@@ -102,13 +102,14 @@ const ObjectForm = ({
           <SimpleSelectField
             itemsList={metros}
             name="location.metro"
-            labelId="district"
+            labelId="metro"
             label="Метро"
             register={register}
-            disabled={!watchDistrict && true}
-            defaultValue={data?.location?.metro}
-            helperText={!watchMetro ? "Если есть в радиусе 1км" : ""}
             isHelperText={true}
+            helperText={!watchMetro ? "Если есть в радиусе 1км" : ""}
+            defaultValue={data?.location?.metro}
+            watch={watchMetro}
+            disabled={!watchDistrict && true}
           />
           <SimpleSelectField
             itemsList={objectStatuses}

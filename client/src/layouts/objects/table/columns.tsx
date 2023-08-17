@@ -54,7 +54,7 @@ export const groupedColumns = [
         header: "Метро",
         cell: (info) => {
           const metroValue = info.getValue();
-          return metroValue !== undefined ? FormatMetro(metroValue) : "";
+          return FormatMetro(metroValue);
         },
       },
       {

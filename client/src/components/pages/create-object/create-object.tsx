@@ -118,11 +118,11 @@ const CreateObject = () => {
         ),
       },
     };
-    // console.log("newData", newData);
+    console.log("newData", newData);
 
     dispatch(createObject(newData))
-      .then(navigate("/objects"))
-      .then(toast.success("Объект успешно создан!"));
+    .then(navigate("/objects"))
+    .then(toast.success("Объект успешно создан!"));
   };
 
   useEffect(() => {
