@@ -17,6 +17,17 @@ router.get("/", async (req, res) => {
 
 router.post("/create", auth, async (req, res) => {
   try {
+    // const userId = req.user._id;
+    // const company = await Company.findOne({
+    //   $or: [{ managers: userId }, { curators: userId }],
+    // });
+
+    // const newObject = await Object.create({
+    //   ...req.body,
+    //   userId,
+    //   company: company._id,
+    // });
+
     const newMeeting = await Meeting.create({ ...req.body });
     res.status(201).send(newMeeting);
   } catch (e) {

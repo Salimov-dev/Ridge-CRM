@@ -12,10 +12,10 @@ const Title = styled(Typography)`
   color: black;
 `;
 
-const LayoutTitle = ({ text }) => {
+const LayoutTitle = ({ title }) => {
   return (
     <Component>
-      <Title variant="h2">{text}</Title>
+      <Title variant="h2">{title}</Title>
     </Component>
   );
 };

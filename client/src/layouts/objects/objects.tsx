@@ -15,7 +15,7 @@ import {
 } from "../../store/objects.store";
 // hooks
 import useSearchObject from "../../hooks/use-search-object";
-import LayoutTitle from "../../components/common/layout-title";
+import LayoutTitle from "../../components/common/page-titles/layout-title";
 
 const initialState = {
   address: "",
@@ -76,7 +76,7 @@ const Objects = () => {
 
   return (
     <Box>
-      <LayoutTitle text="Таблица объектов:" />
+      <LayoutTitle title="Таблица объектов:" />
       <FiltersPanel
         register={register}
         objects={objects}

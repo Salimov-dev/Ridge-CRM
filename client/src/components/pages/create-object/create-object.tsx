@@ -8,15 +8,15 @@ import { toast } from "react-toastify";
 // MUI
 import { Box } from "@mui/material";
 // components
-import Header from "./components/header";
 import ObjectForm from "../../common/forms/object-form";
-import FindObjectOnMap from "./components/find-object-on-map";
+import FindObjectOnMap from "../../common/find-object-on-map";
 // store
 import { createObject } from "../../../store/objects.store";
 // other
 import useFindObject from "../../../hooks/use-find-object";
 import { objectSchema } from "../../../schemas/schemas";
-import { capitalizeFirstLetterOrReturn } from "../../../utils/capitalize-first-letter";
+import { capitalizeFirstLetter } from "../../../utils/capitalize-first-letter";
+import TitleWithAddress from "../../common/page-titles/title-with-address";
 
 const initialState = {
   status: "",
@@ -101,13 +101,11 @@ const CreateObject = () => {
       ...data,
       contact: {
         ...data.contact,
-        name: capitalizeFirstLetterOrReturn(data.contact.name),
+        name: capitalizeFirstLetter(data.contact.name),
       },
       estateOptions: {
         ...data.estateOptions,
-        premisesFloor: capitalizeFirstLetterOrReturn(
-          data.estateOptions.premisesFloor
-        ),
+        premisesFloor: capitalizeFirstLetter(data.estateOptions.premisesFloor),
       },
       location: {
         ...data.location,
@@ -115,16 +113,16 @@ const CreateObject = () => {
       },
       description: {
         ...data.description,
-        fullDescription: capitalizeFirstLetterOrReturn(
+        fullDescription: capitalizeFirstLetter(
           data.description.fullDescription
         ),
       },
     };
     // console.log("newData", newData);
 
-    dispatch(createObject(newData));
-    // .then(navigate("/objects"))
-    // .then(toast.success("Объект успешно создан!"))
+    dispatch(createObject(newData))
+      .then(navigate("/objects"))
+      .then(toast.success("Объект успешно создан!"));
   };
 
   useEffect(() => {
@@ -136,10 +134,13 @@ const CreateObject = () => {
 
   return (
     <Box>
-      <Header
+      <TitleWithAddress
         isEmptyFindedObject={isEmptyFindedObject}
         getCity={getCity}
         getAddress={getAddress}
+        title="Создать объект:"
+        subtitle="Выберите объект на карте"
+        path="objects"
       />
 
       <FindObjectOnMap />

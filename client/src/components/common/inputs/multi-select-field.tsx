@@ -35,7 +35,7 @@ const MultiSelectField = ({
   name,
   labelId,
   label,
-  disabled = false
+  disabled = false,
 }) => {
   function checkArrayElements(arr) {
     for (const element of arr) {
@@ -48,7 +48,7 @@ const MultiSelectField = ({
 
   const itemsWithId = checkArrayElements(itemsList);
 
-  const selectedItemsArray = Array.isArray(selectedItems) ? selectedItems : []
+  const selectedItemsArray = Array.isArray(selectedItems) ? selectedItems : [];
 
   return (
     <FormControl sx={{ minWidth: "100px", width: "100%" }}>
@@ -103,7 +103,7 @@ const MultiSelectField = ({
               />
               <ListItemText
                 key={`text-${item?._id}`} // Ensure a unique key for the ListItemText
-                primary={item?.name}
+                primary={<span>{item?.name}</span>}
               />
             </MenuItem>
           ) : (

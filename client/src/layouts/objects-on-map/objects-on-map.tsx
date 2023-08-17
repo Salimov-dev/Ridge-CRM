@@ -20,7 +20,7 @@ import Map from "./components/map";
 import useSearchObject from "../../hooks/use-search-object";
 import Loader from "../../components/common/loader/loader";
 import ObjectQuantity from "./components/objects-quantity";
-import LayoutTitle from "../../components/common/layout-title";
+import LayoutTitle from "../../components/common/page-titles/layout-title";
 
 const Form = styled(`form`)({
   width: "100%",
@@ -107,7 +107,7 @@ const ObjectsOnMap = () => {
 
   return (
     <Component>
-      <LayoutTitle text="Объекты на карте"/>
+      <LayoutTitle title="Объекты на карте"/>
       <Form noValidate>
         <MultiSelectField
           itemsList={getActualUsersList()}

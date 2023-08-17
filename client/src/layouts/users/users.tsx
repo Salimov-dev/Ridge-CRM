@@ -18,7 +18,7 @@ import {
 // hooks
 import useSearchUser from "../../hooks/use-search-user";
 import { getUserStatusesList } from "../../store/user-statuses.store";
-import LayoutTitle from "../../components/common/layout-title";
+import LayoutTitle from "../../components/common/page-titles/layout-title";
 
 const initialState = {
   lastName: "",
@@ -118,7 +118,7 @@ const Users = () => {
 
   return (
     <Box>
-      <LayoutTitle text="Менеджеры"/>
+      <LayoutTitle title="Менеджеры"/>
       <ButtonsBlock
         isInputEmpty={isInputEmpty}
         reset={reset}

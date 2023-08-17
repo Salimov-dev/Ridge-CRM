@@ -13,7 +13,6 @@ import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 // components
 import TextFieldStyled from "../inputs/text-field-styled";
 import SimpleSelectField from "../inputs/simple-select-field";
-import SwitchStyled from "../inputs/switch-styled";
 // store
 import { getDistrictsList } from "../../../store/districts.store";
 import { getMetroList } from "../../../store/metro.store";
@@ -55,7 +54,6 @@ const ObjectForm = ({
   onSubmit,
   isValid,
   isEditMode = false,
-  isObjectHasAddress,
   isEmptyFindedObject,
   watchName,
   watchDistrict,
@@ -76,10 +74,7 @@ const ObjectForm = ({
   const rentTypes = useSelector(getRentTypesList());
   const objectTypes = useSelector(getObjectTypesList());
   const estateTypes = useSelector(getEstateTypesList());
-
-  const isValidAndHasObject =
-    (Boolean(isEmptyFindedObject) || isObjectHasAddress) && isValid;
-
+  const isValidAndHasAdress = Boolean(isEmptyFindedObject) && isValid;
   const navigate = useNavigate();
 
   const handleBackPage = () => {
@@ -484,7 +479,7 @@ const ObjectForm = ({
             type="submit"
             variant="outlined"
             color="success"
-            disabled={!isValidAndHasObject}
+            disabled={!isValidAndHasAdress}
           >
             {isEditMode ? "Сохранить" : "Создать"}
           </Button>

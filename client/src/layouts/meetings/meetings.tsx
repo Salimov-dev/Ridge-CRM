@@ -5,12 +5,12 @@ import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 import dayjs from "dayjs";
 import ButtonsBlock from "./components/buttons-block";
-import LayoutTitle from "../../components/common/layout-title";
+import LayoutTitle from "../../components/common/page-titles/layout-title";
 
 const Meetings = () => {
   return (
     <Box>
-      <LayoutTitle text="Встречи"/>
+      <LayoutTitle title="Встречи"/>
       <ButtonsBlock/>
     </Box>
   );

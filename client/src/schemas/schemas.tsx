@@ -27,6 +27,14 @@ export const objectSchema = yup.object().shape({
   }),
 });
 
+export const meetingSchema = yup.object().shape({
+  status: yup.string().required("Статус обязателен для заполнения"),
+  date: yup.string().required("Укажите дату встречи"),
+  time: yup.string().required("Укажите время встречи"),
+  objectId: yup.string().required("Выберите объект встречи"),
+  comment: yup.string().required("Заполните комментарий"),
+});
+
 export const managerSchema = yup.object().shape({
   status: yup.string().required("Статус обязателен для заполнения"),
   birthday: yup.string().required("Заполните дату рождения"),

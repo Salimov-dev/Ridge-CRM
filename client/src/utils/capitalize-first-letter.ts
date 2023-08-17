@@ -1,4 +1,4 @@
-export function capitalizeFirstLetterOrReturn(symbol) {
+export function capitalizeFirstLetter(symbol) {
   if (typeof symbol !== "string" || symbol.length === 0) {
     return symbol;
   }

@@ -1,9 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
-import meetingStatusService from "../services/meeting-status.service";
+import meetingStatusesService from "../services/meeting-status.service";
 import isOutDated from "../utils/is-out-date";
 
-const meetingStatusSlice = createSlice({
-  name: "meetingStatus",
+const meetingStatusesSlice = createSlice({
+  name: "meetingStatuses",
   initialState: {
     entities: null,
     isLoading: true,
@@ -11,46 +11,46 @@ const meetingStatusSlice = createSlice({
     lastFetch: null,
   },
   reducers: {
-    meetingStatusRequested: (state) => {
+    meetingStatusesRequested: (state) => {
       state.isLoading = true;
     },
-    meetingStatusReceived: (state, action) => {
+    meetingStatusesReceived: (state, action) => {
       state.entities = action.payload;
       state.isLoading = false;
     },
-    meetingStatusFailed: (state, action) => {
+    meetingStatusesFailed: (state, action) => {
       state.error = action.payload;
       state.isLoading = false;
     },
   },
 });
 
-const { reducer: meetingStatusReducer, actions } = meetingStatusSlice;
-const { meetingStatusRequested, meetingStatusReceived, meetingStatusFailed } =
+const { reducer: meetingStatusesReducer, actions } = meetingStatusesSlice;
+const { meetingStatusesRequested, meetingStatusesReceived, meetingStatusesFailed } =
   actions;
 
-export const loadMeetingStatusList = () => async (dispatch, getState) => {
-  const { lastFetch } = getState().workingPosition;
+export const loadMeetingStatusesList = () => async (dispatch, getState) => {
+  const { lastFetch } = getState().meetingStatuses;
   if (isOutDated(lastFetch)) {
-    dispatch(meetingStatusRequested());
+    dispatch(meetingStatusesRequested());
     try {
-      const { content } = await meetingStatusService.get();
-      dispatch(meetingStatusReceived(content));
+      const { content } = await meetingStatusesService.get();
+      dispatch(meetingStatusesReceived(content));
     } catch (error) {
-      meetingStatusFailed(error.message);
+      meetingStatusesFailed(error.message);
     }
   }
 };
 
-export const getMeetingStatus = () => (state) => state.meetingStatus.entities;
+export const getMeetingStatusesList = () => (state) => state.meetingStatuses.entities;
 
-export const getMeetingStatusLoadingStatus = () => (state) =>
-  state.meetingStatus.isLoading;
+export const getMeetingStatusesLoadingStatus = () => (state) =>
+  state.meetingStatuses.isLoading;
 
-export const getMeetingStatusById = (id) => (state) => {
-  if (state.meetingStatus.entities) {
-    return state.meetingStatus.entities.find((meet) => meet._id === id);
+export const getMeetingStatusNameById = (id) => (state) => {
+  if (state.meetingStatuses.entities) {
+    return state.meetingStatuses.entities.find((meet) => meet._id === id).name;
   }
 };
 
-export default meetingStatusReducer;
+export default meetingStatusesReducer;

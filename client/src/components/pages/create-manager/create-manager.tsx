@@ -12,7 +12,8 @@ import { getUserStatusesList } from "../../../store/user-statuses.store";
 import { addNewManager, getCurrentUserId } from "../../../store/users.store";
 // schema
 import { managerSchema } from "../../../schemas/schemas";
-import Header from "./components/header";
+import TitleWithBackButton from "../../common/page-titles/title-with-back-button";
+import getRandomInt from "../../../utils/get-random-int";
 
 const initialState = {
   email: "",
@@ -53,13 +54,6 @@ const CreateManager = () => {
     resolver: yupResolver(managerSchema),
   });
 
-  const watchTrialStatus = watch("status");
-  const isTrialStatusSelected = watchTrialStatus === "64da643f547d1cfcd04b1dc8";
-
-  function getRandomInt() {
-    return Math.round(Math.random() * 98 + 1);
-  }
-
   const onSubmit = (data) => {
     const newData = {
       ...data,
@@ -74,7 +68,7 @@ const CreateManager = () => {
 
   return (
     <Box>
-      <Header />
+      <TitleWithBackButton title="Добавить нового менеджера" path="/users" />
 
       <ManagerForm
         register={register}
@@ -82,7 +76,6 @@ const CreateManager = () => {
         onSubmit={onSubmit}
         errors={errors}
         setValue={setValue}
-        isTrialStatusSelected={isTrialStatusSelected}
         userStatuses={userStatuses}
         isValid={isValid}
       />

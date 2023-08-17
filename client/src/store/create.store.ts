@@ -12,7 +12,7 @@ import rentTypesReducer from "./rent-types.store";
 import objectTypesReducer from "./object-types.store";
 import estateTypesReducer from "./estate-types.store";
 import userStatusesReducer from "./user-statuses.store";
-import meetingStatusReducer from "./meeting-status.store";
+import meetingStatusesReducer from "./meeting-status.store";
 import meetingsReducer from "./meetings.store";
 
 const rootReducer = combineReducers({
@@ -29,7 +29,7 @@ const rootReducer = combineReducers({
   objectTypes: objectTypesReducer,
   estateTypes: estateTypesReducer,
   userStatuses: userStatusesReducer,
-  meetingStatus: meetingStatusReducer,
+  meetingStatuses: meetingStatusesReducer,
   meetings: meetingsReducer,
 });
 

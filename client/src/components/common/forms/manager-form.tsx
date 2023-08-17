@@ -34,6 +34,7 @@ const FooterButtons = styled(Box)`
 
 const ManagerForm = ({
   data,
+  isEditMode = false,
   register,
   handleSubmit,
   onSubmit,
@@ -41,12 +42,11 @@ const ManagerForm = ({
   setValue,
   userStatuses,
   isValid,
-  isEditMode= false,
 }) => {
   const navigate = useNavigate();
 
   const handleBackPage = () => {
-    navigate("/users")
+    navigate("/users");
   };
 
   return (
@@ -54,7 +54,9 @@ const ManagerForm = ({
       <Box sx={{ marginRight: "auto" }}>
         <h3>Менеджер</h3>
       </Box>
-      <FieldsContainer sx={{ display: "flex", flexDirection: "column", gap: '12px' }}>
+      <FieldsContainer
+        sx={{ display: "flex", flexDirection: "column", gap: "12px" }}
+      >
         <FieldsContainer>
           <TextFieldStyled
             register={register}

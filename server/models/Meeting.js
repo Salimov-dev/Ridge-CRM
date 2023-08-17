@@ -2,14 +2,14 @@ import { Schema, model } from "mongoose";
 
 const schema = new Schema({
     userId: {type: Schema.Types.ObjectId, ref: 'User'},
-    dateOfMeeting: String,
-    meetingsStatus: {type: Schema.Types.ObjectId, ref: 'MeetingStatus'},
-    timeOfMeeting: String,
+    status: {type: Schema.Types.ObjectId, ref: 'MeetingStatus'},
+    date: String,
+    time: String,
     comment: String,
+    objectId: {type: Schema.Types.ObjectId, ref: 'Object'},
     location: {
         city: String,
-        district: String,
-        adress: String,
+        address: String,
         latitude: Number,
         longitude: Number,
         zoom: Number,
