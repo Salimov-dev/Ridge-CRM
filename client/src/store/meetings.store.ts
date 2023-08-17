@@ -118,9 +118,12 @@ export const removeMeeting = (meetingId) => async (dispatch) => {
   }
 };
 export const getMeetingsList = () => (state) => state.meetings.entities;
+
 export const getMeetingLoadingStatus = () => (state) =>
   state.meetings.isLoading;
+
 export const getDataMeetingsStatus = () => (state) => state.meetings.dataLoaded;
+
 export const getMeetingById = (id) => (state) => {
   if (state.meetings.entities) {
     return state.meetings.entities.find((meet) => meet._id === id);

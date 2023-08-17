@@ -20,7 +20,7 @@ import {
 // other
 import { tokens } from "../../../theme";
 
-const BasicTable = ({ items, itemsColumns, isLoading }) => {
+const BasicTable = ({ items, itemsColumns, isLoading ,   sortingColumn="created_at", }) => {
   const [sorting, setSorting] = useState<SortingState>([]);
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -40,7 +40,7 @@ const BasicTable = ({ items, itemsColumns, isLoading }) => {
   });
 
   useEffect(() => {
-    setSorting([{ id: "created_at", desc: true }]);
+    setSorting([{ id: sortingColumn, desc: true }]);
   }, []);
 
   return (

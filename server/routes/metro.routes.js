@@ -5,9 +5,7 @@ const router = express.Router({ mergeParams: true });
 
 router.get("/", async (req, res) => {
   try {
-    console.log("res", res);
     const list = await Metro.find();
-    console.log("list Metro", list);
     res.status(200).send(list);
   } catch (e) {
     res.status(500).json({

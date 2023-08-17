@@ -7,11 +7,11 @@ import {
   InputAdornment,
   FormHelperText,
 } from "@mui/material";
-import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { TimePicker } from "@mui/x-date-pickers/TimePicker";
+import CreateIcon from '@mui/icons-material/Create';
 // components
 import TextFieldStyled from "../inputs/text-field-styled";
 import SimpleSelectField from "../inputs/simple-select-field";
@@ -22,6 +22,7 @@ const Form = styled(`form`)({
   flexDirection: "column",
   alignItems: "center",
   marginBottom: "10px",
+  marginTop: '12px',
   gap: "4px",
 });
 
@@ -63,10 +64,6 @@ const MeetingForm = ({
   return (
     <>
       <Form onSubmit={handleSubmit(onSubmit)} noValidate>
-        
-        <Box sx={{ marginRight: "auto" }}>
-          <h3>Встреча</h3>
-        </Box>
 
         <FieldsContainer>
           <Box sx={{ width: "100%", marginBottom: "-3px", marginTop: "-8px" }}>
@@ -152,7 +149,7 @@ const MeetingForm = ({
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
-                  <AccountCircleOutlinedIcon />
+                  <CreateIcon />
                 </InputAdornment>
               ),
             }}
