@@ -81,12 +81,6 @@ const ObjectInfo = ({ object }) => {
   const cadastralNumber = object?.estateOptions.cadastralNumber;
   const loadingArea = object?.estateOptions.loadingArea;
 
-  const readyToRent = !object?.accordTerms.readyToRent ? "Да" : "Нет";
-  const readyToContract = !object?.accordTerms.readyToContract ? "Да" : "Нет";
-  const readyToRenovation = !object?.accordTerms.readyToRenovation
-    ? "Да"
-    : "Нет";
-
   const fullDescription = object?.description.fullDescription;
 
   return (

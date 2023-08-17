@@ -16,11 +16,6 @@ const schema = new Schema(
       position: String,
       // position: { type: Schema.Types.ObjectId, ref: "WorkingPosition" },
     },
-    accordTerms: {
-      readyToContract: Boolean,
-      readyToRenovation: Boolean,
-      readyToRent: Boolean,
-    },
     description: {
       fullDescription: { type: String },
     },

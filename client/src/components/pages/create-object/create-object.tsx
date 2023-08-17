@@ -1,12 +1,12 @@
 // libraries
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useNavigate } from "react-router-dom";
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 // MUI
-import { Box} from "@mui/material";
+import { Box } from "@mui/material";
 // components
 import Header from "./components/header";
 import ObjectForm from "../../common/forms/object-form";
@@ -17,7 +17,6 @@ import { createObject } from "../../../store/objects.store";
 import useFindObject from "../../../hooks/use-find-object";
 import { objectSchema } from "../../../schemas/schemas";
 import { capitalizeFirstLetterOrReturn } from "../../../utils/capitalize-first-letter";
-
 
 const initialState = {
   status: "",
@@ -56,18 +55,12 @@ const initialState = {
     cadastralNumber: "",
     loadingArea: "",
   },
-  accordTerms: {
-    readyToRent: false,
-    readyToContract: false,
-    readyToRenovation: false,
-  },
   description: {
     fullDescription: "",
   },
 };
 
 const CreateObject = () => {
-  const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -128,16 +121,11 @@ const CreateObject = () => {
       },
     };
     // console.log("newData", newData);
-    
-    dispatch(createObject(newData))
-      .then(navigate("/objects"))    
-      .then(toast.success("Объект успешно создан!"))  
-  };
 
-  const handleClearForm = () => {
-    reset();
+    dispatch(createObject(newData));
+    // .then(navigate("/objects"))
+    // .then(toast.success("Объект успешно создан!"))
   };
-
 
   useEffect(() => {
     setValue("location.city", getCity());
@@ -157,12 +145,10 @@ const CreateObject = () => {
       <FindObjectOnMap />
 
       <ObjectForm
-        initialState={initialState}
         handleSubmit={handleSubmit}
         onSubmit={onSubmit}
         register={register}
         errors={errors}
-        handleClearForm={handleClearForm}
         isValid={isValid}
         isEmptyFindedObject={isEmptyFindedObject}
         watchName={watchName}

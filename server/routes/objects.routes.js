@@ -62,6 +62,7 @@ router.post("/create", auth, async (req, res) => {
       userId,
       company: company._id,
     });
+
     res.status(201).send(newObject);
   } catch (e) {
     res.status(500).json({
