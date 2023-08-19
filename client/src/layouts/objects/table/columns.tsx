@@ -10,25 +10,12 @@ import OpenButton from "./components/open-button";
 
 export const groupedColumns = [
   {
-    header: "Основная информация",
-    columns: [
-      {
-        accessorKey: "created_at",
-        header: "Дата",
-        cell: (info) => {
-          const date = info.getValue();
-          return FormatDate(new Date(date));
-        },
-      },
-      {
-        accessorKey: "userId",
-        header: "Менеджер",
-        cell: (info) => {
-          const userId = info.getValue();
-          return FormatManagerName(userId);
-        },
-      },
-    ],
+    accessorKey: "created_at",
+    header: "Дата",
+    cell: (info) => {
+      const date = info.getValue();
+      return FormatDate(new Date(date));
+    },
   },
   {
     header: "Расположение объекта",
@@ -75,7 +62,7 @@ export const groupedColumns = [
         accessorKey: "contact.phone",
         header: "Телефон",
         cell: (info) => {
-          const phone = info.getValue();        
+          const phone = info.getValue();
           return FormatPhone(phone);
         },
       },
@@ -100,6 +87,14 @@ export const groupedColumns = [
   {
     header: "Другое",
     columns: [
+      {
+        accessorKey: "userId",
+        header: "Менеджер",
+        cell: (info) => {
+          const userId = info.getValue();
+          return FormatManagerName(userId);
+        },
+      },
       {
         accessorKey: "status",
         header: "Статус",

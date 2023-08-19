@@ -15,6 +15,8 @@ import { getCurrentRenterNameById } from "../../../../store/current-renter.store
 import { getEstateConditionNameById } from "../../../../store/object-conditions.store";
 import { getObjectTypeNameById } from "../../../../store/object-types.store";
 import { getEstateTypeNameById } from "../../../../store/estate-types.store";
+import BasicTable from "../../../common/table/basic-table";
+import { commercialTermsColumns, contactsColumns, estateOptionsColumns, estateTypeColumns, locationColumns } from "../table/columns";
 
 const Component = styled(Box)`
   display: flex;
@@ -30,127 +32,44 @@ const InfoBlock = styled(Box)`
   padding: 0 20px;
 `;
 
-const ObjectInfo = ({ object }) => {
-  const metroName = useSelector(getMetroName(object?.location.metro));
+const ObjectInfo = ({ object, isLoading }) => {
 
-  const createdTime = FormatDate(object?.created_at);
-  const manager = useSelector(getUserNameById(object?.userId));
-  const status = useSelector(getObjectStatusNameById(object?.status));
-
-  const contactName = object?.contact.name;
-  const contactPhone = enterPhoneFormat(object?.contact.phone);
-  const contactEmail = object?.contact.email;
-  const contactPosition = useSelector(
-    getWorkingPositionNameById(object?.contact.position)
-  );
-
-  const priceForRentMetr = makeDigitSeparator(getPriceForRentMetr(object));
-  const totalSquare = makeDigitSeparator(object?.commercialTerms.totalSquare);
-  const rentHolidays = makeDigitSeparator(
-    object?.commercialTerms.rentalHolidays
-  );
-  const rentSquare = makeDigitSeparator(object?.commercialTerms.rentSquare);
-  const rentPrice = makeDigitSeparator(object?.commercialTerms.rentPrice);
-  const agentComission = makeDigitSeparator(
-    object?.commercialTerms.agentComission
-  );
-  const indexingAnnual = makeDigitSeparator(
-    object?.commercialTerms.indexingAnnual
-  );
-  const rentTypes = useSelector(
-    getRentTypeNameById(object?.commercialTerms.rentTypes)
-  );
-
-  const premisesHeight = object?.estateOptions.premisesHeight;
-  const premisesFloor = object?.estateOptions.premisesFloor;
-  const currentRenters = useSelector(
-    getCurrentRenterNameById(object?.estateOptions.currentRenters)
-  );
-  const objectConditions = useSelector(
-    getEstateConditionNameById(object?.estateOptions.objectConditions)
-  );
-  const estateTypes = useSelector(
-    getEstateTypeNameById(object?.estateOptions.estateTypes)
-  );
-  const objectTypes = useSelector(
-    getObjectTypeNameById(object?.estateOptions.objectTypes)
-  );
-  const parkingQuantity = object?.estateOptions.parkingQuantity;
-  const electricityKw = object?.estateOptions.electricityKw;
-  const waterSuply = object?.estateOptions.waterSuply;
-  const cadastralNumber = object?.estateOptions.cadastralNumber;
-  const loadingArea = object?.estateOptions.loadingArea;
-
-  const fullDescription = object?.description.fullDescription;
+  console.log("object", object);
 
   return (
     <>
-      <Component>
-        <InfoBlock>
-          <h3>Информация:</h3>
-
-          <Typography>Создан: {createdTime}</Typography>
-          <Typography>Менеджер: {manager}</Typography>
-          <Typography>Статус: {status}</Typography>
-          <br/>
-          <Typography>Метро: {metroName ? metroName : "без метро"}</Typography>
-          <Typography>Кадастровый №: {cadastralNumber}</Typography>
-        </InfoBlock>
-
-        <Divider orientation="vertical" variant="middle" flexItem />
-        <InfoBlock>
-          <h3>Объект:</h3>
-          <Typography>Текущий арендатор: {currentRenters}</Typography>
-          <Typography>Тип недвижимости: {estateTypes}</Typography>
-          <Typography>Тип объекта: {objectTypes}</Typography>
-          <br/>
-          <Typography>Электричество: {electricityKw}кВт</Typography>
-          <Typography>Водоснабжение: {waterSuply}</Typography>
-          <Typography>Высота потолков: {premisesHeight}м</Typography>
-          <Typography>Состояние полов: {premisesFloor}</Typography>
-          <br/>
-          <Typography>Парковка: {parkingQuantity} авто</Typography>
-          <Typography>Зона погрузки: {loadingArea}</Typography>
-        </InfoBlock>
-
-        <Divider orientation="vertical" variant="middle" flexItem />
-        <InfoBlock>
-          <h3>Условия:</h3>
-          <Typography>Тип договора: {rentTypes}</Typography>
-          <br />
-          <Typography>Площадь (общая): {totalSquare}м²</Typography>
-          <Typography>Площадь (аренда): {rentSquare}м²</Typography>
-          <br />
-          <Typography>Стоимость (аренда общая): {rentPrice}руб</Typography>
-          <Typography>
-            Стоимость (аренда м2): {priceForRentMetr}руб/м²
-          </Typography>
-          <Typography>Индексация: {indexingAnnual}% ежегодно</Typography>
-          <br />
-          <Typography>Каникулы: {rentHolidays} дней</Typography>
-          <Typography>
-            Комиссия агента: {agentComission}% или{" "}
-            {makeDigitSeparator(
-              (object?.commercialTerms.rentPrice / 100) * agentComission
-            )}
-            руб
-          </Typography>
-        </InfoBlock>
-
-        <Divider orientation="vertical" variant="middle" flexItem />
-        <InfoBlock>
-          <h3>Контакты:</h3>
-          <Typography>Контакт: {contactName}</Typography>
-          <Typography>Позиция: {contactPosition}</Typography>
-          <br />
-          <Typography>Телефон: {contactPhone}</Typography>
-          <Typography>E-mail: {contactEmail}</Typography>
-        </InfoBlock>
-      </Component>
-      <Box sx={{ width: "100%", flex: "2" }}>
-        <Typography>Описание: {fullDescription}</Typography>
-      </Box>
+     <BasicTable
+      items={[object]}
+      itemsColumns={locationColumns}
+      isLoading={isLoading}
+      sortingColumn="date"
+    />
+    <BasicTable
+      items={[object]}
+      itemsColumns={estateTypeColumns}
+      isLoading={isLoading}
+      sortingColumn="date"
+    />
+    <BasicTable
+      items={[object]}
+      itemsColumns={commercialTermsColumns}
+      isLoading={isLoading}
+      sortingColumn="date"
+    />
+    <BasicTable
+      items={[object]}
+      itemsColumns={estateOptionsColumns}
+      isLoading={isLoading}
+      sortingColumn="date"
+    />
+    <BasicTable
+      items={[object]}
+      itemsColumns={contactsColumns}
+      isLoading={isLoading}
+      sortingColumn="date"
+    />
     </>
+   
   );
 };
 

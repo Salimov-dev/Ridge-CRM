@@ -480,7 +480,7 @@ const ObjectForm = ({
             type="submit"
             variant="outlined"
             color="success"
-            disabled={!isValidAndHasAdress}
+            // disabled={!isValidAndHasAdress}
           >
             {isEditMode ? "Сохранить" : "Создать"}
           </Button>

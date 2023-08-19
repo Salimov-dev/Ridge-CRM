@@ -30,7 +30,7 @@ const ObjectPage = () => {
     <Box>
       <Header object={object} />
       <Map>{!isLoading ? <ObjectsOnMap object={object} /> : <Loader />}</Map>
-      {!isLoading ? <ObjectInfo object={object} /> : <Loader />}
+      {!isLoading ? <ObjectInfo object={object} isLoading={isLoading} /> : <Loader />}
     </Box>
   );
 };
