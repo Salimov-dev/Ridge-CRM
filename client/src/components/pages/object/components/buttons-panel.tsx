@@ -1,6 +1,6 @@
 import { Box, Button, styled } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
-import ArrowBackIosNewOutlinedIcon from "@mui/icons-material/ArrowBackIosNewOutlined";
+import PageBackButton from "../../../common/buttons/page-back-button";
 
 const Component = styled(Box)`
   display: flex;
@@ -13,35 +13,17 @@ const ButtonsPanel = () => {
 
   return (
     <Component>
-      <Button
-        color="success"
-        variant="outlined"
-        sx={{ height: "50px", color: "white" }}
-        onClick={() => navigate("/map")}
-      >
-        <ArrowBackIosNewOutlinedIcon
-          sx={{ width: "20px", height: "20px", marginRight: "5px" }}
-        />{" "}
-        карта
-      </Button>
-      <Button
-        color="success"
-        variant="outlined"
-        sx={{ height: "50px", color: "white" }}
-        onClick={() => navigate("/objects")}
-      >
-        <ArrowBackIosNewOutlinedIcon
-          sx={{ width: "20px", height: "20px", marginRight: "5px" }}
-        />{" "}
-        объекты
-      </Button>
+      <PageBackButton path="/map" text="Карта" />
+      <PageBackButton path="/objects" text="Объекты" />
+      <PageBackButton path={-1} />
+
       <Button
         color="secondary"
         variant="contained"
         sx={{ height: "50px" }}
         onClick={() => navigate(`/objects/${objectId}/edit`)}
       >
-        ПРАВИТЬ
+        Править
       </Button>
     </Component>
   );

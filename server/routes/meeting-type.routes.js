@@ -1,11 +1,11 @@
 import express from "express"
-import District from "../models/District.js"
+import MeetingType from "../models/Meeting-type.js"
 
 const router = express.Router({ mergeParams: true });
 
 router.get("/", async (req, res) => {
   try {
-    const list = await District.find();
+    const list = await MeetingType.find();
     res.status(200).send(list);
   } catch (e) {
     res.status(500).json({

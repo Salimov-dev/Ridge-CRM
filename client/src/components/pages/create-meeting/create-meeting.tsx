@@ -22,9 +22,11 @@ import useFindObject from "../../../hooks/use-find-object";
 import { capitalizeFirstLetter } from "../../../utils/capitalize-first-letter";
 import { createMeeting } from "../../../store/meetings.store";
 import TitleWithAddress from "../../common/page-titles/title-with-address";
+import { getMeetingTypesList } from "../../../store/meeting-types.store";
 
 const initialState = {
   status: "",
+  meetingType: "",
   date: "",
   time: "",
   comment: "",
@@ -41,8 +43,9 @@ const initialState = {
 const CreateMeeting = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const statuses = useSelector(getMeetingStatusesList());
   const objects = useSelector(getObjectsList());
+  const statuses = useSelector(getMeetingStatusesList());
+  const meetingTypes = useSelector(getMeetingTypesList());
   const currentUserId = useSelector(getCurrentUserId());
   const currentUserObjects = objects?.filter(
     (obj) => obj?.userId === currentUserId
@@ -113,6 +116,7 @@ const CreateMeeting = () => {
       <FindObjectOnMap />
       <MeetingForm
         statuses={statuses}
+        meetingTypes={meetingTypes}
         objects={transformObjects}
         handleSubmit={handleSubmit}
         onSubmit={onSubmit}

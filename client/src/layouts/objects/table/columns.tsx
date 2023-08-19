@@ -110,7 +110,7 @@ export const groupedColumns = [
       },
       {
         accessorKey: "_id",
-        header: "Ссылка",
+        header: "",
         enableSorting: false,
         cell: (info) => <OpenButton objectId={info.getValue()} />,
       },

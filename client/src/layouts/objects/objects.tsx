@@ -76,7 +76,7 @@ const Objects = () => {
 
   return (
     <Box>
-      <LayoutTitle title="Таблица объектов:" />
+      <LayoutTitle title="Таблица объектов" />
       <FiltersPanel
         register={register}
         objects={objects}

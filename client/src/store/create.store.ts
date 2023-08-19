@@ -14,23 +14,30 @@ import estateTypesReducer from "./estate-types.store";
 import userStatusesReducer from "./user-statuses.store";
 import meetingStatusesReducer from "./meeting-status.store";
 import meetingsReducer from "./meetings.store";
+import meetingTypesReducer from "./meeting-types.store";
 
 const rootReducer = combineReducers({
+  // objects
   objects: objectsReducer,
-  metro: metroReducer,
-  users: usersListReducer,
-  districts: districtsReducer,
   objectStatus: objectStatusReducer,
-  workingPosition: workingPositionReducer,
-  sidebarCollapsState: sidebarCollapsStateReducer,
-  currentRenters: currentRenterReducer,
   objectConditions: objectConditionsReducer,
-  rentTypes: rentTypesReducer,
   objectTypes: objectTypesReducer,
-  estateTypes: estateTypesReducer,
+  // users
+  users: usersListReducer,
   userStatuses: userStatusesReducer,
+  // meetings
   meetingStatuses: meetingStatusesReducer,
   meetings: meetingsReducer,
+  meetingTypes: meetingTypesReducer,
+  // other objects params
+  metro: metroReducer,
+  districts: districtsReducer,
+  workingPosition: workingPositionReducer,
+  currentRenters: currentRenterReducer,
+  rentTypes: rentTypesReducer,
+  estateTypes: estateTypesReducer,
+  // other
+  sidebarCollapsState: sidebarCollapsStateReducer,
 });
 
 export function createStore() {

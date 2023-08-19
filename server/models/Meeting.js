@@ -4,6 +4,7 @@ const schema = new Schema(
   {
     userId: { type: Schema.Types.ObjectId, ref: "User" },
     status: { type: Schema.Types.ObjectId, ref: "MeetingStatus" },
+    meetingType: { type: Schema.Types.ObjectId, ref: "MeetingType" },
     date: String,
     time: String,
     comment: String,

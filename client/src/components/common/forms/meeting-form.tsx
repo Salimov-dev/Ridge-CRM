@@ -11,7 +11,7 @@ import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { TimePicker } from "@mui/x-date-pickers/TimePicker";
-import CreateIcon from '@mui/icons-material/Create';
+import CreateIcon from "@mui/icons-material/Create";
 // components
 import TextFieldStyled from "../inputs/text-field-styled";
 import SimpleSelectField from "../inputs/simple-select-field";
@@ -22,7 +22,7 @@ const Form = styled(`form`)({
   flexDirection: "column",
   alignItems: "center",
   marginBottom: "10px",
-  marginTop: '12px',
+  marginTop: "12px",
   gap: "4px",
 });
 
@@ -44,6 +44,7 @@ const MeetingForm = ({
   data,
   objects,
   statuses,
+  meetingTypes,
   register,
   errors,
   handleSubmit,
@@ -64,8 +65,15 @@ const MeetingForm = ({
   return (
     <>
       <Form onSubmit={handleSubmit(onSubmit)} noValidate>
-
         <FieldsContainer>
+          <DatePickerStyled
+            register={register}
+            name="date"
+            label="Дата встречи"
+            // value={data?.date}
+            onChange={(value) => setValue("date", value)}
+            errors={errors?.date}
+          />
           <Box sx={{ width: "100%", marginBottom: "-3px", marginTop: "-8px" }}>
             <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="ru">
               <DemoContainer
@@ -110,14 +118,13 @@ const MeetingForm = ({
               {/* {errors ? errors?.message : helperText} */}
             </FormHelperText>
           </Box>
-
-          <DatePickerStyled
+          <SimpleSelectField
             register={register}
-            name="date"
-            label="Дата встречи"
-            // value={data?.date}
-            onChange={(value) => setValue("date", value)}
-            errors={errors?.date}
+            itemsList={meetingTypes}
+            name="meetingType"
+            labelId="meetingType"
+            label="Тип встречи"
+            errors={errors?.meetingType}
           />
           <SimpleSelectField
             register={register}
@@ -127,18 +134,17 @@ const MeetingForm = ({
             label="Статус"
             errors={errors?.status}
           />
-          <SimpleSelectField
+        </FieldsContainer>
+
+        <FieldsContainer>
+        <SimpleSelectField
             register={register}
             itemsList={objects}
             name="objectId"
             labelId="objectId"
             label="Объект встречи"
             errors={errors?.objectId}
-
           />
-        </FieldsContainer>
-
-        <FieldsContainer>
           <TextFieldStyled
             register={register}
             label="Комментарий"

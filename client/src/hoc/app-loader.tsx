@@ -16,6 +16,7 @@ import { loadEstateTypesList } from "../store/estate-types.store";
 import { loadUserStatusesList } from "../store/user-statuses.store";
 import { loadMeetingsList } from "../store/meetings.store";
 import { loadMeetingStatusesList } from "../store/meeting-status.store";
+import { loadMeetingTypesList } from "../store/meeting-types.store";
 
 interface AppLoaderProps {
   children: React.ReactNode;
@@ -25,22 +26,27 @@ const AppLoader = ({ children }: AppLoaderProps) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    // objects
     dispatch<any>(loadObjectsList());
+    dispatch<any>(loadObjectStatusList());
+    dispatch<any>(loadObjectConditionsList());
+    dispatch<any>(loadObjectTypesList());
+    // users
     dispatch<any>(loadUsersList());
+    dispatch<any>(loadUserStatusesList());
+    // meetings
+    dispatch<any>(loadMeetingsList());
+    dispatch<any>(loadMeetingStatusesList());
+    dispatch<any>(loadMeetingTypesList());
+    // other objects params
     dispatch<any>(loadMetroList());
     dispatch<any>(loadDistrictsList());
-    dispatch<any>(loadObjectStatusList());
     dispatch<any>(loadWorkingPositionList());
     dispatch<any>(loadWorkingPositionList());
     dispatch<any>(loadSidebarCollapsState());
     dispatch<any>(loadCurrentRentersList());
-    dispatch<any>(loadObjectConditionsList());
     dispatch<any>(loadRentTypesList());
-    dispatch<any>(loadObjectTypesList());
     dispatch<any>(loadEstateTypesList());
-    dispatch<any>(loadUserStatusesList());
-    dispatch<any>(loadMeetingsList());
-    dispatch<any>(loadMeetingStatusesList());
   }, []);
 
   return children;
