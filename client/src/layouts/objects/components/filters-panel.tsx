@@ -21,11 +21,11 @@ import MultiSelectField from "../../../components/common/inputs/multi-select-fie
 // store
 import { getUsersList } from "../../../store/users.store";
 import { getObjectsStatusList } from "../../../store/object-status.store";
-import { getDistrictsList } from "../../../store/districts.store";
 import { getMetroList } from "../../../store/metro.store";
 import { getCurrentRentersList } from "../../../store/current-renter.store";
 import { getEstateTypesList } from "../../../store/estate-types.store";
 import { getObjectTypesList } from "../../../store/object-types.store";
+import { nanoid } from "@reduxjs/toolkit";
 
 const Form = styled(`form`)({
   display: "flex",
@@ -51,8 +51,8 @@ const FiltersPanel = ({
   isLoading,
 }) => {
   const isInputEmpty = JSON.stringify(initialState) !== JSON.stringify(data);
+  
   const objectStatuses = useSelector(getObjectsStatusList());
-  const districts = useSelector(getDistrictsList());
   const users = useSelector(getUsersList());
   const metro = useSelector(getMetroList());
   const currentRenters = useSelector(getCurrentRentersList());
@@ -96,11 +96,9 @@ const FiltersPanel = ({
     const filteredDistricts = objects?.map((dist) => dist.location.district);
     const uniqueDistricts = [...new Set(filteredDistricts)];
 
-    const actualDistrictsArray = uniqueDistricts?.map((id) => {
-      const foundObject = districts?.find((obj) => obj._id === id);
-      return foundObject
-        ? { _id: foundObject._id, name: foundObject.name }
-        : null;
+    const actualDistrictsArray = uniqueDistricts?.map((dist) => {
+      let formatedDistrict = { _id: nanoid(), name: dist };
+      return formatedDistrict;
     });
 
     const sortedDistricts = orderBy(actualDistrictsArray, ["name"], ["asc"]);
@@ -182,19 +180,19 @@ const FiltersPanel = ({
     return sortedType;
   };
   const getActualUsersList = () => {
-    const filteredUsers = objects?.map(
-      (obj) => obj?.userId
-    );
+    const filteredUsers = objects?.map((obj) => obj?.userId);
     const formatedUsersArray = filteredUsers?.filter((m) => m !== "");
 
     const uniqueUsers = [...new Set(formatedUsersArray)];
-
 
     const actualUsersArray = uniqueUsers?.map((id) => {
       const foundObject = users?.find((user) => user._id === id);
 
       return foundObject
-        ? { _id: foundObject._id, name: `${foundObject.name.lastName} ${foundObject.name.firstName}` }
+        ? {
+            _id: foundObject._id,
+            name: `${foundObject.name.lastName} ${foundObject.name.firstName}`,
+          }
         : null;
     });
 
@@ -264,7 +262,6 @@ const FiltersPanel = ({
           disabled={isLoading ? true : false}
         />
         <MultiSelectField
-          // itemsList={getActualList(objects, "userId", users)}
           itemsList={getActualUsersList()}
           selectedItems={data.selectedUsers}
           onChange={(e) => setValue("selectedUsers", e.target.value)}
@@ -289,16 +286,16 @@ const FiltersPanel = ({
           >
             <FormGroup aria-label="position" row sx={{ width: "100%" }}>
               <FormControlLabel
-                {...register("onlyWithPhone")}
+        
                 control={
                   <Switch
-                    color="success"
-                    checked={data.onlyWithPhone}
-                    disabled={isLoading ? true : false}
-                    onChange={(e) => {
-                      setValue("onlyWithPhone", e.target.checked);
-                    }}
-                  />
+                  color="success"
+                  checked={data.onlyWithPhone} // Set the initial value here
+                  disabled={isLoading ? true : false}
+                  onChange={(e) => {
+                    setValue("onlyWithPhone", e.target.checked);
+                  }}
+                />
                 }
                 label="Объекты с телефоном"
                 labelPlacement="start"
@@ -330,6 +327,7 @@ const FiltersPanel = ({
           labelId="districts-label"
           label="Выбор по району"
           disabled={isLoading ? true : false}
+          isItemValueId={false}
         />
         <MultiSelectField
           itemsList={getActualCitiesList()}

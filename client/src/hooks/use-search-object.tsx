@@ -19,8 +19,8 @@ const useSearchObject = ({ objects, data }) => {
     }
 
     if (data?.name?.length) {
-      array = array.filter((obj) =>
-        obj.contact.name.toLowerCase().includes(data.name.toLowerCase())
+      array = array?.filter((obj) =>
+        obj?.contact.name.toLowerCase().includes(data?.name.toLowerCase())
       );
     }
 
@@ -42,17 +42,17 @@ const useSearchObject = ({ objects, data }) => {
 
     // Фильтр для выбранных районов и городов
     if (data.selectedDistricts?.length) {
-      array = array.filter((item) =>
+      array = array?.filter((item) =>
         data.selectedDistricts.includes(item.location.district)
       );
 
       // Обновляем список выбранных городов на основе отфильтрованных районов
-      const filteredCities = data.selectedDistricts.reduce(
+      const filteredCities = data.selectedDistricts?.reduce(
         (cities, district) => {
           return cities.concat(
             array
-              .filter((item) => item.location.district === district)
-              .map((item) => item.location.city)
+              ?.filter((item) => item.location?.district === district)
+              .map((item) => item.location?.city)
           );
         },
         []
@@ -60,12 +60,12 @@ const useSearchObject = ({ objects, data }) => {
 
       // Фильтруем города исходя из списка отфильтрованных городов
       if (data.selectedCities?.length) {
-        array = array.filter((item) =>
-          filteredCities.includes(item.location.city)
+        array = array?.filter((item) =>
+          filteredCities?.includes(item.location.city)
         );
       } else {
-        array = array.filter((item) =>
-          data.selectedDistricts.includes(item.location.district)
+        array = array?.filter((item) =>
+          data.selectedDistricts?.includes(item.location.district)
         );
       }
     } else if (data.selectedCities?.length) {

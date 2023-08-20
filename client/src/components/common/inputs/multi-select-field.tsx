@@ -36,6 +36,7 @@ const MultiSelectField = ({
   labelId,
   label,
   disabled = false,
+  isItemValueId = true
 }) => {
   function checkArrayElements(arr) {
     for (const element of arr) {
@@ -50,6 +51,7 @@ const MultiSelectField = ({
 
   const selectedItemsArray = Array.isArray(selectedItems) ? selectedItems : [];
 
+  
   return (
     <FormControl sx={{ minWidth: "100px", width: "100%" }}>
       <InputLabel
@@ -76,7 +78,7 @@ const MultiSelectField = ({
         renderValue={(selected) => {
           const uniqueSelected = [...new Set(selected)];
           const selectedItemsNames = uniqueSelected?.map((elementID) => {
-            const item = itemsList?.find((item) => item?._id === elementID);
+            const item = itemsList?.find((item) => (isItemValueId ? item?._id : item?.name) === elementID);
             return item ? item?.name : "";
           });
           return itemsWithId
@@ -95,10 +97,10 @@ const MultiSelectField = ({
       >
         {itemsList?.map((item, index) =>
           itemsWithId ? (
-            <MenuItem key={`item-${item?._id}`} value={item?._id}>
+            <MenuItem key={`item-${item?._id}`} value={isItemValueId ? item?._id : item?.name}>
               <Checkbox
                 key={`checkbox-${item?._id}`} // Ensure a unique key for the Checkbox
-                checked={selectedItems?.indexOf(item?._id) > -1}
+                checked={selectedItems?.indexOf(isItemValueId ? item?._id : item?.name) > -1}
                 sx={{ color: "white !important" }}
               />
               <ListItemText

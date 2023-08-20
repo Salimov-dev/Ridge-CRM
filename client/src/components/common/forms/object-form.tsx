@@ -57,8 +57,6 @@ const ObjectForm = ({
   isEmptyFindedObject,
   isObjectHasAddress,
   watchName,
-  watchDistrict,
-  watchMetro,
   watchCurrentRenters,
   watchobjectConditions,
   watchRentTypes,
@@ -66,8 +64,6 @@ const ObjectForm = ({
   watchEstateTypes,
   watchStatus,
 }) => {
-  const districts = useSelector(getDistrictsList());
-  const metros = useSelector(getMetroList());
   const workingPositions = useSelector(getWorkingPositionsList());
   const objectStatuses = useSelector(getObjectsStatusList());
   const currentRenters = useSelector(getCurrentRentersList());
@@ -90,28 +86,21 @@ const ObjectForm = ({
           <h3>Объект</h3>
         </Box>
         <FieldsContainer>
-          <SimpleSelectField
+          <TextFieldStyled
             register={register}
-            itemsList={districts}
-            name="location.district"
-            labelId="district"
             label="Район"
-            isHelperText={true}
-            helperText="Обязательно"
-            defaultValue={data?.location?.district}
-            watch={watchDistrict}
+            name="location.district"
+            errors={errors?.location?.district}
+            onInputQuantities={50}
+            value={data?.location?.district}
           />
-          <SimpleSelectField
-            itemsList={metros}
-            name="location.metro"
-            labelId="metro"
-            label="Метро"
+          <TextFieldStyled
             register={register}
-            isHelperText={true}
-            helperText={!watchMetro ? "Если есть в радиусе 1км" : ""}
-            defaultValue={data?.location?.metro}
-            watch={watchMetro}
-            disabled={!watchDistrict && true}
+            label="Метро"
+            name="location.metro"
+            errors={errors?.location?.metro}
+            onInputQuantities={50}
+            value={data?.location?.metro}
           />
           <SimpleSelectField
             itemsList={objectStatuses}
@@ -449,7 +438,7 @@ const ObjectForm = ({
               label="Зона погрузки"
               type="text"
               name="estateOptions.loadingArea"
-              onInputQuantities={30}
+              onInputQuantities={60}
               value={data?.estateOptions?.loadingArea}
               InputProps={{
                 endAdornment: (

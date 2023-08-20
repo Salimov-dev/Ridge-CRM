@@ -1,6 +1,6 @@
 // libraries
 import { Box } from "@mui/material";
-import { useEffect } from "react";
+import { useEffect} from "react";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 import dayjs from "dayjs";
@@ -21,6 +21,7 @@ const initialState = {
   address: "",
   phone: "",
   name: "",
+  onlyWithPhone: false,
   startDate: null,
   endDate: null,
   selectedDistricts: [],
@@ -31,14 +32,13 @@ const initialState = {
   selectedEstateTypes: [],
   selectedObjectTypes: [],
   selectedMetro: [],
-  onlyWithPhone: false,
 };
 
 const Objects = () => {
   const columns = groupedColumns;
   const isLoading = useSelector(getObjectsLoadingStatus());
   const objects = useSelector(getObjectsList());
-
+  
   const localStorageState = JSON.parse(
     localStorage.getItem("search-objects-data")
   );
@@ -67,12 +67,17 @@ const Objects = () => {
   });
 
   useEffect(() => {
+    const hasLocalStorageData = localStorage.getItem("search-objects-data");
+
+    if (hasLocalStorageData?.length) {
+      localStorage.setItem("search-objects-data", JSON.stringify(initialState));
+    }
+  }, []);
+
+  useEffect(() => {
     localStorage.setItem("search-objects-data", JSON.stringify(data));
   }, [data]);
 
-  useEffect(() => {
-    localStorage.setItem("search-objects-data", JSON.stringify(initialState));
-  }, []);
 
   return (
     <Box>

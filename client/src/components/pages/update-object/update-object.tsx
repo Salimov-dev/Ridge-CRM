@@ -40,7 +40,6 @@ const UpdateObject = () => {
 
   const data = watch();
   const watchName = watch("contact.name");
-  const watchDistrict = watch("location.district");
 
   const onSubmit = (data) => {
     dispatch(updateObject(data, objectId))
@@ -78,7 +77,6 @@ const UpdateObject = () => {
         isValid={isValid}
         isObjectHasAddress={isObjectHasAddress}
         watchName={watchName}
-        watchDistrict={watchDistrict}
       />
     </Box>
   );

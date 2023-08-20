@@ -39,15 +39,15 @@ export const groupedColumns = [
         header: "Район",
         cell: (info) => {
           const district = info.getValue();
-          return <AlignCenter>{FormatDistrict(district)}</AlignCenter>;
+          return <AlignCenter>{district}</AlignCenter>;
         },
       },
       {
         accessorKey: "location.metro",
         header: "Метро",
         cell: (info) => {
-          const metroValue = info.getValue();
-          return <AlignCenter>{FormatMetro(metroValue)}</AlignCenter>;
+          const metro = info.getValue();
+          return <AlignCenter>{metro}</AlignCenter>;
         },
       },
       {

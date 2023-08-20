@@ -43,16 +43,16 @@ export const locationColumns = [
     accessorKey: "location.district",
     header: "Район",
     cell: (info) => {
-      const district = info.getValue();
-      return <AlignCenter>{FormatDistrict(district)}</AlignCenter>;
+      const district = info.getValue(); 
+      return <AlignCenter>{district}</AlignCenter>;
     },
   },
   {
     accessorKey: "location.metro",
     header: "Метро",
     cell: (info) => {
-      const metroValue = info.getValue();
-      return <AlignCenter>{FormatMetro(metroValue)}</AlignCenter>;
+      const metro = info.getValue();
+      return <AlignCenter>{metro}</AlignCenter>;
     },
   },
   {
@@ -204,9 +204,7 @@ export const commercialTermsColumns = [
     accessorKey: "_id",
     header: "Стоимость 1м²",
     cell: (info) => {
-      const objectId = info.getValue();
-      console.log("object", objectId);
-      
+      const objectId = info.getValue();   
       return <AlignCenter>{`${makeDigitSeparator(priceForMetr(objectId))}₽/м²`}</AlignCenter>;
     },
   },

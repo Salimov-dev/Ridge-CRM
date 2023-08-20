@@ -5,11 +5,10 @@ const Title = styled(Typography)`
   color: black;
 `;
 
-const ObjectName = ({ city, district, address }) => {
+const ObjectName = ({ city, address }) => {
   return (
     <Title variant="h2">
-      {city}, {district}
-      р-н, {address}
+      {city}, {address}
     </Title>
   );
 };

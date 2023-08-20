@@ -30,7 +30,7 @@ const schema = new Schema(
       rentTypes: String,
     },
     estateOptions: {
-      cadastralNumber: Number,
+      cadastralNumber: String,
       currentRenters: { type: Schema.Types.ObjectId, ref: "CurrentRenter" },
       electricityKw: Number,
       objectConditions: String,
@@ -45,13 +45,9 @@ const schema = new Schema(
     },
     location: {
       city: { type: String, required: true },
-      district: { type: Schema.Types.ObjectId, ref: "District" },
+      district:  { type: String, required: true },
+      metro:  { type: String, required: true },
       address: { type: String, required: true },
-      metro: String,
-      // metro: {
-      //   type: Schema.Types.ObjectId,
-      //   ref: "Metro",
-      // },
       latitude: { type: Number, required: true },
       longitude: { type: Number, required: true },
       zoom: { type: Number, required: true },
