@@ -25,12 +25,16 @@ const ObjectPage = () => {
   const objectId = useParams().objectId;
   const object = useSelector(getObjectById(objectId));
   const isLoading = useSelector(getObjectsLoadingStatus());
-  
+
   return (
     <Box>
       <Header object={object} />
       <Map>{!isLoading ? <ObjectsOnMap object={object} /> : <Loader />}</Map>
-      {!isLoading ? <ObjectInfo object={object} isLoading={isLoading} /> : <Loader />}
+      {!isLoading ? (
+        <ObjectInfo object={object} isLoading={isLoading} />
+      ) : (
+        <Loader />
+      )}
     </Box>
   );
 };

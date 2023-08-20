@@ -39,7 +39,7 @@ export const groupedColumns = [
         header: "Район",
         cell: (info) => {
           const district = info.getValue();
-          return <AlignCenter>{district}</AlignCenter>;
+          return <AlignCenter>{FormatDistrict(district)}</AlignCenter>;
         },
       },
       {
@@ -47,7 +47,7 @@ export const groupedColumns = [
         header: "Метро",
         cell: (info) => {
           const metro = info.getValue();
-          return <AlignCenter>{metro}</AlignCenter>;
+          return <AlignCenter>{FormatMetro(metro)}</AlignCenter>;
         },
       },
       {

@@ -51,7 +51,7 @@ const FiltersPanel = ({
   isLoading,
 }) => {
   const isInputEmpty = JSON.stringify(initialState) !== JSON.stringify(data);
-  
+
   const objectStatuses = useSelector(getObjectsStatusList());
   const users = useSelector(getUsersList());
   const metro = useSelector(getMetroList());
@@ -286,16 +286,15 @@ const FiltersPanel = ({
           >
             <FormGroup aria-label="position" row sx={{ width: "100%" }}>
               <FormControlLabel
-        
                 control={
                   <Switch
-                  color="success"
-                  checked={data.onlyWithPhone} // Set the initial value here
-                  disabled={isLoading ? true : false}
-                  onChange={(e) => {
-                    setValue("onlyWithPhone", e.target.checked);
-                  }}
-                />
+                    color="success"
+                    checked={data.onlyWithPhone} // Set the initial value here
+                    disabled={isLoading ? true : false}
+                    onChange={(e) => {
+                      setValue("onlyWithPhone", e.target.checked);
+                    }}
+                  />
                 }
                 label="Объекты с телефоном"
                 labelPlacement="start"

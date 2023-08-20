@@ -32,7 +32,7 @@ const Component = styled(Box)`
 `;
 
 const ObjectInfo = ({ object, isLoading }) => {
-
+  const description = object.description?.fullDescription;
   return (
     <Component>
       <Typography variant="h3">Локация</Typography>
@@ -76,7 +76,9 @@ const ObjectInfo = ({ object, isLoading }) => {
         isPaginate={false}
       />
       <Typography variant="h3">Описание</Typography>
-      <Box>{object.description.fullDescription}</Box>
+      <Box>
+        {description ? object.description.fullDescription : "Нет описания"}
+      </Box>
     </Component>
   );
 };

@@ -3,8 +3,10 @@ import { makeDigitSeparator } from "../../../../utils/make-digit-separator";
 import {
   FormatCurrentRenter,
   FormatDate,
+  FormatDistrict,
   FormatEstateConditions,
   FormatManagerName,
+  FormatMetro,
   FormatObjectStatus,
   FormatPhone,
   FormatTypeEstate,
@@ -42,7 +44,7 @@ export const locationColumns = [
     header: "Район",
     cell: (info) => {
       const district = info.getValue();
-      return <AlignCenter>{district}</AlignCenter>;
+      return <AlignCenter>{FormatDistrict(district)}</AlignCenter>;
     },
   },
   {
@@ -50,7 +52,7 @@ export const locationColumns = [
     header: "Метро",
     cell: (info) => {
       const metro = info.getValue();
-      return <AlignCenter>{metro}</AlignCenter>;
+      return <AlignCenter>{FormatMetro(metro)}</AlignCenter>;
     },
   },
   {

@@ -57,6 +57,8 @@ const ObjectForm = ({
   isEmptyFindedObject,
   isObjectHasAddress,
   watchName,
+  watchMetro,
+  watchDistrict,
   watchCurrentRenters,
   watchobjectConditions,
   watchRentTypes,
@@ -64,10 +66,12 @@ const ObjectForm = ({
   watchEstateTypes,
   watchStatus,
 }) => {
+  const districts = useSelector(getDistrictsList());
   const workingPositions = useSelector(getWorkingPositionsList());
   const objectStatuses = useSelector(getObjectsStatusList());
   const currentRenters = useSelector(getCurrentRentersList());
   const objectConditions = useSelector(getobjectConditionsList());
+  const metros = useSelector(getMetroList());
   const rentTypes = useSelector(getRentTypesList());
   const objectTypes = useSelector(getObjectTypesList());
   const estateTypes = useSelector(getEstateTypesList());
@@ -86,21 +90,44 @@ const ObjectForm = ({
           <h3>Объект</h3>
         </Box>
         <FieldsContainer>
-          <TextFieldStyled
+          {/* <TextFieldStyled
             register={register}
             label="Район"
             name="location.district"
             errors={errors?.location?.district}
             onInputQuantities={50}
             value={data?.location?.district}
-          />
-          <TextFieldStyled
+          /> */}
+          {/* <TextFieldStyled
             register={register}
             label="Метро"
             name="location.metro"
             errors={errors?.location?.metro}
             onInputQuantities={50}
             value={data?.location?.metro}
+          /> */}
+          <SimpleSelectField
+            register={register}
+            itemsList={districts}
+            name="location.district"
+            labelId="district"
+            label="Район"
+            isHelperText={true}
+            helperText="Обязательно"
+            defaultValue={data?.location?.district}
+            watch={watchDistrict}
+          />
+          <SimpleSelectField
+            itemsList={metros}
+            name="location.metro"
+            labelId="metro"
+            label="Метро"
+            register={register}
+            isHelperText={true}
+            helperText={!watchMetro ? "Если есть в радиусе 1км" : ""}
+            defaultValue={data?.location?.metro}
+            watch={watchMetro}
+            disabled={!watchDistrict && true}
           />
           <SimpleSelectField
             itemsList={objectStatuses}
