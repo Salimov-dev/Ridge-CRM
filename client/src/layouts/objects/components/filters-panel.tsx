@@ -51,6 +51,9 @@ const FiltersPanel = ({
   isLoading,
 }) => {
   const isInputEmpty = JSON.stringify(initialState) !== JSON.stringify(data);
+  console.log("data", data);
+  console.log("initialState", initialState);
+  
   
   const objectStatuses = useSelector(getObjectsStatusList());
   const users = useSelector(getUsersList());

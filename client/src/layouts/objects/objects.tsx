@@ -1,6 +1,6 @@
 // libraries
 import { Box } from "@mui/material";
-import { useEffect} from "react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 import dayjs from "dayjs";
@@ -38,7 +38,7 @@ const Objects = () => {
   const columns = groupedColumns;
   const isLoading = useSelector(getObjectsLoadingStatus());
   const objects = useSelector(getObjectsList());
-  
+
   const localStorageState = JSON.parse(
     localStorage.getItem("search-objects-data")
   );
@@ -55,7 +55,7 @@ const Objects = () => {
   };
 
   const { register, watch, setValue, reset } = useForm({
-    defaultValues: formatedState || initialState,
+    defaultValues: Boolean(localStorageState) ? formatedState : initialState,
     mode: "onBlur",
   });
 
@@ -77,7 +77,6 @@ const Objects = () => {
   useEffect(() => {
     localStorage.setItem("search-objects-data", JSON.stringify(data));
   }, [data]);
-
 
   return (
     <Box>
