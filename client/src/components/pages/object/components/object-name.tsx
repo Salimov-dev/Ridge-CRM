@@ -1,10 +1,16 @@
+import { Typography, styled } from "@mui/material";
+
+const Title = styled(Typography)`
+  background: yellow;
+  color: black;
+`;
+
 const ObjectName = ({ city, district, address }) => {
-  
   return (
-    <h1>
+    <Title variant="h2">
       {city}, {district}
       р-н, {address}
-    </h1>
+    </Title>
   );
 };
 

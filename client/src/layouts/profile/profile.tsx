@@ -14,7 +14,6 @@ const Avatar = styled(`img`)({
 const Profile = () => {
   const user = useSelector(getCurrentUserData());
   const inputImageRef = useRef(null);
-  // console.log("user", user);
 
   const handleUploadImage = async (event) => {
     try {

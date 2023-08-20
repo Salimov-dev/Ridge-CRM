@@ -109,7 +109,7 @@ const Map = ({ searchedMeetings }) => {
                   meetings[i].meetingType
                 )}</div>
 
-                <div><strong>Комментарий:</strong> ${meetings[i].comment}</div>
+                <div><strong>Комментарий:</strong> ${meetings[i].comment || "-"}</div>
                 </div>
             `,
         },

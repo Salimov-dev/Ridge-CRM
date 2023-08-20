@@ -79,7 +79,6 @@ const CreateMeeting = () => {
   const isEmptyFindedObject = Boolean(Object.keys(findedObject)?.length);
 
   const data = watch();
-  // console.log("data", data);
 
   const onSubmit = (data) => {
     const newData = {

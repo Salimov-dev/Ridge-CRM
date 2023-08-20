@@ -60,7 +60,7 @@ const CreateManager = () => {
       image: `https://randomuser.me/api/portraits/women/${getRandomInt()}.jpg`,
       curatorId: currentUserId,
     };
-    console.log("newData", newData);
+
     dispatch(addNewManager(newData))
       .then(navigate("/users"))
       .then(toast.success("Менеджер успешно добавлен!"));

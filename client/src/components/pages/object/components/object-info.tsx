@@ -16,60 +16,68 @@ import { getEstateConditionNameById } from "../../../../store/object-conditions.
 import { getObjectTypeNameById } from "../../../../store/object-types.store";
 import { getEstateTypeNameById } from "../../../../store/estate-types.store";
 import BasicTable from "../../../common/table/basic-table";
-import { commercialTermsColumns, contactsColumns, estateOptionsColumns, estateTypeColumns, locationColumns } from "../table/columns";
+import {
+  commercialTermsColumns,
+  contactsColumns,
+  estateOptionsColumns,
+  estateTypeColumns,
+  locationColumns,
+} from "../table/columns";
 
 const Component = styled(Box)`
   display: flex;
-  justify-content: space-between; /* Center items and create space between them */
-  margin-bottom: 20px;
-`;
-
-const InfoBlock = styled(Box)`
-  display: flex;
   flex-direction: column;
-  justift-content: center;
-  white-space: nowrap;
-  padding: 0 20px;
+  gap: 12px;
+  margin-bottom: 20px;
 `;
 
 const ObjectInfo = ({ object, isLoading }) => {
 
-  console.log("object", object);
-
   return (
-    <>
-     <BasicTable
-      items={[object]}
-      itemsColumns={locationColumns}
-      isLoading={isLoading}
-      sortingColumn="date"
-    />
-    <BasicTable
-      items={[object]}
-      itemsColumns={estateTypeColumns}
-      isLoading={isLoading}
-      sortingColumn="date"
-    />
-    <BasicTable
-      items={[object]}
-      itemsColumns={commercialTermsColumns}
-      isLoading={isLoading}
-      sortingColumn="date"
-    />
-    <BasicTable
-      items={[object]}
-      itemsColumns={estateOptionsColumns}
-      isLoading={isLoading}
-      sortingColumn="date"
-    />
-    <BasicTable
-      items={[object]}
-      itemsColumns={contactsColumns}
-      isLoading={isLoading}
-      sortingColumn="date"
-    />
-    </>
-   
+    <Component>
+      <Typography variant="h3">Локация</Typography>
+      <BasicTable
+        items={[object]}
+        itemsColumns={locationColumns}
+        isLoading={isLoading}
+        isSorting={false}
+        isPaginate={false}
+      />
+      <Typography variant="h3">Объект</Typography>
+      <BasicTable
+        items={[object]}
+        itemsColumns={estateTypeColumns}
+        isLoading={isLoading}
+        isSorting={false}
+        isPaginate={false}
+      />
+      <Typography variant="h3">Параметры</Typography>
+      <BasicTable
+        items={[object]}
+        itemsColumns={estateOptionsColumns}
+        isLoading={isLoading}
+        isSorting={false}
+        isPaginate={false}
+      />
+      <Typography variant="h3">Условия</Typography>
+      <BasicTable
+        items={[object]}
+        itemsColumns={commercialTermsColumns}
+        isLoading={isLoading}
+        isSorting={false}
+        isPaginate={false}
+      />
+      <Typography variant="h3">Контакты</Typography>
+      <BasicTable
+        items={[object]}
+        itemsColumns={contactsColumns}
+        isLoading={isLoading}
+        isSorting={false}
+        isPaginate={false}
+      />
+      <Typography variant="h3">Описание</Typography>
+      <Box>{object.description.fullDescription}</Box>
+    </Component>
   );
 };
 

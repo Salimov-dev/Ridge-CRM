@@ -49,9 +49,9 @@ const ObjectsOnMap = ({ object }) => {
                 <div><strong>Город:</strong> ${city}</div>
                 <div><strong>Адрес:</strong> ${address}</div>
                 <div><strong>Статус:</strong> ${status}</div>
-                <div><strong>Контактное лицо:</strong> ${contactName}</div>
-                <div><strong>Позиция:</strong> ${contactPosition}</div>
-                <div><strong>Телефон:</strong> ${contactPhone}</div>
+                <div><strong>Контактное лицо:</strong> ${contactName || "-"}</div>
+                <div><strong>Позиция:</strong> ${contactPosition || "-"}</div>
+                <div><strong>Телефон:</strong> ${contactPhone || "-"}</div>
             </div>
         `,
       },

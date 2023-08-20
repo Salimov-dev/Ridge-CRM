@@ -14,6 +14,7 @@ const HeaderContainer = styled(Box)`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  margin-bottom: 20px;
 `;
 
 const Header = ({ object }) => {

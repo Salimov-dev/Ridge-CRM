@@ -19,7 +19,6 @@ const Meetings = () => {
   const meetings = useSelector(getMeetingsList());
   const isLoading = useSelector(getMeetingLoadingStatus());
   const columns = groupedColumns;
-  // console.log("meetings", meetings);
 
   const MapContainer = styled(Box)`
     width: 100%;

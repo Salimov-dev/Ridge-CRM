@@ -1,71 +1,75 @@
+import { Box, styled } from "@mui/material";
+import { makeDigitSeparator } from "../../../../utils/make-digit-separator";
 import {
+  FormatCurrentRenter,
   FormatDate,
   FormatDistrict,
+  FormatEstateConditions,
   FormatManagerName,
   FormatMetro,
   FormatObjectStatus,
   FormatPhone,
+  FormatTypeEstate,
+  FormatTypeObject,
+  FormatTypeRent,
+  FormatWorkingPosition,
+  priceForMetr,
 } from "../../../common/table/helpers/helpers";
 //   import OpenButton from "./components/open-button";
 
+const AlignCenter = styled(Box)`
+  display: flex;
+  justify-content: center;
+`;
+
 export const locationColumns = [
   {
-    header: "Основная информация",
-    columns: [
-      {
-        accessorKey: "created_at",
-        header: "Дата",
-        cell: (info) => {
-          const date = info.getValue();
-          return FormatDate(new Date(date));
-        },
-      },
-      {
-        accessorKey: "userId",
-        header: "Менеджер",
-        cell: (info) => {
-          const userId = info.getValue();
-          return FormatManagerName(userId);
-        },
-      },
-    ],
+    accessorKey: "created_at",
+    header: "Дата",
+    cell: (info) => {
+      const date = info.getValue();
+      return <AlignCenter>{FormatDate(new Date(date))}</AlignCenter>;
+    },
   },
   {
-    header: "Расположение объекта",
-    columns: [
-      {
-        accessorKey: "location.city",
-        header: "Город",
-        cell: (info) => {
-          const city = info.getValue();
-          return city;
-        },
-      },
-      {
-        accessorKey: "location.district",
-        header: "Район",
-        cell: (info) => {
-          const district = info.getValue();
-          return FormatDistrict(district);
-        },
-      },
-      {
-        accessorKey: "location.metro",
-        header: "Метро",
-        cell: (info) => {
-          const metroValue = info.getValue();
-          return FormatMetro(metroValue);
-        },
-      },
-      {
-        accessorKey: "location.address",
-        header: "Адрес",
-        cell: (info) => {
-          const address = info.getValue();
-          return address;
-        },
-      },
-    ],
+    accessorKey: "location.city",
+    header: "Город",
+    cell: (info) => {
+      const city = info.getValue();
+      return <AlignCenter>{city}</AlignCenter>;
+    },
+  },
+  {
+    accessorKey: "location.district",
+    header: "Район",
+    cell: (info) => {
+      const district = info.getValue();
+      return <AlignCenter>{FormatDistrict(district)}</AlignCenter>;
+    },
+  },
+  {
+    accessorKey: "location.metro",
+    header: "Метро",
+    cell: (info) => {
+      const metroValue = info.getValue();
+      return <AlignCenter>{FormatMetro(metroValue)}</AlignCenter>;
+    },
+  },
+  {
+    accessorKey: "location.address",
+    header: "Адрес",
+    cell: (info) => {
+      const address = info.getValue();
+      return <AlignCenter>{address}</AlignCenter>;
+    },
+  },
+  {
+    accessorKey: "userId",
+    header: "Менеджер",
+    cell: (info) => {
+      const userId = info.getValue();
+      return <AlignCenter>{FormatManagerName(userId)}</AlignCenter>;
+    },
   },
 ];
 
@@ -75,7 +79,7 @@ export const estateTypeColumns = [
     header: "Кадастровый №",
     cell: (info) => {
       const cadNumber = info.getValue();
-      return cadNumber;
+      return <AlignCenter>{cadNumber}</AlignCenter>;
     },
   },
   {
@@ -83,7 +87,7 @@ export const estateTypeColumns = [
     header: "Тип объекта",
     cell: (info) => {
       const type = info.getValue();
-      return type;
+      return <AlignCenter>{FormatTypeEstate(type)}</AlignCenter>;
     },
   },
   {
@@ -91,7 +95,7 @@ export const estateTypeColumns = [
     header: "Тип недвижимости",
     cell: (info) => {
       const type = info.getValue();
-      return type;
+      return <AlignCenter>{FormatTypeObject(type)}</AlignCenter>;
     },
   },
   {
@@ -99,15 +103,15 @@ export const estateTypeColumns = [
     header: "Текущий арендатор",
     cell: (info) => {
       const renter = info.getValue();
-      return renter;
+      return <AlignCenter>{FormatCurrentRenter(renter)}</AlignCenter>;
     },
   },
   {
-    accessorKey: "objectCondition",
+    accessorKey: "estateOptions.objectConditions",
     header: "Состояние помещения",
     cell: (info) => {
       const сondition = info.getValue();
-      return сondition;
+      return <AlignCenter>{FormatEstateConditions(сondition)}</AlignCenter>;
     },
   },
   {
@@ -115,74 +119,7 @@ export const estateTypeColumns = [
     header: "Статус",
     cell: (info) => {
       const status = info.getValue();
-      return FormatObjectStatus(status);
-    },
-  },
-];
-
-export const commercialTermsColumns = [
-  {
-    accessorKey: "commercialTerms.totalSquare",
-    header: "Общая S",
-    cell: (info) => {
-      const square = info.getValue();
-      return square;
-    },
-  },
-  {
-    accessorKey: "commercialTerms.rentSquare",
-    header: "S аренды",
-    cell: (info) => {
-      const square = info.getValue();
-      return square;
-    },
-  },
-  {
-    accessorKey: "commercialTerms.rentPrice",
-    header: "Стоимость аренды",
-    cell: (info) => {
-      const price = info.getValue();
-      return price;
-    },
-  },
-  {
-    accessorKey: "commercialTerms.indexingAnnual",
-    header: "Индексация",
-    cell: (info) => {
-      const indexing = info.getValue();
-      return indexing;
-    },
-  },
-  {
-    accessorKey: "commercialTerms.rentalHolidays",
-    header: "Каникулы",
-    cell: (info) => {
-      const holidays = info.getValue();
-      return holidays;
-    },
-  },
-  {
-    accessorKey: "commercialTerms.securityDeposit",
-    header: "Обеспечительный",
-    cell: (info) => {
-      const holidays = info.getValue();
-      return holidays;
-    },
-  },
-  {
-    accessorKey: "commercialTerms.agentComission",
-    header: "Комиссия",
-    cell: (info) => {
-      const holidays = info.getValue();
-      return holidays;
-    },
-  },
-  {
-    accessorKey: "commercialTerms.rentTypes",
-    header: "Договор",
-    cell: (info) => {
-      const deal = info.getValue();
-      return deal;
+      return <AlignCenter>{FormatObjectStatus(status)}</AlignCenter>;
     },
   },
 ];
@@ -193,47 +130,130 @@ export const estateOptionsColumns = [
     header: "Электр.",
     cell: (info) => {
       const square = info.getValue();
-      return square;
+      return <AlignCenter>{`${square}кВт`}</AlignCenter>;
     },
   },
   {
     accessorKey: "estateOptions.waterSuply",
     header: "Водоснабжение",
     cell: (info) => {
-      const square = info.getValue();
-      return square;
+      const waterSuply = info.getValue();
+      return <AlignCenter>{waterSuply}</AlignCenter>;
     },
   },
   {
     accessorKey: "estateOptions.premisesHeight",
     header: "Потолки",
     cell: (info) => {
-      const square = info.getValue();
-      return square;
+      const premisesHeight = info.getValue();
+      return <AlignCenter>{`${premisesHeight}м`}</AlignCenter>;
     },
   },
   {
     accessorKey: "estateOptions.premisesFloor",
     header: "Полы",
     cell: (info) => {
-      const square = info.getValue();
-      return square;
+      const premisesFloor = info.getValue();
+      return <AlignCenter>{premisesFloor}</AlignCenter>;
     },
   },
   {
     accessorKey: "estateOptions.parkingQuantity",
     header: "Парковка",
     cell: (info) => {
-      const square = info.getValue();
-      return square;
+      const parkingQuantity = info.getValue();
+      return <AlignCenter>{`${parkingQuantity} авто`}</AlignCenter>;
     },
   },
   {
     accessorKey: "estateOptions.loadingArea",
     header: "Разгрузка",
     cell: (info) => {
+      const loadingArea = info.getValue();
+      return <AlignCenter>{loadingArea}</AlignCenter>;
+    },
+  },
+];
+
+export const commercialTermsColumns = [
+  {
+    accessorKey: "commercialTerms.totalSquare",
+    header: "Общая S",
+    cell: (info) => {
       const square = info.getValue();
-      return square;
+      return <AlignCenter>{`${makeDigitSeparator(square)}м²`}</AlignCenter>;
+    },
+  },
+  {
+    accessorKey: "commercialTerms.rentSquare",
+    header: "S аренды",
+    cell: (info) => {
+      const square = info.getValue();
+      return <AlignCenter>{`${makeDigitSeparator(square)}м²`}</AlignCenter>;
+    },
+  },
+  {
+    accessorKey: "commercialTerms.rentPrice",
+    header: "Стоимость аренды",
+    cell: (info) => {
+      const price = info.getValue();
+      return <AlignCenter>{`${makeDigitSeparator(price)}₽`}</AlignCenter>;
+    },
+  },
+  {
+    accessorKey: "_id",
+    header: "Стоимость 1м²",
+    cell: (info) => {
+      const objectId = info.getValue();
+      console.log("object", objectId);
+      
+      return <AlignCenter>{`${makeDigitSeparator(priceForMetr(objectId))}₽/м²`}</AlignCenter>;
+    },
+  },
+  {
+    accessorKey: "commercialTerms.indexingAnnual",
+    header: "Индексация",
+    cell: (info) => {
+      const indexing = info.getValue();
+      return <AlignCenter>{`${makeDigitSeparator(indexing)}%`}</AlignCenter>;
+    },
+  },
+  {
+    accessorKey: "commercialTerms.rentalHolidays",
+    header: "Каникулы",
+    cell: (info) => {
+      const holidays = info.getValue();
+      return (
+        <AlignCenter>{`${makeDigitSeparator(holidays)} дней`}</AlignCenter>
+      );
+    },
+  },
+  {
+    accessorKey: "commercialTerms.securityDeposit",
+    header: "Обеспечительный",
+    cell: (info) => {
+      const securityDeposit = info.getValue();
+      return (
+        <AlignCenter>{`${makeDigitSeparator(securityDeposit)}₽`}</AlignCenter>
+      );
+    },
+  },
+  {
+    accessorKey: "commercialTerms.agentComission",
+    header: "Комиссия",
+    cell: (info) => {
+      const agentComission = info.getValue();
+      return (
+        <AlignCenter>{`${makeDigitSeparator(agentComission)}%`}</AlignCenter>
+      );
+    },
+  },
+  {
+    accessorKey: "commercialTerms.rentTypes",
+    header: "Договор",
+    cell: (info) => {
+      const deal = info.getValue();
+      return <AlignCenter>{FormatTypeRent(deal)}</AlignCenter>;
     },
   },
 ];
@@ -243,32 +263,32 @@ export const contactsColumns = [
     accessorKey: "contact.name",
     header: "Имя",
     cell: (info) => {
-      const square = info.getValue();
-      return square;
+      const name = info.getValue();
+      return <AlignCenter>{name}</AlignCenter>;
     },
   },
   {
     accessorKey: "contact.position",
     header: "Позиция",
     cell: (info) => {
-      const square = info.getValue();
-      return square;
+      const position = info.getValue();
+      return <AlignCenter>{FormatWorkingPosition(position)}</AlignCenter>;
     },
   },
   {
     accessorKey: "contact.phone",
     header: "Телефон",
     cell: (info) => {
-      const square = info.getValue();
-      return square;
+      const phone = info.getValue();
+      return <AlignCenter>{FormatPhone(phone)}</AlignCenter>;
     },
   },
   {
     accessorKey: "contact.email",
     header: "Почта",
     cell: (info) => {
-      const square = info.getValue();
-      return square;
+      const email = info.getValue();
+      return <AlignCenter>{email}</AlignCenter>;
     },
   },
 ];

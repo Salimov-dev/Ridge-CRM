@@ -89,7 +89,6 @@ export const loadObjectsList = () => async (dispatch, getState) => {
 };
 
 export const createObject = (payload) => async (dispatch) => {
-  console.log("payload", payload);
   
   dispatch(objectCreateRequested);
   try {

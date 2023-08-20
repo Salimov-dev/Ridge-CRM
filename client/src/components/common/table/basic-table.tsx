@@ -1,7 +1,7 @@
 // libraries
 import { useMemo, useState, useEffect } from "react";
 // MUI
-import { Box, useTheme } from "@mui/material";
+import { Box, useTheme, styled } from "@mui/material";
 // styles
 import "./styles/styles.css";
 // components
@@ -20,7 +20,18 @@ import {
 // other
 import { tokens } from "../../../theme";
 
-const BasicTable = ({ items, itemsColumns, isLoading ,   sortingColumn="created_at", }) => {
+const Component = styled(Box)`
+  margin-bottom: 20px;
+`
+
+const BasicTable = ({
+  items,
+  itemsColumns,
+  isLoading,
+  isPaginate=true,
+  isSorting=true,
+  sortingColumn = "created_at",
+}) => {
   const [sorting, setSorting] = useState<SortingState>([]);
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -40,19 +51,19 @@ const BasicTable = ({ items, itemsColumns, isLoading ,   sortingColumn="created_
   });
 
   useEffect(() => {
-    setSorting([{ id: sortingColumn, desc: true }]);
+    isSorting && setSorting([{ id: sortingColumn, desc: true }]);
   }, []);
 
   return (
-    <Box>
+    <Component>
       <table>
         <Thead table={table} colors={colors} />
         {!isLoading && <Tbody table={table} />}
       </table>
       {isLoading && <Loader />}
 
-      <Pagination table={table} colors={colors} quantity={items?.length} />
-    </Box>
+      {isPaginate && <Pagination table={table} colors={colors} quantity={items?.length} />}
+    </Component>
   );
 };
 

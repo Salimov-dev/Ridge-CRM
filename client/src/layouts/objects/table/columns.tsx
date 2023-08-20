@@ -1,3 +1,4 @@
+import { Box, styled } from "@mui/material";
 import {
   FormatDate,
   FormatDistrict,
@@ -8,13 +9,18 @@ import {
 } from "../../../components/common/table/helpers/helpers";
 import OpenButton from "./components/open-button";
 
+const AlignCenter = styled(Box)`
+  display: flex;
+  justify-content: center;
+`;
+
 export const groupedColumns = [
   {
     accessorKey: "created_at",
     header: "Дата",
     cell: (info) => {
       const date = info.getValue();
-      return FormatDate(new Date(date));
+      return <AlignCenter>{FormatDate(new Date(date))}</AlignCenter>;
     },
   },
   {
@@ -33,7 +39,7 @@ export const groupedColumns = [
         header: "Район",
         cell: (info) => {
           const district = info.getValue();
-          return FormatDistrict(district);
+          return <AlignCenter>{FormatDistrict(district)}</AlignCenter>;
         },
       },
       {
@@ -41,7 +47,7 @@ export const groupedColumns = [
         header: "Метро",
         cell: (info) => {
           const metroValue = info.getValue();
-          return FormatMetro(metroValue);
+          return <AlignCenter>{FormatMetro(metroValue)}</AlignCenter>;
         },
       },
       {
@@ -63,7 +69,7 @@ export const groupedColumns = [
         header: "Телефон",
         cell: (info) => {
           const phone = info.getValue();
-          return FormatPhone(phone);
+          return <AlignCenter>{FormatPhone(phone)}</AlignCenter>;
         },
       },
       {
@@ -71,7 +77,7 @@ export const groupedColumns = [
         header: "Имя",
         cell: (info) => {
           const name = info.getValue();
-          return name;
+          return <AlignCenter>{name}</AlignCenter>;
         },
       },
       {
@@ -79,7 +85,7 @@ export const groupedColumns = [
         header: "Последний контакт",
         cell: (info) => {
           const contact = info.getValue();
-          return contact;
+          return <AlignCenter>{contact}</AlignCenter>;
         },
       },
     ],
@@ -92,7 +98,7 @@ export const groupedColumns = [
         header: "Менеджер",
         cell: (info) => {
           const userId = info.getValue();
-          return FormatManagerName(userId);
+          return <AlignCenter>{FormatManagerName(userId)}</AlignCenter>;
         },
       },
       {
@@ -100,14 +106,18 @@ export const groupedColumns = [
         header: "Статус",
         cell: (info) => {
           const status = info.getValue();
-          return FormatObjectStatus(status);
+          return <AlignCenter>{FormatObjectStatus(status)}</AlignCenter>;
         },
       },
       {
         accessorKey: "_id",
         header: "",
         enableSorting: false,
-        cell: (info) => <OpenButton objectId={info.getValue()} />,
+        cell: (info) => (
+          <AlignCenter>
+            <OpenButton objectId={info.getValue()} />
+          </AlignCenter>
+        ),
       },
     ],
   },

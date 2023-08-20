@@ -55,6 +55,7 @@ const ObjectForm = ({
   isValid,
   isEditMode = false,
   isEmptyFindedObject,
+  isObjectHasAddress,
   watchName,
   watchDistrict,
   watchMetro,
@@ -74,7 +75,8 @@ const ObjectForm = ({
   const rentTypes = useSelector(getRentTypesList());
   const objectTypes = useSelector(getObjectTypesList());
   const estateTypes = useSelector(getEstateTypesList());
-  const isValidAndHasAdress = Boolean(isEmptyFindedObject) && isValid;
+  const isValidAndHasAdress =
+    (Boolean(isEmptyFindedObject) || isObjectHasAddress) && isValid;
   const navigate = useNavigate();
 
   const handleBackPage = () => {
@@ -359,7 +361,6 @@ const ObjectForm = ({
               label="Кадастровый номер"
               type="text"
               name="estateOptions.cadastralNumber"
-              valueAsNumber={true}
               onInputQuantities={24}
               value={data?.estateOptions?.cadastralNumber}
               InputProps={{
@@ -480,7 +481,7 @@ const ObjectForm = ({
             type="submit"
             variant="outlined"
             color="success"
-            // disabled={!isValidAndHasAdress}
+            disabled={!isValidAndHasAdress}
           >
             {isEditMode ? "Сохранить" : "Создать"}
           </Button>
