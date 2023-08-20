@@ -26,6 +26,7 @@ import { getCurrentRentersList } from "../../../store/current-renter.store";
 import { getEstateTypesList } from "../../../store/estate-types.store";
 import { getObjectTypesList } from "../../../store/object-types.store";
 import { nanoid } from "@reduxjs/toolkit";
+import { getDistrictsList } from "../../../store/districts.store";
 
 const Form = styled(`form`)({
   display: "flex",
@@ -54,6 +55,7 @@ const FiltersPanel = ({
 
   const objectStatuses = useSelector(getObjectsStatusList());
   const users = useSelector(getUsersList());
+  const districts = useSelector(getDistrictsList());
   const metro = useSelector(getMetroList());
   const currentRenters = useSelector(getCurrentRentersList());
   const estateTypes = useSelector(getEstateTypesList());
@@ -96,9 +98,11 @@ const FiltersPanel = ({
     const filteredDistricts = objects?.map((dist) => dist.location.district);
     const uniqueDistricts = [...new Set(filteredDistricts)];
 
-    const actualDistrictsArray = uniqueDistricts?.map((dist) => {
-      let formatedDistrict = { _id: nanoid(), name: dist };
-      return formatedDistrict;
+    const actualDistrictsArray = uniqueDistricts?.map((id) => {
+      const foundObject = districts?.find((obj) => obj._id === id);
+      return foundObject
+        ? { _id: foundObject._id, name: foundObject.name }
+        : null;
     });
 
     const sortedDistricts = orderBy(actualDistrictsArray, ["name"], ["asc"]);
@@ -309,7 +313,7 @@ const FiltersPanel = ({
       </Form>
 
       <Form>
-        <MultiSelectField
+      <MultiSelectField
           itemsList={getActualMetroList()}
           selectedItems={data.selectedMetro}
           onChange={(e) => setValue("selectedMetro", e.target.value)}
@@ -326,7 +330,6 @@ const FiltersPanel = ({
           labelId="districts-label"
           label="Выбор по району"
           disabled={isLoading ? true : false}
-          isItemValueId={false}
         />
         <MultiSelectField
           itemsList={getActualCitiesList()}

@@ -90,22 +90,6 @@ const ObjectForm = ({
           <h3>Объект</h3>
         </Box>
         <FieldsContainer>
-          {/* <TextFieldStyled
-            register={register}
-            label="Район"
-            name="location.district"
-            errors={errors?.location?.district}
-            onInputQuantities={50}
-            value={data?.location?.district}
-          /> */}
-          {/* <TextFieldStyled
-            register={register}
-            label="Метро"
-            name="location.metro"
-            errors={errors?.location?.metro}
-            onInputQuantities={50}
-            value={data?.location?.metro}
-          /> */}
           <SimpleSelectField
             register={register}
             itemsList={districts}
@@ -306,10 +290,10 @@ const ObjectForm = ({
             <TextFieldStyled
               register={register}
               label="Каникулы"
-              type="number"
+              // type="number"
               name="commercialTerms.rentalHolidays"
-              valueAsNumber={true}
-              onInputQuantities={3}
+              // valueAsNumber={true}
+              onInputQuantities={30}
               value={data?.commercialTerms?.rentalHolidays}
               InputProps={{
                 maxLength: 3,

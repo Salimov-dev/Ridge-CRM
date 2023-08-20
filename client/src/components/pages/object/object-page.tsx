@@ -25,7 +25,7 @@ const ObjectPage = () => {
   const objectId = useParams().objectId;
   const object = useSelector(getObjectById(objectId));
   const isLoading = useSelector(getObjectsLoadingStatus());
-
+  
   return (
     <Box>
       <Header object={object} />

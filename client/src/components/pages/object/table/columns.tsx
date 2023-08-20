@@ -15,7 +15,6 @@ import {
   FormatWorkingPosition,
   priceForMetr,
 } from "../../../common/table/helpers/helpers";
-//   import OpenButton from "./components/open-button";
 
 const AlignCenter = styled(Box)`
   display: flex;
@@ -248,11 +247,8 @@ export const commercialTermsColumns = [
     header: "Каникулы",
     cell: (info) => {
       const holidays = info.getValue();
-      return (
-        <AlignCenter>
-          {holidays ? `${makeDigitSeparator(holidays)} дней` : "-"}
-        </AlignCenter>
-      );
+      console.log("holidays", holidays);
+      return <AlignCenter>{holidays ? `${holidays} дней` : "-"}</AlignCenter>;
     },
   },
   {

@@ -24,7 +24,7 @@ const schema = new Schema(
       securityDeposit: Number,
       totalSquare: Number,
       rentSquare: Number,
-      rentalHolidays: Number,
+      rentalHolidays: String,
       agentComission: Number,
       indexingAnnual: Number,
       rentTypes: String,
@@ -46,7 +46,7 @@ const schema = new Schema(
     location: {
       city: { type: String, required: true },
       district:  { type: String, required: true },
-      metro:  { type: String, required: true },
+      metro:  String,
       address: { type: String, required: true },
       latitude: { type: Number, required: true },
       longitude: { type: Number, required: true },
