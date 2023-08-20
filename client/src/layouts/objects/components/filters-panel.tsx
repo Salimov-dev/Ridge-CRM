@@ -51,9 +51,6 @@ const FiltersPanel = ({
   isLoading,
 }) => {
   const isInputEmpty = JSON.stringify(initialState) !== JSON.stringify(data);
-  console.log("data", data);
-  console.log("initialState", initialState);
-  
   
   const objectStatuses = useSelector(getObjectsStatusList());
   const users = useSelector(getUsersList());
@@ -374,7 +371,7 @@ const FiltersPanel = ({
         <SearchDatePicker
           register={register}
           name="startDate"
-          label="Начало"
+          label="Добавлены от"
           value={data.startDate}
           onChange={(value) => setValue("startDate", value)}
           isLoading={isLoading}
@@ -382,7 +379,7 @@ const FiltersPanel = ({
         <SearchDatePicker
           register={register}
           name="endDate"
-          label="Конец"
+          label="Добавлены до"
           value={data.endDate}
           onChange={(value) => setValue("endDate", value)}
           isLoading={isLoading}

@@ -3,10 +3,8 @@ import { makeDigitSeparator } from "../../../../utils/make-digit-separator";
 import {
   FormatCurrentRenter,
   FormatDate,
-  FormatDistrict,
   FormatEstateConditions,
   FormatManagerName,
-  FormatMetro,
   FormatObjectStatus,
   FormatPhone,
   FormatTypeEstate,
@@ -43,7 +41,7 @@ export const locationColumns = [
     accessorKey: "location.district",
     header: "Район",
     cell: (info) => {
-      const district = info.getValue(); 
+      const district = info.getValue();
       return <AlignCenter>{district}</AlignCenter>;
     },
   },
@@ -79,7 +77,7 @@ export const estateTypeColumns = [
     header: "Кадастровый №",
     cell: (info) => {
       const cadNumber = info.getValue();
-      return <AlignCenter>{cadNumber}</AlignCenter>;
+      return <AlignCenter>{cadNumber ? cadNumber : "-"}</AlignCenter>;
     },
   },
   {
@@ -111,7 +109,11 @@ export const estateTypeColumns = [
     header: "Состояние помещения",
     cell: (info) => {
       const сondition = info.getValue();
-      return <AlignCenter>{FormatEstateConditions(сondition)}</AlignCenter>;
+      return (
+        <AlignCenter>
+          {сondition ? FormatEstateConditions(сondition) : "-"}
+        </AlignCenter>
+      );
     },
   },
   {
@@ -130,7 +132,7 @@ export const estateOptionsColumns = [
     header: "Электр.",
     cell: (info) => {
       const square = info.getValue();
-      return <AlignCenter>{`${square}кВт`}</AlignCenter>;
+      return <AlignCenter>{square ? `${square}кВт` : "-"}</AlignCenter>;
     },
   },
   {
@@ -138,7 +140,7 @@ export const estateOptionsColumns = [
     header: "Водоснабжение",
     cell: (info) => {
       const waterSuply = info.getValue();
-      return <AlignCenter>{waterSuply}</AlignCenter>;
+      return <AlignCenter>{waterSuply ? waterSuply : "-"}</AlignCenter>;
     },
   },
   {
@@ -146,7 +148,9 @@ export const estateOptionsColumns = [
     header: "Потолки",
     cell: (info) => {
       const premisesHeight = info.getValue();
-      return <AlignCenter>{`${premisesHeight}м`}</AlignCenter>;
+      return (
+        <AlignCenter>{premisesHeight ? `${premisesHeight}м` : "-"}</AlignCenter>
+      );
     },
   },
   {
@@ -154,7 +158,7 @@ export const estateOptionsColumns = [
     header: "Полы",
     cell: (info) => {
       const premisesFloor = info.getValue();
-      return <AlignCenter>{premisesFloor}</AlignCenter>;
+      return <AlignCenter>{premisesFloor ? premisesFloor : "-"}</AlignCenter>;
     },
   },
   {
@@ -162,7 +166,11 @@ export const estateOptionsColumns = [
     header: "Парковка",
     cell: (info) => {
       const parkingQuantity = info.getValue();
-      return <AlignCenter>{`${parkingQuantity} авто`}</AlignCenter>;
+      return (
+        <AlignCenter>
+          {parkingQuantity ? `${parkingQuantity} авто` : "-"}
+        </AlignCenter>
+      );
     },
   },
   {
@@ -170,7 +178,7 @@ export const estateOptionsColumns = [
     header: "Разгрузка",
     cell: (info) => {
       const loadingArea = info.getValue();
-      return <AlignCenter>{loadingArea}</AlignCenter>;
+      return <AlignCenter>{loadingArea ? loadingArea : "-"}</AlignCenter>;
     },
   },
 ];
@@ -181,7 +189,11 @@ export const commercialTermsColumns = [
     header: "Общая S",
     cell: (info) => {
       const square = info.getValue();
-      return <AlignCenter>{`${makeDigitSeparator(square)}м²`}</AlignCenter>;
+      return (
+        <AlignCenter>
+          {square ? `${makeDigitSeparator(square)}м²` : "-"}
+        </AlignCenter>
+      );
     },
   },
   {
@@ -189,7 +201,11 @@ export const commercialTermsColumns = [
     header: "S аренды",
     cell: (info) => {
       const square = info.getValue();
-      return <AlignCenter>{`${makeDigitSeparator(square)}м²`}</AlignCenter>;
+      return (
+        <AlignCenter>
+          {square ? `${makeDigitSeparator(square)}м²` : "-"}
+        </AlignCenter>
+      );
     },
   },
   {
@@ -197,15 +213,20 @@ export const commercialTermsColumns = [
     header: "Стоимость аренды",
     cell: (info) => {
       const price = info.getValue();
-      return <AlignCenter>{`${makeDigitSeparator(price)}₽`}</AlignCenter>;
+      return (
+        <AlignCenter>
+          {price ? `${makeDigitSeparator(price)}₽` : "-"}
+        </AlignCenter>
+      );
     },
   },
   {
     accessorKey: "_id",
     header: "Стоимость 1м²",
     cell: (info) => {
-      const objectId = info.getValue();   
-      return <AlignCenter>{`${makeDigitSeparator(priceForMetr(objectId))}₽/м²`}</AlignCenter>;
+      const objectId = info.getValue();
+      const result = makeDigitSeparator(priceForMetr(objectId));
+      return <AlignCenter>{result ? `${result}₽/м²` : "-"}</AlignCenter>;
     },
   },
   {
@@ -213,7 +234,11 @@ export const commercialTermsColumns = [
     header: "Индексация",
     cell: (info) => {
       const indexing = info.getValue();
-      return <AlignCenter>{`${makeDigitSeparator(indexing)}%`}</AlignCenter>;
+      return (
+        <AlignCenter>
+          {indexing ? `${makeDigitSeparator(indexing)}%` : "-"}
+        </AlignCenter>
+      );
     },
   },
   {
@@ -222,7 +247,9 @@ export const commercialTermsColumns = [
     cell: (info) => {
       const holidays = info.getValue();
       return (
-        <AlignCenter>{`${makeDigitSeparator(holidays)} дней`}</AlignCenter>
+        <AlignCenter>
+          {holidays ? `${makeDigitSeparator(holidays)} дней` : "-"}
+        </AlignCenter>
       );
     },
   },
@@ -232,7 +259,9 @@ export const commercialTermsColumns = [
     cell: (info) => {
       const securityDeposit = info.getValue();
       return (
-        <AlignCenter>{`${makeDigitSeparator(securityDeposit)}₽`}</AlignCenter>
+        <AlignCenter>
+          {securityDeposit ? `${makeDigitSeparator(securityDeposit)}₽` : "-"}
+        </AlignCenter>
       );
     },
   },
@@ -242,7 +271,9 @@ export const commercialTermsColumns = [
     cell: (info) => {
       const agentComission = info.getValue();
       return (
-        <AlignCenter>{`${makeDigitSeparator(agentComission)}%`}</AlignCenter>
+        <AlignCenter>
+          {agentComission ? `${makeDigitSeparator(agentComission)}%` : "-"}
+        </AlignCenter>
       );
     },
   },
@@ -251,7 +282,7 @@ export const commercialTermsColumns = [
     header: "Договор",
     cell: (info) => {
       const deal = info.getValue();
-      return <AlignCenter>{FormatTypeRent(deal)}</AlignCenter>;
+      return <AlignCenter>{deal ? FormatTypeRent(deal) : "-"}</AlignCenter>;
     },
   },
 ];
@@ -262,7 +293,7 @@ export const contactsColumns = [
     header: "Имя",
     cell: (info) => {
       const name = info.getValue();
-      return <AlignCenter>{name}</AlignCenter>;
+      return <AlignCenter>{name ? name : "-"}</AlignCenter>;
     },
   },
   {
@@ -270,7 +301,11 @@ export const contactsColumns = [
     header: "Позиция",
     cell: (info) => {
       const position = info.getValue();
-      return <AlignCenter>{FormatWorkingPosition(position)}</AlignCenter>;
+      return (
+        <AlignCenter>
+          {position ? FormatWorkingPosition(position) : "-"}
+        </AlignCenter>
+      );
     },
   },
   {
@@ -278,7 +313,7 @@ export const contactsColumns = [
     header: "Телефон",
     cell: (info) => {
       const phone = info.getValue();
-      return <AlignCenter>{FormatPhone(phone)}</AlignCenter>;
+      return <AlignCenter>{phone ? FormatPhone(phone) : "-"}</AlignCenter>;
     },
   },
   {
@@ -286,7 +321,7 @@ export const contactsColumns = [
     header: "Почта",
     cell: (info) => {
       const email = info.getValue();
-      return <AlignCenter>{email}</AlignCenter>;
+      return <AlignCenter>{email ? email : "-"}</AlignCenter>;
     },
   },
 ];
