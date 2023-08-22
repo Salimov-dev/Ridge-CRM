@@ -2,7 +2,6 @@
 import { useSelector } from "react-redux";
 // components
 import { FormatPhone, UserAvatar } from "../../../components/common/table/helpers/helpers";
-import OpenButton from "./components/open-button";
 // mock
 import { gendersArray } from "../../../mock/genders";
 // store
@@ -10,6 +9,7 @@ import { getUserStatusNameById } from "../../../store/user-statuses.store";
 import { getUserNameById } from "../../../store/users.store";
 // utils
 import { FormatDate } from "../../../utils/format-date";
+import TableOpenButton from "../../../components/common/buttons/table-open-button";
 
 export const groupedColumns = [
   {
@@ -149,8 +149,9 @@ export const groupedColumns = [
     header: "Править",
     enableSorting: false,
     cell: (info) => {
-      const id = info.getValue();
-      return <OpenButton userId={id} />;
+      const userId = info.getValue();
+      return <TableOpenButton id={userId} text="Править" nav={`${userId}/edit`}/>;
+      
     },
   },
 ];

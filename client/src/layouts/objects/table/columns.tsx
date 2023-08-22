@@ -7,7 +7,7 @@ import {
   FormatObjectStatus,
   FormatPhone,
 } from "../../../components/common/table/helpers/helpers";
-import OpenButton from "./components/open-button";
+import TableOpenButton from "../../../components/common/buttons/table-open-button";
 
 const AlignCenter = styled(Box)`
   display: flex;
@@ -113,11 +113,10 @@ export const groupedColumns = [
         accessorKey: "_id",
         header: "",
         enableSorting: false,
-        cell: (info) => (
-          <AlignCenter>
-            <OpenButton objectId={info.getValue()} />
-          </AlignCenter>
-        ),
+        cell: (info) => {
+          const objectId = info.getValue();
+          return <TableOpenButton id={objectId} text="Открыть" nav={objectId}/>;
+        },
       },
     ],
   },

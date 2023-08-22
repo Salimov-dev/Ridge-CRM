@@ -1,21 +1,12 @@
 import { useNavigate } from "react-router-dom";
 // MUI
-import {
-  Box,
-  Button,
-  styled,
-  InputAdornment,
-  FormHelperText,
-} from "@mui/material";
-import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { TimePicker } from "@mui/x-date-pickers/TimePicker";
+import { Box, Button, styled, InputAdornment } from "@mui/material";
 import CreateIcon from "@mui/icons-material/Create";
 // components
 import TextFieldStyled from "../inputs/text-field-styled";
 import SimpleSelectField from "../inputs/simple-select-field";
 import DatePickerStyled from "../inputs/date-picker";
+import TimePickerStyled from "../inputs/time-picker";
 
 const Form = styled(`form`)({
   display: "flex",
@@ -52,7 +43,10 @@ const MeetingForm = ({
   setValue,
   isValid,
   isEditMode = false,
-  isEmptyFindedObject,
+  isEmptyFindedObject = true,
+  watchObjectId,
+  watchStatus,
+  watchTypeMeeting,
 }) => {
   const isValidAndHasAdress = Boolean(isEmptyFindedObject) && isValid;
 
@@ -60,7 +54,6 @@ const MeetingForm = ({
 
   const handleBackPage = () => {
     navigate("/meetings");
-    // navigate(isEditMode ? `/objects/${objectId}` : "/objects");
   };
   return (
     <>
@@ -70,60 +63,24 @@ const MeetingForm = ({
             register={register}
             name="date"
             label="Дата встречи"
-            // value={data?.date}
+            value={data?.date}
             onChange={(value) => setValue("date", value)}
             errors={errors?.date}
           />
-          <Box sx={{ width: "100%", marginBottom: "-3px", marginTop: "-8px" }}>
-            <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="ru">
-              <DemoContainer
-                components={["TimePicker"]}
-                sx={{
-                  paddingTop: "8px",
-                }}
-              >
-                <TimePicker
-                  {...register("time")}
-                  label="Basic time picker"
-                  ampm={false}
-                  onChange={(value) => setValue("time", value)}
-                  errors={errors?.time}
-                  //   value={da}
-                  //   onChange={onChange}
-                  //   error={!!errors}
-                  //   disabled={disabled}
-                  sx={{
-                    width: "100%",
-                    "& .MuiOutlinedInput-root": {
-                      "&.Mui-focused fieldset": {
-                        borderColor: "green",
-                      },
-                    },
-                    "& .MuiInputLabel-root": {
-                      color: "gray",
-                    },
-                    "& label.Mui-focused": {
-                      color: "white",
-                    },
-                    "& .MuiButtonBase-root": {
-                      color: "white",
-                      //   color: value ? "white" : "gray",
-                    },
-                  }}
-                />
-              </DemoContainer>
-            </LocalizationProvider>
-            <FormHelperText sx={{ color: "red" }}>
-              {/* <FormHelperText sx={{ color: color }}> */}
-              {/* {errors ? errors?.message : helperText} */}
-            </FormHelperText>
-          </Box>
+          <TimePickerStyled
+            register={register}
+            data={data}
+            errors={errors}
+            setValue={setValue}
+            name="time"
+          />
           <SimpleSelectField
             register={register}
             itemsList={meetingTypes}
             name="meetingType"
             labelId="meetingType"
             label="Тип встречи"
+            value={watchTypeMeeting}
             errors={errors?.meetingType}
           />
           <SimpleSelectField
@@ -132,17 +89,19 @@ const MeetingForm = ({
             name="status"
             labelId="status"
             label="Статус"
+            value={watchStatus}
             errors={errors?.status}
           />
         </FieldsContainer>
 
         <FieldsContainer>
-        <SimpleSelectField
+          <SimpleSelectField
             register={register}
             itemsList={objects}
             name="objectId"
             labelId="objectId"
             label="Объект встречи"
+            value={watchObjectId}
             errors={errors?.objectId}
           />
           <TextFieldStyled
@@ -150,8 +109,8 @@ const MeetingForm = ({
             label="Комментарий"
             name="comment"
             errors={errors?.comment}
+            value={data?.comment || ""}
             onInputQuantities={50}
-            value={data?.comment}
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">

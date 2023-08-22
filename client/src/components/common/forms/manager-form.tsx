@@ -10,6 +10,7 @@ import DatePickerStyled from "../inputs/date-picker";
 import SimpleSelectField from "../inputs/simple-select-field";
 // mock
 import { gendersArray } from "../../../mock/genders";
+import { useEffect, useState } from "react";
 
 const FieldsContainer = styled(Box)`
   width: 100%;
@@ -34,7 +35,6 @@ const FooterButtons = styled(Box)`
 
 const ManagerForm = ({
   data,
-  watch,
   isEditMode = false,
   register,
   handleSubmit,
@@ -43,13 +43,10 @@ const ManagerForm = ({
   setValue,
   userStatuses,
   isValid,
-  // watchStatus,
-  // watchGender
+  watchStatus,
+  watchGender
 }) => {
   const navigate = useNavigate();
-  const watchGender = watch('gender', "")
-  const watchStatus = watch('status', "")
-  console.log("watchGender", watchGender);
 
   const handleBackPage = () => {
     navigate("/users");
@@ -133,7 +130,7 @@ const ManagerForm = ({
             name="gender"
             labelId="gender"
             label="Пол"
-            value={gendersArray && watchGender}
+            value={watchGender}
           />
         </FieldsContainer>
       </FieldsContainer>

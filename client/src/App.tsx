@@ -30,6 +30,7 @@ import CreateManager from "./components/pages/create-manager/create-manager";
 import UpdateManager from "./components/pages/update-manager/update-manager";
 import Meetings from "./layouts/meetings/meetings";
 import CreateMeeting from "./components/pages/create-meeting/create-meeting";
+import UpdateMeeting from "./components/pages/update-meeting/update-meeting";
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -86,7 +87,7 @@ function App() {
                   <Route index element={<Meetings />} />
                   {/* <Route path={":meetingId/"} element={<MeetingPage />} /> */}
                   <Route path={"create"} element={<CreateMeeting />} />
-                  {/* <Route path={":meetingId/edit"} element={<UpdateMeeting />} /> */}
+                  <Route path={":meetingId/edit"} element={<UpdateMeeting />} />
                   <Route path="*" element={<Navigate to="/meetings" />} />
                 </Route>
 

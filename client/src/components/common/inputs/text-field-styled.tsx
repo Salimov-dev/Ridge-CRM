@@ -1,4 +1,4 @@
-import {Box, TextField, styled, FormHelperText } from "@mui/material";
+import { Box, TextField, styled, FormHelperText } from "@mui/material";
 const StyledTextField = styled(TextField)(({ theme }) => ({
   minWidth: "30px",
   width: "100%",
@@ -44,34 +44,28 @@ const TextFieldStyled = ({
     }
   };
   return (
-    <Box sx={{width: '100%'}}>
-    <StyledTextField
-      {...register(name, {
-        valueAsNumber: valueAsNumber,
-      })}
-      variant="outlined"
-      type={type}
-      id={name}
-      value={value}
-      label={label}
-      rows={rows}
-      onKeyDown={onKeyDown}
-      InputProps={InputProps}
-      inputProps={inputProps}
-      multiline={multiline}
-      error={!!errors}
-      helperText={errors?.message}
-      disabled={disabled}
-      onInput={(e) => handleInputCrop(e, onInputQuantities)}
-      sx={{
-        "& .MuiInputLabel-root": {
-          color: value?.length ? "white" : "gray",
-        },
-      }}
-    />
-    {isHelperText ? <FormHelperText>{helperText}</FormHelperText> : null}
+    <Box sx={{ width: "100%" }}>
+      <StyledTextField
+        {...register(name, {
+          valueAsNumber: valueAsNumber,
+        })}
+        variant="outlined"
+        type={type}
+        id={name}
+        value={value}
+        label={label}
+        rows={rows}
+        onKeyDown={onKeyDown}
+        InputProps={InputProps}
+        inputProps={inputProps}
+        multiline={multiline}
+        error={!!errors}
+        helperText={errors?.message}
+        disabled={disabled}
+        onInput={(e) => handleInputCrop(e, onInputQuantities)}
+      />
+      {isHelperText ? <FormHelperText>{helperText}</FormHelperText> : null}
     </Box>
-    
   );
 };
 

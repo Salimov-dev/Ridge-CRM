@@ -114,16 +114,16 @@ const CreateMeeting = () => {
       />
       <FindObjectOnMap />
       <MeetingForm
-        statuses={statuses}
-        meetingTypes={meetingTypes}
-        objects={transformObjects}
-        handleSubmit={handleSubmit}
-        onSubmit={onSubmit}
         register={register}
+        onSubmit={onSubmit}
+        handleSubmit={handleSubmit}
         errors={errors}
         setValue={setValue}
         isValid={isValid}
         isEmptyFindedObject={isEmptyFindedObject}
+        statuses={statuses}
+        meetingTypes={meetingTypes}
+        objects={transformObjects}
       />
     </Box>
   );

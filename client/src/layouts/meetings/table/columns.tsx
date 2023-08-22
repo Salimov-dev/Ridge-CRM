@@ -108,8 +108,7 @@ export const groupedColumns = [
     header: "",
     cell: (info) => {
       const meetingId = info.getValue();
-
-      return <TableOpenButton id={meetingId} text="Править" />;
+      return <TableOpenButton id={meetingId} text="Править" nav={`${meetingId}/edit`}/>;
     },
   },
 ];

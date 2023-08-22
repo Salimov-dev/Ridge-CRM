@@ -20,10 +20,10 @@ const UpdateManager = () => {
   const { userId } = useParams();
   const user = useSelector(getUserDataById(userId));
   const userStatuses = useSelector(getUserStatusesList());
-  
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  
+
   const isEditMode = userId ? true : false;
 
   const formatedUser = {
@@ -32,16 +32,12 @@ const UpdateManager = () => {
       startDate: user?.contract.startDate
         ? dayjs(user?.contract.startDate)
         : null,
-      endDate: user?.contract.endDate
-        ? dayjs(user?.contract.endDate)
-        : null,
+      endDate: user?.contract.endDate ? dayjs(user?.contract.endDate) : null,
       trialPeriod: user?.contract.trialPeriod
         ? dayjs(user?.contract.trialPeriod)
         : null,
     },
-    birthday: user?.birthday
-      ? dayjs(user?.birthday)
-      : null,
+    birthday: user?.birthday ? dayjs(user?.birthday) : null,
   };
 
   const {
@@ -57,24 +53,23 @@ const UpdateManager = () => {
   });
 
   const data = watch();
- 
+  const watchGender = watch("gender", "");
+  const watchStatus = watch("status", "");
+
   const onSubmit = (data) => {
     dispatch(updateUser(data))
       .then(navigate(-1))
       .then(toast.success("Менеджер успешно изменен!"));
   };
 
-  const watchGender = watch('gender', "")
-  const watchStatus = watch('status', "")
-  console.log("watchGender", watchGender);
-
-  const handleBackPage = () => {
-    navigate("/users");
-  };
   return (
     <Box>
       <Header user={user} />
-      <img src={user?.image} alt="" style={{width: '100px', borderRadius: '10px'}}/>
+      <img
+        src={user?.image}
+        alt=""
+        style={{ width: "100px", borderRadius: "10px" }}
+      />
       <ManagerForm
         data={formatedUser}
         watch={watch}
@@ -86,6 +81,8 @@ const UpdateManager = () => {
         isValid={isValid}
         isEditMode={isEditMode}
         userStatuses={userStatuses}
+        watchGender={watchGender}
+        watchStatus={watchStatus}
       />
     </Box>
   );
