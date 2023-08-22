@@ -1,5 +1,4 @@
 // libraries
-import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -18,14 +17,12 @@ import { objectSchema } from "../../../schemas/schemas";
 const UpdateObject = () => {
   const { objectId } = useParams();
   const object = useSelector(getObjectById(objectId));
-  const isEditMode = objectId ? true : false;
-
+  
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  const localStorageObject = JSON.parse(localStorage.getItem("editingObject"));
-  const isObjectHasAddress =
-    localStorageObject?.location?.city && localStorageObject?.location?.address;
+  
+  const isEditMode = objectId ? true : false;
+  const isObjectHasAddress = object?.location?.city && object?.location?.address;
 
   const {
     register,
@@ -33,13 +30,21 @@ const UpdateObject = () => {
     handleSubmit,
     formState: { errors, isValid },
   } = useForm({
-    defaultValues: object || localStorageObject,
+    defaultValues: object,
     mode: "onBlur",
     resolver: yupResolver(objectSchema),
   });
 
-  const data = watch();
-  const watchName = watch("contact.name");
+  const watchName = watch("contact.name", "");
+  const watchStatus = watch("status", "");
+  const watchDistrict = watch("location.district", "");
+  const watchMetro = watch("location.metro", "");
+  const watchCurrentRenters = watch("estateOptions.currentRenters", "");
+  const watchobjectConditions = watch("estateOptions.objectConditions", "");
+  const watchRentTypes = watch("commercialTerms.rentTypes", "");
+  const watchObjectTypes = watch("estateOptions.objectTypes", "");
+  const watchEstateTypes = watch("estateOptions.estateTypes", "");
+  const watchWorkingPosition = watch("contact.position", "");
 
   const onSubmit = (data) => {
     dispatch(updateObject(data, objectId))
@@ -47,27 +52,11 @@ const UpdateObject = () => {
       .then(toast.success("Объект успешно изменен!"));
   };
 
-  useEffect(() => {
-    if (object !== undefined) {
-      localStorage.setItem("editingObject", JSON.stringify(object));
-    } else {
-      return;
-    }
-  }, []);
-
-  useEffect(() => {
-    if (object !== undefined) {
-      localStorage.setItem("editingObject", JSON.stringify(object));
-    } else {
-      return;
-    }
-  }, [localStorageObject]);
-
   return (
     <Box>
       <Header object={object} />
       <ObjectForm
-        data={data}
+        data={object}
         objectId={objectId}
         handleSubmit={handleSubmit}
         onSubmit={onSubmit}
@@ -77,6 +66,15 @@ const UpdateObject = () => {
         isValid={isValid}
         isObjectHasAddress={isObjectHasAddress}
         watchName={watchName}
+        watchDistrict={watchDistrict}
+        watchMetro={watchMetro}
+        watchCurrentRenters={watchCurrentRenters}
+        watchobjectConditions={watchobjectConditions}
+        watchRentTypes={watchRentTypes}
+        watchObjectTypes={watchObjectTypes}
+        watchEstateTypes={watchEstateTypes}
+        watchStatus={watchStatus}
+        watchWorkingPosition={watchWorkingPosition}
       />
     </Box>
   );

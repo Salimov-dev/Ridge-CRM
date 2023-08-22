@@ -25,7 +25,6 @@ import { getMetroList } from "../../../store/metro.store";
 import { getCurrentRentersList } from "../../../store/current-renter.store";
 import { getEstateTypesList } from "../../../store/estate-types.store";
 import { getObjectTypesList } from "../../../store/object-types.store";
-import { nanoid } from "@reduxjs/toolkit";
 import { getDistrictsList } from "../../../store/districts.store";
 
 const Form = styled(`form`)({

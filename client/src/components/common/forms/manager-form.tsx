@@ -34,6 +34,7 @@ const FooterButtons = styled(Box)`
 
 const ManagerForm = ({
   data,
+  watch,
   isEditMode = false,
   register,
   handleSubmit,
@@ -42,8 +43,13 @@ const ManagerForm = ({
   setValue,
   userStatuses,
   isValid,
+  // watchStatus,
+  // watchGender
 }) => {
   const navigate = useNavigate();
+  const watchGender = watch('gender', "")
+  const watchStatus = watch('status', "")
+  console.log("watchGender", watchGender);
 
   const handleBackPage = () => {
     navigate("/users");
@@ -61,10 +67,9 @@ const ManagerForm = ({
           <TextFieldStyled
             register={register}
             label="Фамилия"
-            type="text"
             name="name.lastName"
             errors={errors?.name?.lastName}
-            value={data?.name?.lastName}
+            value={data?.name?.lastName || ""}
             onInputQuantities={25}
             InputProps={{
               endAdornment: <InputAdornment position="end">Ф</InputAdornment>,
@@ -73,10 +78,9 @@ const ManagerForm = ({
           <TextFieldStyled
             register={register}
             label="Имя"
-            type="text"
             name="name.firstName"
             errors={errors?.name?.firstName}
-            value={data?.name?.firstName}
+            value={data?.name?.firstName || ""}
             onInputQuantities={25}
             InputProps={{
               endAdornment: <InputAdornment position="end">И</InputAdornment>,
@@ -88,7 +92,7 @@ const ManagerForm = ({
             type="text"
             name="name.surName"
             errors={errors?.name?.surName}
-            value={data?.name?.surName}
+            value={data?.name?.surName || ""}
             onInputQuantities={25}
             InputProps={{
               endAdornment: <InputAdornment position="end">О</InputAdornment>,
@@ -103,7 +107,7 @@ const ManagerForm = ({
             type="number"
             name="contacts.phone"
             errors={errors?.contacts?.phone}
-            value={data?.contacts?.phone}
+            value={data?.contacts?.phone || ""}
             onInputQuantities={12}
             valueAsNumber={true}
             helperText={"Только в формате 79098887766, 78129998877, 9302211"}
@@ -129,7 +133,7 @@ const ManagerForm = ({
             name="gender"
             labelId="gender"
             label="Пол"
-            defaultValue={data?.gender}
+            value={gendersArray && watchGender}
           />
         </FieldsContainer>
       </FieldsContainer>
@@ -173,7 +177,7 @@ const ManagerForm = ({
           label="Статус"
           errors={errors?.status}
           register={register}
-          defaultValue={data?.status}
+          value={watchStatus}
         />
         <TextFieldStyled
           register={register}
@@ -181,7 +185,7 @@ const ManagerForm = ({
           type="text"
           name="email"
           errors={errors?.email}
-          value={data?.email}
+          value={data?.email || ""}
           onInputQuantities={25}
           InputProps={{
             endAdornment: (

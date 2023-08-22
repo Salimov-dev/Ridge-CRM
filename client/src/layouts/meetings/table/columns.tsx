@@ -38,6 +38,15 @@ export const groupedColumns = [
     },
   },
   {
+    accessorKey: "meetingType",
+    header: "Тип",
+    cell: (info) => {
+      const type = info.getValue();      
+      const name = useSelector(getMeetingTypeNameById(type))
+      return name;
+    },
+  },
+  {
     accessorKey: "objectId",
     header: "Объект встречи",
     cell: (info) => {
@@ -56,15 +65,6 @@ export const groupedColumns = [
           />
         </Box>
       );
-    },
-  },
-  {
-    accessorKey: "meetingType",
-    header: "Тип",
-    cell: (info) => {
-      const type = info.getValue();      
-      const name = useSelector(getMeetingTypeNameById(type))
-      return name;
     },
   },
   {

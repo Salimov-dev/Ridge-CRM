@@ -65,12 +65,14 @@ const ObjectForm = ({
   watchObjectTypes,
   watchEstateTypes,
   watchStatus,
+  watchWorkingPosition
 }) => {
   const districts = useSelector(getDistrictsList());
   const workingPositions = useSelector(getWorkingPositionsList());
   const objectStatuses = useSelector(getObjectsStatusList());
   const currentRenters = useSelector(getCurrentRentersList());
   const objectConditions = useSelector(getobjectConditionsList());
+  
   const metros = useSelector(getMetroList());
   const rentTypes = useSelector(getRentTypesList());
   const objectTypes = useSelector(getObjectTypesList());
@@ -92,72 +94,54 @@ const ObjectForm = ({
         <FieldsContainer>
           <SimpleSelectField
             register={register}
-            itemsList={districts}
             name="location.district"
             labelId="district"
-            label="Район"
-            isHelperText={true}
-            helperText="Обязательно"
-            defaultValue={data?.location?.district}
-            watch={watchDistrict}
+            label="Район*"
+            itemsList={districts}
+            value={watchDistrict || ""}
           />
           <SimpleSelectField
-            itemsList={metros}
+            register={register}
             name="location.metro"
             labelId="metro"
-            label="Метро"
-            register={register}
-            isHelperText={true}
-            helperText={!watchMetro ? "Если есть в радиусе 1км" : ""}
-            defaultValue={data?.location?.metro}
-            watch={watchMetro}
+            label="Метро*"
+            itemsList={metros}
+            value={watchMetro || ""}
             disabled={!watchDistrict && true}
           />
           <SimpleSelectField
-            itemsList={objectStatuses}
+            register={register}
             name="status"
             labelId="status"
-            label="Статус объекта"
-            register={register}
-            isHelperText={true}
-            helperText="Обязательно"
-            defaultValue={data?.status}
-            watch={watchStatus}
+            label="Статус объекта*"
+            itemsList={objectStatuses}
+            value={watchStatus || ""}
           />
         </FieldsContainer>
         <FieldsContainer>
           <SimpleSelectField
+            register={register}
             itemsList={objectTypes}
             name="estateOptions.objectTypes"
             labelId="objectTypes "
-            label="Тип объекта"
-            register={register}
-            defaultValue={data?.estateOptions?.objectTypes}
-            isHelperText={true}
-            helperText="Обязательно"
-            watch={watchObjectTypes}
+            label="Тип объекта*"
+            value={watchObjectTypes || ""}
           />
           <SimpleSelectField
-            itemsList={estateTypes}
+            register={register}
             name="estateOptions.estateTypes"
             labelId="estateTypes "
-            label="Тип недвижимости"
-            register={register}
-            defaultValue={data?.estateOptions?.estateTypes}
-            isHelperText={true}
-            helperText="Обязательно"
-            watch={watchEstateTypes}
+            label="Тип недвижимости*"
+            itemsList={estateTypes}
+            value={watchEstateTypes || ""}
           />
           <SimpleSelectField
-            itemsList={currentRenters}
+            register={register}
             name="estateOptions.currentRenters"
             labelId="currentRenters"
-            label="Текущий арендатор"
-            register={register}
-            defaultValue={data?.estateOptions?.currentRenters}
-            isHelperText={true}
-            helperText="Обязательно"
-            watch={watchCurrentRenters}
+            label="Текущий арендатор*"
+            itemsList={currentRenters}
+            value={watchCurrentRenters || ""}
           />
         </FieldsContainer>
 
@@ -170,8 +154,8 @@ const ObjectForm = ({
             label="Контакт"
             name="contact.name"
             errors={errors?.contact?.name}
+            value={data?.contact?.name || ""}
             onInputQuantities={50}
-            value={data?.contact?.name}
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
@@ -181,27 +165,23 @@ const ObjectForm = ({
             }}
           />
           <SimpleSelectField
-            itemsList={workingPositions}
+            register={register}
             name="contact.position"
             labelId="position"
             label="Позиция"
-            register={register}
+            itemsList={workingPositions}
+            value={watchWorkingPosition || ""}
             disabled={!watchName?.length && true}
-            helperText={!watchName?.length && "Сначала введите имя"}
-            isHelperText={true}
-            defaultValue={data?.contact?.position}
           />
           <TextFieldStyled
             register={register}
             label="Телефон"
             type="number"
             name="contact.phone"
-            onInputQuantities={12}
-            errors={errors?.contact?.phone}
             valueAsNumber={true}
-            helperText={"Только в формате 79098887766, 78129998877, 9302211"}
-            isHelperText={true}
-            value={data?.contact?.phone}
+            value={data?.contact?.phone || ""}
+            errors={errors?.contact?.phone}
+            onInputQuantities={12}
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
@@ -216,7 +196,7 @@ const ObjectForm = ({
             name="contact.email"
             errors={errors?.contact?.email}
             onInputQuantities={100}
-            value={data?.contact?.email}
+            value={data?.contact?.email || ""}
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
@@ -239,7 +219,7 @@ const ObjectForm = ({
               name="commercialTerms.totalSquare"
               valueAsNumber={true}
               onInputQuantities={5}
-              value={data?.commercialTerms?.totalSquare}
+              value={data?.commercialTerms?.totalSquare || ""}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">м²</InputAdornment>
@@ -254,7 +234,7 @@ const ObjectForm = ({
               name="commercialTerms.rentSquare"
               valueAsNumber={true}
               onInputQuantities={5}
-              value={data?.commercialTerms?.rentSquare}
+              value={data?.commercialTerms?.rentSquare || ""}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">м²</InputAdornment>
@@ -268,7 +248,7 @@ const ObjectForm = ({
               name="commercialTerms.rentPrice"
               valueAsNumber={true}
               onInputQuantities={8}
-              value={data?.commercialTerms?.rentPrice}
+              value={data?.commercialTerms?.rentPrice || ""}
               InputProps={{
                 endAdornment: <InputAdornment position="end">₽</InputAdornment>,
               }}
@@ -280,7 +260,7 @@ const ObjectForm = ({
               name="commercialTerms.indexingAnnual"
               valueAsNumber={true}
               onInputQuantities={3}
-              value={data?.commercialTerms?.indexingAnnual}
+              value={data?.commercialTerms?.indexingAnnual || ""}
               InputProps={{
                 endAdornment: <InputAdornment position="end">%</InputAdornment>,
               }}
@@ -290,13 +270,10 @@ const ObjectForm = ({
             <TextFieldStyled
               register={register}
               label="Каникулы"
-              // type="number"
               name="commercialTerms.rentalHolidays"
-              // valueAsNumber={true}
-              onInputQuantities={30}
-              value={data?.commercialTerms?.rentalHolidays}
+              onInputQuantities={3}
+              value={data?.commercialTerms?.rentalHolidays || ""}
               InputProps={{
-                maxLength: 3,
                 endAdornment: (
                   <InputAdornment position="end">дней</InputAdornment>
                 ),
@@ -309,7 +286,7 @@ const ObjectForm = ({
               name="commercialTerms.securityDeposit"
               valueAsNumber={true}
               onInputQuantities={8}
-              value={data?.commercialTerms?.securityDeposit}
+              value={data?.commercialTerms?.securityDeposit || ""}
               InputProps={{
                 maxLength: 7,
                 endAdornment: <InputAdornment position="end">₽</InputAdornment>,
@@ -322,21 +299,19 @@ const ObjectForm = ({
               name="commercialTerms.agentComission"
               valueAsNumber={true}
               onInputQuantities={8}
-              value={data?.commercialTerms?.agentComission}
+              value={data?.commercialTerms?.agentComission || ""}
               InputProps={{
                 maxLength: 7,
                 endAdornment: <InputAdornment position="end">%</InputAdornment>,
               }}
             />
             <SimpleSelectField
-              itemsList={rentTypes}
+              register={register}
               name="commercialTerms.rentTypes"
               labelId="rentTypes"
               label="Тип договора"
-              register={register}
-              defaultValue={data?.commercialTerms?.rentTypes}
-              isHelperText={true}
-              watch={watchRentTypes}
+              itemsList={rentTypes}
+              value={watchRentTypes || ""}
             />
           </FieldsContainer>
         </FieldsContainer>
@@ -347,13 +322,12 @@ const ObjectForm = ({
         <FieldsContainer sx={{ flexDirection: "column" }}>
           <FieldsContainer>
             <SimpleSelectField
-              itemsList={objectConditions}
+              register={register}
               name="estateOptions.objectConditions"
               labelId="objectConditions "
               label="Состояние помещения"
-              register={register}
-              defaultValue={data?.estateOptions?.objectConditions}
-              isHelperText={true}
+              itemsList={objectConditions}
+              value={watchobjectConditions || ""}
               watch={watchobjectConditions}
             />
             <TextFieldStyled
@@ -362,7 +336,7 @@ const ObjectForm = ({
               type="text"
               name="estateOptions.cadastralNumber"
               onInputQuantities={24}
-              value={data?.estateOptions?.cadastralNumber}
+              value={data?.estateOptions?.cadastralNumber || ""}
               InputProps={{
                 endAdornment: <InputAdornment position="end">№</InputAdornment>,
               }}
@@ -374,7 +348,7 @@ const ObjectForm = ({
               name="estateOptions.electricityKw"
               valueAsNumber={true}
               onInputQuantities={4}
-              value={data?.estateOptions?.electricityKw}
+              value={data?.estateOptions?.electricityKw || ""}
               InputProps={{
                 maxLength: 7,
                 endAdornment: (
@@ -389,7 +363,7 @@ const ObjectForm = ({
               label="Состояние полов"
               name="estateOptions.premisesFloor"
               onInputQuantities={100}
-              value={data?.estateOptions?.premisesFloor}
+              value={data?.estateOptions?.premisesFloor || ""}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
@@ -406,7 +380,7 @@ const ObjectForm = ({
               type="text"
               name="estateOptions.waterSuply"
               onInputQuantities={20}
-              value={data?.estateOptions?.waterSuply}
+              value={data?.estateOptions?.waterSuply || ""}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
@@ -422,7 +396,7 @@ const ObjectForm = ({
               name="estateOptions.premisesHeight"
               valueAsNumber={true}
               onInputQuantities={3}
-              value={data?.estateOptions?.premisesHeight}
+              value={data?.estateOptions?.premisesHeight || ""}
               InputProps={{
                 endAdornment: <InputAdornment position="end">м</InputAdornment>,
               }}
@@ -434,7 +408,7 @@ const ObjectForm = ({
               name="estateOptions.parkingQuantity"
               valueAsNumber={true}
               onInputQuantities={4}
-              value={data?.estateOptions?.parkingQuantity}
+              value={data?.estateOptions?.parkingQuantity || ""}
               InputProps={{
                 maxLength: 7,
                 endAdornment: (
@@ -450,7 +424,7 @@ const ObjectForm = ({
               type="text"
               name="estateOptions.loadingArea"
               onInputQuantities={60}
-              value={data?.estateOptions?.loadingArea}
+              value={data?.estateOptions?.loadingArea || ""}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
@@ -471,7 +445,7 @@ const ObjectForm = ({
           name="description.fullDescription"
           rows="8"
           multiline={true}
-          value={data?.description?.fullDescription}
+          value={data?.description?.fullDescription || ""}
           errors={errors?.description?.fullDescription}
           onInputQuantities={20000}
         />

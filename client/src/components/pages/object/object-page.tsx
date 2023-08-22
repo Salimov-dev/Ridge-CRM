@@ -1,8 +1,8 @@
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { Box, styled } from "@mui/material";
-import Loader from "../../common/loader/loader";
 // components
+import Loader from "../../common/loader/loader";
 import ObjectsOnMap from "../../common/elements-on-map/objects-on-map";
 import ObjectInfo from "./components/object-info";
 import Header from "./components/header";
@@ -18,14 +18,14 @@ const Map = styled(Box)`
   flex: 5;
   display: flex;
   background: gray;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 `;
 
 const ObjectPage = () => {
   const objectId = useParams().objectId;
   const object = useSelector(getObjectById(objectId));
   const isLoading = useSelector(getObjectsLoadingStatus());
-  
+
   return (
     <Box>
       <Header object={object} />

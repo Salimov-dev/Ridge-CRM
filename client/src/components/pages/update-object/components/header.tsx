@@ -22,7 +22,7 @@ const Header = ({ object }) => {
       <Title>
         <h1>Изменить объект:</h1>
         <Typography variant="h3" sx={{ background: "yellow", color: "black" }}>
-          {object?.location.city}, {object?.location.address}
+          {object?.location?.city}, {object?.location?.address}
         </Typography>
       </Title>
 

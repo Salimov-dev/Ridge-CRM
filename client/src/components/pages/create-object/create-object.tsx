@@ -96,6 +96,7 @@ const CreateObject = () => {
   const watchRentTypes = watch("estateOptions.rentTypes");
   const watchObjectTypes = watch("estateOptions.objectTypes");
   const watchEstateTypes = watch("estateOptions.estateTypes");
+  const watchWorkingPosition = watch("contact.position");
 
   const onSubmit = (data) => {
     const newData = {
@@ -197,6 +198,7 @@ const CreateObject = () => {
         watchObjectTypes={watchObjectTypes}
         watchEstateTypes={watchEstateTypes}
         watchStatus={watchStatus}
+        watchWorkingPosition={watchWorkingPosition}
       />
     </Box>
   );

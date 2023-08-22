@@ -32,8 +32,8 @@ const SimpleSelectField = ({
   disabled = false,
   isHelperText = false,
   helperText,
-  defaultValue = "",
   watch,
+  value,
   selectedItems,
 }) => {
   const sortedItems = orderBy(itemsList, ["name"], ["asc"]);
@@ -68,18 +68,18 @@ const SimpleSelectField = ({
         labelId={labelId}
         id={name}
         name={name}
-        value={selectedItems}
+        value={value}
         input={<OutlinedInput label={label} />}
         MenuProps={MenuProps}
         disabled={disabled}
-        defaultValue={defaultValue}
+        defaultValue=""
         error={!!errors}
         sx={{
           "& .MuiOutlinedInput-notchedOutline": {
-            borderColor: selectedItems?.length ? "green" : "gray",
+            borderColor: selectedItems ? "green" : "gray",
           },
           "& .MuiInputLabel-root": {
-            color: selectedItems?.length ? "white" : "gray",
+            color: selectedItems ? "white" : "gray",
           },
         }}
       >
@@ -93,9 +93,6 @@ const SimpleSelectField = ({
         ))}
       </StyledSelect>
       <FormHelperText sx={{ color: "red" }}>{errors?.message}</FormHelperText>
-      {!watch || !isHelperText ? (
-        <FormHelperText sx={{ color: "green" }}>{helperText}</FormHelperText>
-      ) : null}
     </FormControl>
   );
 };

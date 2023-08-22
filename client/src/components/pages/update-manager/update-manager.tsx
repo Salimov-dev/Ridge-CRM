@@ -1,5 +1,4 @@
 // libraries
-import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -21,29 +20,11 @@ const UpdateManager = () => {
   const { userId } = useParams();
   const user = useSelector(getUserDataById(userId));
   const userStatuses = useSelector(getUserStatusesList());
-  const isEditMode = userId ? true : false;
+  
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  const localStorageUser = JSON.parse(localStorage.getItem("editingUser"));
   
-  const formatedState = {
-    ...localStorageUser,
-    contract: {
-      startDate: localStorageUser?.contract.startDate
-        ? dayjs(localStorageUser?.contract.startDate)
-        : null,
-      endDate: localStorageUser?.contract.endDate
-        ? dayjs(localStorageUser?.contract.endDate)
-        : null,
-      trialPeriod: localStorageUser?.contract.trialPeriod
-        ? dayjs(localStorageUser?.contract.trialPeriod)
-        : null,
-    },
-    birthday: localStorageUser?.birthday
-      ? dayjs(localStorageUser?.birthday)
-      : null,
-  };
+  const isEditMode = userId ? true : false;
 
   const formatedUser = {
     ...user,
@@ -63,7 +44,6 @@ const UpdateManager = () => {
       : null,
   };
 
-
   const {
     register,
     watch,
@@ -71,42 +51,33 @@ const UpdateManager = () => {
     formState: { errors, isValid },
     setValue,
   } = useForm({
-    defaultValues: user?._id === userId ? formatedUser : formatedState,
+    defaultValues: formatedUser,
     mode: "onBlur",
     resolver: yupResolver(managerSchema),
   });
 
   const data = watch();
  
-
   const onSubmit = (data) => {
     dispatch(updateUser(data))
       .then(navigate(-1))
       .then(toast.success("Менеджер успешно изменен!"));
   };
 
-  useEffect(() => {
-    if (user !== undefined) {
-      localStorage.setItem("editingUser", JSON.stringify(user));
-    } else {
-      return;
-    }
-  }, []);
+  const watchGender = watch('gender', "")
+  const watchStatus = watch('status', "")
+  console.log("watchGender", watchGender);
 
-  useEffect(() => {
-    if (user !== undefined) {
-      localStorage.setItem("editingUser", JSON.stringify(user));
-    } else {
-      return;
-    }
-  }, [localStorageUser]);
-
+  const handleBackPage = () => {
+    navigate("/users");
+  };
   return (
     <Box>
       <Header user={user} />
       <img src={user?.image} alt="" style={{width: '100px', borderRadius: '10px'}}/>
       <ManagerForm
-        data={data}
+        data={formatedUser}
+        watch={watch}
         register={register}
         handleSubmit={handleSubmit}
         onSubmit={onSubmit}

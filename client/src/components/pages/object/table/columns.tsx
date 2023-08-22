@@ -247,7 +247,6 @@ export const commercialTermsColumns = [
     header: "Каникулы",
     cell: (info) => {
       const holidays = info.getValue();
-      console.log("holidays", holidays);
       return <AlignCenter>{holidays ? `${holidays} дней` : "-"}</AlignCenter>;
     },
   },

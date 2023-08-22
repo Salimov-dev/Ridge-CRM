@@ -110,8 +110,8 @@ export const updateObject = (payload) => async (dispatch) => {
 };
 
 export const getObjectById = (objectId) => (state) => {
-  if (state.objects.entities) {
-    return state.objects.entities.find((obj) => obj._id === objectId);
+  if (state?.objects?.entities) {
+    return state?.objects?.entities?.find((obj) => obj?._id === objectId);
   }
 };
 
