@@ -89,9 +89,7 @@ const Map = ({ searchedMeetings }) => {
                   meetings[i].date
                 ).format("DD.MM.YY")}</div>
 
-                <div><strong>Время:</strong> ${dayjs(meetings[i]?.time).format(
-                  "hh:mm"
-                )}</div>
+                <div><strong>Время:</strong> ${dayjs(meetings[i]?.time).format("HH:mm")}</div>
 
                 <div><strong>Адрес:</strong> ${meetings[i]?.location?.city} ${
                   meetings[i]?.location?.address

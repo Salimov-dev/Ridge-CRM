@@ -1,12 +1,21 @@
-import { Box } from "@mui/material";
+import { Box, FormHelperText, styled } from "@mui/material";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { TimePicker } from "@mui/x-date-pickers/TimePicker";
 
-const TimePickerStyled = ({ register, data, errors, setValue, name }) => {
+const FieldsContainer = styled(Box)`
+  width: 100%;
+  display: flex;
+  align-items: "center";
+  gap: 4px;
+`;
+
+const TimePickerStyled = ({ register, data, errors, setValue, name, label }) => {
+  console.log("errors", errors);
   return (
-    <Box sx={{ width: "100%", marginBottom: "-3px", marginTop: "-8px" }}>
+    <FieldsContainer>
+      <Box sx={{ width: "100%", marginBottom: "-3px", marginTop: "-8px" }}>
       <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="ru">
         <DemoContainer
           components={["TimePicker"]}
@@ -16,13 +25,14 @@ const TimePickerStyled = ({ register, data, errors, setValue, name }) => {
         >
           <TimePicker
             {...register(name)}
-            label="Basic time picker"
+            label={label}
             ampm={false}
             onChange={(value) => setValue(name, value)}
             errors={errors?.time}
-            value={data.time}
+            value={data?.time}
             sx={{
               width: "100%",
+
               "& .MuiOutlinedInput-root": {
                 "&.Mui-focused fieldset": {
                   borderColor: "green",
@@ -40,8 +50,13 @@ const TimePickerStyled = ({ register, data, errors, setValue, name }) => {
             }}
           />
         </DemoContainer>
+          <FormHelperText sx={{ color: "red" }}>
+            {errors?.message}
+          </FormHelperText>
       </LocalizationProvider>
     </Box>
+    </FieldsContainer>
+    
   );
 };
 

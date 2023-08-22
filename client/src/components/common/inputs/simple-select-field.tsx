@@ -30,9 +30,6 @@ const SimpleSelectField = ({
   label,
   register,
   disabled = false,
-  isHelperText = false,
-  helperText,
-  watch,
   value,
   selectedItems,
 }) => {

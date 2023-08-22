@@ -63,16 +63,17 @@ const MeetingForm = ({
             register={register}
             name="date"
             label="Дата встречи"
-            value={data?.date || ""}
+            value={data?.date}
             onChange={(value) => setValue("date", value)}
             errors={errors?.date}
           />
           <TimePickerStyled
             register={register}
             data={data}
-            errors={errors}
+            errors={errors?.time}
             setValue={setValue}
             name="time"
+            label="Время встречи"
           />
           <SimpleSelectField
             register={register}
@@ -80,7 +81,7 @@ const MeetingForm = ({
             name="meetingType"
             labelId="meetingType"
             label="Тип встречи"
-            value={watchTypeMeeting || ""}
+            value={watchTypeMeeting}
             errors={errors?.meetingType}
           />
           <SimpleSelectField
@@ -89,7 +90,7 @@ const MeetingForm = ({
             name="status"
             labelId="status"
             label="Статус"
-            value={watchStatus || ""}
+            value={watchStatus}
             errors={errors?.status}
           />
         </FieldsContainer>
@@ -101,7 +102,7 @@ const MeetingForm = ({
             name="objectId"
             labelId="objectId"
             label="Объект встречи"
-            value={watchObjectId || ""}
+            value={watchObjectId}
             errors={errors?.objectId}
           />
           <TextFieldStyled
@@ -109,7 +110,7 @@ const MeetingForm = ({
             label="Комментарий"
             name="comment"
             errors={errors?.comment}
-            value={data?.comment || ""}
+            value={data?.comment}
             onInputQuantities={50}
             InputProps={{
               endAdornment: (

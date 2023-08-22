@@ -67,6 +67,11 @@ const CreateMeeting = () => {
     mode: "onBlur",
     resolver: yupResolver(meetingSchema),
   });
+  console.log("errors", errors);
+  
+  const watchStatus = watch("status", "");
+  const watchObjectId = watch("objectId", "");
+  const watchTypeMeeting = watch("meetingType", "");
 
   const {
     getCity,
@@ -114,6 +119,7 @@ const CreateMeeting = () => {
       />
       <FindObjectOnMap />
       <MeetingForm
+        objects={transformObjects}
         register={register}
         onSubmit={onSubmit}
         handleSubmit={handleSubmit}
@@ -123,7 +129,9 @@ const CreateMeeting = () => {
         isEmptyFindedObject={isEmptyFindedObject}
         statuses={statuses}
         meetingTypes={meetingTypes}
-        objects={transformObjects}
+        watchObjectId={watchObjectId}
+        watchStatus={watchStatus}
+        watchTypeMeeting={watchTypeMeeting}
       />
     </Box>
   );

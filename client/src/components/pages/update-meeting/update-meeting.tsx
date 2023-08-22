@@ -9,7 +9,7 @@ import dayjs from "dayjs";
 import { Box } from "@mui/material";
 // components
 import Header from "./components/header";
-import { getMeetingById } from "../../../store/meetings.store";
+import { getMeetingById, updateMeeting } from "../../../store/meetings.store";
 import { getMeetingStatusesList } from "../../../store/meeting-status.store";
 import { meetingSchema } from "../../../schemas/schemas";
 import MeetingForm from "../../common/forms/meeting-form";
@@ -18,7 +18,7 @@ import { getMeetingTypesList } from "../../../store/meeting-types.store";
 import { getCurrentUserId } from "../../../store/users.store";
 
 const UpdateMeeting = () => {
-    const { meetingId } = useParams();
+  const { meetingId } = useParams();
   const meeting = useSelector(getMeetingById(meetingId));
   const objects = useSelector(getObjectsList());
   const statuses = useSelector(getMeetingStatusesList());
@@ -61,38 +61,33 @@ const UpdateMeeting = () => {
   const watchObjectId = watch("objectId", "");
   const watchTypeMeeting = watch("meetingType", "");
 
-
-
   const onSubmit = (data) => {
-    console.log("data", data);
-    
-    // dispatch(updateUser(data))
-    //   .then(navigate(-1))
-    //   .then(toast.success("Менеджер успешно изменен!"));
+    dispatch(updateMeeting(data, meetingId))
+      .then(navigate(-1))
+      .then(toast.success("Встреча успешно изменена!"));
   };
 
-
-
-    return   <Box>
-    <Header meeting={meeting} />
-    <MeetingForm
-    data={data}
+  return (
+    <Box>
+      <Header meeting={meeting} />
+      <MeetingForm
+        data={data}
         register={register}
         onSubmit={onSubmit}
         handleSubmit={handleSubmit}
         errors={errors}
         isValid={isValid}
-        // isEmptyFindedObject={isEmptyFindedObject}
         setValue={setValue}
         statuses={statuses}
         meetingTypes={meetingTypes}
         objects={transformObjects}
-        isEditMode={true}
+        isEditMode={isEditMode}
         watchObjectId={watchObjectId}
         watchStatus={watchStatus}
         watchTypeMeeting={watchTypeMeeting}
       />
-  </Box>
-}
- 
+    </Box>
+  );
+};
+
 export default UpdateMeeting;
