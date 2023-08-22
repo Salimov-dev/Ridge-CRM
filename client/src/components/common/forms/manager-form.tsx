@@ -130,7 +130,7 @@ const ManagerForm = ({
             name="gender"
             labelId="gender"
             label="Пол"
-            value={watchGender}
+            value={watchGender || ""}
           />
         </FieldsContainer>
       </FieldsContainer>
@@ -168,13 +168,13 @@ const ManagerForm = ({
       </Box>
       <FieldsContainer>
         <SimpleSelectField
-          itemsList={userStatuses}
+          register={register}
           name="status"
           labelId="status"
           label="Статус"
+          itemsList={userStatuses}
+          value={watchStatus || ""}
           errors={errors?.status}
-          register={register}
-          value={watchStatus}
         />
         <TextFieldStyled
           register={register}

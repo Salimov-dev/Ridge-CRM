@@ -37,19 +37,24 @@ const Map = ({ searchedMeetings }) => {
   const [isCollapsed, setIsCollapsed] = useState(collapsLocalStorageSet);
 
   const getMeetingTypeName = (id) => {
-    const type = meetingTypes?.filter((type) => type._id === id);
-    const typeObject = Object.assign({}, ...type);
-    const typeName = typeObject.name;
+    const filteredTypes = meetingTypes?.filter((type) => type?._id === id);
+    if (filteredTypes && filteredTypes.length > 0) {
+      const typeObject = Object.assign({}, ...filteredTypes);
+      return typeObject?.name;
+    }
 
-    return typeName;
+    return null;
   };
 
   const getStatusName = (id) => {
-    const status = statuses?.filter((status) => status._id === id);
-    const statusObject = Object.assign({}, ...status);
-    const statusName = statusObject.name;
+    const filteredStatuses = statuses?.filter((status) => status?._id === id);
 
-    return statusName;
+    if (filteredStatuses && filteredStatuses?.length > 0) {
+      const statusObject = Object.assign({}, ...filteredStatuses);
+      return statusObject?.name;
+    }
+
+    return null;
   };
 
   const getManagerName = (id) => {
@@ -71,45 +76,42 @@ const Map = ({ searchedMeetings }) => {
 
     for (let i = 0; i < searchedMeetings?.length; i++) {
       geoObjects[i] = new ymaps.Placemark(
-        [meetings[i].location.latitude, meetings[i].location.longitude],
+        [meetings[i]?.location?.latitude, meetings[i]?.location?.longitude],
         {
           hintContent: [
-            meetings[i].location.city,
-            meetings[i].location.address,
+            meetings[i]?.location?.city,
+            meetings[i]?.location?.address,
           ],
-          clusterCaption: `${dayjs(meetings[i].date).format("DD.MM.YYYY")}`,
+          clusterCaption: `${dayjs(meetings[i]?.date).format("DD.MM.YYYY")}`,
           balloonContent: `
                 <div>
-                <div style={{marginBottom:'10px'}}><a class="btn btn-warning btn-sm" href=/objects/${
-                  meetings[i].objectId
-                }>Перейти в объект</a></div>
-                <br/>
-
                 <div><strong>Дата встречи:</strong> ${dayjs(
                   meetings[i].date
                 ).format("DD.MM.YY")}</div>
 
-                <div><strong>Время:</strong> ${dayjs(meetings[i].time).format(
+                <div><strong>Время:</strong> ${dayjs(meetings[i]?.time).format(
                   "hh:mm"
                 )}</div>
 
-                <div><strong>Адрес:</strong> ${meetings[i].location.city} ${
-            meetings[i].location.address
-          }</div>
+                <div><strong>Адрес:</strong> ${meetings[i]?.location?.city} ${
+                  meetings[i]?.location?.address
+                }</div>
 
                 <div><strong>Менеджер:</strong> ${getManagerName(
-                  meetings[i].userId
+                  meetings[i]?.userId
                 )}</div>
 
                 <div><strong>Статус:</strong> ${getStatusName(
-                  meetings[i].status
+                  meetings[i]?.status
                 )}</div>
                 
                 <div><strong>Тип:</strong> ${getMeetingTypeName(
-                  meetings[i].meetingType
+                  meetings[i]?.meetingType
                 )}</div>
 
-                <div><strong>Комментарий:</strong> ${meetings[i].comment || "-"}</div>
+                <div><strong>Комментарий:</strong> ${
+                  meetings[i]?.comment || "-"
+                }</div>
                 </div>
             `,
         },
