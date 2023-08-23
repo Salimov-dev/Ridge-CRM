@@ -57,6 +57,9 @@ const UpdateMeeting = () => {
   });
 
   const data = watch();
+
+  const isFullValid = data.date !== null && data.time !== null && isValid;
+
   const watchStatus = watch("status", "");
   const watchObjectId = watch("objectId", "");
   const watchTypeMeeting = watch("meetingType", "");
@@ -76,7 +79,7 @@ const UpdateMeeting = () => {
         onSubmit={onSubmit}
         handleSubmit={handleSubmit}
         errors={errors}
-        isValid={isValid}
+        isValid={isFullValid}
         setValue={setValue}
         statuses={statuses}
         meetingTypes={meetingTypes}

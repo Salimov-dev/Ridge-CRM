@@ -3,6 +3,9 @@ import { Box, FormHelperText } from "@mui/material";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import dayjs from "dayjs";
+
+const today = dayjs();
 
 const DatePickerStyled = ({
   register,
@@ -14,8 +17,10 @@ const DatePickerStyled = ({
   errors,
   disabled,
   color = "red",
+  minDate=today,
+  maxDate=null,
 }) => {
-  
+
   return (
     <Box sx={{ width: "100%", marginBottom: "-3px" }}>
       <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="ru">
@@ -25,6 +30,8 @@ const DatePickerStyled = ({
           value={value}
           onChange={onChange}
           error={!!errors}
+          minDate={minDate}
+          maxDate={maxDate}
           disabled={disabled}
           sx={{
             width: "100%",

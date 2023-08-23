@@ -27,7 +27,7 @@ const TitleWithAddress = ({
     <Component>
       <Title>
         <Typography variant="h2">{title}</Typography>
-        {isEmptyFindedObject ? (
+        {!isEmptyFindedObject ? (
           <Typography
             variant="h2"
             sx={{ background: "yellow", color: "black" }}

@@ -11,6 +11,7 @@ import SimpleSelectField from "../inputs/simple-select-field";
 // mock
 import { gendersArray } from "../../../mock/genders";
 import { useEffect, useState } from "react";
+import dayjs from "dayjs";
 
 const FieldsContainer = styled(Box)`
   width: 100%;
@@ -44,9 +45,12 @@ const ManagerForm = ({
   userStatuses,
   isValid,
   watchStatus,
-  watchGender
+  watchGender,
+  watchStartDate,
 }) => {
   const navigate = useNavigate();
+  const today = dayjs();
+  const tomorrow = dayjs(watchStartDate).add(1, "day");
 
   const handleBackPage = () => {
     navigate("/users");
@@ -145,6 +149,7 @@ const ManagerForm = ({
           label="Начало договора"
           value={data?.contract?.startDate}
           onChange={(value) => setValue("contract.startDate", value)}
+          minDate={null}
         />
         <DatePickerStyled
           register={register}
@@ -152,6 +157,7 @@ const ManagerForm = ({
           label="Окончание договора"
           value={data?.contract?.endDate}
           onChange={(value) => setValue("contract.endDate", value)}
+          minDate={watchStartDate === "" ? today : tomorrow}
         />
         <DatePickerStyled
           register={register}
@@ -160,6 +166,7 @@ const ManagerForm = ({
           value={data?.contract?.trialPeriod}
           color="green"
           onChange={(value) => setValue("contract.trialPeriod", value)}
+          minDate={watchStartDate === "" ? today : tomorrow}
         />
       </FieldsContainer>
 

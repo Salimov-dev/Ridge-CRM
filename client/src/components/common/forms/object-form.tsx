@@ -99,12 +99,13 @@ const ObjectForm = ({
             label="Район*"
             itemsList={districts}
             value={watchDistrict || ""}
+            errors={errors?.location?.district}
           />
           <SimpleSelectField
             register={register}
             name="location.metro"
             labelId="metro"
-            label="Метро*"
+            label="Метро"
             itemsList={metros}
             value={watchMetro || ""}
             disabled={!watchDistrict && true}
@@ -116,6 +117,7 @@ const ObjectForm = ({
             label="Статус объекта*"
             itemsList={objectStatuses}
             value={watchStatus || ""}
+            errors={errors?.status}
           />
         </FieldsContainer>
         <FieldsContainer>
@@ -126,6 +128,7 @@ const ObjectForm = ({
             labelId="objectTypes "
             label="Тип объекта*"
             value={watchObjectTypes || ""}
+            errors={errors?.estateOptions?.objectTypes}
           />
           <SimpleSelectField
             register={register}
@@ -134,6 +137,7 @@ const ObjectForm = ({
             label="Тип недвижимости*"
             itemsList={estateTypes}
             value={watchEstateTypes || ""}
+            errors={errors?.estateOptions?.estateTypes}
           />
           <SimpleSelectField
             register={register}
@@ -142,6 +146,7 @@ const ObjectForm = ({
             label="Текущий арендатор*"
             itemsList={currentRenters}
             value={watchCurrentRenters || ""}
+            errors={errors?.estateOptions?.currentRenters}
           />
         </FieldsContainer>
 

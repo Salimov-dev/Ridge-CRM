@@ -27,8 +27,8 @@ import { getMeetingTypesList } from "../../../store/meeting-types.store";
 const initialState = {
   status: "",
   meetingType: "",
-  date: "",
-  time: "",
+  date: null,
+  time: null,
   comment: "",
   objectId: "",
   location: {
@@ -67,8 +67,7 @@ const CreateMeeting = () => {
     mode: "onBlur",
     resolver: yupResolver(meetingSchema),
   });
-  console.log("errors", errors);
-  
+
   const watchStatus = watch("status", "");
   const watchObjectId = watch("objectId", "");
   const watchTypeMeeting = watch("meetingType", "");
@@ -80,10 +79,11 @@ const CreateMeeting = () => {
     getLongitudeCoordinates,
     findedObject,
   } = useFindObject();
-
-  const isEmptyFindedObject = Boolean(Object.keys(findedObject)?.length);
-
+  
   const data = watch();
+
+  const isEmptyFindedObject = Boolean(!Object.keys(findedObject)?.length);
+  const isFullValid = data.date !== null && data.time !== null && isValid;
 
   const onSubmit = (data) => {
     const newData = {
@@ -117,7 +117,9 @@ const CreateMeeting = () => {
         subtitle="Выберите место встречи на карте"
         path="meetings"
       />
+
       <FindObjectOnMap />
+
       <MeetingForm
         objects={transformObjects}
         register={register}
@@ -125,7 +127,7 @@ const CreateMeeting = () => {
         handleSubmit={handleSubmit}
         errors={errors}
         setValue={setValue}
-        isValid={isValid}
+        isValid={isFullValid}
         isEmptyFindedObject={isEmptyFindedObject}
         statuses={statuses}
         meetingTypes={meetingTypes}

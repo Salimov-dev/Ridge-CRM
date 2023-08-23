@@ -71,7 +71,7 @@ const FiltersPanel = ({
           onChange={(e) => setValue("selectedTypes", e.target.value)}
           name="selectedTypes"
           labelId="selectedTypes-label"
-          label="Выбор по статусу"
+          label="Выбор по типу"
           disabled={isLoading ? true : false}
         />
       </FieldsContainer>

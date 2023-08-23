@@ -43,12 +43,12 @@ const MeetingForm = ({
   setValue,
   isValid,
   isEditMode = false,
-  isEmptyFindedObject = true,
+  isEmptyFindedObject,
   watchObjectId,
   watchStatus,
   watchTypeMeeting,
 }) => {
-  const isValidAndHasAdress = Boolean(isEmptyFindedObject) && isValid;
+  const isValidAndHasAdress = Boolean(!isEmptyFindedObject) && isValid;
 
   const navigate = useNavigate();
 

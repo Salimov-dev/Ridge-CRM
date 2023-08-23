@@ -54,6 +54,8 @@ const CreateManager = () => {
     resolver: yupResolver(managerSchema),
   });
 
+  const watchStartDate = watch("contract.startDate", "")
+
   const onSubmit = (data) => {
     const newData = {
       ...data,
@@ -78,6 +80,7 @@ const CreateManager = () => {
         setValue={setValue}
         userStatuses={userStatuses}
         isValid={isValid}
+        watchStartDate={watchStartDate}
       />
     </Box>
   );

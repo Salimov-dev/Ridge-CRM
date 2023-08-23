@@ -3,23 +3,25 @@ import { Box, styled } from "@mui/material";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
-import dayjs from "dayjs";
 import { orderBy } from "lodash";
+// components
 import ButtonsBlock from "./components/buttons-block";
 import LayoutTitle from "../../components/common/page-titles/layout-title";
 import BasicTable from "../../components/common/table/basic-table";
-import {
-  getMeetingLoadingStatus,
-  getMeetingsList,
-} from "../../store/meetings.store";
 import { groupedColumns } from "./table/columns";
 import Loader from "../../components/common/loader/loader";
 import Map from "./components/map";
 import FiltersPanel from "./components/filter-panel";
+// hooks
+import useSearchMeeting from "../../hooks/use-search-meeting";
+// store
 import { getUsersList } from "../../store/users.store";
 import { getMeetingStatusesList } from "../../store/meeting-status.store";
 import { getMeetingTypesList } from "../../store/meeting-types.store";
-import useSearchMeeting from "../../hooks/use-search-meeting";
+import {
+  getMeetingLoadingStatus,
+  getMeetingsList,
+} from "../../store/meetings.store";
 
 const MapContainer = styled(Box)`
   width: 100%;
@@ -146,7 +148,7 @@ const Meetings = () => {
       />
 
       <MapContainer>
-        {!isLoading ? <Map searchedMeetings={meetings} /> : <Loader />}
+        {!isLoading ? <Map searchedMeetings={searchedMeetings} /> : <Loader />}
       </MapContainer>
 
       <FiltersPanel
