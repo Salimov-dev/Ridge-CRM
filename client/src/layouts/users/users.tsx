@@ -37,8 +37,8 @@ const Users = () => {
   const users = useSelector(getUsersList());
   const currentUserId = useSelector(getCurrentUserId());
   const statuses = useSelector(getUserStatusesList());
-  const columns = groupedColumns;
   const isLoading = useSelector(getUsersLoadingStatus());
+  const columns = groupedColumns;
   const usersWithoutCurrentUser = users.filter(
     (user) => user._id !== currentUserId
   );

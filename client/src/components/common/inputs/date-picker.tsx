@@ -15,7 +15,6 @@ const DatePickerStyled = ({
   disabled,
   color = "red",
 }) => {
-  console.log("errors DatePickerStyled", errors);
   
   return (
     <Box sx={{ width: "100%", marginBottom: "-3px" }}>

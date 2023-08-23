@@ -1,8 +1,8 @@
 import MultiSelectField from "../../../components/common/inputs/multi-select-field";
+import SearchDatePicker from "../../../components/common/inputs/search-date-picker";
 import SearchField from "../../../components/common/inputs/search-field";
 import SimpleSelectField from "../../../components/common/inputs/simple-select-field";
 import { Box, styled } from "@mui/material";
-import { gendersArray } from "../../../mock/genders";
 
 const Form = styled(`form`)({
   display: "flex",
@@ -21,43 +21,32 @@ const FieldsContainer = styled(Box)`
 
 const FiltersPanel = ({
   data,
-  usersList,
-  statusesList,
   register,
   setValue,
-  handleKeyDown,
   isLoading,
+  usersList,
+  statusesList,
+  typesList,
 }) => {
   return (
     <Form>
       <FieldsContainer>
-        <SearchField
+      <SearchDatePicker
           register={register}
-          label="Найти по фамилии"
-          name="lastName"
-          onKeyDown={handleKeyDown}
-          value={data.lastName}
-          inputProps={{ maxLength: 30 }}
-          disabled={isLoading ? true : false}
+          name="startDate"
+          label="Назначены от"
+          value={data.startDate}
+          onChange={(value) => setValue("startDate", value)}
+          isLoading={isLoading}
         />
-        <SearchField
+        <SearchDatePicker
           register={register}
-          label="Найти по телефону"
-          name="phone"
-          onKeyDown={handleKeyDown}
-          value={data.phone}
-          inputProps={{ maxLength: 12 }}
-          disabled={isLoading ? true : false}
+          name="endDate"
+          label="Назначены до"
+          value={data.endDate}
+          onChange={(value) => setValue("endDate", value)}
+          isLoading={isLoading}
         />
-        <SearchField
-          register={register}
-          label="Найти по email"
-          name="email"
-          value={data.email}
-          inputProps={{ maxLength: 30 }}
-          disabled={isLoading ? true : false}
-        />
-
         <MultiSelectField
           itemsList={usersList}
           selectedItems={data.selectedUsers}
@@ -76,13 +65,13 @@ const FiltersPanel = ({
           label="Выбор по статусу"
           disabled={isLoading ? true : false}
         />
-        <SimpleSelectField
-          register={register}
-          itemsList={gendersArray}
-          selectedItems={data.gender}
-          name="gender"
-          labelId="gender"
-          label="Пол"
+        <MultiSelectField
+          itemsList={typesList}
+          selectedItems={data.selectedTypes}
+          onChange={(e) => setValue("selectedTypes", e.target.value)}
+          name="selectedTypes"
+          labelId="selectedTypes-label"
+          label="Выбор по статусу"
           disabled={isLoading ? true : false}
         />
       </FieldsContainer>

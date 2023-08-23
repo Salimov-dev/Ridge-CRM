@@ -12,7 +12,6 @@ const FieldsContainer = styled(Box)`
 `;
 
 const TimePickerStyled = ({ register, data, errors, setValue, name, label }) => {
-  console.log("errors", errors);
   return (
     <FieldsContainer>
       <Box sx={{ width: "100%", marginBottom: "-3px", marginTop: "-8px" }}>
