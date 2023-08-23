@@ -53,6 +53,9 @@ const UpdateManager = () => {
   });
 
   const data = watch();
+
+  const isFullValid = data.contract.startDate !== null && data.contract.endDate !== null && data.birthday !== null && isValid;
+
   const watchGender = watch("gender", "");
   const watchStatus = watch("status", "");
 
@@ -72,13 +75,12 @@ const UpdateManager = () => {
       />
       <ManagerForm
         data={formatedUser}
-        watch={watch}
         register={register}
-        handleSubmit={handleSubmit}
         onSubmit={onSubmit}
+        handleSubmit={handleSubmit}
         errors={errors}
         setValue={setValue}
-        isValid={isValid}
+        isValid={isFullValid}
         isEditMode={isEditMode}
         userStatuses={userStatuses}
         watchGender={watchGender}

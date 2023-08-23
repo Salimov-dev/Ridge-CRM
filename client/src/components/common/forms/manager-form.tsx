@@ -51,6 +51,7 @@ const ManagerForm = ({
   const navigate = useNavigate();
   const today = dayjs();
   const tomorrow = dayjs(watchStartDate).add(1, "day");
+  const endTrialPeriod = dayjs(tomorrow).add(1, "day");
 
   const handleBackPage = () => {
     navigate("/users");
@@ -127,6 +128,7 @@ const ManagerForm = ({
             label="Дата рождения"
             value={data?.birthday}
             onChange={(value) => setValue("birthday", value)}
+            minDate={null}
           />
           <SimpleSelectField
             register={register}
@@ -134,7 +136,8 @@ const ManagerForm = ({
             name="gender"
             labelId="gender"
             label="Пол"
-            value={watchGender || ""}
+            value={watchGender}
+            errors={errors?.gender}
           />
         </FieldsContainer>
       </FieldsContainer>
@@ -166,7 +169,7 @@ const ManagerForm = ({
           value={data?.contract?.trialPeriod}
           color="green"
           onChange={(value) => setValue("contract.trialPeriod", value)}
-          minDate={watchStartDate === "" ? today : tomorrow}
+          minDate={watchStartDate === "" ? today : endTrialPeriod}
         />
       </FieldsContainer>
 
@@ -180,7 +183,7 @@ const ManagerForm = ({
           labelId="status"
           label="Статус"
           itemsList={userStatuses}
-          value={watchStatus || ""}
+          value={watchStatus}
           errors={errors?.status}
         />
         <TextFieldStyled

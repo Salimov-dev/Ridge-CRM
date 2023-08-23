@@ -19,7 +19,7 @@ const initialState = {
   email: "",
   password: "",
   status: "",
-  birthday: "",
+  birthday: null,
   gender: "",
   name: {
     firstName: "",
@@ -30,9 +30,9 @@ const initialState = {
     phone: "",
   },
   contract: {
-    startDate: "",
-    endDate: "",
-    trialPeriod: "",
+    startDate: null,
+    endDate: null,
+    trialPeriod: null,
   },
 };
 
@@ -54,7 +54,12 @@ const CreateManager = () => {
     resolver: yupResolver(managerSchema),
   });
 
-  const watchStartDate = watch("contract.startDate", "")
+  const data = watch()
+  console.log("data", data);
+  const watchGender = watch("gender", "")
+  const watchStatus = watch("status", "")
+  const watchStartDate = watch("contract.startDate", null)
+  
 
   const onSubmit = (data) => {
     const newData = {
@@ -73,6 +78,7 @@ const CreateManager = () => {
       <TitleWithBackButton title="Добавить нового менеджера" path="/users" />
 
       <ManagerForm
+      data={data}
         register={register}
         handleSubmit={handleSubmit}
         onSubmit={onSubmit}
@@ -80,6 +86,8 @@ const CreateManager = () => {
         setValue={setValue}
         userStatuses={userStatuses}
         isValid={isValid}
+        watchGender={watchGender}
+        watchStatus={watchStatus}
         watchStartDate={watchStartDate}
       />
     </Box>
