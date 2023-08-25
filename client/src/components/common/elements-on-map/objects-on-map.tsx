@@ -1,7 +1,6 @@
 // Librares
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import dayjs from "dayjs";
-import { Box, styled } from "@mui/material";
 // Styles
 import "./styles.css";
 // Icons
@@ -10,13 +9,6 @@ import { useSelector } from "react-redux";
 // store
 import { getObjectStatusNameById } from "../../../store/object-status.store";
 import { getWorkingPositionNameById } from "../../../store/working-position.store";
-import { getSidebarCollapsState } from "../../../store/sidebar-collaps-state.store";
-
-const Component = styled(Box)`
-  width: 100%;
-  height: 250px;
-  margin-bottom: 10px;
-`;
 
 const ObjectsOnMap = ({ object }) => {
   const latitude = object?.location.latitude;
@@ -32,12 +24,6 @@ const ObjectsOnMap = ({ object }) => {
   );
   const status = useSelector(getObjectStatusNameById(object?.status));
 
-  const sidebarCollapsedStatus = useSelector(getSidebarCollapsState());
-  const collapsLocalStorageSet = JSON.parse(
-    localStorage.getItem("sidebar-collaps-state")
-  );
-  const [isCollapsed, setIsCollapsed] = useState(collapsLocalStorageSet);
-
   const center = [latitude, longitude];
   const zoom = mapZoom;
 
@@ -48,7 +34,7 @@ const ObjectsOnMap = ({ object }) => {
       mapObjOnPage = new ymaps.Map("map-obj", {
         center: center,
         zoom: zoom,
-        controls: ["searchControl", "zoomControl", "rulerControl"]
+        controls: ["searchControl",  "zoomControl", "rulerControl"]
       });
     }
 
@@ -94,18 +80,7 @@ const ObjectsOnMap = ({ object }) => {
     };
   }, [latitude, longitude]);
 
-  // return <div id="map-obj" className="mapObject__container"></div>;
-  return     <Component>
-  <Box
-    className={isCollapsed ? "collapsed" : ""}
-    id="mapObject__container"
-    style={{
-      height: "100%",
-      width: "100%",
-      autoFitToViewport: "always",
-    }}
-  ></Box>
-</Component>
+  return <div id="map-obj" className="mapObject__container"></div>;
 };
 
 export default ObjectsOnMap;

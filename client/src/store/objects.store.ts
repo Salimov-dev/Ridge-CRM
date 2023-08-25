@@ -93,6 +93,8 @@ export const createObject = (payload) => async (dispatch) => {
   dispatch(objectCreateRequested);
   try {
     const { content } = await objectService.create(payload);
+    console.log("content", content);
+    
     dispatch(objectCreated(content));
   } catch (error) {
     dispatch(createObjectFailed(error.message));

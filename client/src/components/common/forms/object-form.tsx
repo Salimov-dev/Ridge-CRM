@@ -77,9 +77,10 @@ const ObjectForm = ({
   const rentTypes = useSelector(getRentTypesList());
   const objectTypes = useSelector(getObjectTypesList());
   const estateTypes = useSelector(getEstateTypesList());
+  const navigate = useNavigate();
+
   const isValidAndHasAdress =
     (Boolean(isEmptyFindedObject) || isObjectHasAddress) && isValid;
-  const navigate = useNavigate();
 
   const handleBackPage = () => {
     navigate(isEditMode ? `/objects/${objectId}` : "/objects");

@@ -17,7 +17,6 @@ import useFindObject from "../../../hooks/use-find-object";
 import { objectSchema } from "../../../schemas/schemas";
 import { capitalizeFirstLetter } from "../../../utils/capitalize-first-letter";
 import TitleWithAddress from "../../common/page-titles/title-with-address";
-import axios from "axios";
 
 const initialState = {
   status: "",
@@ -77,6 +76,7 @@ const CreateObject = () => {
     resolver: yupResolver(objectSchema),
   });
 
+
   const {
     getCity,
     getAddress,
@@ -84,8 +84,10 @@ const CreateObject = () => {
     getLongitudeCoordinates,
     findedObject,
   } = useFindObject();
+  const data = watch()
 
   const isEmptyFindedObject = !Boolean(Object.keys(findedObject)?.length);
+  const isObjectHasAddress = data?.location?.city && data?.location?.address;
 
   const watchName = watch("contact.name");
   const watchStatus = watch("status");
@@ -154,6 +156,7 @@ const CreateObject = () => {
         errors={errors}
         isValid={isValid}
         isEmptyFindedObject={isEmptyFindedObject}
+        isObjectHasAddress={isObjectHasAddress}
         watchName={watchName}
         watchDistrict={watchDistrict}
         watchMetro={watchMetro}

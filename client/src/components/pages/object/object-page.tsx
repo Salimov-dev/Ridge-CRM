@@ -12,11 +12,14 @@ import {
   getObjectsLoadingStatus,
 } from "../../../store/objects.store";
 
-const MapContainer = styled(Box)`
+
+const Map = styled(Box)`
   width: 100%;
   height: 250px;
-  margin-bottom: 10px;
-  background-color: gray;
+  flex: 5;
+  display: flex;
+  background: gray;
+  margin-bottom: 20px;
 `;
 
 const ObjectPage = () => {
@@ -27,9 +30,7 @@ const ObjectPage = () => {
   return (
     <Box>
       <Header object={object} />
-      <MapContainer>
-        {!isLoading ? <Map searchedObjects={searchedObjects} /> : <Loader />}
-      </MapContainer>
+      <Map>{!isLoading ? <ObjectsOnMap object={object} /> : <Loader />}</Map>
       {!isLoading ? (
         <ObjectInfo object={object} isLoading={isLoading} />
       ) : (
