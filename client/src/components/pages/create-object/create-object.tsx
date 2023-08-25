@@ -85,7 +85,7 @@ const CreateObject = () => {
     findedObject,
   } = useFindObject();
 
-  const isEmptyFindedObject = Boolean(Object.keys(findedObject)?.length);
+  const isEmptyFindedObject = !Boolean(Object.keys(findedObject)?.length);
 
   const watchName = watch("contact.name");
   const watchStatus = watch("status");
@@ -134,46 +134,11 @@ const CreateObject = () => {
     setValue("location.longitude", getLongitudeCoordinates());
   }, [findedObject]);
 
-  // const [district, setDistrict] = useState("");
-  // console.log("district", district);
-
-  // const lat = getLatitudeCoordinates();
-  // const long = getLongitudeCoordinates();
-
-  // const getDistrict = (lat, long) => {
-  //   const res = axios(
-  //     `https://geocode-maps.yandex.ru/1.x/?apikey=fe7c4f02-9876-404c-91b2-c6816e373307&geocode=${long},${lat}&kind=district&format=json`
-  //   )
-  //     .then((response) => {
-  //       const componentsList =
-  //         response.data.response.GeoObjectCollection.featureMember[0]?.GeoObject
-  //           .metaDataProperty.GeocoderMetaData.Address?.Components;
-  //       const districtObject = componentsList?.find(
-  //         (item) => item.kind === "district"
-  //       );
-  //       console.log("response.data.response", response);
-  //       console.log("districtObject", districtObject);
-  //       console.log("componentsList", componentsList);
-        
-  //       if (districtObject) {
-  //         setDistrict(districtObject.name);
-  //       }
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error:", error);
-  //     });
-
-  //   return res;
-  // };
-
-  // getDistrict(lat, long);
-
   return (
     <Box>
       <TitleWithAddress
         isEmptyFindedObject={isEmptyFindedObject}
         getCity={getCity}
-        // district={district}
         getAddress={getAddress}
         title="Создать объект:"
         subtitle="Выберите объект на карте"

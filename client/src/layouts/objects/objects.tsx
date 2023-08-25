@@ -1,13 +1,19 @@
 // libraries
-import { Box } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 import dayjs from "dayjs";
+// MUI
+import { Box, styled, Button, Typography } from "@mui/material";
+import ClearOutlinedIcon from "@mui/icons-material/ClearOutlined";
 // components
 import BasicTable from "../../components/common/table/basic-table";
 import FiltersPanel from "./components/filters-panel";
 import { groupedColumns } from "./table/columns";
+import LayoutTitle from "../../components/common/page-titles/layout-title";
+import Map from "./components/map";
+import Loader from "../../components/common/loader/loader";
 // store
 import {
   getObjectsList,
@@ -15,7 +21,19 @@ import {
 } from "../../store/objects.store";
 // hooks
 import useSearchObject from "../../hooks/use-search-object";
-import LayoutTitle from "../../components/common/page-titles/layout-title";
+
+const MapContainer = styled(Box)`
+  width: 100%;
+  height: 250px;
+  margin-bottom: 10px;
+  background-color: gray;
+`;
+
+const ButtonsBlock = styled(Box)`
+  display: flex;
+  margin-bottom: 10px;
+  gap: 4px;
+`;
 
 const initialState = {
   address: "",
@@ -35,9 +53,10 @@ const initialState = {
 };
 
 const Objects = () => {
+  const objects = useSelector(getObjectsList());
   const columns = groupedColumns;
   const isLoading = useSelector(getObjectsLoadingStatus());
-  const objects = useSelector(getObjectsList());
+  const navigate = useNavigate();
 
   const localStorageState = JSON.parse(
     localStorage.getItem("search-objects-data")
@@ -60,7 +79,7 @@ const Objects = () => {
   });
 
   const data = watch();
-
+  const isInputEmpty = JSON.stringify(initialState) !== JSON.stringify(data);
   const searchedObjects = useSearchObject({
     objects,
     data,
@@ -79,8 +98,34 @@ const Objects = () => {
   }, [data]);
 
   return (
-    <Box>
+    <Box sx={{width: "100%"}}>
       <LayoutTitle title="Таблица объектов" />
+
+      <ButtonsBlock>
+        <Button
+          variant="contained"
+          color="success"
+          onClick={() => navigate("create")}
+        >
+          <Typography>Создать объект</Typography>
+        </Button>
+        {isInputEmpty && (
+          <Button
+            variant="outlined"
+            color="success"
+            onClick={() => reset(initialState)}
+            sx={{ display: "flex", alignItems: "center", gap: "3px" }}
+          >
+            <Typography> Очистить фильтры</Typography>
+            <ClearOutlinedIcon />
+          </Button>
+        )}
+      </ButtonsBlock>
+
+      <MapContainer>
+        {!isLoading ? <Map searchedObjects={searchedObjects} /> : <Loader />}
+      </MapContainer>
+
       <FiltersPanel
         register={register}
         objects={objects}

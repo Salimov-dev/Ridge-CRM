@@ -5,7 +5,6 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 // layouts
 import Presentations from "./layouts/presentations/presentations";
-import ObjectsOnMap from "./layouts/objects-on-map/objects-on-map";
 import Login from "./layouts/login/login";
 import Signup from "./layouts/signup";
 import Profile from "./layouts/profile/profile";
@@ -89,11 +88,6 @@ function App() {
                   <Route path={"create"} element={<CreateMeeting />} />
                   <Route path={":meetingId/edit"} element={<UpdateMeeting />} />
                   <Route path="*" element={<Navigate to="/meetings" />} />
-                </Route>
-
-                <Route path="map">
-                  <Route index element={<ObjectsOnMap />} />
-                  <Route path="*" element={<Navigate to="/map" />} />
                 </Route>
 
                 <Route path="presentations">

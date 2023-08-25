@@ -11,6 +11,7 @@ const useFindObject = () => {
         {
           center: [59.927702320754996, 30.337777413480463],
           zoom: 12,
+          controls: ["searchControl",  "zoomControl", "rulerControl"]
         },
         {
           searchControlProvider: "yandex#search",

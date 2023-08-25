@@ -3,12 +3,9 @@ import { orderBy } from "lodash";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 // MUI
-import ClearOutlinedIcon from "@mui/icons-material/ClearOutlined";
 import {
   Box,
   styled,
-  Typography,
-  Button,
   FormControl,
   FormControlLabel,
   FormGroup,
@@ -35,23 +32,14 @@ const Form = styled(`form`)({
   gap: "4px",
 });
 
-const ButtonsBlock = styled(Box)`
-  display: flex;
-  margin-bottom: 10px;
-  gap: 4px;
-`;
-
 const FiltersPanel = ({
   setValue,
   objects,
   data,
   initialState,
   register,
-  reset,
   isLoading,
 }) => {
-  const isInputEmpty = JSON.stringify(initialState) !== JSON.stringify(data);
-
   const objectStatuses = useSelector(getObjectsStatusList());
   const users = useSelector(getUsersList());
   const districts = useSelector(getDistrictsList());
@@ -59,7 +47,6 @@ const FiltersPanel = ({
   const currentRenters = useSelector(getCurrentRentersList());
   const estateTypes = useSelector(getEstateTypesList());
   const objectTypes = useSelector(getObjectTypesList());
-  const navigate = useNavigate();
 
   const isOnlyPhoneChecked = data?.onlyWithPhone;
 
@@ -206,27 +193,6 @@ const FiltersPanel = ({
 
   return (
     <>
-      <ButtonsBlock>
-        <Button
-          variant="contained"
-          color="success"
-          onClick={() => navigate("create")}
-        >
-          <Typography>Создать объект</Typography>
-        </Button>
-        {isInputEmpty && (
-          <Button
-            variant="outlined"
-            color="success"
-            onClick={() => reset(initialState)}
-            sx={{ display: "flex", alignItems: "center", gap: "3px" }}
-          >
-            <Typography> Очистить фильтры</Typography>
-            <ClearOutlinedIcon />
-          </Button>
-        )}
-      </ButtonsBlock>
-
       <Form>
         <SearchField
           register={register}
@@ -312,7 +278,7 @@ const FiltersPanel = ({
       </Form>
 
       <Form>
-      <MultiSelectField
+        <MultiSelectField
           itemsList={getActualMetroList()}
           selectedItems={data.selectedMetro}
           onChange={(e) => setValue("selectedMetro", e.target.value)}

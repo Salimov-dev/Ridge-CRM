@@ -54,12 +54,11 @@ const CreateManager = () => {
     resolver: yupResolver(managerSchema),
   });
 
-  const data = watch()
-  console.log("data", data);
-  const watchGender = watch("gender", "")
-  const watchStatus = watch("status", "")
-  const watchStartDate = watch("contract.startDate", null)
-  
+  const data = watch();
+
+  const watchGender = watch("gender", "");
+  const watchStatus = watch("status", "");
+  const watchStartDate = watch("contract.startDate", null);
 
   const onSubmit = (data) => {
     const newData = {
@@ -78,7 +77,7 @@ const CreateManager = () => {
       <TitleWithBackButton title="Добавить нового менеджера" path="/users" />
 
       <ManagerForm
-      data={data}
+        data={data}
         register={register}
         handleSubmit={handleSubmit}
         onSubmit={onSubmit}

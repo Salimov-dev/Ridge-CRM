@@ -33,44 +33,23 @@ const ItemsList = ({ isCollapsed, selected, setSelected, colors }) => {
         variant="h6"
         color={colors.grey[300]}
         sx={{
-          m: !isCollapsed ? "15px 0 5px 20px" : "15px 0 5px 12px",
-          fontSize: !isCollapsed ? "inherit" : "12px",
-        }}
-      >
-        Объекты
-      </Typography>
-      <Item
-        title="Таблица объектов"
-        to="/objects"
-        icon={
-          <Tooltip title="Таблица объектов" placement="top-start" arrow>
-            <BusinessOutlinedIcon />
-          </Tooltip>
-        }
-        selected={selected}
-        setSelected={setSelected}
-      />
-      <Item
-        title="Объекты на карте"
-        to="/map"
-        icon={
-          <Tooltip title="Объекты на карте" placement="top-start" arrow>
-            <MapOutlinedIcon />
-          </Tooltip>
-        }
-        selected={selected}
-        setSelected={setSelected}
-      />
-      <Typography
-        variant="h6"
-        color={colors.grey[300]}
-        sx={{
           m: !isCollapsed ? "15px 0 5px 20px" : "15px 0 5px 6px",
           fontSize: !isCollapsed ? "inherit" : "12px",
         }}
       >
         Активность
       </Typography>
+      <Item
+        title="Объекты"
+        to="/objects"
+        icon={
+          <Tooltip title="Объекты" placement="top-start" arrow>
+            <BusinessOutlinedIcon />
+          </Tooltip>
+        }
+        selected={selected}
+        setSelected={setSelected}
+      />
       <Item
         title="Сделки"
         to="/deal"

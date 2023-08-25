@@ -3,8 +3,8 @@ import { useEffect, useState } from "react";
 import { Box, styled } from "@mui/material";
 import dayjs from "dayjs";
 // Icons
-import target_cluster from "../assets/target_cluster.png";
-import target from "../assets/target.png";
+import target_cluster from "../../../assets/map/target_cluster.png";
+import target from "../../../assets/map/target.png";
 // store
 import { getUsersList } from "../../../store/users.store";
 import { getObjectsList } from "../../../store/objects.store";
@@ -72,6 +72,7 @@ const Map = ({ searchedMeetings }) => {
     mapObjects = new ymaps.Map("map__objects", {
       center: [59.930320630519155, 30.32906024941998],
       zoom: 11,
+      controls: ["searchControl",  "zoomControl", "rulerControl"]
     });
 
     for (let i = 0; i < searchedMeetings?.length; i++) {
