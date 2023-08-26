@@ -5,7 +5,7 @@ import { Box, styled } from "@mui/material";
 // components
 import Loader from "../../loader/loader";
 // yandex map
-import { Map, Placemark, Clusterer } from "@pbe/react-yandex-maps";
+import { Map, Placemark, Clusterer, ObjectManager } from "@pbe/react-yandex-maps";
 import target from "../../../../assets/map/target.png";
 import target_cluster from "../../../../assets/map/target_cluster.png";
 // styles
@@ -30,7 +30,21 @@ const ItemsOnMap = ({
   onClick,
 }) => {
   const [activePortal, setActivePortal] = useState(false);
+  const MAP_DEFAULT_STATE = {
+    center: [55.751574, 37.573856],
+    zoom: 5
+  };
 
+  const features = items?.map(item => ({
+    type: "Feature",
+    id: item,
+    geometry: {
+      type: "Point",
+      coordinates: item.location?.latitude && item.location?.longitude
+      ? [item.location.latitude, item.location.longitude]
+      : null,
+    }
+  }));
   const Portal = ({ children, getHTMLElementId }) => {
     const mount = document.getElementById(getHTMLElementId);
     const el = document.createElement("div");
@@ -62,14 +76,31 @@ const ItemsOnMap = ({
             "control.SearchControl",
           ]}
         >
-          <Clusterer
+           <ObjectManager
+          options={{
+            clusterize: true,
+            gridSize: 32,
+          }}
+          objects={{
+            openBalloonOnClick: true,
+            iconLayout: "default#image",
+            iconImageHref: target,
+            iconImageSize: [40, 40],
+            iconImageOffset: [-20, -40],
+          }}
+          clusters={{
+            preset: "islands#redClusterIcons",
+          }}
+          defaultFeatures={features}
+          modules={["objectManager.addon.objectsBalloon"]}
+        />
+          {/* <Clusterer
             options={{
               clusterIcons: [
                 {
                   href: target_cluster,
                   size: [50, 50],
                   offset: [-25, -25],
-                  clusterCaption: 'метка <strong>'
                 },
               ],
               groupByCoordinates: false,
@@ -106,7 +137,7 @@ const ItemsOnMap = ({
                 }}
               />
             ))}
-          </Clusterer>
+          </Clusterer> */}
         </Map>
       ) : (
         <Loader />
