@@ -16,7 +16,6 @@ import { getWorkingPositionsList } from "../../../store/working-position.store";
 import { getSidebarCollapsState } from "../../../store/sidebar-collaps-state.store";
 // utils
 import { enterPhoneFormat } from "../../../utils/enter-phone-format";
-import { FormatDate } from "../../../utils/format-date";
 
 const Component = styled(Box)`
   width: 100%;
@@ -24,7 +23,7 @@ const Component = styled(Box)`
   margin-bottom: 10px;
 `;
 
-const Map = ({ searchedObjects }) => {
+const ObjectsMap = ({ searchedObjects }) => {
   const objects = useSelector(getObjectsList());
   const statuses = useSelector(getObjectsStatusList());
   const users = useSelector(getUsersList());
@@ -62,18 +61,20 @@ const Map = ({ searchedObjects }) => {
     mapObjects = new ymaps.Map("map__objects", {
       center: [59.930320630519155, 30.32906024941998],
       zoom: 11,
-      controls: ["searchControl",  "zoomControl", "rulerControl"]
+      controls: ["searchControl", "zoomControl", "rulerControl"],
     });
 
     for (let i = 0; i < searchedObjects?.length; i++) {
-      
       geoObjects[i] = new ymaps.Placemark(
         [objects[i].location.latitude, objects[i].location.longitude],
         {
           hintContent: [objects[i].location.city, objects[i].location.address],
-          clusterCaption: `${dayjs(objects[i].created_at).format("DD.MM.YYYY")}`,
+          clusterCaption: `${dayjs(objects[i].created_at).format(
+            "DD.MM.YYYY"
+          )}`,
           balloonContent: `
                 <div>
+                <div>ссылка на</div>
                 <div><strong>Дата:</strong> ${dayjs(
                   objects[i].created_at
                 ).format("DD.MM.YY")}</div>
@@ -154,4 +155,4 @@ const Map = ({ searchedObjects }) => {
   );
 };
 
-export default Map;
+export default ObjectsMap;

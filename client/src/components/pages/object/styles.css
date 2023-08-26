@@ -1,0 +1,5 @@
+.driver-card {
+  width: 350px;
+  height: 150px;
+  overflow-y: auto;
+}

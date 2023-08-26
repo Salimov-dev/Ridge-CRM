@@ -12,7 +12,7 @@ import BasicTable from "../../components/common/table/basic-table";
 import FiltersPanel from "./components/filters-panel";
 import { groupedColumns } from "./table/columns";
 import LayoutTitle from "../../components/common/page-titles/layout-title";
-import Map from "./components/map";
+import ObjectsMap from "./components/map";
 import Loader from "../../components/common/loader/loader";
 // store
 import {
@@ -21,6 +21,7 @@ import {
 } from "../../store/objects.store";
 // hooks
 import useSearchObject from "../../hooks/use-search-object";
+
 
 const MapContainer = styled(Box)`
   width: 100%;
@@ -123,7 +124,7 @@ const Objects = () => {
       </ButtonsBlock>
 
       <MapContainer>
-        {!isLoading ? <Map searchedObjects={searchedObjects} /> : <Loader />}
+        {!isLoading ? <ObjectsMap searchedObjects={searchedObjects} /> : <Loader />}
       </MapContainer>
 
       <FiltersPanel
