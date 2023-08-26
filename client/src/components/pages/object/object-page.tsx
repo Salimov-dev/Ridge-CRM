@@ -8,7 +8,7 @@ import {
   getObjectById,
   getObjectsLoadingStatus,
 } from "../../../store/objects.store";
-import ItemsOnMap from "../../common/map/items-on-map/items-on-map";
+import ItemOnMap from "../../common/map/item-on-map/item-on-map";
 import Baloon from "./map/baloon";
 
 const ObjectPage = () => {
@@ -25,7 +25,7 @@ const ObjectPage = () => {
   return (
     <Box>
       <Header object={object} />
-      <ItemsOnMap
+      <ItemOnMap
         items={object}
         mapZoom={mapZoom}
         hintContent={address}

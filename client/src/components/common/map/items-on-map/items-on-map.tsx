@@ -3,10 +3,12 @@ import { createPortal } from "react-dom";
 // MUI
 import { Box, styled } from "@mui/material";
 // components
-import Loader from "../../../common/loader/loader";
+import Loader from "../../loader/loader";
 // yandex map
-import { Map, Placemark } from "@pbe/react-yandex-maps";
+import { Map, Placemark, Clusterer } from "@pbe/react-yandex-maps";
 import target from "../../../../assets/map/target.png";
+import target_cluster from "../../../../assets/map/target_cluster.png";
+// styles
 import "./styles.css";
 
 const MapContainer = styled(Box)`
@@ -25,27 +27,50 @@ const ItemsOnMap = ({
   center,
   mapZoom,
   isLoading,
+  onClick,
 }) => {
   const [activePortal, setActivePortal] = useState(false);
 
   const Portal = ({ children, getHTMLElementId }) => {
-    // находим искомый HTML по id
     const mount = document.getElementById(getHTMLElementId);
-    // создаём свой div
     const el = document.createElement("div");
 
     useEffect(() => {
-      // добавляем свой див к искомому элементу
       if (mount) mount.appendChild(el);
       return () => {
-        // удаляем элемент от искомого при завершении компоненты
         if (mount) mount.removeChild(el);
       };
     }, [el, mount]);
 
-    // отменяем отрисовку при отсутствии искомого элемента
+    const handleDocumentClick = (event) => {
+      if (!el.contains(event.target) && !mount.contains(event.target)) {
+        setActivePortal(false);
+      }
+    };
+
+    useEffect(() => {
+      const ymapsBalloonCloseButton = document.querySelector(
+        ".ymaps-2-1-79-balloon__close-button"
+      );
+
+      if (ymapsBalloonCloseButton) {
+        const closeBalloon = () => {
+          setActivePortal(false);
+        };
+
+        ymapsBalloonCloseButton.addEventListener("click", closeBalloon);
+
+        document.addEventListener("click", handleDocumentClick);
+
+        return () => {
+          ymapsBalloonCloseButton.removeEventListener("click", closeBalloon);
+          document.removeEventListener("click", handleDocumentClick);
+        };
+      }
+    });
+
     if (!mount) return null;
-    // собственно, пририсовываем React-элемент в div к искомому HTML
+
     return createPortal(children, el);
   };
 
@@ -66,6 +91,7 @@ const ItemsOnMap = ({
       };
     }
   });
+
   return (
     <MapContainer>
       {!isLoading ? (
@@ -83,26 +109,46 @@ const ItemsOnMap = ({
             "control.SearchControl",
           ]}
         >
-          <Placemark
-            modules={["geoObject.addon.balloon", "geoObject.addon.hint"]}
+          <Clusterer
             options={{
-              iconLayout: "default#image",
-              iconImageHref: target,
-              iconImageSize: [40, 40],
-              iconImageOffset: [-20, -40],
+              clusterIcons: [
+                {
+                  href: target_cluster,
+                  size: [50, 50],
+                  offset: [-25, -25],
+                },
+              ],
+              groupByCoordinates: false,
             }}
-            geometry={center}
-            properties={{
-              hintContent: hintContent,
-              balloonContent: '<div id="baloon" class="baloon"></div>',
-            }}
-            onClick={() => {
-              // ставим в очередь промисов, чтобы сработало после отрисовки балуна
-              setTimeout(() => {
-                setActivePortal(true);
-              }, 0);
-            }}
-          />
+          >
+            {items?.map((item) => (
+              <Placemark
+                key={item._id}
+                modules={["geoObject.addon.balloon", "geoObject.addon.hint"]}
+                options={{
+                  iconLayout: "default#image",
+                  iconImageHref: target,
+                  iconImageSize: [40, 40],
+                  iconImageOffset: [-20, -40],
+                }}
+                geometry={
+                  item.location?.latitude && item.location?.longitude
+                    ? [item.location.latitude, item.location.longitude]
+                    : null
+                }
+                properties={{
+                  hintContent: hintContent(item),
+                  balloonContent: '<div id="baloon" class="baloon"></div>',
+                }}
+                onClick={() => {
+                  onClick(item._id);
+                  setTimeout(() => {
+                    setActivePortal(true);
+                  }, 0);
+                }}
+              />
+            ))}
+          </Clusterer>
         </Map>
       ) : (
         <Loader />

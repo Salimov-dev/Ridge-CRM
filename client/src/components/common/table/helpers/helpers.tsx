@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import dayjs from "dayjs";
 // utils
 import { enterPhoneFormat } from "../../../../utils/enter-phone-format";
@@ -26,7 +26,7 @@ export const FormatManagerName = (id) => {
 };
 
 export const FormatPhone = (num) => {
-  return <Box sx={{ whiteSpace: "nowrap" }}>{enterPhoneFormat(num)}</Box>;
+  return <Box sx={{ whiteSpace: "nowrap" }}><Typography>{enterPhoneFormat(num)}</Typography> </Box>;
 };
 
 export const FormatDistrict = (id) => {

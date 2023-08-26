@@ -1,6 +1,6 @@
 // libraries
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 import dayjs from "dayjs";
@@ -12,23 +12,16 @@ import BasicTable from "../../components/common/table/basic-table";
 import FiltersPanel from "./components/filters-panel";
 import { groupedColumns } from "./table/columns";
 import LayoutTitle from "../../components/common/page-titles/layout-title";
-import ObjectsMap from "./components/map";
-import Loader from "../../components/common/loader/loader";
 // store
 import {
+  getObjectById,
   getObjectsList,
   getObjectsLoadingStatus,
 } from "../../store/objects.store";
 // hooks
 import useSearchObject from "../../hooks/use-search-object";
-
-
-const MapContainer = styled(Box)`
-  width: 100%;
-  height: 250px;
-  margin-bottom: 10px;
-  background-color: gray;
-`;
+import ItemsOnMap from "../../components/common/map/items-on-map/items-on-map";
+import Baloon from "./map/baloon";
 
 const ButtonsBlock = styled(Box)`
   display: flex;
@@ -54,9 +47,15 @@ const initialState = {
 };
 
 const Objects = () => {
+  const [selectedBaloon, setSelectedBaloon] = useState(null);
   const objects = useSelector(getObjectsList());
-  const columns = groupedColumns;
+  const selectedObject = useSelector(getObjectById(selectedBaloon));
   const isLoading = useSelector(getObjectsLoadingStatus());
+
+  const columns = groupedColumns;
+  const center = [59.930320630519155, 30.32906024941998];
+  const mapZoom = 11;
+
   const navigate = useNavigate();
 
   const localStorageState = JSON.parse(
@@ -99,7 +98,7 @@ const Objects = () => {
   }, [data]);
 
   return (
-    <Box sx={{width: "100%"}}>
+    <Box sx={{ width: "100%" }}>
       <LayoutTitle title="Таблица объектов" />
 
       <ButtonsBlock>
@@ -123,9 +122,17 @@ const Objects = () => {
         )}
       </ButtonsBlock>
 
-      <MapContainer>
-        {!isLoading ? <ObjectsMap searchedObjects={searchedObjects} /> : <Loader />}
-      </MapContainer>
+      <ItemsOnMap
+        items={searchedObjects}
+        mapZoom={mapZoom}
+        hintContent={(item) =>
+          `${item?.location?.city}, ${item?.location?.address}`
+        }
+        center={center}
+        onClick={setSelectedBaloon}
+        baloon={<Baloon object={selectedObject} />}
+        isLoading={isLoading}
+      />
 
       <FiltersPanel
         register={register}
