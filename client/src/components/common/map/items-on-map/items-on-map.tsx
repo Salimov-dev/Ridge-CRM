@@ -42,55 +42,8 @@ const ItemsOnMap = ({
       };
     }, [el, mount]);
 
-    const handleDocumentClick = (event) => {
-      if (!el.contains(event.target) && !mount.contains(event.target)) {
-        setActivePortal(false);
-      }
-    };
-
-    useEffect(() => {
-      const ymapsBalloonCloseButton = document.querySelector(
-        ".ymaps-2-1-79-balloon__close-button"
-      );
-
-      if (ymapsBalloonCloseButton) {
-        const closeBalloon = () => {
-          setActivePortal(false);
-        };
-
-        ymapsBalloonCloseButton.addEventListener("click", closeBalloon);
-
-        document.addEventListener("click", handleDocumentClick);
-
-        return () => {
-          ymapsBalloonCloseButton.removeEventListener("click", closeBalloon);
-          document.removeEventListener("click", handleDocumentClick);
-        };
-      }
-    });
-
-    if (!mount) return null;
-
     return createPortal(children, el);
   };
-
-  useEffect(() => {
-    const ymapsBalloonCloseButton = document.querySelector(
-      ".ymaps-2-1-79-balloon__close-button"
-    );
-
-    if (ymapsBalloonCloseButton) {
-      const closeBalloon = () => {
-        setActivePortal(false);
-      };
-
-      ymapsBalloonCloseButton.addEventListener("click", closeBalloon);
-
-      return () => {
-        ymapsBalloonCloseButton.removeEventListener("click", closeBalloon);
-      };
-    }
-  });
 
   return (
     <MapContainer>
@@ -116,10 +69,15 @@ const ItemsOnMap = ({
                   href: target_cluster,
                   size: [50, 50],
                   offset: [-25, -25],
+                  clusterCaption: 'метка <strong>'
                 },
               ],
               groupByCoordinates: false,
             }}
+            // onClick={ () => {
+            //   // ставим в очередь промисов, чтобы сработало после отрисовки балуна
+            //   setTimeout(() => { setActivePortal(true)}, 0)
+            //   } } 
           >
             {items?.map((item) => (
               <Placemark
@@ -141,8 +99,8 @@ const ItemsOnMap = ({
                   balloonContent: '<div id="baloon" class="baloon"></div>',
                 }}
                 onClick={() => {
-                  onClick(item._id);
                   setTimeout(() => {
+                    onClick(item?._id);
                     setActivePortal(true);
                   }, 0);
                 }}

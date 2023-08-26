@@ -20,7 +20,7 @@ const MapContainer = styled(Box)`
 
 const ItemOnMap = ({ baloon, hintContent, center, mapZoom, isLoading }) => {
   const [activePortal, setActivePortal] = useState(false);
-
+  
   const Portal = ({ children, getHTMLElementId }) => {
     // находим искомый HTML по id
     const mount = document.getElementById(getHTMLElementId);
@@ -59,6 +59,7 @@ const ItemOnMap = ({ baloon, hintContent, center, mapZoom, isLoading }) => {
       };
     }
   });
+
   return (
     <MapContainer>
       {!isLoading ? (
@@ -96,6 +97,7 @@ const ItemOnMap = ({ baloon, hintContent, center, mapZoom, isLoading }) => {
               }, 0);
             }}
           />
+          
         </Map>
       ) : (
         <Loader />

@@ -1,15 +1,17 @@
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { Box } from "@mui/material";
+// components
 import Loader from "../../common/loader/loader";
 import ObjectInfo from "./components/object-info";
 import Header from "./components/header";
+import ItemOnMap from "../../common/map/item-on-map/item-on-map";
+import Baloon from "./map/baloon";
+// store
 import {
   getObjectById,
   getObjectsLoadingStatus,
 } from "../../../store/objects.store";
-import ItemOnMap from "../../common/map/item-on-map/item-on-map";
-import Baloon from "./map/baloon";
 
 const ObjectPage = () => {
   const objectId = useParams().objectId;

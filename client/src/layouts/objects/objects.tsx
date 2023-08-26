@@ -8,10 +8,12 @@ import dayjs from "dayjs";
 import { Box, styled, Button, Typography } from "@mui/material";
 import ClearOutlinedIcon from "@mui/icons-material/ClearOutlined";
 // components
-import BasicTable from "../../components/common/table/basic-table";
-import FiltersPanel from "./components/filters-panel";
+import Baloon from "./map/baloon";
 import { groupedColumns } from "./table/columns";
+import FiltersPanel from "./components/filters-panel";
+import BasicTable from "../../components/common/table/basic-table";
 import LayoutTitle from "../../components/common/page-titles/layout-title";
+import ItemsOnMap from "../../components/common/map/items-on-map/items-on-map";
 // store
 import {
   getObjectById,
@@ -20,8 +22,6 @@ import {
 } from "../../store/objects.store";
 // hooks
 import useSearchObject from "../../hooks/use-search-object";
-import ItemsOnMap from "../../components/common/map/items-on-map/items-on-map";
-import Baloon from "./map/baloon";
 
 const ButtonsBlock = styled(Box)`
   display: flex;
@@ -48,6 +48,7 @@ const initialState = {
 
 const Objects = () => {
   const [selectedBaloon, setSelectedBaloon] = useState(null);
+
   const objects = useSelector(getObjectsList());
   const selectedObject = useSelector(getObjectById(selectedBaloon));
   const isLoading = useSelector(getObjectsLoadingStatus());
