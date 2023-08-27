@@ -7,6 +7,6 @@ export const AppStyled = styled(Box)`
 `;
 
 export const RightSide = styled(Box)`
-  padding: 0 20px 250px 20px;
+  padding: 0 20px 30px 20px;
   width: 100%;
 `;

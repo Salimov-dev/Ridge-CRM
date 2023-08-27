@@ -1,5 +1,5 @@
 // libraries
-import { CssBaseline, ThemeProvider } from "@mui/material";
+import { Box, CssBaseline, ThemeProvider } from "@mui/material";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 // layouts
@@ -31,6 +31,7 @@ import AppLoader from "./hoc/app-loader";
 import ScrollToTop from "./utils/scroll-to-top";
 import { ColorModeContext, useMode } from "./theme";
 import Calendar from "./layouts/calendar/calendar";
+import Footer from "./components/common/footer/footer";
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -101,6 +102,10 @@ function App() {
                 </Route>
 
               </Routes>
+              
+
+              <Footer/>
+    
             </RightSide>
           </AppStyled>
         </AppLoader>
