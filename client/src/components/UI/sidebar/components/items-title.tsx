@@ -6,7 +6,10 @@ const ItemsTitle = ({ colors, isCollapsed, title }) => {
       variant="h6"
       color={colors}
       sx={{
-        m: !isCollapsed ? "15px 0 5px 20px" : "15px 0 5px 6px",
+        display: "flex",
+        justifyContent: "center",
+        paddingRight: "7px",
+        margin: !isCollapsed ? "15px 0 5px 20px" : "15px 0 5px 6px",
         fontSize: !isCollapsed ? "inherit" : "12px",
       }}
     >

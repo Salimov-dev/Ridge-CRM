@@ -1,22 +1,22 @@
 import { Button } from "@mui/material";
-import { useNavigate } from "react-router-dom";
 import ArrowBackIosNewOutlinedIcon from "@mui/icons-material/ArrowBackIosNewOutlined";
+import { useNavigate } from "react-router-dom";
 
-const PageBackButton = () => {
+const LinkButton = ({ path, text="Назад" }) => {
   const navigate = useNavigate();
   return (
     <Button
       color="success"
       variant="outlined"
       sx={{ height: "50px", color: "white" }}
-      onClick={() => navigate(-1)}
+      onClick={() => navigate(path)}
     >
       <ArrowBackIosNewOutlinedIcon
         sx={{ width: "20px", height: "20px", marginRight: "5px" }}
       />
-      Назад
+      {text}
     </Button>
   );
 };
 
-export default PageBackButton;
+export default LinkButton;

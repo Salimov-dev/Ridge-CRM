@@ -26,7 +26,6 @@ const ItemsList = ({ isCollapsed, selected, setSelected, colors }) => {
         selected={selected}
         setSelected={setSelected}
       />
-
       <ItemsTitle
         title="Активность"
         colors={colors.grey[300]}

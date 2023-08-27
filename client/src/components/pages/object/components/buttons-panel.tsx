@@ -1,7 +1,9 @@
-import { Box, Button, styled } from "@mui/material";
-import { useNavigate, useParams } from "react-router-dom";
+import { Box, styled } from "@mui/material";
+import { useParams } from "react-router-dom";
+// components
 import PageBackButton from "../../../common/buttons/page-back-button";
 import EditButton from "../../../common/buttons/edit-button";
+import LinkButton from "../../../common/buttons/link-button";
 
 const Component = styled(Box)`
   display: flex;
@@ -10,11 +12,10 @@ const Component = styled(Box)`
 
 const ButtonsPanel = () => {
   const objectId = useParams().objectId;
-  const navigate = useNavigate();
 
   return (
     <Component>
-      <PageBackButton path="/objects" text="Объекты" />
+      <LinkButton path="/objects" text="Объекты" />
       <PageBackButton />
       <EditButton path={`/objects/${objectId}/edit`} />
     </Component>
