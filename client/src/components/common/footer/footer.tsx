@@ -1,5 +1,5 @@
-import { Box, Button, Divider, styled } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { Box, Divider, styled } from "@mui/material";
+import Item from "./components/item";
 
 const Component = styled(Box)`
   height: 200px;
@@ -18,74 +18,24 @@ const Menu = styled(Box)`
 `;
 
 const Footer = () => {
-  const navigate = useNavigate();
-
   return (
     <Component>
       <Menu>
-        <Button
-          variant="outlined"
-          sx={{ color: "gray" }}
-          onClick={() => navigate("/")}
-        >
-          Главная
-        </Button>
+        <Item title="Главная" path="/" />
         <Divider orientation="vertical" flexItem />
-        <Button
-          variant="outlined"
-          sx={{ color: "gray" }}
-          onClick={() => navigate("/objects")}
-        >
-          Объекты
-        </Button>
+        <Item title="Объекты" path="/objects" />
         <Divider orientation="vertical" flexItem />
-        <Button
-          variant="outlined"
-          sx={{ color: "gray" }}
-          onClick={() => navigate("/")}
-        >
-          Сделки
-        </Button>
+        <Item title="Сделки" path="/" />
         <Divider orientation="vertical" flexItem />
-        <Button
-          variant="outlined"
-          sx={{ color: "gray" }}
-          onClick={() => navigate("/meetings")}
-        >
-          Встречи
-        </Button>
+        <Item title="Встречи" path="/meetings" />
         <Divider orientation="vertical" flexItem />
-        <Button
-          variant="outlined"
-          sx={{ color: "gray" }}
-          onClick={() => navigate("/calendar")}
-        >
-          Календарь
-        </Button>
+        <Item title="Календарь" path="/calendar" />
         <Divider orientation="vertical" flexItem />
-        <Button
-          variant="outlined"
-          sx={{ color: "gray" }}
-          onClick={() => navigate("/users")}
-        >
-          Менеджеры
-        </Button>
+        <Item title="Менеджеры" path="/users" />
         <Divider orientation="vertical" flexItem />
-        <Button
-          variant="outlined"
-          sx={{ color: "gray" }}
-          onClick={() => navigate("/")}
-        >
-          Презентации
-        </Button>
+        <Item title="Презентации" path="/" />
         <Divider orientation="vertical" flexItem />
-        <Button
-          variant="outlined"
-          sx={{ color: "gray" }}
-          onClick={() => navigate("/")}
-        >
-          Результаты
-        </Button>
+        <Item title="Результаты" path="/" />
       </Menu>
     </Component>
   );

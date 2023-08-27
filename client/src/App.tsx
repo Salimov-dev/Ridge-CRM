@@ -1,5 +1,5 @@
 // libraries
-import { Box, CssBaseline, ThemeProvider } from "@mui/material";
+import { CssBaseline, ThemeProvider } from "@mui/material";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 // layouts
@@ -9,11 +9,13 @@ import Users from "./layouts/users/users";
 import Login from "./layouts/login/login";
 import Profile from "./layouts/profile/profile";
 import Objects from "./layouts/objects/objects";
+import Calendar from "./layouts/calendar/calendar";
 import Meetings from "./layouts/meetings/meetings";
 import Presentations from "./layouts/presentations/presentations";
 // components
 import TopBar from "./components/UI/topbar/topbar";
 import Sidebar from "./components/UI/sidebar/sidebar";
+import Footer from "./components/common/footer/footer";
 import ObjectPage from "./components/pages/object/object-page";
 import CreateObject from "./components/pages/create-object/create-object";
 import UpdateObject from "./components/pages/update-object/update-object";
@@ -30,8 +32,6 @@ import "./styles.css";
 import AppLoader from "./hoc/app-loader";
 import ScrollToTop from "./utils/scroll-to-top";
 import { ColorModeContext, useMode } from "./theme";
-import Calendar from "./layouts/calendar/calendar";
-import Footer from "./components/common/footer/footer";
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -45,6 +45,7 @@ function App() {
             <Sidebar />
             <RightSide>
               <TopBar />
+
               <Routes>
                 <Route index path="" element={<Main />} />
 
@@ -100,12 +101,9 @@ function App() {
                   <Route index element={<Presentations />} />
                   <Route path="*" element={<Navigate to="/presentations" />} />
                 </Route>
-
               </Routes>
-              
 
-              <Footer/>
-    
+              <Footer />
             </RightSide>
           </AppStyled>
         </AppLoader>
