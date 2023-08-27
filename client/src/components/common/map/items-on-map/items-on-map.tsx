@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 // MUI
 import { Box, styled } from "@mui/material";
 // components
 import Loader from "../../loader/loader";
 // yandex map
-import { Map, Placemark, Clusterer, ObjectManager } from "@pbe/react-yandex-maps";
+import { Map, Placemark, Clusterer } from "@pbe/react-yandex-maps";
 import target from "../../../../assets/map/target.png";
 import target_cluster from "../../../../assets/map/target_cluster.png";
 // styles
@@ -30,21 +30,8 @@ const ItemsOnMap = ({
   onClick,
 }) => {
   const [activePortal, setActivePortal] = useState(false);
-  const MAP_DEFAULT_STATE = {
-    center: [55.751574, 37.573856],
-    zoom: 5
-  };
+  const clustererInstanceRef = useRef(null);
 
-  const features = items?.map(item => ({
-    type: "Feature",
-    id: item,
-    geometry: {
-      type: "Point",
-      coordinates: item.location?.latitude && item.location?.longitude
-      ? [item.location.latitude, item.location.longitude]
-      : null,
-    }
-  }));
   const Portal = ({ children, getHTMLElementId }) => {
     const mount = document.getElementById(getHTMLElementId);
     const el = document.createElement("div");
@@ -74,27 +61,11 @@ const ItemsOnMap = ({
             "geoObject.addon.hint",
             "control.ZoomControl",
             "control.SearchControl",
+            "clusterer.addon.balloon",
           ]}
         >
-           <ObjectManager
-          options={{
-            clusterize: true,
-            gridSize: 32,
-          }}
-          objects={{
-            openBalloonOnClick: true,
-            iconLayout: "default#image",
-            iconImageHref: target,
-            iconImageSize: [40, 40],
-            iconImageOffset: [-20, -40],
-          }}
-          clusters={{
-            preset: "islands#redClusterIcons",
-          }}
-          defaultFeatures={features}
-          modules={["objectManager.addon.objectsBalloon"]}
-        />
-          {/* <Clusterer
+          <Clusterer
+            instanceRef={(ref) => (clustererInstanceRef.current = ref)}
             options={{
               clusterIcons: [
                 {
@@ -105,10 +76,6 @@ const ItemsOnMap = ({
               ],
               groupByCoordinates: false,
             }}
-            // onClick={ () => {
-            //   // ставим в очередь промисов, чтобы сработало после отрисовки балуна
-            //   setTimeout(() => { setActivePortal(true)}, 0)
-            //   } } 
           >
             {items?.map((item) => (
               <Placemark
@@ -127,7 +94,8 @@ const ItemsOnMap = ({
                 }
                 properties={{
                   hintContent: hintContent(item),
-                  balloonContent: '<div id="baloon" class="baloon"></div>',
+                  balloonContentBody: '<div id="baloon" class="baloon"></div>',
+                  clusterCaption: item?._id,
                 }}
                 onClick={() => {
                   setTimeout(() => {
@@ -137,7 +105,7 @@ const ItemsOnMap = ({
                 }}
               />
             ))}
-          </Clusterer> */}
+          </Clusterer>
         </Map>
       ) : (
         <Loader />

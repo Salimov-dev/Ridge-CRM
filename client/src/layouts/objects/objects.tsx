@@ -133,6 +133,7 @@ const Objects = () => {
         onClick={setSelectedBaloon}
         baloon={<Baloon object={selectedObject} />}
         isLoading={isLoading}
+        selectedBaloon={selectedBaloon}
       />
 
       <FiltersPanel

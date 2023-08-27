@@ -1,8 +1,10 @@
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { Box, Button, Divider, Typography, styled } from "@mui/material";
+import { Box, styled } from "@mui/material";
 // components
 import { FormatPhone } from "../../../components/common/table/helpers/helpers";
+import DividerStyled from "../../../components/common/divider/divider-styled";
+import OpenObjectButton from "../../../components/common/map/baloon/open-object-button";
+import Attribute from "../../../components/common/map/baloon/attribute";
 // utils
 import { FormatDate } from "../../../utils/format-date";
 import { makeDigitSeparator } from "../../../utils/make-digit-separator";
@@ -24,147 +26,84 @@ const BaloonContainer = styled(Box)`
   padding: 10px 0;
 `;
 
-const StringContainer = styled(Box)`
-  display: flex;
-  gap: 4px;
-  align-items: center;
-`;
-
 const Baloon = ({ object }) => {
-  const navigate = useNavigate();
+  const createdAt = FormatDate(object.created_at);
+  const manager = useSelector(getUserNameById(object?.userId));
+  const city = object?.location?.city;
+  const district = useSelector(getDistrictById(object?.location?.district));
+  const address = object?.location?.address;
+
+  const name = object?.contact?.name;
+  const phone = object?.contact?.phone;
+  const email = object?.contact?.email;
+
+  const objectId = object._id;
+  const objectType = useSelector(
+    getObjectTypeNameById(object?.estateOptions?.objectTypes)
+  );
+  const estateType = useSelector(
+    getEstateTypeNameById(object?.estateOptions?.estateTypes)
+  );
+  const renter = useSelector(
+    getCurrentRenterNameById(object?.estateOptions?.currentRenters)
+  );
 
   const totalSquare = object?.commercialTerms?.totalSquare;
   const rentSquare = object?.commercialTerms?.rentSquare;
   const rentPrice = object?.commercialTerms?.rentPrice;
   const rentTypes = object?.commercialTerms?.rentTypes;
-  const name = object?.contact?.name;
-  const phone = object?.contact?.phone;
-  const email = object?.contact?.email;
 
   return (
     <BaloonContainer>
-      <Button
-        variant="outlined"
-        size="small"
-        color="primary"
-        onClick={() => navigate(`/objects/${object._id}`)}
-        sx={{ paddingTop: "6px", marginBottom: "6px" }}
-      >
-        Перейти в объект
-      </Button>
-      <StringContainer>
-        <Typography>
-          <b>Дата создания:</b>
-        </Typography>
-        {FormatDate(object.created_at)}
-      </StringContainer>
-      <StringContainer>
-        <Typography>
-          <b>Менеджер:</b>
-        </Typography>
-        <Typography>{useSelector(getUserNameById(object?.userId))}</Typography>
-      </StringContainer>
-      <StringContainer>
-        <Typography>
-          <b>Город:</b>
-        </Typography>
-        <Typography>{object?.location?.city}</Typography>
-      </StringContainer>
-      <StringContainer>
-        <Typography>
-          <b>Район:</b>
-        </Typography>
-        <Typography>
-          {useSelector(getDistrictById(object?.location?.district))}
-        </Typography>
-      </StringContainer>
-      <StringContainer>
-        <Typography>
-          <b>Адрес:</b>
-        </Typography>
-        <Typography>{object?.location?.address}</Typography>
-      </StringContainer>
+      <OpenObjectButton path={`/objects/${objectId}`} />
 
-      <Divider />
+      <DividerStyled />
+      <Attribute
+        title="Дата создания:"
+        subTitle={createdAt}
+        withoutTypography={true}
+      />
+      <Attribute title="Менеджер:" subTitle={manager} />
+      <Attribute title="Город:" subTitle={city} />
+      <Attribute title="Район:" subTitle={district} />
+      <Attribute title="Адрес:" subTitle={address} />
 
-      <StringContainer>
-        <Typography>
-          <b>Тип объекта:</b>
-        </Typography>
-        <Typography>
-          {useSelector(
-            getObjectTypeNameById(object?.estateOptions?.objectTypes)
-          )}
-        </Typography>
-      </StringContainer>
-      <StringContainer>
-        <Typography>
-          <b>Тип недвиж:</b>
-        </Typography>
-        <Typography>
-          {useSelector(
-            getEstateTypeNameById(object?.estateOptions?.estateTypes)
-          )}
-        </Typography>
-      </StringContainer>
-      <StringContainer>
-        <Typography>
-          <b>Арендатор:</b>
-        </Typography>
-        <Typography>
-          {useSelector(
-            getCurrentRenterNameById(object?.estateOptions?.currentRenters)
-          )}
-        </Typography>
-      </StringContainer>
+      <DividerStyled />
+      <Attribute title="Тип объекта:" subTitle={objectType} />
+      <Attribute title="Тип недвиж:" subTitle={estateType} />
+      <Attribute title="Арендатор:" subTitle={renter} />
 
-      <Divider />
+      <DividerStyled />
+      <Attribute
+        title="Площадь общая:"
+        subTitle={totalSquare ? `${makeDigitSeparator(totalSquare)}м²` : "-"}
+      />
+      <Attribute
+        title="Площадь АП:"
+        subTitle={rentSquare ? `${makeDigitSeparator(rentSquare)}м²` : "-"}
+      />
+      <Attribute
+        title="Стоимость АП:"
+        subTitle={rentPrice ? `${makeDigitSeparator(rentPrice)}₽` : "-"}
+      />
+      <Attribute
+        title="Тип договора:"
+        subTitle={
+          rentTypes ? `${useSelector(getRentTypeNameById(rentTypes))}` : "-"
+        }
+      />
 
-      <StringContainer>
-        <Typography>
-          <b>Площадь общая:</b>
-        </Typography>
-        {totalSquare ? `${makeDigitSeparator(totalSquare)}м²` : "-"}
-      </StringContainer>
-      <StringContainer>
-        <Typography>
-          <b>Площадь АП:</b>
-        </Typography>
-        <Typography>
-          {rentSquare ? `${makeDigitSeparator(rentSquare)}м²` : "-"}
-        </Typography>
-      </StringContainer>
-      <StringContainer>
-        <Typography>
-          <b>Стоимость АП:</b>
-        </Typography>
-        <Typography>
-          {rentPrice ? `${makeDigitSeparator(rentPrice)}₽` : "-"}
-        </Typography>
-      </StringContainer>
-      <StringContainer>
-        <Typography>
-          <b>Тип договора:</b>
-        </Typography>
-        <Typography>
-          {rentTypes ? `${useSelector(getRentTypeNameById(rentTypes))}` : "-"}
-        </Typography>
-      </StringContainer>
+      <DividerStyled />
+      <Attribute title="Контакт:" subTitle={name ? `${name}` : "-"} />
+      <Attribute
+        title="Телефон:"
+        subTitle={phone ? FormatPhone(phone) : "-"}
+        withoutTypography={true}
+      />
+      <Attribute title="Email:" subTitle={email ? email : "-"} />
 
-      <Divider />
-
-      <Typography>
-        <b>Контакт:</b> {name ? `${name}` : "-"}
-      </Typography>
-      <StringContainer>
-        <Typography>
-          <b>Телефон:</b>
-        </Typography>
-        {phone ? FormatPhone(phone) : "-"}
-      </StringContainer>
-      <Typography>
-        <b>Email:</b> {email ? email : "-"}
-      </Typography>
+      <DividerStyled />
+      <OpenObjectButton path={`/objects/${objectId}`} />
     </BaloonContainer>
   );
 };

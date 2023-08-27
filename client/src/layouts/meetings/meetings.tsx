@@ -1,6 +1,6 @@
 // libraries
 import { Box, styled } from "@mui/material";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 import { orderBy } from "lodash";
@@ -19,9 +19,12 @@ import { getUsersList } from "../../store/users.store";
 import { getMeetingStatusesList } from "../../store/meeting-status.store";
 import { getMeetingTypesList } from "../../store/meeting-types.store";
 import {
+  getMeetingById,
   getMeetingLoadingStatus,
   getMeetingsList,
 } from "../../store/meetings.store";
+import ItemsOnMap from "../../components/common/map/items-on-map/items-on-map";
+import Baloon from "./map/baloon";
 
 const MapContainer = styled(Box)`
   width: 100%;
@@ -39,7 +42,9 @@ const initialState = {
 };
 
 const Meetings = () => {
+  const [selectedBaloon, setSelectedBaloon] = useState(null);
   const meetings = useSelector(getMeetingsList());
+  const selectedMeeting = useSelector(getMeetingById(selectedBaloon));
   const isLoading = useSelector(getMeetingLoadingStatus());
   const users = useSelector(getUsersList());
   const statuses = useSelector(getMeetingStatusesList());
@@ -57,6 +62,8 @@ const Meetings = () => {
   });
 
   const data = watch();
+  const center = [59.930320630519155, 30.32906024941998];
+  const mapZoom = 11;
 
   const isInputEmpty = JSON.stringify(initialState) !== JSON.stringify(data);
 
@@ -147,9 +154,22 @@ const Meetings = () => {
         initialState={initialState}
       />
 
-      <MapContainer>
+<ItemsOnMap
+        items={searchedMeetings}
+        mapZoom={mapZoom}
+        hintContent={(item) =>
+          `${item?.location?.city}, ${item?.location?.address}`
+        }
+        center={center}
+        onClick={setSelectedBaloon}
+        baloon={<Baloon meeting={selectedMeeting} />}
+        isLoading={isLoading}
+        selectedBaloon={selectedBaloon}
+      />
+
+      {/* <MapContainer>
         {!isLoading ? <Map searchedMeetings={searchedMeetings} /> : <Loader />}
-      </MapContainer>
+      </MapContainer> */}
 
       <FiltersPanel
         data={data}

@@ -28,7 +28,6 @@ const ObjectPage = () => {
     <Box>
       <Header object={object} />
       <ItemOnMap
-        items={object}
         mapZoom={mapZoom}
         hintContent={address}
         center={center}
