@@ -1,12 +1,12 @@
 import { useSelector } from "react-redux";
 import { Box, styled } from "@mui/material";
 // components
-import Loader from "../../../common/loader/loader";
-import ButtonsPanel from "./buttons-panel";
 import ObjectName from "./object-name";
+import ButtonsPanel from "./buttons-panel";
+import Loader from "../../../common/loader/loader";
 // store
-import { getObjectsLoadingStatus } from "../../../../store/objects.store";
 import { getDistrictById } from "../../../../store/districts.store";
+import { getObjectsLoadingStatus } from "../../../../store/objects.store";
 
 const Component = styled(Box)``;
 

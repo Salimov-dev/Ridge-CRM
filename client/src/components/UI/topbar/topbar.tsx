@@ -1,13 +1,8 @@
 // libraries
-import { useContext } from "react";
-import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 // MUI
-import { Box, IconButton, useTheme, Button } from "@mui/material";
-import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
-import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
-import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
-import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
+import { Box,Button } from "@mui/material";
 // styled
 import { Component, RightSide } from "./styled/styled";
 // components
@@ -18,16 +13,12 @@ import {
   getCurrentUserData,
   getUsersLoadingStatus,
 } from "../../../store/users.store";
-// other
-import { ColorModeContext } from "../../../theme";
 
 const TopBar = () => {
-  const theme = useTheme();
-  const colorMode = useContext(ColorModeContext);
   const currentUser = useSelector(getCurrentUserData());
   const isLoading = useSelector(getUsersLoadingStatus());
   const navigate = useNavigate();
-  
+
   const handleGoToLogin = () => {
     navigate("auth/login");
   };
@@ -36,20 +27,6 @@ const TopBar = () => {
     <Component>
       <Box sx={{ m: "auto 0" }}></Box>
       <RightSide>
-        <IconButton onClick={colorMode.toggleColorMode}>
-          {theme.palette.mode === "dark" ? (
-            <DarkModeOutlinedIcon />
-          ) : (
-            <LightModeOutlinedIcon />
-          )}
-        </IconButton>
-        <IconButton>
-          <NotificationsOutlinedIcon />
-        </IconButton>
-        <IconButton>
-          <SettingsOutlinedIcon />
-        </IconButton>
-
         {!isLoading ? (
           <>
             {currentUser ? (

@@ -1,6 +1,5 @@
-import { Box, Typography, styled, Button } from "@mui/material";
-import ArrowBackIosNewOutlinedIcon from "@mui/icons-material/ArrowBackIosNewOutlined";
-import { useNavigate } from "react-router-dom";
+import { Box, Typography, styled } from "@mui/material";
+import PageBackButton from "../../../common/buttons/page-back-button";
 
 const Component = styled(Box)`
   display: flex;
@@ -16,27 +15,16 @@ const Title = styled(Box)`
 `;
 
 const Header = ({ object }) => {
-  const navigate = useNavigate();
   return (
     <Component>
       <Title>
-        <h1>Изменить объект:</h1>
+        <Typography variant="h2">Изменить объект:</Typography>
         <Typography variant="h3" sx={{ background: "yellow", color: "black" }}>
           {object?.location?.city}, {object?.location?.address}
         </Typography>
       </Title>
 
-      <Button
-        color="success"
-        variant="outlined"
-        sx={{ height: "50px", color: "white" }}
-        onClick={() => navigate(-1)}
-      >
-        <ArrowBackIosNewOutlinedIcon
-          sx={{ width: "20px", height: "20px", marginRight: "5px" }}
-        />{" "}
-        Назад
-      </Button>
+      <PageBackButton />
     </Component>
   );
 };

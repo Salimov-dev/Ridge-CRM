@@ -7,6 +7,7 @@ import Loader from "../../loader/loader";
 // yandex map
 import { Map, Placemark } from "@pbe/react-yandex-maps";
 import target from "../../../../assets/map/target.png";
+// styles
 import "./styles.css";
 
 const MapContainer = styled(Box)`
@@ -22,23 +23,17 @@ const ItemOnMap = ({ baloon, hintContent, center, mapZoom, isLoading }) => {
   const [activePortal, setActivePortal] = useState(false);
 
   const Portal = ({ children, getHTMLElementId }) => {
-    // находим искомый HTML по id
     const mount = document.getElementById(getHTMLElementId);
-    // создаём свой div
     const el = document.createElement("div");
 
     useEffect(() => {
-      // добавляем свой див к искомому элементу
       if (mount) mount.appendChild(el);
       return () => {
-        // удаляем элемент от искомого при завершении компоненты
         if (mount) mount.removeChild(el);
       };
     }, [el, mount]);
 
-    // отменяем отрисовку при отсутствии искомого элемента
     if (!mount) return null;
-    // собственно, пририсовываем React-элемент в div к искомому HTML
     return createPortal(children, el);
   };
 
@@ -59,6 +54,7 @@ const ItemOnMap = ({ baloon, hintContent, center, mapZoom, isLoading }) => {
       };
     }
   });
+
   return (
     <MapContainer>
       {!isLoading ? (
@@ -90,7 +86,6 @@ const ItemOnMap = ({ baloon, hintContent, center, mapZoom, isLoading }) => {
               balloonContent: '<div id="baloon" class="baloon"></div>',
             }}
             onClick={() => {
-              // ставим в очередь промисов, чтобы сработало после отрисовки балуна
               setTimeout(() => {
                 setActivePortal(true);
               }, 0);

@@ -1,5 +1,5 @@
-import { createAction, createSlice } from "@reduxjs/toolkit";
 import localStorageService from "../services/local.storage-service";
+import { createAction, createSlice } from "@reduxjs/toolkit";
 import objectService from "../services/object.service";
 import isOutDated from "../utils/is-out-date";
 
@@ -79,9 +79,7 @@ export const loadObjectsList = () => async (dispatch, getState) => {
     dispatch(objectsRequested());
     try {
       const { content } = await objectService.get();
-      // setTimeout(() => {
         dispatch(objectsReceived(content));
-      // }, 2000);
     } catch (error) {
       objectsFailed(error.message);
     }

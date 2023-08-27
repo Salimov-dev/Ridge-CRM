@@ -1,37 +1,37 @@
 // libraries
 import { useState, useEffect } from "react";
-import { Sidebar as ProSidebar, Menu } from "react-pro-sidebar";
 import { useDispatch } from "react-redux";
-import { useTheme } from "@mui/material";
+import { Box, styled, useTheme } from "@mui/material";
+import { Sidebar as ProSidebar, Menu } from "react-pro-sidebar";
 // components
 import Header from "./components/header";
 import ItemsList from "./components/items-list";
-// styles
-import { Component } from "./styled/styled";
 // store
 import { setSidebarCollapsState } from "../../../store/sidebar-collaps-state.store";
 // other
 import { tokens } from "../../../theme";
 
+const Component = styled(Box)`
+  height: 100vh;
+  overflow-x: hidden;
+`;
+
 const Sidebar = () => {
-  const theme = useTheme();
-  const colors = tokens(theme.palette.mode);
-  const dispatch = useDispatch();
+  const [currentPath, setCurrentPath] = useState("");
+  const [selected, setSelected] = useState(setSelectedMenuItem());
   const [isCollapsed, setIsCollapsed] = useState(
     JSON.parse(localStorage.getItem("sidebar-collaps-state"))
   );
-  const [currentPath, setCurrentPath] = useState("");
-  const [selected, setSelected] = useState(setSelectedMenuItem());
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
+  const dispatch = useDispatch();
 
   function setSelectedMenuItem() {
     if (currentPath === "/") {
       return "Главная";
     }
     if (currentPath === "/objects") {
-      return "Таблица объектов";
-    }
-    if (currentPath === "/map") {
-      return "Объекты на карте";
+      return "Объекты";
     }
     if (currentPath === "/users") {
       return "Менеджеры";
@@ -84,7 +84,7 @@ const Sidebar = () => {
       }}
     >
       <ProSidebar collapsed={isCollapsed}>
-        <Menu iconShape="square">
+        <Menu>
           <Header
             isCollapsed={isCollapsed}
             setIsCollapsed={handleSetCollapsed}

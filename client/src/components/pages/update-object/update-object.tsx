@@ -8,7 +8,7 @@ import { toast } from "react-toastify";
 import { Box } from "@mui/material";
 // components
 import Header from "./components/header";
-import ObjectForm from "../../common/forms/object-form";
+import ObjectForm from "../../common/forms/object-form/object-form";
 // store
 import { getObjectById, updateObject } from "../../../store/objects.store";
 // other
@@ -17,12 +17,12 @@ import { objectSchema } from "../../../schemas/schemas";
 const UpdateObject = () => {
   const { objectId } = useParams();
   const object = useSelector(getObjectById(objectId));
-  
+  const isEditMode = objectId ? true : false;
+  const isObjectHasAddress =
+    object?.location?.city && object?.location?.address;
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  
-  const isEditMode = objectId ? true : false;
-  const isObjectHasAddress = object?.location?.city && object?.location?.address;
 
   const {
     register,
@@ -35,17 +35,6 @@ const UpdateObject = () => {
     resolver: yupResolver(objectSchema),
   });
 
-  const watchName = watch("contact.name", "");
-  const watchStatus = watch("status", "");
-  const watchDistrict = watch("location.district", "");
-  const watchMetro = watch("location.metro", "");
-  const watchCurrentRenters = watch("estateOptions.currentRenters", "");
-  const watchobjectConditions = watch("estateOptions.objectConditions", "");
-  const watchRentTypes = watch("commercialTerms.rentTypes", "");
-  const watchObjectTypes = watch("estateOptions.objectTypes", "");
-  const watchEstateTypes = watch("estateOptions.estateTypes", "");
-  const watchWorkingPosition = watch("contact.position", "");
-
   const onSubmit = (data) => {
     dispatch(updateObject(data, objectId))
       .then(navigate(-1))
@@ -56,25 +45,16 @@ const UpdateObject = () => {
     <Box>
       <Header object={object} />
       <ObjectForm
+        register={register}
         data={object}
         objectId={objectId}
         handleSubmit={handleSubmit}
         onSubmit={onSubmit}
-        register={register}
+        watch={watch}
         errors={errors}
         isEditMode={isEditMode}
         isValid={isValid}
         isObjectHasAddress={isObjectHasAddress}
-        watchName={watchName}
-        watchDistrict={watchDistrict}
-        watchMetro={watchMetro}
-        watchCurrentRenters={watchCurrentRenters}
-        watchobjectConditions={watchobjectConditions}
-        watchRentTypes={watchRentTypes}
-        watchObjectTypes={watchObjectTypes}
-        watchEstateTypes={watchEstateTypes}
-        watchStatus={watchStatus}
-        watchWorkingPosition={watchWorkingPosition}
       />
     </Box>
   );

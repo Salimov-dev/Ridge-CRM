@@ -1,6 +1,5 @@
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { Box, Button, Divider, Typography, styled } from "@mui/material";
+import { Box, Divider, Typography, styled } from "@mui/material";
 // utils
 import { FormatDate } from "../../../utils/format-date";
 import { FormatTime } from "../../../utils/format-time";
@@ -10,8 +9,8 @@ import { getObjectById } from "../../../store/objects.store";
 import { getMeetingTypeNameById } from "../../../store/meeting-types.store";
 import { getMeetingStatusNameById } from "../../../store/meeting-status.store";
 // components
-import DividerStyled from "../../../components/common/divider/divider-styled";
 import Attribute from "../../../components/common/map/baloon/attribute";
+import DividerStyled from "../../../components/common/divider/divider-styled";
 import OpenObjectButton from "../../../components/common/map/baloon/open-object-button";
 
 const BaloonContainer = styled(Box)`

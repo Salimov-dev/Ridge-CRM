@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 // MUI
-import { Box, Button, styled, InputAdornment, FormGroup } from "@mui/material";
+import { Box, styled, InputAdornment } from "@mui/material";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import PhoneIphoneOutlinedIcon from "@mui/icons-material/PhoneIphoneOutlined";
 import AlternateEmailOutlinedIcon from "@mui/icons-material/AlternateEmailOutlined";
@@ -11,18 +11,20 @@ import ElectricBoltIcon from "@mui/icons-material/ElectricBolt";
 import VerticalAlignBottomOutlinedIcon from "@mui/icons-material/VerticalAlignBottomOutlined";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 // components
-import TextFieldStyled from "../inputs/text-field-styled";
-import SimpleSelectField from "../inputs/simple-select-field";
+import TextFieldStyled from "../../inputs/text-field-styled";
+import SimpleSelectField from "../../inputs/simple-select-field";
 // store
-import { getDistrictsList } from "../../../store/districts.store";
-import { getMetroList } from "../../../store/metro.store";
-import { getWorkingPositionsList } from "../../../store/working-position.store";
-import { getObjectsStatusList } from "../../../store/object-status.store";
-import { getCurrentRentersList } from "../../../store/current-renter.store";
-import { getobjectConditionsList } from "../../../store/object-conditions.store";
-import { getRentTypesList } from "../../../store/rent-types.store";
-import { getObjectTypesList } from "../../../store/object-types.store";
-import { getEstateTypesList } from "../../../store/estate-types.store";
+import { getMetroList } from "../../../../store/metro.store";
+import { getDistrictsList } from "../../../../store/districts.store";
+import { getRentTypesList } from "../../../../store/rent-types.store";
+import { getObjectTypesList } from "../../../../store/object-types.store";
+import { getEstateTypesList } from "../../../../store/estate-types.store";
+import { getObjectsStatusList } from "../../../../store/object-status.store";
+import { getCurrentRentersList } from "../../../../store/current-renter.store";
+import { getWorkingPositionsList } from "../../../../store/working-position.store";
+import { getobjectConditionsList } from "../../../../store/object-conditions.store";
+import Title from "../title";
+import FooterButtons from "../footer-buttons";
 
 const Form = styled(`form`)({
   display: "flex",
@@ -38,13 +40,6 @@ const FieldsContainer = styled(Box)`
   gap: 4px;
 `;
 
-const FooterButtons = styled(Box)`
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  margin-top: 30px;
-`;
-
 const ObjectForm = ({
   data,
   objectId,
@@ -56,23 +51,25 @@ const ObjectForm = ({
   isEditMode = false,
   isEmptyFindedObject,
   isObjectHasAddress,
-  watchName,
-  watchMetro,
-  watchDistrict,
-  watchCurrentRenters,
-  watchobjectConditions,
-  watchRentTypes,
-  watchObjectTypes,
-  watchEstateTypes,
-  watchStatus,
-  watchWorkingPosition
+  watch,
 }) => {
   const districts = useSelector(getDistrictsList());
   const workingPositions = useSelector(getWorkingPositionsList());
   const objectStatuses = useSelector(getObjectsStatusList());
   const currentRenters = useSelector(getCurrentRentersList());
   const objectConditions = useSelector(getobjectConditionsList());
-  
+
+  const watchName = watch("contact.name", "");
+  const watchStatus = watch("status", "");
+  const watchDistrict = watch("location.district", "");
+  const watchMetro = watch("location.metro", "");
+  const watchCurrentRenters = watch("estateOptions.currentRenters", "");
+  const watchobjectConditions = watch("estateOptions.objectConditions", "");
+  const watchRentTypes = watch("commercialTerms.rentTypes", "");
+  const watchObjectTypes = watch("estateOptions.objectTypes", "");
+  const watchEstateTypes = watch("estateOptions.estateTypes", "");
+  const watchWorkingPosition = watch("contact.position", "");
+
   const metros = useSelector(getMetroList());
   const rentTypes = useSelector(getRentTypesList());
   const objectTypes = useSelector(getObjectTypesList());
@@ -89,9 +86,7 @@ const ObjectForm = ({
   return (
     <>
       <Form onSubmit={handleSubmit(onSubmit)} noValidate>
-        <Box sx={{ marginRight: "auto" }}>
-          <h3>Объект</h3>
-        </Box>
+        <Title title="Объект" />
         <FieldsContainer>
           <SimpleSelectField
             register={register}
@@ -151,9 +146,7 @@ const ObjectForm = ({
           />
         </FieldsContainer>
 
-        <Box sx={{ marginRight: "auto" }}>
-          <h3>Контактная информация</h3>
-        </Box>
+        <Title title="Контактная информация" />
         <FieldsContainer>
           <TextFieldStyled
             register={register}
@@ -213,9 +206,7 @@ const ObjectForm = ({
           />
         </FieldsContainer>
 
-        <Box sx={{ marginRight: "auto" }}>
-          <h3>Коммерческие условия</h3>
-        </Box>
+        <Title title="Коммерческие условия" />
         <FieldsContainer sx={{ flexDirection: "column", gap: "8px" }}>
           <FieldsContainer>
             <TextFieldStyled
@@ -322,9 +313,7 @@ const ObjectForm = ({
           </FieldsContainer>
         </FieldsContainer>
 
-        <Box sx={{ marginRight: "auto" }}>
-          <h3>Параметры помещения</h3>
-        </Box>
+        <Title title="Параметры помещения" />
         <FieldsContainer sx={{ flexDirection: "column" }}>
           <FieldsContainer>
             <SimpleSelectField
@@ -442,9 +431,7 @@ const ObjectForm = ({
           </FieldsContainer>
         </FieldsContainer>
 
-        <Box sx={{ marginRight: "auto" }}>
-          <h3>Описание объекта</h3>
-        </Box>
+        <Title title="Описание объекта" />
         <TextFieldStyled
           register={register}
           label="Опишите объект"
@@ -455,27 +442,11 @@ const ObjectForm = ({
           errors={errors?.description?.fullDescription}
           onInputQuantities={20000}
         />
-
-        <FooterButtons>
-          <Button
-            type="submit"
-            variant="outlined"
-            color="success"
-            disabled={!isValidAndHasAdress}
-          >
-            {isEditMode ? "Сохранить" : "Создать"}
-          </Button>
-          <Box sx={{ display: "flex", gap: "4px" }}>
-            <Button
-              type="button"
-              variant="outlined"
-              color="error"
-              onClick={handleBackPage}
-            >
-              Отмена
-            </Button>
-          </Box>
-        </FooterButtons>
+        <FooterButtons
+          isEditMode={isEditMode}
+          isValid={!isValidAndHasAdress}
+          onClick={handleBackPage}
+        />
       </Form>
     </>
   );

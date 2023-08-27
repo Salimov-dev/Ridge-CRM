@@ -1,12 +1,13 @@
 import { useNavigate } from "react-router-dom";
 // MUI
-import { Box, Button, styled, InputAdornment } from "@mui/material";
+import { Box, styled, InputAdornment } from "@mui/material";
 import CreateIcon from "@mui/icons-material/Create";
 // components
-import TextFieldStyled from "../inputs/text-field-styled";
-import SimpleSelectField from "../inputs/simple-select-field";
-import DatePickerStyled from "../inputs/date-picker";
-import TimePickerStyled from "../inputs/time-picker";
+import TextFieldStyled from "../../inputs/text-field-styled";
+import SimpleSelectField from "../../inputs/simple-select-field";
+import DatePickerStyled from "../../inputs/date-picker";
+import TimePickerStyled from "../../inputs/time-picker";
+import FooterButtons from "../footer-buttons";
 
 const Form = styled(`form`)({
   display: "flex",
@@ -24,13 +25,6 @@ const FieldsContainer = styled(Box)`
   gap: 4px;
 `;
 
-const FooterButtons = styled(Box)`
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  margin-top: 30px;
-`;
-
 const MeetingForm = ({
   data,
   objects,
@@ -44,12 +38,12 @@ const MeetingForm = ({
   isValid,
   isEditMode = false,
   isEmptyFindedObject,
-  watchObjectId,
-  watchStatus,
-  watchTypeMeeting,
+  watch,
 }) => {
   const isValidAndHasAdress = Boolean(!isEmptyFindedObject) && isValid;
-
+  const watchStatus = watch("status", "");
+  const watchObjectId = watch("objectId", "");
+  const watchTypeMeeting = watch("meetingType", "");
   const navigate = useNavigate();
 
   const handleBackPage = () => {
@@ -122,26 +116,11 @@ const MeetingForm = ({
           />
         </FieldsContainer>
 
-        <FooterButtons>
-          <Button
-            type="submit"
-            variant="outlined"
-            color="success"
-            disabled={!isValidAndHasAdress}
-          >
-            {isEditMode ? "Сохранить" : "Создать"}
-          </Button>
-          <Box sx={{ display: "flex", gap: "4px" }}>
-            <Button
-              type="button"
-              variant="outlined"
-              color="error"
-              onClick={handleBackPage}
-            >
-              Отмена
-            </Button>
-          </Box>
-        </FooterButtons>
+        <FooterButtons
+          isEditMode={isEditMode}
+          isValid={!isValidAndHasAdress}
+          onClick={handleBackPage}
+        />
       </Form>
     </>
   );

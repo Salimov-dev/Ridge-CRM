@@ -1,12 +1,15 @@
-import { Box, Typography } from "@mui/material";
-import { FormatManagerName } from "../../../components/common/table/helpers/helpers";
-import { FormatDate } from "../../../utils/format-date";
-import { FormatTime } from "../../../utils/format-time";
 import { useSelector } from "react-redux";
-import { getObjectById } from "../../../store/objects.store";
+import { Box, Typography } from "@mui/material";
+// components
+import { FormatManagerName } from "../../../components/common/table/helpers/helpers";
 import TableOpenButton from "../../../components/common/buttons/table-open-button";
+// store
+import { getObjectById } from "../../../store/objects.store";
 import { getMeetingStatusNameById } from "../../../store/meeting-status.store";
 import { getMeetingTypeNameById } from "../../../store/meeting-types.store";
+// utils
+import { FormatDate } from "../../../utils/format-date";
+import { FormatTime } from "../../../utils/format-time";
 
 export const groupedColumns = [
   {

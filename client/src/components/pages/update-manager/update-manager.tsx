@@ -1,18 +1,18 @@
 // libraries
-import { useDispatch, useSelector } from "react-redux";
+import dayjs from "dayjs";
+import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { toast } from "react-toastify";
-import dayjs from "dayjs";
 // MUI
 import { Box } from "@mui/material";
 // components
 import Header from "./components/header";
-import ManagerForm from "../../common/forms/manager-form";
+import ManagerForm from "../../common/forms/manager-form/manager-form";
 // store
-import { getUserDataById, updateUser } from "../../../store/users.store";
 import { getUserStatusesList } from "../../../store/user-statuses.store";
+import { getUserDataById, updateUser } from "../../../store/users.store";
 // other
 import { managerSchema } from "../../../schemas/schemas";
 
@@ -54,10 +54,11 @@ const UpdateManager = () => {
 
   const data = watch();
 
-  const isFullValid = data.contract.startDate !== null && data.contract.endDate !== null && data.birthday !== null && isValid;
-
-  const watchGender = watch("gender", "");
-  const watchStatus = watch("status", "");
+  const isFullValid =
+    data.contract.startDate !== null &&
+    data.contract.endDate !== null &&
+    data.birthday !== null &&
+    isValid;
 
   const onSubmit = (data) => {
     dispatch(updateUser(data))
@@ -78,13 +79,12 @@ const UpdateManager = () => {
         register={register}
         onSubmit={onSubmit}
         handleSubmit={handleSubmit}
+        watch={watch}
         errors={errors}
         setValue={setValue}
         isValid={isFullValid}
         isEditMode={isEditMode}
         userStatuses={userStatuses}
-        watchGender={watchGender}
-        watchStatus={watchStatus}
       />
     </Box>
   );

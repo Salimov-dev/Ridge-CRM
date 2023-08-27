@@ -1,7 +1,9 @@
-import MultiSelectField from "../../../components/common/inputs/multi-select-field";
-import SearchField from "../../../components/common/inputs/search-field";
-import SimpleSelectField from "../../../components/common/inputs/simple-select-field";
 import { Box, styled } from "@mui/material";
+// components
+import SearchField from "../../../components/common/inputs/search-field";
+import MultiSelectField from "../../../components/common/inputs/multi-select-field";
+import SimpleSelectField from "../../../components/common/inputs/simple-select-field";
+// mock
 import { gendersArray } from "../../../mock/genders";
 
 const Form = styled(`form`)({

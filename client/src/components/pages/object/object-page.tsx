@@ -1,12 +1,12 @@
+import { Box } from "@mui/material";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { Box } from "@mui/material";
 // components
+import Baloon from "./map/baloon";
+import Header from "./components/header";
 import Loader from "../../common/loader/loader";
 import ObjectInfo from "./components/object-info";
-import Header from "./components/header";
 import ItemOnMap from "../../common/map/item-on-map/item-on-map";
-import Baloon from "./map/baloon";
 // store
 import {
   getObjectById,
@@ -18,11 +18,11 @@ const ObjectPage = () => {
   const object = useSelector(getObjectById(objectId));
   const isLoading = useSelector(getObjectsLoadingStatus());
 
+  const address = `${object?.location?.city}, ${object?.location?.address}`;
   const latitude = object?.location?.latitude || null;
   const longitude = object?.location?.longitude || null;
   const mapZoom = object?.location?.zoom || null;
   const center = [latitude, longitude];
-  const address = `${object?.location?.city}, ${object?.location?.address}`;
 
   return (
     <Box>

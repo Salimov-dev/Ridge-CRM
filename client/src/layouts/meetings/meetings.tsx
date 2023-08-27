@@ -1,37 +1,28 @@
 // libraries
-import { Box, styled } from "@mui/material";
-import { useEffect, useState } from "react";
+import { orderBy } from "lodash";
+import { Box } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
-import { orderBy } from "lodash";
+import { useEffect, useState } from "react";
 // components
-import ButtonsBlock from "./components/buttons-block";
-import LayoutTitle from "../../components/common/page-titles/layout-title";
-import BasicTable from "../../components/common/table/basic-table";
+import Baloon from "./map/baloon";
 import { groupedColumns } from "./table/columns";
-import Loader from "../../components/common/loader/loader";
-import Map from "./components/map";
 import FiltersPanel from "./components/filter-panel";
+import BasicTable from "../../components/common/table/basic-table";
+import LayoutTitle from "../../components/common/page-titles/layout-title";
+import ItemsOnMap from "../../components/common/map/items-on-map/items-on-map";
+import AddAndClearFiltersButton from "../../components/common/buttons/add-and-clear-filters-button";
 // hooks
 import useSearchMeeting from "../../hooks/use-search-meeting";
 // store
 import { getUsersList } from "../../store/users.store";
-import { getMeetingStatusesList } from "../../store/meeting-status.store";
 import { getMeetingTypesList } from "../../store/meeting-types.store";
+import { getMeetingStatusesList } from "../../store/meeting-status.store";
 import {
   getMeetingById,
   getMeetingLoadingStatus,
   getMeetingsList,
 } from "../../store/meetings.store";
-import ItemsOnMap from "../../components/common/map/items-on-map/items-on-map";
-import Baloon from "./map/baloon";
-
-const MapContainer = styled(Box)`
-  width: 100%;
-  height: 250px;
-  margin-bottom: 10px;
-  background-color: gray;
-`;
 
 const initialState = {
   startDate: null,
@@ -43,10 +34,10 @@ const initialState = {
 
 const Meetings = () => {
   const [selectedBaloon, setSelectedBaloon] = useState(null);
+  const users = useSelector(getUsersList());
   const meetings = useSelector(getMeetingsList());
   const selectedMeeting = useSelector(getMeetingById(selectedBaloon));
   const isLoading = useSelector(getMeetingLoadingStatus());
-  const users = useSelector(getUsersList());
   const statuses = useSelector(getMeetingStatusesList());
   const types = useSelector(getMeetingTypesList());
 
@@ -148,13 +139,15 @@ const Meetings = () => {
     <Box>
       <LayoutTitle title="Встречи" />
 
-      <ButtonsBlock
+      <AddAndClearFiltersButton
+        title="Добавить встречу"
         isInputEmpty={isInputEmpty}
         reset={reset}
         initialState={initialState}
+        path="create"
       />
 
-<ItemsOnMap
+      <ItemsOnMap
         items={searchedMeetings}
         mapZoom={mapZoom}
         hintContent={(item) =>
@@ -164,12 +157,7 @@ const Meetings = () => {
         onClick={setSelectedBaloon}
         baloon={<Baloon meeting={selectedMeeting} />}
         isLoading={isLoading}
-        selectedBaloon={selectedBaloon}
       />
-
-      {/* <MapContainer>
-        {!isLoading ? <Map searchedMeetings={searchedMeetings} /> : <Loader />}
-      </MapContainer> */}
 
       <FiltersPanel
         data={data}

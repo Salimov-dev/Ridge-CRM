@@ -1,19 +1,19 @@
 // libraries
-import { useDispatch, useSelector } from "react-redux";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
 import { Box } from "@mui/material";
+import { toast } from "react-toastify";
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { yupResolver } from "@hookform/resolvers/yup";
 // components
-import ManagerForm from "../../common/forms/manager-form";
+import ManagerForm from "../../common/forms/manager-form/manager-form";
 // store
 import { getUserStatusesList } from "../../../store/user-statuses.store";
 import { addNewManager, getCurrentUserId } from "../../../store/users.store";
 // schema
 import { managerSchema } from "../../../schemas/schemas";
-import TitleWithBackButton from "../../common/page-titles/title-with-back-button";
 import getRandomInt from "../../../utils/get-random-int";
+import TitleWithBackButton from "../../common/page-titles/title-with-back-button";
 
 const initialState = {
   email: "",
@@ -37,11 +37,6 @@ const initialState = {
 };
 
 const CreateManager = () => {
-  const userStatuses = useSelector(getUserStatusesList());
-  const currentUserId = useSelector(getCurrentUserId());
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-
   const {
     register,
     watch,
@@ -55,10 +50,10 @@ const CreateManager = () => {
   });
 
   const data = watch();
-
-  const watchGender = watch("gender", "");
-  const watchStatus = watch("status", "");
-  const watchStartDate = watch("contract.startDate", null);
+  const userStatuses = useSelector(getUserStatusesList());
+  const currentUserId = useSelector(getCurrentUserId());
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const onSubmit = (data) => {
     const newData = {
@@ -77,17 +72,15 @@ const CreateManager = () => {
       <TitleWithBackButton title="Добавить нового менеджера" path="/users" />
 
       <ManagerForm
-        data={data}
         register={register}
+        data={data}
         handleSubmit={handleSubmit}
         onSubmit={onSubmit}
+        watch={watch}
         errors={errors}
         setValue={setValue}
         userStatuses={userStatuses}
         isValid={isValid}
-        watchGender={watchGender}
-        watchStatus={watchStatus}
-        watchStartDate={watchStartDate}
       />
     </Box>
   );

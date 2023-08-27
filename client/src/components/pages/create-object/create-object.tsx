@@ -1,22 +1,22 @@
 // libraries
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
+import { yupResolver } from "@hookform/resolvers/yup";
 // MUI
 import { Box } from "@mui/material";
 // components
-import ObjectForm from "../../common/forms/object-form";
+import ObjectForm from "../../common/forms/object-form/object-form";
 import FindObjectOnMap from "../../common/find-object-on-map";
+import TitleWithAddress from "../../common/page-titles/title-with-address";
 // store
 import { createObject } from "../../../store/objects.store";
 // other
-import useFindObject from "../../../hooks/use-find-object";
 import { objectSchema } from "../../../schemas/schemas";
+import useFindObject from "../../../hooks/use-find-object";
 import { capitalizeFirstLetter } from "../../../utils/capitalize-first-letter";
-import TitleWithAddress from "../../common/page-titles/title-with-address";
 
 const initialState = {
   status: "",
@@ -61,9 +61,6 @@ const initialState = {
 };
 
 const CreateObject = () => {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-
   const {
     register,
     watch,
@@ -76,7 +73,6 @@ const CreateObject = () => {
     resolver: yupResolver(objectSchema),
   });
 
-
   const {
     getCity,
     getAddress,
@@ -84,21 +80,13 @@ const CreateObject = () => {
     getLongitudeCoordinates,
     findedObject,
   } = useFindObject();
-  const data = watch()
+
+  const data = watch();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const isEmptyFindedObject = !Boolean(Object.keys(findedObject)?.length);
   const isObjectHasAddress = data?.location?.city && data?.location?.address;
-
-  const watchName = watch("contact.name");
-  const watchStatus = watch("status");
-  const watchDistrict = watch("location.district");
-  const watchMetro = watch("location.metro");
-  const watchCurrentRenters = watch("estateOptions.currentRenters");
-  const watchobjectConditions = watch("estateOptions.objectConditions");
-  const watchRentTypes = watch("estateOptions.rentTypes");
-  const watchObjectTypes = watch("estateOptions.objectTypes");
-  const watchEstateTypes = watch("estateOptions.estateTypes");
-  const watchWorkingPosition = watch("contact.position");
 
   const onSubmit = (data) => {
     const newData = {
@@ -125,8 +113,8 @@ const CreateObject = () => {
     console.log("newData", newData);
 
     dispatch(createObject(newData))
-    .then(navigate("/objects"))
-    .then(toast.success("Объект успешно создан!"));
+      .then(navigate("/objects"))
+      .then(toast.success("Объект успешно создан!"));
   };
 
   useEffect(() => {
@@ -155,18 +143,9 @@ const CreateObject = () => {
         register={register}
         errors={errors}
         isValid={isValid}
+        watch={watch}
         isEmptyFindedObject={isEmptyFindedObject}
         isObjectHasAddress={isObjectHasAddress}
-        watchName={watchName}
-        watchDistrict={watchDistrict}
-        watchMetro={watchMetro}
-        watchCurrentRenters={watchCurrentRenters}
-        watchobjectConditions={watchobjectConditions}
-        watchRentTypes={watchRentTypes}
-        watchObjectTypes={watchObjectTypes}
-        watchEstateTypes={watchEstateTypes}
-        watchStatus={watchStatus}
-        watchWorkingPosition={watchWorkingPosition}
       />
     </Box>
   );

@@ -8,17 +8,19 @@ const Component = styled(Box)`
   gap: 4px;
 `;
 
-const ButtonsBlock = ({ isInputEmpty, reset, initialState }) => {
+const AddAndClearFiltersButton = ({ title, isInputEmpty, reset, initialState, path }) => {
   const navigate = useNavigate();
+
   return (
     <Component>
       <Button
         variant="contained"
         color="success"
-        onClick={() => navigate("create")}
+        onClick={() => navigate(path)}
       >
-        <Typography>Добавить встречу</Typography>
+        <Typography>{title}</Typography>
       </Button>
+
       {isInputEmpty && (
         <Button
           variant="outlined"
@@ -26,7 +28,7 @@ const ButtonsBlock = ({ isInputEmpty, reset, initialState }) => {
           onClick={() => reset(initialState)}
           sx={{ display: "flex", alignItems: "center", gap: "3px" }}
         >
-          <Typography> Очистить фильтры</Typography>
+          <Typography>Очистить фильтры</Typography>
           <ClearOutlinedIcon />
         </Button>
       )}
@@ -34,4 +36,4 @@ const ButtonsBlock = ({ isInputEmpty, reset, initialState }) => {
   );
 };
 
-export default ButtonsBlock;
+export default AddAndClearFiltersButton;

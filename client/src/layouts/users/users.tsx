@@ -5,20 +5,20 @@ import { useSelector } from "react-redux";
 import { orderBy } from "lodash";
 import { useForm } from "react-hook-form";
 // components
-import BasicTable from "../../components/common/table/basic-table";
-import FiltersPanel from "./components/filter-panel";
-import ButtonsBlock from "./components/buttons-block";
 import { groupedColumns } from "./table/columns";
+import FiltersPanel from "./components/filter-panel";
+import BasicTable from "../../components/common/table/basic-table";
+// hooks
+import useSearchUser from "../../hooks/use-search-user";
+import { getUserStatusesList } from "../../store/user-statuses.store";
+import LayoutTitle from "../../components/common/page-titles/layout-title";
 // store
 import {
   getCurrentUserId,
   getUsersList,
   getUsersLoadingStatus,
 } from "../../store/users.store";
-// hooks
-import useSearchUser from "../../hooks/use-search-user";
-import { getUserStatusesList } from "../../store/user-statuses.store";
-import LayoutTitle from "../../components/common/page-titles/layout-title";
+import AddAndClearFiltersButton from "../../components/common/buttons/add-and-clear-filters-button";
 
 const initialState = {
   lastName: "",
@@ -34,26 +34,23 @@ const initialState = {
 };
 
 const Users = () => {
-  const users = useSelector(getUsersList());
-  const currentUserId = useSelector(getCurrentUserId());
-  const statuses = useSelector(getUserStatusesList());
-  const isLoading = useSelector(getUsersLoadingStatus());
-  const columns = groupedColumns;
-  const usersWithoutCurrentUser = users.filter(
-    (user) => user._id !== currentUserId
-  );
-
   const localStorageState = JSON.parse(
     localStorage.getItem("search-users-data")
   );
-
   const { register, watch, setValue, reset } = useForm({
     defaultValues: localStorageState || initialState,
     mode: "onBlur",
   });
 
   const data = watch();
-  
+  const columns = groupedColumns;
+  const users = useSelector(getUsersList());
+  const currentUserId = useSelector(getCurrentUserId());
+  const usersWithoutCurrentUser = users.filter(
+    (user) => user._id !== currentUserId
+  );
+  const statuses = useSelector(getUserStatusesList());
+  const isLoading = useSelector(getUsersLoadingStatus());
   const isInputEmpty = JSON.stringify(initialState) !== JSON.stringify(data);
 
   const searchedUsers = useSearchUser({
@@ -118,11 +115,13 @@ const Users = () => {
 
   return (
     <Box>
-      <LayoutTitle title="Менеджеры"/>
-      <ButtonsBlock
+      <LayoutTitle title="Менеджеры" />
+      <AddAndClearFiltersButton
+        title="Добавить менеджера"
         isInputEmpty={isInputEmpty}
         reset={reset}
         initialState={initialState}
+        path="create"
       />
       <FiltersPanel
         data={data}

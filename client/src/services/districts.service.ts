@@ -1,4 +1,5 @@
 import httpService from "./http.service";
+
 const districtsEndpoint = "/districts";
 
 const districtsService = {

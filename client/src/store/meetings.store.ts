@@ -1,7 +1,7 @@
 import { createAction, createSlice } from "@reduxjs/toolkit";
+import isOutDated from "../utils/is-out-date";
 import localStorageService from "../services/local.storage-service";
 import meetingsService from "../services/meetings.service";
-import isOutDated from "../utils/is-out-date";
 
 const initialState = localStorageService.getAccessToken()
   ? {

@@ -30,8 +30,6 @@ export const objectSchema = yup.object().shape({
 export const meetingSchema = yup.object().shape({
   status: yup.string().required("Статус обязателен для заполнения"),
   meetingType: yup.string().required("Тип обязателен для заполнения"),
-  // date: yup.date().required("Укажите дату встречи"),
-  // time: yup.date().required("Укажите время встречи"),
   objectId: yup.string().required("Выберите объект встречи"),
   comment: yup.string().required("Заполните комментарий"),
 });
@@ -74,7 +72,6 @@ export const managerSchema = yup.object().shape({
     .required("Заполните начало договора")
     .typeError("Должна должна быть датой")
     .max(yup.ref("endDate"), "Начальная дата не может быть позже конечной"),
-    // endDate: yup.date().required().min(yup.ref('startDate'), 'End date cannot be earlier than start date'),
     endDate: yup
     .date()
     .required("Заполните окончание договора")

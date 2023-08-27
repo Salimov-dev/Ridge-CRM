@@ -17,6 +17,7 @@ const Component = styled(Box)`
 
 const ObjectInfo = ({ object, isLoading }) => {
   const description = object?.description?.fullDescription;
+  
   return (
     <Component>
       <Typography variant="h3">Локация</Typography>

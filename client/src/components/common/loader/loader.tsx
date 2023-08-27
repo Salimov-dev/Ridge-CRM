@@ -1,11 +1,11 @@
 import { CircularProgress, Box } from "@mui/material";
 
-const Loader = ({ size = 25, width = '100%' }) => {
+const Loader = ({ size = 25, width = '100%', height = '100%' }) => {
   return (
     <Box
       sx={{
         width: {width},
-        height: "100%",
+        height: {height},
         padding: "30px 0",
         display: "flex",
         justifyContent: "center",

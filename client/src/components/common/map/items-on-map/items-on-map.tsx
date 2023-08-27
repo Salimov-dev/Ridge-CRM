@@ -5,8 +5,8 @@ import { Box, styled } from "@mui/material";
 // components
 import Loader from "../../loader/loader";
 // yandex map
-import { Map, Placemark, Clusterer } from "@pbe/react-yandex-maps";
 import target from "../../../../assets/map/target.png";
+import { Map, Placemark, Clusterer } from "@pbe/react-yandex-maps";
 import target_cluster from "../../../../assets/map/target_cluster.png";
 // styles
 import "./styles.css";

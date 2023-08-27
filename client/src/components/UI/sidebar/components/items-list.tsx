@@ -1,11 +1,8 @@
-import { Typography, Tooltip } from "@mui/material";
+import { Tooltip } from "@mui/material";
 import Item from "./item";
-// styled
-import { ItemsListContainer } from "../styled/styled";
 // icons
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
-import MapOutlinedIcon from "@mui/icons-material/MapOutlined";
 import GroupsOutlinedIcon from "@mui/icons-material/GroupsOutlined";
 import BusinessCenterOutlinedIcon from "@mui/icons-material/BusinessCenterOutlined";
 import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined";
@@ -13,10 +10,11 @@ import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
 import BusinessOutlinedIcon from "@mui/icons-material/BusinessOutlined";
 import AssignmentOutlinedIcon from "@mui/icons-material/AssignmentOutlined";
 import TableChartOutlinedIcon from "@mui/icons-material/TableChartOutlined";
+import ItemsTitle from "./items-title";
 
 const ItemsList = ({ isCollapsed, selected, setSelected, colors }) => {
   return (
-    <ItemsListContainer>
+    <>
       <Item
         title="Главная"
         to="/"
@@ -29,16 +27,11 @@ const ItemsList = ({ isCollapsed, selected, setSelected, colors }) => {
         setSelected={setSelected}
       />
 
-      <Typography
-        variant="h6"
-        color={colors.grey[300]}
-        sx={{
-          m: !isCollapsed ? "15px 0 5px 20px" : "15px 0 5px 6px",
-          fontSize: !isCollapsed ? "inherit" : "12px",
-        }}
-      >
-        Активность
-      </Typography>
+      <ItemsTitle
+        title="Активность"
+        colors={colors.grey[300]}
+        isCollapsed={isCollapsed}
+      />
       <Item
         title="Объекты"
         to="/objects"
@@ -76,16 +69,11 @@ const ItemsList = ({ isCollapsed, selected, setSelected, colors }) => {
         setSelected={setSelected}
       />
 
-      <Typography
-        variant="h6"
-        color={colors.grey[300]}
-        sx={{
-          m: !isCollapsed ? "15px 0 5px 20px" : "15px 0 5px 12px",
-          fontSize: !isCollapsed ? "inherit" : "12px",
-        }}
-      >
-        Команда
-      </Typography>
+      <ItemsTitle
+        title="Команда"
+        colors={colors.grey[300]}
+        isCollapsed={isCollapsed}
+      />
       <Item
         title="Менеджеры"
         to="/users"
@@ -115,16 +103,12 @@ const ItemsList = ({ isCollapsed, selected, setSelected, colors }) => {
         selected={selected}
         setSelected={setSelected}
       />
-      <Typography
-        variant="h6"
-        color={colors.grey[300]}
-        sx={{
-          m: !isCollapsed ? "15px 0 5px 20px" : "15px 0 5px 18px",
-          fontSize: !isCollapsed ? "inherit" : "12px",
-        }}
-      >
-        Другое
-      </Typography>
+
+      <ItemsTitle
+        title="Другое"
+        colors={colors.grey[300]}
+        isCollapsed={isCollapsed}
+      />
       <Item
         title="Материалы"
         to="/materials"
@@ -132,7 +116,7 @@ const ItemsList = ({ isCollapsed, selected, setSelected, colors }) => {
         selected={selected}
         setSelected={setSelected}
       />
-    </ItemsListContainer>
+    </>
   );
 };
 

@@ -1,17 +1,18 @@
+import dayjs from "dayjs";
 import { useNavigate } from "react-router-dom";
 // MUI
-import { Box, styled, InputAdornment, Button } from "@mui/material";
+import { Box, styled, InputAdornment } from "@mui/material";
 import PhoneIphoneOutlinedIcon from "@mui/icons-material/PhoneIphoneOutlined";
 import AlternateEmailOutlinedIcon from "@mui/icons-material/AlternateEmailOutlined";
 import KeyOutlinedIcon from "@mui/icons-material/KeyOutlined";
 // components
-import TextFieldStyled from "../inputs/text-field-styled";
-import DatePickerStyled from "../inputs/date-picker";
-import SimpleSelectField from "../inputs/simple-select-field";
+import TextFieldStyled from "../../inputs/text-field-styled";
+import DatePickerStyled from "../../inputs/date-picker";
+import SimpleSelectField from "../../inputs/simple-select-field";
 // mock
-import { gendersArray } from "../../../mock/genders";
-import { useEffect, useState } from "react";
-import dayjs from "dayjs";
+import { gendersArray } from "../../../../mock/genders";
+import Title from "../title";
+import FooterButtons from "../footer-buttons";
 
 const FieldsContainer = styled(Box)`
   width: 100%;
@@ -27,13 +28,6 @@ const Form = styled(`form`)({
   gap: "4px",
 });
 
-const FooterButtons = styled(Box)`
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  margin-top: 30px;
-`;
-
 const ManagerForm = ({
   data,
   isEditMode = false,
@@ -44,14 +38,15 @@ const ManagerForm = ({
   setValue,
   userStatuses,
   isValid,
-  watchStatus,
-  watchGender,
-  watchStartDate,
+  watch,
 }) => {
-  const navigate = useNavigate();
   const today = dayjs();
+  const watchStartDate = watch("watchStartDate", "");
+  const watchGender = watch("gender", "");
+  const watchStatus = watch("status", "");
   const tomorrow = dayjs(watchStartDate).add(1, "day");
   const endTrialPeriod = dayjs(tomorrow).add(1, "day");
+  const navigate = useNavigate();
 
   const handleBackPage = () => {
     navigate("/users");
@@ -59,9 +54,7 @@ const ManagerForm = ({
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)} noValidate>
-      <Box sx={{ marginRight: "auto" }}>
-        <h3>Менеджер</h3>
-      </Box>
+      <Title title="Менеджер" />
       <FieldsContainer
         sx={{ display: "flex", flexDirection: "column", gap: "12px" }}
       >
@@ -142,9 +135,7 @@ const ManagerForm = ({
         </FieldsContainer>
       </FieldsContainer>
 
-      <Box sx={{ marginRight: "auto" }}>
-        <h3>Трудовой договор</h3>
-      </Box>
+      <Title title="Трудовой договор" />
       <FieldsContainer>
         <DatePickerStyled
           register={register}
@@ -173,9 +164,7 @@ const ManagerForm = ({
         />
       </FieldsContainer>
 
-      <Box sx={{ marginRight: "auto" }}>
-        <h3>Аккаунт в CRM</h3>
-      </Box>
+      <Title title="Аккаунт в CRM" />
       <FieldsContainer>
         <SimpleSelectField
           register={register}
@@ -220,26 +209,11 @@ const ManagerForm = ({
         )}
       </FieldsContainer>
 
-      <FooterButtons>
-        <Button
-          type="submit"
-          variant="outlined"
-          color="success"
-          disabled={!isValid}
-        >
-          {isEditMode ? "Сохранить" : "Создать"}
-        </Button>
-        <Box sx={{ display: "flex", gap: "4px" }}>
-          <Button
-            type="button"
-            variant="outlined"
-            color="error"
-            onClick={handleBackPage}
-          >
-            Отмена
-          </Button>
-        </Box>
-      </FooterButtons>
+      <FooterButtons
+        isEditMode={isEditMode}
+        isValid={!isValid}
+        onClick={handleBackPage}
+      />
     </Form>
   );
 };

@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 // components
 import FindObjectOnMap from "../../common/find-object-on-map";
-import MeetingForm from "../../common/forms/meeting-form";
+import MeetingForm from "../../common/forms/meeting-form/meeting-form";
 // MUI
 import { Box } from "@mui/material";
 // store
@@ -68,10 +68,6 @@ const CreateMeeting = () => {
     resolver: yupResolver(meetingSchema),
   });
 
-  const watchStatus = watch("status", "");
-  const watchObjectId = watch("objectId", "");
-  const watchTypeMeeting = watch("meetingType", "");
-
   const {
     getCity,
     getAddress,
@@ -79,7 +75,7 @@ const CreateMeeting = () => {
     getLongitudeCoordinates,
     findedObject,
   } = useFindObject();
-  
+
   const data = watch();
 
   const isEmptyFindedObject = Boolean(!Object.keys(findedObject)?.length);
@@ -121,19 +117,17 @@ const CreateMeeting = () => {
       <FindObjectOnMap />
 
       <MeetingForm
-        objects={transformObjects}
         register={register}
+        objects={transformObjects}
+        statuses={statuses}
+        meetingTypes={meetingTypes}
         onSubmit={onSubmit}
         handleSubmit={handleSubmit}
+        watch={watch}
         errors={errors}
         setValue={setValue}
         isValid={isFullValid}
         isEmptyFindedObject={isEmptyFindedObject}
-        statuses={statuses}
-        meetingTypes={meetingTypes}
-        watchObjectId={watchObjectId}
-        watchStatus={watchStatus}
-        watchTypeMeeting={watchTypeMeeting}
       />
     </Box>
   );

@@ -1,12 +1,10 @@
 // libraries
-import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 import dayjs from "dayjs";
 // MUI
-import { Box, styled, Button, Typography } from "@mui/material";
-import ClearOutlinedIcon from "@mui/icons-material/ClearOutlined";
+import { Box } from "@mui/material";
 // components
 import Baloon from "./map/baloon";
 import { groupedColumns } from "./table/columns";
@@ -22,12 +20,7 @@ import {
 } from "../../store/objects.store";
 // hooks
 import useSearchObject from "../../hooks/use-search-object";
-
-const ButtonsBlock = styled(Box)`
-  display: flex;
-  margin-bottom: 10px;
-  gap: 4px;
-`;
+import AddAndClearFiltersButton from "../../components/common/buttons/add-and-clear-filters-button";
 
 const initialState = {
   address: "",
@@ -56,8 +49,6 @@ const Objects = () => {
   const columns = groupedColumns;
   const center = [59.930320630519155, 30.32906024941998];
   const mapZoom = 11;
-
-  const navigate = useNavigate();
 
   const localStorageState = JSON.parse(
     localStorage.getItem("search-objects-data")
@@ -101,28 +92,13 @@ const Objects = () => {
   return (
     <Box sx={{ width: "100%" }}>
       <LayoutTitle title="Таблица объектов" />
-
-      <ButtonsBlock>
-        <Button
-          variant="contained"
-          color="success"
-          onClick={() => navigate("create")}
-        >
-          <Typography>Создать объект</Typography>
-        </Button>
-        {isInputEmpty && (
-          <Button
-            variant="outlined"
-            color="success"
-            onClick={() => reset(initialState)}
-            sx={{ display: "flex", alignItems: "center", gap: "3px" }}
-          >
-            <Typography> Очистить фильтры</Typography>
-            <ClearOutlinedIcon />
-          </Button>
-        )}
-      </ButtonsBlock>
-
+      <AddAndClearFiltersButton
+        title="Добавить объект"
+        isInputEmpty={isInputEmpty}
+        reset={reset}
+        initialState={initialState}
+        path="create"
+      />
       <ItemsOnMap
         items={searchedObjects}
         mapZoom={mapZoom}
@@ -133,16 +109,13 @@ const Objects = () => {
         onClick={setSelectedBaloon}
         baloon={<Baloon object={selectedObject} />}
         isLoading={isLoading}
-        selectedBaloon={selectedBaloon}
       />
 
       <FiltersPanel
+        data={data}
         register={register}
         objects={objects}
-        data={data}
-        initialState={initialState}
         setValue={setValue}
-        reset={reset}
         isLoading={isLoading}
       />
 

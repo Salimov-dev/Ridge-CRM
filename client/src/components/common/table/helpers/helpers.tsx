@@ -4,18 +4,18 @@ import dayjs from "dayjs";
 // utils
 import { enterPhoneFormat } from "../../../../utils/enter-phone-format";
 // store
+import { getMetroName } from "../../../../store/metro.store";
+import { getObjectById } from "../../../../store/objects.store";
 import { getUserNameById } from "../../../../store/users.store";
 import { getDistrictById } from "../../../../store/districts.store";
-import { getObjectStatusNameById } from "../../../../store/object-status.store";
-import { getMetroName } from "../../../../store/metro.store";
+import { getRentTypeNameById } from "../../../../store/rent-types.store";
 import { getObjectTypeNameById } from "../../../../store/object-types.store";
 import { getEstateTypeNameById } from "../../../../store/estate-types.store";
-import { getCurrentRenterNameById } from "../../../../store/current-renter.store";
-import { getEstateConditionNameById } from "../../../../store/object-conditions.store";
-import { getWorkingPositionNameById } from "../../../../store/working-position.store";
-import { getRentTypeNameById } from "../../../../store/rent-types.store";
-import { getObjectById } from "../../../../store/objects.store";
+import { getObjectStatusNameById } from "../../../../store/object-status.store";
 import { getPriceForRentMetr } from "../../../../utils/get-price-rent-for-metr";
+import { getCurrentRenterNameById } from "../../../../store/current-renter.store";
+import { getWorkingPositionNameById } from "../../../../store/working-position.store";
+import { getEstateConditionNameById } from "../../../../store/object-conditions.store";
 
 export const FormatDate = (date) => {
   return dayjs(date).format("DD.MM.YY");

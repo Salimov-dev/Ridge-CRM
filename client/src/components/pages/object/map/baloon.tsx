@@ -1,4 +1,5 @@
 import { useSelector } from "react-redux";
+import Loader from "../../../common/loader/loader";
 import { Box, Typography, styled } from "@mui/material";
 import { FormatDate } from "../../../../utils/format-date";
 import { getUserNameById } from "../../../../store/users.store";
@@ -6,6 +7,7 @@ import { getDistrictById } from "../../../../store/districts.store";
 
 const BaloonContainer = styled(Box)`
   width: 100%;
+  height: 100px;
   display: flex;
   gap: 4px;
   flex-direction: column;
@@ -13,24 +15,35 @@ const BaloonContainer = styled(Box)`
 `;
 
 const Baloon = ({ object }) => {
-  return (
+  const date = FormatDate(object.created_at);
+  const manager = useSelector(getUserNameById(object?.userId));
+  const city = object?.location?.city;
+  const district = useSelector(getDistrictById(object?.location?.district));
+  const address = object?.location?.address;
+
+  return object ? (
     <BaloonContainer>
       <Box sx={{ display: "flex", gap: "4px" }}>
-        <b>Дата создания:</b> {FormatDate(object.created_at)}
+        <Typography>
+          <b>Дата создания:</b>
+        </Typography>
+        {date}
       </Box>
       <Typography>
-        <b>Менеджер:</b> {useSelector(getUserNameById(object?.userId))}
+        <b>Менеджер:</b> {manager}
       </Typography>
       <Typography>
-        <b>Город:</b> {object?.location?.city}
+        <b>Город:</b> {city}
       </Typography>
       <Typography>
-        <b>Район:</b> {useSelector(getDistrictById(object?.location?.district))}
+        <b>Район:</b> {district}
       </Typography>
       <Typography>
-        <b>Адрес:</b> {object?.location?.address}
+        <b>Адрес:</b> {address}
       </Typography>
     </BaloonContainer>
+  ) : (
+    <Loader height={90} />
   );
 };
 

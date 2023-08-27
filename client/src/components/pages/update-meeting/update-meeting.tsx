@@ -1,37 +1,36 @@
 // libraries
-import { useDispatch, useSelector } from "react-redux";
+import dayjs from "dayjs";
+import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useNavigate, useParams } from "react-router-dom";
-import { toast } from "react-toastify";
-import dayjs from "dayjs";
 // MUI
 import { Box } from "@mui/material";
 // components
 import Header from "./components/header";
-import { getMeetingById, updateMeeting } from "../../../store/meetings.store";
-import { getMeetingStatusesList } from "../../../store/meeting-status.store";
+import MeetingForm from "../../common/forms/meeting-form/meeting-form";
+// store
 import { meetingSchema } from "../../../schemas/schemas";
-import MeetingForm from "../../common/forms/meeting-form";
 import { getObjectsList } from "../../../store/objects.store";
-import { getMeetingTypesList } from "../../../store/meeting-types.store";
 import { getCurrentUserId } from "../../../store/users.store";
+import { getMeetingTypesList } from "../../../store/meeting-types.store";
+import { getMeetingStatusesList } from "../../../store/meeting-status.store";
+import { getMeetingById, updateMeeting } from "../../../store/meetings.store";
 
 const UpdateMeeting = () => {
   const { meetingId } = useParams();
-  const meeting = useSelector(getMeetingById(meetingId));
   const objects = useSelector(getObjectsList());
-  const statuses = useSelector(getMeetingStatusesList());
-  const meetingTypes = useSelector(getMeetingTypesList());
   const currentUserId = useSelector(getCurrentUserId());
   const currentUserObjects = objects?.filter(
     (obj) => obj?.userId === currentUserId
   );
+  const meeting = useSelector(getMeetingById(meetingId));
+  const meetingTypes = useSelector(getMeetingTypesList());
+  const statuses = useSelector(getMeetingStatusesList());
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  const isEditMode = meetingId ? true : false;
 
   const formatedMeeting = {
     ...meeting,
@@ -59,10 +58,7 @@ const UpdateMeeting = () => {
   const data = watch();
 
   const isFullValid = data.date !== null && data.time !== null && isValid;
-
-  const watchStatus = watch("status", "");
-  const watchObjectId = watch("objectId", "");
-  const watchTypeMeeting = watch("meetingType", "");
+  const isEditMode = meetingId ? true : false;
 
   const onSubmit = (data) => {
     dispatch(updateMeeting(data, meetingId))
@@ -74,20 +70,18 @@ const UpdateMeeting = () => {
     <Box>
       <Header meeting={meeting} />
       <MeetingForm
-        data={data}
         register={register}
+        data={data}
+        objects={transformObjects}
+        meetingTypes={meetingTypes}
         onSubmit={onSubmit}
         handleSubmit={handleSubmit}
+        watch={watch}
         errors={errors}
         isValid={isFullValid}
         setValue={setValue}
         statuses={statuses}
-        meetingTypes={meetingTypes}
-        objects={transformObjects}
         isEditMode={isEditMode}
-        watchObjectId={watchObjectId}
-        watchStatus={watchStatus}
-        watchTypeMeeting={watchTypeMeeting}
       />
     </Box>
   );

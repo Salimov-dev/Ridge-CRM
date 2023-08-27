@@ -1,28 +1,21 @@
 // libraries
 import { orderBy } from "lodash";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 // MUI
-import {
-  Box,
-  styled,
-  FormControl,
-  FormControlLabel,
-  FormGroup,
-  Switch,
-} from "@mui/material";
+import { styled } from "@mui/material";
 // components
-import SearchDatePicker from "../../../components/common/inputs/search-date-picker";
 import SearchField from "../../../components/common/inputs/search-field";
+import SearchDatePicker from "../../../components/common/inputs/search-date-picker";
 import MultiSelectField from "../../../components/common/inputs/multi-select-field";
 // store
 import { getUsersList } from "../../../store/users.store";
-import { getObjectsStatusList } from "../../../store/object-status.store";
 import { getMetroList } from "../../../store/metro.store";
-import { getCurrentRentersList } from "../../../store/current-renter.store";
+import { getDistrictsList } from "../../../store/districts.store";
 import { getEstateTypesList } from "../../../store/estate-types.store";
 import { getObjectTypesList } from "../../../store/object-types.store";
-import { getDistrictsList } from "../../../store/districts.store";
+import { getObjectsStatusList } from "../../../store/object-status.store";
+import { getCurrentRentersList } from "../../../store/current-renter.store";
+import SearchSwitch from "../../../components/common/inputs/search-switch";
 
 const Form = styled(`form`)({
   display: "flex",
@@ -32,21 +25,14 @@ const Form = styled(`form`)({
   gap: "4px",
 });
 
-const FiltersPanel = ({
-  setValue,
-  objects,
-  data,
-  initialState,
-  register,
-  isLoading,
-}) => {
-  const objectStatuses = useSelector(getObjectsStatusList());
+const FiltersPanel = ({ setValue, objects, data, register, isLoading }) => {
   const users = useSelector(getUsersList());
+  const objectStatuses = useSelector(getObjectsStatusList());
+  const objectTypes = useSelector(getObjectTypesList());
   const districts = useSelector(getDistrictsList());
   const metro = useSelector(getMetroList());
   const currentRenters = useSelector(getCurrentRentersList());
   const estateTypes = useSelector(getEstateTypesList());
-  const objectTypes = useSelector(getObjectTypesList());
 
   const isOnlyPhoneChecked = data?.onlyWithPhone;
 
@@ -239,42 +225,14 @@ const FiltersPanel = ({
           label="Выбор по менеджеру"
           disabled={isLoading ? true : false}
         />
-
-        <Box>
-          <FormControl
-            component="fieldset"
-            sx={{
-              padding: "5px 15px 5px 0px",
-              border: "1px solid",
-              borderColor: isOnlyPhoneChecked ? "green" : "gray",
-              borderRadius: "6px",
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-            }}
-          >
-            <FormGroup aria-label="position" row sx={{ width: "100%" }}>
-              <FormControlLabel
-                control={
-                  <Switch
-                    color="success"
-                    checked={data.onlyWithPhone} // Set the initial value here
-                    disabled={isLoading ? true : false}
-                    onChange={(e) => {
-                      setValue("onlyWithPhone", e.target.checked);
-                    }}
-                  />
-                }
-                label="Объекты с телефоном"
-                labelPlacement="start"
-                sx={{
-                  width: "100%",
-                  color: isOnlyPhoneChecked ? "white" : "gray",
-                }}
-              />
-            </FormGroup>
-          </FormControl>
-        </Box>
+        <SearchSwitch
+          data={data}
+          isLoading={isLoading}
+          isOnlyPhoneChecked={isOnlyPhoneChecked}
+          onChange={(e) => {
+            setValue("onlyWithPhone", e.target.checked);
+          }}
+        />
       </Form>
 
       <Form>
@@ -341,7 +299,6 @@ const FiltersPanel = ({
           label="Добавлены от"
           value={data.startDate}
           onChange={(value) => setValue("startDate", value)}
-          isLoading={isLoading}
         />
         <SearchDatePicker
           register={register}
@@ -349,7 +306,6 @@ const FiltersPanel = ({
           label="Добавлены до"
           value={data.endDate}
           onChange={(value) => setValue("endDate", value)}
-          isLoading={isLoading}
         />
       </Form>
     </>

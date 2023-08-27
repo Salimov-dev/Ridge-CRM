@@ -1,15 +1,15 @@
 // libraries
 import { useSelector } from "react-redux";
 // components
+import TableOpenButton from "../../../components/common/buttons/table-open-button";
 import { FormatPhone, UserAvatar } from "../../../components/common/table/helpers/helpers";
 // mock
 import { gendersArray } from "../../../mock/genders";
 // store
-import { getUserStatusNameById } from "../../../store/user-statuses.store";
 import { getUserNameById } from "../../../store/users.store";
+import { getUserStatusNameById } from "../../../store/user-statuses.store";
 // utils
 import { FormatDate } from "../../../utils/format-date";
-import TableOpenButton from "../../../components/common/buttons/table-open-button";
 
 export const groupedColumns = [
   {

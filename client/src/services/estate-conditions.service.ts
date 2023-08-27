@@ -1,4 +1,5 @@
 import httpService from "./http.service";
+
 const objectConditionsEndpoint = "/objectConditions";
 
 const objectConditionsService = {
