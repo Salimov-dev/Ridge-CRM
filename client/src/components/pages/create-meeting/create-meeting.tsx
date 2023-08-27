@@ -6,7 +6,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 // components
-import FindObjectOnMap from "../../common/find-object-on-map";
+import FindObjectOnMap from "../../common/find-object-on-map/find-object-on-map";
 import MeetingForm from "../../common/forms/meeting-form/meeting-form";
 // MUI
 import { Box } from "@mui/material";

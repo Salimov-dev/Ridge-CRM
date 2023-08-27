@@ -9,7 +9,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Box } from "@mui/material";
 // components
 import ObjectForm from "../../common/forms/object-form/object-form";
-import FindObjectOnMap from "../../common/find-object-on-map";
+import FindObjectOnMap from "../../common/find-object-on-map/find-object-on-map";
 import TitleWithAddress from "../../common/page-titles/title-with-address";
 // store
 import { createObject } from "../../../store/objects.store";

@@ -1,6 +1,7 @@
 import { Box, Button, styled } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
 import PageBackButton from "../../../common/buttons/page-back-button";
+import EditButton from "../../../common/buttons/edit-button";
 
 const Component = styled(Box)`
   display: flex;
@@ -13,18 +14,9 @@ const ButtonsPanel = () => {
 
   return (
     <Component>
-      <PageBackButton path="/map" text="Карта" />
       <PageBackButton path="/objects" text="Объекты" />
-      <PageBackButton path={-1} />
-
-      <Button
-        color="secondary"
-        variant="contained"
-        sx={{ height: "50px" }}
-        onClick={() => navigate(`/objects/${objectId}/edit`)}
-      >
-        Править
-      </Button>
+      <PageBackButton />
+      <EditButton path={`/objects/${objectId}/edit`} />
     </Component>
   );
 };

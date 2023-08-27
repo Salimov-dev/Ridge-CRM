@@ -7,6 +7,8 @@ import {
   estateTypeColumns,
   locationColumns,
 } from "../table/columns";
+import PageBackButton from "../../../common/buttons/page-back-button";
+import EditButton from "../../../common/buttons/edit-button";
 
 const Component = styled(Box)`
   display: flex;
@@ -17,7 +19,7 @@ const Component = styled(Box)`
 
 const ObjectInfo = ({ object, isLoading }) => {
   const description = object?.description?.fullDescription;
-  
+
   return (
     <Component>
       <Typography variant="h3">Локация</Typography>
@@ -63,6 +65,11 @@ const ObjectInfo = ({ object, isLoading }) => {
       <Typography variant="h3">Описание</Typography>
       <Box>
         {description ? object.description.fullDescription : "Нет описания"}
+      </Box>
+      <Box sx={{ display: "flex", justifyContent: "end", gap: "4px" }}>
+        <PageBackButton path="/objects" text="Объекты" />
+        <PageBackButton />
+        <EditButton path={`/objects/${object._id}/edit`} />
       </Box>
     </Component>
   );

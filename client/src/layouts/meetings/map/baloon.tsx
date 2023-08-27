@@ -60,7 +60,7 @@ const Baloon = ({ meeting }) => {
       <Typography>
         <b>Объект встречи:</b>
       </Typography>
-      <Attribute title={null} subTitle={objectAddress} />
+      <Attribute title="" subTitle={objectAddress} gap='0'/>
       <Divider />
 
       <OpenObjectButton path={`/objects/${objectId}`} />
