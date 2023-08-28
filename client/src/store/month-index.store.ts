@@ -1,9 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
+import dayjs from "dayjs";
 
 const monthIndexSlice = createSlice({
   name: "monthIndex",
   initialState: {
-    entities: 0,
+    entities: dayjs().month(),
   },
   reducers: {
     monthIndexSetted: (state, action) => {
@@ -16,8 +17,8 @@ const { reducer: monthIndexReducer, actions } = monthIndexSlice;
 
 const { monthIndexSetted } = actions;
 
-export const setMonthIndex = (query) => (dispatch) => {
-  dispatch(monthIndexSetted(query));
+export const setMonthIndex = (payload) => (dispatch) => {
+  dispatch(monthIndexSetted(payload));
 };
 
 export const getMonthIndexState = () => (state) => {

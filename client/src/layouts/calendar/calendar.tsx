@@ -1,24 +1,19 @@
-// import FullCalendar from "@fullcalendar/react";
-// import dayGridPlugin from "@fullcalendar/daygrid";
-// import timeGridPlugin from "@fullcalendar/timeGridPlugin";
-// import interactionPlugin from "@fullcalendar/interactionPlugin";
-// import listPlugin from "@fullcalendar/listPlugin";
-import { Box, styled } from "@mui/material";
+import { Box } from "@mui/material";
 import LayoutTitle from "../../components/common/page-titles/layout-title";
 import getMonth from "../../utils/calendar/get-month";
 import Header from "./components/header";
-import Sidebar from "./components/sidebar";
 import Month from "./components/month";
-import { useState } from "react";
-
-const Container = styled(Box)`
-  height: 100%;
-  display: flex;
-  flex-direction: columns;
-`;
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { getMonthIndexState } from "../../store/month-index.store";
 
 const Calendar = () => {
   const [currentMonth, setCurrentMonth] = useState(getMonth());
+  const monthIndex = useSelector(getMonthIndexState());
+
+  useEffect(() => {
+    setCurrentMonth(getMonth(monthIndex));
+  }, [monthIndex]);
 
   return (
     <>
@@ -26,11 +21,9 @@ const Calendar = () => {
       <Box sx={{ display: "flex", flexDirection: "column", height: "100vh" }}>
         <Header />
         <Box sx={{ display: "flex", flex: 1 }}>
-          <Sidebar />
-          <Month month={currentMonth}/>
+          <Month month={currentMonth} />
         </Box>
       </Box>
-      {/* <FullCalendar plugins={[dayGridPlugin]} initialView="dayGridMonth" /> */}
     </>
   );
 };

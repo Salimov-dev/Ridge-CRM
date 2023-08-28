@@ -1,8 +1,31 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, styled } from "@mui/material";
 import dayjs from "dayjs";
 import "dayjs/locale/ru";
 
+const DayOfWeek = styled(Box)`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  border-bottom: 1px solid gray;
+  background: darkGreen;
+`;
+
+const DateOfMonthContainer = styled(Box)`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+`;
+
+const DateOfMonth = styled(Typography)`
+  padding: 3px 3px 3px 6px;
+  border-radius: 50%;
+  width: 26px;
+  height: 26px;
+`;
+
 const Day = ({ day, rowIdx }) => {
+  const firstRow = rowIdx === 0
+
   const isCurrentDay = () => {
     const currentDay = dayjs().format("DD-MM-YY");
     const calendarDay = day.format("DD-MM-YY");
@@ -29,20 +52,22 @@ const Day = ({ day, rowIdx }) => {
           justifyContent: "center",
         }}
       >
-        {rowIdx === 0 && (
-          <Typography>{day.locale("ru").format("dd").toUpperCase()}</Typography>
+        {firstRow && (
+          <DayOfWeek>
+            <Typography>
+              {day.locale("ru").format("dd").toUpperCase()}
+            </Typography>
+          </DayOfWeek>
         )}
-        <Typography
-          sx={{
-            backgroundColor: isCurrentDay() ? "blue" : "inherit",
-            padding: "6px 6px 6px 9px",
-            borderRadius: "50%",
-            width: "32px",
-            height: "32px",
-          }}
-        >
-          {day.format("DD")}
-        </Typography>
+        <DateOfMonthContainer>
+          <DateOfMonth
+            sx={{
+              backgroundColor: isCurrentDay() ? "blue" : "inherit",
+            }}
+          >
+            {day.format("DD")}
+          </DateOfMonth>
+        </DateOfMonthContainer>
       </Box>
     </Box>
   );
