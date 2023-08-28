@@ -10,7 +10,7 @@ import { Box } from "@mui/material";
 import Header from "./components/header";
 import ObjectForm from "../../common/forms/object-form/object-form";
 // store
-import { getObjectById, updateObject } from "../../../store/objects.store";
+import { getObjectById, updateObject } from "../../../store/object/objects.store";
 // other
 import { objectSchema } from "../../../schemas/schemas";
 

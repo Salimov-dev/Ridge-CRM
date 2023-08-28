@@ -8,8 +8,11 @@ import { yupResolver } from "@hookform/resolvers/yup";
 // components
 import ManagerForm from "../../common/forms/manager-form/manager-form";
 // store
-import { getUserStatusesList } from "../../../store/user-statuses.store";
-import { addNewManager, getCurrentUserId } from "../../../store/users.store";
+import { getUserStatusesList } from "../../../store/user/user-statuses.store";
+import {
+  addNewManager,
+  getCurrentUserId,
+} from "../../../store/user/users.store";
 // schema
 import { managerSchema } from "../../../schemas/schemas";
 import getRandomInt from "../../../utils/get-random-int";

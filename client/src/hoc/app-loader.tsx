@@ -1,22 +1,22 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 // store
-import { loadObjectsList } from "../store/objects.store";
-import { loadUsersList } from "../store/users.store";
-import { loadMetroList } from "../store/metro.store";
-import { loadDistrictsList } from "../store/districts.store";
-import { loadObjectStatusList } from "../store/object-status.store";
-import { loadWorkingPositionList } from "../store/working-position.store";
+import { loadObjectsList } from "../store/object/objects.store";
+import { loadObjectStatusList } from "../store/object/object-status.store";
+import { loadObjectTypesList } from "../store/object/object-types.store";
+import { loadUsersList } from "../store/user/users.store";
+import { loadMetroList } from "../store/object/metro.store";
+import { loadDistrictsList } from "../store/object/districts.store";
+import { loadWorkingPositionList } from "../store/user/working-position.store";
 import { loadSidebarCollapsState } from "../store/sidebar-collaps-state.store";
-import { loadCurrentRentersList } from "../store/current-renter.store";
-import { loadObjectConditionsList } from "../store/object-conditions.store";
-import { loadRentTypesList } from "../store/rent-types.store";
-import { loadObjectTypesList } from "../store/object-types.store";
-import { loadEstateTypesList } from "../store/estate-types.store";
-import { loadUserStatusesList } from "../store/user-statuses.store";
-import { loadMeetingsList } from "../store/meetings.store";
-import { loadMeetingStatusesList } from "../store/meeting-status.store";
-import { loadMeetingTypesList } from "../store/meeting-types.store";
+import { loadCurrentRentersList } from "../store/object/current-renter.store";
+import { loadObjectConditionsList } from "../store/object/object-conditions.store";
+import { loadRentTypesList } from "../store/object/rent-types.store";
+import { loadEstateTypesList } from "../store/object/estate-types.store";
+import { loadUserStatusesList } from "../store/user/user-statuses.store";
+import { loadMeetingsList } from "../store/meeting/meetings.store";
+import { loadMeetingStatusesList } from "../store/meeting/meeting-status.store";
+import { loadMeetingTypesList } from "../store/meeting/meeting-types.store";
 
 interface AppLoaderProps {
   children: React.ReactNode;

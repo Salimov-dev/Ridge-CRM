@@ -7,7 +7,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 // MUI
 import { Typography } from "@mui/material";
 // store
-import { login } from "../../store/users.store";
+import { login } from "../../store/user/users.store";
 // components
 import LoginForm from "./components/login-form";
 import { Component, AuthForm, Title } from "./styled/styled";

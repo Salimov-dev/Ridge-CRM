@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 // MUI
 import { Box, Button, Menu, MenuItem, Typography, styled } from "@mui/material";
 // store
-import { logOut } from "../../../../store/users.store";
+import { logOut } from "../../../../store/user/users.store";
 
 const Component = styled(Box)`
   display: flex;

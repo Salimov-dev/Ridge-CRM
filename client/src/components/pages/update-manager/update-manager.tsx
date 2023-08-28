@@ -11,8 +11,8 @@ import { Box } from "@mui/material";
 import Header from "./components/header";
 import ManagerForm from "../../common/forms/manager-form/manager-form";
 // store
-import { getUserStatusesList } from "../../../store/user-statuses.store";
-import { getUserDataById, updateUser } from "../../../store/users.store";
+import { getUserStatusesList } from "../../../store/user/user-statuses.store";
+import { getUserDataById, updateUser } from "../../../store/user/users.store";
 // other
 import { managerSchema } from "../../../schemas/schemas";
 

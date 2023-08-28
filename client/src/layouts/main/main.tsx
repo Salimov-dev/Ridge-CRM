@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { getObjectsList } from "../../store/objects.store";
+import { getObjectsList } from "../../store/object/objects.store";
 
 const Main = () => {
   const objects = useSelector(getObjectsList());

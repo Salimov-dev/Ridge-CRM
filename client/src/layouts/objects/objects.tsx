@@ -8,7 +8,7 @@ import { Box } from "@mui/material";
 // components
 import Baloon from "./map/baloon";
 import { groupedColumns } from "./table/columns";
-import FiltersPanel from "./components/filters-panel";
+import FilterPanel from "./components/filters-panel";
 import BasicTable from "../../components/common/table/basic-table";
 import LayoutTitle from "../../components/common/page-titles/layout-title";
 import ItemsOnMap from "../../components/common/map/items-on-map/items-on-map";
@@ -17,7 +17,7 @@ import {
   getObjectById,
   getObjectsList,
   getObjectsLoadingStatus,
-} from "../../store/objects.store";
+} from "../../store/object/objects.store";
 // hooks
 import useSearchObject from "../../hooks/use-search-object";
 import AddAndClearFiltersButton from "../../components/common/buttons/add-and-clear-filters-button";
@@ -111,7 +111,7 @@ const Objects = () => {
         isLoading={isLoading}
       />
 
-      <FiltersPanel
+      <FilterPanel
         data={data}
         register={register}
         objects={objects}

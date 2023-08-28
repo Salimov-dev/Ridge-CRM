@@ -5,8 +5,8 @@ import ObjectName from "./object-name";
 import ButtonsPanel from "./buttons-panel";
 import Loader from "../../../common/loader/loader";
 // store
-import { getDistrictById } from "../../../../store/districts.store";
-import { getObjectsLoadingStatus } from "../../../../store/objects.store";
+import { getDistrictById } from "../../../../store/object/districts.store";
+import { getObjectsLoadingStatus } from "../../../../store/object/objects.store";
 
 const Component = styled(Box)``;
 
@@ -19,7 +19,7 @@ const HeaderContainer = styled(Box)`
 
 const Title = styled(Box)`
   display: flex;
-  gap: 8px
+  gap: 8px;
 `;
 
 const Header = ({ object }) => {

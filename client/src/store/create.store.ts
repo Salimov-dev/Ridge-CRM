@@ -1,25 +1,26 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 // objects
-import objectsReducer from "./objects.store";
-import objectTypesReducer from "./object-types.store";
-import objectStatusReducer from "./object-status.store";
-import objectConditionsReducer from "./object-conditions.store";
+import objectsReducer from "./object/objects.store";
+import objectTypesReducer from "./object/object-types.store";
+import objectStatusReducer from "./object/object-status.store";
+import objectConditionsReducer from "./object/object-conditions.store";
 // meetings
-import meetingsReducer from "./meetings.store";
-import meetingTypesReducer from "./meeting-types.store";
-import meetingStatusesReducer from "./meeting-status.store";
+import meetingsReducer from "./meeting/meetings.store";
+import meetingTypesReducer from "./meeting/meeting-types.store";
+import meetingStatusesReducer from "./meeting/meeting-status.store";
 // users
-import usersListReducer from "./users.store";
-import userStatusesReducer from "./user-statuses.store";
+import usersListReducer from "./user/users.store";
+import userStatusesReducer from "./user/user-statuses.store";
 // other objects params
-import metroReducer from "./metro.store";
-import districtsReducer from "./districts.store";
-import rentTypesReducer from "./rent-types.store";
-import estateTypesReducer from "./estate-types.store";
-import currentRenterReducer from "./current-renter.store";
-import workingPositionReducer from "./working-position.store";
+import metroReducer from "./object/metro.store";
+import districtsReducer from "./object/districts.store";
+import rentTypesReducer from "./object/rent-types.store";
+import estateTypesReducer from "./object/estate-types.store";
+import currentRenterReducer from "./object/current-renter.store";
+import workingPositionReducer from "./user/working-position.store";
 // other
 import sidebarCollapsStateReducer from "./sidebar-collaps-state.store";
+import monthIndexReducer from "./month-index.store";
 
 const rootReducer = combineReducers({
   // objects
@@ -43,6 +44,7 @@ const rootReducer = combineReducers({
   estateTypes: estateTypesReducer,
   // other
   sidebarCollapsState: sidebarCollapsStateReducer,
+  monthIndex: monthIndexReducer,
 });
 
 export function createStore() {

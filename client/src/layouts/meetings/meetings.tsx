@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 // components
 import Baloon from "./map/baloon";
 import { groupedColumns } from "./table/columns";
-import FiltersPanel from "./components/filter-panel";
+import FilterPanel from "./components/filter-panel";
 import BasicTable from "../../components/common/table/basic-table";
 import LayoutTitle from "../../components/common/page-titles/layout-title";
 import ItemsOnMap from "../../components/common/map/items-on-map/items-on-map";
@@ -15,14 +15,14 @@ import AddAndClearFiltersButton from "../../components/common/buttons/add-and-cl
 // hooks
 import useSearchMeeting from "../../hooks/use-search-meeting";
 // store
-import { getUsersList } from "../../store/users.store";
-import { getMeetingTypesList } from "../../store/meeting-types.store";
-import { getMeetingStatusesList } from "../../store/meeting-status.store";
+import { getUsersList } from "../../store/user/users.store";
+import { getMeetingTypesList } from "../../store/meeting/meeting-types.store";
+import { getMeetingStatusesList } from "../../store/meeting/meeting-status.store";
 import {
   getMeetingById,
   getMeetingLoadingStatus,
   getMeetingsList,
-} from "../../store/meetings.store";
+} from "../../store/meeting/meetings.store";
 
 const initialState = {
   startDate: null,
@@ -159,7 +159,7 @@ const Meetings = () => {
         isLoading={isLoading}
       />
 
-      <FiltersPanel
+      <FilterPanel
         data={data}
         register={register}
         setValue={setValue}

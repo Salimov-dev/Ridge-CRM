@@ -10,7 +10,7 @@ import styled from "@emotion/styled";
 import { Box, Button, Typography, Paper } from "@mui/material";
 import KeyboardArrowLeftOutlinedIcon from "@mui/icons-material/KeyboardArrowLeftOutlined";
 // store
-import { login, signUp } from "../../store/users.store";
+import { login, signUp } from "../../store/user/users.store";
 // components
 import SignUpForm from "../../components/UI/signup/signup-form";
 

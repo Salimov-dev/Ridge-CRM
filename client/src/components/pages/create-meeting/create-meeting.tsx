@@ -1,28 +1,28 @@
 // libraries
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useDispatch, useSelector } from "react-redux";
 // components
-import FindObjectOnMap from "../../common/find-object-on-map/find-object-on-map";
 import MeetingForm from "../../common/forms/meeting-form/meeting-form";
+import TitleWithAddress from "../../common/page-titles/title-with-address";
+import FindObjectOnMap from "../../common/find-object-on-map/find-object-on-map";
 // MUI
 import { Box } from "@mui/material";
 // store
-import { getMeetingStatusesList } from "../../../store/meeting-status.store";
-import { getCurrentUserId } from "../../../store/users.store";
-import { getObjectsList } from "../../../store/objects.store";
+import { getCurrentUserId } from "../../../store/user/users.store";
+import { getObjectsList } from "../../../store/object/objects.store";
+import { getMeetingStatusesList } from "../../../store/meeting/meeting-status.store";
 // schema
 import { meetingSchema } from "../../../schemas/schemas";
 // hooks
 import useFindObject from "../../../hooks/use-find-object";
 // utils
-import { capitalizeFirstLetter } from "../../../utils/capitalize-first-letter";
-import { createMeeting } from "../../../store/meetings.store";
-import TitleWithAddress from "../../common/page-titles/title-with-address";
-import { getMeetingTypesList } from "../../../store/meeting-types.store";
+import { createMeeting } from "../../../store/meeting/meetings.store";
+import { getMeetingTypesList } from "../../../store/meeting/meeting-types.store";
+import { capitalizeFirstLetter } from "../../../utils/data/capitalize-first-letter";
 
 const initialState = {
   status: "",
@@ -111,7 +111,6 @@ const CreateMeeting = () => {
         getAddress={getAddress}
         title="Создать встречу:"
         subtitle="Выберите место встречи на карте"
-        path="meetings"
       />
 
       <FindObjectOnMap />

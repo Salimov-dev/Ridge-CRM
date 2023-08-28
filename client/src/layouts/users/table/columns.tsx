@@ -2,14 +2,17 @@
 import { useSelector } from "react-redux";
 // components
 import TableOpenButton from "../../../components/common/buttons/table-open-button";
-import { FormatPhone, UserAvatar } from "../../../components/common/table/helpers/helpers";
+import {
+  FormatPhone,
+  UserAvatar,
+} from "../../../components/common/table/helpers/helpers";
 // mock
 import { gendersArray } from "../../../mock/genders";
 // store
-import { getUserNameById } from "../../../store/users.store";
-import { getUserStatusNameById } from "../../../store/user-statuses.store";
+import { getUserNameById } from "../../../store/user/users.store";
+import { getUserStatusNameById } from "../../../store/user/user-statuses.store";
 // utils
-import { FormatDate } from "../../../utils/format-date";
+import { FormatDate } from "../../../utils/date/format-date";
 
 export const groupedColumns = [
   {
@@ -28,7 +31,7 @@ export const groupedColumns = [
         header: "Аватар",
         cell: (info) => {
           const ava = info.getValue();
-          return <UserAvatar path={ava}/>;
+          return <UserAvatar path={ava} />;
         },
       },
       {
@@ -150,8 +153,9 @@ export const groupedColumns = [
     enableSorting: false,
     cell: (info) => {
       const userId = info.getValue();
-      return <TableOpenButton id={userId} text="Править" nav={`${userId}/edit`}/>;
-      
+      return (
+        <TableOpenButton id={userId} text="Править" nav={`${userId}/edit`} />
+      );
     },
   },
 ];

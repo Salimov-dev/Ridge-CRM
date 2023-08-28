@@ -2,20 +2,20 @@ import { useSelector } from "react-redux";
 import { Box, Typography } from "@mui/material";
 import dayjs from "dayjs";
 // utils
-import { enterPhoneFormat } from "../../../../utils/enter-phone-format";
+import { enterPhoneFormat } from "../../../../utils/data/enter-phone-format";
+import { getPriceForRentMetr } from "../../../../utils/data/get-price-rent-for-metr";
 // store
-import { getMetroName } from "../../../../store/metro.store";
-import { getObjectById } from "../../../../store/objects.store";
-import { getUserNameById } from "../../../../store/users.store";
-import { getDistrictById } from "../../../../store/districts.store";
-import { getRentTypeNameById } from "../../../../store/rent-types.store";
-import { getObjectTypeNameById } from "../../../../store/object-types.store";
-import { getEstateTypeNameById } from "../../../../store/estate-types.store";
-import { getObjectStatusNameById } from "../../../../store/object-status.store";
-import { getPriceForRentMetr } from "../../../../utils/get-price-rent-for-metr";
-import { getCurrentRenterNameById } from "../../../../store/current-renter.store";
-import { getWorkingPositionNameById } from "../../../../store/working-position.store";
-import { getEstateConditionNameById } from "../../../../store/object-conditions.store";
+import { getMetroName } from "../../../../store/object/metro.store";
+import { getObjectById } from "../../../../store/object/objects.store";
+import { getUserNameById } from "../../../../store/user/users.store";
+import { getDistrictById } from "../../../../store/object/districts.store";
+import { getRentTypeNameById } from "../../../../store/object/rent-types.store";
+import { getObjectTypeNameById } from "../../../../store/object/object-types.store";
+import { getEstateTypeNameById } from "../../../../store/object/estate-types.store";
+import { getObjectStatusNameById } from "../../../../store/object/object-status.store";
+import { getCurrentRenterNameById } from "../../../../store/object/current-renter.store";
+import { getWorkingPositionNameById } from "../../../../store/user/working-position.store";
+import { getEstateConditionNameById } from "../../../../store/object/object-conditions.store";
 
 export const FormatDate = (date) => {
   return dayjs(date).format("DD.MM.YY");
@@ -26,7 +26,11 @@ export const FormatManagerName = (id) => {
 };
 
 export const FormatPhone = (num) => {
-  return <Box sx={{ whiteSpace: "nowrap" }}><Typography>{enterPhoneFormat(num)}</Typography> </Box>;
+  return (
+    <Box sx={{ whiteSpace: "nowrap" }}>
+      <Typography>{enterPhoneFormat(num)}</Typography>{" "}
+    </Box>
+  );
 };
 
 export const FormatDistrict = (id) => {
@@ -66,8 +70,8 @@ export const FormatMetro = (id) => {
 };
 
 export const priceForMetr = (id) => {
-  const object =  useSelector(getObjectById(id));
-  return getPriceForRentMetr(object)
+  const object = useSelector(getObjectById(id));
+  return getPriceForRentMetr(object);
 };
 
 export const UserAvatar = ({ path }) => {

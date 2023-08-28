@@ -1,6 +1,6 @@
 import { Box, Typography, styled } from "@mui/material";
-import { FormatTime } from "../../../../utils/format-time";
-import { FormatDate } from "../../../../utils/format-date";
+import { FormatTime } from "../../../../utils/date/format-time";
+import { FormatDate } from "../../../../utils/date/format-date";
 import PageBackButton from "../../../common/buttons/page-back-button";
 
 const Component = styled(Box)`

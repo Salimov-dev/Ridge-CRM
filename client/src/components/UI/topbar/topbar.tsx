@@ -2,7 +2,7 @@
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 // MUI
-import { Box,Button } from "@mui/material";
+import { Box, Button } from "@mui/material";
 // styled
 import { Component, RightSide } from "./styled/styled";
 // components
@@ -12,7 +12,7 @@ import Loader from "../../common/loader/loader";
 import {
   getCurrentUserData,
   getUsersLoadingStatus,
-} from "../../../store/users.store";
+} from "../../../store/user/users.store";
 
 const TopBar = () => {
   const currentUser = useSelector(getCurrentUserData());

@@ -1,9 +1,9 @@
 import { useSelector } from "react-redux";
 import Loader from "../../../common/loader/loader";
 import { Box, Typography, styled } from "@mui/material";
-import { FormatDate } from "../../../../utils/format-date";
-import { getUserNameById } from "../../../../store/users.store";
-import { getDistrictById } from "../../../../store/districts.store";
+import { FormatDate } from "../../../../utils/date/format-date";
+import { getUserNameById } from "../../../../store/user/users.store";
+import { getDistrictById } from "../../../../store/object/districts.store";
 
 const BaloonContainer = styled(Box)`
   width: 100%;

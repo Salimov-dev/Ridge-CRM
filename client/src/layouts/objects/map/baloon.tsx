@@ -6,15 +6,15 @@ import DividerStyled from "../../../components/common/divider/divider-styled";
 import OpenObjectButton from "../../../components/common/map/baloon/open-object-button";
 import Attribute from "../../../components/common/map/baloon/attribute";
 // utils
-import { FormatDate } from "../../../utils/format-date";
-import { makeDigitSeparator } from "../../../utils/make-digit-separator";
+import { FormatDate } from "../../../utils/date/format-date";
+import { makeDigitSeparator } from "../../../utils/data/make-digit-separator";
 // store
-import { getUserNameById } from "../../../store/users.store";
-import { getDistrictById } from "../../../store/districts.store";
-import { getRentTypeNameById } from "../../../store/rent-types.store";
-import { getEstateTypeNameById } from "../../../store/estate-types.store";
-import { getObjectTypeNameById } from "../../../store/object-types.store";
-import { getCurrentRenterNameById } from "../../../store/current-renter.store";
+import { getUserNameById } from "../../../store/user/users.store";
+import { getDistrictById } from "../../../store/object/districts.store";
+import { getRentTypeNameById } from "../../../store/object/rent-types.store";
+import { getEstateTypeNameById } from "../../../store/object/estate-types.store";
+import { getObjectTypeNameById } from "../../../store/object/object-types.store";
+import { getCurrentRenterNameById } from "../../../store/object/current-renter.store";
 
 const BaloonContainer = styled(Box)`
   width: 100%;

@@ -12,11 +12,11 @@ import ObjectForm from "../../common/forms/object-form/object-form";
 import FindObjectOnMap from "../../common/find-object-on-map/find-object-on-map";
 import TitleWithAddress from "../../common/page-titles/title-with-address";
 // store
-import { createObject } from "../../../store/objects.store";
+import { createObject } from "../../../store/object/objects.store";
 // other
 import { objectSchema } from "../../../schemas/schemas";
 import useFindObject from "../../../hooks/use-find-object";
-import { capitalizeFirstLetter } from "../../../utils/capitalize-first-letter";
+import { capitalizeFirstLetter } from "../../../utils/data/capitalize-first-letter";
 
 const initialState = {
   status: "",

@@ -21,7 +21,7 @@ const FieldsContainer = styled(Box)`
   gap: 4px;
 `;
 
-const FiltersPanel = ({
+const FilterPanel = ({
   data,
   usersList,
   statusesList,
@@ -92,4 +92,4 @@ const FiltersPanel = ({
   );
 };
 
-export default FiltersPanel;
+export default FilterPanel;

@@ -1,7 +1,7 @@
 // MUI
 import { Box, Button, Menu, MenuItem, Typography, styled } from "@mui/material";
 import { useSelector } from "react-redux";
-import { getCurrentUserData } from "../../store/users.store";
+import { getCurrentUserData } from "../../store/user/users.store";
 import { useState, useRef } from "react";
 import uploadService from "../../services/upload";
 import UploadButton from "../../components/common/buttons/upload-button";

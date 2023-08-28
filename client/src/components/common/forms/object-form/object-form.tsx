@@ -14,15 +14,15 @@ import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import TextFieldStyled from "../../inputs/text-field-styled";
 import SimpleSelectField from "../../inputs/simple-select-field";
 // store
-import { getMetroList } from "../../../../store/metro.store";
-import { getDistrictsList } from "../../../../store/districts.store";
-import { getRentTypesList } from "../../../../store/rent-types.store";
-import { getObjectTypesList } from "../../../../store/object-types.store";
-import { getEstateTypesList } from "../../../../store/estate-types.store";
-import { getObjectsStatusList } from "../../../../store/object-status.store";
-import { getCurrentRentersList } from "../../../../store/current-renter.store";
-import { getWorkingPositionsList } from "../../../../store/working-position.store";
-import { getobjectConditionsList } from "../../../../store/object-conditions.store";
+import { getMetroList } from "../../../../store/object/metro.store";
+import { getDistrictsList } from "../../../../store/object/districts.store";
+import { getRentTypesList } from "../../../../store/object/rent-types.store";
+import { getObjectTypesList } from "../../../../store/object/object-types.store";
+import { getEstateTypesList } from "../../../../store/object/estate-types.store";
+import { getObjectsStatusList } from "../../../../store/object/object-status.store";
+import { getCurrentRentersList } from "../../../../store/object/current-renter.store";
+import { getWorkingPositionsList } from "../../../../store/user/working-position.store";
+import { getobjectConditionsList } from "../../../../store/object/object-conditions.store";
 import Title from "../title";
 import FooterButtons from "../footer-buttons";
 

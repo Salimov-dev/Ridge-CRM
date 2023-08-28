@@ -8,13 +8,13 @@ import SearchField from "../../../components/common/inputs/search-field";
 import SearchDatePicker from "../../../components/common/inputs/search-date-picker";
 import MultiSelectField from "../../../components/common/inputs/multi-select-field";
 // store
-import { getUsersList } from "../../../store/users.store";
-import { getMetroList } from "../../../store/metro.store";
-import { getDistrictsList } from "../../../store/districts.store";
-import { getEstateTypesList } from "../../../store/estate-types.store";
-import { getObjectTypesList } from "../../../store/object-types.store";
-import { getObjectsStatusList } from "../../../store/object-status.store";
-import { getCurrentRentersList } from "../../../store/current-renter.store";
+import { getUsersList } from "../../../store/user/users.store";
+import { getMetroList } from "../../../store/object/metro.store";
+import { getDistrictsList } from "../../../store/object/districts.store";
+import { getEstateTypesList } from "../../../store/object/estate-types.store";
+import { getObjectTypesList } from "../../../store/object/object-types.store";
+import { getObjectsStatusList } from "../../../store/object/object-status.store";
+import { getCurrentRentersList } from "../../../store/object/current-renter.store";
 import SearchSwitch from "../../../components/common/inputs/search-switch";
 
 const Form = styled(`form`)({
@@ -25,7 +25,7 @@ const Form = styled(`form`)({
   gap: "4px",
 });
 
-const FiltersPanel = ({ setValue, objects, data, register, isLoading }) => {
+const FilterPanel = ({ setValue, objects, data, register, isLoading }) => {
   const users = useSelector(getUsersList());
   const objectStatuses = useSelector(getObjectsStatusList());
   const objectTypes = useSelector(getObjectTypesList());
@@ -312,4 +312,4 @@ const FiltersPanel = ({ setValue, objects, data, register, isLoading }) => {
   );
 };
 
-export default FiltersPanel;
+export default FilterPanel;

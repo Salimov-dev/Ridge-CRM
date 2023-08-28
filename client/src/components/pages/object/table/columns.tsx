@@ -1,5 +1,5 @@
 import { Box, styled } from "@mui/material";
-import { makeDigitSeparator } from "../../../../utils/make-digit-separator";
+import { makeDigitSeparator } from "../../../../utils/data/make-digit-separator";
 import {
   FormatCurrentRenter,
   FormatDate,

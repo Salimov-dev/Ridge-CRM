@@ -19,7 +19,7 @@ const FieldsContainer = styled(Box)`
   gap: 4px;
 `;
 
-const FiltersPanel = ({
+const FilterPanel = ({
   data,
   register,
   setValue,
@@ -31,7 +31,7 @@ const FiltersPanel = ({
   return (
     <Form>
       <FieldsContainer>
-      <SearchDatePicker
+        <SearchDatePicker
           register={register}
           name="startDate"
           label="Назначены от"
@@ -79,4 +79,4 @@ const FiltersPanel = ({
   );
 };
 
-export default FiltersPanel;
+export default FilterPanel;

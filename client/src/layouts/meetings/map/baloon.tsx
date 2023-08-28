@@ -1,13 +1,13 @@
 import { useSelector } from "react-redux";
 import { Box, Divider, Typography, styled } from "@mui/material";
 // utils
-import { FormatDate } from "../../../utils/format-date";
-import { FormatTime } from "../../../utils/format-time";
+import { FormatDate } from "../../../utils/date/format-date";
+import { FormatTime } from "../../../utils/date/format-time";
 // store
-import { getUserNameById } from "../../../store/users.store";
-import { getObjectById } from "../../../store/objects.store";
-import { getMeetingTypeNameById } from "../../../store/meeting-types.store";
-import { getMeetingStatusNameById } from "../../../store/meeting-status.store";
+import { getUserNameById } from "../../../store/user/users.store";
+import { getObjectById } from "../../../store/object/objects.store";
+import { getMeetingTypeNameById } from "../../../store/meeting/meeting-types.store";
+import { getMeetingStatusNameById } from "../../../store/meeting/meeting-status.store";
 // components
 import Attribute from "../../../components/common/map/baloon/attribute";
 import DividerStyled from "../../../components/common/divider/divider-styled";
@@ -60,7 +60,7 @@ const Baloon = ({ meeting }) => {
       <Typography>
         <b>Объект встречи:</b>
       </Typography>
-      <Attribute title="" subTitle={objectAddress} gap='0'/>
+      <Attribute title="" subTitle={objectAddress} gap="0" />
       <Divider />
 
       <OpenObjectButton path={`/objects/${objectId}`} />

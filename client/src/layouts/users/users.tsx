@@ -6,18 +6,18 @@ import { orderBy } from "lodash";
 import { useForm } from "react-hook-form";
 // components
 import { groupedColumns } from "./table/columns";
-import FiltersPanel from "./components/filter-panel";
+import FilterPanel from "./components/filter-panel";
 import BasicTable from "../../components/common/table/basic-table";
 // hooks
 import useSearchUser from "../../hooks/use-search-user";
-import { getUserStatusesList } from "../../store/user-statuses.store";
+import { getUserStatusesList } from "../../store/user/user-statuses.store";
 import LayoutTitle from "../../components/common/page-titles/layout-title";
 // store
 import {
   getCurrentUserId,
   getUsersList,
   getUsersLoadingStatus,
-} from "../../store/users.store";
+} from "../../store/user/users.store";
 import AddAndClearFiltersButton from "../../components/common/buttons/add-and-clear-filters-button";
 
 const initialState = {
@@ -123,7 +123,7 @@ const Users = () => {
         initialState={initialState}
         path="create"
       />
-      <FiltersPanel
+      <FilterPanel
         data={data}
         usersList={getActualUsersList()}
         statusesList={getActualStatusesList()}

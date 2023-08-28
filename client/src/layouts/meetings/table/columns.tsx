@@ -4,12 +4,12 @@ import { Box, Typography } from "@mui/material";
 import { FormatManagerName } from "../../../components/common/table/helpers/helpers";
 import TableOpenButton from "../../../components/common/buttons/table-open-button";
 // store
-import { getObjectById } from "../../../store/objects.store";
-import { getMeetingStatusNameById } from "../../../store/meeting-status.store";
-import { getMeetingTypeNameById } from "../../../store/meeting-types.store";
+import { getObjectById } from "../../../store/object/objects.store";
+import { getMeetingStatusNameById } from "../../../store/meeting/meeting-status.store";
+import { getMeetingTypeNameById } from "../../../store/meeting/meeting-types.store";
 // utils
-import { FormatDate } from "../../../utils/format-date";
-import { FormatTime } from "../../../utils/format-time";
+import { FormatDate } from "../../../utils/date/format-date";
+import { FormatTime } from "../../../utils/date/format-time";
 
 export const groupedColumns = [
   {
@@ -44,8 +44,8 @@ export const groupedColumns = [
     accessorKey: "meetingType",
     header: "Тип",
     cell: (info) => {
-      const type = info.getValue();      
-      const name = useSelector(getMeetingTypeNameById(type))
+      const type = info.getValue();
+      const name = useSelector(getMeetingTypeNameById(type));
       return name;
     },
   },
@@ -58,7 +58,13 @@ export const groupedColumns = [
       const result = `${object?.location.city}, ${object?.location.address}`;
 
       return (
-        <Box sx={{ display: "flex", alignItems: "center", justifyContent: 'space-between' }}>
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+        >
           {result}{" "}
           <TableOpenButton
             id={objectId}
@@ -75,7 +81,7 @@ export const groupedColumns = [
     header: "Статус",
     cell: (info) => {
       const status = info.getValue();
-      const name = useSelector(getMeetingStatusNameById(status))
+      const name = useSelector(getMeetingStatusNameById(status));
       return name;
     },
   },
@@ -88,7 +94,7 @@ export const groupedColumns = [
       return FormatManagerName(userId);
     },
   },
- 
+
   {
     accessorKey: "comment",
     header: "Комментарий",
@@ -111,7 +117,13 @@ export const groupedColumns = [
     header: "",
     cell: (info) => {
       const meetingId = info.getValue();
-      return <TableOpenButton id={meetingId} text="Править" nav={`${meetingId}/edit`}/>;
+      return (
+        <TableOpenButton
+          id={meetingId}
+          text="Править"
+          nav={`${meetingId}/edit`}
+        />
+      );
     },
   },
 ];

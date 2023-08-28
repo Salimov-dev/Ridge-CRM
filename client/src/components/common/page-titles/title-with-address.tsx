@@ -21,7 +21,6 @@ const TitleWithAddress = ({
   getAddress,
   title,
   subtitle,
-  path
 }) => {
   return (
     <Component>
@@ -37,13 +36,16 @@ const TitleWithAddress = ({
         ) : (
           <Typography
             variant="h2"
-            sx={{ background: "yellow", color: "black" }}
+            sx={{
+              background: !isEmptyFindedObject ? "yellow" : "red",
+              color: !isEmptyFindedObject ? "black" : "white",
+            }}
           >
             {subtitle}
           </Typography>
         )}
       </Title>
-      <PageBackButton path={path} />
+      <PageBackButton />
     </Component>
   );
 };

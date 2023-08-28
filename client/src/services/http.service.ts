@@ -1,11 +1,11 @@
 import axios from "axios";
 import { toast } from "react-toastify";
 import configFile from "../config.json";
-import authService from "./auth-service";
-import localStorageService from "./local.storage-service";
+import authService from "./user/auth-service";
+import localStorageService from "./user/local.storage-service";
 
 const http = axios.create({
-  baseURL: configFile.apiEndpoint
+  baseURL: configFile.apiEndpoint,
 });
 
 http.interceptors.request.use(
@@ -25,7 +25,7 @@ http.interceptors.request.use(
           refreshToken: data.refresh_token,
           idToken: data.id_token,
           expiresIn: data.expires_in,
-          localId: data.user_id
+          localId: data.user_id,
         });
       }
       const accessToken = localStorageService.getAccessToken();
@@ -41,7 +41,7 @@ http.interceptors.request.use(
       if (accessToken) {
         config.headers = {
           ...config.headers,
-          Authorization: `Bearer ${accessToken}`
+          Authorization: `Bearer ${accessToken}`,
         };
       }
     }
@@ -55,8 +55,8 @@ http.interceptors.request.use(
 function transormData(data) {
   return data && !data._id
     ? Object.keys(data).map((key) => ({
-      ...data[key]
-    }))
+        ...data[key],
+      }))
     : data;
 }
 
@@ -86,6 +86,6 @@ const httpService = {
   post: http.post,
   put: http.put,
   delete: http.delete,
-  patch: http.patch
+  patch: http.patch,
 };
 export default httpService;

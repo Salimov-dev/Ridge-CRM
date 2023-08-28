@@ -12,11 +12,14 @@ import Header from "./components/header";
 import MeetingForm from "../../common/forms/meeting-form/meeting-form";
 // store
 import { meetingSchema } from "../../../schemas/schemas";
-import { getObjectsList } from "../../../store/objects.store";
-import { getCurrentUserId } from "../../../store/users.store";
-import { getMeetingTypesList } from "../../../store/meeting-types.store";
-import { getMeetingStatusesList } from "../../../store/meeting-status.store";
-import { getMeetingById, updateMeeting } from "../../../store/meetings.store";
+import { getObjectsList } from "../../../store/object/objects.store";
+import { getCurrentUserId } from "../../../store/user/users.store";
+import { getMeetingTypesList } from "../../../store/meeting/meeting-types.store";
+import { getMeetingStatusesList } from "../../../store/meeting/meeting-status.store";
+import {
+  getMeetingById,
+  updateMeeting,
+} from "../../../store/meeting/meetings.store";
 
 const UpdateMeeting = () => {
   const { meetingId } = useParams();

@@ -11,7 +11,7 @@ import ItemOnMap from "../../common/map/item-on-map/item-on-map";
 import {
   getObjectById,
   getObjectsLoadingStatus,
-} from "../../../store/objects.store";
+} from "../../../store/object/objects.store";
 
 const ObjectPage = () => {
   const objectId = useParams().objectId;
