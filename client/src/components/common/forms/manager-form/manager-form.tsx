@@ -1,18 +1,17 @@
 import dayjs from "dayjs";
-import { useNavigate } from "react-router-dom";
 // MUI
 import { Box, styled, InputAdornment } from "@mui/material";
 import PhoneIphoneOutlinedIcon from "@mui/icons-material/PhoneIphoneOutlined";
 import AlternateEmailOutlinedIcon from "@mui/icons-material/AlternateEmailOutlined";
 import KeyOutlinedIcon from "@mui/icons-material/KeyOutlined";
 // components
+import Title from "../title";
+import FooterButtons from "../footer-buttons";
 import TextFieldStyled from "../../inputs/text-field-styled";
 import DatePickerStyled from "../../inputs/date-picker";
 import SimpleSelectField from "../../inputs/simple-select-field";
 // mock
 import { gendersArray } from "../../../../mock/genders";
-import Title from "../title";
-import FooterButtons from "../footer-buttons";
 
 const FieldsContainer = styled(Box)`
   width: 100%;
@@ -34,6 +33,7 @@ const ManagerForm = ({
   register,
   handleSubmit,
   onSubmit,
+  onClose,
   errors,
   setValue,
   userStatuses,
@@ -46,11 +46,6 @@ const ManagerForm = ({
   const watchStatus = watch("status", "");
   const tomorrow = dayjs(watchStartDate).add(1, "day");
   const endTrialPeriod = dayjs(tomorrow).add(1, "day");
-  const navigate = useNavigate();
-
-  const handleBackPage = () => {
-    navigate("/users");
-  };
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)} noValidate>
@@ -212,7 +207,7 @@ const ManagerForm = ({
       <FooterButtons
         isEditMode={isEditMode}
         isValid={!isValid}
-        onClick={handleBackPage}
+        onClick={onClose}
       />
     </Form>
   );

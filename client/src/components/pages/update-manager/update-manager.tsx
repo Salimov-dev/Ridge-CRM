@@ -4,7 +4,6 @@ import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
 // MUI
 import { Box } from "@mui/material";
 // components
@@ -16,14 +15,14 @@ import { getUserDataById, updateUser } from "../../../store/user/users.store";
 // other
 import { managerSchema } from "../../../schemas/schemas";
 import Loader from "../../common/loader/loader";
+import { getUpdateManagerId } from "../../../store/user/update-manager.store";
 
-const UpdateManager = () => {
-  const { userId } = useParams();
+const UpdateManager = ({onClose}) => {
+  const userId = useSelector(getUpdateManagerId())
   const user = useSelector(getUserDataById(userId));
   const userStatuses = useSelector(getUserStatusesList());
 
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const isEditMode = userId ? true : false;
 
@@ -63,13 +62,13 @@ const UpdateManager = () => {
 
   const onSubmit = (data) => {
     dispatch(updateUser(data))
-      .then(navigate(-1))
+      .then(onClose())
       .then(toast.success("Менеджер успешно изменен!"));
   };
 
   return (
     user ? <Box>
-      <Header user={user} />
+      <Header user={user} onClose={onClose}/>
       <img
         src={user?.image}
         alt=""
@@ -79,6 +78,7 @@ const UpdateManager = () => {
         data={formatedUser}
         register={register}
         onSubmit={onSubmit}
+        onClose={onClose}
         handleSubmit={handleSubmit}
         watch={watch}
         errors={errors}

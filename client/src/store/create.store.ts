@@ -23,6 +23,7 @@ import sidebarCollapsStateReducer from "./sidebar-collaps-state.store";
 import monthIndexReducer from "./month-index.store";
 import updateMeetingReducer from "./meeting/update-meeting.store";
 import updateObjectReducer from "./object/update-object.store";
+import updateManagerReducer from "./user/update-manager.store";
 
 const rootReducer = combineReducers({
   // objects
@@ -49,6 +50,7 @@ const rootReducer = combineReducers({
   monthIndex: monthIndexReducer,
   updateMeeting: updateMeetingReducer,
   updateObject: updateObjectReducer,
+  updateManager: updateManagerReducer,
 });
 
 export function createStore() {

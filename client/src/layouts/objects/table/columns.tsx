@@ -8,15 +8,7 @@ import {
   FormatPhone,
 } from "../../../components/common/table/helpers/helpers";
 import { FormatDate } from "../../../utils/date/format-date";
-import { useDispatch } from "react-redux";
-import {
-  setUpdateMeetingId,
-  setUpdateMeetingOpenState,
-} from "../../../store/meeting/update-meeting.store";
-import {
-  setUpdateObjectId,
-  setUpdateObjectOpenState,
-} from "../../../store/object/update-object.store";
+import { useNavigate } from "react-router-dom";
 
 const AlignCenter = styled(Box)`
   display: flex;
@@ -124,10 +116,9 @@ export const groupedColumns = [
         enableSorting: false,
         cell: (info) => {
           const objectId = info.getValue();
-          const dispatch = useDispatch();
+          const navigate = useNavigate();
           const handleClick = () => {
-            dispatch(setUpdateObjectId(objectId));
-            dispatch(setUpdateObjectOpenState(true));
+            navigate(objectId);
           };
           return (
             <TableOpenButton

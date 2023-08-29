@@ -2,11 +2,11 @@
 import { Box } from "@mui/material";
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { yupResolver } from "@hookform/resolvers/yup";
 // components
 import ManagerForm from "../../common/forms/manager-form/manager-form";
+import TitleWithCloseButton from "../../common/page-titles/title-with-close-button";
 // store
 import { getUserStatusesList } from "../../../store/user/user-statuses.store";
 import {
@@ -15,8 +15,8 @@ import {
 } from "../../../store/user/users.store";
 // schema
 import { managerSchema } from "../../../schemas/schemas";
+// utils
 import getRandomInt from "../../../utils/get-random-int";
-import TitleWithBackButton from "../../common/page-titles/title-with-back-button";
 
 const initialState = {
   email: "",
@@ -39,7 +39,7 @@ const initialState = {
   },
 };
 
-const CreateManager = () => {
+const CreateManager = ({ onClose }) => {
   const {
     register,
     watch,
@@ -56,7 +56,6 @@ const CreateManager = () => {
   const userStatuses = useSelector(getUserStatusesList());
   const currentUserId = useSelector(getCurrentUserId());
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const onSubmit = (data) => {
     const newData = {
@@ -66,19 +65,22 @@ const CreateManager = () => {
     };
 
     dispatch(addNewManager(newData))
-      .then(navigate("/users"))
+      .then(onClose())
       .then(toast.success("Менеджер успешно добавлен!"));
   };
 
   return (
     <Box>
-      <TitleWithBackButton title="Добавить нового менеджера" path="/users" />
-
+      <TitleWithCloseButton
+        title="Добавить нового менеджера"
+        onClose={onClose}
+      />
       <ManagerForm
         register={register}
         data={data}
         handleSubmit={handleSubmit}
         onSubmit={onSubmit}
+        onClose={onClose}
         watch={watch}
         errors={errors}
         setValue={setValue}

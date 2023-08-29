@@ -1,5 +1,5 @@
 // libraries
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 // components
 import TableOpenButton from "../../../components/common/buttons/table-open-button";
 import {
@@ -13,6 +13,7 @@ import { getUserNameById } from "../../../store/user/users.store";
 import { getUserStatusNameById } from "../../../store/user/user-statuses.store";
 // utils
 import { FormatDate } from "../../../utils/date/format-date";
+import { setUpdateManagerId, setUpdateManagerOpenState } from "../../../store/user/update-manager.store";
 
 export const groupedColumns = [
   {
@@ -153,8 +154,13 @@ export const groupedColumns = [
     enableSorting: false,
     cell: (info) => {
       const userId = info.getValue();
+      const dispatch = useDispatch();
+      const handleClick = () => {
+        dispatch(setUpdateManagerId(userId));
+        dispatch(setUpdateManagerOpenState(true));
+      };
       return (
-        <TableOpenButton id={userId} text="Править" nav={`${userId}/edit`} />
+        <TableOpenButton id={userId} text="Править" onClick={handleClick}  />
       );
     },
   },

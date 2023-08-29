@@ -1,30 +1,32 @@
 // libraries
-import { toast } from "react-toastify";
+import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 // MUI
 import { Box } from "@mui/material";
 // components
 import Header from "./components/header";
-import Loader from "../../common/loader/loader";
 import ObjectForm from "../../common/forms/object-form/object-form";
 // store
 import {
   getObjectById,
   updateObject,
 } from "../../../store/object/objects.store";
-import { getUpdateObjectId } from "../../../store/object/update-object.store";
-// schema
+// other
 import { objectSchema } from "../../../schemas/schemas";
+import Loader from "../../common/loader/loader";
 
-const UpdateObject = ({ onClose }) => {
-  const dispatch = useDispatch();
-  const objectId = useSelector(getUpdateObjectId());
+const UpdateObject = () => {
+  const { objectId } = useParams();
   const object = useSelector(getObjectById(objectId));
   const isEditMode = objectId ? true : false;
   const isObjectHasAddress =
     object?.location?.city && object?.location?.address;
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const {
     register,
@@ -37,21 +39,19 @@ const UpdateObject = ({ onClose }) => {
     resolver: yupResolver(objectSchema),
   });
 
-  const data = watch();
-
   const onSubmit = (data) => {
     dispatch(updateObject(data, objectId))
-      .then(onClose())
+      .then(navigate(-1))
       .then(toast.success("Объект успешно изменен!"));
   };
 
   return object ? (
     <Box>
-      <Header object={object} onClose={onClose} />
+      <Header object={object} />
       <ObjectForm
         register={register}
-        data={data}
-        onClose={onClose}
+        data={object}
+        objectId={objectId}
         handleSubmit={handleSubmit}
         onSubmit={onSubmit}
         watch={watch}

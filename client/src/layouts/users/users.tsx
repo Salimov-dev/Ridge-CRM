@@ -1,7 +1,7 @@
 // libraries
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Box } from "@mui/material";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { orderBy } from "lodash";
 import { useForm } from "react-hook-form";
 // components
@@ -19,6 +19,11 @@ import {
   getUsersLoadingStatus,
 } from "../../store/user/users.store";
 import AddAndClearFiltersButton from "../../components/common/buttons/add-and-clear-filters-button";
+import DialogStyled from "../../components/common/dialog/dialog-styled";
+import UpdateManager from "../../components/pages/update-manager/update-manager";
+import CreateManager from "../../components/pages/create-manager/create-manager";
+import { loadUpdateManagerOpenState, setUpdateManagerOpenState } from "../../store/user/update-manager.store";
+import { setUpdateObjectOpenState } from "../../store/object/update-object.store";
 
 const initialState = {
   lastName: "",
@@ -112,7 +117,23 @@ const Users = () => {
   useEffect(() => {
     localStorage.setItem("search-users-data", JSON.stringify(initialState));
   }, []);
+  const isOpenUpdate = useSelector(loadUpdateManagerOpenState())
 
+  const dispatch = useDispatch()
+  
+  const [openCreate, setOpenCreate] = useState(false);
+
+  const handleOpenCreate = () => {
+    setOpenCreate(true);
+  };
+
+  const handleCloseCreate = () => {
+    setOpenCreate(false);
+  };
+
+  const handleCloseUpdate = () => {
+    dispatch(setUpdateManagerOpenState(false))
+  };
   return (
     <Box>
       <LayoutTitle title="Менеджеры" />
@@ -121,8 +142,8 @@ const Users = () => {
         isInputEmpty={isInputEmpty}
         reset={reset}
         initialState={initialState}
-        path="create"
         disabled={isLoading}
+        onOpen={handleOpenCreate}
       />
       <FilterPanel
         data={data}
@@ -137,6 +158,20 @@ const Users = () => {
         items={searchedUsers}
         itemsColumns={columns}
         isLoading={isLoading}
+      />
+
+      <DialogStyled
+        component={<CreateManager onClose={handleCloseCreate} />}
+        onClose={handleCloseCreate}
+        open={openCreate}
+        maxWidth="lg"
+      />
+
+      <DialogStyled
+        component={<UpdateManager onClose={handleCloseUpdate} />}
+        onClose={handleCloseUpdate}
+        open={isOpenUpdate}
+        maxWidth="lg"
       />
     </Box>
   );

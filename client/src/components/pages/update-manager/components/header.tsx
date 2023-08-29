@@ -1,5 +1,5 @@
 import { Box, Typography, styled } from "@mui/material";
-import PageBackButton from "../../../common/buttons/page-back-button";
+import CloseButton from "../../../common/buttons/close-button";
 
 const Component = styled(Box)`
   display: flex;
@@ -15,7 +15,7 @@ const Title = styled(Box)`
   gap: 8px;
 `;
 
-const Header = ({ user }) => {
+const Header = ({ user, onClose }) => {
   return (
     <Component>
       <Title>
@@ -24,7 +24,7 @@ const Header = ({ user }) => {
           {user?.name.lastName} {user?.name.firstName} {user?.name.surName}
         </Typography>
       </Title>
-      <PageBackButton />
+      <CloseButton onClose={onClose} />
     </Component>
   );
 };

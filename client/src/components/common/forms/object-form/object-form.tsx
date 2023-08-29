@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 // MUI
 import { Box, styled, InputAdornment } from "@mui/material";
@@ -41,6 +42,7 @@ const FieldsContainer = styled(Box)`
 
 const ObjectForm = ({
   data,
+  objectId,
   register,
   errors,
   handleSubmit,
@@ -73,9 +75,14 @@ const ObjectForm = ({
   const rentTypes = useSelector(getRentTypesList());
   const objectTypes = useSelector(getObjectTypesList());
   const estateTypes = useSelector(getEstateTypesList());
+  const navigate = useNavigate();
 
   const isValidAndHasAdress =
     (Boolean(isEmptyFindedObject) || isObjectHasAddress) && isValid;
+
+  const handleBackPage = () => {
+    navigate(isEditMode ? `/objects/${objectId}` : "/objects");
+  };
 
   return (
     <>
@@ -430,7 +437,7 @@ const ObjectForm = ({
           register={register}
           label="Опишите объект"
           name="description.fullDescription"
-          rows="3"
+          rows="8"
           multiline={true}
           value={data?.description?.fullDescription}
           errors={errors?.description?.fullDescription}
@@ -439,6 +446,7 @@ const ObjectForm = ({
         <FooterButtons
           isEditMode={isEditMode}
           isValid={!isValidAndHasAdress}
+          onClick={handleBackPage}
           onClose={onClose}
         />
       </Form>

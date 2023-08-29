@@ -7,27 +7,29 @@ const Component = styled(Box)`
   margin-top: 30px;
 `;
 
-const FooterButtons = ({isEditMode, isValid, onClose}) => {
-    return ( <Component>
+const FooterButtons = ({ isEditMode, isValid, onClose, onClick }) => {
+  return (
+    <Component>
+      <Button
+        type="submit"
+        variant="outlined"
+        color="success"
+        disabled={isValid}
+      >
+        {isEditMode ? "Сохранить" : "Создать"}
+      </Button>
+      <Box sx={{ display: "flex", gap: "4px" }}>
         <Button
-          type="submit"
+          type="button"
           variant="outlined"
-          color="success"
-          disabled={isValid}
+          color="error"
+          onClick={onClose || onClick}
         >
-          {isEditMode ? "Сохранить" : "Создать"}
+          Отмена
         </Button>
-        <Box sx={{ display: "flex", gap: "4px" }}>
-          <Button
-            type="button"
-            variant="outlined"
-            color="error"
-            onClick={onClose}
-          >
-            Отмена
-          </Button>
-        </Box>
-      </Component> );
-}
- 
+      </Box>
+    </Component>
+  );
+};
+
 export default FooterButtons;

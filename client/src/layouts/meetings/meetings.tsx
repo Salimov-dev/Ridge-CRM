@@ -38,14 +38,17 @@ const initialState = {
 
 const Meetings = () => {
   const [selectedBaloon, setSelectedBaloon] = useState(null);
+  const [openCreate, setOpenCreate] = useState(false);
   const users = useSelector(getUsersList());
   const meetings = useSelector(getMeetingsList());
   const selectedMeeting = useSelector(getMeetingById(selectedBaloon));
   const isLoading = useSelector(getMeetingLoadingStatus());
   const statuses = useSelector(getMeetingStatusesList());
   const types = useSelector(getMeetingTypesList());
+  const isOpenUpdate = useSelector(loadUpdateMeetingOpenState())
 
   const columns = groupedColumns;
+  const dispatch = useDispatch()
 
   const localStorageState = JSON.parse(
     localStorage.getItem("search-meetings-data")
@@ -131,20 +134,6 @@ const Meetings = () => {
     return sortedTypes;
   };
 
-  useEffect(() => {
-    localStorage.setItem("search-meetings-data", JSON.stringify(data));
-  }, [data]);
-
-  useEffect(() => {
-    localStorage.setItem("search-meetings-data", JSON.stringify(initialState));
-  }, []);
-
-  const isOpenUpdate = useSelector(loadUpdateMeetingOpenState())
-
-  const dispatch = useDispatch()
-  
-  const [openCreate, setOpenCreate] = useState(false);
-
   const handleOpenCreate = () => {
     setOpenCreate(true);
   };
@@ -156,6 +145,14 @@ const Meetings = () => {
   const handleCloseUpdate = () => {
     dispatch(setUpdateMeetingOpenState(false))
   };
+
+  useEffect(() => {
+    localStorage.setItem("search-meetings-data", JSON.stringify(data));
+  }, [data]);
+
+  useEffect(() => {
+    localStorage.setItem("search-meetings-data", JSON.stringify(initialState));
+  }, []);
 
   return (
     <Box>
