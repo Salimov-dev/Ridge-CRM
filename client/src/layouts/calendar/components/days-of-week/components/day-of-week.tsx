@@ -1,6 +1,6 @@
 import { Box, Typography } from "@mui/material";
 
-const DayOfWeek = ({ day }) => {
+const DayOfWeek = ({ day, color }) => {
   return (
     <Box
       sx={{
@@ -9,7 +9,7 @@ const DayOfWeek = ({ day }) => {
         justifyContent: "center",
       }}
     >
-      <Typography>{day}</Typography>
+      <Typography sx={{ color: color, fontWeight: "800" }}>{day}</Typography>
     </Box>
   );
 };

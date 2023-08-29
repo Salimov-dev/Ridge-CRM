@@ -1,13 +1,13 @@
 import { Box, styled } from "@mui/material";
 import TableOpenButton from "../../../components/common/buttons/table-open-button";
 import {
-  FormatDate,
   FormatDistrict,
   FormatManagerName,
   FormatMetro,
   FormatObjectStatus,
   FormatPhone,
 } from "../../../components/common/table/helpers/helpers";
+import { FormatDate } from "../../../utils/date/format-date";
 
 const AlignCenter = styled(Box)`
   display: flex;

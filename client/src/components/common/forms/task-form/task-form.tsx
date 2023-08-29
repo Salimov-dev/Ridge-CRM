@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 // MUI
 import { Box, styled, InputAdornment } from "@mui/material";
 import CreateIcon from "@mui/icons-material/Create";
@@ -20,44 +21,37 @@ const Form = styled(`form`)({
 const FieldsContainer = styled(Box)`
   width: 100%;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: "center";
   gap: 4px;
 `;
 
-const MeetingForm = ({
+const TaskForm = ({
   data,
-  objects,
-  statuses,
-  meetingTypes,
   register,
-  errors,
-  handleSubmit,
   onSubmit,
   onClose,
+  handleSubmit,
+  watch,
+  errors,
   setValue,
   isValid,
-  isEditMode = false,
-  isEmptyFindedObject,
-  watch,
 }) => {
-  const isValidAndHasAdress = Boolean(!isEmptyFindedObject) && isValid;
-  const watchStatus = watch("status", "");
   const watchObjectId = watch("objectId", "");
-  const watchTypeMeeting = watch("meetingType", "");
+  const navigate = useNavigate();
 
-  const handleCancelCreate = () => {
-    onClose()
+  const handleBackPage = () => {
+    navigate("/meetings");
   };
-
   return (
     <>
       <Form onSubmit={handleSubmit(onSubmit)} noValidate>
         <FieldsContainer>
+     
           <DatePickerStyled
             register={register}
             name="date"
-            label="Дата встречи"
+            label="Дата"
             value={data?.date}
             onChange={(value) => setValue("date", value)}
             errors={errors?.date}
@@ -68,37 +62,16 @@ const MeetingForm = ({
             errors={errors?.time}
             setValue={setValue}
             name="time"
-            label="Время встречи"
+            label="Время"
           />
           <SimpleSelectField
             register={register}
-            itemsList={meetingTypes}
+            // itemsList={meetingTypes}
             name="meetingType"
             labelId="meetingType"
-            label="Тип встречи"
-            value={watchTypeMeeting}
+            label="Объект"
+            // value={watchTypeMeeting}
             errors={errors?.meetingType}
-          />
-          <SimpleSelectField
-            register={register}
-            itemsList={statuses}
-            name="status"
-            labelId="status"
-            label="Статус"
-            value={watchStatus}
-            errors={errors?.status}
-          />
-        </FieldsContainer>
-
-        <FieldsContainer>
-          <SimpleSelectField
-            register={register}
-            itemsList={objects}
-            name="objectId"
-            labelId="objectId"
-            label="Объект встречи"
-            value={watchObjectId}
-            errors={errors?.objectId}
           />
           <TextFieldStyled
             register={register}
@@ -107,6 +80,8 @@ const MeetingForm = ({
             errors={errors?.comment}
             value={data?.comment}
             onInputQuantities={50}
+            rows="3"
+          multiline={true}
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
@@ -118,13 +93,13 @@ const MeetingForm = ({
         </FieldsContainer>
 
         <FooterButtons
-          isEditMode={isEditMode}
-          isValid={!isValidAndHasAdress}
-          onClick={handleCancelCreate}
+        //   isEditMode={isEditMode}
+        //   isValid={!isValidAndHasAdress}
+          onClick={onClose}
         />
       </Form>
     </>
   );
 };
 
-export default MeetingForm;
+export default TaskForm;

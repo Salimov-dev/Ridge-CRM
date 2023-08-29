@@ -47,7 +47,7 @@ const SimpleSelectField = ({
   };
 
   return (
-    <FormControl sx={{ minWidth: "300px", width: "100%" }}>
+    <FormControl sx={{ minWidth: "200px", width: "100%" }}>
       <InputLabel
         id={labelId}
         sx={{

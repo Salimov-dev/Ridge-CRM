@@ -34,6 +34,10 @@ export const meetingSchema = yup.object().shape({
   comment: yup.string().required("Заполните комментарий"),
 });
 
+export const taskSchema = yup.object().shape({
+  comment: yup.string().required("Заполните комментарий"),
+});
+
 export const managerSchema = yup.object().shape({
   status: yup.string().required("Статус обязателен для заполнения"),
   birthday: yup.string().required("Заполните дату рождения"),

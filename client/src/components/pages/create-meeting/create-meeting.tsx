@@ -10,7 +10,7 @@ import MeetingForm from "../../common/forms/meeting-form/meeting-form";
 import TitleWithAddress from "../../common/page-titles/title-with-address";
 import FindObjectOnMap from "../../common/find-object-on-map/find-object-on-map";
 // MUI
-import { Box } from "@mui/material";
+import { Box, styled } from "@mui/material";
 // store
 import { getCurrentUserId } from "../../../store/user/users.store";
 import { getObjectsList } from "../../../store/object/objects.store";
@@ -23,6 +23,10 @@ import useFindObject from "../../../hooks/use-find-object";
 import { createMeeting } from "../../../store/meeting/meetings.store";
 import { getMeetingTypesList } from "../../../store/meeting/meeting-types.store";
 import { capitalizeFirstLetter } from "../../../utils/data/capitalize-first-letter";
+
+const Component = styled(Box)`
+  width: 100%;
+`
 
 const initialState = {
   status: "",
@@ -40,7 +44,7 @@ const initialState = {
   },
 };
 
-const CreateMeeting = () => {
+const CreateMeeting = ({onClose}) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const objects = useSelector(getObjectsList());
@@ -92,7 +96,7 @@ const CreateMeeting = () => {
     };
 
     dispatch(createMeeting(newData))
-      .then(navigate("/meetings"))
+      .then(onClose())
       .then(toast.success("Встреча успешно создана!"));
   };
 
@@ -104,13 +108,14 @@ const CreateMeeting = () => {
   }, [findedObject]);
 
   return (
-    <Box>
+    <Component>
       <TitleWithAddress
         isEmptyFindedObject={isEmptyFindedObject}
         getCity={getCity}
         getAddress={getAddress}
         title="Создать встречу:"
         subtitle="Выберите место встречи на карте"
+        onClose={onClose}
       />
 
       <FindObjectOnMap />
@@ -121,6 +126,7 @@ const CreateMeeting = () => {
         statuses={statuses}
         meetingTypes={meetingTypes}
         onSubmit={onSubmit}
+        onClose={onClose}
         handleSubmit={handleSubmit}
         watch={watch}
         errors={errors}
@@ -128,7 +134,7 @@ const CreateMeeting = () => {
         isValid={isFullValid}
         isEmptyFindedObject={isEmptyFindedObject}
       />
-    </Box>
+    </Component>
   );
 };
 

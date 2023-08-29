@@ -1,6 +1,6 @@
 // libraries
 import { orderBy } from "lodash";
-import { Box } from "@mui/material";
+import { Box, Button, Dialog, Typography } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
@@ -23,6 +23,7 @@ import {
   getMeetingLoadingStatus,
   getMeetingsList,
 } from "../../store/meeting/meetings.store";
+import CreateMeeting from "../../components/pages/create-meeting/create-meeting";
 
 const initialState = {
   startDate: null,
@@ -135,17 +136,25 @@ const Meetings = () => {
     localStorage.setItem("search-meetings-data", JSON.stringify(initialState));
   }, []);
 
+  const [open, setOpen] = useState(false);
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
   return (
     <Box>
-      <LayoutTitle title="Встречи"/>
+      <LayoutTitle title="Встречи" />
 
       <AddAndClearFiltersButton
         title="Добавить встречу"
         isInputEmpty={isInputEmpty}
         reset={reset}
         initialState={initialState}
-        path="create"
         disabled={isLoading ? true : false}
+        onOpen={handleClickOpen}
       />
 
       <ItemsOnMap
@@ -176,6 +185,12 @@ const Meetings = () => {
         isLoading={isLoading}
         sortingColumn="date"
       />
+
+      <Dialog onClose={handleClose} open={open} maxWidth='lg'>
+        <Box sx={{ width: "1200px", padding: "20px" }}>
+          <CreateMeeting onClose={handleClose}/>
+        </Box>
+      </Dialog>
     </Box>
   );
 };

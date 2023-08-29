@@ -10,6 +10,8 @@ import { Map, Placemark, Clusterer } from "@pbe/react-yandex-maps";
 import target_cluster from "../../../../assets/map/target_cluster.png";
 // styles
 import "./styles.css";
+import { FormatDate } from "../../../../utils/date/format-date";
+import dayjs from "dayjs";
 
 const MapContainer = styled(Box)`
   width: 100%;
@@ -95,7 +97,7 @@ const ItemsOnMap = ({
                 properties={{
                   hintContent: hintContent(item),
                   balloonContentBody: '<div id="baloon" class="baloon"></div>',
-                  clusterCaption: item?._id,
+                  clusterCaption: dayjs(item?.created_at).format("DD.MM.YY"),
                 }}
                 onClick={() => {
                   setTimeout(() => {

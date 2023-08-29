@@ -24,7 +24,8 @@ const DateOfMonth = styled(Typography)`
   width: 32px;
 `;
 
-const Day = ({ day }) => {
+const Day = ({ day, isWeekendColumn }) => {
+
   const isCurrentDay = () => {
     const currentDay = dayjs().format("DD-MM-YY");
     const calendarDay = day.format("DD-MM-YY");
@@ -40,6 +41,7 @@ const Day = ({ day }) => {
         alignItems: "start",
         border: "1px solid gray",
         flexDirection: "column",
+        backgroundColor: isWeekendColumn ? "#171e32" : "inherit",
       }}
     >
       <Box
@@ -55,8 +57,8 @@ const Day = ({ day }) => {
         <DateOfMonthContainer>
           <DateOfMonth
             sx={{
-              backgroundColor: isCurrentDay() ? "yellow" : "inherit",
-              color: isCurrentDay() ? 'black' : 'inherit'
+              backgroundColor: isCurrentDay() ? "yellow"  : "inherit",
+              color: isWeekendColumn ? "red" : isCurrentDay()  ? 'black' : 'inherit'
             }}
           >
             {day.format("DD")}

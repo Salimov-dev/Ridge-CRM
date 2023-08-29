@@ -7,6 +7,8 @@ import {
 import dayjs from "dayjs";
 import "dayjs/locale/ru";
 import { capitalizeFirstLetter } from "../../../utils/data/capitalize-first-letter";
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
 const Header = () => {
   const monthIndex = useSelector(getMonthIndexState());
@@ -31,9 +33,7 @@ const Header = () => {
         justifyContent: "space-between",
       }}
     >
-      <Button variant="outlined" color="success">
-        Создать событие
-      </Button>
+    
 
       <Typography variant="h2">
         {capitalizeFirstLetter(
@@ -49,7 +49,7 @@ const Header = () => {
           color="success"
           onClick={handleTogglePrevMonth}
         >
-          назад
+          <ArrowBackIosIcon/>
         </Button>
         <Button
           variant="outlined"
@@ -63,7 +63,7 @@ const Header = () => {
           color="success"
           onClick={handleToggleNextMonth}
         >
-          вперед
+          <ArrowForwardIosIcon/>
         </Button>
       </Box>
     </Box>

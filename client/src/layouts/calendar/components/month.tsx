@@ -3,6 +3,7 @@ import Day from "./day";
 import React from "react";
 
 const Month = ({ month }) => {
+  
   return (
     <Box
       sx={{
@@ -16,7 +17,7 @@ const Month = ({ month }) => {
       {month?.map((row, i) => (
         <React.Fragment key={i}>
           {row.map((day, idx) => (
-            <Day day={day} key={idx} />
+            <Day day={day} key={idx} isWeekendColumn={idx === 5 || idx === 6}/>
           ))}
         </React.Fragment>
       ))}

@@ -9,17 +9,17 @@ const DaysOfWeek = () => {
     { _id: nanoid(), name: "СР" },
     { _id: nanoid(), name: "ЧТ" },
     { _id: nanoid(), name: "ПТ" },
-    { _id: nanoid(), name: "СБ" },
-    { _id: nanoid(), name: "ВС" },
+    { _id: nanoid(), name: "СБ", color: "red" },
+    { _id: nanoid(), name: "ВС", color: "red" },
   ];
 
   return (
     <Box
       sx={{
         display: "flex",
-        alignItems: 'center',
+        alignItems: "center",
         width: "100%",
-        height: '30px',
+        height: "30px",
         justifyContent: "space-between",
         background: "darkGreen",
         borderTop: "3px solid gray",
@@ -28,7 +28,7 @@ const DaysOfWeek = () => {
       }}
     >
       {daysArray.map((day) => (
-        <DayOfWeek key={day._id} day={day.name} />
+        <DayOfWeek key={day._id} day={day.name} color={day.color}/>
       ))}
     </Box>
   );

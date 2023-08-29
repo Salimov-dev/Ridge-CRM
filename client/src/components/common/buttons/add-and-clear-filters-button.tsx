@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router-dom";
 import { Box, styled, Button, Typography } from "@mui/material";
 import ClearOutlinedIcon from "@mui/icons-material/ClearOutlined";
 
@@ -8,15 +7,14 @@ const Component = styled(Box)`
   gap: 4px;
 `;
 
-const AddAndClearFiltersButton = ({ title, isInputEmpty, reset, initialState, path, disabled }) => {
-  const navigate = useNavigate();
+const AddAndClearFiltersButton = ({ title, isInputEmpty, reset, initialState, disabled, onOpen }) => {
 
   return (
     <Component>
       <Button
         variant="contained"
         color="success"
-        onClick={() => navigate(path)}
+        onClick={onOpen}
         disabled={disabled}
       >
         <Typography>{title}</Typography>

@@ -1,5 +1,5 @@
-import { Box, Typography, styled } from "@mui/material";
-import PageBackButton from "../buttons/page-back-button";
+import { Box, Button, Typography, styled } from "@mui/material";
+import CloseButton from "../buttons/close-button";
 
 const Component = styled(Box)`
   display: flex;
@@ -21,6 +21,7 @@ const TitleWithAddress = ({
   getAddress,
   title,
   subtitle,
+  onClose,
 }) => {
   return (
     <Component>
@@ -45,7 +46,7 @@ const TitleWithAddress = ({
           </Typography>
         )}
       </Title>
-      <PageBackButton />
+      <CloseButton onClose={onClose} />
     </Component>
   );
 };
