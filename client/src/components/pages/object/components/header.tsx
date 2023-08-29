@@ -22,15 +22,14 @@ const Title = styled(Box)`
   gap: 8px;
 `;
 
-const Header = ({ object }) => {
-  const isObjectsLoading = useSelector(getObjectsLoadingStatus());
+const Header = ({ object, isLoading }) => {
   const city = object?.location.city;
   const address = object?.location.address;
   const district = useSelector(getDistrictById(object?.location.district));
 
   return (
     <Component>
-      {!isObjectsLoading ? (
+      {!isLoading ? (
         <HeaderContainer>
           <Title>
             <Typography variant="h2">Объект: </Typography>

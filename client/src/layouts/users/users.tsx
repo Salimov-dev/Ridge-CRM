@@ -122,6 +122,7 @@ const Users = () => {
         reset={reset}
         initialState={initialState}
         path="create"
+        disabled={isLoading}
       />
       <FilterPanel
         data={data}

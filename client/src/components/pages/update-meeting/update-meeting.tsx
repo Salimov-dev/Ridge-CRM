@@ -20,6 +20,7 @@ import {
   getMeetingById,
   updateMeeting,
 } from "../../../store/meeting/meetings.store";
+import Loader from "../../common/loader/loader";
 
 const UpdateMeeting = () => {
   const { meetingId } = useParams();
@@ -69,7 +70,7 @@ const UpdateMeeting = () => {
       .then(toast.success("Встреча успешно изменена!"));
   };
 
-  return (
+  return meeting ? (
     <Box>
       <Header meeting={meeting} />
       <MeetingForm
@@ -87,6 +88,8 @@ const UpdateMeeting = () => {
         isEditMode={isEditMode}
       />
     </Box>
+  ) : (
+    <Loader />
   );
 };
 

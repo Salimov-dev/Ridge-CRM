@@ -137,7 +137,7 @@ const Meetings = () => {
 
   return (
     <Box>
-      <LayoutTitle title="Встречи" />
+      <LayoutTitle title="Встречи"/>
 
       <AddAndClearFiltersButton
         title="Добавить встречу"
@@ -145,6 +145,7 @@ const Meetings = () => {
         reset={reset}
         initialState={initialState}
         path="create"
+        disabled={isLoading ? true : false}
       />
 
       <ItemsOnMap

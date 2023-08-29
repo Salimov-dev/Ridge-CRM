@@ -1,3 +1,4 @@
+/* custom scroll bar styles */
 ::-webkit-scrollbar {
   width: 5px;
 }
@@ -11,3 +12,25 @@
   border-radius: 100vw;
 }
 
+/* react-scroll-up-button styles */
+.AnyClassForContainer {
+  width: 40px !important;
+  height: 40px !important;
+  padding: 7px;
+  bottom: 50px !important;
+  background: #141b2d !important;
+  fill: gray !important;
+  border: 2px solid !important;
+  border-color: gray !important;
+  transition: transform 0.3s ease, border-color 0.3s ease, fill 0.3s ease !important;
+}
+
+.AnyClassForContainer:hover {
+  border-color: white !important;
+  fill: white !important;
+  transform: scale(1.1); 
+}
+
+.AnyClassForTransition {
+  /* right: 20px; */
+}

@@ -26,7 +26,7 @@ const ObjectPage = () => {
 
   return (
     <Box>
-      <Header object={object} />
+      <Header object={object} isLoading={isLoading} />
       <ItemOnMap
         mapZoom={mapZoom}
         hintContent={address}

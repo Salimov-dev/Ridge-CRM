@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import LayoutTitle from "../../components/common/page-titles/layout-title";
 import getMonth from "../../utils/calendar/get-month";
 import Header from "./components/header";
@@ -6,6 +6,7 @@ import Month from "./components/month";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { getMonthIndexState } from "../../store/month-index.store";
+import DaysOfWeek from "./components/days-of-week/days-of-week";
 
 const Calendar = () => {
   const [currentMonth, setCurrentMonth] = useState(getMonth());
@@ -20,6 +21,7 @@ const Calendar = () => {
       <LayoutTitle title="Календарь" />
       <Box sx={{ display: "flex", flexDirection: "column", height: "100vh" }}>
         <Header />
+        <DaysOfWeek/>
         <Box sx={{ display: "flex", flex: 1 }}>
           <Month month={currentMonth} />
         </Box>

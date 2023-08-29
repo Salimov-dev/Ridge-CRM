@@ -25,7 +25,7 @@ const Form = styled(`form`)({
   gap: "4px",
 });
 
-const FilterPanel = ({ setValue, objects, data, register, isLoading }) => {
+const FilterPanel = ({ setValue, objects, data, register, isLoading}) => {
   const users = useSelector(getUsersList());
   const objectStatuses = useSelector(getObjectsStatusList());
   const objectTypes = useSelector(getObjectTypesList());
@@ -299,6 +299,7 @@ const FilterPanel = ({ setValue, objects, data, register, isLoading }) => {
           label="Добавлены от"
           value={data.startDate}
           onChange={(value) => setValue("startDate", value)}
+          disabled={isLoading ? true : false}
         />
         <SearchDatePicker
           register={register}
@@ -306,6 +307,7 @@ const FilterPanel = ({ setValue, objects, data, register, isLoading }) => {
           label="Добавлены до"
           value={data.endDate}
           onChange={(value) => setValue("endDate", value)}
+          disabled={isLoading ? true : false}
         />
       </Form>
     </>

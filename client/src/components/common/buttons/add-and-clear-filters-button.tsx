@@ -8,7 +8,7 @@ const Component = styled(Box)`
   gap: 4px;
 `;
 
-const AddAndClearFiltersButton = ({ title, isInputEmpty, reset, initialState, path }) => {
+const AddAndClearFiltersButton = ({ title, isInputEmpty, reset, initialState, path, disabled }) => {
   const navigate = useNavigate();
 
   return (
@@ -17,6 +17,7 @@ const AddAndClearFiltersButton = ({ title, isInputEmpty, reset, initialState, pa
         variant="contained"
         color="success"
         onClick={() => navigate(path)}
+        disabled={disabled}
       >
         <Typography>{title}</Typography>
       </Button>

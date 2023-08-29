@@ -15,6 +15,7 @@ import { getUserStatusesList } from "../../../store/user/user-statuses.store";
 import { getUserDataById, updateUser } from "../../../store/user/users.store";
 // other
 import { managerSchema } from "../../../schemas/schemas";
+import Loader from "../../common/loader/loader";
 
 const UpdateManager = () => {
   const { userId } = useParams();
@@ -67,7 +68,7 @@ const UpdateManager = () => {
   };
 
   return (
-    <Box>
+    user ? <Box>
       <Header user={user} />
       <img
         src={user?.image}
@@ -86,7 +87,7 @@ const UpdateManager = () => {
         isEditMode={isEditMode}
         userStatuses={userStatuses}
       />
-    </Box>
+    </Box> : <Loader/>
   );
 };
 

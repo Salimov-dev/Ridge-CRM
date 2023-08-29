@@ -10,9 +10,13 @@ import { Box } from "@mui/material";
 import Header from "./components/header";
 import ObjectForm from "../../common/forms/object-form/object-form";
 // store
-import { getObjectById, updateObject } from "../../../store/object/objects.store";
+import {
+  getObjectById,
+  updateObject,
+} from "../../../store/object/objects.store";
 // other
 import { objectSchema } from "../../../schemas/schemas";
+import Loader from "../../common/loader/loader";
 
 const UpdateObject = () => {
   const { objectId } = useParams();
@@ -41,7 +45,7 @@ const UpdateObject = () => {
       .then(toast.success("Объект успешно изменен!"));
   };
 
-  return (
+  return object ? (
     <Box>
       <Header object={object} />
       <ObjectForm
@@ -57,6 +61,8 @@ const UpdateObject = () => {
         isObjectHasAddress={isObjectHasAddress}
       />
     </Box>
+  ) : (
+    <Loader />
   );
 };
 

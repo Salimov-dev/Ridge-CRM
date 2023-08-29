@@ -17,15 +17,14 @@ const DateOfMonthContainer = styled(Box)`
 `;
 
 const DateOfMonth = styled(Typography)`
-  padding: 3px 3px 3px 6px;
-  border-radius: 50%;
-  width: 26px;
-  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 3px;
+  width: 32px;
 `;
 
-const Day = ({ day, rowIdx }) => {
-  const firstRow = rowIdx === 0
-
+const Day = ({ day }) => {
   const isCurrentDay = () => {
     const currentDay = dayjs().format("DD-MM-YY");
     const calendarDay = day.format("DD-MM-YY");
@@ -50,19 +49,14 @@ const Day = ({ day, rowIdx }) => {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
+          paddingTop: '3px'
         }}
       >
-        {firstRow && (
-          <DayOfWeek>
-            <Typography>
-              {day.locale("ru").format("dd").toUpperCase()}
-            </Typography>
-          </DayOfWeek>
-        )}
         <DateOfMonthContainer>
           <DateOfMonth
             sx={{
-              backgroundColor: isCurrentDay() ? "blue" : "inherit",
+              backgroundColor: isCurrentDay() ? "yellow" : "inherit",
+              color: isCurrentDay() ? 'black' : 'inherit'
             }}
           >
             {day.format("DD")}
