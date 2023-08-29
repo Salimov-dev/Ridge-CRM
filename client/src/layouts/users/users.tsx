@@ -22,8 +22,10 @@ import AddAndClearFiltersButton from "../../components/common/buttons/add-and-cl
 import DialogStyled from "../../components/common/dialog/dialog-styled";
 import UpdateManager from "../../components/pages/update-manager/update-manager";
 import CreateManager from "../../components/pages/create-manager/create-manager";
-import { loadUpdateManagerOpenState, setUpdateManagerOpenState } from "../../store/user/update-manager.store";
-import { setUpdateObjectOpenState } from "../../store/object/update-object.store";
+import {
+  loadUpdateManagerOpenState,
+  setUpdateManagerOpenState,
+} from "../../store/user/update-manager.store";
 
 const initialState = {
   lastName: "",
@@ -39,6 +41,7 @@ const initialState = {
 };
 
 const Users = () => {
+  const [openCreate, setOpenCreate] = useState(false);
   const localStorageState = JSON.parse(
     localStorage.getItem("search-users-data")
   );
@@ -57,6 +60,9 @@ const Users = () => {
   const statuses = useSelector(getUserStatusesList());
   const isLoading = useSelector(getUsersLoadingStatus());
   const isInputEmpty = JSON.stringify(initialState) !== JSON.stringify(data);
+  const isOpenUpdate = useSelector(loadUpdateManagerOpenState());
+
+  const dispatch = useDispatch();
 
   const searchedUsers = useSearchUser({
     users: usersWithoutCurrentUser,
@@ -110,19 +116,6 @@ const Users = () => {
     return sortedStatuses;
   };
 
-  useEffect(() => {
-    localStorage.setItem("search-users-data", JSON.stringify(data));
-  }, [data]);
-
-  useEffect(() => {
-    localStorage.setItem("search-users-data", JSON.stringify(initialState));
-  }, []);
-  const isOpenUpdate = useSelector(loadUpdateManagerOpenState())
-
-  const dispatch = useDispatch()
-  
-  const [openCreate, setOpenCreate] = useState(false);
-
   const handleOpenCreate = () => {
     setOpenCreate(true);
   };
@@ -132,8 +125,17 @@ const Users = () => {
   };
 
   const handleCloseUpdate = () => {
-    dispatch(setUpdateManagerOpenState(false))
+    dispatch(setUpdateManagerOpenState(false));
   };
+
+  useEffect(() => {
+    localStorage.setItem("search-users-data", JSON.stringify(data));
+  }, [data]);
+
+  useEffect(() => {
+    localStorage.setItem("search-users-data", JSON.stringify(initialState));
+  }, []);
+
   return (
     <Box>
       <LayoutTitle title="Менеджеры" />

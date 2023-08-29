@@ -4,7 +4,6 @@ import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useNavigate, useParams } from "react-router-dom";
 // MUI
 import { Box } from "@mui/material";
 // components
@@ -21,9 +20,7 @@ import {
   updateMeeting,
 } from "../../../store/meeting/meetings.store";
 import Loader from "../../common/loader/loader";
-import {
-  getUpdateMeetingId,
-} from "../../../store/meeting/update-meeting.store";
+import { getUpdateMeetingId } from "../../../store/meeting/update-meeting.store";
 
 const UpdateMeeting = ({ onClose }) => {
   const objects = useSelector(getObjectsList());
@@ -67,7 +64,11 @@ const UpdateMeeting = ({ onClose }) => {
   const isEditMode = meetingId ? true : false;
 
   const onSubmit = (data) => {
-    dispatch(updateMeeting(data, meetingId))
+    const transformedDate = dayjs(data.date).format("YYYY-MM-DDTHH:mm:ss.SSSZ");
+    const transformedTime = dayjs(data.time).format("YYYY-MM-DDTHH:mm:ss.SSSZ");
+    const newData = { ...data, date: transformedDate, time: transformedTime };
+
+    dispatch(updateMeeting(newData, meetingId))
       .then(onClose())
       .then(toast.success("Встреча успешно изменена!"));
   };

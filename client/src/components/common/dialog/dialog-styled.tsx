@@ -1,13 +1,23 @@
 import { Box, Dialog, styled } from "@mui/material";
 
 const Container = styled(Box)`
-  width: 1200px;
   padding: 20px;
 `;
 
-const DialogStyled = ({ component, onClose, open, maxWidth }) => {
+const DialogStyled = ({
+  component,
+  onClose,
+  open,
+  fullWidth = true,
+  maxWidth = "lg",
+}) => {
   return (
-    <Dialog onClose={onClose} open={open} maxWidth={maxWidth} scroll="body"
+    <Dialog
+      onClose={onClose}
+      fullWidth={fullWidth}
+      open={open}
+      maxWidth={maxWidth}
+      scroll="body"
     >
       <Container>{component}</Container>
     </Dialog>

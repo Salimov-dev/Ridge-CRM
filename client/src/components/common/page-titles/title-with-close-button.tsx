@@ -4,7 +4,7 @@ import CloseButton from "../buttons/close-button";
 
 const Component = styled(Box)`
   display: flex;
-  align-items: center;
+  align-items: start;
   justify-content: space-between;
 `;
 

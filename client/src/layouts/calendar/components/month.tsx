@@ -2,7 +2,7 @@ import { Box } from "@mui/material";
 import Day from "./day";
 import React from "react";
 
-const Month = ({ month }) => {
+const Month = ({ month, onClick }) => {
   
   return (
     <Box
@@ -17,7 +17,7 @@ const Month = ({ month }) => {
       {month?.map((row, i) => (
         <React.Fragment key={i}>
           {row.map((day, idx) => (
-            <Day day={day} key={idx} isWeekendColumn={idx === 5 || idx === 6}/>
+            <Day day={day} key={idx} onClick={onClick} isWeekendColumn={idx === 5 || idx === 6}/>
           ))}
         </React.Fragment>
       ))}

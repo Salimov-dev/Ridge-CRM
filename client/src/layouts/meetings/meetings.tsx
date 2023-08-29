@@ -26,7 +26,10 @@ import {
 import CreateMeeting from "../../components/pages/create-meeting/create-meeting";
 import DialogStyled from "../../components/common/dialog/dialog-styled";
 import UpdateMeeting from "../../components/pages/update-meeting/update-meeting";
-import { loadUpdateMeetingOpenState, setUpdateMeetingOpenState } from "../../store/meeting/update-meeting.store";
+import {
+  loadUpdateMeetingOpenState,
+  setUpdateMeetingOpenState,
+} from "../../store/meeting/update-meeting.store";
 
 const initialState = {
   startDate: null,
@@ -45,10 +48,10 @@ const Meetings = () => {
   const isLoading = useSelector(getMeetingLoadingStatus());
   const statuses = useSelector(getMeetingStatusesList());
   const types = useSelector(getMeetingTypesList());
-  const isOpenUpdate = useSelector(loadUpdateMeetingOpenState())
+  const isOpenUpdate = useSelector(loadUpdateMeetingOpenState());
 
   const columns = groupedColumns;
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const localStorageState = JSON.parse(
     localStorage.getItem("search-meetings-data")
@@ -143,7 +146,7 @@ const Meetings = () => {
   };
 
   const handleCloseUpdate = () => {
-    dispatch(setUpdateMeetingOpenState(false))
+    dispatch(setUpdateMeetingOpenState(false));
   };
 
   useEffect(() => {
@@ -194,20 +197,20 @@ const Meetings = () => {
         itemsColumns={columns}
         isLoading={isLoading}
         sortingColumn="date"
+        desc={false}
       />
 
       <DialogStyled
         component={<CreateMeeting onClose={handleCloseCreate} />}
         onClose={handleCloseCreate}
         open={openCreate}
-        maxWidth="lg"
       />
 
       <DialogStyled
         component={<UpdateMeeting onClose={handleCloseUpdate} />}
         onClose={handleCloseUpdate}
         open={isOpenUpdate}
-        maxWidth="lg"
+        fullWidth={false}
       />
     </Box>
   );

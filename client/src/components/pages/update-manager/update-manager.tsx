@@ -75,7 +75,7 @@ const UpdateManager = ({onClose}) => {
         style={{ width: "100px", borderRadius: "10px" }}
       />
       <ManagerForm
-        data={formatedUser}
+        data={data}
         register={register}
         onSubmit={onSubmit}
         onClose={onClose}

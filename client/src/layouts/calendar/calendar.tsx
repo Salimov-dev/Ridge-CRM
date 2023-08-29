@@ -15,6 +15,8 @@ import DaysOfWeek from "./components/days-of-week/days-of-week";
 import { taskSchema } from "../../schemas/schemas";
 import { capitalizeFirstLetter } from "../../utils/data/capitalize-first-letter";
 import TaskForm from "../../components/common/forms/task-form/task-form";
+import DialogStyled from "../../components/common/dialog/dialog-styled";
+import CreateTask from "./components/create-task/create-task";
 
 const initialState = {
   comment: "",
@@ -24,7 +26,7 @@ const initialState = {
 };
 
 const Calendar = () => {
-  const [open, setOpen] = useState(false);
+  const [openCreate, setOpenCreate] = useState(false);
   const [currentMonth, setCurrentMonth] = useState(getMonth());
   const monthIndex = useSelector(getMonthIndexState());
 
@@ -54,12 +56,12 @@ const Calendar = () => {
     // .then(toast.success("Встреча успешно создана!"));
   };
 
-  const handleClickOpen = () => {
-    setOpen(true);
+  const handleOpenCreate = () => {
+    setOpenCreate(true);
   };
 
-  const handleClose = () => {
-    setOpen(false);
+  const handleCloseCreate = () => {
+    setOpenCreate(false);
   };
 
   useEffect(() => {
@@ -73,33 +75,34 @@ const Calendar = () => {
       <Box sx={{ display: "flex", flexDirection: "column", height: "100vh" }}>
         <Header />
 
-        <Button variant="outlined" color="success" onClick={handleClickOpen}>
+        <Button variant="outlined" color="success" onClick={handleOpenCreate}>
           Создать событие
         </Button>
 
         <DaysOfWeek />
         <Box sx={{ display: "flex", flex: 1 }}>
-          <Month month={currentMonth} />
+          <Month month={currentMonth} onClick={handleOpenCreate} />
         </Box>
       </Box>
 
-      <Dialog onClose={handleClose} open={open} >
-        <Box sx={{ width: '500px', padding: '20px'}}>
-        <Typography variant="h3" mb={3}>Добавить задачу в календарь</Typography>
-        <TaskForm
-          data={data}
-          register={register}
-          onSubmit={onSubmit}
-          handleSubmit={handleSubmit}
-          watch={watch}
-          errors={errors}
-          setValue={setValue}
-          onClose={handleClose}
-          // isValid={isFullValid}
-        />
-        </Box>
-      
-      </Dialog>
+      <DialogStyled
+        onClose={handleCloseCreate}
+        open={openCreate}
+        maxWidth="sm"
+        fullWidth={false}
+        component={
+          <CreateTask
+            data={data}
+            register={register}
+            onSubmit={onSubmit}
+            handleSubmit={handleSubmit}
+            watch={watch}
+            errors={errors}
+            setValue={setValue}
+            onClose={handleCloseCreate}
+          />
+        }
+      />
     </>
   );
 };

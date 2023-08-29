@@ -31,6 +31,7 @@ const BasicTable = ({
   isPaginate=true,
   isSorting=true,
   sortingColumn = "created_at",
+  desc=true
 }) => {
   const [sorting, setSorting] = useState<SortingState>([]);
   const theme = useTheme();
@@ -51,7 +52,7 @@ const BasicTable = ({
   });
 
   useEffect(() => {
-    isSorting && setSorting([{ id: sortingColumn, desc: true }]);
+    isSorting && setSorting([{ id: sortingColumn, desc: desc }]);
   }, []);
 
   return (

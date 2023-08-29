@@ -1,4 +1,5 @@
 import CloseIcon from "@mui/icons-material/Close";
+import { Box } from "@mui/material";
 
 const CloseButton = ({ onClose }) => {
   return (

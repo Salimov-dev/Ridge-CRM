@@ -14,6 +14,7 @@ import {
   setUpdateMeetingId,
   setUpdateMeetingOpenState,
 } from "../../../store/meeting/update-meeting.store";
+import { useNavigate } from "react-router-dom";
 
 export const groupedColumns = [
   {
@@ -60,6 +61,11 @@ export const groupedColumns = [
       const objectId = info.getValue();
       const object = useSelector(getObjectById(objectId));
       const result = `${object?.location.city}, ${object?.location.address}`;
+      const navigate = useNavigate();
+
+      const handleClick = () => {
+        navigate(`/objects/${objectId}`);
+      };
 
       return (
         <Box
@@ -69,12 +75,12 @@ export const groupedColumns = [
             justifyContent: "space-between",
           }}
         >
-          {result}{" "}
+          {result}
           <TableOpenButton
             id={objectId}
-            nav={`/objects/${objectId}`}
             text="Перейти"
             color="neutral"
+            onClick={handleClick}
           />
         </Box>
       );

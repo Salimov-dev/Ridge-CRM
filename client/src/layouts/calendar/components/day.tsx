@@ -2,21 +2,23 @@ import { Box, Typography, styled } from "@mui/material";
 import dayjs from "dayjs";
 import "dayjs/locale/ru";
 
-const DayOfWeek = styled(Box)`
-  width: 100%;
+const OneDayContainer = styled(Box)`
   display: flex;
-  justify-content: center;
-  border-bottom: 1px solid gray;
-  background: darkGreen;
+  border: 1px solid gray;
+  flex-direction: column;
+  cursor: pointer;
 `;
 
-const DateOfMonthContainer = styled(Box)`
+const ContainerDate = styled(Typography)`
   width: 100%;
   display: flex;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
+  padding-top: 3px;
 `;
 
-const DateOfMonth = styled(Typography)`
+const Date = styled(Typography)`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -24,8 +26,7 @@ const DateOfMonth = styled(Typography)`
   width: 32px;
 `;
 
-const Day = ({ day, isWeekendColumn }) => {
-
+const Day = ({ day, isWeekendColumn, onClick }) => {
   const isCurrentDay = () => {
     const currentDay = dayjs().format("DD-MM-YY");
     const calendarDay = day.format("DD-MM-YY");
@@ -35,37 +36,26 @@ const Day = ({ day, isWeekendColumn }) => {
   };
 
   return (
-    <Box
-      sx={{
-        display: "flex",
-        alignItems: "start",
-        border: "1px solid gray",
-        flexDirection: "column",
-        backgroundColor: isWeekendColumn ? "#171e32" : "inherit",
-      }}
+    <OneDayContainer
+      onClick={onClick}
+      sx={{ backgroundColor: isWeekendColumn ? "#171e32" : "inherit" }}
     >
-      <Box
-        sx={{
-          width: "100%",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-          paddingTop: '3px'
-        }}
-      >
-        <DateOfMonthContainer>
-          <DateOfMonth
-            sx={{
-              backgroundColor: isCurrentDay() ? "yellow"  : "inherit",
-              color: isWeekendColumn ? "red" : isCurrentDay()  ? 'black' : 'inherit'
-            }}
-          >
-            {day.format("DD")}
-          </DateOfMonth>
-        </DateOfMonthContainer>
-      </Box>
-    </Box>
+      <ContainerDate>
+        <Date
+          sx={{
+            backgroundColor: isCurrentDay() ? "yellow" : "inherit",
+            color: isWeekendColumn
+              ? "red"
+              : isCurrentDay()
+              ? "black"
+              : "inherit",
+          }}
+        >
+          {day.format("DD")}
+        </Date>
+      </ContainerDate>
+      <Box></Box>
+    </OneDayContainer>
   );
 };
 
