@@ -43,9 +43,6 @@ const TimePickerStyled = ({ register, data, errors, setValue, name, label }) => 
               "& label.Mui-focused": {
                 color: "white",
               },
-              "& .MuiButtonBase-root": {
-                color: "white",
-              },
             }}
           />
         </DemoContainer>

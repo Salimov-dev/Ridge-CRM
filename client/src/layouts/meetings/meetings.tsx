@@ -1,8 +1,8 @@
 // libraries
 import { orderBy } from "lodash";
-import { Box, Button, Dialog, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import { useForm } from "react-hook-form";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 // components
 import Baloon from "./map/baloon";
@@ -24,6 +24,9 @@ import {
   getMeetingsList,
 } from "../../store/meeting/meetings.store";
 import CreateMeeting from "../../components/pages/create-meeting/create-meeting";
+import DialogStyled from "../../components/common/dialog/dialog-styled";
+import UpdateMeeting from "../../components/pages/update-meeting/update-meeting";
+import { loadUpdateMeetingOpenState, setUpdateMeetingOpenState } from "../../store/meeting/update-meeting.store";
 
 const initialState = {
   startDate: null,
@@ -136,14 +139,24 @@ const Meetings = () => {
     localStorage.setItem("search-meetings-data", JSON.stringify(initialState));
   }, []);
 
-  const [open, setOpen] = useState(false);
-  const handleClickOpen = () => {
-    setOpen(true);
+  const isOpenUpdate = useSelector(loadUpdateMeetingOpenState())
+
+  const dispatch = useDispatch()
+  
+  const [openCreate, setOpenCreate] = useState(false);
+
+  const handleOpenCreate = () => {
+    setOpenCreate(true);
   };
 
-  const handleClose = () => {
-    setOpen(false);
+  const handleCloseCreate = () => {
+    setOpenCreate(false);
   };
+
+  const handleCloseUpdate = () => {
+    dispatch(setUpdateMeetingOpenState(false))
+  };
+
   return (
     <Box>
       <LayoutTitle title="Встречи" />
@@ -154,7 +167,7 @@ const Meetings = () => {
         reset={reset}
         initialState={initialState}
         disabled={isLoading ? true : false}
-        onOpen={handleClickOpen}
+        onOpen={handleOpenCreate}
       />
 
       <ItemsOnMap
@@ -186,11 +199,19 @@ const Meetings = () => {
         sortingColumn="date"
       />
 
-      <Dialog onClose={handleClose} open={open} maxWidth='lg'>
-        <Box sx={{ width: "1200px", padding: "20px" }}>
-          <CreateMeeting onClose={handleClose}/>
-        </Box>
-      </Dialog>
+      <DialogStyled
+        component={<CreateMeeting onClose={handleCloseCreate} />}
+        onClose={handleCloseCreate}
+        open={openCreate}
+        maxWidth="lg"
+      />
+
+      <DialogStyled
+        component={<UpdateMeeting onClose={handleCloseUpdate} />}
+        onClose={handleCloseUpdate}
+        open={isOpenUpdate}
+        maxWidth="lg"
+      />
     </Box>
   );
 };

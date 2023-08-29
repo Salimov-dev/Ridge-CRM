@@ -60,7 +60,7 @@ const initialState = {
   },
 };
 
-const CreateObject = () => {
+const CreateObject = ({onClose}) => {
   const {
     register,
     watch,
@@ -113,7 +113,7 @@ const CreateObject = () => {
     console.log("newData", newData);
 
     dispatch(createObject(newData))
-      .then(navigate("/objects"))
+      .then(onClose())
       .then(toast.success("Объект успешно создан!"));
   };
 
@@ -132,7 +132,7 @@ const CreateObject = () => {
         getAddress={getAddress}
         title="Создать объект:"
         subtitle="Выберите объект на карте"
-        path="objects"
+        onClose={onClose}
       />
 
       <FindObjectOnMap />
@@ -146,6 +146,7 @@ const CreateObject = () => {
         watch={watch}
         isEmptyFindedObject={isEmptyFindedObject}
         isObjectHasAddress={isObjectHasAddress}
+        onClose={onClose}
       />
     </Box>
   );

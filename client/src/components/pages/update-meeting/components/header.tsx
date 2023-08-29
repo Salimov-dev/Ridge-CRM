@@ -1,12 +1,12 @@
 import { Box, Typography, styled } from "@mui/material";
 import { FormatTime } from "../../../../utils/date/format-time";
 import { FormatDate } from "../../../../utils/date/format-date";
-import PageBackButton from "../../../common/buttons/page-back-button";
+import CloseButton from "../../../common/buttons/close-button";
 
 const Component = styled(Box)`
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: start;
   gap: 8px;
   margin-bottom: 40px;
 `;
@@ -19,21 +19,41 @@ const Title = styled(Box)`
   gap: 8px;
 `;
 
-const Header = ({ meeting }) => {
+const Header = ({ meeting, onClose }) => {
   return (
     <Component>
       <Title>
-        <Typography variant="h2">Редактировать встречу:</Typography>
+        <Box sx={{ display: "flex" }}>
+          <Typography variant="h2">Редактировать встречу:</Typography>
+          <Typography
+            variant="h2"
+            sx={{ background: "yellow", color: "black", marginLeft: "4px" }}
+          >
+            {FormatDate(meeting?.date, "h2")}
+          </Typography>
+          <Typography
+            variant="h2"
+            sx={{ background: "yellow", color: "black", padding: "0 4px" }}
+          >
+            в
+          </Typography>
+          <Typography
+            variant="h2"
+            sx={{ background: "yellow", color: "black" }}
+          >
+            {FormatTime(meeting?.time, "h2")}
+          </Typography>
+        </Box>
         <Typography variant="h2" sx={{ background: "yellow", color: "black" }}>
           <Box sx={{ display: "flex", gap: "8px" }}>
-            {FormatDate(meeting?.date, "h2")} в{" "}
-            {FormatTime(meeting?.time, "h2")} по адресу:
-            {meeting?.location?.city}, {meeting?.location?.address}
+            <Box>
+              по адресу: {meeting?.location?.city}, {meeting?.location?.address}
+            </Box>
           </Box>
         </Typography>
       </Title>
 
-      <PageBackButton />
+      <CloseButton onClose={onClose} />
     </Component>
   );
 };

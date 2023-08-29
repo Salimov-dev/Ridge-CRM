@@ -15,7 +15,7 @@ const StyledTextField = styled(TextField)(({ theme }) => ({
   },
   "& .MuiInputLabel-outlined.MuiInputLabel-shrink": {
     transform: "translate(14px, -6px) scale(0.75)",
-    backgroundColor: theme.palette.background.default,
+    backgroundColor: "transparent",
     padding: "0 5px",
   },
 }));

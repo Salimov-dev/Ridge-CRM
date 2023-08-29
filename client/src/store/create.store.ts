@@ -21,6 +21,8 @@ import workingPositionReducer from "./user/working-position.store";
 // other
 import sidebarCollapsStateReducer from "./sidebar-collaps-state.store";
 import monthIndexReducer from "./month-index.store";
+import updateMeetingReducer from "./meeting/update-meeting.store";
+import updateObjectReducer from "./object/update-object.store";
 
 const rootReducer = combineReducers({
   // objects
@@ -45,6 +47,8 @@ const rootReducer = combineReducers({
   // other
   sidebarCollapsState: sidebarCollapsStateReducer,
   monthIndex: monthIndexReducer,
+  updateMeeting: updateMeetingReducer,
+  updateObject: updateObjectReducer,
 });
 
 export function createStore() {

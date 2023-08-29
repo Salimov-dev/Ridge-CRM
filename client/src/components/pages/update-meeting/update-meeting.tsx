@@ -21,20 +21,22 @@ import {
   updateMeeting,
 } from "../../../store/meeting/meetings.store";
 import Loader from "../../common/loader/loader";
+import {
+  getUpdateMeetingId,
+} from "../../../store/meeting/update-meeting.store";
 
-const UpdateMeeting = () => {
-  const { meetingId } = useParams();
+const UpdateMeeting = ({ onClose }) => {
   const objects = useSelector(getObjectsList());
   const currentUserId = useSelector(getCurrentUserId());
   const currentUserObjects = objects?.filter(
     (obj) => obj?.userId === currentUserId
   );
+  const meetingId = useSelector(getUpdateMeetingId());
   const meeting = useSelector(getMeetingById(meetingId));
   const meetingTypes = useSelector(getMeetingTypesList());
   const statuses = useSelector(getMeetingStatusesList());
 
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const formatedMeeting = {
     ...meeting,
@@ -66,19 +68,20 @@ const UpdateMeeting = () => {
 
   const onSubmit = (data) => {
     dispatch(updateMeeting(data, meetingId))
-      .then(navigate(-1))
+      .then(onClose())
       .then(toast.success("Встреча успешно изменена!"));
   };
 
   return meeting ? (
     <Box>
-      <Header meeting={meeting} />
+      <Header meeting={meeting} onClose={onClose} />
       <MeetingForm
         register={register}
         data={data}
         objects={transformObjects}
         meetingTypes={meetingTypes}
         onSubmit={onSubmit}
+        onClose={onClose}
         handleSubmit={handleSubmit}
         watch={watch}
         errors={errors}

@@ -1,4 +1,4 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Box, Typography } from "@mui/material";
 // components
 import { FormatManagerName } from "../../../components/common/table/helpers/helpers";
@@ -10,6 +10,10 @@ import { getMeetingTypeNameById } from "../../../store/meeting/meeting-types.sto
 // utils
 import { FormatDate } from "../../../utils/date/format-date";
 import { FormatTime } from "../../../utils/date/format-time";
+import {
+  setUpdateMeetingId,
+  setUpdateMeetingOpenState,
+} from "../../../store/meeting/update-meeting.store";
 
 export const groupedColumns = [
   {
@@ -117,12 +121,13 @@ export const groupedColumns = [
     header: "",
     cell: (info) => {
       const meetingId = info.getValue();
+      const dispatch = useDispatch();
+      const handleClick = () => {
+        dispatch(setUpdateMeetingId(meetingId));
+        dispatch(setUpdateMeetingOpenState(true));
+      };
       return (
-        <TableOpenButton
-          id={meetingId}
-          text="Править"
-          nav={`${meetingId}/edit`}
-        />
+        <TableOpenButton id={meetingId} text="Править" onClick={handleClick} />
       );
     },
   },

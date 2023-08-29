@@ -1,7 +1,7 @@
 // libraries
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import dayjs from "dayjs";
 // MUI
 import { Box } from "@mui/material";
@@ -21,6 +21,10 @@ import {
 // hooks
 import useSearchObject from "../../hooks/use-search-object";
 import AddAndClearFiltersButton from "../../components/common/buttons/add-and-clear-filters-button";
+import DialogStyled from "../../components/common/dialog/dialog-styled";
+import CreateObject from "../../components/pages/create-object/create-object";
+import { loadUpdateObjectOpenState, setUpdateObjectOpenState } from "../../store/object/update-object.store";
+import UpdateObject from "../../components/pages/update-object/update-object";
 
 const initialState = {
   address: "",
@@ -41,6 +45,8 @@ const initialState = {
 
 const Objects = () => {
   const [selectedBaloon, setSelectedBaloon] = useState(null);
+  const [openCreate, setOpenCreate] = useState(false);
+  const isOpenUpdate = useSelector(loadUpdateObjectOpenState());
 
   const objects = useSelector(getObjectsList());
   const selectedObject = useSelector(getObjectById(selectedBaloon));
@@ -49,6 +55,8 @@ const Objects = () => {
   const columns = groupedColumns;
   const center = [59.930320630519155, 30.32906024941998];
   const mapZoom = 11;
+
+  const dispatch = useDispatch();
 
   const localStorageState = JSON.parse(
     localStorage.getItem("search-objects-data")
@@ -77,6 +85,18 @@ const Objects = () => {
     data,
   });
 
+  const handleOpenCreate = () => {
+    setOpenCreate(true);
+  };
+
+  const handleCloseCreate = () => {
+    setOpenCreate(false);
+  };
+
+  const handleCloseUpdate = () => {
+    dispatch(setUpdateObjectOpenState(false));
+  };
+
   useEffect(() => {
     const hasLocalStorageData = localStorage.getItem("search-objects-data");
 
@@ -97,7 +117,7 @@ const Objects = () => {
         isInputEmpty={isInputEmpty}
         reset={reset}
         initialState={initialState}
-        path="create"
+        onOpen={handleOpenCreate}
       />
       <ItemsOnMap
         items={searchedObjects}
@@ -123,6 +143,20 @@ const Objects = () => {
         items={searchedObjects}
         itemsColumns={columns}
         isLoading={isLoading}
+      />
+
+      <DialogStyled
+        component={<CreateObject onClose={handleCloseCreate} />}
+        onClose={handleCloseCreate}
+        open={openCreate}
+        maxWidth="lg"
+      />
+
+      <DialogStyled
+        component={<UpdateObject onClose={handleCloseUpdate} />}
+        onClose={handleCloseUpdate}
+        open={isOpenUpdate}
+        maxWidth="lg"
       />
     </Box>
   );

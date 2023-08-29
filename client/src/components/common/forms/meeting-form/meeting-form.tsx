@@ -46,10 +46,6 @@ const MeetingForm = ({
   const watchObjectId = watch("objectId", "");
   const watchTypeMeeting = watch("meetingType", "");
 
-  const handleCancelCreate = () => {
-    onClose()
-  };
-
   return (
     <>
       <Form onSubmit={handleSubmit(onSubmit)} noValidate>
@@ -120,7 +116,7 @@ const MeetingForm = ({
         <FooterButtons
           isEditMode={isEditMode}
           isValid={!isValidAndHasAdress}
-          onClick={handleCancelCreate}
+          onClose={onClose}
         />
       </Form>
     </>

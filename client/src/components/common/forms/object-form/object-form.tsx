@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 // MUI
 import { Box, styled, InputAdornment } from "@mui/material";
@@ -11,6 +10,8 @@ import ElectricBoltIcon from "@mui/icons-material/ElectricBolt";
 import VerticalAlignBottomOutlinedIcon from "@mui/icons-material/VerticalAlignBottomOutlined";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 // components
+import Title from "../title";
+import FooterButtons from "../footer-buttons";
 import TextFieldStyled from "../../inputs/text-field-styled";
 import SimpleSelectField from "../../inputs/simple-select-field";
 // store
@@ -23,8 +24,6 @@ import { getObjectsStatusList } from "../../../../store/object/object-status.sto
 import { getCurrentRentersList } from "../../../../store/object/current-renter.store";
 import { getWorkingPositionsList } from "../../../../store/user/working-position.store";
 import { getobjectConditionsList } from "../../../../store/object/object-conditions.store";
-import Title from "../title";
-import FooterButtons from "../footer-buttons";
 
 const Form = styled(`form`)({
   display: "flex",
@@ -42,11 +41,11 @@ const FieldsContainer = styled(Box)`
 
 const ObjectForm = ({
   data,
-  objectId,
   register,
   errors,
   handleSubmit,
   onSubmit,
+  onClose,
   isValid,
   isEditMode = false,
   isEmptyFindedObject,
@@ -74,14 +73,9 @@ const ObjectForm = ({
   const rentTypes = useSelector(getRentTypesList());
   const objectTypes = useSelector(getObjectTypesList());
   const estateTypes = useSelector(getEstateTypesList());
-  const navigate = useNavigate();
 
   const isValidAndHasAdress =
     (Boolean(isEmptyFindedObject) || isObjectHasAddress) && isValid;
-
-  const handleBackPage = () => {
-    navigate(isEditMode ? `/objects/${objectId}` : "/objects");
-  };
 
   return (
     <>
@@ -436,7 +430,7 @@ const ObjectForm = ({
           register={register}
           label="Опишите объект"
           name="description.fullDescription"
-          rows="8"
+          rows="3"
           multiline={true}
           value={data?.description?.fullDescription}
           errors={errors?.description?.fullDescription}
@@ -445,7 +439,7 @@ const ObjectForm = ({
         <FooterButtons
           isEditMode={isEditMode}
           isValid={!isValidAndHasAdress}
-          onClick={handleBackPage}
+          onClose={onClose}
         />
       </Form>
     </>

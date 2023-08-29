@@ -1,11 +1,8 @@
 import { Button } from "@mui/material";
-import { useNavigate } from "react-router-dom";
 
-const TableOpenButton = ({ id, text, color = "secondary", nav }) => {
-  const navigate = useNavigate();
-
+const TableOpenButton = ({ text, color = "secondary", onClick }) => {
   return (
-    <Button variant="text" color={color} onClick={() => navigate(nav)}>
+    <Button variant="text" color={color} onClick={onClick}>
       {text}
     </Button>
   );

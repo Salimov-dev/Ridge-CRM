@@ -2,7 +2,6 @@
 import { useEffect } from "react";
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useDispatch, useSelector } from "react-redux";
 // components
@@ -46,7 +45,6 @@ const initialState = {
 
 const CreateMeeting = ({onClose}) => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const objects = useSelector(getObjectsList());
   const statuses = useSelector(getMeetingStatusesList());
   const meetingTypes = useSelector(getMeetingTypesList());
