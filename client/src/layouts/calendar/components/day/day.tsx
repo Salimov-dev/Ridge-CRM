@@ -77,7 +77,7 @@ const Day = ({ day, isWeekendColumn, onClick, meeting }) => {
           {day.format("DD")}
         </Date>
       </ContainerDate>
-      <DayContent meeting={meeting} />
+      <DayContent meeting={meeting} day={day} />
     </OneDayContainer>
   );
 };
