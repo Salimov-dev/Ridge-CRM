@@ -10,6 +10,7 @@ const Component = styled(Box)`
 const Title = styled(Typography)`
   background: yellow;
   color: black;
+  padding: 0 4px;
 `;
 
 const LayoutTitle = ({ title }) => {

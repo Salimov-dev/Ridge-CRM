@@ -1,4 +1,4 @@
-import { Box, Button, Typography, styled } from "@mui/material";
+import { Box, Typography, styled } from "@mui/material";
 import CloseButton from "../buttons/close-button";
 
 const Component = styled(Box)`
@@ -30,7 +30,7 @@ const TitleWithAddress = ({
         {!isEmptyFindedObject ? (
           <Typography
             variant="h2"
-            sx={{ background: "yellow", color: "black" }}
+            sx={{ background: "yellow", color: "black", padding: '4px' }}
           >
             {getCity()}, {getAddress()}
           </Typography>
@@ -40,6 +40,7 @@ const TitleWithAddress = ({
             sx={{
               background: !isEmptyFindedObject ? "yellow" : "red",
               color: !isEmptyFindedObject ? "black" : "white",
+              padding: '0 4px'
             }}
           >
             {subtitle}

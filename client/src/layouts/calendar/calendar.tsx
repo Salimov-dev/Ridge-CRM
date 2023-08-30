@@ -13,7 +13,7 @@ import DaysOfWeek from "./components/days-of-week/days-of-week";
 import DialogStyled from "../../components/common/dialog/dialog-styled";
 import CalendarBody from "./components/calendar-body/calendar-body";
 import LayoutTitle from "../../components/common/page-titles/layout-title";
-import CurrentWeeklyMeetings from "./components/current-weekly-meetings/current-weekly-meetings/current-weekly-meetings";
+import CurrentWeeklyMeetings from "./components/current-weekly-meetings/current-weekly-meetings";
 // utils
 import getMonth from "../../utils/calendar/get-month";
 import { capitalizeFirstLetter } from "../../utils/data/capitalize-first-letter";

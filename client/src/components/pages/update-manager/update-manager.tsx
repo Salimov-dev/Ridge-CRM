@@ -17,8 +17,8 @@ import { managerSchema } from "../../../schemas/schemas";
 import Loader from "../../common/loader/loader";
 import { getUpdateManagerId } from "../../../store/user/update-manager.store";
 
-const UpdateManager = ({onClose}) => {
-  const userId = useSelector(getUpdateManagerId())
+const UpdateManager = ({ onClose }) => {
+  const userId = useSelector(getUpdateManagerId());
   const user = useSelector(getUserDataById(userId));
   const userStatuses = useSelector(getUserStatusesList());
 
@@ -66,9 +66,9 @@ const UpdateManager = ({onClose}) => {
       .then(toast.success("Менеджер успешно изменен!"));
   };
 
-  return (
-    user ? <Box>
-      <Header user={user} onClose={onClose}/>
+  return user ? (
+    <Box>
+      <Header user={user} onClose={onClose} />
       <img
         src={user?.image}
         alt=""
@@ -87,7 +87,9 @@ const UpdateManager = ({onClose}) => {
         isEditMode={isEditMode}
         userStatuses={userStatuses}
       />
-    </Box> : <Loader/>
+    </Box>
+  ) : (
+    <Loader />
   );
 };
 

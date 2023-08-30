@@ -6,9 +6,6 @@ import ButtonsPanel from "./buttons-panel";
 import Loader from "../../../common/loader/loader";
 // store
 import { getDistrictById } from "../../../../store/object/districts.store";
-import { getObjectsLoadingStatus } from "../../../../store/object/objects.store";
-
-const Component = styled(Box)``;
 
 const HeaderContainer = styled(Box)`
   display: flex;
@@ -28,7 +25,7 @@ const Header = ({ object, isLoading }) => {
   const district = useSelector(getDistrictById(object?.location.district));
 
   return (
-    <Component>
+    <>
       {!isLoading ? (
         <HeaderContainer>
           <Title>
@@ -40,7 +37,7 @@ const Header = ({ object, isLoading }) => {
       ) : (
         <Loader />
       )}
-    </Component>
+    </>
   );
 };
 

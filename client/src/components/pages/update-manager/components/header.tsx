@@ -20,7 +20,10 @@ const Header = ({ user, onClose }) => {
     <Component>
       <Title>
         <Typography variant="h2">Редактировать менеджера:</Typography>
-        <Typography variant="h2" sx={{ background: "yellow", color: "black" }}>
+        <Typography
+          variant="h2"
+          sx={{ background: "yellow", color: "black", padding: "0 4px" }}
+        >
           {user?.name.lastName} {user?.name.firstName} {user?.name.surName}
         </Typography>
       </Title>

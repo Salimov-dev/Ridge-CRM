@@ -1,15 +1,9 @@
 import { toast } from "react-toastify";
-import { useSelector } from "react-redux";
 import { Box, Typography, styled } from "@mui/material";
-// components
-import Loader from "../../../../components/common/loader/loader";
-// store
-import { getMeetingTypesList } from "../../../../store/meeting/meeting-types.store";
-import { getUsersList } from "../../../../store/user/users.store";
 // utils
-import { FormatTime } from "../../../../utils/date/format-time";
 import { chechIsCurrentDay } from "../../../../utils/date/check-is-current-day";
 import { chechIsFutureDay } from "../../../../utils/date/check-is-future-day";
+import DayContent from "./components/day-content/day-content";
 
 const OneDayContainer = styled(Box)`
   display: flex;
@@ -38,24 +32,8 @@ const Date = styled(Typography)`
 `;
 
 const Day = ({ day, isWeekendColumn, onClick, meeting }) => {
-  const isCurrentDay = chechIsCurrentDay(day)
-  const isFutureDay = chechIsFutureDay(day)
-
-  const users = useSelector(getUsersList());
-  const meetingTypes = useSelector(getMeetingTypesList());
-
-  const getManagerName = (id) => {
-    const user = users?.find((user) => user._id === id);
-    const result = `${user?.name.lastName} ${user?.name.firstName}`;
-    return result;
-  };
-
-  const getMeetingTypeName = (id) => {
-    const meetingType = meetingTypes?.find((type) => type?._id === id);
-    const result = meetingType?.name;
-
-    return result;
-  };
+  const isCurrentDay = chechIsCurrentDay(day);
+  const isFutureDay = chechIsFutureDay(day);
 
   return (
     <OneDayContainer
@@ -79,11 +57,7 @@ const Day = ({ day, isWeekendColumn, onClick, meeting }) => {
           ? "1px solid white"
           : "1px solid gray",
         "&:hover": {
-          borderColor: isCurrentDay
-            ? "yellow"
-            : isFutureDay
-            ? "yellow"
-            : "red",
+          borderColor: isCurrentDay ? "yellow" : isFutureDay ? "yellow" : "red",
         },
       }}
     >
@@ -103,29 +77,7 @@ const Day = ({ day, isWeekendColumn, onClick, meeting }) => {
           {day.format("DD")}
         </Date>
       </ContainerDate>
-      {meeting ? (
-        <Box sx={{ display: "flex", flexDirection: "column", gap: "4px" }}>
-          {meeting?.map((meet) => (
-            <Box
-              key={meet._id}
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                background: "blue",
-              }}
-            >
-              <Typography>Встреча в: {FormatTime(meet.time)}</Typography>
-              <Typography>{getMeetingTypeName(meet?.meetingType)}</Typography>
-              <Typography>
-                {meet.location.city}, {meet.location.address}
-              </Typography>
-              <Typography>{getManagerName(meet?.userId)}</Typography>
-            </Box>
-          ))}
-        </Box>
-      ) : (
-        <Loader />
-      )}
+      <DayContent meeting={meeting} />
     </OneDayContainer>
   );
 };

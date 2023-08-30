@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import dayjs from "dayjs";
 import Day from "../day/day";
+import { orderBy } from "lodash";
 import { Box } from "@mui/material";
 import { useSelector } from "react-redux";
 import { getMeetingsList } from "../../../../store/meeting/meetings.store";
@@ -12,9 +13,9 @@ const Month = ({ month, onClick }) => {
     const meeting = meetings?.filter(
       (meet) => dayjs(meet?.date).format() === dayjs(day)?.format()
     );
-    return meeting;
+    const sortedMeetings = orderBy(meeting, ["date"], ["desc"]);
+    return sortedMeetings;
   };
-
 
   return (
     <Box

@@ -1,5 +1,5 @@
 import { Box, Typography } from "@mui/material";
-import BasicTable from "../../../../../components/common/table/basic-table";
+import BasicTable from "../../../../components/common/table/basic-table";
 
 const CurrentWeeklyMeetings = ({ meetings, columns, isLoading }) => {
   return (

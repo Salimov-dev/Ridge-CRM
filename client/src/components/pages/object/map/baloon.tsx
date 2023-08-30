@@ -1,7 +1,11 @@
 import { useSelector } from "react-redux";
+import { Box, styled } from "@mui/material";
+// components
 import Loader from "../../../common/loader/loader";
-import { Box, Typography, styled } from "@mui/material";
+import Attribute from "../../../common/map/baloon/attribute";
+// utils
 import { FormatDate } from "../../../../utils/date/format-date";
+// store
 import { getUserNameById } from "../../../../store/user/users.store";
 import { getDistrictById } from "../../../../store/object/districts.store";
 
@@ -23,27 +27,14 @@ const Baloon = ({ object }) => {
 
   return object ? (
     <BaloonContainer>
-      <Box sx={{ display: "flex", gap: "4px" }}>
-        <Typography>
-          <b>Дата создания:</b>
-        </Typography>
-        {date}
-      </Box>
-      <Typography>
-        <b>Менеджер:</b> {manager}
-      </Typography>
-      <Typography>
-        <b>Город:</b> {city}
-      </Typography>
-      <Typography>
-        <b>Район:</b> {district}
-      </Typography>
-      <Typography>
-        <b>Адрес:</b> {address}
-      </Typography>
+      <Attribute title="Дата создания:" subTitle={date} />
+      <Attribute title="Менеджер:" subTitle={manager} />
+      <Attribute title="Город:" subTitle={city} />
+      <Attribute title="Район:" subTitle={district} />
+      <Attribute title="Адрес:" subTitle={address} />
     </BaloonContainer>
   ) : (
-    <Loader height={90} />
+    <Loader height="90" />
   );
 };
 
