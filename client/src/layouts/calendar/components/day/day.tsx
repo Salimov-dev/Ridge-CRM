@@ -1,10 +1,15 @@
-import { Box, Typography, styled } from "@mui/material";
-import dayjs from "dayjs";
-import "dayjs/locale/ru";
-import { FormatTime } from "../../../../utils/date/format-time";
+import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
+import { Box, Typography, styled } from "@mui/material";
+// components
+import Loader from "../../../../components/common/loader/loader";
+// store
 import { getMeetingTypesList } from "../../../../store/meeting/meeting-types.store";
 import { getUsersList } from "../../../../store/user/users.store";
+// utils
+import { FormatTime } from "../../../../utils/date/format-time";
+import { chechIsCurrentDay } from "../../../../utils/date/check-is-current-day";
+import { chechIsFutureDay } from "../../../../utils/date/check-is-future-day";
 
 const OneDayContainer = styled(Box)`
   display: flex;
@@ -33,69 +38,94 @@ const Date = styled(Typography)`
 `;
 
 const Day = ({ day, isWeekendColumn, onClick, meeting }) => {
-  // const managerName = useSelector(getUserNameById(meeting?.userId));
-  // console.log("meeting",meeting);
-  
-  const isCurrentDay = () => {
-    const currentDay = dayjs().format("DD-MM-YY");
-    const calendarDay = day?.format("DD-MM-YY");
-    const isCurrentDay = currentDay === calendarDay;
+  const isCurrentDay = chechIsCurrentDay(day)
+  const isFutureDay = chechIsFutureDay(day)
 
-    return isCurrentDay;
-  };
-
-  const users = useSelector(getUsersList())
-  const meetingTypes = useSelector(getMeetingTypesList())
+  const users = useSelector(getUsersList());
+  const meetingTypes = useSelector(getMeetingTypesList());
 
   const getManagerName = (id) => {
     const user = users?.find((user) => user._id === id);
     const result = `${user?.name.lastName} ${user?.name.firstName}`;
-    return result
-  }
-
-const getMeetingTypeName = (id) => {
-    const meetingType = meetingTypes?.find(
-      (type) => type?._id === id
-    );
-    const result = meetingType?.name; 
-  
     return result;
   };
-  
+
+  const getMeetingTypeName = (id) => {
+    const meetingType = meetingTypes?.find((type) => type?._id === id);
+    const result = meetingType?.name;
+
+    return result;
+  };
+
   return (
     <OneDayContainer
-      onClick={() => onClick(day)}
+      onClick={() => {
+        if (isCurrentDay || isFutureDay) {
+          onClick(day);
+        } else {
+          toast.error("Нельзя поставить задачу ранее текущей даты!");
+        }
+      }}
       sx={{
         backgroundColor: isWeekendColumn ? "#171e32" : "inherit",
+        borderColor: isCurrentDay
+          ? "yellow"
+          : isFutureDay
+          ? "green"
+          : "inherit",
+        border: isCurrentDay
+          ? "2px dotted white"
+          : isFutureDay
+          ? "1px solid white"
+          : "1px solid gray",
         "&:hover": {
-          borderColor: "yellow",
+          borderColor: isCurrentDay
+            ? "yellow"
+            : isFutureDay
+            ? "yellow"
+            : "red",
         },
       }}
     >
       <ContainerDate>
         <Date
           sx={{
-            backgroundColor: isCurrentDay() ? "yellow" : "inherit",
+            backgroundColor: isCurrentDay ? "yellow" : "inherit",
             color: isWeekendColumn
               ? "red"
-              : isCurrentDay()
+              : isCurrentDay
               ? "black"
-              : "inherit",
+              : isFutureDay
+              ? "white"
+              : "gray",
           }}
         >
           {day.format("DD")}
         </Date>
       </ContainerDate>
-      <Box sx={{display: 'flex', flexDirection: 'column', gap: '4px'}}>
-        {meeting?.map((meet) => (
-          <Box key={meet._id} sx={{ display: "flex", flexDirection: "column", background: 'blue' }}>
-            <Typography >Встреча в: {FormatTime(meet.time)}</Typography>
-            <Typography >{getMeetingTypeName(meet?.meetingType)}</Typography>
-            <Typography >{meet.location.city}, {meet.location.address}</Typography>
-            <Typography >{getManagerName(meet?.userId)}</Typography>
-          </Box>
-        ))}
-      </Box>
+      {meeting ? (
+        <Box sx={{ display: "flex", flexDirection: "column", gap: "4px" }}>
+          {meeting?.map((meet) => (
+            <Box
+              key={meet._id}
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                background: "blue",
+              }}
+            >
+              <Typography>Встреча в: {FormatTime(meet.time)}</Typography>
+              <Typography>{getMeetingTypeName(meet?.meetingType)}</Typography>
+              <Typography>
+                {meet.location.city}, {meet.location.address}
+              </Typography>
+              <Typography>{getManagerName(meet?.userId)}</Typography>
+            </Box>
+          ))}
+        </Box>
+      ) : (
+        <Loader />
+      )}
     </OneDayContainer>
   );
 };

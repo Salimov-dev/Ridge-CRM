@@ -7,8 +7,6 @@ import {
   estateTypeColumns,
   locationColumns,
 } from "../table/columns";
-import PageBackButton from "../../../common/buttons/page-back-button";
-import EditButton from "../../../common/buttons/edit-button";
 
 const Component = styled(Box)`
   display: flex;
@@ -27,7 +25,6 @@ const ObjectInfo = ({ object, isLoading }) => {
         items={[object]}
         itemsColumns={locationColumns}
         isLoading={isLoading}
-        isSorting={false}
         isPaginate={false}
       />
       <Typography variant="h3">Объект</Typography>
@@ -35,7 +32,6 @@ const ObjectInfo = ({ object, isLoading }) => {
         items={[object]}
         itemsColumns={estateTypeColumns}
         isLoading={isLoading}
-        isSorting={false}
         isPaginate={false}
       />
       <Typography variant="h3">Параметры</Typography>
@@ -43,7 +39,6 @@ const ObjectInfo = ({ object, isLoading }) => {
         items={[object]}
         itemsColumns={estateOptionsColumns}
         isLoading={isLoading}
-        isSorting={false}
         isPaginate={false}
       />
       <Typography variant="h3">Условия</Typography>
@@ -51,7 +46,6 @@ const ObjectInfo = ({ object, isLoading }) => {
         items={[object]}
         itemsColumns={commercialTermsColumns}
         isLoading={isLoading}
-        isSorting={false}
         isPaginate={false}
       />
       <Typography variant="h3">Контакты</Typography>
@@ -59,17 +53,11 @@ const ObjectInfo = ({ object, isLoading }) => {
         items={[object]}
         itemsColumns={contactsColumns}
         isLoading={isLoading}
-        isSorting={false}
         isPaginate={false}
       />
       <Typography variant="h3">Описание</Typography>
       <Box>
         {description ? object.description.fullDescription : "Нет описания"}
-      </Box>
-      <Box sx={{ display: "flex", justifyContent: "end", gap: "4px" }}>
-        <PageBackButton path="/objects" text="Объекты" />
-        <PageBackButton />
-        <EditButton path={`/objects/${object._id}/edit`} />
       </Box>
     </Component>
   );

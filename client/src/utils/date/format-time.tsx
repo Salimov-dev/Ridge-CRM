@@ -1,7 +1,5 @@
 import dayjs from "dayjs";
 
 export const FormatTime = (date) => {
-  return (
-   dayjs(date).format("HH:mm")
-  );
+  return dayjs(date).format("HH:mm");
 };

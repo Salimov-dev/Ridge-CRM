@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 // MUI
@@ -5,13 +6,11 @@ import { Box, styled } from "@mui/material";
 // components
 import Loader from "../../loader/loader";
 // yandex map
-import target from "../../../../assets/map/target.png";
+import targetDefault from "../../../../assets/map/target.png";
 import { Map, Placemark, Clusterer } from "@pbe/react-yandex-maps";
 import target_cluster from "../../../../assets/map/target_cluster.png";
 // styles
 import "./styles.css";
-import { FormatDate } from "../../../../utils/date/format-date";
-import dayjs from "dayjs";
 
 const MapContainer = styled(Box)`
   width: 100%;
@@ -30,6 +29,8 @@ const ItemsOnMap = ({
   mapZoom,
   isLoading,
   onClick,
+  target=targetDefault,
+  targetCluster=target_cluster
 }) => {
   const [activePortal, setActivePortal] = useState(false);
   const clustererInstanceRef = useRef(null);
@@ -71,7 +72,7 @@ const ItemsOnMap = ({
             options={{
               clusterIcons: [
                 {
-                  href: target_cluster,
+                  href: targetCluster,
                   size: [50, 50],
                   offset: [-25, -25],
                 },

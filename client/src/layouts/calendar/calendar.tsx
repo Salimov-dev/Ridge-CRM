@@ -1,25 +1,32 @@
 // libraries
-import { toast } from "react-toastify";
-import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { Box, Button, Dialog, DialogTitle, Typography } from "@mui/material";
-import LayoutTitle from "../../components/common/page-titles/layout-title";
-import getMonth from "../../utils/calendar/get-month";
-import Header from "./components/header/header";
-import Month from "./components/month/month";
-import { useEffect, useState } from "react";
+import dayjs from "dayjs";
+import { orderBy } from "lodash";
 import { useSelector } from "react-redux";
-import { getMonthIndexState } from "../../store/month-index.store";
-import DaysOfWeek from "./components/days-of-week/days-of-week";
-import { taskSchema } from "../../schemas/schemas";
-import { capitalizeFirstLetter } from "../../utils/data/capitalize-first-letter";
-import TaskForm from "../../components/common/forms/task-form/task-form";
-import DialogStyled from "../../components/common/dialog/dialog-styled";
+import { useForm } from "react-hook-form";
+import { useEffect, useState } from "react";
+import { yupResolver } from "@hookform/resolvers/yup";
+// components
+import { groupedColumns } from "./table/columns";
+import Header from "./components/header/header";
 import CreateTask from "./components/create-task/create-task";
+import DaysOfWeek from "./components/days-of-week/days-of-week";
+import DialogStyled from "../../components/common/dialog/dialog-styled";
+import CalendarBody from "./components/calendar-body/calendar-body";
+import LayoutTitle from "../../components/common/page-titles/layout-title";
+import CurrentWeeklyMeetings from "./components/current-weekly-meetings/current-weekly-meetings/current-weekly-meetings";
+// utils
+import getMonth from "../../utils/calendar/get-month";
+import { capitalizeFirstLetter } from "../../utils/data/capitalize-first-letter";
+// schema
+import { taskSchema } from "../../schemas/schemas";
+// store
+import { getMonthIndexState } from "../../store/month-index.store";
 import { getObjectsList } from "../../store/object/objects.store";
 import { getCurrentUserId } from "../../store/user/users.store";
-import dayjs from "dayjs";
+import {
+  getMeetingLoadingStatus,
+  getMeetingsList,
+} from "../../store/meeting/meetings.store";
 
 const initialState = {
   comment: "",
@@ -32,8 +39,26 @@ const Calendar = () => {
   const [openCreate, setOpenCreate] = useState(false);
   const [currentMonth, setCurrentMonth] = useState(getMonth());
   const monthIndex = useSelector(getMonthIndexState());
+  const columns = groupedColumns;
 
   const objects = useSelector(getObjectsList());
+  const meetings = useSelector(getMeetingsList());
+  const isMeetingsLoading = useSelector(getMeetingLoadingStatus());
+
+  const today = dayjs();
+  const startOfWeek = today.startOf("week");
+  const endOfWeek = today.endOf("week");
+
+  const currentWeeklyMeetings = meetings?.filter((meet) =>
+    dayjs(meet.date).isBetween(startOfWeek, endOfWeek, null, "[]")
+  );
+
+  const sortedCurrentWeeklyMeetings = orderBy(
+    currentWeeklyMeetings,
+    ["date"],
+    ["asc"]
+  );
+
   const currentUserId = useSelector(getCurrentUserId());
   const currentUserObjects = objects?.filter(
     (obj) => obj?.userId === currentUserId
@@ -59,14 +84,12 @@ const Calendar = () => {
 
   const data = watch();
   // console.log("data", data);
-
   const onSubmit = (data) => {
     const newData = {
       ...data,
       comment: capitalizeFirstLetter(data.comment),
     };
     // console.log("newData", newData);
-
     // dispatch(createMeeting(newData))
     // .then(onClose())
     // .then(toast.success("Встреча успешно создана!"));
@@ -94,14 +117,17 @@ const Calendar = () => {
   return (
     <>
       <LayoutTitle title="Календарь" />
-
-      <Box sx={{ display: "flex", flexDirection: "column" }}>
-        <Header onClick={handleOpenCreate} />
-        <DaysOfWeek />
-        <Box sx={{ display: "flex", flex: 1 }}>
-          <Month month={currentMonth} onClick={handleOpenCreate} />
-        </Box>
-      </Box>
+      <Header onClick={handleOpenCreate} />
+      <DaysOfWeek />
+      <CalendarBody
+        currentMonth={currentMonth}
+        onOpenCreate={handleOpenCreate}
+      />
+      <CurrentWeeklyMeetings
+        meetings={sortedCurrentWeeklyMeetings}
+        columns={columns}
+        isLoading={isMeetingsLoading}
+      />
 
       <DialogStyled
         onClose={handleCloseCreate}

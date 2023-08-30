@@ -10,10 +10,16 @@ import { groupedColumns } from "./table/columns";
 import FilterPanel from "./components/filter-panel";
 import BasicTable from "../../components/common/table/basic-table";
 import LayoutTitle from "../../components/common/page-titles/layout-title";
+import DialogStyled from "../../components/common/dialog/dialog-styled";
+import CreateMeeting from "../../components/pages/create-meeting/create-meeting";
+import UpdateMeeting from "../../components/pages/update-meeting/update-meeting";
 import ItemsOnMap from "../../components/common/map/items-on-map/items-on-map";
 import AddAndClearFiltersButton from "../../components/common/buttons/add-and-clear-filters-button";
 // hooks
 import useSearchMeeting from "../../hooks/use-search-meeting";
+// icons
+import target from "../../assets/map/target_meeting.png";
+import targetCluster from "../../assets/map/targeMeeting_cluster.png";
 // store
 import { getUsersList } from "../../store/user/users.store";
 import { getMeetingTypesList } from "../../store/meeting/meeting-types.store";
@@ -23,9 +29,6 @@ import {
   getMeetingLoadingStatus,
   getMeetingsList,
 } from "../../store/meeting/meetings.store";
-import CreateMeeting from "../../components/pages/create-meeting/create-meeting";
-import DialogStyled from "../../components/common/dialog/dialog-styled";
-import UpdateMeeting from "../../components/pages/update-meeting/update-meeting";
 import {
   loadUpdateMeetingOpenState,
   setUpdateMeetingOpenState,
@@ -49,7 +52,8 @@ const Meetings = () => {
   const statuses = useSelector(getMeetingStatusesList());
   const types = useSelector(getMeetingTypesList());
   const isOpenUpdate = useSelector(loadUpdateMeetingOpenState());
-
+  const center = [59.930320630519155, 30.32906024941998];
+  const mapZoom = 11;
   const columns = groupedColumns;
   const dispatch = useDispatch();
 
@@ -63,8 +67,6 @@ const Meetings = () => {
   });
 
   const data = watch();
-  const center = [59.930320630519155, 30.32906024941998];
-  const mapZoom = 11;
 
   const isInputEmpty = JSON.stringify(initialState) !== JSON.stringify(data);
 
@@ -72,6 +74,8 @@ const Meetings = () => {
     meetings,
     data,
   });
+
+  const sortedMeetings = orderBy(searchedMeetings, ["date"], ["asc"]);
 
   const getActualUsersList = () => {
     const filteredUsers = meetings?.map((meet) => meet?.userId);
@@ -180,6 +184,8 @@ const Meetings = () => {
         onClick={setSelectedBaloon}
         baloon={<Baloon meeting={selectedMeeting} />}
         isLoading={isLoading}
+        target={target}
+        targetCluster={targetCluster}
       />
 
       <FilterPanel
@@ -193,11 +199,9 @@ const Meetings = () => {
       />
 
       <BasicTable
-        items={searchedMeetings}
+        items={sortedMeetings}
         itemsColumns={columns}
         isLoading={isLoading}
-        sortingColumn="date"
-        desc={false}
       />
 
       <DialogStyled

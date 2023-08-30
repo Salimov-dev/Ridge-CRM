@@ -1,5 +1,4 @@
 // libraries
-import "dayjs/locale/ru";
 import dayjs from "dayjs";
 import { Box, styled } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";

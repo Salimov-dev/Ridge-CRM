@@ -3,7 +3,7 @@ import { Button } from "@mui/material";
 const CreateTaskButton = ({ onClick }) => {
   return (
     <Button variant="outlined" color="success" onClick={onClick}>
-      Создать событие
+      Поставить себе задачу
     </Button>
   );
 };

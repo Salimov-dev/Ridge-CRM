@@ -6,6 +6,7 @@ import Baloon from "./map/baloon";
 import Header from "./components/header";
 import Loader from "../../common/loader/loader";
 import ObjectInfo from "./components/object-info";
+import FooterButtons from "./components/footer-buttons";
 import ItemOnMap from "../../common/map/item-on-map/item-on-map";
 // store
 import {
@@ -39,6 +40,7 @@ const ObjectPage = () => {
       ) : (
         <Loader />
       )}
+      <FooterButtons objectId={objectId._id} />
     </Box>
   );
 };

@@ -22,17 +22,9 @@ import { tokens } from "../../../theme";
 
 const Component = styled(Box)`
   margin-bottom: 20px;
-`
+`;
 
-const BasicTable = ({
-  items,
-  itemsColumns,
-  isLoading,
-  isPaginate=true,
-  isSorting=true,
-  sortingColumn = "created_at",
-  desc=true
-}) => {
+const BasicTable = ({ items, itemsColumns, isLoading, isPaginate = true }) => {
   const [sorting, setSorting] = useState<SortingState>([]);
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -51,10 +43,6 @@ const BasicTable = ({
     getPaginationRowModel: getPaginationRowModel(),
   });
 
-  useEffect(() => {
-    isSorting && setSorting([{ id: sortingColumn, desc: desc }]);
-  }, []);
-
   return (
     <Component>
       <table>
@@ -63,7 +51,9 @@ const BasicTable = ({
       </table>
       {isLoading && <Loader />}
 
-      {isPaginate && <Pagination table={table} colors={colors} quantity={items?.length} />}
+      {isPaginate && (
+        <Pagination table={table} colors={colors} quantity={items?.length} />
+      )}
     </Component>
   );
 };
