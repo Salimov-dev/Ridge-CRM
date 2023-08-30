@@ -166,6 +166,7 @@ export const getUserNameById = (id) => (state) => {
 
     return result;
   }
+  return 
 };
 
 export const getUserDataById = (id) => (state) => {

@@ -27,15 +27,16 @@ const FieldsContainer = styled(Box)`
 
 const TaskForm = ({
   data,
+  objects,
   register,
   onSubmit,
   onClose,
   handleSubmit,
-  watch,
   errors,
   setValue,
   isValid,
 }) => {
+  
   return (
     <Form onSubmit={handleSubmit(onSubmit)} noValidate>
       <FieldsContainer>
@@ -50,21 +51,19 @@ const TaskForm = ({
         <TimePickerStyled
           register={register}
           data={data}
-          errors={errors?.time}
-          setValue={setValue}
           name="time"
           label="Время"
+          setValue={setValue}
+          errors={errors?.time}
         />
       </FieldsContainer>
 
       <SimpleSelectField
         register={register}
-        // itemsList={meetingTypes}
-        name="meetingType"
-        labelId="meetingType"
+        itemsList={objects}
+        name="objectId"
+        labelId="objectId"
         label="Объект"
-        // value={watchTypeMeeting}
-        errors={errors?.meetingType}
       />
       <TextFieldStyled
         register={register}

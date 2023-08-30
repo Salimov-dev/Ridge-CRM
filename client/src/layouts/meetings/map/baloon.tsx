@@ -43,7 +43,6 @@ const Baloon = ({ meeting }) => {
       <Attribute
         title="Время встречи:"
         subTitle={time}
-        withoutTypography={true}
       />
       <Attribute
         title="Адрес:"

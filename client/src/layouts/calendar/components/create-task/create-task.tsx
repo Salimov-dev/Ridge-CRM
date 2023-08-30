@@ -4,23 +4,24 @@ import TitleWithCloseButton from "../../../../components/common/page-titles/titl
 
 const CreateTask = ({
   data,
+  objects,
   register,
   onSubmit,
   handleSubmit,
-  watch,
   errors,
   setValue,
   onClose,
 }) => {
+  
   return (
     <Box>
       <TitleWithCloseButton title="Добавить задачу" onClose={onClose} />
       <TaskForm
         data={data}
+        objects={objects}
         register={register}
         onSubmit={onSubmit}
         handleSubmit={handleSubmit}
-        watch={watch}
         errors={errors}
         setValue={setValue}
         onClose={onClose}
