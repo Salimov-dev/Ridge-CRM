@@ -20,6 +20,9 @@ import { taskSchema } from "../../schemas/schemas";
 // store
 import { getMonthIndexState } from "../../store/month-index.store";
 import useCalendar from "../../hooks/use-calendar";
+import CreateMeeting from "../../components/pages/create-meeting/create-meeting";
+import CreateButtons from "./components/header/components/create-buttons";
+import { Box } from "@mui/material";
 
 const initialState = {
   comment: "",
@@ -32,6 +35,7 @@ const initialState = {
 const Calendar = () => {
   const [currentMonth, setCurrentMonth] = useState(getMonth());
   const [openCreateMyTask, setOpenCreateMyTask] = useState(false);
+  const [openCreateMeeting, setOpenCreateMeeting] = useState(false);
   const [openCreateManagerTask, setOpenCreateManagerTask] = useState(false);
   const monthIndex = useSelector(getMonthIndexState());
   const columns = groupedColumns;
@@ -59,7 +63,7 @@ const Calendar = () => {
     isMeetingsLoading,
     onSubmitMyTask,
     onSubmitManagerTask,
-    handleCloseCreate,
+    handleCloseCreateMyTask,
     handleCloseCreateManagerTask,
     handleopenCreateMyTaskMyTask,
     handleopenCreateMyTaskManagerTask,
@@ -75,18 +79,33 @@ const Calendar = () => {
     setCurrentMonth(getMonth(monthIndex));
   }, [monthIndex]);
 
+  const handleOpenCreateMeeting = () => {
+    setOpenCreateMeeting(true);
+  };
+
+  const handleCloseCreateMeeting = () => {
+    setOpenCreateMeeting(false);
+  };
   return (
     <>
       <LayoutTitle title="Календарь" />
       <Header
         onCreateMyTask={handleopenCreateMyTaskMyTask}
         onCreateManagerTask={handleopenCreateMyTaskManagerTask}
+        onCreateMeeting={handleOpenCreateMeeting}
       />
       <DaysOfWeek />
       <CalendarBody
         currentMonth={currentMonth}
         onOpenCreateMyTask={handleopenCreateMyTaskMyTask}
       />
+      <Box sx={{ display: "flex", justifyContent: "end" }}>
+        <CreateButtons
+          onCreateMeeting={handleOpenCreateMeeting}
+          onCreateMyTask={handleopenCreateMyTaskMyTask}
+          onCreateManagerTask={handleopenCreateMyTaskManagerTask}
+        />
+      </Box>
       <CurrentWeeklyMeetings
         meetings={meetings}
         columns={columns}
@@ -99,6 +118,11 @@ const Calendar = () => {
         isLoading={isMeetingsLoading}
       /> */}
 
+      <DialogStyled
+        component={<CreateMeeting onClose={handleCloseCreateMeeting} />}
+        onClose={handleCloseCreateMeeting}
+        open={openCreateMeeting}
+      />
       <DialogStyled
         onClose={handleCloseCreateManagerTask}
         open={openCreateManagerTask}
@@ -122,7 +146,7 @@ const Calendar = () => {
         }
       />
       <DialogStyled
-        onClose={handleCloseCreate}
+        onClose={handleCloseCreateMyTask}
         open={openCreateMyTask}
         maxWidth="sm"
         fullWidth={false}
@@ -136,7 +160,7 @@ const Calendar = () => {
             handleSubmit={handleSubmit}
             errors={errors}
             setValue={setValue}
-            onClose={handleCloseCreate}
+            onClose={handleCloseCreateMyTask}
             isValid={isFullValid}
           />
         }

@@ -71,7 +71,7 @@ const useCalendar = (
     setOpenCreateMyTask(true);
   };
 
-  const handleCloseCreate = () => {
+  const handleCloseCreateMyTask = () => {
     setOpenCreateMyTask(false);
     setValue("date", null);
     reset();
@@ -100,14 +100,14 @@ const useCalendar = (
       managerId: null,
     };
     dispatch(createTask(newData))
-      .then(handleCloseCreate())
+      .then(handleCloseCreateMyTask())
       .then(toast.success("Задача успешно создана!"));
   };
 
   return {
     onSubmitMyTask,
     onSubmitManagerTask,
-    handleCloseCreate,
+    handleCloseCreateMyTask,
     handleCloseCreateManagerTask,
     handleopenCreateMyTaskMyTask,
     handleopenCreateMyTaskManagerTask,
