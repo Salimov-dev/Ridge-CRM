@@ -1,9 +1,10 @@
 import { toast } from "react-toastify";
 import { Box, Typography, styled } from "@mui/material";
+// components
+import DayContent from "./components/day-content/day-content";
 // utils
 import { chechIsCurrentDay } from "../../../../utils/date/check-is-current-day";
 import { chechIsFutureDay } from "../../../../utils/date/check-is-future-day";
-import DayContent from "./components/day-content/day-content";
 
 const OneDayContainer = styled(Box)`
   display: flex;
@@ -31,7 +32,7 @@ const Date = styled(Typography)`
   width: 32px;
 `;
 
-const Day = ({ day, isWeekendColumn, onClick, meeting }) => {
+const Day = ({ day, isWeekendColumn, onClick, meeting, task }) => {
   const isCurrentDay = chechIsCurrentDay(day);
   const isFutureDay = chechIsFutureDay(day);
 
@@ -52,7 +53,7 @@ const Day = ({ day, isWeekendColumn, onClick, meeting }) => {
           ? "green"
           : "inherit",
         border: isCurrentDay
-          ? "2px dotted white"
+          ? "3px dashed yellow"
           : isFutureDay
           ? "1px solid white"
           : "1px solid gray",
@@ -77,7 +78,7 @@ const Day = ({ day, isWeekendColumn, onClick, meeting }) => {
           {day.format("DD")}
         </Date>
       </ContainerDate>
-      <DayContent meeting={meeting} day={day} />
+      <DayContent meeting={meeting} task={task} day={day} />
     </OneDayContainer>
   );
 };

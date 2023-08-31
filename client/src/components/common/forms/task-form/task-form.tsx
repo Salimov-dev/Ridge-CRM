@@ -86,7 +86,7 @@ const TaskForm = ({
       <FooterButtons
         //   isEditMode={isEditMode}
         //   isValid={!isValidAndHasAdress}
-        onClick={onClose}
+        onClose={onClose}
       />
     </Form>
   );

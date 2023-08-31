@@ -18,6 +18,7 @@ export const groupedColumns = [
   {
     accessorKey: "date",
     header: "Дата",
+    enableSorting: false,
     cell: (info) => {
       const date = info.getValue();
       const formattedDate = FormatDate(new Date(date)); // Предполагая, что у вас есть функция FormatDate
@@ -33,6 +34,7 @@ export const groupedColumns = [
   {
     accessorKey: "time",
     header: "Время",
+    enableSorting: false,
     cell: (info) => {
       const time = info.getValue();
       return FormatTime(new Date(time));

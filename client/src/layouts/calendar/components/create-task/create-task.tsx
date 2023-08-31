@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import TaskForm from "../../../../components/common/forms/task-form/task-form";
 import TitleWithCloseButton from "../../../../components/common/page-titles/title-with-close-button";
 
@@ -12,7 +12,6 @@ const CreateTask = ({
   setValue,
   onClose,
 }) => {
-  
   return (
     <Box>
       <TitleWithCloseButton title="Добавить задачу" onClose={onClose} />

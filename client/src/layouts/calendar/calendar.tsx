@@ -1,7 +1,8 @@
 // libraries
 import dayjs from "dayjs";
 import { orderBy } from "lodash";
-import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -27,6 +28,7 @@ import {
   getMeetingLoadingStatus,
   getMeetingsList,
 } from "../../store/meeting/meetings.store";
+import { createTask, getTasksList } from "../../store/task/tasks.store";
 
 const initialState = {
   comment: "",
@@ -40,6 +42,7 @@ const Calendar = () => {
   const [currentMonth, setCurrentMonth] = useState(getMonth());
   const monthIndex = useSelector(getMonthIndexState());
   const columns = groupedColumns;
+  const dispatch = useDispatch()
 
   const objects = useSelector(getObjectsList());
   const meetings = useSelector(getMeetingsList());
@@ -83,17 +86,6 @@ const Calendar = () => {
   });
 
   const data = watch();
-  // console.log("data", data);
-  const onSubmit = (data) => {
-    const newData = {
-      ...data,
-      comment: capitalizeFirstLetter(data.comment),
-    };
-    // console.log("newData", newData);
-    // dispatch(createMeeting(newData))
-    // .then(onClose())
-    // .then(toast.success("Встреча успешно создана!"));
-  };
 
   const handleOpenCreate = (day) => {
     const type = typeof day.date;
@@ -108,6 +100,16 @@ const Calendar = () => {
     setOpenCreate(false);
     setValue("date", null);
     reset();
+  };
+
+  const onSubmit = (data) => {
+    const newData = {
+      ...data,
+      comment: capitalizeFirstLetter(data.comment),
+    };
+    dispatch(createTask(newData))
+    .then(handleCloseCreate())
+    .then(toast.success("Задача успешно создана!"));
   };
 
   useEffect(() => {

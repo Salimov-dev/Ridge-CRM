@@ -98,11 +98,11 @@ export function createMeeting(payload) {
   };
 }
 
-export const updateMeeting = (payload, meetingId) => async (dispatch) => {
+export const updateMeeting = (payload) => async (dispatch) => {
   dispatch(meetingUpdateRequested());
   try {
     dispatch(meetingUpdateSuccessed(payload));
-    await meetingsService.update(payload, meetingId);
+    await meetingsService.update(payload);
   } catch (error) {
     dispatch(meetingUpdateFailed(error.message));
   }

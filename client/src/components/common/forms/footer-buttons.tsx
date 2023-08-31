@@ -7,7 +7,7 @@ const Component = styled(Box)`
   margin-top: 30px;
 `;
 
-const FooterButtons = ({ isEditMode, isValid, onClose, onClick }) => {
+const FooterButtons = ({ isEditMode, isValid, onClose }) => {
   return (
     <Component>
       <Button
@@ -23,7 +23,7 @@ const FooterButtons = ({ isEditMode, isValid, onClose, onClick }) => {
           type="button"
           variant="outlined"
           color="error"
-          onClick={onClose || onClick}
+          onClick={onClose}
         >
           Отмена
         </Button>

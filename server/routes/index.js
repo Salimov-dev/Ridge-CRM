@@ -23,6 +23,7 @@ import workingPositionRoutes from "./working-position.routes.js";
 import currentRenterRoutes from "./current-renter.routes.js";
 import rentTypeRoutes from "./rent-type.routes.js";
 import estateTypeRoutes from "./estate-type.routes.js";
+import tasks from "./tasks.routes.js";
 
 const router = express.Router({ mergeParams: true });
 
@@ -41,9 +42,11 @@ router.use("/objectType", objectTypeRoutes);
 router.use("/meetings", meetings);
 router.use("/meetingStatus", meetingStatus);
 router.use("/meetingType", meetingType);
+// tasks
+router.use("/tasks", tasks);
 // uploads
 router.use("/upload", uploadRoutes);
-// other 
+// other
 router.use("/districts", districtsRoutes);
 router.use("/metro", metroRoutes);
 router.use("/workingPosition", workingPositionRoutes);
