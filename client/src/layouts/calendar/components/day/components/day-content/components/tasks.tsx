@@ -43,29 +43,58 @@ const Tasks = ({ tasks, isCurrentDay, isFutureDay }) => {
     return result;
   };
 
-
   return tasks ? (
     <ItemsContainer>
       {tasks?.map((task) => (
         <ItemContainer
           key={task._id}
           sx={{
-            color: isCurrentDay ?  task.managerId ? "white" : "black" : isFutureDay ? task.managerId ? "white" : "black" : "white",
-            background: isCurrentDay
-              ? task.managerId ? "red" : "orange"
+            color: isCurrentDay
+              ? task.managerId
+                ? "white"
+                : "black"
               : isFutureDay
-              ? task.managerId ? "red" : "orange"
+              ? task.managerId
+                ? "white"
+                : "black"
+              : "white",
+            background: isCurrentDay
+              ? task.managerId
+                ? "red"
+                : "orange"
+              : isFutureDay
+              ? task.managerId
+                ? "red"
+                : "orange"
               : "gray",
           }}
         >
-          <Typography sx={{ textDecoration: "underline" }}>
-            Задача до: {task.time ? FormatTime(task.time) : "В течение дня"}
+          <Typography sx={{ fontSize:'15px', textDecoration: "underline" }}>
+            <b>
+              Задача до: {task.time ? FormatTime(task.time) : "В течение дня"}
+            </b>
           </Typography>
-          {task?.managerId ? <Typography>Менеджер: {getManagerName(task?.managerId)}</Typography> : null}
-          {task?.managerId ? <Typography>Куратор: {getCuratorName(task?.userId)}</Typography> : null}
-          {task?.managerId && <DividerStyled/>}
-          <Typography>Коммент: {task?.comment}</Typography>
-          {task?.objectId ? <Typography>Объект: {getObjectAddress(task?.objectId)}</Typography> : null}
+          {task?.managerId ? (
+            <Typography>
+              <b>Менеджер:</b> {getManagerName(task?.managerId)}
+            </Typography>
+          ) : null}
+          {task?.managerId ? (
+            <Typography>
+              <b>Куратор:</b> {getCuratorName(task?.userId)}
+            </Typography>
+          ) : null}
+          {task?.managerId && <DividerStyled />}
+          <Box sx={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+            <Typography>
+              <b>Задача:</b> {task?.comment}
+            </Typography>
+            {task?.objectId ? (
+              <Typography>
+                <b>Объект:</b> {getObjectAddress(task?.objectId)}
+              </Typography>
+            ) : null}
+          </Box>
         </ItemContainer>
       ))}
     </ItemsContainer>

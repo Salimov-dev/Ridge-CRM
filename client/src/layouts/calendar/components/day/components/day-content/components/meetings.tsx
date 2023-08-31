@@ -53,15 +53,15 @@ const Meetings = ({ meeting, isCurrentDay, isFutureDay }) => {
             background: isCurrentDay ? "blue" : isFutureDay ? "blue" : "gray",
           }}
         >
-          <Typography sx={{ textDecoration: "underline" }}>
-            Встреча в: {FormatTime(meet.time)}
+          <Typography sx={{ fontSize:'15px',textDecoration: "underline" }}>
+           <b>Встреча в: {FormatTime(meet.time)}</b> 
           </Typography>
           <Typography>{getMeetingStatusName(meet?.status)}</Typography>
           <Typography>{getMeetingTypeName(meet?.meetingType)}</Typography>
           <Typography>
             {meet.location.city}, {meet.location.address}
           </Typography>
-          <Typography>{getManagerName(meet?.userId)}</Typography>
+          <Typography sx={{fontStyle: 'italic'}}>{getManagerName(meet?.userId)}</Typography>
         </ItemContainer>
       ))}
     </ItemsContainer>
