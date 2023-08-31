@@ -36,7 +36,7 @@ const Month = ({ month, onClick }) => {
         flex: "1",
         display: "grid",
         gridTemplateColumns: "repeat(7, 1fr)",
-        gridTemplateRows: "repeat(5, 1fr)",
+        gridTemplateRows: "repeat(5, minmax(200px, auto))",
         border: "1px solid gray",
       }}
     >

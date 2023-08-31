@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, styled } from "@mui/material";
 // components
 import Meetings from "./components/meetings";
 import Tasks from "./components/tasks";
@@ -6,12 +6,19 @@ import Tasks from "./components/tasks";
 import { chechIsCurrentDay } from "../../../../../../utils/date/check-is-current-day";
 import { chechIsFutureDay } from "../../../../../../utils/date/check-is-future-day";
 
+const Components = styled(Box)`
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-bottom: 28px;
+`;
+
 const DayContent = ({ meeting, tasks, day }) => {
   const isCurrentDay = chechIsCurrentDay(day);
   const isFutureDay = chechIsFutureDay(day);
 
   return (
-    <Box sx={{ display: "flex", flexDirection: "column", gap: "4px" }}>
+    <Components>
       <Tasks
         tasks={tasks}
         isCurrentDay={isCurrentDay}
@@ -22,7 +29,7 @@ const DayContent = ({ meeting, tasks, day }) => {
         isCurrentDay={isCurrentDay}
         isFutureDay={isFutureDay}
       />
-    </Box>
+    </Components>
   );
 };
 
