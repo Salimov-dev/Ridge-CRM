@@ -1,12 +1,24 @@
+// libraries
+import dayjs from "dayjs";
+import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 // MUI
-import { Box, styled, InputAdornment } from "@mui/material";
 import CreateIcon from "@mui/icons-material/Create";
+import { Box, styled, InputAdornment } from "@mui/material";
 // components
 import TextFieldStyled from "../../inputs/text-field-styled";
 import SimpleSelectField from "../../inputs/simple-select-field";
 import DatePickerStyled from "../../inputs/date-picker";
 import TimePickerStyled from "../../inputs/time-picker";
 import FooterButtons from "../footer-buttons";
+// store
+import { createTask } from "../../../../store/task/tasks.store";
+// utils
+import { capitalizeFirstLetter } from "../../../../utils/data/capitalize-first-letter";
+// schema
+import { taskSchema } from "../../../../schemas/schemas";
 
 const Form = styled(`form`)({
   width: "500px",
@@ -25,23 +37,48 @@ const FieldsContainer = styled(Box)`
   gap: 4px;
 `;
 
-const TaskForm = ({
-  data,
+const initialState = {
+  comment: "",
+  date: dayjs(),
+  time: null,
+  objectId: "",
+  managerId: "",
+};
+
+const ManagerTaskForm = ({
   objects,
   users,
-  register,
-  onSubmit,
   onClose,
-  handleSubmit,
-  errors,
-  setValue,
-  isValid,
-  isManagerTask=false
 }) => {
+  const dispatch = useDispatch();
+
+  const {
+    register,
+    watch,
+    handleSubmit,
+    setValue,
+    formState: { errors, isValid },
+  } = useForm({
+    defaultValues: initialState,
+    mode: "onBlur",
+    resolver: yupResolver(taskSchema),
+  });
+  const data = watch();
+  const watchDate = watch("date", null);
+  const isFullValid = !watchDate || !isValid;
+
+  const onSubmitManagerTask = () => {
+    const newData = {
+      ...data,
+      comment: capitalizeFirstLetter(data.comment),
+    };
+    dispatch(createTask(newData))
+      .then(() => onClose())
+      .then(() => toast.success("Задача успешно создана!"));
+  };
 
   return (
-    
-    <Form onSubmit={handleSubmit(onSubmit)} noValidate>
+    <Form onSubmit={handleSubmit(onSubmitManagerTask)} noValidate>
       <FieldsContainer>
         <DatePickerStyled
           register={register}
@@ -68,13 +105,13 @@ const TaskForm = ({
         labelId="objectId"
         label="Объект"
       />
-      {isManagerTask ? <SimpleSelectField
+      <SimpleSelectField
         register={register}
         itemsList={users}
         name="managerId"
         labelId="managerId"
         label="Менеджер"
-      /> : null}
+      />
       <TextFieldStyled
         register={register}
         label="Комментарий"
@@ -95,11 +132,11 @@ const TaskForm = ({
 
       <FooterButtons
         //   isEditMode={isEditMode}
-          isValid={isValid}
+        isValid={isFullValid}
         onClose={onClose}
       />
     </Form>
   );
 };
 
-export default TaskForm;
+export default ManagerTaskForm;

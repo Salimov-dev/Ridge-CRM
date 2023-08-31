@@ -1,27 +1,20 @@
 import dayjs from "dayjs";
 import { orderBy } from "lodash";
-import { toast } from "react-toastify";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 // store
-import { createTask } from "../store/task/tasks.store";
 import { getObjectsList } from "../store/object/objects.store";
 import {
   getMeetingLoadingStatus,
   getMeetingsList,
 } from "../store/meeting/meetings.store";
 import { getCurrentUserId, getUsersList } from "../store/user/users.store";
-// utils
-import { capitalizeFirstLetter } from "../utils/data/capitalize-first-letter";
 
 const useCalendar = (
-  data,
   setOpenCreateManagerTask,
   setOpenCreateMyTask,
-  setValue,
-  reset
+  setDateCreateMyTask,
+  setOpenCreateMeeting
 ) => {
-  const dispatch = useDispatch();
-
   const objects = useSelector(getObjectsList());
   const meetings = useSelector(getMeetingsList());
   const isMeetingsLoading = useSelector(getMeetingLoadingStatus());
@@ -63,54 +56,47 @@ const useCalendar = (
     transformObjects?.push({ _id: obj._id, name: obj.location.address });
   });
 
-  const handleopenCreateMyTaskManagerTask = () => {
+  const handleOpenCreateMyTaskManagerTask = () => {
     setOpenCreateManagerTask(true);
+    setOpenCreateMyTask(false);
   };
 
-  const handleopenCreateMyTaskMyTask = () => {
+  const handleOpenCreateMyTask = (day) => {
+    const type = typeof day.date;
+    setDateCreateMyTask(dayjs());
     setOpenCreateMyTask(true);
+    setOpenCreateManagerTask(false);
+    if (type === "function") {
+      setDateCreateMyTask(day);
+    }
   };
 
   const handleCloseCreateMyTask = () => {
     setOpenCreateMyTask(false);
-    setValue("date", null);
-    reset();
+    setDateCreateMyTask(null);
+    setOpenCreateManagerTask(false);
   };
 
   const handleCloseCreateManagerTask = () => {
     setOpenCreateManagerTask(false);
-    setValue("date", null);
-    reset();
+    setOpenCreateMyTask(false);
   };
 
-  const onSubmitManagerTask = () => {
-    const newData = {
-      ...data,
-      comment: capitalizeFirstLetter(data.comment),
-    };
-    dispatch(createTask(newData))
-      .then(handleCloseCreateManagerTask())
-      .then(toast.success("Задача успешно создана!"));
+  const handleOpenCreateMeeting = () => {
+    setOpenCreateMeeting(true);
   };
 
-  const onSubmitMyTask = () => {
-    const newData = {
-      ...data,
-      comment: capitalizeFirstLetter(data.comment),
-      managerId: null,
-    };
-    dispatch(createTask(newData))
-      .then(handleCloseCreateMyTask())
-      .then(toast.success("Задача успешно создана!"));
+  const handleCloseCreateMeeting = () => {
+    setOpenCreateMeeting(false);
   };
 
   return {
-    onSubmitMyTask,
-    onSubmitManagerTask,
     handleCloseCreateMyTask,
     handleCloseCreateManagerTask,
-    handleopenCreateMyTaskMyTask,
-    handleopenCreateMyTaskManagerTask,
+    handleCloseCreateMeeting,
+    handleOpenCreateMyTask,
+    handleOpenCreateMyTaskManagerTask,
+    handleOpenCreateMeeting,
     isMeetingsLoading,
     meetings: sortedCurrentWeeklyMeetings,
     users: transformUsers,

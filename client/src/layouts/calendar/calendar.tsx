@@ -1,109 +1,76 @@
 // libraries
 import dayjs from "dayjs";
+import { Box } from "@mui/material";
 import { useSelector } from "react-redux";
-import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
-import { yupResolver } from "@hookform/resolvers/yup";
 // components
 import { groupedColumns } from "./table/columns";
 import Header from "./components/header/header";
-import CreateTask from "./components/create-task/create-task";
 import DaysOfWeek from "./components/days-of-week/days-of-week";
 import DialogStyled from "../../components/common/dialog/dialog-styled";
 import CalendarBody from "./components/calendar-body/calendar-body";
+import CreateButtons from "./components/header/components/create-buttons";
 import LayoutTitle from "../../components/common/page-titles/layout-title";
+import CreateMyTask from "./components/create-my-task/create-my-task";
+import CreateManagerTask from "./components/create-manager-task/create-manager-task";
+import CreateMeeting from "../../components/pages/create-meeting/create-meeting";
 import CurrentWeeklyMeetings from "./components/current-weekly-meetings/current-weekly-meetings";
 // utils
 import getMonth from "../../utils/calendar/get-month";
-// schema
-import { taskSchema } from "../../schemas/schemas";
 // store
 import { getMonthIndexState } from "../../store/month-index.store";
+// hooks
 import useCalendar from "../../hooks/use-calendar";
-import CreateMeeting from "../../components/pages/create-meeting/create-meeting";
-import CreateButtons from "./components/header/components/create-buttons";
-import { Box } from "@mui/material";
-
-const initialState = {
-  comment: "",
-  date: dayjs(),
-  time: null,
-  objectId: "",
-  managerId: "",
-};
 
 const Calendar = () => {
   const [currentMonth, setCurrentMonth] = useState(getMonth());
   const [openCreateMyTask, setOpenCreateMyTask] = useState(false);
-  const [openCreateMeeting, setOpenCreateMeeting] = useState(false);
+  const [dateCreateMyTask, setDateCreateMyTask] = useState(null);
   const [openCreateManagerTask, setOpenCreateManagerTask] = useState(false);
+  const [openCreateMeeting, setOpenCreateMeeting] = useState(false);
   const monthIndex = useSelector(getMonthIndexState());
   const columns = groupedColumns;
-
-  const {
-    register,
-    watch,
-    handleSubmit,
-    setValue,
-    reset,
-    formState: { errors, isValid },
-  } = useForm({
-    defaultValues: initialState,
-    mode: "onBlur",
-    resolver: yupResolver(taskSchema),
-  });
-  const data = watch();
-  const watchDate = watch("date", null);
-  const isFullValid = !watchDate || !isValid;
 
   const {
     meetings,
     users,
     objects,
     isMeetingsLoading,
-    onSubmitMyTask,
-    onSubmitManagerTask,
     handleCloseCreateMyTask,
     handleCloseCreateManagerTask,
-    handleopenCreateMyTaskMyTask,
-    handleopenCreateMyTaskManagerTask,
+    handleCloseCreateMeeting,
+    handleOpenCreateMyTask,
+    handleOpenCreateMyTaskManagerTask,
+    handleOpenCreateMeeting,
   } = useCalendar(
-    data,
     setOpenCreateManagerTask,
     setOpenCreateMyTask,
-    setValue,
-    reset
+    setDateCreateMyTask,
+    setOpenCreateMeeting
   );
 
   useEffect(() => {
     setCurrentMonth(getMonth(monthIndex));
   }, [monthIndex]);
 
-  const handleOpenCreateMeeting = () => {
-    setOpenCreateMeeting(true);
-  };
-
-  const handleCloseCreateMeeting = () => {
-    setOpenCreateMeeting(false);
-  };
   return (
     <>
       <LayoutTitle title="Календарь" />
       <Header
-        onCreateMyTask={handleopenCreateMyTaskMyTask}
-        onCreateManagerTask={handleopenCreateMyTaskManagerTask}
+        onCreateMyTask={handleOpenCreateMyTask}
+        onCreateManagerTask={handleOpenCreateMyTaskManagerTask}
         onCreateMeeting={handleOpenCreateMeeting}
       />
       <DaysOfWeek />
       <CalendarBody
         currentMonth={currentMonth}
-        onOpenCreateMyTask={handleopenCreateMyTaskMyTask}
+        onOpenCreateMyTask={handleOpenCreateMyTask}
       />
       <Box sx={{ display: "flex", justifyContent: "end" }}>
         <CreateButtons
           onCreateMeeting={handleOpenCreateMeeting}
-          onCreateMyTask={handleopenCreateMyTaskMyTask}
-          onCreateManagerTask={handleopenCreateMyTaskManagerTask}
+          onCreateMyTask={handleOpenCreateMyTask}
+          onCreateManagerTask={handleOpenCreateMyTaskManagerTask}
         />
       </Box>
       <CurrentWeeklyMeetings
@@ -123,25 +90,18 @@ const Calendar = () => {
         onClose={handleCloseCreateMeeting}
         open={openCreateMeeting}
       />
+
       <DialogStyled
         onClose={handleCloseCreateManagerTask}
         open={openCreateManagerTask}
         maxWidth="sm"
         fullWidth={false}
         component={
-          <CreateTask
-            data={data}
+          <CreateManagerTask
             title="Добавить менеджеру задачу"
             objects={objects}
             users={users}
-            register={register}
-            onSubmit={onSubmitManagerTask}
-            handleSubmit={handleSubmit}
-            errors={errors}
-            setValue={setValue}
             onClose={handleCloseCreateManagerTask}
-            isValid={isFullValid}
-            isManagerTask={true}
           />
         }
       />
@@ -151,17 +111,11 @@ const Calendar = () => {
         maxWidth="sm"
         fullWidth={false}
         component={
-          <CreateTask
-            data={data}
+          <CreateMyTask
             title="Добавить себе задачу"
             objects={objects}
-            register={register}
-            onSubmit={onSubmitMyTask}
-            handleSubmit={handleSubmit}
-            errors={errors}
-            setValue={setValue}
+            date={dateCreateMyTask}
             onClose={handleCloseCreateMyTask}
-            isValid={isFullValid}
           />
         }
       />

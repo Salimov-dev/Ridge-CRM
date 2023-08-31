@@ -29,7 +29,7 @@ const TextFieldStyled = ({
   value,
   InputProps,
   inputProps,
-  type,
+  type='text',
   rows = "1",
   onInputQuantities,
   valueAsNumber = false,
