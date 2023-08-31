@@ -6,6 +6,7 @@ const schema = new Schema(
     time: String,
     objectId: String,
     comment: String,
+    managerId: String,
     userId: { type: Schema.Types.ObjectId, ref: "User" },
     company: { type: Schema.Types.ObjectId, ref: "Company" },
   },

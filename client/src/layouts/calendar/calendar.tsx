@@ -23,26 +23,31 @@ import { taskSchema } from "../../schemas/schemas";
 // store
 import { getMonthIndexState } from "../../store/month-index.store";
 import { getObjectsList } from "../../store/object/objects.store";
-import { getCurrentUserId } from "../../store/user/users.store";
+import { getCurrentUserId, getUsersList } from "../../store/user/users.store";
 import {
   getMeetingLoadingStatus,
   getMeetingsList,
 } from "../../store/meeting/meetings.store";
 import { createTask, getTasksList } from "../../store/task/tasks.store";
+import CurrentWeeklyMyTasks from "./components/current-weekly-my-tasks/current-weekly-my-tasks";
+import { Box } from "@mui/material";
+import useCalendar from "../../hooks/use-calendar";
 
 const initialState = {
   comment: "",
   date: dayjs(),
   time: null,
   objectId: "",
+  managerId: "",
 };
 
 const Calendar = () => {
-  const [openCreate, setOpenCreate] = useState(false);
+  const [openCreateMyTask, setOpenCreateMyTask] = useState(false);
+  const [openCreateManagerTask, setOpenCreateManagerTask] = useState(false);
   const [currentMonth, setCurrentMonth] = useState(getMonth());
   const monthIndex = useSelector(getMonthIndexState());
   const columns = groupedColumns;
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const objects = useSelector(getObjectsList());
   const meetings = useSelector(getMeetingsList());
@@ -62,7 +67,20 @@ const Calendar = () => {
     ["asc"]
   );
 
+  const users = useSelector(getUsersList());
   const currentUserId = useSelector(getCurrentUserId());
+  const usersWithoutCurrentUser = users.filter(
+    (user) => user._id !== currentUserId
+  );
+
+  let transformUsers = [];
+  usersWithoutCurrentUser?.forEach((user) => {
+    transformUsers?.push({
+      _id: user._id,
+      name: `${user.name.lastName} ${user.name.firstName}`,
+    });
+  });
+
   const currentUserObjects = objects?.filter(
     (obj) => obj?.userId === currentUserId
   );
@@ -84,33 +102,25 @@ const Calendar = () => {
     mode: "onBlur",
     resolver: yupResolver(taskSchema),
   });
+  const watchDate = watch("date", null);
+  const isFullValid = !watchDate || !isValid;
 
   const data = watch();
 
-  const handleOpenCreate = (day) => {
-    const type = typeof day.date;
-
-    setOpenCreate(true);
-    if (type === "function") {
-      setValue("date", day);
-    }
-  };
-
-  const handleCloseCreate = () => {
-    setOpenCreate(false);
-    setValue("date", null);
-    reset();
-  };
-
-  const onSubmit = (data) => {
-    const newData = {
-      ...data,
-      comment: capitalizeFirstLetter(data.comment),
-    };
-    dispatch(createTask(newData))
-    .then(handleCloseCreate())
-    .then(toast.success("Задача успешно создана!"));
-  };
+  const {
+    onSubmitMyTask,
+    onSubmitManagerTask,
+    handleCloseCreate,
+    handleCloseCreateManagerTask,
+    handleopenCreateMyTaskMyTask,
+    handleopenCreateMyTaskManagerTask,
+  } = useCalendar(
+    data,
+    setOpenCreateManagerTask,
+    setOpenCreateMyTask,
+    setValue,
+    reset
+  );
 
   useEffect(() => {
     setCurrentMonth(getMonth(monthIndex));
@@ -119,11 +129,14 @@ const Calendar = () => {
   return (
     <>
       <LayoutTitle title="Календарь" />
-      <Header onClick={handleOpenCreate} />
+      <Header
+        onCreateMyTask={handleopenCreateMyTaskMyTask}
+        onCreateManagerTask={handleopenCreateMyTaskManagerTask}
+      />
       <DaysOfWeek />
       <CalendarBody
         currentMonth={currentMonth}
-        onOpenCreate={handleOpenCreate}
+        onOpenCreateMyTask={handleopenCreateMyTaskMyTask}
       />
       <CurrentWeeklyMeetings
         meetings={sortedCurrentWeeklyMeetings}
@@ -131,21 +144,51 @@ const Calendar = () => {
         isLoading={isMeetingsLoading}
       />
 
+      {/* <CurrentWeeklyMyTasks
+        meetings={sortedCurrentWeeklyMeetings}
+        columns={columns}
+        isLoading={isMeetingsLoading}
+      /> */}
+
       <DialogStyled
-        onClose={handleCloseCreate}
-        open={openCreate}
+        onClose={handleCloseCreateManagerTask}
+        open={openCreateManagerTask}
         maxWidth="sm"
         fullWidth={false}
         component={
           <CreateTask
             data={data}
+            title="Добавить менеджеру задачу"
+            objects={transformObjects}
+            users={transformUsers}
+            register={register}
+            onSubmit={onSubmitManagerTask}
+            handleSubmit={handleSubmit}
+            errors={errors}
+            setValue={setValue}
+            onClose={handleCloseCreateManagerTask}
+            isValid={isFullValid}
+            isManagerTask={true}
+          />
+        }
+      />
+      <DialogStyled
+        onClose={handleCloseCreate}
+        open={openCreateMyTask}
+        maxWidth="sm"
+        fullWidth={false}
+        component={
+          <CreateTask
+            data={data}
+            title="Добавить себе задачу"
             objects={transformObjects}
             register={register}
-            onSubmit={onSubmit}
+            onSubmit={onSubmitMyTask}
             handleSubmit={handleSubmit}
             errors={errors}
             setValue={setValue}
             onClose={handleCloseCreate}
+            isValid={isFullValid}
           />
         }
       />

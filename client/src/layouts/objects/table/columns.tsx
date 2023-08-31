@@ -120,13 +120,7 @@ export const groupedColumns = [
           const handleClick = () => {
             navigate(objectId);
           };
-          return (
-            <TableOpenButton
-              id={objectId}
-              text="Открыть"
-              onClick={handleClick}
-            />
-          );
+          return <TableOpenButton text="Открыть" onClick={handleClick} />;
         },
       },
     ],

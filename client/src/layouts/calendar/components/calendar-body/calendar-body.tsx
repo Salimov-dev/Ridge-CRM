@@ -7,10 +7,10 @@ const Component = styled(Box)`
   margin-bottom: 20px;
 `;
 
-const CalendarBody = ({ currentMonth, onOpenCreate }) => {
+const CalendarBody = ({ currentMonth, onOpenCreateMyTask }) => {
   return (
     <Component>
-      <Month month={currentMonth} onClick={onOpenCreate} />
+      <Month month={currentMonth} onClick={onOpenCreateMyTask} />
     </Component>
   );
 };

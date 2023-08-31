@@ -25,7 +25,7 @@ const Form = styled(`form`)({
   gap: "4px",
 });
 
-const FilterPanel = ({ setValue, objects, data, register, isLoading}) => {
+const FilterPanel = ({ setValue, objects, data, register, isLoading }) => {
   const users = useSelector(getUsersList());
   const objectStatuses = useSelector(getObjectsStatusList());
   const objectTypes = useSelector(getObjectTypesList());

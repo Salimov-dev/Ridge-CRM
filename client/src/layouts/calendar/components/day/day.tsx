@@ -32,7 +32,7 @@ const Date = styled(Typography)`
   width: 32px;
 `;
 
-const Day = ({ day, isWeekendColumn, onClick, meeting, task }) => {
+const Day = ({ day, isWeekendColumn, onClick, meeting, tasks }) => {
   const isCurrentDay = chechIsCurrentDay(day);
   const isFutureDay = chechIsFutureDay(day);
 
@@ -78,7 +78,7 @@ const Day = ({ day, isWeekendColumn, onClick, meeting, task }) => {
           {day.format("DD")}
         </Date>
       </ContainerDate>
-      <DayContent meeting={meeting} task={task} day={day} />
+      <DayContent meeting={meeting} tasks={tasks} day={day} />
     </OneDayContainer>
   );
 };

@@ -15,12 +15,23 @@ const Component = styled(Box)`
   justify-content: space-between;
 `;
 
-const Header = ({ onClick }) => {
+const Header = ({ onCreateMyTask, onCreateManagerTask }) => {
   const monthIndex = useSelector(getMonthIndexState());
 
   return (
     <Component>
-      <CreateTaskButton onClick={onClick} />
+      <Box sx={{ display: "flex", gap: "4px" }}>
+        <CreateTaskButton
+          onClick={onCreateMyTask}
+          title="Поставить себе задачу"
+          color="success"
+        />
+        <CreateTaskButton
+          onClick={onCreateManagerTask}
+          title="Поставить менеджеру задачу"
+          color="secondary"
+        />
+      </Box>
       <MonthToday monthIndex={monthIndex} />
       <ControlButtons />
     </Component>

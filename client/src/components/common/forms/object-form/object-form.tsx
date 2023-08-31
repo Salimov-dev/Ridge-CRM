@@ -223,7 +223,6 @@ const ObjectForm = ({
                   <InputAdornment position="end">м²</InputAdornment>
                 ),
               }}
-              inputProps={{ maxLength: 3 }}
             />
             <TextFieldStyled
               register={register}
@@ -286,7 +285,6 @@ const ObjectForm = ({
               onInputQuantities={8}
               value={data?.commercialTerms?.securityDeposit}
               InputProps={{
-                maxLength: 7,
                 endAdornment: <InputAdornment position="end">₽</InputAdornment>,
               }}
             />
@@ -296,10 +294,9 @@ const ObjectForm = ({
               type="number"
               name="commercialTerms.agentComission"
               valueAsNumber={true}
-              onInputQuantities={8}
+              onInputQuantities={3}
               value={data?.commercialTerms?.agentComission}
               InputProps={{
-                maxLength: 7,
                 endAdornment: <InputAdornment position="end">%</InputAdornment>,
               }}
             />
@@ -346,7 +343,6 @@ const ObjectForm = ({
               onInputQuantities={4}
               value={data?.estateOptions?.electricityKw}
               InputProps={{
-                maxLength: 7,
                 endAdornment: (
                   <InputAdornment position="end">
                     <ElectricBoltIcon />
@@ -406,7 +402,6 @@ const ObjectForm = ({
               onInputQuantities={4}
               value={data?.estateOptions?.parkingQuantity}
               InputProps={{
-                maxLength: 7,
                 endAdornment: (
                   <InputAdornment position="end">
                     <DirectionsCarIcon />
@@ -437,9 +432,9 @@ const ObjectForm = ({
           register={register}
           label="Опишите объект"
           name="description.fullDescription"
+          value={data?.description?.fullDescription}
           rows="8"
           multiline={true}
-          value={data?.description?.fullDescription}
           errors={errors?.description?.fullDescription}
           onInputQuantities={20000}
         />

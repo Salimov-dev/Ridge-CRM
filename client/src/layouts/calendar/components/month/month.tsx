@@ -49,7 +49,7 @@ const Month = ({ month, onClick }) => {
               onClick={onClick}
               isWeekendColumn={idx === 5 || idx === 6}
               meeting={getMeeting(day)}
-              task={getTask(day)}
+              tasks={getTask(day)}
             />
           ))}
         </React.Fragment>

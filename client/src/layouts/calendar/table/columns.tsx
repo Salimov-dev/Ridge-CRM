@@ -21,8 +21,8 @@ export const groupedColumns = [
     enableSorting: false,
     cell: (info) => {
       const date = info.getValue();
-      const formattedDate = FormatDate(new Date(date)); // Предполагая, что у вас есть функция FormatDate
-      const dayOfWeek = dayjs(date).locale("ru").format("dd"); // Получаем сокращенное имя дня недели
+      const formattedDate = FormatDate(new Date(date));
+      const dayOfWeek = dayjs(date).locale("ru").format("dd");
       return (
         <Box sx={{ display: "flex", gap: "6px" }}>
           <Typography>{formattedDate}</Typography>
@@ -37,7 +37,11 @@ export const groupedColumns = [
     enableSorting: false,
     cell: (info) => {
       const time = info.getValue();
-      return FormatTime(new Date(time));
+      return (
+        <Typography sx={{ textAlign: "center" }}>
+          {FormatTime(new Date(time))}
+        </Typography>
+      );
     },
   },
   {
@@ -58,7 +62,7 @@ export const groupedColumns = [
     cell: (info) => {
       const type = info.getValue();
       const name = useSelector(getMeetingTypeNameById(type));
-      return name;
+      return <Typography sx={{ textAlign: "center" }}>{name}</Typography>;
     },
   },
   {
@@ -99,7 +103,7 @@ export const groupedColumns = [
     cell: (info) => {
       const status = info.getValue();
       const name = useSelector(getMeetingStatusNameById(status));
-      return name;
+      return <Typography sx={{ textAlign: "center" }}>{name}</Typography>;
     },
   },
 
@@ -126,7 +130,11 @@ export const groupedColumns = [
     header: "Дата создания",
     cell: (info) => {
       const date = info.getValue();
-      return FormatDate(new Date(date));
+      return (
+        <Typography sx={{ textAlign: "center" }}>
+          {FormatDate(new Date(date))}
+        </Typography>
+      );
     },
   },
 ];

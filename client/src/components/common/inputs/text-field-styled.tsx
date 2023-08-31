@@ -38,8 +38,8 @@ const TextFieldStyled = ({
   isHelperText = false,
   helperText,
 }) => {
-  const handleInputCrop = (e, num) => {
-    const maxLength = num;
+  const handleInput = (e) => {
+    const maxLength = onInputQuantities
     if (e.target.value.length > maxLength) {
       e.target.value = e.target.value.slice(0, maxLength);
     }
@@ -63,7 +63,7 @@ const TextFieldStyled = ({
         error={!!errors}
         helperText={errors?.message}
         disabled={disabled}
-        onInput={(e) => handleInputCrop(e, onInputQuantities)}
+        onInput={(e) => handleInput(e)}
       />
       {isHelperText ? <FormHelperText>{helperText}</FormHelperText> : null}
     </Box>

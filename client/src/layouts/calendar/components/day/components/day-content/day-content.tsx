@@ -6,14 +6,14 @@ import Tasks from "./components/tasks";
 import { chechIsCurrentDay } from "../../../../../../utils/date/check-is-current-day";
 import { chechIsFutureDay } from "../../../../../../utils/date/check-is-future-day";
 
-const DayContent = ({ meeting, task, day }) => {
+const DayContent = ({ meeting, tasks, day }) => {
   const isCurrentDay = chechIsCurrentDay(day);
   const isFutureDay = chechIsFutureDay(day);
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column", gap: "4px" }}>
       <Tasks
-        task={task}
+        tasks={tasks}
         isCurrentDay={isCurrentDay}
         isFutureDay={isFutureDay}
       />

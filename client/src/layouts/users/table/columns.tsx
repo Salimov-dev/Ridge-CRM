@@ -13,7 +13,11 @@ import { getUserNameById } from "../../../store/user/users.store";
 import { getUserStatusNameById } from "../../../store/user/user-statuses.store";
 // utils
 import { FormatDate } from "../../../utils/date/format-date";
-import { setUpdateManagerId, setUpdateManagerOpenState } from "../../../store/user/update-manager.store";
+import {
+  setUpdateManagerId,
+  setUpdateManagerOpenState,
+} from "../../../store/user/update-manager.store";
+import { Typography } from "@mui/material";
 
 export const groupedColumns = [
   {
@@ -40,7 +44,9 @@ export const groupedColumns = [
         header: "Фамилия",
         cell: (info) => {
           const lastName = info.getValue();
-          return lastName;
+          return (
+            <Typography sx={{ textAlign: "center" }}>{lastName}</Typography>
+          );
         },
       },
       {
@@ -48,7 +54,9 @@ export const groupedColumns = [
         header: "Имя",
         cell: (info) => {
           const firstName = info.getValue();
-          return firstName;
+          return (
+            <Typography sx={{ textAlign: "center" }}>{firstName}</Typography>
+          );
         },
       },
       {
@@ -56,7 +64,9 @@ export const groupedColumns = [
         header: "Отчество",
         cell: (info) => {
           const surName = info.getValue();
-          return surName;
+          return (
+            <Typography sx={{ textAlign: "center" }}>{surName}</Typography>
+          );
         },
       },
       {
@@ -64,7 +74,11 @@ export const groupedColumns = [
         header: "Пол",
         cell: (info) => {
           const gender = info.getValue();
-          return gendersArray.find((gen) => gen._id === gender).name;
+          return (
+            <Typography sx={{ textAlign: "center" }}>
+              {gendersArray.find((gen) => gen._id === gender).name}
+            </Typography>
+          );
         },
       },
       {
@@ -72,7 +86,11 @@ export const groupedColumns = [
         header: "ДР",
         cell: (info) => {
           const birthday = info.getValue();
-          return FormatDate(new Date(birthday));
+          return (
+            <Typography sx={{ textAlign: "center" }}>
+              {FormatDate(new Date(birthday))}
+            </Typography>
+          );
         },
       },
     ],
@@ -85,7 +103,11 @@ export const groupedColumns = [
         header: "Телефон",
         cell: (info) => {
           const phone = info.getValue();
-          return FormatPhone(phone);
+          return (
+            <Typography sx={{ textAlign: "center" }}>
+              {FormatPhone(phone)}
+            </Typography>
+          );
         },
       },
       {
@@ -93,7 +115,7 @@ export const groupedColumns = [
         header: "Email",
         cell: (info) => {
           const email = info.getValue();
-          return email;
+          return <Typography sx={{ textAlign: "center" }}>{email}</Typography>;
         },
       },
     ],
@@ -106,7 +128,11 @@ export const groupedColumns = [
         header: "Куратор",
         cell: (info) => {
           const curatorId = info.getValue();
-          return useSelector(getUserNameById(curatorId));
+          return (
+            <Typography sx={{ textAlign: "center" }}>
+              {useSelector(getUserNameById(curatorId))}
+            </Typography>
+          );
         },
       },
       {
@@ -114,7 +140,11 @@ export const groupedColumns = [
         header: "Статус",
         cell: (info) => {
           const status = info.getValue();
-          return useSelector(getUserStatusNameById(status));
+          return (
+            <Typography sx={{ textAlign: "center" }}>
+              {useSelector(getUserStatusNameById(status))}
+            </Typography>
+          );
         },
       },
     ],
@@ -127,7 +157,11 @@ export const groupedColumns = [
         header: "От",
         cell: (info) => {
           const startDate = info.getValue();
-          return FormatDate(new Date(startDate));
+          return (
+            <Typography sx={{ textAlign: "center" }}>
+              {FormatDate(new Date(startDate))}
+            </Typography>
+          );
         },
       },
       {
@@ -135,7 +169,11 @@ export const groupedColumns = [
         header: "До",
         cell: (info) => {
           const endDate = info.getValue();
-          return FormatDate(new Date(endDate));
+          return (
+            <Typography sx={{ textAlign: "center" }}>
+              {FormatDate(new Date(endDate))}
+            </Typography>
+          );
         },
       },
       {
@@ -143,7 +181,11 @@ export const groupedColumns = [
         header: "ИС",
         cell: (info) => {
           const trialPeriod = info.getValue();
-          return trialPeriod ? FormatDate(new Date(trialPeriod)) : "";
+          return (
+            <Typography sx={{ textAlign: "center" }}>
+              {trialPeriod ? FormatDate(new Date(trialPeriod)) : ""}
+            </Typography>
+          );
         },
       },
     ],
@@ -159,9 +201,7 @@ export const groupedColumns = [
         dispatch(setUpdateManagerId(userId));
         dispatch(setUpdateManagerOpenState(true));
       };
-      return (
-        <TableOpenButton id={userId} text="Править" onClick={handleClick}  />
-      );
+      return <TableOpenButton text="Править" onClick={handleClick} />;
     },
   },
 ];

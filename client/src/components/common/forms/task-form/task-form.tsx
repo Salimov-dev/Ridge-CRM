@@ -28,6 +28,7 @@ const FieldsContainer = styled(Box)`
 const TaskForm = ({
   data,
   objects,
+  users,
   register,
   onSubmit,
   onClose,
@@ -35,9 +36,11 @@ const TaskForm = ({
   errors,
   setValue,
   isValid,
+  isManagerTask=false
 }) => {
-  
+
   return (
+    
     <Form onSubmit={handleSubmit(onSubmit)} noValidate>
       <FieldsContainer>
         <DatePickerStyled
@@ -65,15 +68,22 @@ const TaskForm = ({
         labelId="objectId"
         label="Объект"
       />
+      {isManagerTask ? <SimpleSelectField
+        register={register}
+        itemsList={users}
+        name="managerId"
+        labelId="managerId"
+        label="Менеджер"
+      /> : null}
       <TextFieldStyled
         register={register}
         label="Комментарий"
         name="comment"
-        errors={errors?.comment}
         value={data?.comment}
-        onInputQuantities={50}
         rows="3"
         multiline={true}
+        errors={errors?.comment}
+        onInputQuantities={100}
         InputProps={{
           endAdornment: (
             <InputAdornment position="end">
@@ -85,7 +95,7 @@ const TaskForm = ({
 
       <FooterButtons
         //   isEditMode={isEditMode}
-        //   isValid={!isValidAndHasAdress}
+          isValid={isValid}
         onClose={onClose}
       />
     </Form>
