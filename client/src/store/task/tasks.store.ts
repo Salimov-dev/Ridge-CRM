@@ -1,4 +1,4 @@
-import { createAction, createSlice } from "@reduxjs/toolkit";
+import { createAction, createSelector, createSlice } from "@reduxjs/toolkit";
 import isOutDated from "../../utils/auth/is-out-date";
 import localStorageService from "../../services/user/local.storage-service";
 import tasksService from "../../services/tasks/tasks.service";
@@ -119,6 +119,12 @@ export const removeTask = (taskId) => async (dispatch) => {
   }
 };
 export const getTasksList = () => (state) => state?.tasks?.entities;
+
+export const getObjectTasksList = (objectId) =>
+  createSelector(
+    (state) => state?.tasks?.entities,
+    (tasks) => tasks?.filter((task) => task?.objectId === objectId)
+  );
 
 export const getTaskLoadingStatus = () => (state) => state.tasks.isLoading;
 

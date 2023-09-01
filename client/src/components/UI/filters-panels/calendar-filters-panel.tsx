@@ -1,4 +1,3 @@
-i; // components
 import SearchField from "../../common/inputs/search-field";
 import SimpleSelectField from "../../common/inputs/simple-select-field";
 import SearchSwitch from "../../common/inputs/search-switch";

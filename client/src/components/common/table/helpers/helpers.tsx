@@ -26,11 +26,7 @@ export const FormatManagerName = (id) => {
 };
 
 export const FormatPhone = (num) => {
-  return (
-    <Box sx={{ whiteSpace: "nowrap" }}>
-      <Typography>{enterPhoneFormat(num)}</Typography>{" "}
-    </Box>
-  );
+  return enterPhoneFormat(num);
 };
 
 export const FormatDistrict = (id) => {

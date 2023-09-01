@@ -5,12 +5,10 @@ import { FormatManagerName } from "../components/common/table/helpers/helpers";
 import TableOpenButton from "../components/common/buttons/table-open-button";
 // store
 import { getObjectById } from "../store/object/objects.store";
-import { getMeetingStatusNameById } from "../store/meeting/meeting-status.store";
-import { getMeetingTypeNameById } from "../store/meeting/meeting-types.store";
 // utils
 import { FormatDate } from "../utils/date/format-date";
 import { FormatTime } from "../utils/date/format-time";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import dayjs from "dayjs";
 import "dayjs/locale/ru";
 import GoToButton from "../components/common/buttons/go-to-button";
@@ -54,6 +52,9 @@ export const tasksColumns = [
       const result = `${object?.location.city}, ${object?.location.address}`;
       const navigate = useNavigate();
 
+      const paramsId = useParams();
+      const isParamsId = Boolean(Object.keys(paramsId).length);
+
       const handleClick = () => {
         navigate(`/objects/${objectId}`);
       };
@@ -67,7 +68,9 @@ export const tasksColumns = [
           }}
         >
           {result}
-          <GoToButton text="Перейти" color="neutral" onClick={handleClick} />
+          {!isParamsId ? (
+            <GoToButton text="Перейти" color="neutral" onClick={handleClick} />
+          ) : null}
         </Box>
       ) : (
         "-"

@@ -16,7 +16,7 @@ import Presentations from "./layouts/presentations/presentations";
 import TopBar from "./components/UI/topbar/topbar";
 import Sidebar from "./components/UI/sidebar/sidebar";
 import Footer from "./components/common/footer/footer";
-import ObjectPage from "./components/pages/object/object-page";
+import ObjectPage from "./components/pages/object-page/object-page";
 import CreateObject from "./components/pages/create-object/create-object";
 import UpdateObject from "./components/pages/update-object/update-object";
 import UpdateProfile from "./components/pages/update-profile/update-profile";

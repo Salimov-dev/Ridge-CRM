@@ -2,7 +2,7 @@ import { useMemo } from "react";
 import dayjs from "dayjs";
 import "dayjs/locale/ru";
 
-const useSearchMeeting = ({ meetings, data }) => {
+const useSearchMeeting = ( meetings, data ) => {
   const searchedMeetings = useMemo(() => {
     let array = meetings;
 

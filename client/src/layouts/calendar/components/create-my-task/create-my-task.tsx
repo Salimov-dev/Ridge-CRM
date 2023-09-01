@@ -5,7 +5,8 @@ import TitleWithCloseButton from "../../../../components/common/page-titles/titl
 const CreateMyTask = ({ objects, title, onClose, date }) => {
   return (
     <Box>
-      <TitleWithCloseButton title={title} onClose={onClose} />
+      <TitleWithCloseButton title={title}  background="orange"
+        color="white" onClose={onClose} />
       <MyTaskForm date={date} objects={objects} onClose={onClose} />
     </Box>
   );

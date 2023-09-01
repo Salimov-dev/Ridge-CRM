@@ -1,4 +1,4 @@
-import { createAction, createSlice } from "@reduxjs/toolkit";
+import { createAction, createSelector, createSlice } from "@reduxjs/toolkit";
 import isOutDated from "../../utils/auth/is-out-date";
 import localStorageService from "../../services/user/local.storage-service";
 import meetingsService from "../../services/meeting/meetings.service";
@@ -118,6 +118,12 @@ export const removeMeeting = (meetingId) => async (dispatch) => {
   }
 };
 export const getMeetingsList = () => (state) => state.meetings.entities;
+
+export const getObjectMeetingsList = (objectId) =>
+  createSelector(
+    (state) => state?.meetings?.entities,
+    (meetings) => meetings?.filter((meet) => meet?.objectId === objectId)
+  );
 
 export const getMeetingLoadingStatus = () => (state) =>
   state.meetings.isLoading;

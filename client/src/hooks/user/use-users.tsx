@@ -9,19 +9,7 @@ const useUsers = (
   usersWithoutCurrentUser
 ) => {
   const statuses = useSelector(getUserStatusesList());
-
   const dispatch = useDispatch();
-
-  const handleKeyDown = (e) => {
-    const keyValue = e.key;
-    const isRussianLetter = /^[А-ЯЁа-яё]$/.test(keyValue);
-    const isDigit = /^\d$/.test(keyValue);
-    const isBackspace = e.keyCode === 8;
-
-    if (!isRussianLetter && !isDigit && !isBackspace) {
-      e.preventDefault();
-    }
-  };
 
   const getActualUsersList = () => {
     const actualUsersArray = usersWithoutCurrentUser?.map((u) => {
@@ -73,7 +61,6 @@ const useUsers = (
   return {
     getActualUsersList,
     getActualStatusesList,
-    handleKeyDown,
     handleOpenCreate,
     handleCloseCreate,
     handleCloseUpdate,

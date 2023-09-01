@@ -74,10 +74,10 @@ const Meetings = () => {
   });
 
   const data = watch();
-  const searchedMeetings = useSearchMeeting({
+  const searchedMeetings = useSearchMeeting(
     meetings,
     data,
-  });
+  );
   const sortedMeetings = orderBy(searchedMeetings, ["date"], ["asc"]);
   const isInputEmpty = JSON.stringify(initialState) !== JSON.stringify(data);
 

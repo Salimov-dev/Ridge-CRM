@@ -148,7 +148,7 @@ const Calendar = () => {
         fullWidth={false}
         component={
           <CreateManagerTask
-            title="Добавить менеджеру задачу"
+            title="Поставить менеджеру задачу"
             objects={objects}
             users={users}
             onClose={handleCloseCreateManagerTask}
@@ -163,7 +163,7 @@ const Calendar = () => {
         fullWidth={false}
         component={
           <CreateMyTask
-            title="Добавить себе задачу"
+            title="Поставить себе задачу"
             objects={objects}
             date={dateCreateMyTask}
             onClose={handleCloseCreateMyTask}

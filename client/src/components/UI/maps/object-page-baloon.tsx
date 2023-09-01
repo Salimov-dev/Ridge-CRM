@@ -1,13 +1,13 @@
 import { useSelector } from "react-redux";
 import { Box, styled } from "@mui/material";
 // components
-import Loader from "../../../common/loader/loader";
-import Attribute from "../../../common/map/baloon/attribute";
+import Loader from "../../common/loader/loader";
+import Attribute from "../../common/map/baloon/attribute";
 // utils
-import { FormatDate } from "../../../../utils/date/format-date";
+import { FormatDate } from "../../../utils/date/format-date";
 // store
-import { getUserNameById } from "../../../../store/user/users.store";
-import { getDistrictById } from "../../../../store/object/districts.store";
+import { getUserNameById } from "../../../store/user/users.store";
+import { getDistrictById } from "../../../store/object/districts.store";
 
 const BaloonContainer = styled(Box)`
   width: 100%;
@@ -18,7 +18,7 @@ const BaloonContainer = styled(Box)`
   align-items: start;
 `;
 
-const Baloon = ({ object }) => {
+const ObjectPageBaloon = ({ object }) => {
   const date = FormatDate(object.created_at);
   const manager = useSelector(getUserNameById(object?.userId));
   const city = object?.location?.city;
@@ -38,4 +38,4 @@ const Baloon = ({ object }) => {
   );
 };
 
-export default Baloon;
+export default ObjectPageBaloon;

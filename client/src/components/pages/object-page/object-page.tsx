@@ -2,11 +2,11 @@ import { Box } from "@mui/material";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 // components
-import Baloon from "./map/baloon";
-import Header from "./components/header";
+import ObjectPageBaloon from "../../UI/maps/object-page-baloon";
+import Header from "./header/header";
 import Loader from "../../common/loader/loader";
-import ObjectInfo from "./components/object-info";
-import FooterButtons from "./components/footer-buttons";
+import ObjectInfo from "./object-info/object-info";
+import FooterButtons from "./footer-buttons/footer-buttons";
 import ItemOnMap from "../../common/map/item-on-map/item-on-map";
 // store
 import {
@@ -32,7 +32,7 @@ const ObjectPage = () => {
         mapZoom={mapZoom}
         hintContent={address}
         center={center}
-        baloon={<Baloon object={object} />}
+        baloon={<ObjectPageBaloon object={object} />}
         isLoading={isLoading}
       />
       {!isLoading ? (
@@ -40,7 +40,7 @@ const ObjectPage = () => {
       ) : (
         <Loader />
       )}
-      <FooterButtons objectId={objectId._id} />
+      <FooterButtons objectId={objectId._id} isLoading={isLoading} />
     </Box>
   );
 };

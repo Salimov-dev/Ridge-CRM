@@ -5,7 +5,12 @@ import ManagerTaskForm from "../../../../components/common/forms/manager-task-fo
 const CreateManagerTask = ({ objects, users, title, onClose }) => {
   return (
     <Box>
-      <TitleWithCloseButton title={title} onClose={onClose} />
+      <TitleWithCloseButton
+        title={title}
+        background="red"
+        color="white"
+        onClose={onClose}
+      />
       <ManagerTaskForm objects={objects} users={users} onClose={onClose} />
     </Box>
   );

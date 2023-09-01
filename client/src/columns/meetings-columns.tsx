@@ -14,7 +14,7 @@ import {
   setUpdateMeetingId,
   setUpdateMeetingOpenState,
 } from "../store/meeting/update-meeting.store";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import dayjs from "dayjs";
 import GoToButton from "../components/common/buttons/go-to-button";
 
@@ -78,6 +78,9 @@ export const meetingsColumns = [
       const result = `${object?.location.city}, ${object?.location.address}`;
       const navigate = useNavigate();
 
+      const paramsId = useParams();
+      const isParamsId = Boolean(Object.keys(paramsId).length);
+
       const handleClick = () => {
         navigate(`/objects/${objectId}`);
       };
@@ -91,7 +94,7 @@ export const meetingsColumns = [
           }}
         >
           {result}
-          <GoToButton text="Перейти" color="neutral" onClick={handleClick} />
+          {!isParamsId ? <GoToButton text="Перейти" color="neutral" onClick={handleClick} /> : null}
         </Box>
       );
     },

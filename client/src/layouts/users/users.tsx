@@ -54,7 +54,6 @@ const Users = () => {
   const {
     getActualUsersList,
     getActualStatusesList,
-    handleKeyDown,
     handleOpenCreate,
     handleCloseCreate,
     handleCloseUpdate,

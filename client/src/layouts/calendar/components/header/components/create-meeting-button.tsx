@@ -12,7 +12,7 @@ const CreateMeetingButton = ({ onOpen }) => {
         "&:hover": { background: "darkBlue" },
       }}
     >
-      <Typography variant="body0">Создать встречу</Typography>
+      <Typography variant="body0">Добавить встречу</Typography>
     </Button>
   );
 };

@@ -8,14 +8,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { Box } from "@mui/material";
 // components
 import Header from "./components/header";
+import Loader from "../../common/loader/loader";
 import ManagerForm from "../../common/forms/manager-form/manager-form";
 // store
 import { getUserStatusesList } from "../../../store/user/user-statuses.store";
 import { getUserDataById, updateUser } from "../../../store/user/users.store";
+import { getUpdateManagerId } from "../../../store/user/update-manager.store";
 // other
 import { managerSchema } from "../../../schemas/schemas";
-import Loader from "../../common/loader/loader";
-import { getUpdateManagerId } from "../../../store/user/update-manager.store";
 
 const UpdateManager = ({ onClose }) => {
   const userId = useSelector(getUpdateManagerId());

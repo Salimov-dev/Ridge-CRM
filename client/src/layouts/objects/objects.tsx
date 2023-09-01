@@ -87,10 +87,10 @@ const Objects = () => {
   const data = watch();
   const isInputEmpty = JSON.stringify(initialState) !== JSON.stringify(data);
 
-  const searchedObjects = useSearchObject({
+  const searchedObjects = useSearchObject(
     objects,
     data,
-  });
+  );
 
   useEffect(() => {
     const hasLocalStorageData = localStorage.getItem("search-objects-data");

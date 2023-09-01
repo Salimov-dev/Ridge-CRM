@@ -8,6 +8,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Box } from "@mui/material";
 // components
 import Header from "./components/header";
+import Loader from "../../common/loader/loader";
 import MeetingForm from "../../common/forms/meeting-form/meeting-form";
 // store
 import { meetingSchema } from "../../../schemas/schemas";
@@ -15,12 +16,11 @@ import { getObjectsList } from "../../../store/object/objects.store";
 import { getCurrentUserId } from "../../../store/user/users.store";
 import { getMeetingTypesList } from "../../../store/meeting/meeting-types.store";
 import { getMeetingStatusesList } from "../../../store/meeting/meeting-status.store";
+import { getUpdateMeetingId } from "../../../store/meeting/update-meeting.store";
 import {
   getMeetingById,
   updateMeeting,
 } from "../../../store/meeting/meetings.store";
-import Loader from "../../common/loader/loader";
-import { getUpdateMeetingId } from "../../../store/meeting/update-meeting.store";
 
 const UpdateMeeting = ({ onClose }) => {
   const objects = useSelector(getObjectsList());
@@ -32,7 +32,6 @@ const UpdateMeeting = ({ onClose }) => {
   const meeting = useSelector(getMeetingById(meetingId));
   const meetingTypes = useSelector(getMeetingTypesList());
   const statuses = useSelector(getMeetingStatusesList());
-
   const dispatch = useDispatch();
 
   const formatedMeeting = {

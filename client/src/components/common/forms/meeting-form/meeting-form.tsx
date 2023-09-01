@@ -31,6 +31,7 @@ const MeetingForm = ({
   statuses,
   meetingTypes,
   register,
+  watch,
   errors,
   handleSubmit,
   onSubmit,
@@ -39,7 +40,6 @@ const MeetingForm = ({
   isValid,
   isEditMode = false,
   isEmptyFindedObject,
-  watch,
 }) => {
   const isValidAndHasAdress = Boolean(!isEmptyFindedObject) && isValid;
   const watchStatus = watch("status", "");
@@ -57,6 +57,7 @@ const MeetingForm = ({
             value={data?.date}
             onChange={(value) => setValue("date", value)}
             errors={errors?.date}
+            isEditMode={isEditMode}
           />
           <TimePickerStyled
             register={register}

@@ -7,16 +7,15 @@ const Component = styled(Box)`
   margin-bottom: 20px;
 `;
 
-const Title = styled(Typography)`
-  background: yellow;
-  color: black;
-  padding: 0 4px;
-`;
-
-const LayoutTitle = ({ title }) => {
+const LayoutTitle = ({ title, background, color }) => {
   return (
     <Component>
-      <Title variant="h2">{title}</Title>
+      <Typography
+        variant="h2"
+        sx={{ background: background, color: color, padding: "0 4px" }}
+      >
+        {title}
+      </Typography>
     </Component>
   );
 };

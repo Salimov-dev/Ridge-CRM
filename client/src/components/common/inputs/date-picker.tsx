@@ -6,7 +6,7 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 // utils
 import getDateToday from "../../../utils/date/get-date-today";
 
-const today = getDateToday()
+const today = getDateToday();
 
 const DatePickerStyled = ({
   register,
@@ -18,10 +18,10 @@ const DatePickerStyled = ({
   errors,
   disabled,
   color = "red",
-  minDate=today,
-  maxDate=null,
+  minDate = today,
+  maxDate = null,
+  isEditMode,
 }) => {
-
   return (
     <Box sx={{ width: "100%", marginBottom: "-3px" }}>
       <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="ru">
@@ -31,7 +31,7 @@ const DatePickerStyled = ({
           value={value}
           onChange={onChange}
           error={!!errors}
-          minDate={minDate}
+          minDate={!isEditMode ? minDate : null}
           maxDate={maxDate}
           disabled={disabled}
           sx={{

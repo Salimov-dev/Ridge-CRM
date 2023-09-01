@@ -12,7 +12,7 @@ import {
   getTaskLoadingStatus,
   getTasksList,
 } from "../../store/task/tasks.store";
-import getDateToday from "../../utils/date/get-date-today";
+// utils
 import getStartWeekDate from "../../utils/date/get-start-week-date";
 import getEndWeekDate from "../../utils/date/get-end-week-date";
 

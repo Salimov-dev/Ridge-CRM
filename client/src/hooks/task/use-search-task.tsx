@@ -1,7 +1,6 @@
 import dayjs from "dayjs";
 import { useMemo } from "react";
 // utils
-import getDateToday from "../../utils/date/get-date-today";
 import getStartWeekDate from "../../utils/date/get-start-week-date";
 import getEndWeekDate from "../../utils/date/get-end-week-date";
 import getDateYesterday from "../../utils/date/get-date-yesterday";

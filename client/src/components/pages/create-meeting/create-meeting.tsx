@@ -111,7 +111,7 @@ const CreateMeeting = ({ onClose }) => {
         isEmptyFindedObject={isEmptyFindedObject}
         getCity={getCity}
         getAddress={getAddress}
-        title="Создать встречу:"
+        title="Добавить встречу:"
         subtitle="Выберите место встречи на карте"
         onClose={onClose}
       />
