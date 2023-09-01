@@ -3,11 +3,13 @@ import { Box } from "@mui/material";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 // components
+import { tasksColumns } from "./table/tasks-columns";
 import { weeklyMeetingsColumns } from "./table/weekly-meetings-columns";
 import Header from "./components/header/header";
 import DaysOfWeek from "./components/days-of-week/days-of-week";
 import DialogStyled from "../../components/common/dialog/dialog-styled";
 import CalendarBody from "./components/calendar-body/calendar-body";
+import BasicTable from "../../components/common/table/basic-table";
 import CreateButtons from "./components/header/components/create-buttons";
 import LayoutTitle from "../../components/common/page-titles/layout-title";
 import CreateMyTask from "./components/create-my-task/create-my-task";
@@ -20,6 +22,16 @@ import getMonth from "../../utils/calendar/get-month";
 import { getMonthIndexState } from "../../store/month-index.store";
 // hooks
 import useCalendar from "../../hooks/use-calendar";
+import FilterPanel from "./components/filters-panel/filter-panel";
+import { useForm } from "react-hook-form";
+import useSearchTask from "../../hooks/use-search-task";
+
+const initialState = {
+  object: "",
+  task: "",
+  onlyMyTasks: false,
+  selectedTaskTypes: [],
+};
 
 const Calendar = () => {
   const [currentMonth, setCurrentMonth] = useState(getMonth());
@@ -28,13 +40,15 @@ const Calendar = () => {
   const [openCreateManagerTask, setOpenCreateManagerTask] = useState(false);
   const [openCreateMeeting, setOpenCreateMeeting] = useState(false);
   const monthIndex = useSelector(getMonthIndexState());
-  const columns = weeklyMeetingsColumns;
+  const tasksColumn = tasksColumns;
 
   const {
     meetings,
     users,
+    tasks,
     objects,
     isMeetingsLoading,
+    isTasksLoading,
     handleCloseCreateMyTask,
     handleCloseCreateManagerTask,
     handleCloseCreateMeeting,
@@ -47,6 +61,30 @@ const Calendar = () => {
     setDateCreateMyTask,
     setOpenCreateMeeting
   );
+
+  const localStorageState = JSON.parse(
+    localStorage.getItem("search-tasks-data")
+  );
+
+  const { register, watch, setValue, reset } = useForm({
+    defaultValues: Boolean(localStorageState)
+      ? localStorageState
+      : initialState,
+    mode: "onBlur",
+  });
+  const data = watch();
+
+  const isInputEmpty = JSON.stringify(initialState) !== JSON.stringify(data);
+
+  const searchedTasks = useSearchTask(tasks, data);
+
+  useEffect(() => {
+    localStorage.setItem("search-tasks-data", JSON.stringify(data));
+  }, [data]);
+
+  useEffect(() => {
+    localStorage.setItem("search-tasks-data", JSON.stringify(initialState));
+  }, []);
 
   useEffect(() => {
     setCurrentMonth(getMonth(monthIndex));
@@ -68,7 +106,9 @@ const Calendar = () => {
         onOpenCreateMyTask={handleOpenCreateMyTask}
       />
 
-      <Box sx={{ display: "flex", justifyContent: "end" }}>
+      <Box
+        sx={{ display: "flex", justifyContent: "end", marginBottom: "20px" }}
+      >
         <CreateButtons
           onCreateMeeting={handleOpenCreateMeeting}
           onCreateMyTask={handleOpenCreateMyTask}
@@ -76,17 +116,24 @@ const Calendar = () => {
         />
       </Box>
 
-      <CurrentWeeklyMeetings
-        meetings={meetings}
-        columns={columns}
-        isLoading={isMeetingsLoading}
+      <FilterPanel
+        data={data}
+        register={register}
+        tasks={tasks}
+        setValue={setValue}
+        isLoading={isTasksLoading}
+      />
+      <BasicTable
+        items={searchedTasks}
+        itemsColumns={tasksColumn}
+        isLoading={isTasksLoading}
       />
 
-      {/* <CurrentWeeklyMyTasks
-        meetings={sortedCurrentWeeklyMeetings}
-        columns={columns}
+      <CurrentWeeklyMeetings
+        meetings={meetings}
+        columns={weeklyMeetingsColumns}
         isLoading={isMeetingsLoading}
-      /> */}
+      />
 
       <DialogStyled
         component={<CreateMeeting onClose={handleCloseCreateMeeting} />}

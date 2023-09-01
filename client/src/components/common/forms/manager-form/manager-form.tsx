@@ -12,6 +12,7 @@ import DatePickerStyled from "../../inputs/date-picker";
 import SimpleSelectField from "../../inputs/simple-select-field";
 // mock
 import { gendersArray } from "../../../../mock/genders";
+import getDateToday from "../../../../utils/date/get-date-today";
 
 const FieldsContainer = styled(Box)`
   width: 100%;
@@ -40,7 +41,7 @@ const ManagerForm = ({
   isValid,
   watch,
 }) => {
-  const today = dayjs();
+  const today = getDateToday()
   const watchStartDate = watch("watchStartDate", "");
   const watchGender = watch("gender", "");
   const watchStatus = watch("status", "");

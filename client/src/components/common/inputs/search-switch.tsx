@@ -6,7 +6,15 @@ import {
   Switch,
 } from "@mui/material";
 
-const SearchSwitch = ({ data, isLoading, isOnlyPhoneChecked, onChange }) => {
+const SearchSwitch = ({
+  data,
+  title = "switch",
+  checked,
+  isLoading,
+  isChecked,
+  onChange,
+  whiteSpace = "none",
+}) => {
   return (
     <Box>
       <FormControl
@@ -14,7 +22,7 @@ const SearchSwitch = ({ data, isLoading, isOnlyPhoneChecked, onChange }) => {
         sx={{
           padding: "5px 15px 5px 0px",
           border: "1px solid",
-          borderColor: isOnlyPhoneChecked ? "green" : "gray",
+          borderColor: isChecked ? "green" : "gray",
           borderRadius: "6px",
           display: "flex",
           flexDirection: "column",
@@ -26,16 +34,17 @@ const SearchSwitch = ({ data, isLoading, isOnlyPhoneChecked, onChange }) => {
             control={
               <Switch
                 color="success"
-                checked={data.onlyWithPhone} // Set the initial value here
+                checked={checked} // Set the initial value here
                 disabled={isLoading ? true : false}
                 onChange={onChange}
               />
             }
-            label="Объекты с телефоном"
+            label={title}
             labelPlacement="start"
             sx={{
               width: "100%",
-              color: isOnlyPhoneChecked ? "white" : "gray",
+              whiteSpace: whiteSpace,
+              color: isChecked ? "white" : "gray",
             }}
           />
         </FormGroup>

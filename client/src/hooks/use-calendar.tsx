@@ -8,6 +8,10 @@ import {
   getMeetingsList,
 } from "../store/meeting/meetings.store";
 import { getCurrentUserId, getUsersList } from "../store/user/users.store";
+import { getTaskLoadingStatus, getTasksList } from "../store/task/tasks.store";
+import getDateToday from "../utils/date/get-date-today";
+import getStartWeekDate from "../utils/date/get-start-week-date";
+import getEndWeekDate from "../utils/date/get-end-week-date";
 
 const useCalendar = (
   setOpenCreateManagerTask,
@@ -17,11 +21,12 @@ const useCalendar = (
 ) => {
   const objects = useSelector(getObjectsList());
   const meetings = useSelector(getMeetingsList());
+  const tasks = useSelector(getTasksList());
   const isMeetingsLoading = useSelector(getMeetingLoadingStatus());
+  const isTasksLoading = useSelector(getTaskLoadingStatus());
 
-  const today = dayjs();
-  const startOfWeek = today.startOf("week");
-  const endOfWeek = today.endOf("week");
+  const startOfWeek = getStartWeekDate();
+  const endOfWeek = getEndWeekDate();
 
   const currentWeeklyMeetings = meetings?.filter((meet) =>
     dayjs(meet.date).isBetween(startOfWeek, endOfWeek, null, "[]")
@@ -32,6 +37,8 @@ const useCalendar = (
     ["date"],
     ["asc"]
   );
+
+  const sortedTasks = orderBy(tasks, ["date"], ["asc"]);
 
   const users = useSelector(getUsersList());
   const currentUserId = useSelector(getCurrentUserId());
@@ -98,9 +105,11 @@ const useCalendar = (
     handleOpenCreateMyTaskManagerTask,
     handleOpenCreateMeeting,
     isMeetingsLoading,
+    isTasksLoading,
     meetings: sortedCurrentWeeklyMeetings,
     users: transformUsers,
     objects: transformObjects,
+    tasks: sortedTasks,
   };
 };
 

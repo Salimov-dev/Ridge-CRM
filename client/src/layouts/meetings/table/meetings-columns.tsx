@@ -16,6 +16,7 @@ import {
 } from "../../../store/meeting/update-meeting.store";
 import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
+import GoToButton from "../../../components/common/buttons/go-to-button";
 
 export const meetingsColumns = [
   {
@@ -90,12 +91,7 @@ export const meetingsColumns = [
           }}
         >
           {result}
-          <TableOpenButton
-            id={objectId}
-            text="Перейти"
-            color="neutral"
-            onClick={handleClick}
-          />
+          <GoToButton text="Перейти" color="neutral" onClick={handleClick} />
         </Box>
       );
     },

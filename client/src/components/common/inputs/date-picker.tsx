@@ -3,9 +3,10 @@ import { Box, FormHelperText } from "@mui/material";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import dayjs from "dayjs";
+// utils
+import getDateToday from "../../../utils/date/get-date-today";
 
-const today = dayjs();
+const today = getDateToday()
 
 const DatePickerStyled = ({
   register,

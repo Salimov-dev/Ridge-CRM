@@ -13,8 +13,9 @@ import { FormatTime } from "../../../utils/date/format-time";
 import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
 import "dayjs/locale/ru";
+import GoToButton from "../../../components/common/buttons/go-to-button";
 
-export const weeklyTasksColumns = [
+export const tasksColumns = [
   {
     accessorKey: "date",
     header: "Дата",
@@ -24,7 +25,7 @@ export const weeklyTasksColumns = [
       const formattedDate = FormatDate(new Date(date));
       const dayOfWeek = dayjs(date).locale("ru").format("dd");
       return (
-        <Box sx={{ display: "flex", gap: "6px" }}>
+        <Box sx={{ display: "flex", justifyContent: 'center', gap: "6px" }}>
           <Typography>{formattedDate}</Typography>
           <Typography>{dayOfWeek}</Typography>{" "}
         </Box>
@@ -57,7 +58,7 @@ export const weeklyTasksColumns = [
         navigate(`/objects/${objectId}`);
       };
 
-      return (
+      return object ? (
         <Box
           sx={{
             display: "flex",
@@ -66,22 +67,23 @@ export const weeklyTasksColumns = [
           }}
         >
           {result}
-          <TableOpenButton
-            id={objectId}
-            text="Перейти"
-            color="neutral"
-            onClick={handleClick}
-          />
+          <GoToButton text="Перейти" color="neutral" onClick={handleClick} />
         </Box>
+      ) : (
+        "-"
       );
     },
   },
   {
     accessorKey: "userId",
-    header: "Создатель задачи",
+    header: "Задачу поставил",
     cell: (info) => {
       const userId = info.getValue();
-      return FormatManagerName(userId);
+      return (
+        <Typography sx={{ textAlign: "center" }}>
+          {FormatManagerName(userId)}
+        </Typography>
+      );
     },
   },
 

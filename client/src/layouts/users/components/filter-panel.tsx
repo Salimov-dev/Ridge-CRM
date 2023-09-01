@@ -85,6 +85,7 @@ const FilterPanel = ({
           name="gender"
           labelId="gender"
           label="Пол"
+          value={data.gender}
           disabled={isLoading ? true : false}
         />
       </FieldsContainer>

@@ -13,6 +13,7 @@ import { FormatTime } from "../../../utils/date/format-time";
 import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
 import "dayjs/locale/ru";
+import GoToButton from "../../../components/common/buttons/go-to-button";
 
 export const weeklyMeetingsColumns = [
   {
@@ -87,8 +88,7 @@ export const weeklyMeetingsColumns = [
           }}
         >
           {result}
-          <TableOpenButton
-            id={objectId}
+          <GoToButton
             text="Перейти"
             color="neutral"
             onClick={handleClick}
