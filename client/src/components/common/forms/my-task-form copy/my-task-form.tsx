@@ -91,6 +91,7 @@ const MyTaskForm = ({ objects, users, onClose, isManagerTask = false }) => {
           name="time"
           label="Время"
           setValue={setValue}
+          value={data.time}
           errors={errors?.time}
         />
       </FieldsContainer>

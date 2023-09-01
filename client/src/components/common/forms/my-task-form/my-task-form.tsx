@@ -1,11 +1,12 @@
 // libraries
+import { useEffect } from "react";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 // MUI
 import CreateIcon from "@mui/icons-material/Create";
-import { Box, styled, InputAdornment } from "@mui/material";
+import { InputAdornment } from "@mui/material";
 // components
 import TextFieldStyled from "../../inputs/text-field-styled";
 import SimpleSelectField from "../../inputs/simple-select-field";
@@ -18,34 +19,19 @@ import { createTask } from "../../../../store/task/tasks.store";
 import { capitalizeFirstLetter } from "../../../../utils/data/capitalize-first-letter";
 // schema
 import { taskSchema } from "../../../../schemas/schemas";
+// styled
+import { FieldsContainer, Form } from "../styled/styled";
 
-const Form = styled(`form`)({
-  width: "500px",
-  display: "flex",
-  flexDirection: "column",
-  alignItems: "center",
-  marginBottom: "10px",
-  marginTop: "12px",
-  gap: "4px",
-});
-
-const FieldsContainer = styled(Box)`
-  width: 100%;
-  display: flex;
-  align-items: "center";
-  gap: 4px;
-`;
+const initialState = {
+  comment: "",
+  date: null,
+  time: null,
+  objectId: "",
+  managerId: "",
+};
 
 const MyTaskForm = ({ date, objects, objectPageId, onClose }) => {
   const dispatch = useDispatch();
-  
-  const initialState = {
-    comment: "",
-    date: date,
-    time: null,
-    objectId: objectPageId,
-    managerId: "",
-  };
 
   const {
     register,
@@ -60,6 +46,7 @@ const MyTaskForm = ({ date, objects, objectPageId, onClose }) => {
   });
   const data = watch();
   const watchDate = watch("date", null);
+  const watchObjectId = watch("objectId", "");
   const isFullValid = !watchDate || !isValid;
 
   const onSubmitMyTask = () => {
@@ -72,6 +59,18 @@ const MyTaskForm = ({ date, objects, objectPageId, onClose }) => {
       .then(() => onClose())
       .then(() => toast.success("Задача успешно создана!"));
   };
+
+  useEffect(() => {
+    if (objectPageId) {
+      setValue("objectId", objectPageId);
+    }
+  }, [objectPageId]);
+
+  useEffect(() => {
+    if (date) {
+      setValue("date", date);
+    }
+  }, [date]);
 
   return (
     <Form onSubmit={handleSubmit(onSubmitMyTask)} noValidate>
@@ -89,6 +88,7 @@ const MyTaskForm = ({ date, objects, objectPageId, onClose }) => {
           data={data}
           name="time"
           label="Время"
+          value={data.time}
           setValue={setValue}
           errors={errors?.time}
         />
@@ -99,7 +99,9 @@ const MyTaskForm = ({ date, objects, objectPageId, onClose }) => {
         itemsList={objects}
         name="objectId"
         labelId="objectId"
-        label="Объект"
+        label="Объект встречи"
+        value={watchObjectId}
+        disabled={objectPageId}
       />
       <TextFieldStyled
         register={register}

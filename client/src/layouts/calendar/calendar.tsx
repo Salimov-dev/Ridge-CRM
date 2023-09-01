@@ -1,10 +1,9 @@
 // libraries
 import { Box } from "@mui/material";
 import { useSelector } from "react-redux";
+import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 // components
-import { tasksColumns } from "../../columns/tasks-columns";
-import { weeklyMeetingsColumns } from "../../columns/weekly-meetings-columns";
 import Header from "./components/header/header";
 import DaysOfWeek from "./components/days-of-week/days-of-week";
 import DialogStyled from "../../components/common/dialog/dialog-styled";
@@ -16,14 +15,16 @@ import CreateMyTask from "./components/create-my-task/create-my-task";
 import CreateManagerTask from "./components/create-manager-task/create-manager-task";
 import CreateMeeting from "../../components/pages/create-meeting/create-meeting";
 import CurrentWeeklyMeetings from "./components/current-weekly-meetings/current-weekly-meetings";
+import CalendarFiltersPanel from "../../components/UI/filters-panels/calendar-filters-panel";
+// columns
+import { tasksColumns } from "../../columns/tasks-columns";
+import { weeklyMeetingsColumns } from "../../columns/weekly-meetings-columns";
 // utils
 import getMonth from "../../utils/calendar/get-month";
 // store
 import { getMonthIndexState } from "../../store/month-index.store";
 // hooks
 import useCalendar from "../../hooks/calendar/use-calendar";
-import CalendarFiltersPanel from "../../components/UI/filters-panels/calendar-filters-panel";
-import { useForm } from "react-hook-form";
 import useSearchTask from "../../hooks/task/use-search-task";
 
 const initialState = {
@@ -73,10 +74,11 @@ const Calendar = () => {
     mode: "onBlur",
   });
   const data = watch();
-
-  const isInputEmpty = JSON.stringify(initialState) !== JSON.stringify(data);
-
   const searchedTasks = useSearchTask(tasks, data);
+
+  useEffect(() => {
+    setCurrentMonth(getMonth(monthIndex));
+  }, [monthIndex]);
 
   useEffect(() => {
     localStorage.setItem("search-tasks-data", JSON.stringify(data));
@@ -85,10 +87,6 @@ const Calendar = () => {
   useEffect(() => {
     localStorage.setItem("search-tasks-data", JSON.stringify(initialState));
   }, []);
-
-  useEffect(() => {
-    setCurrentMonth(getMonth(monthIndex));
-  }, [monthIndex]);
 
   return (
     <>

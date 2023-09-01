@@ -19,6 +19,7 @@ import { createTask } from "../../../../store/task/tasks.store";
 import { capitalizeFirstLetter } from "../../../../utils/data/capitalize-first-letter";
 // schema
 import { taskSchema } from "../../../../schemas/schemas";
+import { useEffect } from "react";
 
 const Form = styled(`form`)({
   width: "500px",
@@ -45,7 +46,7 @@ const initialState = {
   managerId: "",
 };
 
-const ManagerTaskForm = ({ objects, users, onClose }) => {
+const ManagerTaskForm = ({ objects, users, onClose, objectPageId }) => {
   const dispatch = useDispatch();
 
   const {
@@ -61,6 +62,7 @@ const ManagerTaskForm = ({ objects, users, onClose }) => {
   });
   const data = watch();
   const watchDate = watch("date", null);
+  const watchObjectId = watch("objectId", "");
   const isFullValid = !watchDate || !isValid;
 
   const onSubmitManagerTask = () => {
@@ -72,6 +74,12 @@ const ManagerTaskForm = ({ objects, users, onClose }) => {
       .then(() => onClose())
       .then(() => toast.success("Задача успешно создана!"));
   };
+
+  useEffect(() => {
+    if (objectPageId) {
+      setValue("objectId", objectPageId);
+    }
+  }, [objectPageId]);
 
   return (
     <Form onSubmit={handleSubmit(onSubmitManagerTask)} noValidate>
@@ -89,6 +97,7 @@ const ManagerTaskForm = ({ objects, users, onClose }) => {
           data={data}
           name="time"
           label="Время"
+          value={data.time}
           setValue={setValue}
           errors={errors?.time}
         />
@@ -99,7 +108,9 @@ const ManagerTaskForm = ({ objects, users, onClose }) => {
         itemsList={objects}
         name="objectId"
         labelId="objectId"
-        label="Объект"
+        label="Объект встречи"
+        value={watchObjectId}
+        disabled={objectPageId}
       />
       <SimpleSelectField
         register={register}

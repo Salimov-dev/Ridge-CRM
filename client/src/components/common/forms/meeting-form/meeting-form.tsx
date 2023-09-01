@@ -1,5 +1,5 @@
 // MUI
-import { Box, styled, InputAdornment } from "@mui/material";
+import { InputAdornment } from "@mui/material";
 import CreateIcon from "@mui/icons-material/Create";
 // components
 import TextFieldStyled from "../../inputs/text-field-styled";
@@ -7,23 +7,7 @@ import SimpleSelectField from "../../inputs/simple-select-field";
 import DatePickerStyled from "../../inputs/date-picker";
 import TimePickerStyled from "../../inputs/time-picker";
 import FooterButtons from "../footer-buttons/footer-buttons";
-
-const Form = styled(`form`)({
-  display: "flex",
-  flexDirection: "column",
-  alignItems: "center",
-  marginBottom: "10px",
-  marginTop: "12px",
-  gap: "4px",
-});
-
-const FieldsContainer = styled(Box)`
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: "center";
-  gap: 4px;
-`;
+import { FieldsContainer, Form } from "../styled/styled";
 
 const MeetingForm = ({
   data,
@@ -66,6 +50,7 @@ const MeetingForm = ({
             errors={errors?.time}
             setValue={setValue}
             name="time"
+            value={data?.time}
             label="Время встречи"
           />
           <SimpleSelectField

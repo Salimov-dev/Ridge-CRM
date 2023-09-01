@@ -74,12 +74,13 @@ const Meetings = () => {
   });
 
   const data = watch();
-  const searchedMeetings = useSearchMeeting(
-    meetings,
-    data,
-  );
+  const searchedMeetings = useSearchMeeting(meetings, data);
   const sortedMeetings = orderBy(searchedMeetings, ["date"], ["asc"]);
   const isInputEmpty = JSON.stringify(initialState) !== JSON.stringify(data);
+
+  useEffect(() => {
+    localStorage.setItem("search-meetings-data", JSON.stringify(data));
+  }, [data]);
 
   useEffect(() => {
     const hasLocalStorageData = localStorage.getItem("search-meetings-data");
@@ -91,10 +92,6 @@ const Meetings = () => {
       );
     }
   }, []);
-
-  useEffect(() => {
-    localStorage.setItem("search-meetings-data", JSON.stringify(data));
-  }, [data]);
 
   return (
     <Box>

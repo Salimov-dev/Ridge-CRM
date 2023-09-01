@@ -81,10 +81,8 @@ const CreateObject = ({ onClose }) => {
     findedObject,
   } = useFindObject();
 
-  const data = watch();
   const dispatch = useDispatch();
-  const navigate = useNavigate();
-
+  const data = watch();
   const isEmptyFindedObject = !Boolean(Object.keys(findedObject)?.length);
   const isObjectHasAddress = data?.location?.city && data?.location?.address;
 
