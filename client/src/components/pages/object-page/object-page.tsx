@@ -40,7 +40,7 @@ const ObjectPage = () => {
       ) : (
         <Loader />
       )}
-      <FooterButtons objectId={objectId._id} isLoading={isLoading} />
+      <FooterButtons objectId={objectId} isLoading={isLoading} />
     </Box>
   );
 };

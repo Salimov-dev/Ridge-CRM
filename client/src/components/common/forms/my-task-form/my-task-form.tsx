@@ -32,6 +32,7 @@ const initialState = {
 
 const MyTaskForm = ({ date, objects, objectPageId, onClose }) => {
   const dispatch = useDispatch();
+  const isObjectPage = Boolean(objectPageId.length)
 
   const {
     register,
@@ -101,7 +102,7 @@ const MyTaskForm = ({ date, objects, objectPageId, onClose }) => {
         labelId="objectId"
         label="Объект встречи"
         value={watchObjectId}
-        disabled={objectPageId}
+        disabled={isObjectPage}
       />
       <TextFieldStyled
         register={register}

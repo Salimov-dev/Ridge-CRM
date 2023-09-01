@@ -48,6 +48,7 @@ const initialState = {
 
 const ManagerTaskForm = ({ objects, users, onClose, objectPageId }) => {
   const dispatch = useDispatch();
+  const isObjectPage = Boolean(objectPageId.length)
 
   const {
     register,
@@ -110,7 +111,7 @@ const ManagerTaskForm = ({ objects, users, onClose, objectPageId }) => {
         labelId="objectId"
         label="Объект встречи"
         value={watchObjectId}
-        disabled={objectPageId}
+        disabled={isObjectPage}
       />
       <SimpleSelectField
         register={register}
