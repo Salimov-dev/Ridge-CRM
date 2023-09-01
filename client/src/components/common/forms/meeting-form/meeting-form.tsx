@@ -30,6 +30,7 @@ const MeetingForm = ({
   objects,
   statuses,
   meetingTypes,
+  objectPageId,
   register,
   watch,
   errors,
@@ -96,6 +97,7 @@ const MeetingForm = ({
             label="Объект встречи"
             value={watchObjectId}
             errors={errors?.objectId}
+            disabled={objectPageId}
           />
           <TextFieldStyled
             register={register}

@@ -27,23 +27,23 @@ const Component = styled(Box)`
   width: 100%;
 `;
 
-const initialState = {
-  status: "",
-  meetingType: "",
-  date: null,
-  time: null,
-  comment: "",
-  objectId: "",
-  location: {
-    city: "",
-    address: "",
-    latitude: null,
-    longitude: null,
-    zoom: null,
-  },
-};
 
-const CreateMeeting = ({ onClose }) => {
+const CreateMeeting = ({ objectPageId, onClose }) => {
+  const initialState = {
+    status: "",
+    meetingType: "",
+    date: null,
+    time: null,
+    comment: "",
+    objectId: objectPageId ? objectPageId : "",
+    location: {
+      city: "",
+      address: "",
+      latitude: null,
+      longitude: null,
+      zoom: null,
+    },
+  };
   const dispatch = useDispatch();
   const objects = useSelector(getObjectsList());
   const statuses = useSelector(getMeetingStatusesList());
@@ -123,6 +123,7 @@ const CreateMeeting = ({ onClose }) => {
         objects={transformObjects}
         statuses={statuses}
         meetingTypes={meetingTypes}
+        objectPageId={objectPageId}
         onSubmit={onSubmit}
         onClose={onClose}
         handleSubmit={handleSubmit}

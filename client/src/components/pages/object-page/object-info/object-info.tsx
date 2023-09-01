@@ -20,8 +20,9 @@ import {
 } from "../../../../store/task/tasks.store";
 import { tasksColumns } from "../../../../columns/tasks-columns";
 import AddAndClearFiltersButton from "../../../common/buttons/add-and-clear-filters-button";
-import CreateMeetingButton from "../../../../layouts/calendar/components/header/components/create-meeting-button";
-import CreateTaskButton from "../../../../layouts/calendar/components/header/components/create-task-button";
+import ObjectMeetings from "./components/object-meetings";
+import ObjectsParams from "./components/object-params";
+import ObjectTasks from "./components/object-tasks";
 
 const Component = styled(Box)`
   display: flex;
@@ -42,92 +43,12 @@ const ObjectInfo = ({ object, isLoading }) => {
 
   return (
     <Component>
-      <Typography variant="h3">Локация</Typography>
-      <BasicTable
-        items={[object]}
-        itemsColumns={locationColumns}
-        isLoading={isLoading}
-        isPaginate={false}
+      <ObjectsParams object={object} isLoading={isLoading} />
+      <ObjectMeetings
+        meetings={meetings}
+        isMeetingsLoading={isMeetingsLoading}
       />
-
-      <Typography variant="h3">Объект</Typography>
-      <BasicTable
-        items={[object]}
-        itemsColumns={estateTypeColumns}
-        isLoading={isLoading}
-        isPaginate={false}
-      />
-
-      <Typography variant="h3">Параметры</Typography>
-      <BasicTable
-        items={[object]}
-        itemsColumns={estateOptionsColumns}
-        isLoading={isLoading}
-        isPaginate={false}
-      />
-
-      <Typography variant="h3">Условия</Typography>
-      <BasicTable
-        items={[object]}
-        itemsColumns={commercialTermsColumns}
-        isLoading={isLoading}
-        isPaginate={false}
-      />
-
-      <Typography variant="h3">Контакты</Typography>
-      <BasicTable
-        items={[object]}
-        itemsColumns={contactsColumns}
-        isLoading={isLoading}
-        isPaginate={false}
-      />
-
-      <Typography variant="h3">Описание</Typography>
-      <Box sx={{ marginBottom: "20px" }}>
-        {description ? object.description.fullDescription : "Нет описания"}
-      </Box>
-
-      <DividerStyled />
-      <Box
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-        }}
-      >
-        <Typography variant="h3">Встречи по этому объекту:</Typography>
-        <CreateMeetingButton />
-      </Box>
-      {meetings.length ? (
-        <BasicTable
-          items={meetings}
-          itemsColumns={meetingsColumn}
-          isLoading={isMeetingsLoading}
-        />
-      ) : (
-        <Typography>Не обнаружены</Typography>
-      )}
-
-      <DividerStyled />
-      <Box
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-        }}
-      >
-        <Typography variant="h3">Задачи по этому объекту:</Typography>
-        <CreateTaskButton title="Добавить встречу" background="red" />
-      </Box>
-      {tasks.length ? (
-        <BasicTable
-          items={tasks}
-          itemsColumns={tasksColumn}
-          isLoading={isTasksLoading}
-        />
-      ) : (
-        <Typography>Не обнаружены</Typography>
-      )}
+      <ObjectTasks tasks={tasks} isTasksLoading={isTasksLoading} />
     </Component>
   );
 };

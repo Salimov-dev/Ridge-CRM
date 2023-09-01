@@ -53,7 +53,7 @@ const Calendar = () => {
     handleCloseCreateManagerTask,
     handleCloseCreateMeeting,
     handleOpenCreateMyTask,
-    handleOpenCreateMyTaskManagerTask,
+    handleOpenCreateManagerTask,
     handleOpenCreateMeeting,
   } = useCalendar(
     setOpenCreateManagerTask,
@@ -95,7 +95,7 @@ const Calendar = () => {
       <LayoutTitle title="Календарь" />
       <Header
         onCreateMyTask={handleOpenCreateMyTask}
-        onCreateManagerTask={handleOpenCreateMyTaskManagerTask}
+        onCreateManagerTask={handleOpenCreateManagerTask}
         onCreateMeeting={handleOpenCreateMeeting}
       />
 
@@ -112,7 +112,7 @@ const Calendar = () => {
         <CreateButtons
           onCreateMeeting={handleOpenCreateMeeting}
           onCreateMyTask={handleOpenCreateMyTask}
-          onCreateManagerTask={handleOpenCreateMyTaskManagerTask}
+          onCreateManagerTask={handleOpenCreateManagerTask}
         />
       </Box>
 
@@ -148,7 +148,7 @@ const Calendar = () => {
         fullWidth={false}
         component={
           <CreateManagerTask
-            title="Поставить менеджеру задачу"
+            title="Добавить менеджеру задачу"
             objects={objects}
             users={users}
             onClose={handleCloseCreateManagerTask}
@@ -163,7 +163,7 @@ const Calendar = () => {
         fullWidth={false}
         component={
           <CreateMyTask
-            title="Поставить себе задачу"
+            title="Добавить себе задачу"
             objects={objects}
             date={dateCreateMyTask}
             onClose={handleCloseCreateMyTask}

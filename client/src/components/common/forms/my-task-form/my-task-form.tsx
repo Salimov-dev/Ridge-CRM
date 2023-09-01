@@ -36,14 +36,14 @@ const FieldsContainer = styled(Box)`
   gap: 4px;
 `;
 
-const MyTaskForm = ({ date, objects, onClose }) => {
+const MyTaskForm = ({ date, objects, objectPageId, onClose }) => {
   const dispatch = useDispatch();
-
+  
   const initialState = {
     comment: "",
     date: date,
     time: null,
-    objectId: "",
+    objectId: objectPageId,
     managerId: "",
   };
 
