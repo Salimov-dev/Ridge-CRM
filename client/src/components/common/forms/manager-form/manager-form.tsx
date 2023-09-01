@@ -5,8 +5,8 @@ import PhoneIphoneOutlinedIcon from "@mui/icons-material/PhoneIphoneOutlined";
 import AlternateEmailOutlinedIcon from "@mui/icons-material/AlternateEmailOutlined";
 import KeyOutlinedIcon from "@mui/icons-material/KeyOutlined";
 // components
-import Title from "../title";
-import FooterButtons from "../footer-buttons";
+import Title from "../title/title";
+import FooterButtons from "../footer-buttons/footer-buttons";
 import TextFieldStyled from "../../inputs/text-field-styled";
 import DatePickerStyled from "../../inputs/date-picker";
 import SimpleSelectField from "../../inputs/simple-select-field";
@@ -41,7 +41,7 @@ const ManagerForm = ({
   isValid,
   watch,
 }) => {
-  const today = getDateToday()
+  const today = getDateToday();
   const watchStartDate = watch("watchStartDate", "");
   const watchGender = watch("gender", "");
   const watchStatus = watch("status", "");

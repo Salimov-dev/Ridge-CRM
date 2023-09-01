@@ -45,7 +45,7 @@ const initialState = {
   managerId: "",
 };
 
-const ManagerTaskForm = ({ objects, users, onClose }) => {
+const MyTaskForm = ({ objects, users, onClose, isManagerTask = false }) => {
   const dispatch = useDispatch();
 
   const {
@@ -63,10 +63,11 @@ const ManagerTaskForm = ({ objects, users, onClose }) => {
   const watchDate = watch("date", null);
   const isFullValid = !watchDate || !isValid;
 
-  const onSubmitManagerTask = () => {
+  const onSubmitMyTask = () => {
     const newData = {
       ...data,
       comment: capitalizeFirstLetter(data.comment),
+      managerId: null,
     };
     dispatch(createTask(newData))
       .then(() => onClose())
@@ -74,7 +75,7 @@ const ManagerTaskForm = ({ objects, users, onClose }) => {
   };
 
   return (
-    <Form onSubmit={handleSubmit(onSubmitManagerTask)} noValidate>
+    <Form onSubmit={handleSubmit(onSubmitMyTask)} noValidate>
       <FieldsContainer>
         <DatePickerStyled
           register={register}
@@ -101,13 +102,15 @@ const ManagerTaskForm = ({ objects, users, onClose }) => {
         labelId="objectId"
         label="Объект"
       />
-      <SimpleSelectField
-        register={register}
-        itemsList={users}
-        name="managerId"
-        labelId="managerId"
-        label="Менеджер"
-      />
+      {isManagerTask ? (
+        <SimpleSelectField
+          register={register}
+          itemsList={users}
+          name="managerId"
+          labelId="managerId"
+          label="Менеджер"
+        />
+      ) : null}
       <TextFieldStyled
         register={register}
         label="Комментарий"
@@ -135,4 +138,4 @@ const ManagerTaskForm = ({ objects, users, onClose }) => {
   );
 };
 
-export default ManagerTaskForm;
+export default MyTaskForm;

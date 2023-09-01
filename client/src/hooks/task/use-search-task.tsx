@@ -1,10 +1,10 @@
 import dayjs from "dayjs";
 import { useMemo } from "react";
 // utils
-import getDateToday from "../utils/date/get-date-today";
-import getStartWeekDate from "../utils/date/get-start-week-date";
-import getEndWeekDate from "../utils/date/get-end-week-date";
-import getDateYesterday from "../utils/date/get-date-yesterday";
+import getDateToday from "../../utils/date/get-date-today";
+import getStartWeekDate from "../../utils/date/get-start-week-date";
+import getEndWeekDate from "../../utils/date/get-end-week-date";
+import getDateYesterday from "../../utils/date/get-date-yesterday";
 
 const useSearchTask = (tasks, data) => {
   const yesterday = getDateYesterday();
@@ -16,8 +16,8 @@ const useSearchTask = (tasks, data) => {
 
     if (data?.task) {
       array = array?.filter((task) =>
-      task?.comment.toLowerCase().includes(data?.task.toLowerCase())
-    );
+        task?.comment.toLowerCase().includes(data?.task.toLowerCase())
+      );
     }
 
     // актуальные

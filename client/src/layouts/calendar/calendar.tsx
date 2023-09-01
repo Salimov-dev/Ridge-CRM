@@ -3,8 +3,8 @@ import { Box } from "@mui/material";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 // components
-import { tasksColumns } from "./table/tasks-columns";
-import { weeklyMeetingsColumns } from "./table/weekly-meetings-columns";
+import { tasksColumns } from "../../columns/tasks-columns";
+import { weeklyMeetingsColumns } from "../../columns/weekly-meetings-columns";
 import Header from "./components/header/header";
 import DaysOfWeek from "./components/days-of-week/days-of-week";
 import DialogStyled from "../../components/common/dialog/dialog-styled";
@@ -21,10 +21,10 @@ import getMonth from "../../utils/calendar/get-month";
 // store
 import { getMonthIndexState } from "../../store/month-index.store";
 // hooks
-import useCalendar from "../../hooks/use-calendar";
-import FilterPanel from "./components/filters-panel/filter-panel";
+import useCalendar from "../../hooks/calendar/use-calendar";
+import CalendarFiltersPanel from "../../components/UI/filters-panels/calendar-filters-panel";
 import { useForm } from "react-hook-form";
-import useSearchTask from "../../hooks/use-search-task";
+import useSearchTask from "../../hooks/task/use-search-task";
 
 const initialState = {
   object: "",
@@ -116,7 +116,7 @@ const Calendar = () => {
         />
       </Box>
 
-      <FilterPanel
+      <CalendarFiltersPanel
         data={data}
         register={register}
         tasks={tasks}

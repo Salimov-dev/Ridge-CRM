@@ -1,11 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
-import { loadUpdateMeetingOpenState } from "../store/meeting/update-meeting.store";
+import { loadUpdateMeetingOpenState } from "../../store/meeting/update-meeting.store";
 
 const useMeetings = (setOpenCreate, setUpdateMeetingOpenState) => {
   const isOpenUpdate = useSelector(loadUpdateMeetingOpenState());
   const center = [59.930320630519155, 30.32906024941998];
   const mapZoom = 11;
-  
+
   const dispatch = useDispatch();
 
   const handleOpenCreate = () => {

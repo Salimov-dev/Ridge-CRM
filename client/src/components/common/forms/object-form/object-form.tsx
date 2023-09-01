@@ -11,8 +11,8 @@ import ElectricBoltIcon from "@mui/icons-material/ElectricBolt";
 import VerticalAlignBottomOutlinedIcon from "@mui/icons-material/VerticalAlignBottomOutlined";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 // components
-import Title from "../title";
-import FooterButtons from "../footer-buttons";
+import Title from "../title/title";
+import FooterButtons from "../footer-buttons/footer-buttons";
 import TextFieldStyled from "../../inputs/text-field-styled";
 import SimpleSelectField from "../../inputs/simple-select-field";
 // store

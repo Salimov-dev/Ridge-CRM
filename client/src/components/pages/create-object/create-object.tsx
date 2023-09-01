@@ -15,7 +15,7 @@ import TitleWithAddress from "../../common/page-titles/title-with-address";
 import { createObject } from "../../../store/object/objects.store";
 // other
 import { objectSchema } from "../../../schemas/schemas";
-import useFindObject from "../../../hooks/use-find-object";
+import useFindObject from "../../../hooks/object/use-find-object";
 import { capitalizeFirstLetter } from "../../../utils/data/capitalize-first-letter";
 
 const initialState = {
@@ -60,7 +60,7 @@ const initialState = {
   },
 };
 
-const CreateObject = ({onClose}) => {
+const CreateObject = ({ onClose }) => {
   const {
     register,
     watch,

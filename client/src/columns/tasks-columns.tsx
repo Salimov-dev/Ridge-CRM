@@ -1,19 +1,19 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Box, Typography } from "@mui/material";
 // components
-import { FormatManagerName } from "../../../components/common/table/helpers/helpers";
-import TableOpenButton from "../../../components/common/buttons/table-open-button";
+import { FormatManagerName } from "../components/common/table/helpers/helpers";
+import TableOpenButton from "../components/common/buttons/table-open-button";
 // store
-import { getObjectById } from "../../../store/object/objects.store";
-import { getMeetingStatusNameById } from "../../../store/meeting/meeting-status.store";
-import { getMeetingTypeNameById } from "../../../store/meeting/meeting-types.store";
+import { getObjectById } from "../store/object/objects.store";
+import { getMeetingStatusNameById } from "../store/meeting/meeting-status.store";
+import { getMeetingTypeNameById } from "../store/meeting/meeting-types.store";
 // utils
-import { FormatDate } from "../../../utils/date/format-date";
-import { FormatTime } from "../../../utils/date/format-time";
+import { FormatDate } from "../utils/date/format-date";
+import { FormatTime } from "../utils/date/format-time";
 import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
 import "dayjs/locale/ru";
-import GoToButton from "../../../components/common/buttons/go-to-button";
+import GoToButton from "../components/common/buttons/go-to-button";
 
 export const tasksColumns = [
   {
@@ -25,7 +25,7 @@ export const tasksColumns = [
       const formattedDate = FormatDate(new Date(date));
       const dayOfWeek = dayjs(date).locale("ru").format("dd");
       return (
-        <Box sx={{ display: "flex", justifyContent: 'center', gap: "6px" }}>
+        <Box sx={{ display: "flex", justifyContent: "center", gap: "6px" }}>
           <Typography>{formattedDate}</Typography>
           <Typography>{dayOfWeek}</Typography>{" "}
         </Box>

@@ -1,6 +1,6 @@
 import { createAction, createSlice } from "@reduxjs/toolkit";
 // utils
-import { generetaAuthError } from "../../utils/generate-auth-error";
+import { generetaAuthError } from "../../utils/auth/generate-auth-error";
 // service
 import authService from "../../services/user/auth-service";
 import userService from "../../services/user/user.service";

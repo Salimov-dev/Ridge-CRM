@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import meetingStatusesService from "../../services/meeting/meeting-status.service";
-import isOutDated from "../../utils/is-out-date";
+import isOutDated from "../../utils/auth/is-out-date";
 
 const meetingStatusesSlice = createSlice({
   name: "meetingStatuses",

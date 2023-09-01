@@ -1,22 +1,22 @@
 // libraries
 import { useDispatch, useSelector } from "react-redux";
 // components
-import TableOpenButton from "../../../components/common/buttons/table-open-button";
+import TableOpenButton from "../components/common/buttons/table-open-button";
 import {
   FormatPhone,
   UserAvatar,
-} from "../../../components/common/table/helpers/helpers";
+} from "../components/common/table/helpers/helpers";
 // mock
-import { gendersArray } from "../../../mock/genders";
+import { gendersArray } from "../mock/genders";
 // store
-import { getUserNameById } from "../../../store/user/users.store";
-import { getUserStatusNameById } from "../../../store/user/user-statuses.store";
+import { getUserNameById } from "../store/user/users.store";
+import { getUserStatusNameById } from "../store/user/user-statuses.store";
 // utils
-import { FormatDate } from "../../../utils/date/format-date";
+import { FormatDate } from "../utils/date/format-date";
 import {
   setUpdateManagerId,
   setUpdateManagerOpenState,
-} from "../../../store/user/update-manager.store";
+} from "../store/user/update-manager.store";
 import { Typography } from "@mui/material";
 
 export const usersColumns = [

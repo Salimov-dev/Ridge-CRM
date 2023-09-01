@@ -6,9 +6,9 @@ import { useEffect, useState } from "react";
 // MUI
 import { Box } from "@mui/material";
 // components
-import Baloon from "./map/baloon";
-import { objectsColumns } from "./table/objects-columns";
-import FilterPanel from "./components/filters-panel";
+import ObjectBaloon from "../../components/UI/maps/object-baloon";
+import { objectsColumns } from "../../columns/objects-columns";
+import ObjectsFiltersPanel from "../../components/UI/filters-panels/obects-filters-panel";
 import BasicTable from "../../components/common/table/basic-table";
 import LayoutTitle from "../../components/common/page-titles/layout-title";
 import ItemsOnMap from "../../components/common/map/items-on-map/items-on-map";
@@ -17,8 +17,8 @@ import AddAndClearFiltersButton from "../../components/common/buttons/add-and-cl
 import UpdateObject from "../../components/pages/update-object/update-object";
 import CreateObject from "../../components/pages/create-object/create-object";
 // hooks
-import useObjects from "../../hooks/use-objects";
-import useSearchObject from "../../hooks/use-search-object";
+import useObjects from "../../hooks/object/use-objects";
+import useSearchObject from "../../hooks/object/use-search-object";
 // store
 import {
   getObjectById,
@@ -122,11 +122,11 @@ const Objects = () => {
         }
         center={center}
         onClick={setSelectedBaloon}
-        baloon={<Baloon object={selectedObject} />}
+        baloon={<ObjectBaloon object={selectedObject} />}
         isLoading={isLoading}
       />
 
-      <FilterPanel
+      <ObjectsFiltersPanel
         data={data}
         register={register}
         objects={objects}

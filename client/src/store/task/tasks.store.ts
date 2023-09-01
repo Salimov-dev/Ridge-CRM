@@ -1,5 +1,5 @@
 import { createAction, createSlice } from "@reduxjs/toolkit";
-import isOutDated from "../../utils/is-out-date";
+import isOutDated from "../../utils/auth/is-out-date";
 import localStorageService from "../../services/user/local.storage-service";
 import tasksService from "../../services/tasks/tasks.service";
 
@@ -92,7 +92,7 @@ export function createTask(payload) {
     try {
       const { content } = await tasksService.create(payload);
       dispatch(taskCreated(content));
-      loadTasksList()
+      loadTasksList();
     } catch (error) {
       dispatch(createTaskFailed(error.message));
     }

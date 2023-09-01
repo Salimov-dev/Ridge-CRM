@@ -2,16 +2,19 @@ import dayjs from "dayjs";
 import { orderBy } from "lodash";
 import { useSelector } from "react-redux";
 // store
-import { getObjectsList } from "../store/object/objects.store";
+import { getObjectsList } from "../../store/object/objects.store";
 import {
   getMeetingLoadingStatus,
   getMeetingsList,
-} from "../store/meeting/meetings.store";
-import { getCurrentUserId, getUsersList } from "../store/user/users.store";
-import { getTaskLoadingStatus, getTasksList } from "../store/task/tasks.store";
-import getDateToday from "../utils/date/get-date-today";
-import getStartWeekDate from "../utils/date/get-start-week-date";
-import getEndWeekDate from "../utils/date/get-end-week-date";
+} from "../../store/meeting/meetings.store";
+import { getCurrentUserId, getUsersList } from "../../store/user/users.store";
+import {
+  getTaskLoadingStatus,
+  getTasksList,
+} from "../../store/task/tasks.store";
+import getDateToday from "../../utils/date/get-date-today";
+import getStartWeekDate from "../../utils/date/get-start-week-date";
+import getEndWeekDate from "../../utils/date/get-end-week-date";
 
 const useCalendar = (
   setOpenCreateManagerTask,

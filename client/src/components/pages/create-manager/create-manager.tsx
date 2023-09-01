@@ -16,7 +16,7 @@ import {
 // schema
 import { managerSchema } from "../../../schemas/schemas";
 // utils
-import getRandomInt from "../../../utils/get-random-int";
+import getRandomInt from "../../../utils/other/get-random-int";
 
 const initialState = {
   email: "",

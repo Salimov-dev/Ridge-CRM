@@ -1,33 +1,17 @@
-import { Box, styled } from "@mui/material";
 // components
-import SearchField from "../../../components/common/inputs/search-field";
-import MultiSelectField from "../../../components/common/inputs/multi-select-field";
-import SimpleSelectField from "../../../components/common/inputs/simple-select-field";
+import SearchField from "../../common/inputs/search-field";
+import MultiSelectField from "../../common/inputs/multi-select-field";
+import SimpleSelectField from "../../common/inputs/simple-select-field";
+import { FieldsContainer, Form } from "../../common/forms/styled/styled";
 // mock
 import { gendersArray } from "../../../mock/genders";
 
-const Form = styled(`form`)({
-  display: "flex",
-  width: "100%",
-  alignItems: "center",
-  flexDirection: "column",
-  marginBottom: "10px",
-  gap: "12px",
-});
-
-const FieldsContainer = styled(Box)`
-  width: 100%;
-  display: flex;
-  gap: 4px;
-`;
-
-const FilterPanel = ({
+const UsersFiltersPanel = ({
+  register,
   data,
   usersList,
   statusesList,
-  register,
   setValue,
-  handleKeyDown,
   isLoading,
 }) => {
   return (
@@ -37,7 +21,6 @@ const FilterPanel = ({
           register={register}
           label="Найти по фамилии"
           name="lastName"
-          onKeyDown={handleKeyDown}
           value={data.lastName}
           inputProps={{ maxLength: 30 }}
           disabled={isLoading ? true : false}
@@ -46,7 +29,6 @@ const FilterPanel = ({
           register={register}
           label="Найти по телефону"
           name="phone"
-          onKeyDown={handleKeyDown}
           value={data.phone}
           inputProps={{ maxLength: 12 }}
           disabled={isLoading ? true : false}
@@ -59,7 +41,6 @@ const FilterPanel = ({
           inputProps={{ maxLength: 30 }}
           disabled={isLoading ? true : false}
         />
-
         <MultiSelectField
           itemsList={usersList}
           selectedItems={data.selectedUsers}
@@ -93,4 +74,4 @@ const FilterPanel = ({
   );
 };
 
-export default FilterPanel;
+export default UsersFiltersPanel;

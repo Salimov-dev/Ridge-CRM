@@ -9,9 +9,9 @@ import { getObjectById } from "../../../store/object/objects.store";
 import { getMeetingTypeNameById } from "../../../store/meeting/meeting-types.store";
 import { getMeetingStatusNameById } from "../../../store/meeting/meeting-status.store";
 // components
-import Attribute from "../../../components/common/map/baloon/attribute";
-import DividerStyled from "../../../components/common/divider/divider-styled";
-import OpenObjectButton from "../../../components/common/map/baloon/open-object-button";
+import Attribute from "../../common/map/baloon/attribute";
+import DividerStyled from "../../common/divider/divider-styled";
+import OpenObjectButton from "../../common/map/baloon/open-object-button";
 
 const BaloonContainer = styled(Box)`
   width: 100%;
@@ -23,7 +23,7 @@ const BaloonContainer = styled(Box)`
   padding: 10px 0;
 `;
 
-const Baloon = ({ meeting }) => {
+const MeetingBaloon = ({ meeting }) => {
   const object = useSelector(getObjectById(meeting?.objectId));
   const objectId = meeting?.objectId;
   const objectAddress = `${object?.location.city}, ${object?.location.address}`;
@@ -35,14 +35,8 @@ const Baloon = ({ meeting }) => {
 
   return (
     <BaloonContainer>
-      <Attribute
-        title="Дата встречи:"
-        subTitle={date}
-      />
-      <Attribute
-        title="Время встречи:"
-        subTitle={time}
-      />
+      <Attribute title="Дата встречи:" subTitle={date} />
+      <Attribute title="Время встречи:" subTitle={time} />
       <Attribute
         title="Адрес:"
         subTitle={`${meeting?.location?.city}, ${meeting?.location?.address}`}
@@ -66,4 +60,4 @@ const Baloon = ({ meeting }) => {
   );
 };
 
-export default Baloon;
+export default MeetingBaloon;

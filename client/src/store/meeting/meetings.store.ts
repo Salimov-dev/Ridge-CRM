@@ -1,5 +1,5 @@
 import { createAction, createSlice } from "@reduxjs/toolkit";
-import isOutDated from "../../utils/is-out-date";
+import isOutDated from "../../utils/auth/is-out-date";
 import localStorageService from "../../services/user/local.storage-service";
 import meetingsService from "../../services/meeting/meetings.service";
 

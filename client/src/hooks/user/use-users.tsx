@@ -1,6 +1,6 @@
 import { orderBy } from "lodash";
 import { useDispatch, useSelector } from "react-redux";
-import { getUserStatusesList } from "../store/user/user-statuses.store";
+import { getUserStatusesList } from "../../store/user/user-statuses.store";
 
 const useUsers = (
   setOpenCreate,

@@ -1,13 +1,13 @@
 import { Box, styled } from "@mui/material";
-import TableOpenButton from "../../../components/common/buttons/table-open-button";
+import TableOpenButton from "../components/common/buttons/table-open-button";
 import {
   FormatDistrict,
   FormatManagerName,
   FormatMetro,
   FormatObjectStatus,
   FormatPhone,
-} from "../../../components/common/table/helpers/helpers";
-import { FormatDate } from "../../../utils/date/format-date";
+} from "../components/common/table/helpers/helpers";
+import { FormatDate } from "../utils/date/format-date";
 import { useNavigate } from "react-router-dom";
 
 const AlignCenter = styled(Box)`

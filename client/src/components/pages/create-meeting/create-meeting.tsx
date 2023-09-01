@@ -17,7 +17,7 @@ import { getMeetingStatusesList } from "../../../store/meeting/meeting-status.st
 // schema
 import { meetingSchema } from "../../../schemas/schemas";
 // hooks
-import useFindObject from "../../../hooks/use-find-object";
+import useFindObject from "../../../hooks/object/use-find-object";
 // utils
 import { createMeeting } from "../../../store/meeting/meetings.store";
 import { getMeetingTypesList } from "../../../store/meeting/meeting-types.store";
@@ -25,7 +25,7 @@ import { capitalizeFirstLetter } from "../../../utils/data/capitalize-first-lett
 
 const Component = styled(Box)`
   width: 100%;
-`
+`;
 
 const initialState = {
   status: "",
@@ -43,7 +43,7 @@ const initialState = {
   },
 };
 
-const CreateMeeting = ({onClose}) => {
+const CreateMeeting = ({ onClose }) => {
   const dispatch = useDispatch();
   const objects = useSelector(getObjectsList());
   const statuses = useSelector(getMeetingStatusesList());

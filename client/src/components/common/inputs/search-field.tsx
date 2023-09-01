@@ -24,12 +24,10 @@ const SearchField = ({
   register,
   label,
   name,
-  onKeyDown,
   value,
   inputProps,
-  disabled = false
+  disabled = false,
 }) => {
-
   return (
     <StyledTextField
       {...register(name)}
@@ -38,7 +36,6 @@ const SearchField = ({
       variant="outlined"
       id={name}
       name={name}
-      onKeyDown={onKeyDown}
       value={value}
       disabled={disabled}
       inputProps={inputProps}

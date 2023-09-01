@@ -1,10 +1,10 @@
 import { useSelector } from "react-redux";
 import { Box, styled } from "@mui/material";
 // components
-import { FormatPhone } from "../../../components/common/table/helpers/helpers";
-import DividerStyled from "../../../components/common/divider/divider-styled";
-import OpenObjectButton from "../../../components/common/map/baloon/open-object-button";
-import Attribute from "../../../components/common/map/baloon/attribute";
+import { FormatPhone } from "../../common/table/helpers/helpers";
+import DividerStyled from "../../common/divider/divider-styled";
+import OpenObjectButton from "../../common/map/baloon/open-object-button";
+import Attribute from "../../common/map/baloon/attribute";
 // utils
 import { FormatDate } from "../../../utils/date/format-date";
 import { makeDigitSeparator } from "../../../utils/data/make-digit-separator";
@@ -26,7 +26,7 @@ const BaloonContainer = styled(Box)`
   padding: 10px 0;
 `;
 
-const Baloon = ({ object }) => {
+const ObjectBaloon = ({ object }) => {
   const createdAt = FormatDate(object.created_at);
   const manager = useSelector(getUserNameById(object?.userId));
   const city = object?.location?.city;
@@ -108,4 +108,4 @@ const Baloon = ({ object }) => {
   );
 };
 
-export default Baloon;
+export default ObjectBaloon;

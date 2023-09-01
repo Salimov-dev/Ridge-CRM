@@ -4,11 +4,11 @@ import { Box } from "@mui/material";
 import { useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 // components
-import { usersColumns } from "./table/users-columns";
-import FilterPanel from "./components/filter-panel";
+import { usersColumns } from "../../columns/users-columns";
+import UsersFiltersPanel from "../../components/UI/filters-panels/users-filters-panel";
 import BasicTable from "../../components/common/table/basic-table";
 // hooks
-import useSearchUser from "../../hooks/use-search-user";
+import useSearchUser from "../../hooks/user/use-search-user";
 import LayoutTitle from "../../components/common/page-titles/layout-title";
 // store
 import {
@@ -24,7 +24,7 @@ import {
   loadUpdateManagerOpenState,
   setUpdateManagerOpenState,
 } from "../../store/user/update-manager.store";
-import useUsers from "../../hooks/use-users";
+import useUsers from "../../hooks/user/use-users";
 
 const initialState = {
   lastName: "",
@@ -99,13 +99,12 @@ const Users = () => {
         disabled={isLoading}
         onOpen={handleOpenCreate}
       />
-      <FilterPanel
+      <UsersFiltersPanel
         data={data}
         usersList={getActualUsersList()}
         statusesList={getActualStatusesList()}
         register={register}
         setValue={setValue}
-        handleKeyDown={handleKeyDown}
         isLoading={isLoading}
       />
       <BasicTable

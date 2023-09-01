@@ -30,7 +30,7 @@ import { AppStyled, RightSide } from "./styled";
 import "./styles.css";
 // other
 import AppLoader from "./hoc/app-loader";
-import ScrollToTop from "./utils/scroll-to-top";
+import ScrollToTop from "./utils/other/scroll-to-top";
 import { ColorModeContext, useMode } from "./theme";
 
 function App() {

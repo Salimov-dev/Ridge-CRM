@@ -1,29 +1,32 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Box, Typography } from "@mui/material";
 // components
-import { FormatManagerName } from "../../../components/common/table/helpers/helpers";
-import TableOpenButton from "../../../components/common/buttons/table-open-button";
+import { FormatManagerName } from "../components/common/table/helpers/helpers";
+import TableOpenButton from "../components/common/buttons/table-open-button";
 // store
-import { getObjectById } from "../../../store/object/objects.store";
-import { getMeetingStatusNameById } from "../../../store/meeting/meeting-status.store";
-import { getMeetingTypeNameById } from "../../../store/meeting/meeting-types.store";
+import { getObjectById } from "../store/object/objects.store";
+import { getMeetingStatusNameById } from "../store/meeting/meeting-status.store";
+import { getMeetingTypeNameById } from "../store/meeting/meeting-types.store";
 // utils
-import { FormatDate } from "../../../utils/date/format-date";
-import { FormatTime } from "../../../utils/date/format-time";
+import { FormatDate } from "../utils/date/format-date";
+import { FormatTime } from "../utils/date/format-time";
+import {
+  setUpdateMeetingId,
+  setUpdateMeetingOpenState,
+} from "../store/meeting/update-meeting.store";
 import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
-import "dayjs/locale/ru";
-import GoToButton from "../../../components/common/buttons/go-to-button";
+import GoToButton from "../components/common/buttons/go-to-button";
 
-export const weeklyMeetingsColumns = [
+export const meetingsColumns = [
   {
     accessorKey: "date",
     header: "Дата",
     enableSorting: false,
     cell: (info) => {
       const date = info.getValue();
-      const formattedDate = FormatDate(new Date(date));
-      const dayOfWeek = dayjs(date).locale("ru").format("dd");
+      const formattedDate = FormatDate(new Date(date)); // Предполагая, что у вас есть функция FormatDate
+      const dayOfWeek = dayjs(date).locale("ru").format("dd"); // Получаем сокращенное имя дня недели
       return (
         <Box sx={{ display: "flex", gap: "6px" }}>
           <Typography>{formattedDate}</Typography>
@@ -88,11 +91,7 @@ export const weeklyMeetingsColumns = [
           }}
         >
           {result}
-          <GoToButton
-            text="Перейти"
-            color="neutral"
-            onClick={handleClick}
-          />
+          <GoToButton text="Перейти" color="neutral" onClick={handleClick} />
         </Box>
       );
     },
@@ -134,6 +133,21 @@ export const weeklyMeetingsColumns = [
         <Typography sx={{ textAlign: "center" }}>
           {FormatDate(new Date(date))}
         </Typography>
+      );
+    },
+  },
+  {
+    accessorKey: "_id",
+    header: "",
+    cell: (info) => {
+      const meetingId = info.getValue();
+      const dispatch = useDispatch();
+      const handleClick = () => {
+        dispatch(setUpdateMeetingId(meetingId));
+        dispatch(setUpdateMeetingOpenState(true));
+      };
+      return (
+        <TableOpenButton id={meetingId} text="Править" onClick={handleClick} />
       );
     },
   },
