@@ -1,5 +1,4 @@
 // libraries
-import dayjs from "dayjs";
 import { Box } from "@mui/material";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
@@ -61,11 +60,14 @@ const Calendar = () => {
         onCreateManagerTask={handleOpenCreateMyTaskManagerTask}
         onCreateMeeting={handleOpenCreateMeeting}
       />
+
       <DaysOfWeek />
+
       <CalendarBody
         currentMonth={currentMonth}
         onOpenCreateMyTask={handleOpenCreateMyTask}
       />
+
       <Box sx={{ display: "flex", justifyContent: "end" }}>
         <CreateButtons
           onCreateMeeting={handleOpenCreateMeeting}
@@ -73,6 +75,7 @@ const Calendar = () => {
           onCreateManagerTask={handleOpenCreateMyTaskManagerTask}
         />
       </Box>
+
       <CurrentWeeklyMeetings
         meetings={meetings}
         columns={columns}
@@ -105,6 +108,7 @@ const Calendar = () => {
           />
         }
       />
+
       <DialogStyled
         onClose={handleCloseCreateMyTask}
         open={openCreateMyTask}

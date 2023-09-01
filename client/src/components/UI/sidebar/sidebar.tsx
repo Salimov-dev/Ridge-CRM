@@ -59,7 +59,6 @@ const Sidebar = () => {
     <Component
       sx={{
         height: "inherit",
-        minWidth: !isCollapsed ? "220px" : "inherit",
         "& .ps-sidebar-container": {
           overflow: "hidden",
           background: `${colors.primary[400]} !important`,
@@ -70,9 +69,6 @@ const Sidebar = () => {
         },
         "& .pro-icon-wrapper": {
           backgroundColor: "transparent !important",
-        },
-        "& .pro-inner-item": {
-          padding: "5px 35px 5px 20px !important",
         },
         "& .ps-menu-button:hover": {
           color: "#868dfb !important",
