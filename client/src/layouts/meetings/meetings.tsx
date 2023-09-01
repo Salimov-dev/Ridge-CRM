@@ -1,13 +1,14 @@
 // libraries
+import dayjs from "dayjs";
 import { orderBy } from "lodash";
 import { Box } from "@mui/material";
 import { useForm } from "react-hook-form";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 // components
 import Baloon from "./map/baloon";
-import { groupedColumns } from "./table/columns";
 import FilterPanel from "./components/filter-panel";
+import { meetingsColumns } from "./table/meetings-columns";
 import BasicTable from "../../components/common/table/basic-table";
 import LayoutTitle from "../../components/common/page-titles/layout-title";
 import DialogStyled from "../../components/common/dialog/dialog-styled";
@@ -16,23 +17,18 @@ import UpdateMeeting from "../../components/pages/update-meeting/update-meeting"
 import ItemsOnMap from "../../components/common/map/items-on-map/items-on-map";
 import AddAndClearFiltersButton from "../../components/common/buttons/add-and-clear-filters-button";
 // hooks
+import useMeetings from "../../hooks/use-meetings";
 import useSearchMeeting from "../../hooks/use-search-meeting";
 // icons
 import target from "../../assets/map/target_meeting.png";
 import targetCluster from "../../assets/map/targeMeeting_cluster.png";
 // store
-import { getUsersList } from "../../store/user/users.store";
-import { getMeetingTypesList } from "../../store/meeting/meeting-types.store";
-import { getMeetingStatusesList } from "../../store/meeting/meeting-status.store";
 import {
   getMeetingById,
   getMeetingLoadingStatus,
   getMeetingsList,
 } from "../../store/meeting/meetings.store";
-import {
-  loadUpdateMeetingOpenState,
-  setUpdateMeetingOpenState,
-} from "../../store/meeting/update-meeting.store";
+import { setUpdateMeetingOpenState } from "../../store/meeting/update-meeting.store";
 
 const initialState = {
   startDate: null,
@@ -45,121 +41,60 @@ const initialState = {
 const Meetings = () => {
   const [selectedBaloon, setSelectedBaloon] = useState(null);
   const [openCreate, setOpenCreate] = useState(false);
-  const users = useSelector(getUsersList());
   const meetings = useSelector(getMeetingsList());
+  const columns = meetingsColumns;
   const selectedMeeting = useSelector(getMeetingById(selectedBaloon));
   const isLoading = useSelector(getMeetingLoadingStatus());
-  const statuses = useSelector(getMeetingStatusesList());
-  const types = useSelector(getMeetingTypesList());
-  const isOpenUpdate = useSelector(loadUpdateMeetingOpenState());
-  const center = [59.930320630519155, 30.32906024941998];
-  const mapZoom = 11;
-  const columns = groupedColumns;
-  const dispatch = useDispatch();
-
   const localStorageState = JSON.parse(
     localStorage.getItem("search-meetings-data")
   );
 
+  const {
+    isOpenUpdate,
+    center,
+    mapZoom,
+    handleOpenCreate,
+    handleCloseCreate,
+    handleCloseUpdate,
+  } = useMeetings(setOpenCreate, setUpdateMeetingOpenState);
+
+  const formatedState = {
+    ...localStorageState,
+    startDate: localStorageState?.startDate
+      ? dayjs(localStorageState?.startDate)
+      : null,
+    endDate: localStorageState?.endDate
+      ? dayjs(localStorageState?.endDate)
+      : null,
+  };
+
   const { register, watch, setValue, reset } = useForm({
-    defaultValues: localStorageState || initialState,
+    defaultValues: Boolean(localStorageState) ? formatedState : initialState,
     mode: "onBlur",
   });
 
   const data = watch();
-
-  const isInputEmpty = JSON.stringify(initialState) !== JSON.stringify(data);
-
   const searchedMeetings = useSearchMeeting({
     meetings,
     data,
   });
-
   const sortedMeetings = orderBy(searchedMeetings, ["date"], ["asc"]);
+  const isInputEmpty = JSON.stringify(initialState) !== JSON.stringify(data);
 
-  const getActualUsersList = () => {
-    const filteredUsers = meetings?.map((meet) => meet?.userId);
-    const formatedUsersArray = filteredUsers?.filter((user) => user !== "");
+  useEffect(() => {
+    const hasLocalStorageData = localStorage.getItem("search-meetings-data");
 
-    const uniqueUsers = [...new Set(formatedUsersArray)];
-
-    const actualUsersArray = uniqueUsers?.map((id) => {
-      const foundObject = users?.find((user) => user._id === id);
-      return foundObject
-        ? {
-            _id: foundObject._id,
-            name: `${foundObject.name.lastName} ${foundObject.name.firstName}`,
-          }
-        : null;
-    });
-
-    const sortedUsers = orderBy(actualUsersArray, ["name"], ["asc"]);
-
-    return sortedUsers;
-  };
-
-  const getActualStatusesList = () => {
-    const filteredStatuses = meetings?.map((meet) => meet?.status);
-    const formatedStatusesArray = filteredStatuses?.filter(
-      (status) => status !== ""
-    );
-
-    const uniqueStatuses = [...new Set(formatedStatusesArray)];
-
-    const actualStatusesArray = uniqueStatuses?.map((id) => {
-      const foundObject = statuses?.find((status) => status._id === id);
-      return foundObject
-        ? {
-            _id: foundObject._id,
-            name: foundObject.name,
-          }
-        : null;
-    });
-
-    const sortedStatuses = orderBy(actualStatusesArray, ["name"], ["asc"]);
-
-    return sortedStatuses;
-  };
-
-  const getActuaTypesList = () => {
-    const filteredTypes = meetings?.map((meet) => meet?.meetingType);
-    const formatedTypesArray = filteredTypes?.filter((type) => type !== "");
-    const uniqueTypes = [...new Set(formatedTypesArray)];
-
-    const actualTypesArray = uniqueTypes?.map((id) => {
-      const foundObject = types?.find((type) => type._id === id);
-      return foundObject
-        ? {
-            _id: foundObject._id,
-            name: foundObject.name,
-          }
-        : null;
-    });
-
-    const sortedTypes = orderBy(actualTypesArray, ["name"], ["asc"]);
-
-    return sortedTypes;
-  };
-
-  const handleOpenCreate = () => {
-    setOpenCreate(true);
-  };
-
-  const handleCloseCreate = () => {
-    setOpenCreate(false);
-  };
-
-  const handleCloseUpdate = () => {
-    dispatch(setUpdateMeetingOpenState(false));
-  };
+    if (hasLocalStorageData?.length) {
+      localStorage.setItem(
+        "search-meetings-data",
+        JSON.stringify(initialState)
+      );
+    }
+  }, []);
 
   useEffect(() => {
     localStorage.setItem("search-meetings-data", JSON.stringify(data));
   }, [data]);
-
-  useEffect(() => {
-    localStorage.setItem("search-meetings-data", JSON.stringify(initialState));
-  }, []);
 
   return (
     <Box>
@@ -193,9 +128,6 @@ const Meetings = () => {
         register={register}
         setValue={setValue}
         isLoading={isLoading}
-        usersList={getActualUsersList()}
-        statusesList={getActualStatusesList()}
-        typesList={getActuaTypesList()}
       />
 
       <BasicTable

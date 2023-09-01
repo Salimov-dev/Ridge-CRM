@@ -15,7 +15,7 @@ const AlignCenter = styled(Box)`
   justify-content: center;
 `;
 
-export const groupedColumns = [
+export const objectsColumns = [
   {
     accessorKey: "created_at",
     header: "Дата",

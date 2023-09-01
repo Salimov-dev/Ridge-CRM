@@ -3,7 +3,7 @@ import { Box } from "@mui/material";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 // components
-import { groupedColumns } from "./table/columns";
+import { weeklyMeetingsColumns } from "./table/weekly-meetings-columns";
 import Header from "./components/header/header";
 import DaysOfWeek from "./components/days-of-week/days-of-week";
 import DialogStyled from "../../components/common/dialog/dialog-styled";
@@ -28,7 +28,7 @@ const Calendar = () => {
   const [openCreateManagerTask, setOpenCreateManagerTask] = useState(false);
   const [openCreateMeeting, setOpenCreateMeeting] = useState(false);
   const monthIndex = useSelector(getMonthIndexState());
-  const columns = groupedColumns;
+  const columns = weeklyMeetingsColumns;
 
   const {
     meetings,

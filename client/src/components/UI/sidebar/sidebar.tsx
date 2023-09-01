@@ -39,6 +39,9 @@ const Sidebar = () => {
     if (currentPath === "/meetings") {
       return "Встречи";
     }
+    if (currentPath === "/calendar") {
+      return "Календарь";
+    }
     return "";
   }
 

@@ -6,7 +6,7 @@ import {
   estateOptionsColumns,
   estateTypeColumns,
   locationColumns,
-} from "../table/columns";
+} from "../table/object-page-columns";
 
 const Component = styled(Box)`
   display: flex;

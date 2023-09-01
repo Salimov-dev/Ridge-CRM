@@ -1,17 +1,15 @@
 // libraries
-import { Box, Button, Typography, styled } from "@mui/material";
+import { Box, styled } from "@mui/material";
 import { useSelector } from "react-redux";
 // components
 import MonthToday from "./components/month-today";
+import CreateButtons from "./components/create-buttons";
 import ControlButtons from "./components/control-buttons";
-import CreateTaskButton from "./components/create-task-button";
 // store
 import { getMonthIndexState } from "../../../../store/month-index.store";
-import CreateMeetingButton from "./components/create-meeting-button";
-import CreateButtons from "./components/create-buttons";
 
 const Component = styled(Box)`
-  margin-bottom: 10px;
+  margin-bottom: 6px;
   display: flex;
   gap: 4px;
   justify-content: space-between;

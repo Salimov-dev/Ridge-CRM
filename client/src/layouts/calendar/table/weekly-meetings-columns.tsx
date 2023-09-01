@@ -14,7 +14,7 @@ import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
 import "dayjs/locale/ru";
 
-export const groupedColumns = [
+export const weeklyMeetingsColumns = [
   {
     accessorKey: "date",
     header: "Дата",

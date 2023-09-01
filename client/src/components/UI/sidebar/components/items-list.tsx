@@ -63,7 +63,11 @@ const ItemsList = ({ isCollapsed, selected, setSelected, colors }) => {
       <Item
         title="Календарь"
         to="/calendar"
-        icon={<CalendarTodayOutlinedIcon />}
+        icon={
+          <Tooltip title="Календарь" placement="top-start" arrow>
+            <CalendarTodayOutlinedIcon />
+          </Tooltip>
+        }
         selected={selected}
         setSelected={setSelected}
       />

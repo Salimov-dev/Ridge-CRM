@@ -19,7 +19,7 @@ import {
 } from "../../../store/user/update-manager.store";
 import { Typography } from "@mui/material";
 
-export const groupedColumns = [
+export const usersColumns = [
   {
     header: "Основная информация",
     columns: [

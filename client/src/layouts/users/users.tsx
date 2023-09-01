@@ -1,16 +1,14 @@
 // libraries
 import { useEffect, useState } from "react";
 import { Box } from "@mui/material";
-import { useDispatch, useSelector } from "react-redux";
-import { orderBy } from "lodash";
+import { useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 // components
-import { groupedColumns } from "./table/columns";
+import { usersColumns } from "./table/users-columns";
 import FilterPanel from "./components/filter-panel";
 import BasicTable from "../../components/common/table/basic-table";
 // hooks
 import useSearchUser from "../../hooks/use-search-user";
-import { getUserStatusesList } from "../../store/user/user-statuses.store";
 import LayoutTitle from "../../components/common/page-titles/layout-title";
 // store
 import {
@@ -26,6 +24,7 @@ import {
   loadUpdateManagerOpenState,
   setUpdateManagerOpenState,
 } from "../../store/user/update-manager.store";
+import useUsers from "../../hooks/use-users";
 
 const initialState = {
   lastName: "",
@@ -42,6 +41,30 @@ const initialState = {
 
 const Users = () => {
   const [openCreate, setOpenCreate] = useState(false);
+  const columns = usersColumns;
+  const isLoading = useSelector(getUsersLoadingStatus());
+  const isOpenUpdate = useSelector(loadUpdateManagerOpenState());
+
+  const users = useSelector(getUsersList());
+  const currentUserId = useSelector(getCurrentUserId());
+  const usersWithoutCurrentUser = users.filter(
+    (user) => user._id !== currentUserId
+  );
+
+  const {
+    getActualUsersList,
+    getActualStatusesList,
+    handleKeyDown,
+    handleOpenCreate,
+    handleCloseCreate,
+    handleCloseUpdate,
+  } = useUsers(
+    setOpenCreate,
+    setUpdateManagerOpenState,
+    users,
+    usersWithoutCurrentUser
+  );
+
   const localStorageState = JSON.parse(
     localStorage.getItem("search-users-data")
   );
@@ -49,84 +72,13 @@ const Users = () => {
     defaultValues: localStorageState || initialState,
     mode: "onBlur",
   });
-
   const data = watch();
-  const columns = groupedColumns;
-  const users = useSelector(getUsersList());
-  const currentUserId = useSelector(getCurrentUserId());
-  const usersWithoutCurrentUser = users.filter(
-    (user) => user._id !== currentUserId
-  );
-  const statuses = useSelector(getUserStatusesList());
-  const isLoading = useSelector(getUsersLoadingStatus());
   const isInputEmpty = JSON.stringify(initialState) !== JSON.stringify(data);
-  const isOpenUpdate = useSelector(loadUpdateManagerOpenState());
-
-  const dispatch = useDispatch();
 
   const searchedUsers = useSearchUser({
     users: usersWithoutCurrentUser,
     data,
   });
-
-  const handleKeyDown = (e) => {
-    const keyValue = e.key;
-    const isRussianLetter = /^[А-ЯЁа-яё]$/.test(keyValue);
-    const isDigit = /^\d$/.test(keyValue);
-    const isBackspace = e.keyCode === 8;
-
-    if (!isRussianLetter && !isDigit && !isBackspace) {
-      e.preventDefault();
-    }
-  };
-
-  const getActualUsersList = () => {
-    const actualUsersArray = usersWithoutCurrentUser?.map((u) => {
-      const foundObject = users?.find((user) => user._id === u._id);
-      return foundObject
-        ? {
-            _id: foundObject._id,
-            name: `${foundObject.name.lastName} ${foundObject.name.firstName}`,
-          }
-        : null;
-    });
-
-    const sortedUsers = orderBy(actualUsersArray, ["name"], ["asc"]);
-
-    return sortedUsers;
-  };
-
-  const getActualStatusesList = () => {
-    const filteredStatuses = usersWithoutCurrentUser?.map(
-      (user) => user?.status
-    );
-    const formateStatusesArray = filteredStatuses?.filter((s) => s !== "");
-
-    const uniqueStatuses = [...new Set(formateStatusesArray)];
-
-    const actualStatusesArray = uniqueStatuses?.map((id) => {
-      const foundObject = statuses?.find((obj) => obj._id === id);
-      return foundObject
-        ? { _id: foundObject._id, name: foundObject.name }
-        : null;
-    });
-
-    const sortedStatuses = orderBy(actualStatusesArray, ["name"], ["asc"]);
-
-    return sortedStatuses;
-  };
-
-  const handleOpenCreate = () => {
-    setOpenCreate(true);
-  };
-
-  const handleCloseCreate = () => {
-    setOpenCreate(false);
-  };
-
-  const handleCloseUpdate = () => {
-    dispatch(setUpdateManagerOpenState(false));
-  };
 
   useEffect(() => {
     localStorage.setItem("search-users-data", JSON.stringify(data));
