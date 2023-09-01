@@ -4,7 +4,7 @@ import CreateMeetingButton from "../../../../../layouts/calendar/components/head
 import BasicTable from "../../../../common/table/basic-table";
 import { meetingsColumns } from "../../../../../columns/meetings-columns";
 
-const ObjectMeetings = ({meetings, handleOpenCreateMeeting, isMeetingsLoading}) => {
+const ObjectMeetings = ({meetings, onOpenCreateMeeting, isMeetingsLoading}) => {
   return (
     <>
       <DividerStyled />
@@ -16,7 +16,7 @@ const ObjectMeetings = ({meetings, handleOpenCreateMeeting, isMeetingsLoading}) 
         }}
       >
         <Typography variant="h3">Встречи по этому объекту:</Typography>
-        <CreateMeetingButton onOpen={handleOpenCreateMeeting} />
+        <CreateMeetingButton onOpen={onOpenCreateMeeting} />
       </Box>
       {meetings?.length ? (
         <BasicTable

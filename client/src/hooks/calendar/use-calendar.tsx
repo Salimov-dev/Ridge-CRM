@@ -66,38 +66,31 @@ const useCalendar = (
     transformObjects?.push({ _id: obj._id, name: obj.location.address });
   });
 
-  const handleOpenCreateManagerTask = () => {
-    setOpenCreateManagerTask(true);
-    setOpenCreateMyTask(false);
+  const handleOpenCreateMeeting = () => {
+    setOpenCreateMeeting(true);
   };
 
-  const handleCloseCreateMyTask = () => {
-    setOpenCreateMyTask(false);
-    setDateCreateMyTask(null);
-    setOpenCreateManagerTask(false);
+  const handleOpenCreateManagerTask = () => {
+    setOpenCreateManagerTask(true);
   };
 
   const handleOpenCreateMyTask = (day) => {
     const type = typeof day.date;
     setDateCreateMyTask(dayjs());
     setOpenCreateMyTask(true);
-    setOpenCreateManagerTask(false);
     if (type === "function") {
       setDateCreateMyTask(day);
     }
   };
-
-  const handleCloseCreateManagerTask = () => {
-    setOpenCreateManagerTask(false);
-    setOpenCreateMyTask(false);
-  };
-
-  const handleOpenCreateMeeting = () => {
-    setOpenCreateMeeting(true);
-  };
-
   const handleCloseCreateMeeting = () => {
     setOpenCreateMeeting(false);
+  };
+  const handleCloseCreateManagerTask = () => {
+    setOpenCreateManagerTask(false);
+  };
+  const handleCloseCreateMyTask = () => {
+    setOpenCreateMyTask(false);
+    setDateCreateMyTask(null);
   };
 
   return {
