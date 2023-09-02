@@ -25,8 +25,9 @@ import sidebarCollapsStateReducer from "./sidebar-collaps-state.store";
 import monthIndexReducer from "./month-index.store";
 import updateMeetingReducer from "./meeting/update-meeting.store";
 import updateObjectReducer from "./object/update-object.store";
-import updateManagerReducer from "./user/update-manager.store";
-import updateTaskReducer from "./task/update-task.store";
+import updateManagerReducer from "./user/update-user.store";
+import updateMyTaskReducer from "./task/update-task.store";
+import updateManagerTaskReducer from "./task/update-manager-task.store";
 
 const rootReducer = combineReducers({
   // objects
@@ -50,7 +51,8 @@ const rootReducer = combineReducers({
   meetingTypes: meetingTypesReducer,
   // tasks
   tasks: tasksReducer,
-  updateTask: updateTaskReducer,
+  updateMyTask: updateMyTaskReducer,
+  updateManagerTask: updateManagerTaskReducer,
   // calendar
   monthIndex: monthIndexReducer,
   updateMeeting: updateMeetingReducer,

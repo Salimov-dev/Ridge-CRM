@@ -1,39 +1,39 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const updateTaskSlice = createSlice({
-  name: "updateTask",
+const updateMyTaskSlice = createSlice({
+  name: "updateMyTask",
   initialState: {
     entities: false,
     taskId: "",
   },
   reducers: {
-    updateTaskOpenSetted: (state, action) => {
+    updateMyTaskOpenSetted: (state, action) => {
       state.entities = action.payload;
     },
-    updateTaskId: (state, action) => {
+    updateMyTaskId: (state, action) => {
       state.taskId = action.payload;
     },
   },
 });
 
-const { reducer: updateTaskReducer, actions } = updateTaskSlice;
+const { reducer: updateMyTaskReducer, actions } = updateMyTaskSlice;
 
-const { updateTaskOpenSetted, updateTaskId } = actions;
+const { updateMyTaskOpenSetted, updateMyTaskId } = actions;
 
-export const setUpdateTaskOpenState = (payload) => (dispatch) => {
-  dispatch(updateTaskOpenSetted(payload));
+export const setupdateMyTaskOpenState = (payload) => (dispatch) => {
+  dispatch(updateMyTaskOpenSetted(payload));
 };
 
-export const setUpdateTaskId = (payload) => (dispatch) => {
-  dispatch(updateTaskId(payload));
+export const setupdateMyTaskId = (payload) => (dispatch) => {
+  dispatch(updateMyTaskId(payload));
 };
 
-export const loadUpdateTaskOpenState = () => (state) => {
-  return state?.updateTask?.entities;
+export const loadupdateMyTaskOpenState = () => (state) => {
+  return state?.updateMyTask?.entities;
 };
 
-export const getUpdateTaskId = () => (state) => {
-  return state.updateTask.taskId;
+export const getupdateMyTaskId = () => (state) => {
+  return state.updateMyTask.taskId;
 };
 
-export default updateTaskReducer;
+export default updateMyTaskReducer;

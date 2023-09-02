@@ -29,6 +29,10 @@ import {
 } from "../../../../store/user/users.store";
 import UpdateMeeting from "../../update-meeting/update-meeting";
 import { loadUpdateMeetingOpenState } from "../../../../store/meeting/update-meeting.store";
+import UpdateMyTask from "../../update-my-task/update-my-task";
+import UpdateManagerTask from "../../update-manager-task/update-manager-task";
+import { loadupdateMyTaskOpenState } from "../../../../store/task/update-task.store";
+import { loadUpdateManagerTaskOpenState } from "../../../../store/task/update-manager-task.store";
 
 const Component = styled(Box)`
   display: flex;
@@ -49,6 +53,9 @@ const ObjectInfo = ({ object, isLoading }) => {
 
   const tasks = useSelector(getObjectTasksList(object._id));
   const isTasksLoading = useSelector(getTaskLoadingStatus());
+  const isOpenUpdateMyTask = useSelector(loadupdateMyTaskOpenState());
+  const isOpenUpdateManagerTask = useSelector(loadUpdateManagerTaskOpenState());
+
 
   const users = useSelector(getUsersList());
   const currentUserId = useSelector(getCurrentUserId());
@@ -81,6 +88,8 @@ const ObjectInfo = ({ object, isLoading }) => {
     handleCloseCreateManagerTask,
     handleCloseCreateMyTask,
     handleCloseUpdateMeeting,
+    handleCloseUpdateMyTask,
+    handleCloseUpdateManagerTask
   } = useObjectInfo(
     setOpenCreateMeeting,
     setOpenCreateMyTask,
@@ -151,6 +160,34 @@ const ObjectInfo = ({ object, isLoading }) => {
             objectPageId={objectId}
             objects={transformObjects}
             onClose={handleCloseCreateMyTask}
+          />
+        }
+      />
+
+      <DialogStyled
+        onClose={handleCloseUpdateMyTask}
+        open={isOpenUpdateMyTask}
+        maxWidth="sm"
+        fullWidth={false}
+        component={
+          <UpdateMyTask
+            title="Изменить свою задачу"
+            onClose={handleCloseUpdateMyTask}
+          />
+        }
+      />
+
+      <DialogStyled
+        onClose={handleCloseUpdateManagerTask}
+        open={isOpenUpdateManagerTask}
+        maxWidth="sm"
+        fullWidth={false}
+        component={
+          <UpdateManagerTask
+            title="Изменить задачу менеджеру"
+            objects={transformObjects}
+            users={transformUsers}
+            onClose={handleCloseUpdateManagerTask}
           />
         }
       />

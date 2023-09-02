@@ -10,13 +10,13 @@ import {
 import { getCurrentUserId, getUsersList } from "../../store/user/users.store";
 import {
   getTaskLoadingStatus,
-  getTasksList,
 } from "../../store/task/tasks.store";
 import { setUpdateMeetingOpenState } from "../../store/meeting/update-meeting.store";
 // utils
 import getStartWeekDate from "../../utils/date/get-start-week-date";
 import getEndWeekDate from "../../utils/date/get-end-week-date";
-import { setUpdateTaskOpenState } from "../../store/task/update-task.store";
+import { setupdateMyTaskOpenState } from "../../store/task/update-task.store";
+import { setUpdateManagerTaskOpenState } from "../../store/task/update-manager-task.store";
 
 const useCalendar = (
   setOpenCreateManagerTask,
@@ -26,7 +26,6 @@ const useCalendar = (
 ) => {
   const objects = useSelector(getObjectsList());
   const meetings = useSelector(getMeetingsList());
-  const tasks = useSelector(getTasksList());
   const isMeetingsLoading = useSelector(getMeetingLoadingStatus());
   const isTasksLoading = useSelector(getTaskLoadingStatus());
 
@@ -44,8 +43,6 @@ const useCalendar = (
     ["date"],
     ["asc"]
   );
-
-  const sortedTasks = orderBy(tasks, ["date"], ["asc"]);
 
   const users = useSelector(getUsersList());
   const currentUserId = useSelector(getCurrentUserId());
@@ -101,7 +98,11 @@ const useCalendar = (
   };
 
   const handleCloseUpdateMyTask = () => {
-    dispatch(setUpdateTaskOpenState(false));
+    dispatch(setupdateMyTaskOpenState(false));
+  };
+
+  const handleCloseUpdateManagerTask = () => {
+    dispatch(setUpdateManagerTaskOpenState(false));
   };
 
   const handleCloseUpdateMeeting = () => {
@@ -114,6 +115,7 @@ const useCalendar = (
     handleCloseCreateMeeting,
     handleCloseUpdateMeeting,
     handleCloseUpdateMyTask,
+    handleCloseUpdateManagerTask,
     handleOpenCreateMyTask,
     handleOpenCreateManagerTask,
     handleOpenCreateMeeting,
@@ -122,7 +124,6 @@ const useCalendar = (
     sortedCurrentWeeklyMeetings,
     transformUsers,
     transformObjects,
-    sortedTasks,
   };
 };
 

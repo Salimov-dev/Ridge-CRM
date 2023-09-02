@@ -1,6 +1,10 @@
+import dayjs from "dayjs";
+import "dayjs/locale/ru";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
 import { Box, Typography } from "@mui/material";
 // components
+import GoToButton from "../components/common/buttons/go-to-button";
 import { FormatManagerName } from "../components/common/table/helpers/helpers";
 import TableOpenButton from "../components/common/buttons/table-open-button";
 // store
@@ -8,11 +12,16 @@ import { getObjectById } from "../store/object/objects.store";
 // utils
 import { FormatDate } from "../utils/date/format-date";
 import { FormatTime } from "../utils/date/format-time";
-import { useNavigate, useParams } from "react-router-dom";
-import dayjs from "dayjs";
-import "dayjs/locale/ru";
-import GoToButton from "../components/common/buttons/go-to-button";
-import { setUpdateTaskId, setUpdateTaskOpenState } from "../store/task/update-task.store";
+import {
+  setupdateMyTaskId,
+  setupdateMyTaskOpenState,
+} from "../store/task/update-task.store";
+import { getTaskById } from "../store/task/tasks.store";
+import { getCurrentUserId } from "../store/user/users.store";
+import {
+  setUpdateManagerTaskId,
+  setUpdateManagerTaskOpenState,
+} from "../store/task/update-manager-task.store";
 
 export const tasksColumns = [
   {
@@ -115,14 +124,33 @@ export const tasksColumns = [
     accessorKey: "_id",
     header: "",
     cell: (info) => {
-      const taskId = info.getValue();
       const dispatch = useDispatch();
+      const taskId = info.getValue();
+      const task = useSelector(getTaskById(taskId));
+      const currentUserId = useSelector(getCurrentUserId());
+      const isCuratorTask = Boolean(task?.managerId);
+      const isCurrentUserIsCuratorTask = currentUserId !== task?.userId;
+      const disable = isCuratorTask && isCurrentUserIsCuratorTask;
+
       const handleClick = () => {
-        dispatch(setUpdateTaskId(taskId));
-        dispatch(setUpdateTaskOpenState(true));
+        if (isCuratorTask) {
+          dispatch(setUpdateManagerTaskOpenState(true));
+          dispatch(setUpdateManagerTaskId(taskId));
+        } else {
+          dispatch(setupdateMyTaskId(taskId));
+          dispatch(setupdateMyTaskOpenState(true));
+        }
       };
+
       return (
-        <TableOpenButton id={taskId} text="Править" onClick={handleClick} />
+        <TableOpenButton
+          text="Править"
+          onClick={handleClick}
+          disabled={disable}
+          fontColor={isCuratorTask ? "inherit" : "black"}
+          background={isCuratorTask ? "red" : "orange"}
+          backgroudHover={isCuratorTask ? "darkRed" : "darkOrange"}
+        />
       );
     },
   },

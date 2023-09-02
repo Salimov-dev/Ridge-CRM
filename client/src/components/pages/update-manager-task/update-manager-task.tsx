@@ -1,29 +1,27 @@
 // liraries
 import dayjs from "dayjs";
 import { useEffect } from "react";
-import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useDispatch, useSelector } from "react-redux";
 // components
-import MyTaskForm from "../../common/forms/my-task-form/my-task-form";
 import TitleWithCloseButton from "../../common/page-titles/title-with-close-button";
+import ManagerTaskForm from "../../common/forms/manager-task-form/manager-task-form";
 // store
-import { getupdateMyTaskId } from "../../../store/task/update-task.store";
-import { getTaskById, updateMyTask } from "../../../store/task/tasks.store";
-import { getObjectsList } from "../../../store/object/objects.store";
 import { getCurrentUserId } from "../../../store/user/users.store";
+import { getUpdateManagerTaskId } from "../../../store/task/update-manager-task.store";
+import { getTaskById, updateMyTask } from "../../../store/task/tasks.store";
 // schema
 import { taskSchema } from "../../../schemas/schemas";
 
-const UpdateMyTask = ({ title, onClose }) => {
+const UpdateManagerTask = ({ title, onClose, objects, users }) => {
   const dispatch = useDispatch();
-  const taskId = useSelector(getupdateMyTaskId());
-  const task = useSelector(getTaskById(taskId));
-  const objects = useSelector(getObjectsList());
-  const objectId = task?.objectId;
 
+  const taskId = useSelector(getUpdateManagerTaskId());
+  const task = useSelector(getTaskById(taskId));
   const currentUserId = useSelector(getCurrentUserId());
+  const objectId = task?.objectId;
   const currentUserObjects = objects?.filter(
     (obj) => obj?.userId === currentUserId
   );
@@ -52,6 +50,7 @@ const UpdateMyTask = ({ title, onClose }) => {
   });
 
   const data = watch();
+
   const isFullValid = data.date !== null && data.time !== null && isValid;
   const isEditMode = taskId ? true : false;
 
@@ -62,7 +61,7 @@ const UpdateMyTask = ({ title, onClose }) => {
 
     dispatch(updateMyTask(newData, taskId))
       .then(onClose())
-      .then(toast.success("Задача себе успешно изменена!"));
+      .then(toast.success("Задача менеджеру успешно изменена!"));
   };
 
   useEffect(() => {
@@ -75,14 +74,15 @@ const UpdateMyTask = ({ title, onClose }) => {
     <>
       <TitleWithCloseButton
         title={title}
-        background="orange"
+        background="red"
         color="white"
         onClose={onClose}
       />
-      <MyTaskForm
+      <ManagerTaskForm
         register={register}
         data={data}
-        objects={transformObjects}
+        users={users}
+        objects={objects}
         handleSubmit={handleSubmit}
         onSubmit={onSubmit}
         onClose={onClose}
@@ -96,4 +96,4 @@ const UpdateMyTask = ({ title, onClose }) => {
   );
 };
 
-export default UpdateMyTask;
+export default UpdateManagerTask;

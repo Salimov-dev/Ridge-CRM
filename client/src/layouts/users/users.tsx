@@ -23,7 +23,7 @@ import CreateManager from "../../components/pages/create-manager/create-manager"
 import {
   loadUpdateManagerOpenState,
   setUpdateManagerOpenState,
-} from "../../store/user/update-manager.store";
+} from "../../store/user/update-user.store";
 import useUsers from "../../hooks/user/use-users";
 
 const initialState = {

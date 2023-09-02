@@ -22,8 +22,10 @@ const MyTaskForm = ({
   setValue,
   isValid,
   watch,
+  isObjectPage
 }) => {
-  const watchObjectId = watch("objectId", "")
+  const watchObjectId = watch("objectId", "");
+  
   return (
     <Form onSubmit={handleSubmit(onSubmit)} noValidate>
       <FieldsContainer>
@@ -52,8 +54,9 @@ const MyTaskForm = ({
         itemsList={objects}
         name="objectId"
         labelId="objectId"
-        label="Объект встречи"
+        label="Объект задачи"
         value={watchObjectId}
+        disabled={isObjectPage}
       />
       <TextFieldStyled
         register={register}

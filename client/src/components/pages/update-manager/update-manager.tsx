@@ -13,7 +13,7 @@ import ManagerForm from "../../common/forms/manager-form/manager-form";
 // store
 import { getUserStatusesList } from "../../../store/user/user-statuses.store";
 import { getUserDataById, updateUser } from "../../../store/user/users.store";
-import { getUpdateManagerId } from "../../../store/user/update-manager.store";
+import { getUpdateManagerId } from "../../../store/user/update-user.store";
 // other
 import { managerSchema } from "../../../schemas/schemas";
 

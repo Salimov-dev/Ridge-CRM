@@ -99,7 +99,7 @@ export function createTask(payload) {
   };
 }
 
-export const updateTask = (payload) => async (dispatch) => {
+export const updateMyTask = (payload) => async (dispatch) => {
   dispatch(taskUpdateRequested());
   try {
     dispatch(taskUpdateSuccessed(payload));
@@ -132,7 +132,7 @@ export const getDataTasksStatus = () => (state) => state.tasks.dataLoaded;
 
 export const getTaskById = (id) => (state) => {
   if (state.tasks.entities) {
-    return state.tasks.entities.find((meet) => meet._id === id);
+    return state.tasks.entities.find((task) => task._id === id);
   }
 };
 

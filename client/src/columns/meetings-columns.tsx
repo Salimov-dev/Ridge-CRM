@@ -94,7 +94,9 @@ export const meetingsColumns = [
           }}
         >
           {result}
-          {!isParamsId ? <GoToButton text="Перейти" color="neutral" onClick={handleClick} /> : null}
+          {!isParamsId ? (
+            <GoToButton text="Перейти" color="neutral" onClick={handleClick} />
+          ) : null}
         </Box>
       );
     },
@@ -145,12 +147,19 @@ export const meetingsColumns = [
     cell: (info) => {
       const meetingId = info.getValue();
       const dispatch = useDispatch();
+
       const handleClick = () => {
         dispatch(setUpdateMeetingId(meetingId));
         dispatch(setUpdateMeetingOpenState(true));
       };
+
       return (
-        <TableOpenButton id={meetingId} text="Править" onClick={handleClick} />
+        <TableOpenButton
+          text="Править"
+          onClick={handleClick}
+          background="blue"
+          backgroudHover= "darkBlue" 
+        />
       );
     },
   },

@@ -1,4 +1,5 @@
 // libraries
+import { orderBy } from "lodash";
 import { Box, Typography } from "@mui/material";
 import { useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
@@ -15,21 +16,24 @@ import CreateMyTask from "../../components/pages/create-my-task/create-my-task";
 import CreateManagerTask from "../../components/pages/create-manager-task/create-manager-task";
 import CreateMeeting from "../../components/pages/create-meeting/create-meeting";
 import CurrentWeeklyMeetings from "./components/current-weekly-meetings/current-weekly-meetings";
+import UpdateMeeting from "../../components/pages/update-meeting/update-meeting";
+import UpdateMyTask from "../../components/pages/update-my-task/update-my-task";
+import UpdateManagerTask from "../../components/pages/update-manager-task/update-manager-task";
 import CalendarFiltersPanel from "../../components/UI/filters-panels/calendar-filters-panel";
 // columns
 import { tasksColumns } from "../../columns/tasks-columns";
+import { meetingsColumns } from "../../columns/meetings-columns";
 // utils
 import getMonth from "../../utils/calendar/get-month";
 // store
+import { loadUpdateMeetingOpenState } from "../../store/meeting/update-meeting.store";
+import { loadupdateMyTaskOpenState } from "../../store/task/update-task.store";
 import { getMonthIndexState } from "../../store/month-index.store";
 // hooks
 import useCalendar from "../../hooks/calendar/use-calendar";
 import useSearchTask from "../../hooks/task/use-search-task";
-import { meetingsColumns } from "../../columns/meetings-columns";
-import { loadUpdateMeetingOpenState } from "../../store/meeting/update-meeting.store";
-import UpdateMeeting from "../../components/pages/update-meeting/update-meeting";
-import UpdateMyTask from "../../components/pages/update-my-task/update-my-task";
-import { loadUpdateTaskOpenState } from "../../store/task/update-task.store";
+import { loadUpdateManagerTaskOpenState } from "../../store/task/update-manager-task.store";
+import { getTasksList } from "../../store/task/tasks.store";
 
 const initialState = {
   object: "",
@@ -40,20 +44,22 @@ const initialState = {
 
 const Calendar = () => {
   const [currentMonth, setCurrentMonth] = useState(getMonth());
-  const [openCreateMyTask, setOpenCreateMyTask] = useState(false);
+
   const [dateCreateMyTask, setDateCreateMyTask] = useState(null);
+  const [openCreateMyTask, setOpenCreateMyTask] = useState(false);
   const [openCreateManagerTask, setOpenCreateManagerTask] = useState(false);
   const [openCreateMeeting, setOpenCreateMeeting] = useState(false);
+
   const tasksColumn = tasksColumns;
   const monthIndex = useSelector(getMonthIndexState());
   const isOpenUpdateMeeting = useSelector(loadUpdateMeetingOpenState());
-  const isOpenUpdateTask = useSelector(loadUpdateTaskOpenState());
+  const isOpenUpdateMyTask = useSelector(loadupdateMyTaskOpenState());
+  const isOpenUpdateManagerTask = useSelector(loadUpdateManagerTaskOpenState());
 
   const {
     sortedCurrentWeeklyMeetings,
     transformUsers,
     transformObjects,
-    sortedTasks,
     isMeetingsLoading,
     isTasksLoading,
     handleCloseCreateMyTask,
@@ -61,6 +67,7 @@ const Calendar = () => {
     handleCloseCreateMeeting,
     handleCloseUpdateMeeting,
     handleCloseUpdateMyTask,
+    handleCloseUpdateManagerTask,
     handleOpenCreateMyTask,
     handleOpenCreateManagerTask,
     handleOpenCreateMeeting,
@@ -68,7 +75,7 @@ const Calendar = () => {
     setOpenCreateManagerTask,
     setOpenCreateMyTask,
     setDateCreateMyTask,
-    setOpenCreateMeeting,
+    setOpenCreateMeeting
   );
 
   const localStorageState = JSON.parse(
@@ -82,7 +89,9 @@ const Calendar = () => {
     mode: "onBlur",
   });
   const data = watch();
-  const searchedTasks = useSearchTask(sortedTasks, data);
+  const tasks = useSelector(getTasksList());
+  const searchedTasks = useSearchTask(tasks, data);
+  const sortedTasks = orderBy(searchedTasks, ["date"], ["asc"]);
 
   useEffect(() => {
     setCurrentMonth(getMonth(monthIndex));
@@ -132,12 +141,11 @@ const Calendar = () => {
       <CalendarFiltersPanel
         data={data}
         register={register}
-        tasks={sortedTasks}
         setValue={setValue}
         isLoading={isTasksLoading}
       />
       <BasicTable
-        items={searchedTasks}
+        items={sortedTasks}
         itemsColumns={tasksColumn}
         isLoading={isTasksLoading}
       />
@@ -177,6 +185,21 @@ const Calendar = () => {
       />
 
       <DialogStyled
+        onClose={handleCloseUpdateManagerTask}
+        open={isOpenUpdateManagerTask}
+        maxWidth="sm"
+        fullWidth={false}
+        component={
+          <UpdateManagerTask
+            title="Изменить задачу менеджеру"
+            objects={transformObjects}
+            users={transformUsers}
+            onClose={handleCloseUpdateManagerTask}
+          />
+        }
+      />
+
+      <DialogStyled
         onClose={handleCloseCreateMyTask}
         open={openCreateMyTask}
         maxWidth="sm"
@@ -193,7 +216,7 @@ const Calendar = () => {
 
       <DialogStyled
         onClose={handleCloseUpdateMyTask}
-        open={isOpenUpdateTask}
+        open={isOpenUpdateMyTask}
         maxWidth="sm"
         fullWidth={false}
         component={

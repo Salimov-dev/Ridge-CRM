@@ -16,7 +16,7 @@ import { FormatDate } from "../utils/date/format-date";
 import {
   setUpdateManagerId,
   setUpdateManagerOpenState,
-} from "../store/user/update-manager.store";
+} from "../store/user/update-user.store";
 import { Typography } from "@mui/material";
 
 export const usersColumns = [

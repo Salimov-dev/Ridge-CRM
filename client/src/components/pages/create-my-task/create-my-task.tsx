@@ -35,7 +35,6 @@ const CreateMyTask = ({ objects, objectPageId, title, onClose, date }) => {
   });
   const data = watch();
   const watchDate = watch("date", null);
-  const watchObjectId = watch("objectId", "");
   const isFullValid = !watchDate || !isValid;
 
   const onSubmit = () => {
@@ -79,7 +78,7 @@ const CreateMyTask = ({ objects, objectPageId, title, onClose, date }) => {
         errors={errors}
         setValue={setValue}
         isValid={isFullValid}
-        watchObjectId={watchObjectId}
+        watch={watch}
         isObjectPage={isObjectPage}
       />
     </Box>

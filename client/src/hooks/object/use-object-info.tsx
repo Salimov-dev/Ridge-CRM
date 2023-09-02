@@ -1,6 +1,8 @@
 import dayjs from "dayjs";
 import { useDispatch } from "react-redux";
 import { setUpdateMeetingOpenState } from "../../store/meeting/update-meeting.store";
+import { setupdateMyTaskOpenState } from "../../store/task/update-task.store";
+import { setUpdateManagerTaskOpenState } from "../../store/task/update-manager-task.store";
 
 const useObjectInfo = (
   setOpenCreateMeeting,
@@ -27,15 +29,26 @@ const useObjectInfo = (
     setDateCreateMyTask(dayjs());
     setOpenCreateMyTask(true);
   };
+
   const handleCloseCreateMeeting = () => {
     setOpenCreateMeeting(false);
   };
+
   const handleCloseCreateManagerTask = () => {
     setOpenCreateManagerTask(false);
   };
+
   const handleCloseCreateMyTask = () => {
     setOpenCreateMyTask(false);
     setDateCreateMyTask(null);
+  };
+
+  const handleCloseUpdateMyTask = () => {
+    dispatch(setupdateMyTaskOpenState(false));
+  };
+
+  const handleCloseUpdateManagerTask = () => {
+    dispatch(setUpdateManagerTaskOpenState(false));
   };
   return {
     handleOpenCreateMeeting,
@@ -44,7 +57,9 @@ const useObjectInfo = (
     handleCloseCreateMeeting,
     handleCloseCreateManagerTask,
     handleCloseCreateMyTask,
-    handleCloseUpdateMeeting
+    handleCloseUpdateMeeting,
+    handleCloseUpdateMyTask,
+    handleCloseUpdateManagerTask
   };
 };
 

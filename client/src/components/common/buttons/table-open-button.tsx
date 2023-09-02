@@ -1,12 +1,26 @@
 import { Button } from "@mui/material";
 
-const TableOpenButton = ({ text, color = "secondary", onClick }) => {
+const TableOpenButton = ({
+  text,
+  background,
+  color = "secondary",
+  onClick,
+  disabled,
+  fontColor,
+  backgroudHover
+}) => {
   return (
     <Button
       variant="text"
       color={color}
       onClick={onClick}
-      sx={{ width: "100%" }}
+      disabled={disabled}
+      sx={{
+        width: "100%",
+        background: background,
+        color: fontColor,
+        "&:hover": { background: backgroudHover },
+      }}
     >
       {text}
     </Button>
