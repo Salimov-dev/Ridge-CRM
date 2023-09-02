@@ -5,7 +5,7 @@ import {
   estateOptionsColumns,
   estateTypeColumns,
   locationColumns,
-} from "../../../../../columns/object-page-columns";
+} from "../../../../../columns/object-page-columns/object-page-columns";
 import BasicTable from "../../../../common/table/basic-table";
 import Title from "./title";
 

@@ -4,24 +4,24 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { Box, Typography } from "@mui/material";
 // components
-import GoToButton from "../components/common/buttons/go-to-button";
-import { FormatManagerName } from "../components/common/table/helpers/helpers";
-import TableOpenButton from "../components/common/buttons/table-open-button";
+import GoToButton from "../../components/common/buttons/go-to-button";
+import { FormatManagerName } from "../../components/common/table/helpers/helpers";
+import TableOpenButton from "../../components/common/buttons/table-open-button";
 // store
-import { getObjectById } from "../store/object/objects.store";
+import { getObjectById } from "../../store/object/objects.store";
 // utils
-import { FormatDate } from "../utils/date/format-date";
-import { FormatTime } from "../utils/date/format-time";
+import { FormatDate } from "../../utils/date/format-date";
+import { FormatTime } from "../../utils/date/format-time";
 import {
   setupdateMyTaskId,
   setupdateMyTaskOpenState,
-} from "../store/task/update-task.store";
-import { getTaskById } from "../store/task/tasks.store";
-import { getCurrentUserId } from "../store/user/users.store";
+} from "../../store/task/update-task.store";
+import { getTaskById } from "../../store/task/tasks.store";
+import { getCurrentUserId } from "../../store/user/users.store";
 import {
   setUpdateManagerTaskId,
   setUpdateManagerTaskOpenState,
-} from "../store/task/update-manager-task.store";
+} from "../../store/task/update-manager-task.store";
 
 export const tasksColumns = [
   {

@@ -1,5 +1,5 @@
 import { Box, styled } from "@mui/material";
-import { makeDigitSeparator } from "../utils/data/make-digit-separator";
+import { makeDigitSeparator } from "../../utils/data/make-digit-separator";
 import {
   FormatCurrentRenter,
   FormatDate,
@@ -14,7 +14,7 @@ import {
   FormatTypeRent,
   FormatWorkingPosition,
   priceForMetr,
-} from "../components/common/table/helpers/helpers";
+} from "../../components/common/table/helpers/helpers";
 
 const AlignCenter = styled(Box)`
   display: flex;

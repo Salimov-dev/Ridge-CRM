@@ -4,7 +4,7 @@ import { Box } from "@mui/material";
 import { useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 // components
-import { usersColumns } from "../../columns/users-columns";
+import { usersColumns } from "../../columns/users-columns/users-columns";
 import UsersFiltersPanel from "../../components/UI/filters-panels/users-filters-panel";
 import BasicTable from "../../components/common/table/basic-table";
 // hooks

@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 // components
 import MeetingBaloon from "../../components/UI/maps/meeting-baloon";
 import MeetingsFiltersPanel from "../../components/UI/filters-panels/meetings-filters-panel";
-import { meetingsColumns } from "../../columns/meetings-columns";
+import { meetingsColumns } from "../../columns/meetings-columns/meetings-columns";
 import BasicTable from "../../components/common/table/basic-table";
 import LayoutTitle from "../../components/common/page-titles/layout-title";
 import DialogStyled from "../../components/common/dialog/dialog-styled";

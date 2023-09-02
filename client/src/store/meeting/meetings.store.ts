@@ -125,6 +125,12 @@ export const getObjectMeetingsList = (objectId) =>
     (meetings) => meetings?.filter((meet) => meet?.objectId === objectId)
   );
 
+export const getMeetingsByObjectId = (objectId) => (state) => {
+  const meetings = state?.meetings.entities;
+  const objectMeetings = meetings?.filter((meet) => meet.objectId === objectId);
+  return objectMeetings;
+};
+
 export const getMeetingLoadingStatus = () => (state) =>
   state.meetings.isLoading;
 

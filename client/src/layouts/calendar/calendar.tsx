@@ -11,8 +11,8 @@ import CalendarBody from "./components/calendar-body/calendar-body";
 import LayoutTitle from "../../components/common/page-titles/layout-title";
 import CurrentWeeklyMeetings from "./components/current-weekly-meetings/current-weekly-meetings";
 // columns
-import { tasksColumns } from "../../columns/tasks-columns";
-import { meetingsColumns } from "../../columns/meetings-columns";
+import { tasksColumns } from "../../columns/tasks-columns/tasks-columns";
+import { meetingsColumns } from "../../columns/meetings-columns/meetings-columns";
 // utils
 import getMonth from "../../utils/calendar/get-month";
 // store

@@ -1,14 +1,18 @@
-import { Box, styled } from "@mui/material";
-import TableOpenButton from "../components/common/buttons/table-open-button";
+import { Box, Tooltip, Typography, styled } from "@mui/material";
+import TableOpenButton from "../../components/common/buttons/table-open-button";
 import {
   FormatDistrict,
   FormatManagerName,
   FormatMetro,
   FormatObjectStatus,
   FormatPhone,
-} from "../components/common/table/helpers/helpers";
-import { FormatDate } from "../utils/date/format-date";
+} from "../../components/common/table/helpers/helpers";
+import { FormatDate } from "../../utils/date/format-date";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { getMeetingsByObjectId } from "../../store/meeting/meetings.store";
+import { getTasksByObjectId } from "../../store/task/tasks.store";
+import Flags from "./components/flags";
 
 const AlignCenter = styled(Box)`
   display: flex;
@@ -52,16 +56,31 @@ export const objectsColumns = [
         },
       },
       {
-        accessorKey: "location.address",
+        accessorFn: (row) => row,
         header: "Адрес",
         cell: (info) => {
-          const address = info.getValue();
-          return address;
+          const object = info.getValue();
+          const objectId = object?._id;
+          const meetings = useSelector(getMeetingsByObjectId(objectId));
+          const tasks = useSelector(getTasksByObjectId(objectId));
+
+          return (
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                gap: "12px",
+              }}
+            >
+              <Typography>{object?.location?.address}</Typography>
+              <Flags meetings={meetings} tasks={tasks} />
+            </Box>
+          );
         },
       },
     ],
   },
-
   {
     header: "Контактная информация",
     columns: [
@@ -112,7 +131,7 @@ export const objectsColumns = [
       },
       {
         accessorKey: "_id",
-        header: "",
+        header: "Объект",
         enableSorting: false,
         cell: (info) => {
           const objectId = info.getValue();

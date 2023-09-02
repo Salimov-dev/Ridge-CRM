@@ -1,22 +1,22 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Box, Typography } from "@mui/material";
 // components
-import { FormatManagerName } from "../components/common/table/helpers/helpers";
-import TableOpenButton from "../components/common/buttons/table-open-button";
+import { FormatManagerName } from "../../components/common/table/helpers/helpers";
+import TableOpenButton from "../../components/common/buttons/table-open-button";
 // store
-import { getObjectById } from "../store/object/objects.store";
-import { getMeetingStatusNameById } from "../store/meeting/meeting-status.store";
-import { getMeetingTypeNameById } from "../store/meeting/meeting-types.store";
+import { getObjectById } from "../../store/object/objects.store";
+import { getMeetingStatusNameById } from "../../store/meeting/meeting-status.store";
+import { getMeetingTypeNameById } from "../../store/meeting/meeting-types.store";
 // utils
-import { FormatDate } from "../utils/date/format-date";
-import { FormatTime } from "../utils/date/format-time";
+import { FormatDate } from "../../utils/date/format-date";
+import { FormatTime } from "../../utils/date/format-time";
 import {
   setUpdateMeetingId,
   setUpdateMeetingOpenState,
-} from "../store/meeting/update-meeting.store";
+} from "../../store/meeting/update-meeting.store";
 import { useNavigate, useParams } from "react-router-dom";
 import dayjs from "dayjs";
-import GoToButton from "../components/common/buttons/go-to-button";
+import GoToButton from "../../components/common/buttons/go-to-button";
 
 export const meetingsColumns = [
   {
@@ -158,7 +158,7 @@ export const meetingsColumns = [
           text="Править"
           onClick={handleClick}
           background="blue"
-          backgroudHover= "darkBlue" 
+          backgroudHover="darkBlue"
         />
       );
     },

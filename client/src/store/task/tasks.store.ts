@@ -126,6 +126,12 @@ export const getObjectTasksList = (objectId) =>
     (tasks) => tasks?.filter((task) => task?.objectId === objectId)
   );
 
+export const getTasksByObjectId = (objectId) => (state) => {
+  const tasks = state?.tasks.entities;
+  const objectTasks = tasks?.filter((task) => task.objectId === objectId);
+  return objectTasks;
+};
+
 export const getTaskLoadingStatus = () => (state) => state.tasks.isLoading;
 
 export const getDataTasksStatus = () => (state) => state.tasks.dataLoaded;

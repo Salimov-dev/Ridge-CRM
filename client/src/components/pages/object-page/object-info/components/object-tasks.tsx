@@ -1,6 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import DividerStyled from "../../../../common/divider/divider-styled";
-import { tasksColumns } from "../../../../../columns/tasks-columns";
+import { tasksColumns } from "../../../../../columns/tasks-columns/tasks-columns";
 import CreateTaskButton from "../../../../../layouts/calendar/components/header/components/create-task-button";
 import BasicTable from "../../../../common/table/basic-table";
 
@@ -23,7 +23,7 @@ const ObjectTasks = ({
         }}
       >
         <Typography variant="h3">Задачи по объекту: {address}</Typography>
-        <Box sx={{display: 'flex', gap: '4px'}}>
+        <Box sx={{ display: "flex", gap: "4px" }}>
           <CreateTaskButton
             onClick={onCreateMyTask}
             title="Поставить себе задачу"
