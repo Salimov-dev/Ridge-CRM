@@ -27,6 +27,8 @@ import {
   getCurrentUserId,
   getUsersList,
 } from "../../../../store/user/users.store";
+import UpdateMeeting from "../../update-meeting/update-meeting";
+import { loadUpdateMeetingOpenState } from "../../../../store/meeting/update-meeting.store";
 
 const Component = styled(Box)`
   display: flex;
@@ -42,6 +44,7 @@ const ObjectInfo = ({ object, isLoading }) => {
   const [dateCreateMyTask, setDateCreateMyTask] = useState(null);
 
   const meetings = useSelector(getObjectMeetingsList(object._id));
+  const isOpenUpdateMeeting = useSelector(loadUpdateMeetingOpenState());
   const isMeetingsLoading = useSelector(getMeetingLoadingStatus());
 
   const tasks = useSelector(getObjectTasksList(object._id));
@@ -77,6 +80,7 @@ const ObjectInfo = ({ object, isLoading }) => {
     handleCloseCreateMeeting,
     handleCloseCreateManagerTask,
     handleCloseCreateMyTask,
+    handleCloseUpdateMeeting,
   } = useObjectInfo(
     setOpenCreateMeeting,
     setOpenCreateMyTask,
@@ -89,11 +93,13 @@ const ObjectInfo = ({ object, isLoading }) => {
       <ObjectsParams object={object} isLoading={isLoading} />
       <ObjectMeetings
         meetings={meetings}
+        object={object}
         isMeetingsLoading={isMeetingsLoading}
         onOpenCreateMeeting={handleOpenCreateMeeting}
       />
       <ObjectTasks
         tasks={tasks}
+        object={object}
         isTasksLoading={isTasksLoading}
         onCreateMyTask={handleOpenCreateMyTask}
         onCreateManagerTask={handleOpenCreateManagerTask}
@@ -108,6 +114,13 @@ const ObjectInfo = ({ object, isLoading }) => {
         }
         onClose={handleCloseCreateMeeting}
         open={openCreateMeeting}
+      />
+
+      <DialogStyled
+        component={<UpdateMeeting onClose={handleCloseUpdateMeeting} />}
+        onClose={handleCloseUpdateMeeting}
+        open={isOpenUpdateMeeting}
+        fullWidth={false}
       />
 
       <DialogStyled

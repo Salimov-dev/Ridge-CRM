@@ -1,5 +1,5 @@
 // libraries
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
@@ -18,7 +18,6 @@ import CurrentWeeklyMeetings from "./components/current-weekly-meetings/current-
 import CalendarFiltersPanel from "../../components/UI/filters-panels/calendar-filters-panel";
 // columns
 import { tasksColumns } from "../../columns/tasks-columns";
-import { weeklyMeetingsColumns } from "../../columns/weekly-meetings-columns";
 // utils
 import getMonth from "../../utils/calendar/get-month";
 // store
@@ -26,6 +25,9 @@ import { getMonthIndexState } from "../../store/month-index.store";
 // hooks
 import useCalendar from "../../hooks/calendar/use-calendar";
 import useSearchTask from "../../hooks/task/use-search-task";
+import { meetingsColumns } from "../../columns/meetings-columns";
+import { loadUpdateMeetingOpenState } from "../../store/meeting/update-meeting.store";
+import UpdateMeeting from "../../components/pages/update-meeting/update-meeting";
 
 const initialState = {
   object: "",
@@ -40,19 +42,21 @@ const Calendar = () => {
   const [dateCreateMyTask, setDateCreateMyTask] = useState(null);
   const [openCreateManagerTask, setOpenCreateManagerTask] = useState(false);
   const [openCreateMeeting, setOpenCreateMeeting] = useState(false);
-  const monthIndex = useSelector(getMonthIndexState());
   const tasksColumn = tasksColumns;
+  const monthIndex = useSelector(getMonthIndexState());
+  const isOpenUpdate = useSelector(loadUpdateMeetingOpenState());
 
   const {
-    meetings,
-    users,
-    tasks,
-    objects,
+    sortedCurrentWeeklyMeetings,
+    transformUsers,
+    transformObjects,
+    sortedTasks,
     isMeetingsLoading,
     isTasksLoading,
     handleCloseCreateMyTask,
     handleCloseCreateManagerTask,
     handleCloseCreateMeeting,
+    handleCloseUpdateMeeting,
     handleOpenCreateMyTask,
     handleOpenCreateManagerTask,
     handleOpenCreateMeeting,
@@ -67,14 +71,14 @@ const Calendar = () => {
     localStorage.getItem("search-tasks-data")
   );
 
-  const { register, watch, setValue, reset } = useForm({
+  const { register, watch, setValue } = useForm({
     defaultValues: Boolean(localStorageState)
       ? localStorageState
       : initialState,
     mode: "onBlur",
   });
   const data = watch();
-  const searchedTasks = useSearchTask(tasks, data);
+  const searchedTasks = useSearchTask(sortedTasks, data);
 
   useEffect(() => {
     setCurrentMonth(getMonth(monthIndex));
@@ -105,8 +109,14 @@ const Calendar = () => {
       />
 
       <Box
-        sx={{ display: "flex", justifyContent: "end", marginBottom: "20px" }}
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "end",
+          marginBottom: "4px",
+        }}
       >
+        <Typography variant="h3">Задачи:</Typography>
         <CreateButtons
           onCreateMeeting={handleOpenCreateMeeting}
           onCreateMyTask={handleOpenCreateMyTask}
@@ -114,10 +124,11 @@ const Calendar = () => {
         />
       </Box>
 
+      <Box sx={{ marginBottom: "10px" }}></Box>
       <CalendarFiltersPanel
         data={data}
         register={register}
-        tasks={tasks}
+        tasks={sortedTasks}
         setValue={setValue}
         isLoading={isTasksLoading}
       />
@@ -128,8 +139,8 @@ const Calendar = () => {
       />
 
       <CurrentWeeklyMeetings
-        meetings={meetings}
-        columns={weeklyMeetingsColumns}
+        meetings={sortedCurrentWeeklyMeetings}
+        columns={meetingsColumns}
         isLoading={isMeetingsLoading}
       />
 
@@ -140,15 +151,22 @@ const Calendar = () => {
       />
 
       <DialogStyled
+        component={<UpdateMeeting onClose={handleCloseUpdateMeeting} />}
+        onClose={handleCloseUpdateMeeting}
+        open={isOpenUpdate}
+        fullWidth={false}
+      />
+
+      <DialogStyled
         onClose={handleCloseCreateManagerTask}
         open={openCreateManagerTask}
-        maxWidth="sm"
+        maxWidth="lg"
         fullWidth={false}
         component={
           <CreateManagerTask
-            title="Добавить менеджеру задачу"
-            objects={objects}
-            users={users}
+            title="Поставить менеджеру задачу"
+            objects={transformObjects}
+            users={transformUsers}
             onClose={handleCloseCreateManagerTask}
           />
         }
@@ -162,7 +180,7 @@ const Calendar = () => {
         component={
           <CreateMyTask
             title="Добавить себе задачу"
-            objects={objects}
+            objects={transformObjects}
             date={dateCreateMyTask}
             onClose={handleCloseCreateMyTask}
           />

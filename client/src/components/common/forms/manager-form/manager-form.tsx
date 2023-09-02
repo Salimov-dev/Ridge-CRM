@@ -13,20 +13,7 @@ import SimpleSelectField from "../../inputs/simple-select-field";
 // mock
 import { gendersArray } from "../../../../mock/genders";
 import getDateToday from "../../../../utils/date/get-date-today";
-
-const FieldsContainer = styled(Box)`
-  width: 100%;
-  display: flex;
-  gap: 4px;
-`;
-
-const Form = styled(`form`)({
-  display: "flex",
-  flexDirection: "column",
-  alignItems: "center",
-  marginBottom: "10px",
-  gap: "4px",
-});
+import { FieldsContainer, Form } from "../styled/styled";
 
 const ManagerForm = ({
   data,

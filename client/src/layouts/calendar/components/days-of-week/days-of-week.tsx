@@ -19,7 +19,7 @@ const DaysOfWeek = () => {
         display: "flex",
         alignItems: "center",
         width: "100%",
-        height: "30px",
+        height: "22px",
         justifyContent: "space-between",
         background: "darkGreen",
         borderTop: "3px solid gray",
@@ -28,7 +28,7 @@ const DaysOfWeek = () => {
       }}
     >
       {daysArray.map((day) => (
-        <DayOfWeek key={day._id} day={day.name} color={day.color}/>
+        <DayOfWeek key={day._id} day={day.name} color={day.color} />
       ))}
     </Box>
   );

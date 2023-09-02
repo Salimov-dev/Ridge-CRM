@@ -19,6 +19,7 @@ const useMeetings = (setOpenCreate, setUpdateMeetingOpenState) => {
   const handleCloseUpdate = () => {
     dispatch(setUpdateMeetingOpenState(false));
   };
+  
   return {
     isOpenUpdate,
     center,

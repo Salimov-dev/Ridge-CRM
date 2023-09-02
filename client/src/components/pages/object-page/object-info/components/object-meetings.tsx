@@ -6,9 +6,12 @@ import CreateMeetingButton from "../../../../../layouts/calendar/components/head
 
 const ObjectMeetings = ({
   meetings,
+  object,
   onOpenCreateMeeting,
   isMeetingsLoading,
 }) => {
+  const address = `${object?.location?.city}, ${object?.location?.address}`;
+
   return (
     <>
       <DividerStyled />
@@ -19,7 +22,7 @@ const ObjectMeetings = ({
           justifyContent: "space-between",
         }}
       >
-        <Typography variant="h3">Встречи по этому объекту:</Typography>
+        <Typography variant="h3">Встречи по объекту: {address}</Typography>
         <CreateMeetingButton onOpen={onOpenCreateMeeting} />
       </Box>
       {meetings?.length ? (

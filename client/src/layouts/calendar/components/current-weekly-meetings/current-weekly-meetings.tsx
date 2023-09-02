@@ -6,7 +6,7 @@ const CurrentWeeklyMeetings = ({ meetings, columns, isLoading }) => {
     <>
       <Box sx={{ marginBottom: "10px" }}>
         <Typography variant="h3">
-          Встречи на текущей неделе ({meetings?.length})шт:
+          Встречи на текущей неделе:
         </Typography>
       </Box>
       <BasicTable

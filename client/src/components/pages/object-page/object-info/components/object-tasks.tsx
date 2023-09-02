@@ -6,10 +6,12 @@ import BasicTable from "../../../../common/table/basic-table";
 
 const ObjectTasks = ({
   tasks,
+  object,
   isTasksLoading,
   onCreateMyTask,
   onCreateManagerTask,
 }) => {
+  const address = `${object?.location?.city}, ${object?.location?.address}`;
   return (
     <>
       <DividerStyled />
@@ -20,7 +22,7 @@ const ObjectTasks = ({
           justifyContent: "space-between",
         }}
       >
-        <Typography variant="h3">Задачи по этому объекту:</Typography>
+        <Typography variant="h3">Задачи по объекту: {address}</Typography>
         <Box sx={{display: 'flex', gap: '4px'}}>
           <CreateTaskButton
             onClick={onCreateMyTask}

@@ -32,7 +32,7 @@ const initialState = {
 
 const MyTaskForm = ({ date, objects, objectPageId, onClose }) => {
   const dispatch = useDispatch();
-  const isObjectPage = Boolean(objectPageId.length)
+  const isObjectPage = Boolean(objectPageId?.length)
 
   const {
     register,

@@ -1,4 +1,6 @@
 import dayjs from "dayjs";
+import { useDispatch } from "react-redux";
+import { setUpdateMeetingOpenState } from "../../store/meeting/update-meeting.store";
 
 const useObjectInfo = (
   setOpenCreateMeeting,
@@ -6,6 +8,12 @@ const useObjectInfo = (
   setOpenCreateManagerTask,
   setDateCreateMyTask
 ) => {
+  const dispatch = useDispatch()
+
+  const handleCloseUpdateMeeting = () => {
+    dispatch(setUpdateMeetingOpenState(false));
+  };
+
   const handleOpenCreateMeeting = () => {
     setOpenCreateMeeting(true);
   };
@@ -36,6 +44,7 @@ const useObjectInfo = (
     handleCloseCreateMeeting,
     handleCloseCreateManagerTask,
     handleCloseCreateMyTask,
+    handleCloseUpdateMeeting
   };
 };
 

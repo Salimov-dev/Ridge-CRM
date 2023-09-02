@@ -5,6 +5,7 @@ const Component = styled(Box)`
   align-items: center;
   gap: 8px;
   margin-bottom: 20px;
+  margin-right: 50px;
 `;
 
 const LayoutTitle = ({ title, background, color }) => {

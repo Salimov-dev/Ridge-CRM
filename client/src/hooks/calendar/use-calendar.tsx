@@ -1,6 +1,6 @@
 import dayjs from "dayjs";
 import { orderBy } from "lodash";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 // store
 import { getObjectsList } from "../../store/object/objects.store";
 import {
@@ -12,6 +12,7 @@ import {
   getTaskLoadingStatus,
   getTasksList,
 } from "../../store/task/tasks.store";
+import { setUpdateMeetingOpenState } from "../../store/meeting/update-meeting.store";
 // utils
 import getStartWeekDate from "../../utils/date/get-start-week-date";
 import getEndWeekDate from "../../utils/date/get-end-week-date";
@@ -30,6 +31,8 @@ const useCalendar = (
 
   const startOfWeek = getStartWeekDate();
   const endOfWeek = getEndWeekDate();
+
+  const dispatch = useDispatch();
 
   const currentWeeklyMeetings = meetings?.filter((meet) =>
     dayjs(meet.date).isBetween(startOfWeek, endOfWeek, null, "[]")
@@ -93,19 +96,24 @@ const useCalendar = (
     setDateCreateMyTask(null);
   };
 
+  const handleCloseUpdateMeeting = () => {
+    dispatch(setUpdateMeetingOpenState(false));
+  };
+
   return {
     handleCloseCreateMyTask,
     handleCloseCreateManagerTask,
     handleCloseCreateMeeting,
+    handleCloseUpdateMeeting,
     handleOpenCreateMyTask,
     handleOpenCreateManagerTask,
     handleOpenCreateMeeting,
     isMeetingsLoading,
     isTasksLoading,
-    meetings: sortedCurrentWeeklyMeetings,
-    users: transformUsers,
-    objects: transformObjects,
-    tasks: sortedTasks,
+    sortedCurrentWeeklyMeetings,
+    transformUsers,
+    transformObjects,
+    sortedTasks,
   };
 };
 

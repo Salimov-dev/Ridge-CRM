@@ -4,7 +4,7 @@ import Month from "../month/month";
 const Component = styled(Box)`
   display: flex;
   flex-direction: column;
-  margin-bottom: 6px;
+  margin-bottom: 20px;
 `;
 
 const CalendarBody = ({ currentMonth, onOpenCreateMyTask }) => {

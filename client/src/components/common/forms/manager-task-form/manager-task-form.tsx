@@ -20,23 +20,7 @@ import { capitalizeFirstLetter } from "../../../../utils/data/capitalize-first-l
 // schema
 import { taskSchema } from "../../../../schemas/schemas";
 import { useEffect } from "react";
-
-const Form = styled(`form`)({
-  width: "500px",
-  display: "flex",
-  flexDirection: "column",
-  alignItems: "center",
-  marginBottom: "10px",
-  marginTop: "12px",
-  gap: "4px",
-});
-
-const FieldsContainer = styled(Box)`
-  width: 100%;
-  display: flex;
-  align-items: "center";
-  gap: 4px;
-`;
+import { FieldsContainer, Form } from "../styled/styled";
 
 const initialState = {
   comment: "",
@@ -48,7 +32,7 @@ const initialState = {
 
 const ManagerTaskForm = ({ objects, users, onClose, objectPageId }) => {
   const dispatch = useDispatch();
-  const isObjectPage = Boolean(objectPageId.length)
+  const isObjectPage = Boolean(objectPageId?.length);
 
   const {
     register,
@@ -83,7 +67,7 @@ const ManagerTaskForm = ({ objects, users, onClose, objectPageId }) => {
   }, [objectPageId]);
 
   return (
-    <Form onSubmit={handleSubmit(onSubmitManagerTask)} noValidate>
+    <Form onSubmit={handleSubmit(onSubmitManagerTask)} noValidate >
       <FieldsContainer>
         <DatePickerStyled
           register={register}
