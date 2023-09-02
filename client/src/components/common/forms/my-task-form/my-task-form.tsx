@@ -1,9 +1,3 @@
-// libraries
-import { useEffect } from "react";
-import { toast } from "react-toastify";
-import { useDispatch } from "react-redux";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
 // MUI
 import CreateIcon from "@mui/icons-material/Create";
 import { InputAdornment } from "@mui/material";
@@ -13,68 +7,25 @@ import SimpleSelectField from "../../inputs/simple-select-field";
 import DatePickerStyled from "../../inputs/date-picker";
 import TimePickerStyled from "../../inputs/time-picker";
 import FooterButtons from "../footer-buttons/footer-buttons";
-// store
-import { createTask } from "../../../../store/task/tasks.store";
-// utils
-import { capitalizeFirstLetter } from "../../../../utils/data/capitalize-first-letter";
-// schema
-import { taskSchema } from "../../../../schemas/schemas";
 // styled
 import { FieldsContainer, Form } from "../styled/styled";
 
-const initialState = {
-  comment: "",
-  date: null,
-  time: null,
-  objectId: "",
-  managerId: "",
-};
-
-const MyTaskForm = ({ date, objects, objectPageId, onClose }) => {
-  const dispatch = useDispatch();
-  const isObjectPage = Boolean(objectPageId?.length)
-
-  const {
-    register,
-    watch,
-    handleSubmit,
-    setValue,
-    formState: { errors, isValid },
-  } = useForm({
-    defaultValues: initialState,
-    mode: "onBlur",
-    resolver: yupResolver(taskSchema),
-  });
-  const data = watch();
-  const watchDate = watch("date", null);
-  const watchObjectId = watch("objectId", "");
-  const isFullValid = !watchDate || !isValid;
-
-  const onSubmitMyTask = () => {
-    const newData = {
-      ...data,
-      comment: capitalizeFirstLetter(data.comment),
-      managerId: null,
-    };
-    dispatch(createTask(newData))
-      .then(() => onClose())
-      .then(() => toast.success("Задача успешно создана!"));
-  };
-
-  useEffect(() => {
-    if (objectPageId) {
-      setValue("objectId", objectPageId);
-    }
-  }, [objectPageId]);
-
-  useEffect(() => {
-    if (date) {
-      setValue("date", date);
-    }
-  }, [date]);
-
+const MyTaskForm = ({
+  data,
+  objects,
+  isEditMode = false,
+  register,
+  handleSubmit,
+  onSubmit,
+  onClose,
+  errors,
+  setValue,
+  isValid,
+  watch,
+}) => {
+  const watchObjectId = watch("objectId", "")
   return (
-    <Form onSubmit={handleSubmit(onSubmitMyTask)} noValidate>
+    <Form onSubmit={handleSubmit(onSubmit)} noValidate>
       <FieldsContainer>
         <DatePickerStyled
           register={register}
@@ -83,6 +34,7 @@ const MyTaskForm = ({ date, objects, objectPageId, onClose }) => {
           value={data?.date}
           onChange={(value) => setValue("date", value)}
           errors={errors?.date}
+          minDate={null}
         />
         <TimePickerStyled
           register={register}
@@ -102,7 +54,6 @@ const MyTaskForm = ({ date, objects, objectPageId, onClose }) => {
         labelId="objectId"
         label="Объект встречи"
         value={watchObjectId}
-        disabled={isObjectPage}
       />
       <TextFieldStyled
         register={register}
@@ -123,8 +74,8 @@ const MyTaskForm = ({ date, objects, objectPageId, onClose }) => {
       />
 
       <FooterButtons
-        //   isEditMode={isEditMode}
-        isValid={isFullValid}
+        isEditMode={isEditMode}
+        isValid={isValid}
         onClose={onClose}
       />
     </Form>

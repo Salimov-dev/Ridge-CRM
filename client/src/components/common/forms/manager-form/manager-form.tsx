@@ -1,6 +1,6 @@
 import dayjs from "dayjs";
 // MUI
-import { Box, styled, InputAdornment } from "@mui/material";
+import { InputAdornment } from "@mui/material";
 import PhoneIphoneOutlinedIcon from "@mui/icons-material/PhoneIphoneOutlined";
 import AlternateEmailOutlinedIcon from "@mui/icons-material/AlternateEmailOutlined";
 import KeyOutlinedIcon from "@mui/icons-material/KeyOutlined";
@@ -12,7 +12,9 @@ import DatePickerStyled from "../../inputs/date-picker";
 import SimpleSelectField from "../../inputs/simple-select-field";
 // mock
 import { gendersArray } from "../../../../mock/genders";
+// utils
 import getDateToday from "../../../../utils/date/get-date-today";
+// styled
 import { FieldsContainer, Form } from "../styled/styled";
 
 const ManagerForm = ({

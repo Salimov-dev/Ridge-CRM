@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
-import TitleWithCloseButton from "../../../../components/common/page-titles/title-with-close-button";
-import ManagerTaskForm from "../../../../components/common/forms/manager-task-form/manager-task-form";
+import TitleWithCloseButton from "../../common/page-titles/title-with-close-button";
+import ManagerTaskForm from "../../common/forms/manager-task-form/manager-task-form";
 
 const CreateManagerTask = ({
   objects,

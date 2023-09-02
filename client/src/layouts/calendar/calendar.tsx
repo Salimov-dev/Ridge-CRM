@@ -11,8 +11,8 @@ import CalendarBody from "./components/calendar-body/calendar-body";
 import BasicTable from "../../components/common/table/basic-table";
 import CreateButtons from "./components/header/components/create-buttons";
 import LayoutTitle from "../../components/common/page-titles/layout-title";
-import CreateMyTask from "./components/create-my-task/create-my-task";
-import CreateManagerTask from "./components/create-manager-task/create-manager-task";
+import CreateMyTask from "../../components/pages/create-my-task/create-my-task";
+import CreateManagerTask from "../../components/pages/create-manager-task/create-manager-task";
 import CreateMeeting from "../../components/pages/create-meeting/create-meeting";
 import CurrentWeeklyMeetings from "./components/current-weekly-meetings/current-weekly-meetings";
 import CalendarFiltersPanel from "../../components/UI/filters-panels/calendar-filters-panel";
@@ -28,6 +28,8 @@ import useSearchTask from "../../hooks/task/use-search-task";
 import { meetingsColumns } from "../../columns/meetings-columns";
 import { loadUpdateMeetingOpenState } from "../../store/meeting/update-meeting.store";
 import UpdateMeeting from "../../components/pages/update-meeting/update-meeting";
+import UpdateMyTask from "../../components/pages/update-my-task/update-my-task";
+import { loadUpdateTaskOpenState } from "../../store/task/update-task.store";
 
 const initialState = {
   object: "",
@@ -44,7 +46,8 @@ const Calendar = () => {
   const [openCreateMeeting, setOpenCreateMeeting] = useState(false);
   const tasksColumn = tasksColumns;
   const monthIndex = useSelector(getMonthIndexState());
-  const isOpenUpdate = useSelector(loadUpdateMeetingOpenState());
+  const isOpenUpdateMeeting = useSelector(loadUpdateMeetingOpenState());
+  const isOpenUpdateTask = useSelector(loadUpdateTaskOpenState());
 
   const {
     sortedCurrentWeeklyMeetings,
@@ -57,6 +60,7 @@ const Calendar = () => {
     handleCloseCreateManagerTask,
     handleCloseCreateMeeting,
     handleCloseUpdateMeeting,
+    handleCloseUpdateMyTask,
     handleOpenCreateMyTask,
     handleOpenCreateManagerTask,
     handleOpenCreateMeeting,
@@ -64,7 +68,7 @@ const Calendar = () => {
     setOpenCreateManagerTask,
     setOpenCreateMyTask,
     setDateCreateMyTask,
-    setOpenCreateMeeting
+    setOpenCreateMeeting,
   );
 
   const localStorageState = JSON.parse(
@@ -153,7 +157,7 @@ const Calendar = () => {
       <DialogStyled
         component={<UpdateMeeting onClose={handleCloseUpdateMeeting} />}
         onClose={handleCloseUpdateMeeting}
-        open={isOpenUpdate}
+        open={isOpenUpdateMeeting}
         fullWidth={false}
       />
 
@@ -183,6 +187,19 @@ const Calendar = () => {
             objects={transformObjects}
             date={dateCreateMyTask}
             onClose={handleCloseCreateMyTask}
+          />
+        }
+      />
+
+      <DialogStyled
+        onClose={handleCloseUpdateMyTask}
+        open={isOpenUpdateTask}
+        maxWidth="sm"
+        fullWidth={false}
+        component={
+          <UpdateMyTask
+            title="Изменить свою задачу"
+            onClose={handleCloseUpdateMyTask}
           />
         }
       />

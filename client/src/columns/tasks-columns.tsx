@@ -12,6 +12,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import dayjs from "dayjs";
 import "dayjs/locale/ru";
 import GoToButton from "../components/common/buttons/go-to-button";
+import { setUpdateTaskId, setUpdateTaskOpenState } from "../store/task/update-task.store";
 
 export const tasksColumns = [
   {
@@ -114,14 +115,14 @@ export const tasksColumns = [
     accessorKey: "_id",
     header: "",
     cell: (info) => {
-      const meetingId = info.getValue();
+      const taskId = info.getValue();
       const dispatch = useDispatch();
       const handleClick = () => {
-        // dispatch(setUpdateMeetingId(meetingId));
-        // dispatch(setUpdateMeetingOpenState(true));
+        dispatch(setUpdateTaskId(taskId));
+        dispatch(setUpdateTaskOpenState(true));
       };
       return (
-        <TableOpenButton id={meetingId} text="Править" onClick={handleClick} />
+        <TableOpenButton id={taskId} text="Править" onClick={handleClick} />
       );
     },
   },

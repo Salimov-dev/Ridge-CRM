@@ -16,6 +16,7 @@ import { setUpdateMeetingOpenState } from "../../store/meeting/update-meeting.st
 // utils
 import getStartWeekDate from "../../utils/date/get-start-week-date";
 import getEndWeekDate from "../../utils/date/get-end-week-date";
+import { setUpdateTaskOpenState } from "../../store/task/update-task.store";
 
 const useCalendar = (
   setOpenCreateManagerTask,
@@ -85,15 +86,22 @@ const useCalendar = (
       setDateCreateMyTask(day);
     }
   };
+
   const handleCloseCreateMeeting = () => {
     setOpenCreateMeeting(false);
   };
+
   const handleCloseCreateManagerTask = () => {
     setOpenCreateManagerTask(false);
   };
+
   const handleCloseCreateMyTask = () => {
     setOpenCreateMyTask(false);
     setDateCreateMyTask(null);
+  };
+
+  const handleCloseUpdateMyTask = () => {
+    dispatch(setUpdateTaskOpenState(false));
   };
 
   const handleCloseUpdateMeeting = () => {
@@ -105,6 +113,7 @@ const useCalendar = (
     handleCloseCreateManagerTask,
     handleCloseCreateMeeting,
     handleCloseUpdateMeeting,
+    handleCloseUpdateMyTask,
     handleOpenCreateMyTask,
     handleOpenCreateManagerTask,
     handleOpenCreateMeeting,

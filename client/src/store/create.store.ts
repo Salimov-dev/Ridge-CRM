@@ -26,6 +26,7 @@ import monthIndexReducer from "./month-index.store";
 import updateMeetingReducer from "./meeting/update-meeting.store";
 import updateObjectReducer from "./object/update-object.store";
 import updateManagerReducer from "./user/update-manager.store";
+import updateTaskReducer from "./task/update-task.store";
 
 const rootReducer = combineReducers({
   // objects
@@ -49,6 +50,7 @@ const rootReducer = combineReducers({
   meetingTypes: meetingTypesReducer,
   // tasks
   tasks: tasksReducer,
+  updateTask: updateTaskReducer,
   // calendar
   monthIndex: monthIndexReducer,
   updateMeeting: updateMeetingReducer,

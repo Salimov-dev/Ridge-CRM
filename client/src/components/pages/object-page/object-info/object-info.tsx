@@ -3,8 +3,8 @@ import { useState } from "react";
 import { Box, styled } from "@mui/material";
 import { useSelector } from "react-redux";
 // layout
-import CreateManagerTask from "../../../../layouts/calendar/components/create-manager-task/create-manager-task";
-import CreateMyTask from "../../../../layouts/calendar/components/create-my-task/create-my-task";
+import CreateManagerTask from "../../create-manager-task/create-manager-task";
+import CreateMyTask from "../../create-my-task/create-my-task";
 // components
 import ObjectsParams from "./components/object-params";
 import ObjectTasks from "./components/object-tasks";
