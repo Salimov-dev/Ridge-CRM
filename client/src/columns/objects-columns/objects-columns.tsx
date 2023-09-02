@@ -10,7 +10,7 @@ import {
 import { FormatDate } from "../../utils/date/format-date";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { getMeetingsByObjectId } from "../../store/meeting/meetings.store";
+import { getObjectMeetingsList } from "../../store/meeting/meetings.store";
 import { getTasksByObjectId } from "../../store/task/tasks.store";
 import Flags from "./components/flags";
 
@@ -61,10 +61,10 @@ export const objectsColumns = [
         cell: (info) => {
           const object = info.getValue();
           const objectId = object?._id;
-          const meetings = useSelector(getMeetingsByObjectId(objectId));
+          const meetings = useSelector(getObjectMeetingsList(objectId));
           const tasks = useSelector(getTasksByObjectId(objectId));
-
-          return (
+          if (objectId) {
+            return (
             <Box
               sx={{
                 display: "flex",
@@ -77,6 +77,8 @@ export const objectsColumns = [
               <Flags meetings={meetings} tasks={tasks} />
             </Box>
           );
+          } else return null
+          
         },
       },
     ],

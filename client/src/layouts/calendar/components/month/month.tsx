@@ -1,6 +1,6 @@
 import React from "react";
 import dayjs from "dayjs";
-import Day from "../day/day";
+import Day from "./day/day";
 import { orderBy } from "lodash";
 import { Box } from "@mui/material";
 import { useSelector } from "react-redux";
@@ -16,17 +16,25 @@ const Month = ({ month, onClick }) => {
     const meeting = meetings?.filter(
       (meet) => dayjs(meet?.date).format() === dayjs(day)?.format()
     );
-    const sortedMeetings = orderBy(meeting, ["date"], ["desc"]);
+    const sortedMeetings = orderBy(meeting, ["date"], ["asc"]);
     return sortedMeetings;
   };
 
   const getTask = (day) => {
-    const currentTasks = tasks?.filter(
-      (task) =>
-        dayjs(task?.date)?.format("YYYY-MM-DD") ===
-        dayjs(day)?.format("YYYY-MM-DD")
+    const currentTasks = tasks?.filter((task) => {
+      const taskDate = dayjs(task?.date);
+      const targetDate = dayjs(day);
+      return (
+        taskDate.format("YYYY-MM-DD") === targetDate.format("YYYY-MM-DD") &&
+        taskDate.isSame(targetDate, "day")
+      );
+    });
+
+    const sortedTasks = orderBy(
+      currentTasks,
+      [(task) => dayjs(task.time)],
+      ["asc"]
     );
-    const sortedTasks = orderBy(currentTasks, ["time"], ["asc"]);
     return sortedTasks;
   };
 
@@ -46,7 +54,7 @@ const Month = ({ month, onClick }) => {
             <Day
               day={day}
               key={idx}
-              onClick={()=>onClick(day)}
+              onClick={() => onClick(day)}
               isWeekendColumn={idx === 5 || idx === 6}
               meeting={getMeeting(day)}
               tasks={getTask(day)}

@@ -1,10 +1,11 @@
 import { Box, styled } from "@mui/material";
 // components
-import Meetings from "./components/meetings";
+
 import Tasks from "./components/tasks";
 // utils
-import { chechIsCurrentDay } from "../../../../../../utils/date/check-is-current-day";
-import { chechIsFutureDay } from "../../../../../../utils/date/check-is-future-day";
+import { chechIsCurrentDay } from "../../../../../../../utils/date/check-is-current-day";
+import { chechIsFutureDay } from "../../../../../../../utils/date/check-is-future-day";
+import Meetings from "./components/meetings";
 
 const Components = styled(Box)`
   display: flex;

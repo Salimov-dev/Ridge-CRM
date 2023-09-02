@@ -3,8 +3,8 @@ import { Box, Typography, styled } from "@mui/material";
 // components
 import DayContent from "./components/day-content/day-content";
 // utils
-import { chechIsCurrentDay } from "../../../../utils/date/check-is-current-day";
-import { chechIsFutureDay } from "../../../../utils/date/check-is-future-day";
+import { chechIsCurrentDay } from "../../../../../utils/date/check-is-current-day";
+import { chechIsFutureDay } from "../../../../../utils/date/check-is-future-day";
 
 const OneDayContainer = styled(Box)`
   display: flex;

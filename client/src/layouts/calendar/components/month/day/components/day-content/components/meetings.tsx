@@ -1,10 +1,10 @@
 import { useSelector } from "react-redux";
 import { Box, Typography, styled } from "@mui/material";
-import { FormatTime } from "../../../../../../../utils/date/format-time";
-import { getUsersList } from "../../../../../../../store/user/users.store";
-import { getMeetingTypesList } from "../../../../../../../store/meeting/meeting-types.store";
-import { getMeetingStatusesList } from "../../../../../../../store/meeting/meeting-status.store";
-import Loader from "../../../../../../../components/common/loader/loader";
+import { FormatTime } from "../../../../../../../../utils/date/format-time";
+import { getUsersList } from "../../../../../../../../store/user/users.store";
+import { getMeetingTypesList } from "../../../../../../../../store/meeting/meeting-types.store";
+import { getMeetingStatusesList } from "../../../../../../../../store/meeting/meeting-status.store";
+import Loader from "../../../../../../../../components/common/loader/loader";
 
 const ItemsContainer = styled(Box)`
   display: flex;
@@ -44,6 +44,7 @@ const Meetings = ({ meeting, isCurrentDay, isFutureDay }) => {
 
     return result;
   };
+  
   return meeting ? (
     <ItemsContainer>
       {meeting?.map((meet) => (
@@ -53,15 +54,17 @@ const Meetings = ({ meeting, isCurrentDay, isFutureDay }) => {
             background: isCurrentDay ? "blue" : isFutureDay ? "blue" : "gray",
           }}
         >
-          <Typography sx={{ fontSize:'15px',textDecoration: "underline" }}>
-           <b>Встреча в: {FormatTime(meet.time)}</b> 
+          <Typography sx={{ fontSize: "15px", textDecoration: "underline" }}>
+            <b>Встреча в: {FormatTime(meet.time)}</b>
           </Typography>
           <Typography>{getMeetingStatusName(meet?.status)}</Typography>
           <Typography>{getMeetingTypeName(meet?.meetingType)}</Typography>
           <Typography>
             {meet.location.city}, {meet.location.address}
           </Typography>
-          <Typography sx={{fontStyle: 'italic'}}>{getManagerName(meet?.userId)}</Typography>
+          <Typography sx={{ fontStyle: "italic" }}>
+            {getManagerName(meet?.userId)}
+          </Typography>
         </ItemContainer>
       ))}
     </ItemsContainer>

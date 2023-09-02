@@ -1,7 +1,8 @@
-import { createAction, createSelector, createSlice } from "@reduxjs/toolkit";
+import { createAction, createSlice } from "@reduxjs/toolkit";
 import isOutDated from "../../utils/auth/is-out-date";
 import localStorageService from "../../services/user/local.storage-service";
 import meetingsService from "../../services/meeting/meetings.service";
+import { createSelector } from 'reselect';
 
 const initialState = localStorageService.getAccessToken()
   ? {
@@ -124,12 +125,6 @@ export const getObjectMeetingsList = (objectId) =>
     (state) => state?.meetings?.entities,
     (meetings) => meetings?.filter((meet) => meet?.objectId === objectId)
   );
-
-export const getMeetingsByObjectId = (objectId) => (state) => {
-  const meetings = state?.meetings.entities;
-  const objectMeetings = meetings?.filter((meet) => meet.objectId === objectId);
-  return objectMeetings;
-};
 
 export const getMeetingLoadingStatus = () => (state) =>
   state.meetings.isLoading;

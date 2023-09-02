@@ -1,10 +1,10 @@
 import { useSelector } from "react-redux";
 import { Box, Typography, styled } from "@mui/material";
-import { getObjectsList } from "../../../../../../../store/object/objects.store";
-import { FormatTime } from "../../../../../../../utils/date/format-time";
-import Loader from "../../../../../../../components/common/loader/loader";
-import { getUsersList } from "../../../../../../../store/user/users.store";
-import DividerStyled from "../../../../../../../components/common/divider/divider-styled";
+import { getObjectsList } from "../../../../../../../../store/object/objects.store";
+import { FormatTime } from "../../../../../../../../utils/date/format-time";
+import Loader from "../../../../../../../../components/common/loader/loader";
+import { getUsersList } from "../../../../../../../../store/user/users.store";
+import DividerStyled from "../../../../../../../../components/common/divider/divider-styled";
 
 const ItemsContainer = styled(Box)`
   display: flex;
