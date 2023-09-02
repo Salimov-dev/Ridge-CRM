@@ -39,7 +39,6 @@ const useObjectsFiltersPanel = (objects) => {
 
     return sortedStatuses;
   };
-
   const getActualDistrictsList = () => {
     const filteredDistricts = objects?.map((dist) => dist.location.district);
     const uniqueDistricts = [...new Set(filteredDistricts)];

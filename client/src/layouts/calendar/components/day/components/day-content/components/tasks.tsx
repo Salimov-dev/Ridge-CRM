@@ -69,7 +69,7 @@ const Tasks = ({ tasks, isCurrentDay, isFutureDay }) => {
               : "gray",
           }}
         >
-          <Typography sx={{ fontSize:'15px', textDecoration: "underline" }}>
+          <Typography sx={{ fontSize: "15px", textDecoration: "underline" }}>
             <b>
               Задача до: {task.time ? FormatTime(task.time) : "В течение дня"}
             </b>

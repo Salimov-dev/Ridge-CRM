@@ -7,16 +7,14 @@ import {
   getMeetingLoadingStatus,
   getMeetingsList,
 } from "../../store/meeting/meetings.store";
+import { getTaskLoadingStatus } from "../../store/task/tasks.store";
 import { getCurrentUserId, getUsersList } from "../../store/user/users.store";
-import {
-  getTaskLoadingStatus,
-} from "../../store/task/tasks.store";
+import { setupdateMyTaskOpenState } from "../../store/task/update-task.store";
 import { setUpdateMeetingOpenState } from "../../store/meeting/update-meeting.store";
+import { setUpdateManagerTaskOpenState } from "../../store/task/update-manager-task.store";
 // utils
 import getStartWeekDate from "../../utils/date/get-start-week-date";
 import getEndWeekDate from "../../utils/date/get-end-week-date";
-import { setupdateMyTaskOpenState } from "../../store/task/update-task.store";
-import { setUpdateManagerTaskOpenState } from "../../store/task/update-manager-task.store";
 
 const useCalendar = (
   setOpenCreateManagerTask,
@@ -26,28 +24,27 @@ const useCalendar = (
 ) => {
   const objects = useSelector(getObjectsList());
   const meetings = useSelector(getMeetingsList());
+  const users = useSelector(getUsersList());
+  const currentUserId = useSelector(getCurrentUserId());
   const isMeetingsLoading = useSelector(getMeetingLoadingStatus());
   const isTasksLoading = useSelector(getTaskLoadingStatus());
-
   const startOfWeek = getStartWeekDate();
   const endOfWeek = getEndWeekDate();
-
   const dispatch = useDispatch();
 
   const currentWeeklyMeetings = meetings?.filter((meet) =>
     dayjs(meet.date).isBetween(startOfWeek, endOfWeek, null, "[]")
   );
-
+  const usersWithoutCurrentUser = users.filter(
+    (user) => user._id !== currentUserId
+  );
+  const currentUserObjects = objects?.filter(
+    (obj) => obj?.userId === currentUserId
+  );
   const sortedCurrentWeeklyMeetings = orderBy(
     currentWeeklyMeetings,
     ["date"],
     ["asc"]
-  );
-
-  const users = useSelector(getUsersList());
-  const currentUserId = useSelector(getCurrentUserId());
-  const usersWithoutCurrentUser = users.filter(
-    (user) => user._id !== currentUserId
   );
 
   let transformUsers = [];
@@ -58,23 +55,34 @@ const useCalendar = (
     });
   });
 
-  const currentUserObjects = objects?.filter(
-    (obj) => obj?.userId === currentUserId
-  );
-
   let transformObjects = [];
   currentUserObjects?.forEach((obj) => {
     transformObjects?.push({ _id: obj._id, name: obj.location.address });
   });
 
+  // meetings
   const handleOpenCreateMeeting = () => {
     setOpenCreateMeeting(true);
   };
+  const handleCloseUpdateMeeting = () => {
+    dispatch(setUpdateMeetingOpenState(false));
+  };
+  const handleCloseCreateMeeting = () => {
+    setOpenCreateMeeting(false);
+  };
 
+  // manager tasks
   const handleOpenCreateManagerTask = () => {
     setOpenCreateManagerTask(true);
   };
+  const handleCloseUpdateManagerTask = () => {
+    dispatch(setUpdateManagerTaskOpenState(false));
+  };
+  const handleCloseCreateManagerTask = () => {
+    setOpenCreateManagerTask(false);
+  };
 
+  // my tasks
   const handleOpenCreateMyTask = (day) => {
     const type = typeof day.date;
     setDateCreateMyTask(dayjs());
@@ -83,30 +91,12 @@ const useCalendar = (
       setDateCreateMyTask(day);
     }
   };
-
-  const handleCloseCreateMeeting = () => {
-    setOpenCreateMeeting(false);
-  };
-
-  const handleCloseCreateManagerTask = () => {
-    setOpenCreateManagerTask(false);
-  };
-
-  const handleCloseCreateMyTask = () => {
-    setOpenCreateMyTask(false);
-    setDateCreateMyTask(null);
-  };
-
   const handleCloseUpdateMyTask = () => {
     dispatch(setupdateMyTaskOpenState(false));
   };
-
-  const handleCloseUpdateManagerTask = () => {
-    dispatch(setUpdateManagerTaskOpenState(false));
-  };
-
-  const handleCloseUpdateMeeting = () => {
-    dispatch(setUpdateMeetingOpenState(false));
+  const handleCloseCreateMyTask = () => {
+    setOpenCreateMyTask(false);
+    setDateCreateMyTask(null);
   };
 
   return {

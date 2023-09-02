@@ -2,15 +2,11 @@
 import { useState } from "react";
 import { Box, styled } from "@mui/material";
 import { useSelector } from "react-redux";
-// layout
-import CreateManagerTask from "../../create-manager-task/create-manager-task";
-import CreateMyTask from "../../create-my-task/create-my-task";
 // components
+import Dialogs from "./components/dialogs";
 import ObjectsParams from "./components/object-params";
 import ObjectTasks from "./components/object-tasks";
 import ObjectMeetings from "./components/object-meetings";
-import CreateMeeting from "../../create-meeting/create-meeting";
-import DialogStyled from "../../../common/dialog/dialog-styled";
 // hooks
 import useObjectInfo from "../../../../hooks/object/use-object-info";
 // store
@@ -27,10 +23,7 @@ import {
   getCurrentUserId,
   getUsersList,
 } from "../../../../store/user/users.store";
-import UpdateMeeting from "../../update-meeting/update-meeting";
 import { loadUpdateMeetingOpenState } from "../../../../store/meeting/update-meeting.store";
-import UpdateMyTask from "../../update-my-task/update-my-task";
-import UpdateManagerTask from "../../update-manager-task/update-manager-task";
 import { loadupdateMyTaskOpenState } from "../../../../store/task/update-task.store";
 import { loadUpdateManagerTaskOpenState } from "../../../../store/task/update-manager-task.store";
 
@@ -47,21 +40,27 @@ const ObjectInfo = ({ object, isLoading }) => {
   const [openCreateMeeting, setOpenCreateMeeting] = useState(false);
   const [dateCreateMyTask, setDateCreateMyTask] = useState(null);
 
-  const meetings = useSelector(getObjectMeetingsList(object._id));
   const isOpenUpdateMeeting = useSelector(loadUpdateMeetingOpenState());
+  const isOpenUpdateMyTask = useSelector(loadupdateMyTaskOpenState());
+  const isOpenUpdateManagerTask = useSelector(loadUpdateManagerTaskOpenState());
+
+  const meetings = useSelector(getObjectMeetingsList(object._id));
   const isMeetingsLoading = useSelector(getMeetingLoadingStatus());
 
   const tasks = useSelector(getObjectTasksList(object._id));
   const isTasksLoading = useSelector(getTaskLoadingStatus());
-  const isOpenUpdateMyTask = useSelector(loadupdateMyTaskOpenState());
-  const isOpenUpdateManagerTask = useSelector(loadUpdateManagerTaskOpenState());
-
 
   const users = useSelector(getUsersList());
+  const objects = useSelector(getObjectsList());
+
   const currentUserId = useSelector(getCurrentUserId());
   const usersWithoutCurrentUser = users.filter(
     (user) => user._id !== currentUserId
   );
+  const currentUserObjects = objects?.filter(
+    (obj) => obj?.userId === currentUserId
+  );
+
   let transformUsers = [];
   usersWithoutCurrentUser?.forEach((user) => {
     transformUsers?.push({
@@ -70,11 +69,6 @@ const ObjectInfo = ({ object, isLoading }) => {
     });
   });
 
-  const objectId = object._id;
-  const objects = useSelector(getObjectsList());
-  const currentUserObjects = objects?.filter(
-    (obj) => obj?.userId === currentUserId
-  );
   let transformObjects = [];
   currentUserObjects?.forEach((obj) => {
     transformObjects?.push({ _id: obj._id, name: obj.location.address });
@@ -89,7 +83,7 @@ const ObjectInfo = ({ object, isLoading }) => {
     handleCloseCreateMyTask,
     handleCloseUpdateMeeting,
     handleCloseUpdateMyTask,
-    handleCloseUpdateManagerTask
+    handleCloseUpdateManagerTask,
   } = useObjectInfo(
     setOpenCreateMeeting,
     setOpenCreateMyTask,
@@ -113,83 +107,23 @@ const ObjectInfo = ({ object, isLoading }) => {
         onCreateMyTask={handleOpenCreateMyTask}
         onCreateManagerTask={handleOpenCreateManagerTask}
       />
-
-      <DialogStyled
-        component={
-          <CreateMeeting
-            onClose={handleCloseCreateMeeting}
-            objectPageId={objectId}
-          />
-        }
-        onClose={handleCloseCreateMeeting}
-        open={openCreateMeeting}
-      />
-
-      <DialogStyled
-        component={<UpdateMeeting onClose={handleCloseUpdateMeeting} />}
-        onClose={handleCloseUpdateMeeting}
-        open={isOpenUpdateMeeting}
-        fullWidth={false}
-      />
-
-      <DialogStyled
-        onClose={handleCloseCreateManagerTask}
-        open={openCreateManagerTask}
-        maxWidth="sm"
-        fullWidth={false}
-        component={
-          <CreateManagerTask
-            title="Добавить менеджеру задачу"
-            objectPageId={objectId}
-            objects={transformObjects}
-            users={transformUsers}
-            onClose={handleCloseCreateManagerTask}
-          />
-        }
-      />
-
-      <DialogStyled
-        onClose={handleCloseCreateMyTask}
-        open={openCreateMyTask}
-        maxWidth="sm"
-        fullWidth={false}
-        component={
-          <CreateMyTask
-            title="Добавить себе задачу"
-            date={dateCreateMyTask}
-            objectPageId={objectId}
-            objects={transformObjects}
-            onClose={handleCloseCreateMyTask}
-          />
-        }
-      />
-
-      <DialogStyled
-        onClose={handleCloseUpdateMyTask}
-        open={isOpenUpdateMyTask}
-        maxWidth="sm"
-        fullWidth={false}
-        component={
-          <UpdateMyTask
-            title="Изменить свою задачу"
-            onClose={handleCloseUpdateMyTask}
-          />
-        }
-      />
-
-      <DialogStyled
-        onClose={handleCloseUpdateManagerTask}
-        open={isOpenUpdateManagerTask}
-        maxWidth="sm"
-        fullWidth={false}
-        component={
-          <UpdateManagerTask
-            title="Изменить задачу менеджеру"
-            objects={transformObjects}
-            users={transformUsers}
-            onClose={handleCloseUpdateManagerTask}
-          />
-        }
+      <Dialogs
+        object={object}
+        objects={transformObjects}
+        users={transformUsers}
+        openCreateMyTask={openCreateMyTask}
+        openCreateManagerTask={openCreateManagerTask}
+        openCreateMeeting={openCreateMeeting}
+        dateCreateMyTask={dateCreateMyTask}
+        handleCloseCreateMeeting={handleCloseCreateMeeting}
+        handleCloseCreateManagerTask={handleCloseCreateManagerTask}
+        handleCloseCreateMyTask={handleCloseCreateMyTask}
+        handleCloseUpdateMeeting={handleCloseUpdateMeeting}
+        handleCloseUpdateMyTask={handleCloseUpdateMyTask}
+        handleCloseUpdateManagerTask={handleCloseUpdateManagerTask}
+        isOpenUpdateManagerTask={isOpenUpdateManagerTask}
+        isOpenUpdateMyTask={isOpenUpdateMyTask}
+        isOpenUpdateMeeting={isOpenUpdateMeeting}
       />
     </Component>
   );

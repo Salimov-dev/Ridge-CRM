@@ -10,46 +10,46 @@ const useObjectInfo = (
   setOpenCreateManagerTask,
   setDateCreateMyTask
 ) => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-  const handleCloseUpdateMeeting = () => {
-    dispatch(setUpdateMeetingOpenState(false));
-  };
-
+  // meetings
   const handleOpenCreateMeeting = () => {
     setOpenCreateMeeting(true);
   };
+  const handleCloseUpdateMeeting = () => {
+    dispatch(setUpdateMeetingOpenState(false));
+  };
+  const handleCloseCreateMeeting = () => {
+    setOpenCreateMeeting(false);
+  };
 
+  // managers
   const handleOpenCreateManagerTask = () => {
     setOpenCreateManagerTask(true);
     setOpenCreateMyTask(false);
   };
 
+  // my tasks
   const handleOpenCreateMyTask = () => {
     setDateCreateMyTask(dayjs());
     setOpenCreateMyTask(true);
   };
-
-  const handleCloseCreateMeeting = () => {
-    setOpenCreateMeeting(false);
+  const handleCloseUpdateManagerTask = () => {
+    dispatch(setUpdateManagerTaskOpenState(false));
   };
-
-  const handleCloseCreateManagerTask = () => {
-    setOpenCreateManagerTask(false);
-  };
-
   const handleCloseCreateMyTask = () => {
     setOpenCreateMyTask(false);
     setDateCreateMyTask(null);
   };
 
+  // manager tasks
+  const handleCloseCreateManagerTask = () => {
+    setOpenCreateManagerTask(false);
+  };
   const handleCloseUpdateMyTask = () => {
     dispatch(setupdateMyTaskOpenState(false));
   };
 
-  const handleCloseUpdateManagerTask = () => {
-    dispatch(setUpdateManagerTaskOpenState(false));
-  };
   return {
     handleOpenCreateMeeting,
     handleOpenCreateManagerTask,
@@ -59,7 +59,7 @@ const useObjectInfo = (
     handleCloseCreateMyTask,
     handleCloseUpdateMeeting,
     handleCloseUpdateMyTask,
-    handleCloseUpdateManagerTask
+    handleCloseUpdateManagerTask,
   };
 };
 

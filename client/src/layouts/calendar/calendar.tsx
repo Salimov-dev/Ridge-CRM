@@ -1,39 +1,29 @@
 // libraries
 import { orderBy } from "lodash";
-import { Box, Typography } from "@mui/material";
 import { useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 // components
 import Header from "./components/header/header";
-import DaysOfWeek from "./components/days-of-week/days-of-week";
-import DialogStyled from "../../components/common/dialog/dialog-styled";
+import Tasks from "./components/tasks/tasks";
+import Dialogs from "./components/dialogs/dialogs";
 import CalendarBody from "./components/calendar-body/calendar-body";
-import BasicTable from "../../components/common/table/basic-table";
-import CreateButtons from "./components/header/components/create-buttons";
 import LayoutTitle from "../../components/common/page-titles/layout-title";
-import CreateMyTask from "../../components/pages/create-my-task/create-my-task";
-import CreateManagerTask from "../../components/pages/create-manager-task/create-manager-task";
-import CreateMeeting from "../../components/pages/create-meeting/create-meeting";
 import CurrentWeeklyMeetings from "./components/current-weekly-meetings/current-weekly-meetings";
-import UpdateMeeting from "../../components/pages/update-meeting/update-meeting";
-import UpdateMyTask from "../../components/pages/update-my-task/update-my-task";
-import UpdateManagerTask from "../../components/pages/update-manager-task/update-manager-task";
-import CalendarFiltersPanel from "../../components/UI/filters-panels/calendar-filters-panel";
 // columns
 import { tasksColumns } from "../../columns/tasks-columns";
 import { meetingsColumns } from "../../columns/meetings-columns";
 // utils
 import getMonth from "../../utils/calendar/get-month";
 // store
-import { loadUpdateMeetingOpenState } from "../../store/meeting/update-meeting.store";
-import { loadupdateMyTaskOpenState } from "../../store/task/update-task.store";
+import { getTasksList } from "../../store/task/tasks.store";
 import { getMonthIndexState } from "../../store/month-index.store";
+import { loadupdateMyTaskOpenState } from "../../store/task/update-task.store";
+import { loadUpdateMeetingOpenState } from "../../store/meeting/update-meeting.store";
+import { loadUpdateManagerTaskOpenState } from "../../store/task/update-manager-task.store";
 // hooks
 import useCalendar from "../../hooks/calendar/use-calendar";
 import useSearchTask from "../../hooks/task/use-search-task";
-import { loadUpdateManagerTaskOpenState } from "../../store/task/update-manager-task.store";
-import { getTasksList } from "../../store/task/tasks.store";
 
 const initialState = {
   object: "",
@@ -88,6 +78,7 @@ const Calendar = () => {
       : initialState,
     mode: "onBlur",
   });
+
   const data = watch();
   const tasks = useSelector(getTasksList());
   const searchedTasks = useSearchTask(tasks, data);
@@ -113,118 +104,42 @@ const Calendar = () => {
         onCreateManagerTask={handleOpenCreateManagerTask}
         onCreateMeeting={handleOpenCreateMeeting}
       />
-
-      <DaysOfWeek />
-
       <CalendarBody
         currentMonth={currentMonth}
         onOpenCreateMyTask={handleOpenCreateMyTask}
       />
-
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "end",
-          marginBottom: "4px",
-        }}
-      >
-        <Typography variant="h3">Задачи:</Typography>
-        <CreateButtons
-          onCreateMeeting={handleOpenCreateMeeting}
-          onCreateMyTask={handleOpenCreateMyTask}
-          onCreateManagerTask={handleOpenCreateManagerTask}
-        />
-      </Box>
-
-      <Box sx={{ marginBottom: "10px" }}></Box>
-      <CalendarFiltersPanel
-        data={data}
+      <Tasks
         register={register}
+        data={data}
         setValue={setValue}
-        isLoading={isTasksLoading}
+        isTasksLoading={isTasksLoading}
+        sortedTasks={sortedTasks}
+        tasksColumn={tasksColumn}
+        handleOpenCreateMeeting={handleOpenCreateMeeting}
+        handleOpenCreateMyTask={handleOpenCreateMyTask}
+        handleOpenCreateManagerTask={handleOpenCreateManagerTask}
       />
-      <BasicTable
-        items={sortedTasks}
-        itemsColumns={tasksColumn}
-        isLoading={isTasksLoading}
-      />
-
       <CurrentWeeklyMeetings
         meetings={sortedCurrentWeeklyMeetings}
         columns={meetingsColumns}
         isLoading={isMeetingsLoading}
       />
-
-      <DialogStyled
-        component={<CreateMeeting onClose={handleCloseCreateMeeting} />}
-        onClose={handleCloseCreateMeeting}
-        open={openCreateMeeting}
-      />
-
-      <DialogStyled
-        component={<UpdateMeeting onClose={handleCloseUpdateMeeting} />}
-        onClose={handleCloseUpdateMeeting}
-        open={isOpenUpdateMeeting}
-        fullWidth={false}
-      />
-
-      <DialogStyled
-        onClose={handleCloseCreateManagerTask}
-        open={openCreateManagerTask}
-        maxWidth="lg"
-        fullWidth={false}
-        component={
-          <CreateManagerTask
-            title="Поставить менеджеру задачу"
-            objects={transformObjects}
-            users={transformUsers}
-            onClose={handleCloseCreateManagerTask}
-          />
-        }
-      />
-
-      <DialogStyled
-        onClose={handleCloseUpdateManagerTask}
-        open={isOpenUpdateManagerTask}
-        maxWidth="sm"
-        fullWidth={false}
-        component={
-          <UpdateManagerTask
-            title="Изменить задачу менеджеру"
-            objects={transformObjects}
-            users={transformUsers}
-            onClose={handleCloseUpdateManagerTask}
-          />
-        }
-      />
-
-      <DialogStyled
-        onClose={handleCloseCreateMyTask}
-        open={openCreateMyTask}
-        maxWidth="sm"
-        fullWidth={false}
-        component={
-          <CreateMyTask
-            title="Добавить себе задачу"
-            objects={transformObjects}
-            date={dateCreateMyTask}
-            onClose={handleCloseCreateMyTask}
-          />
-        }
-      />
-
-      <DialogStyled
-        onClose={handleCloseUpdateMyTask}
-        open={isOpenUpdateMyTask}
-        maxWidth="sm"
-        fullWidth={false}
-        component={
-          <UpdateMyTask
-            title="Изменить свою задачу"
-            onClose={handleCloseUpdateMyTask}
-          />
-        }
+      <Dialogs
+        users={transformUsers}
+        objects={transformObjects}
+        dateCreateMyTask={dateCreateMyTask}
+        openCreateMyTask={openCreateMyTask}
+        openCreateManagerTask={openCreateManagerTask}
+        openCreateMeeting={openCreateMeeting}
+        handleCloseCreateMyTask={handleCloseCreateMyTask}
+        handleCloseCreateManagerTask={handleCloseCreateManagerTask}
+        handleCloseCreateMeeting={handleCloseCreateMeeting}
+        handleCloseUpdateMeeting={handleCloseUpdateMeeting}
+        handleCloseUpdateMyTask={handleCloseUpdateMyTask}
+        handleCloseUpdateManagerTask={handleCloseUpdateManagerTask}
+        isOpenUpdateManagerTask={isOpenUpdateManagerTask}
+        isOpenUpdateMyTask={isOpenUpdateMyTask}
+        isOpenUpdateMeeting={isOpenUpdateMeeting}
       />
     </>
   );

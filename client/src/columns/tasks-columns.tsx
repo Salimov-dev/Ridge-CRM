@@ -99,7 +99,18 @@ export const tasksColumns = [
       );
     },
   },
-
+  {
+    accessorKey: "managerId",
+    header: "Ответственный",
+    cell: (info) => {
+      const managerId = info.getValue();
+      return (
+        <Typography sx={{ textAlign: "center" }}>
+          {managerId ? FormatManagerName(managerId) : "-"}
+        </Typography>
+      );
+    },
+  },
   {
     accessorKey: "comment",
     header: "Задача",

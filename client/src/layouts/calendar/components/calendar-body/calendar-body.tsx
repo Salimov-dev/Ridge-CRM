@@ -1,5 +1,6 @@
 import { Box, styled } from "@mui/material";
 import Month from "../month/month";
+import DaysOfWeek from "../days-of-week/days-of-week";
 
 const Component = styled(Box)`
   display: flex;
@@ -10,6 +11,7 @@ const Component = styled(Box)`
 const CalendarBody = ({ currentMonth, onOpenCreateMyTask }) => {
   return (
     <Component>
+      <DaysOfWeek />
       <Month month={currentMonth} onClick={onOpenCreateMyTask} />
     </Component>
   );
