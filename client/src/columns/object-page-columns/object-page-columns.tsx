@@ -289,7 +289,7 @@ export const contactsColumns = [
     accessorKey: "contact.name",
     header: "Имя",
     cell: (info) => {
-      const name = info.getValue();
+      const name = info?.getValue();
       return <AlignCenter>{name ? name : "-"}</AlignCenter>;
     },
   },
@@ -297,7 +297,7 @@ export const contactsColumns = [
     accessorKey: "contact.position",
     header: "Позиция",
     cell: (info) => {
-      const position = info.getValue();
+      const position = info?.getValue();
       return (
         <AlignCenter>
           {position ? FormatWorkingPosition(position) : "-"}
@@ -309,7 +309,7 @@ export const contactsColumns = [
     accessorKey: "contact.phone",
     header: "Телефон",
     cell: (info) => {
-      const phone = info.getValue();
+      const phone = info?.getValue();
       return <AlignCenter>{phone ? FormatPhone(phone) : "-"}</AlignCenter>;
     },
   },
@@ -317,7 +317,7 @@ export const contactsColumns = [
     accessorKey: "contact.email",
     header: "Почта",
     cell: (info) => {
-      const email = info.getValue();
+      const email = info?.getValue();
       return <AlignCenter>{email ? email : "-"}</AlignCenter>;
     },
   },

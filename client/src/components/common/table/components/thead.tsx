@@ -2,7 +2,7 @@ import KeyboardArrowDownOutlinedIcon from "@mui/icons-material/KeyboardArrowDown
 import KeyboardArrowUpOutlinedIcon from "@mui/icons-material/KeyboardArrowUpOutlined";
 import { flexRender } from "@tanstack/react-table";
 
-const Thead = ({ table, colors }) => {
+const Thead = ({ table, colors, isDialogMode }) => {
   return (
     <thead>
       {table.getHeaderGroups().map((headerGroup) => (
@@ -14,7 +14,9 @@ const Thead = ({ table, colors }) => {
                 colSpan={header.colSpan}
                 style={{
                   cursor: "pointer",
-                  background: `${colors.primary[400]}`,
+                  background: !isDialogMode
+                    ? `${colors.primary[400]}`
+                    : "#2d2d2d",
                 }}
               >
                 {header.isPlaceholder ? null : (

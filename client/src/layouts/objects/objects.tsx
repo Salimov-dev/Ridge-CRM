@@ -1,7 +1,7 @@
 // libraries
 import dayjs from "dayjs";
 import { useForm } from "react-hook-form";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 // MUI
 import { Box } from "@mui/material";
@@ -29,6 +29,8 @@ import {
   loadUpdateObjectOpenState,
   setUpdateObjectOpenState,
 } from "../../store/object/update-object.store";
+import ObjectPage from "../../components/pages/object-page/object-page";
+import { loadOpenObjectPageOpenState, setOpenObjectPageOpenState } from "../../store/object/open-object-page.store";
 
 const initialState = {
   address: "",
@@ -89,6 +91,13 @@ const Objects = () => {
 
   const searchedObjects = useSearchObject(objects, data);
 
+const dispatch = useDispatch()
+  const handleCloseCreateMeeting = () => {
+     dispatch(setOpenObjectPageOpenState(false));
+  };
+
+  const isOpenObjectPage = useSelector(loadOpenObjectPageOpenState());
+
   useEffect(() => {
     const hasLocalStorageData = localStorage.getItem("search-objects-data");
 
@@ -110,6 +119,7 @@ const Objects = () => {
         reset={reset}
         initialState={initialState}
         onOpen={handleOpenCreate}
+        disabled={isLoading}
       />
       <ItemsOnMap
         items={searchedObjects}
@@ -145,10 +155,10 @@ const Objects = () => {
       />
 
       <DialogStyled
-        component={<UpdateObject onClose={handleCloseUpdate} />}
-        onClose={handleCloseUpdate}
-        open={isOpenUpdate}
-        maxWidth="lg"
+        component={<ObjectPage onClose={handleCloseCreateMeeting} />}
+        onClose={handleCloseCreateMeeting}
+        open={isOpenObjectPage}
+        maxWidth = "xl"
       />
     </Box>
   );

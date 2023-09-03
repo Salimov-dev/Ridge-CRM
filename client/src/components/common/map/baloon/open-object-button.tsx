@@ -1,18 +1,16 @@
 import { Button } from "@mui/material";
-import { useNavigate } from "react-router-dom";
 
-const OpenObjectButton = ({ path }) => {
-  const navigate = useNavigate();
+const OpenObjectButton = ({ onClick }) => {
   return (
     <Button
-      variant="outlined"
-      size="small"
-      color="primary"
-      onClick={() => navigate(path)}
-      sx={{ paddingTop: "6px", marginBottom: "6px" }}
-    >
-      Перейти в объект
-    </Button>
+        variant="outlined"
+        size="small"
+        color="primary"
+        onClick={onClick}
+        sx={{ paddingTop: "6px", marginBottom: "6px" }}
+      >
+        Открыть страницу объекта
+      </Button>
   );
 };
 

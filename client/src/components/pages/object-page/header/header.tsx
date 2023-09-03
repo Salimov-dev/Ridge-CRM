@@ -1,11 +1,8 @@
-import { useSelector } from "react-redux";
 import { Box, Typography, styled } from "@mui/material";
 // components
 import ObjectName from "./components/object-name";
 import ButtonsPanel from "../buttons-panel/buttons-panel";
 import Loader from "../../../common/loader/loader";
-// store
-import { getDistrictById } from "../../../../store/object/districts.store";
 
 const HeaderContainer = styled(Box)`
   display: flex;
@@ -19,18 +16,17 @@ const Title = styled(Box)`
   gap: 8px;
 `;
 
-const Header = ({ object, isLoading }) => {
+const Header = ({ object, isLoading, onClose }) => {
   const city = object?.location.city;
   const address = object?.location.address;
-  const district = useSelector(getDistrictById(object?.location.district));
 
   return !isLoading ? (
     <HeaderContainer>
       <Title>
         <Typography variant="h2">Объект: </Typography>
-        <ObjectName city={city} district={district} address={address} />
+        <ObjectName city={city} address={address} />
       </Title>
-      <ButtonsPanel city={city} district={district} address={address} />
+      <ButtonsPanel onClose={onClose} />
     </HeaderContainer>
   ) : (
     <Loader />

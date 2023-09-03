@@ -28,6 +28,7 @@ import updateObjectReducer from "./object/update-object.store";
 import updateManagerReducer from "./user/update-user.store";
 import updateMyTaskReducer from "./task/update-task.store";
 import updateManagerTaskReducer from "./task/update-manager-task.store";
+import openObjectPageReducer from "./object/open-object-page.store";
 
 const rootReducer = combineReducers({
   // objects
@@ -35,6 +36,9 @@ const rootReducer = combineReducers({
   objectStatus: objectStatusReducer,
   objectConditions: objectConditionsReducer,
   objectTypes: objectTypesReducer,
+  openObjectPage: openObjectPageReducer,
+
+  updateObject: updateObjectReducer,
   // objects params
   metro: metroReducer,
   districts: districtsReducer,
@@ -45,19 +49,18 @@ const rootReducer = combineReducers({
   // users
   users: usersListReducer,
   userStatuses: userStatusesReducer,
+  updateManager: updateManagerReducer,
   // meetings
   meetingStatuses: meetingStatusesReducer,
   meetings: meetingsReducer,
   meetingTypes: meetingTypesReducer,
+  updateMeeting: updateMeetingReducer,
   // tasks
   tasks: tasksReducer,
   updateMyTask: updateMyTaskReducer,
   updateManagerTask: updateManagerTaskReducer,
   // calendar
   monthIndex: monthIndexReducer,
-  updateMeeting: updateMeetingReducer,
-  updateObject: updateObjectReducer,
-  updateManager: updateManagerReducer,
   // other
   sidebarCollapsState: sidebarCollapsStateReducer,
 });

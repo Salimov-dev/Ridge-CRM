@@ -122,7 +122,7 @@ const CreateObject = ({ onClose }) => {
   }, [findedObject]);
 
   return (
-    <Box>
+    <>
       <TitleWithAddress
         isEmptyFindedObject={isEmptyFindedObject}
         getCity={getCity}
@@ -145,7 +145,7 @@ const CreateObject = ({ onClose }) => {
         isObjectHasAddress={isObjectHasAddress}
         onClose={onClose}
       />
-    </Box>
+    </>
   );
 };
 

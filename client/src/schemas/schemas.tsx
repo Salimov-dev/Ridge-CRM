@@ -30,7 +30,6 @@ export const objectSchema = yup.object().shape({
 export const meetingSchema = yup.object().shape({
   status: yup.string().required("Статус обязателен для заполнения"),
   meetingType: yup.string().required("Тип обязателен для заполнения"),
-  objectId: yup.string().required("Выберите объект встречи"),
   comment: yup.string().required("Заполните комментарий"),
 });
 

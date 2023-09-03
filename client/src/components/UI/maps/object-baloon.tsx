@@ -1,4 +1,4 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Box, styled } from "@mui/material";
 // components
 import { FormatPhone } from "../../common/table/helpers/helpers";
@@ -15,6 +15,10 @@ import { getRentTypeNameById } from "../../../store/object/rent-types.store";
 import { getEstateTypeNameById } from "../../../store/object/estate-types.store";
 import { getObjectTypeNameById } from "../../../store/object/object-types.store";
 import { getCurrentRenterNameById } from "../../../store/object/current-renter.store";
+import {
+  setOpenObjectPageId,
+  setOpenObjectPageOpenState,
+} from "../../../store/object/open-object-page.store";
 
 const BaloonContainer = styled(Box)`
   width: 100%;
@@ -27,17 +31,22 @@ const BaloonContainer = styled(Box)`
 `;
 
 const ObjectBaloon = ({ object }) => {
+  const objectId = object?._id;
   const createdAt = FormatDate(object.created_at);
   const manager = useSelector(getUserNameById(object?.userId));
   const city = object?.location?.city;
   const district = useSelector(getDistrictById(object?.location?.district));
   const address = object?.location?.address;
-
   const name = object?.contact?.name;
   const phone = object?.contact?.phone;
   const email = object?.contact?.email;
+  const totalSquare = object?.commercialTerms?.totalSquare;
+  const rentSquare = object?.commercialTerms?.rentSquare;
+  const rentPrice = object?.commercialTerms?.rentPrice;
+  const rentTypes = object?.commercialTerms?.rentTypes;
 
-  const objectId = object._id;
+  const dispatch = useDispatch();
+
   const objectType = useSelector(
     getObjectTypeNameById(object?.estateOptions?.objectTypes)
   );
@@ -48,15 +57,14 @@ const ObjectBaloon = ({ object }) => {
     getCurrentRenterNameById(object?.estateOptions?.currentRenters)
   );
 
-  const totalSquare = object?.commercialTerms?.totalSquare;
-  const rentSquare = object?.commercialTerms?.rentSquare;
-  const rentPrice = object?.commercialTerms?.rentPrice;
-  const rentTypes = object?.commercialTerms?.rentTypes;
+  const handleOpenObjectPage = () => {
+    dispatch(setOpenObjectPageId(objectId));
+    dispatch(setOpenObjectPageOpenState(true));
+  };
 
   return (
     <BaloonContainer>
-      <OpenObjectButton path={`/objects/${objectId}`} />
-
+      <OpenObjectButton onClick={handleOpenObjectPage} />
       <DividerStyled />
       <Attribute
         title="Дата создания:"
@@ -103,7 +111,7 @@ const ObjectBaloon = ({ object }) => {
       <Attribute title="Email:" subTitle={email ? email : "-"} />
 
       <DividerStyled />
-      <OpenObjectButton path={`/objects/${objectId}`} />
+      <OpenObjectButton onClick={handleOpenObjectPage} />
     </BaloonContainer>
   );
 };

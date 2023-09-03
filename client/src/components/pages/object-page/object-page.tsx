@@ -13,9 +13,12 @@ import {
   getObjectById,
   getObjectsLoadingStatus,
 } from "../../../store/object/objects.store";
+import { getOpenObjectPageId } from "../../../store/object/open-object-page.store";
+import CloseButton from "../../common/buttons/close-button";
+import ButtonsPanel from "./buttons-panel/buttons-panel";
 
-const ObjectPage = () => {
-  const objectId = useParams().objectId;
+const ObjectPage = ({ onClose }) => {
+  const objectId = useSelector(getOpenObjectPageId());
   const object = useSelector(getObjectById(objectId));
   const isLoading = useSelector(getObjectsLoadingStatus());
 
@@ -27,7 +30,7 @@ const ObjectPage = () => {
 
   return (
     <Box>
-      <Header object={object} isLoading={isLoading} />
+      <Header object={object} isLoading={isLoading} onClose={onClose} />
       <ItemOnMap
         mapZoom={mapZoom}
         hintContent={address}
@@ -40,7 +43,7 @@ const ObjectPage = () => {
       ) : (
         <Loader />
       )}
-      <FooterButtons objectId={objectId} isLoading={isLoading} />
+      <FooterButtons isLoading={isLoading} onClose={onClose} />
     </Box>
   );
 };

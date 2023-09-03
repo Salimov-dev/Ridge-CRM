@@ -1,23 +1,26 @@
-import { Box, styled } from "@mui/material";
-import { useParams } from "react-router-dom";
-// components
-import PageBackButton from "../../../common/buttons/page-back-button";
-import EditButton from "../../../common/buttons/edit-button";
-import LinkButton from "../../../common/buttons/link-button";
+import { Box, Button, styled } from "@mui/material";
 
 const Component = styled(Box)`
   display: flex;
   gap: 4px;
 `;
 
-const ButtonsPanel = () => {
-  const objectId = useParams().objectId;
-
+const ButtonsPanel = ({ onClose }) => {
   return (
     <Component>
-      <LinkButton path="/objects" text="Объекты" />
-      <PageBackButton />
-      <EditButton path={`/objects/${objectId}/edit`} />
+      <Box sx={{ display: "flex", gap: "4px" }}>
+        <Button color="secondary" variant="contained" sx={{ height: "40px" }}>
+          Править
+        </Button>
+        <Button
+          color="error"
+          variant="contained"
+          sx={{ height: "40px" }}
+          onClick={onClose}
+        >
+          Закрыть
+        </Button>
+      </Box>
     </Component>
   );
 };

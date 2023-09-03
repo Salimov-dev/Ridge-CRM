@@ -9,10 +9,14 @@ import {
 } from "../../components/common/table/helpers/helpers";
 import { FormatDate } from "../../utils/date/format-date";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getObjectMeetingsList } from "../../store/meeting/meetings.store";
 import { getTasksByObjectId } from "../../store/task/tasks.store";
 import Flags from "./components/flags";
+import {
+  setOpenObjectPageId,
+  setOpenObjectPageOpenState,
+} from "../../store/object/open-object-page.store";
 
 const AlignCenter = styled(Box)`
   display: flex;
@@ -65,20 +69,19 @@ export const objectsColumns = [
           const tasks = useSelector(getTasksByObjectId(objectId));
           if (objectId) {
             return (
-            <Box
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-                gap: "12px",
-              }}
-            >
-              <Typography>{object?.location?.address}</Typography>
-              <Flags meetings={meetings} tasks={tasks} />
-            </Box>
-          );
-          } else return null
-          
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  gap: "12px",
+                }}
+              >
+                <Typography>{object?.location?.address}</Typography>
+                <Flags meetings={meetings} tasks={tasks} />
+              </Box>
+            );
+          } else return null;
         },
       },
     ],
@@ -137,9 +140,10 @@ export const objectsColumns = [
         enableSorting: false,
         cell: (info) => {
           const objectId = info.getValue();
-          const navigate = useNavigate();
+          const dispatch = useDispatch();
           const handleClick = () => {
-            navigate(objectId);
+            dispatch(setOpenObjectPageId(objectId));
+            dispatch(setOpenObjectPageOpenState(true));
           };
           return <TableOpenButton text="Открыть" onClick={handleClick} />;
         },

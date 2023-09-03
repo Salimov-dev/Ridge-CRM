@@ -44,10 +44,10 @@ const ObjectInfo = ({ object, isLoading }) => {
   const isOpenUpdateMyTask = useSelector(loadupdateMyTaskOpenState());
   const isOpenUpdateManagerTask = useSelector(loadUpdateManagerTaskOpenState());
 
-  const meetings = useSelector(getObjectMeetingsList(object._id));
+  const meetings = useSelector(getObjectMeetingsList(object?._id));
   const isMeetingsLoading = useSelector(getMeetingLoadingStatus());
 
-  const tasks = useSelector(getObjectTasksList(object._id));
+  const tasks = useSelector(getObjectTasksList(object?._id));
   const isTasksLoading = useSelector(getTaskLoadingStatus());
 
   const users = useSelector(getUsersList());
@@ -55,7 +55,7 @@ const ObjectInfo = ({ object, isLoading }) => {
 
   const currentUserId = useSelector(getCurrentUserId());
   const usersWithoutCurrentUser = users.filter(
-    (user) => user._id !== currentUserId
+    (user) => user?._id !== currentUserId
   );
   const currentUserObjects = objects?.filter(
     (obj) => obj?.userId === currentUserId
@@ -64,14 +64,14 @@ const ObjectInfo = ({ object, isLoading }) => {
   let transformUsers = [];
   usersWithoutCurrentUser?.forEach((user) => {
     transformUsers?.push({
-      _id: user._id,
-      name: `${user.name.lastName} ${user.name.firstName}`,
+      _id: user?._id,
+      name: `${user?.name?.lastName} ${user?.name?.firstName}`,
     });
   });
 
   let transformObjects = [];
   currentUserObjects?.forEach((obj) => {
-    transformObjects?.push({ _id: obj._id, name: obj.location.address });
+    transformObjects?.push({ _id: obj?._id, name: obj?.location.address });
   });
 
   const {

@@ -77,7 +77,7 @@ const Meetings = () => {
   const searchedMeetings = useSearchMeeting(meetings, data);
   const sortedMeetings = orderBy(searchedMeetings, ["date"], ["asc"]);
   const isInputEmpty = JSON.stringify(initialState) !== JSON.stringify(data);
-
+  
   useEffect(() => {
     localStorage.setItem("search-meetings-data", JSON.stringify(data));
   }, [data]);
@@ -114,7 +114,7 @@ const Meetings = () => {
         }
         center={center}
         onClick={setSelectedMeetingBaloon}
-        MeetingBaloon={<MeetingBaloon meeting={selectedMeeting} />}
+        baloon={<MeetingBaloon meeting={selectedMeeting} />}
         isLoading={isLoading}
         target={target}
         targetCluster={targetCluster}

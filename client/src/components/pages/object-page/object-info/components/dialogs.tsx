@@ -24,7 +24,7 @@ const Dialogs = ({
   isOpenUpdateMyTask,
   isOpenUpdateMeeting,
 }) => {
-  const objectId = object._id;
+  const objectId = object?._id;
   return (
     <>
       <DialogStyled

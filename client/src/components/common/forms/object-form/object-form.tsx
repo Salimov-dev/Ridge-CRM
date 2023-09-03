@@ -25,20 +25,7 @@ import { getObjectsStatusList } from "../../../../store/object/object-status.sto
 import { getCurrentRentersList } from "../../../../store/object/current-renter.store";
 import { getWorkingPositionsList } from "../../../../store/user/working-position.store";
 import { getobjectConditionsList } from "../../../../store/object/object-conditions.store";
-
-const Form = styled(`form`)({
-  display: "flex",
-  flexDirection: "column",
-  alignItems: "center",
-  marginBottom: "10px",
-  gap: "4px",
-});
-
-const FieldsContainer = styled(Box)`
-  width: 100%;
-  display: flex;
-  gap: 4px;
-`;
+import { FieldsContainer, Form } from "../styled/styled";
 
 const ObjectForm = ({
   data,
@@ -182,6 +169,8 @@ const ObjectForm = ({
             value={data?.contact?.phone}
             errors={errors?.contact?.phone}
             onInputQuantities={12}
+            isHelperText = {true}
+            helperText="Вводите в формате 79045554433, 78129998877, 9995544"
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
@@ -268,7 +257,7 @@ const ObjectForm = ({
               register={register}
               label="Каникулы"
               name="commercialTerms.rentalHolidays"
-              onInputQuantities={3}
+              onInputQuantities={30}
               value={data?.commercialTerms?.rentalHolidays}
               InputProps={{
                 endAdornment: (
