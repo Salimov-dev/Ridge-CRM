@@ -2,6 +2,7 @@ import { Schema, model } from "mongoose";
 
 const schema = new Schema(
   {
+    isDone: Boolean,
     userId: { type: Schema.Types.ObjectId, ref: "User" },
     status: { type: Schema.Types.ObjectId, ref: "MeetingStatus" },
     meetingType: { type: Schema.Types.ObjectId, ref: "MeetingType" },

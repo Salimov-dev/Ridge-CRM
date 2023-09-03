@@ -14,7 +14,7 @@ import { FormatTime } from "../../utils/date/format-time";
 import {
   setupdateMyTaskId,
   setupdateMyTaskOpenState,
-} from "../../store/task/update-task.store";
+} from "../../store/task/update-my-task.store";
 import { getTaskById } from "../../store/task/tasks.store";
 import { getCurrentUserId } from "../../store/user/users.store";
 import {

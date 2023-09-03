@@ -7,6 +7,7 @@ const schema = new Schema(
     objectId: String,
     comment: String,
     managerId: String,
+    isDone: Boolean,
     userId: { type: Schema.Types.ObjectId, ref: "User" },
     company: { type: Schema.Types.ObjectId, ref: "Company" },
   },

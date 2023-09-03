@@ -18,6 +18,8 @@ const Flags = ({ meetings, tasks }) => {
               height: "10px",
               background: "blue",
               borderRadius: "50%",
+              border: "1px solid gray",
+              boxShadow: "0 0 4px rgba(255, 255, 255, 0.5)",
             }}
           ></Box>
         </Tooltip>
@@ -29,8 +31,9 @@ const Flags = ({ meetings, tasks }) => {
               width: "10px",
               height: "10px",
               background: "orange",
-
+              border: "1px solid orange",
               borderRadius: "50%",
+              boxShadow: "0 0 4px rgba(255, 255, 255, 0.5)",
             }}
           ></Box>
         </Tooltip>

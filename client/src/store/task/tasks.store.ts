@@ -53,6 +53,11 @@ const tasksSlice = createSlice({
         (meet) => meet._id !== action.payload
       );
     },
+    taskIsDoneStatus: (state, action) => {
+      state.entities[
+        state.entities.findIndex((task) => task._id === action.payload._id)
+      ] = action.payload;
+    },
   },
 });
 
@@ -62,6 +67,10 @@ const taskUpdateRequested = createAction("tasks/taskUpdateRequested");
 const taskUpdateFailed = createAction("tasks/taskUpdateFailed");
 const removeTaskRequested = createAction("tasks/removetaskRequested");
 const removeTaskFailed = createAction("tasks/removetaskFailed");
+const taskIsDoneRequested = createAction("tasks/taskIsDoneRequested");
+const taskNotDoneRequested = createAction("tasks/taskNotDoneRequested");
+const taskIsDoneFailed = createAction("tasks/taskIsDoneFailed");
+const taskNotDoneFailed = createAction("tasks/taskNotDoneFailed");
 
 const { reducer: tasksReducer, actions } = tasksSlice;
 const {
@@ -70,6 +79,7 @@ const {
   tasksFailed,
   taskCreated,
   taskUpdateSuccessed,
+  taskIsDoneStatus,
   taskRemoved,
 } = actions;
 
@@ -118,6 +128,27 @@ export const removeTask = (taskId) => async (dispatch) => {
     dispatch(removeTaskFailed(error.message));
   }
 };
+
+export const setIsDoneTaskStatus = (payload) => async (dispatch) => {
+  dispatch(taskIsDoneRequested());
+  try {
+    dispatch(taskIsDoneStatus(payload));
+    await tasksService.update(payload);
+  } catch (error) {
+    dispatch(taskIsDoneFailed(error.message));
+  }
+};
+
+export const setIsNotDoneTaskStatus = (payload) => async (dispatch) => {
+  dispatch(taskNotDoneRequested());
+  try {
+    dispatch(taskIsDoneStatus(payload));
+    await tasksService.update(payload);
+  } catch (error) {
+    dispatch(taskNotDoneFailed(error.message));
+  }
+};
+
 export const getTasksList = () => (state) => state?.tasks?.entities;
 
 export const getObjectTasksList = (objectId) =>

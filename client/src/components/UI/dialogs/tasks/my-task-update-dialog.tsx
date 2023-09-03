@@ -4,7 +4,7 @@ import UpdateMyTask from "../../../pages/update-my-task/update-my-task";
 import {
   loadupdateMyTaskOpenState,
   setupdateMyTaskOpenState,
-} from "../../../../store/task/update-task.store";
+} from "../../../../store/task/update-my-task.store";
 
 const MyTaskUpdateDialog = () => {
   const dispatch = useDispatch();

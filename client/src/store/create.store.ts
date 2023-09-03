@@ -26,7 +26,7 @@ import monthIndexReducer from "./month-index.store";
 import updateMeetingReducer from "./meeting/update-meeting.store";
 import updateObjectReducer from "./object/update-object.store";
 import updateManagerReducer from "./user/update-user.store";
-import updateMyTaskReducer from "./task/update-task.store";
+import updateMyTaskReducer from "./task/update-my-task.store";
 import updateManagerTaskReducer from "./task/update-manager-task.store";
 import openObjectPageReducer from "./object/open-object-page.store";
 

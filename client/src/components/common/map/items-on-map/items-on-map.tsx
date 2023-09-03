@@ -29,11 +29,9 @@ const ItemsOnMap = ({
   mapZoom,
   isLoading,
   onClick,
-  target=targetDefault,
-  targetCluster=target_cluster
+  target = targetDefault,
+  targetCluster = target_cluster,
 }) => {
-  console.log("items", items);
-  
   const [activePortal, setActivePortal] = useState(false);
   const clustererInstanceRef = useRef(null);
 

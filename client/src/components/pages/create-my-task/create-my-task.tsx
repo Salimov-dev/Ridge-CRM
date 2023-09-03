@@ -43,6 +43,7 @@ const CreateMyTask = ({ objects, objectPageId, title, onClose, date }) => {
       comment: capitalizeFirstLetter(data.comment),
       managerId: null,
     };
+    
     dispatch(createTask(newData))
       .then(() => onClose())
       .then(() => toast.success("Задача успешно создана!"));

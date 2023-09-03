@@ -9,7 +9,7 @@ import {
 } from "../../store/meeting/meetings.store";
 import { getTaskLoadingStatus } from "../../store/task/tasks.store";
 import { getCurrentUserId, getUsersList } from "../../store/user/users.store";
-import { setupdateMyTaskOpenState } from "../../store/task/update-task.store";
+import { setupdateMyTaskOpenState } from "../../store/task/update-my-task.store";
 import { setUpdateMeetingOpenState } from "../../store/meeting/update-meeting.store";
 import { setUpdateManagerTaskOpenState } from "../../store/task/update-manager-task.store";
 // utils

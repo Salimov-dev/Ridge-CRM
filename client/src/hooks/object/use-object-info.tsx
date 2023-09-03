@@ -1,7 +1,7 @@
 import dayjs from "dayjs";
 import { useDispatch } from "react-redux";
 import { setUpdateMeetingOpenState } from "../../store/meeting/update-meeting.store";
-import { setupdateMyTaskOpenState } from "../../store/task/update-task.store";
+import { setupdateMyTaskOpenState } from "../../store/task/update-my-task.store";
 import { setUpdateManagerTaskOpenState } from "../../store/task/update-manager-task.store";
 
 const useObjectInfo = (

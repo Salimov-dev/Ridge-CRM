@@ -2,7 +2,7 @@ import { createAction, createSlice } from "@reduxjs/toolkit";
 import isOutDated from "../../utils/auth/is-out-date";
 import localStorageService from "../../services/user/local.storage-service";
 import meetingsService from "../../services/meeting/meetings.service";
-import { createSelector } from 'reselect';
+import { createSelector } from "reselect";
 
 const initialState = localStorageService.getAccessToken()
   ? {
@@ -54,6 +54,11 @@ const meetingsSlice = createSlice({
         (meet) => meet._id !== action.payload
       );
     },
+    meetingIsDoneStatus: (state, action) => {
+      state.entities[
+        state.entities.findIndex((m) => m._id === action.payload._id)
+      ] = action.payload;
+    },
   },
 });
 
@@ -63,6 +68,12 @@ const meetingUpdateRequested = createAction("meetings/meetingUpdateRequested");
 const meetingUpdateFailed = createAction("meetings/meetingUpdateFailed");
 const removeMeetingRequested = createAction("meetings/removeMeetingRequested");
 const removeMeetingFailed = createAction("meetings/removeMeetingFailed");
+const meetingIsDoneRequested = createAction("meetings/meetingIsDoneRequested");
+const meetingNotDoneRequested = createAction(
+  "meetings/meetingNotDoneRequested"
+);
+const meetingIsDoneFailed = createAction("meetings/meetingIsDoneFailed");
+const meetingNotDoneFailed = createAction("meetings/meetingNotDoneFailed");
 
 const { reducer: meetingsReducer, actions } = meetingsSlice;
 const {
@@ -72,6 +83,7 @@ const {
   meetingCreated,
   meetingUpdateSuccessed,
   meetingRemoved,
+  meetingIsDoneStatus,
 } = actions;
 
 export const loadMeetingsList = () => async (dispatch, getState) => {
@@ -118,6 +130,27 @@ export const removeMeeting = (meetingId) => async (dispatch) => {
     dispatch(removeMeetingFailed(error.message));
   }
 };
+
+export const setIsDoneMeeting = (payload) => async (dispatch) => {
+  dispatch(meetingIsDoneRequested());
+  try {
+    dispatch(meetingIsDoneStatus(payload));
+    await meetingsService.update(payload);
+  } catch (error) {
+    dispatch(meetingIsDoneFailed(error.message));
+  }
+};
+
+export const setIsNotDoneMeeting = (payload) => async (dispatch) => {
+  dispatch(meetingNotDoneRequested());
+  try {
+    dispatch(meetingIsDoneStatus(payload));
+    await meetingsService.update(payload);
+  } catch (error) {
+    dispatch(meetingNotDoneFailed(error.message));
+  }
+};
+
 export const getMeetingsList = () => (state) => state.meetings.entities;
 
 export const getObjectMeetingsList = (objectId) =>

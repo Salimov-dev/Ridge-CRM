@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import MyTaskForm from "../../common/forms/my-task-form/my-task-form";
 import TitleWithCloseButton from "../../common/page-titles/title-with-close-button";
 // store
-import { getupdateMyTaskId } from "../../../store/task/update-task.store";
+import { getupdateMyTaskId } from "../../../store/task/update-my-task.store";
 import { getTaskById, updateMyTask } from "../../../store/task/tasks.store";
 import { getObjectsList } from "../../../store/object/objects.store";
 import { getCurrentUserId } from "../../../store/user/users.store";

@@ -1,5 +1,6 @@
 import { toast } from "react-toastify";
 import { Box, Typography, styled } from "@mui/material";
+import ControlPointOutlinedIcon from "@mui/icons-material/ControlPointOutlined";
 // components
 import DayContent from "./components/day-content/day-content";
 // utils
@@ -19,7 +20,7 @@ const ContainerDate = styled(Box)`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: start;
   padding-top: 3px;
   margin-bottom: 10px;
 `;
@@ -38,14 +39,8 @@ const Day = ({ day, isWeekendColumn, onClick, meeting, tasks }) => {
 
   return (
     <OneDayContainer
-      onClick={() => {
-        if (isCurrentDay || isFutureDay) {
-          onClick(day);
-        } else {
-          toast.error("Нельзя поставить задачу ранее текущей даты!");
-        }
-      }}
       sx={{
+        height: "100%",
         backgroundColor: isWeekendColumn ? "#171e32" : "inherit",
         borderColor: isCurrentDay
           ? "yellow"
@@ -79,6 +74,18 @@ const Day = ({ day, isWeekendColumn, onClick, meeting, tasks }) => {
         </Date>
       </ContainerDate>
       <DayContent meeting={meeting} tasks={tasks} day={day} />
+      <Box
+        sx={{ display: "flex", justifyContent: "end" }}
+        onClick={() => {
+          if (isCurrentDay || isFutureDay) {
+            onClick(day);
+          } else {
+            toast.error("Нельзя поставить задачу ранее текущей даты!");
+          }
+        }}
+      >
+        <ControlPointOutlinedIcon sx={{ width: "25px", height: "25px" }} />
+      </Box>
     </OneDayContainer>
   );
 };

@@ -45,34 +45,50 @@ const UpdateObject = ({ onClose }) => {
       .then(toast.success("Объект успешно изменен!"));
   };
 
-  const newObject = cloneDeep(object)
+  const newObject = cloneDeep(object);
+
   function replaceNullWithEmptyString(obj) {
     if (obj.commercialTerms.agentComission === null) {
-      obj.commercialTerms.agentComission = '';
+      obj.commercialTerms.agentComission = "";
     }
     if (obj.commercialTerms.indexingAnnual === null) {
-      obj.commercialTerms.indexingAnnual = '';
+      obj.commercialTerms.indexingAnnual = "";
     }
     if (obj.commercialTerms.rentPrice === null) {
-      obj.commercialTerms.rentPrice = '';
+      obj.commercialTerms.rentPrice = "";
     }
     if (obj.commercialTerms.rentSquare === null) {
-      obj.commercialTerms.rentSquare = '';
+      obj.commercialTerms.rentSquare = "";
+    }
+    if (obj.commercialTerms.securityDeposit === null) {
+      obj.commercialTerms.securityDeposit = "";
     }
     if (obj.commercialTerms.totalSquare === null) {
-      obj.commercialTerms.totalSquare = '';
+      obj.commercialTerms.totalSquare = "";
+    }
+    if (obj.contact.phone === null) {
+      obj.contact.phone = "";
+    }
+
+    if (obj.estateOptions.electricityKw === null) {
+      obj.estateOptions.electricityKw = "";
+    }
+    if (obj.estateOptions.parkingQuantity === null) {
+      obj.estateOptions.parkingQuantity = "";
+    }
+    if (obj.estateOptions.premisesHeight === null) {
+      obj.estateOptions.premisesHeight = "";
     }
     return obj;
   }
-  console.log("replace", replaceNullWithEmptyString(newObject));
-  
+  const transformObject = replaceNullWithEmptyString(newObject);
 
   return object ? (
     <Box>
       <Header object={object} onClose={onClose} />
       <ObjectForm
         register={register}
-        data={object}
+        data={transformObject}
         handleSubmit={handleSubmit}
         onSubmit={onSubmit}
         onClose={onClose}
