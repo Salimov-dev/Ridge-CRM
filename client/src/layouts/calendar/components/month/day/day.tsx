@@ -1,5 +1,5 @@
 import { toast } from "react-toastify";
-import { Box, Typography, styled } from "@mui/material";
+import { Box, Tooltip, Typography, styled } from "@mui/material";
 import ControlPointOutlinedIcon from "@mui/icons-material/ControlPointOutlined";
 // components
 import DayContent from "./components/day-content/day-content";
@@ -84,7 +84,15 @@ const Day = ({ day, isWeekendColumn, onClick, meeting, tasks }) => {
           }
         }}
       >
-        <ControlPointOutlinedIcon sx={{ width: "25px", height: "25px" }} />
+        <Tooltip title="Добавить задачу" placement="top-start" arrow>
+          <ControlPointOutlinedIcon
+            sx={{
+              width: "25px",
+              height: "25px",
+              "&:hover": { transform: "scale(1.2)", color: "yellow" },
+            }}
+          />
+        </Tooltip>
       </Box>
     </OneDayContainer>
   );

@@ -3,22 +3,14 @@ import Body from "./components/body";
 import { ItemContainer, ItemsContainer } from "../styled/styled";
 import Loader from "../../../../../../../../../components/common/loader/loader";
 
-const Meetings = ({ meeting, isCurrentDay, isFutureDay }) => {
+const Meetings = ({ meeting }) => {
   return meeting ? (
     <ItemsContainer>
       {meeting?.map((meet) => (
         <ItemContainer
           key={meet._id}
           sx={{
-            background: isCurrentDay
-              ? !meet?.isDone
-                ? "blue"
-                : "gray"
-              : isFutureDay
-              ? !meet?.isDone
-                ? "blue"
-                : "gray"
-              : "gray",
+            background: !meet?.isDone ? "blue" : "gray",
           }}
         >
           <Title meet={meet} />
