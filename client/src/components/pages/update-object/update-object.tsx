@@ -45,6 +45,28 @@ const UpdateObject = ({ onClose }) => {
       .then(toast.success("Объект успешно изменен!"));
   };
 
+  const newObject = cloneDeep(object)
+  function replaceNullWithEmptyString(obj) {
+    if (obj.commercialTerms.agentComission === null) {
+      obj.commercialTerms.agentComission = '';
+    }
+    if (obj.commercialTerms.indexingAnnual === null) {
+      obj.commercialTerms.indexingAnnual = '';
+    }
+    if (obj.commercialTerms.rentPrice === null) {
+      obj.commercialTerms.rentPrice = '';
+    }
+    if (obj.commercialTerms.rentSquare === null) {
+      obj.commercialTerms.rentSquare = '';
+    }
+    if (obj.commercialTerms.totalSquare === null) {
+      obj.commercialTerms.totalSquare = '';
+    }
+    return obj;
+  }
+  console.log("replace", replaceNullWithEmptyString(newObject));
+  
+
   return object ? (
     <Box>
       <Header object={object} onClose={onClose} />

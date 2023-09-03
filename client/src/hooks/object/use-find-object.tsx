@@ -103,12 +103,14 @@ const useFindObject = () => {
 
   const getLatitudeCoordinates = () => {
     const [firstPoint, secondPoint] = findedObject?.boundedBy || [];
-    return (firstPoint?.[0] || 0 + secondPoint?.[0] || 0) / 2;
+    const latitudeSum = (firstPoint?.[0] || 0) + (secondPoint?.[0] || 0);
+    return latitudeSum / 2;
   };
 
   const getLongitudeCoordinates = () => {
     const [firstPoint, secondPoint] = findedObject?.boundedBy || [];
-    return (firstPoint?.[1] || 0 + secondPoint?.[1] || 0) / 2;
+    const longitudeSum = (firstPoint?.[1] || 0) + (secondPoint?.[1] || 0);
+    return longitudeSum / 2;
   };
 
   useEffect(() => {

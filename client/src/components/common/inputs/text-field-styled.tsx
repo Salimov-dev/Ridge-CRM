@@ -29,7 +29,7 @@ const TextFieldStyled = ({
   value,
   InputProps,
   inputProps,
-  type='text',
+  type = "text",
   rows = "1",
   onInputQuantities,
   valueAsNumber = false,
@@ -39,7 +39,7 @@ const TextFieldStyled = ({
   helperText,
 }) => {
   const handleInput = (e) => {
-    const maxLength = onInputQuantities
+    const maxLength = onInputQuantities;
     if (e.target.value.length > maxLength) {
       e.target.value = e.target.value.slice(0, maxLength);
     }
@@ -53,7 +53,7 @@ const TextFieldStyled = ({
         variant="outlined"
         type={type}
         id={name}
-        value={value || ""}
+        value={value}
         label={label}
         rows={rows}
         onKeyDown={onKeyDown}
