@@ -65,7 +65,7 @@ const SimpleSelectField = ({
         labelId={labelId}
         id={name}
         name={name}
-        value={value}
+        value={value || ""}
         input={<OutlinedInput label={label} />}
         MenuProps={MenuProps}
         disabled={disabled}

@@ -1,7 +1,7 @@
 // libraries
 import dayjs from "dayjs";
 import { useForm } from "react-hook-form";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 // MUI
 import { Box } from "@mui/material";
@@ -14,10 +14,10 @@ import LayoutTitle from "../../components/common/page-titles/layout-title";
 import ItemsOnMap from "../../components/common/map/items-on-map/items-on-map";
 import DialogStyled from "../../components/common/dialog/dialog-styled";
 import AddAndClearFiltersButton from "../../components/common/buttons/add-and-clear-filters-button";
-import UpdateObject from "../../components/pages/update-object/update-object";
+import ObjectPageDialog from "../../components/UI/dialogs/object-page-dialog/object-page-dialog";
+import ObjectUpdatePageDialog from "../../components/UI/dialogs/objects/object-update-page";
 import CreateObject from "../../components/pages/create-object/create-object";
 // hooks
-import useObjects from "../../hooks/object/use-objects";
 import useSearchObject from "../../hooks/object/use-search-object";
 // store
 import {
@@ -25,15 +25,6 @@ import {
   getObjectsList,
   getObjectsLoadingStatus,
 } from "../../store/object/objects.store";
-import {
-  loadUpdateObjectOpenState,
-  setUpdateObjectOpenState,
-} from "../../store/object/update-object.store";
-import ObjectPage from "../../components/pages/object-page/object-page";
-import {
-  loadOpenObjectPageOpenState,
-  setOpenObjectPageOpenState,
-} from "../../store/object/open-object-page.store";
 
 const initialState = {
   address: "",
@@ -56,19 +47,11 @@ const Objects = () => {
   const [selectedBaloon, setSelectedBaloon] = useState(null);
   const [openCreate, setOpenCreate] = useState(false);
   const objects = useSelector(getObjectsList());
-  const columns = objectsColumns;
-
   const selectedObject = useSelector(getObjectById(selectedBaloon));
-  const isOpenUpdate = useSelector(loadUpdateObjectOpenState());
+  const columns = objectsColumns;
+  const center = [59.930320630519155, 30.32906024941998];
+  const mapZoom = 11;
   const isLoading = useSelector(getObjectsLoadingStatus());
-
-  const {
-    center,
-    mapZoom,
-    handleOpenCreate,
-    handleCloseCreate,
-    handleCloseUpdate,
-  } = useObjects(setOpenCreate, setUpdateObjectOpenState);
 
   const localStorageState = JSON.parse(
     localStorage.getItem("search-objects-data")
@@ -89,28 +72,18 @@ const Objects = () => {
     defaultValues: Boolean(localStorageState) ? formatedState : initialState,
     mode: "onBlur",
   });
+
   const data = watch();
+  const searchedObjects = useSearchObject(objects, data);
   const isInputEmpty = JSON.stringify(initialState) !== JSON.stringify(data);
 
-  const searchedObjects = useSearchObject(objects, data);
-
-  const dispatch = useDispatch();
-
-  const handleCloseObjectPage = () => {
-    dispatch(setOpenObjectPageOpenState(false));
+  const handleOpenCreate = () => {
+    setOpenCreate(true);
   };
 
-  const handleCloseEditObject = () => {
-    dispatch(setUpdateObjectOpenState(false));
+  const handleCloseCreate = () => {
+    setOpenCreate(false);
   };
-
-  // const handleOpenEditObject = () => {
-  //   dispatch(setUpdateObjectId(objectId));
-  //   dispatch(setUpdateObjectOpenState(true));
-  // };
-
-  const isOpenObjectPage = useSelector(loadOpenObjectPageOpenState());
-  const isOpenEditObject = useSelector(loadUpdateObjectOpenState());
 
   useEffect(() => {
     const hasLocalStorageData = localStorage.getItem("search-objects-data");
@@ -165,22 +138,11 @@ const Objects = () => {
         component={<CreateObject onClose={handleCloseCreate} />}
         onClose={handleCloseCreate}
         open={openCreate}
-        maxWidth="lg"
-      />
-
-      <DialogStyled
-        component={<ObjectPage onClose={handleCloseObjectPage} />}
-        onClose={handleCloseObjectPage}
-        open={isOpenObjectPage}
         maxWidth="xl"
       />
 
-      <DialogStyled
-        component={<UpdateObject onClose={handleCloseEditObject} />}
-        onClose={handleCloseEditObject}
-        open={isOpenEditObject}
-        maxWidth="xl"
-      />
+      <ObjectPageDialog />
+      <ObjectUpdatePageDialog />
     </Box>
   );
 };

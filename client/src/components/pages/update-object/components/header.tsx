@@ -19,12 +19,14 @@ const Header = ({ object, onClose }) => {
     <Component>
       <Title>
         <Typography variant="h2">Изменить объект:</Typography>
-        <Typography variant="h3" sx={{ background: "yellow", color: "black" }}>
-          {object?.location?.city}, {object?.location?.address}
-        </Typography>
+        <Box sx={{ background: "yellow", color: "black" }}>
+          <Typography variant="h2">
+            {object?.location?.city}, {object?.location?.address}
+          </Typography>
+        </Box>
       </Title>
 
-      <PageBackButton onClick={onClose}/>
+      <PageBackButton onClick={onClose} />
     </Component>
   );
 };

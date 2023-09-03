@@ -1,5 +1,5 @@
 // libraries
-import { useMemo, useState, useEffect } from "react";
+import { useMemo, useState } from "react";
 // MUI
 import { Box, useTheme, styled } from "@mui/material";
 // styles

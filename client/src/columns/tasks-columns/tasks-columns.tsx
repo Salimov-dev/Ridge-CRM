@@ -1,7 +1,6 @@
 import dayjs from "dayjs";
 import "dayjs/locale/ru";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
 import { Box, Typography } from "@mui/material";
 // components
 import GoToButton from "../../components/common/buttons/go-to-button";
@@ -22,6 +21,10 @@ import {
   setUpdateManagerTaskId,
   setUpdateManagerTaskOpenState,
 } from "../../store/task/update-manager-task.store";
+import {
+  setOpenObjectPageId,
+  setOpenObjectPageOpenState,
+} from "../../store/object/open-object-page.store";
 
 export const tasksColumns = [
   {
@@ -55,21 +58,19 @@ export const tasksColumns = [
   },
   {
     accessorKey: "objectId",
-    header: "Объект задачи",
+    header: "Объект встречи",
     cell: (info) => {
       const objectId = info.getValue();
       const object = useSelector(getObjectById(objectId));
       const result = `${object?.location.city}, ${object?.location.address}`;
-      const navigate = useNavigate();
-
-      const paramsId = useParams();
-      const isParamsId = Boolean(Object.keys(paramsId).length);
+      const dispatch = useDispatch();
 
       const handleClick = () => {
-        navigate(`/objects/${objectId}`);
+        dispatch(setOpenObjectPageId(objectId));
+        dispatch(setOpenObjectPageOpenState(true));
       };
 
-      return object ? (
+      return (
         <Box
           sx={{
             display: "flex",
@@ -77,13 +78,19 @@ export const tasksColumns = [
             justifyContent: "space-between",
           }}
         >
-          {result}
-          {!isParamsId ? (
-            <GoToButton text="Перейти" color="neutral" onClick={handleClick} />
-          ) : null}
+          {objectId ? (
+            <>
+              {result}
+              <GoToButton
+                text="Открыть"
+                color="neutral"
+                onClick={handleClick}
+              />
+            </>
+          ) : (
+            "-"
+          )}
         </Box>
-      ) : (
-        "-"
       );
     },
   },

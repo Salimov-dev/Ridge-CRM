@@ -1,10 +1,11 @@
+import MeetingUpdateDialog from "../../../../UI/dialogs/meetings/meeting-update-dialog";
+import ObjectUpdatePageDialog from "../../../../UI/dialogs/objects/object-update-page";
+import ManagerTaskUpdateDialog from "../../../../UI/dialogs/tasks/manager-task-update-dialog";
+import MyTaskUpdateDialog from "../../../../UI/dialogs/tasks/my-task-update-dialog";
 import DialogStyled from "../../../../common/dialog/dialog-styled";
 import CreateManagerTask from "../../../create-manager-task/create-manager-task";
 import CreateMeeting from "../../../create-meeting/create-meeting";
 import CreateMyTask from "../../../create-my-task/create-my-task";
-import UpdateManagerTask from "../../../update-manager-task/update-manager-task";
-import UpdateMeeting from "../../../update-meeting/update-meeting";
-import UpdateMyTask from "../../../update-my-task/update-my-task";
 
 const Dialogs = ({
   object,
@@ -17,16 +18,13 @@ const Dialogs = ({
   handleCloseCreateMeeting,
   handleCloseCreateManagerTask,
   handleCloseCreateMyTask,
-  handleCloseUpdateMeeting,
-  handleCloseUpdateMyTask,
-  handleCloseUpdateManagerTask,
-  isOpenUpdateManagerTask,
-  isOpenUpdateMyTask,
-  isOpenUpdateMeeting,
 }) => {
   const objectId = object?._id;
   return (
     <>
+      <ObjectUpdatePageDialog />
+
+      <MeetingUpdateDialog />
       <DialogStyled
         component={
           <CreateMeeting
@@ -37,12 +35,8 @@ const Dialogs = ({
         onClose={handleCloseCreateMeeting}
         open={openCreateMeeting}
       />
-      <DialogStyled
-        component={<UpdateMeeting onClose={handleCloseUpdateMeeting} />}
-        onClose={handleCloseUpdateMeeting}
-        open={isOpenUpdateMeeting}
-        fullWidth={false}
-      />
+
+      <ManagerTaskUpdateDialog />
       <DialogStyled
         onClose={handleCloseCreateManagerTask}
         open={openCreateManagerTask}
@@ -58,6 +52,8 @@ const Dialogs = ({
           />
         }
       />
+
+      <MyTaskUpdateDialog />
       <DialogStyled
         onClose={handleCloseCreateMyTask}
         open={openCreateMyTask}
@@ -70,32 +66,6 @@ const Dialogs = ({
             objectPageId={objectId}
             objects={objects}
             onClose={handleCloseCreateMyTask}
-          />
-        }
-      />
-      <DialogStyled
-        onClose={handleCloseUpdateMyTask}
-        open={isOpenUpdateMyTask}
-        maxWidth="sm"
-        fullWidth={false}
-        component={
-          <UpdateMyTask
-            title="Изменить свою задачу"
-            onClose={handleCloseUpdateMyTask}
-          />
-        }
-      />
-      <DialogStyled
-        onClose={handleCloseUpdateManagerTask}
-        open={isOpenUpdateManagerTask}
-        maxWidth="sm"
-        fullWidth={false}
-        component={
-          <UpdateManagerTask
-            title="Изменить задачу менеджеру"
-            objects={objects}
-            users={users}
-            onClose={handleCloseUpdateManagerTask}
           />
         }
       />

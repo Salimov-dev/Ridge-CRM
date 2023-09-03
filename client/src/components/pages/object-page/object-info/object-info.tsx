@@ -23,9 +23,6 @@ import {
   getCurrentUserId,
   getUsersList,
 } from "../../../../store/user/users.store";
-import { loadUpdateMeetingOpenState } from "../../../../store/meeting/update-meeting.store";
-import { loadupdateMyTaskOpenState } from "../../../../store/task/update-task.store";
-import { loadUpdateManagerTaskOpenState } from "../../../../store/task/update-manager-task.store";
 
 const Component = styled(Box)`
   display: flex;
@@ -39,10 +36,6 @@ const ObjectInfo = ({ object, isLoading }) => {
   const [openCreateManagerTask, setOpenCreateManagerTask] = useState(false);
   const [openCreateMeeting, setOpenCreateMeeting] = useState(false);
   const [dateCreateMyTask, setDateCreateMyTask] = useState(null);
-
-  const isOpenUpdateMeeting = useSelector(loadUpdateMeetingOpenState());
-  const isOpenUpdateMyTask = useSelector(loadupdateMyTaskOpenState());
-  const isOpenUpdateManagerTask = useSelector(loadUpdateManagerTaskOpenState());
 
   const meetings = useSelector(getObjectMeetingsList(object?._id));
   const isMeetingsLoading = useSelector(getMeetingLoadingStatus());
@@ -118,12 +111,6 @@ const ObjectInfo = ({ object, isLoading }) => {
         handleCloseCreateMeeting={handleCloseCreateMeeting}
         handleCloseCreateManagerTask={handleCloseCreateManagerTask}
         handleCloseCreateMyTask={handleCloseCreateMyTask}
-        handleCloseUpdateMeeting={handleCloseUpdateMeeting}
-        handleCloseUpdateMyTask={handleCloseUpdateMyTask}
-        handleCloseUpdateManagerTask={handleCloseUpdateManagerTask}
-        isOpenUpdateManagerTask={isOpenUpdateManagerTask}
-        isOpenUpdateMyTask={isOpenUpdateMyTask}
-        isOpenUpdateMeeting={isOpenUpdateMeeting}
       />
     </Component>
   );

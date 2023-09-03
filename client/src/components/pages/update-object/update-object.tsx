@@ -2,8 +2,8 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import cloneDeep from "lodash.clonedeep";
 // MUI
 import { Box } from "@mui/material";
 // components
@@ -27,7 +27,6 @@ const UpdateObject = ({ onClose }) => {
     object?.location?.city && object?.location?.address;
 
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const {
     register,
@@ -52,7 +51,6 @@ const UpdateObject = ({ onClose }) => {
       <ObjectForm
         register={register}
         data={object}
-        objectId={objectId}
         handleSubmit={handleSubmit}
         onSubmit={onSubmit}
         onClose={onClose}

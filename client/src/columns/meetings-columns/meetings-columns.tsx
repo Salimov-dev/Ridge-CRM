@@ -1,6 +1,8 @@
-import { useDispatch, useSelector } from "react-redux";
+import dayjs from "dayjs";
 import { Box, Typography } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
 // components
+import GoToButton from "../../components/common/buttons/go-to-button";
 import { FormatManagerName } from "../../components/common/table/helpers/helpers";
 import TableOpenButton from "../../components/common/buttons/table-open-button";
 // store
@@ -14,9 +16,10 @@ import {
   setUpdateMeetingId,
   setUpdateMeetingOpenState,
 } from "../../store/meeting/update-meeting.store";
-import { useNavigate, useParams } from "react-router-dom";
-import dayjs from "dayjs";
-import GoToButton from "../../components/common/buttons/go-to-button";
+import {
+  setOpenObjectPageId,
+  setOpenObjectPageOpenState,
+} from "../../store/object/open-object-page.store";
 
 export const meetingsColumns = [
   {
@@ -25,8 +28,8 @@ export const meetingsColumns = [
     enableSorting: false,
     cell: (info) => {
       const date = info.getValue();
-      const formattedDate = FormatDate(new Date(date)); // Предполагая, что у вас есть функция FormatDate
-      const dayOfWeek = dayjs(date).locale("ru").format("dd"); // Получаем сокращенное имя дня недели
+      const formattedDate = FormatDate(new Date(date));
+      const dayOfWeek = dayjs(date).locale("ru").format("dd");
       return (
         <Box sx={{ display: "flex", gap: "6px" }}>
           <Typography>{formattedDate}</Typography>
@@ -76,13 +79,11 @@ export const meetingsColumns = [
       const objectId = info.getValue();
       const object = useSelector(getObjectById(objectId));
       const result = `${object?.location.city}, ${object?.location.address}`;
-      const navigate = useNavigate();
-
-      const paramsId = useParams();
-      const isParamsId = Boolean(Object.keys(paramsId).length);
+      const dispatch = useDispatch();
 
       const handleClick = () => {
-        navigate(`/objects/${objectId}`);
+        dispatch(setOpenObjectPageId(objectId));
+        dispatch(setOpenObjectPageOpenState(true));
       };
 
       return (
@@ -94,8 +95,8 @@ export const meetingsColumns = [
           }}
         >
           {result}
-          {!isParamsId ? (
-            <GoToButton text="Перейти" color="neutral" onClick={handleClick} />
+          {objectId ? (
+            <GoToButton text="Открыть" color="neutral" onClick={handleClick} />
           ) : null}
         </Box>
       );

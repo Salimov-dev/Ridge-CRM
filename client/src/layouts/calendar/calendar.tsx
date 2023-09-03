@@ -18,9 +18,6 @@ import getMonth from "../../utils/calendar/get-month";
 // store
 import { getTasksList } from "../../store/task/tasks.store";
 import { getMonthIndexState } from "../../store/month-index.store";
-import { loadupdateMyTaskOpenState } from "../../store/task/update-task.store";
-import { loadUpdateMeetingOpenState } from "../../store/meeting/update-meeting.store";
-import { loadUpdateManagerTaskOpenState } from "../../store/task/update-manager-task.store";
 // hooks
 import useCalendar from "../../hooks/calendar/use-calendar";
 import useSearchTask from "../../hooks/task/use-search-task";
@@ -42,9 +39,6 @@ const Calendar = () => {
 
   const tasksColumn = tasksColumns;
   const monthIndex = useSelector(getMonthIndexState());
-  const isOpenUpdateMeeting = useSelector(loadUpdateMeetingOpenState());
-  const isOpenUpdateMyTask = useSelector(loadupdateMyTaskOpenState());
-  const isOpenUpdateManagerTask = useSelector(loadUpdateManagerTaskOpenState());
 
   const {
     sortedCurrentWeeklyMeetings,
@@ -55,9 +49,6 @@ const Calendar = () => {
     handleCloseCreateMyTask,
     handleCloseCreateManagerTask,
     handleCloseCreateMeeting,
-    handleCloseUpdateMeeting,
-    handleCloseUpdateMyTask,
-    handleCloseUpdateManagerTask,
     handleOpenCreateMyTask,
     handleOpenCreateManagerTask,
     handleOpenCreateMeeting,
@@ -134,12 +125,6 @@ const Calendar = () => {
         handleCloseCreateMyTask={handleCloseCreateMyTask}
         handleCloseCreateManagerTask={handleCloseCreateManagerTask}
         handleCloseCreateMeeting={handleCloseCreateMeeting}
-        handleCloseUpdateMeeting={handleCloseUpdateMeeting}
-        handleCloseUpdateMyTask={handleCloseUpdateMyTask}
-        handleCloseUpdateManagerTask={handleCloseUpdateManagerTask}
-        isOpenUpdateManagerTask={isOpenUpdateManagerTask}
-        isOpenUpdateMyTask={isOpenUpdateMyTask}
-        isOpenUpdateMeeting={isOpenUpdateMeeting}
       />
     </>
   );

@@ -13,11 +13,12 @@ import BasicTable from "../../components/common/table/basic-table";
 import LayoutTitle from "../../components/common/page-titles/layout-title";
 import DialogStyled from "../../components/common/dialog/dialog-styled";
 import CreateMeeting from "../../components/pages/create-meeting/create-meeting";
-import UpdateMeeting from "../../components/pages/update-meeting/update-meeting";
 import ItemsOnMap from "../../components/common/map/items-on-map/items-on-map";
+import ObjectPageDialog from "../../components/UI/dialogs/object-page-dialog/object-page-dialog";
+import ObjectUpdatePageDialog from "../../components/UI/dialogs/objects/object-update-page";
+import MeetingUpdateDialog from "../../components/UI/dialogs/meetings/meeting-update-dialog";
 import AddAndClearFiltersButton from "../../components/common/buttons/add-and-clear-filters-button";
 // hooks
-import useMeetings from "../../hooks/meeting/use-meetings";
 import useSearchMeeting from "../../hooks/meeting/use-search-meeting";
 // icons
 import target from "../../assets/map/target_meeting.png";
@@ -28,7 +29,6 @@ import {
   getMeetingLoadingStatus,
   getMeetingsList,
 } from "../../store/meeting/meetings.store";
-import { setUpdateMeetingOpenState } from "../../store/meeting/update-meeting.store";
 
 const initialState = {
   startDate: null,
@@ -45,18 +45,12 @@ const Meetings = () => {
   const columns = meetingsColumns;
   const selectedMeeting = useSelector(getMeetingById(selectedMeetingBaloon));
   const isLoading = useSelector(getMeetingLoadingStatus());
+
+  const center = [59.930320630519155, 30.32906024941998];
+  const mapZoom = 11;
   const localStorageState = JSON.parse(
     localStorage.getItem("search-meetings-data")
   );
-
-  const {
-    isOpenUpdate,
-    center,
-    mapZoom,
-    handleOpenCreate,
-    handleCloseCreate,
-    handleCloseUpdate,
-  } = useMeetings(setOpenCreate, setUpdateMeetingOpenState);
 
   const formatedState = {
     ...localStorageState,
@@ -77,7 +71,15 @@ const Meetings = () => {
   const searchedMeetings = useSearchMeeting(meetings, data);
   const sortedMeetings = orderBy(searchedMeetings, ["date"], ["asc"]);
   const isInputEmpty = JSON.stringify(initialState) !== JSON.stringify(data);
-  
+
+  const handleOpenCreate = () => {
+    setOpenCreate(true);
+  };
+
+  const handleCloseCreate = () => {
+    setOpenCreate(false);
+  };
+
   useEffect(() => {
     localStorage.setItem("search-meetings-data", JSON.stringify(data));
   }, [data]);
@@ -139,12 +141,9 @@ const Meetings = () => {
         open={openCreate}
       />
 
-      <DialogStyled
-        component={<UpdateMeeting onClose={handleCloseUpdate} />}
-        onClose={handleCloseUpdate}
-        open={isOpenUpdate}
-        fullWidth={false}
-      />
+      <MeetingUpdateDialog />
+      <ObjectPageDialog />
+      <ObjectUpdatePageDialog />
     </Box>
   );
 };

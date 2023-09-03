@@ -23,8 +23,8 @@ const useCalendar = (
   setOpenCreateMeeting
 ) => {
   const objects = useSelector(getObjectsList());
-  const meetings = useSelector(getMeetingsList());
   const users = useSelector(getUsersList());
+  const meetings = useSelector(getMeetingsList());
   const currentUserId = useSelector(getCurrentUserId());
   const isMeetingsLoading = useSelector(getMeetingLoadingStatus());
   const isTasksLoading = useSelector(getTaskLoadingStatus());

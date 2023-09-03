@@ -1,7 +1,6 @@
-import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 // MUI
-import { Box, styled, InputAdornment } from "@mui/material";
+import { InputAdornment } from "@mui/material";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import PhoneIphoneOutlinedIcon from "@mui/icons-material/PhoneIphoneOutlined";
 import AlternateEmailOutlinedIcon from "@mui/icons-material/AlternateEmailOutlined";
@@ -25,11 +24,11 @@ import { getObjectsStatusList } from "../../../../store/object/object-status.sto
 import { getCurrentRentersList } from "../../../../store/object/current-renter.store";
 import { getWorkingPositionsList } from "../../../../store/user/working-position.store";
 import { getobjectConditionsList } from "../../../../store/object/object-conditions.store";
+// styled
 import { FieldsContainer, Form } from "../styled/styled";
 
 const ObjectForm = ({
   data,
-  objectId,
   register,
   errors,
   handleSubmit,
@@ -41,6 +40,7 @@ const ObjectForm = ({
   isObjectHasAddress,
   watch,
 }) => {
+   
   const districts = useSelector(getDistrictsList());
   const workingPositions = useSelector(getWorkingPositionsList());
   const objectStatuses = useSelector(getObjectsStatusList());
@@ -62,14 +62,9 @@ const ObjectForm = ({
   const rentTypes = useSelector(getRentTypesList());
   const objectTypes = useSelector(getObjectTypesList());
   const estateTypes = useSelector(getEstateTypesList());
-  const navigate = useNavigate();
 
   const isValidAndHasAdress =
     (Boolean(isEmptyFindedObject) || isObjectHasAddress) && isValid;
-
-  const handleBackPage = () => {
-    navigate(isEditMode ? `/objects/${objectId}` : "/objects");
-  };
 
   return (
     <>
@@ -157,7 +152,7 @@ const ObjectForm = ({
             labelId="position"
             label="Позиция"
             itemsList={workingPositions}
-            value={watchWorkingPosition || ""}
+            value={watchWorkingPosition}
             disabled={!watchName?.length && true}
           />
           <TextFieldStyled
