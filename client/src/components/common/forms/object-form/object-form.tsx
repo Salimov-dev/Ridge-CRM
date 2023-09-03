@@ -422,7 +422,7 @@ const ObjectForm = ({
           label="Опишите объект"
           name="description.fullDescription"
           value={data?.description?.fullDescription}
-          rows="8"
+          rows="3"
           multiline={true}
           errors={errors?.description?.fullDescription}
           onInputQuantities={20000}
@@ -430,7 +430,6 @@ const ObjectForm = ({
         <FooterButtons
           isEditMode={isEditMode}
           isValid={!isValidAndHasAdress}
-          onClick={handleBackPage}
           onClose={onClose}
         />
       </Form>

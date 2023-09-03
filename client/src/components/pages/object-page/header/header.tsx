@@ -16,7 +16,7 @@ const Title = styled(Box)`
   gap: 8px;
 `;
 
-const Header = ({ object, isLoading, onClose }) => {
+const Header = ({ object, isLoading, onClose, onEdit }) => {
   const city = object?.location.city;
   const address = object?.location.address;
 
@@ -26,7 +26,7 @@ const Header = ({ object, isLoading, onClose }) => {
         <Typography variant="h2">Объект: </Typography>
         <ObjectName city={city} address={address} />
       </Title>
-      <ButtonsPanel onClose={onClose} />
+      <ButtonsPanel onClose={onClose} onEdit={onEdit} />
     </HeaderContainer>
   ) : (
     <Loader />

@@ -5,18 +5,23 @@ const Component = styled(Box)`
   gap: 4px;
 `;
 
-const ButtonsPanel = ({ onClose }) => {
+const ButtonsPanel = ({ onClose, onEdit }) => {
   return (
     <Component>
       <Box sx={{ display: "flex", gap: "4px" }}>
-        <Button color="secondary" variant="contained" sx={{ height: "40px" }}>
+        <Button
+          color="secondary"
+          variant="contained"
+          onClick={onEdit}
+          sx={{ height: "40px" }}
+        >
           Править
         </Button>
         <Button
           color="error"
           variant="contained"
-          sx={{ height: "40px" }}
           onClick={onClose}
+          sx={{ height: "40px" }}
         >
           Закрыть
         </Button>

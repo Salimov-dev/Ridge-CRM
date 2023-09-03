@@ -1,6 +1,5 @@
 import { Box } from "@mui/material";
-import { useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 // components
 import ObjectPageBaloon from "../../UI/maps/object-page-baloon";
 import Header from "./header/header";
@@ -14,8 +13,10 @@ import {
   getObjectsLoadingStatus,
 } from "../../../store/object/objects.store";
 import { getOpenObjectPageId } from "../../../store/object/open-object-page.store";
-import CloseButton from "../../common/buttons/close-button";
-import ButtonsPanel from "./buttons-panel/buttons-panel";
+import {
+  setUpdateObjectId,
+  setUpdateObjectOpenState,
+} from "../../../store/object/update-object.store";
 
 const ObjectPage = ({ onClose }) => {
   const objectId = useSelector(getOpenObjectPageId());
@@ -28,9 +29,16 @@ const ObjectPage = ({ onClose }) => {
   const mapZoom = object?.location?.zoom || null;
   const center = [latitude, longitude];
 
+  const dispatch = useDispatch()
+
+  const handleOpenEditObject = () => {
+    dispatch(setUpdateObjectId(objectId));
+    dispatch(setUpdateObjectOpenState(true));
+  };
+
   return (
     <Box>
-      <Header object={object} isLoading={isLoading} onClose={onClose} />
+      <Header object={object} isLoading={isLoading} onClose={onClose}  onEdit={handleOpenEditObject} />
       <ItemOnMap
         mapZoom={mapZoom}
         hintContent={address}
@@ -43,7 +51,11 @@ const ObjectPage = ({ onClose }) => {
       ) : (
         <Loader />
       )}
-      <FooterButtons isLoading={isLoading} onClose={onClose} />
+      <FooterButtons
+        isLoading={isLoading}
+        onClose={onClose}
+        onEdit={handleOpenEditObject}
+      />
     </Box>
   );
 };

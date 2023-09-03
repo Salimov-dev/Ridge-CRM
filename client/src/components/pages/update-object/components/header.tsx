@@ -24,7 +24,7 @@ const Header = ({ object, onClose }) => {
         </Typography>
       </Title>
 
-      <PageBackButton />
+      <PageBackButton onClick={onClose}/>
     </Component>
   );
 };

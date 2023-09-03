@@ -30,7 +30,10 @@ import {
   setUpdateObjectOpenState,
 } from "../../store/object/update-object.store";
 import ObjectPage from "../../components/pages/object-page/object-page";
-import { loadOpenObjectPageOpenState, setOpenObjectPageOpenState } from "../../store/object/open-object-page.store";
+import {
+  loadOpenObjectPageOpenState,
+  setOpenObjectPageOpenState,
+} from "../../store/object/open-object-page.store";
 
 const initialState = {
   address: "",
@@ -91,12 +94,23 @@ const Objects = () => {
 
   const searchedObjects = useSearchObject(objects, data);
 
-const dispatch = useDispatch()
-  const handleCloseCreateMeeting = () => {
-     dispatch(setOpenObjectPageOpenState(false));
+  const dispatch = useDispatch();
+
+  const handleCloseObjectPage = () => {
+    dispatch(setOpenObjectPageOpenState(false));
   };
 
+  const handleCloseEditObject = () => {
+    dispatch(setUpdateObjectOpenState(false));
+  };
+
+  // const handleOpenEditObject = () => {
+  //   dispatch(setUpdateObjectId(objectId));
+  //   dispatch(setUpdateObjectOpenState(true));
+  // };
+
   const isOpenObjectPage = useSelector(loadOpenObjectPageOpenState());
+  const isOpenEditObject = useSelector(loadUpdateObjectOpenState());
 
   useEffect(() => {
     const hasLocalStorageData = localStorage.getItem("search-objects-data");
@@ -155,10 +169,17 @@ const dispatch = useDispatch()
       />
 
       <DialogStyled
-        component={<ObjectPage onClose={handleCloseCreateMeeting} />}
-        onClose={handleCloseCreateMeeting}
+        component={<ObjectPage onClose={handleCloseObjectPage} />}
+        onClose={handleCloseObjectPage}
         open={isOpenObjectPage}
-        maxWidth = "xl"
+        maxWidth="xl"
+      />
+
+      <DialogStyled
+        component={<UpdateObject onClose={handleCloseEditObject} />}
+        onClose={handleCloseEditObject}
+        open={isOpenEditObject}
+        maxWidth="xl"
       />
     </Box>
   );
