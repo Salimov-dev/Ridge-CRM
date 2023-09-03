@@ -17,6 +17,7 @@ import {
   setUpdateMeetingOpenState,
 } from "../../store/meeting/update-meeting.store";
 import {
+  loadOpenObjectPageOpenState,
   setOpenObjectPageId,
   setOpenObjectPageOpenState,
 } from "../../store/object/open-object-page.store";
@@ -78,7 +79,8 @@ export const meetingsColumns = [
     cell: (info) => {
       const objectId = info.getValue();
       const object = useSelector(getObjectById(objectId));
-      const result = `${object?.location.city}, ${object?.location.address}`;
+      const fullAddress = `${object?.location.city}, ${object?.location.address}`;
+      const isObjectPage = useSelector(loadOpenObjectPageOpenState());
       const dispatch = useDispatch();
 
       const handleClick = () => {
@@ -94,8 +96,8 @@ export const meetingsColumns = [
             justifyContent: "space-between",
           }}
         >
-          {result}
-          {objectId ? (
+          {fullAddress}
+          {!isObjectPage && objectId ? (
             <GoToButton text="Открыть" color="neutral" onClick={handleClick} />
           ) : null}
         </Box>
