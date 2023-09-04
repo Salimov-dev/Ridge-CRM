@@ -141,10 +141,12 @@ export const objectsColumns = [
         cell: (info) => {
           const objectId = info.getValue();
           const dispatch = useDispatch();
+
           const handleClick = () => {
             dispatch(setOpenObjectPageId(objectId));
             dispatch(setOpenObjectPageOpenState(true));
           };
+
           return <TableOpenButton text="Открыть" onClick={handleClick} />;
         },
       },

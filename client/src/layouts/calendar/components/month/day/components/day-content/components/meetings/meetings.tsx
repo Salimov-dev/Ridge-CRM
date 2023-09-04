@@ -3,10 +3,10 @@ import Body from "./components/body";
 import { ItemContainer, ItemsContainer } from "../styled/styled";
 import Loader from "../../../../../../../../../components/common/loader/loader";
 
-const Meetings = ({ meeting }) => {
-  return meeting ? (
+const Meetings = ({ meetings }) => {
+  return meetings ? (
     <ItemsContainer>
-      {meeting?.map((meet) => (
+      {meetings?.map((meet) => (
         <ItemContainer
           key={meet._id}
           sx={{

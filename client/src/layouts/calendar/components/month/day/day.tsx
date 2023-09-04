@@ -1,8 +1,7 @@
-import { toast } from "react-toastify";
-import { Box, Tooltip, Typography, styled } from "@mui/material";
-import ControlPointOutlinedIcon from "@mui/icons-material/ControlPointOutlined";
+import { Box, Typography, styled } from "@mui/material";
 // components
 import DayContent from "./components/day-content/day-content";
+import CreateTaskIcon from "./components/day-content/components/create-task-icon/create-task-icon";
 // utils
 import { chechIsCurrentDay } from "../../../../../utils/date/check-is-current-day";
 import { chechIsFutureDay } from "../../../../../utils/date/check-is-future-day";
@@ -33,10 +32,9 @@ const Date = styled(Typography)`
   width: 32px;
 `;
 
-const Day = ({ day, isWeekendColumn, onClick, meeting, tasks }) => {
+const Day = ({ day, isWeekendColumn, onClick, meetings, tasks }) => {
   const isCurrentDay = chechIsCurrentDay(day);
   const isFutureDay = chechIsFutureDay(day);
-
   return (
     <OneDayContainer
       sx={{
@@ -73,27 +71,13 @@ const Day = ({ day, isWeekendColumn, onClick, meeting, tasks }) => {
           {day.format("DD")}
         </Date>
       </ContainerDate>
-      <DayContent meeting={meeting} tasks={tasks} day={day} />
-      <Box
-        sx={{ display: "flex", justifyContent: "end" }}
-        onClick={() => {
-          if (isCurrentDay || isFutureDay) {
-            onClick(day);
-          } else {
-            toast.error("Нельзя поставить задачу ранее текущей даты!");
-          }
-        }}
-      >
-        <Tooltip title="Добавить задачу" placement="top-start" arrow>
-          <ControlPointOutlinedIcon
-            sx={{
-              width: "25px",
-              height: "25px",
-              "&:hover": { transform: "scale(1.2)", color: "yellow" },
-            }}
-          />
-        </Tooltip>
-      </Box>
+      <DayContent meetings={meetings} tasks={tasks} />
+      <CreateTaskIcon
+        day={day}
+        onClick={onClick}
+        isCurrentDay={isCurrentDay}
+        isFutureDay={isFutureDay}
+      />
     </OneDayContainer>
   );
 };

@@ -91,7 +91,8 @@ const CreateMeeting = ({ objectPageId, onClose }) => {
         zoom: 16,
       },
     };
-
+    console.log("newData", newData);
+    
     dispatch(createMeeting(newData))
       .then(onClose())
       .then(toast.success("Встреча успешно создана!"));

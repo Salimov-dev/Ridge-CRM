@@ -8,15 +8,18 @@ const Components = styled(Box)`
   display: flex;
   flex-direction: column;
   justify-content: start;
-  gap: 4px;
   padding-bottom: 28px;
+  gap: 4px;
 `;
 
-const DayContent = ({ meeting, tasks }) => {
+const DayContent = ({ meetings, tasks }) => {
+  const isTasks = tasks.length;
+  const isMeetings = meetings?.length;
+
   return (
     <Components>
-      <Tasks tasks={tasks} />
-      <Meetings meeting={meeting} />
+      {isTasks ? <Tasks tasks={tasks} /> : null}
+      {isMeetings ? <Meetings meetings={meetings} /> : null}
     </Components>
   );
 };

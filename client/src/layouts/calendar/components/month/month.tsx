@@ -56,7 +56,7 @@ const Month = ({ month, onClick }) => {
               key={idx}
               onClick={() => onClick(day)}
               isWeekendColumn={idx === 5 || idx === 6}
-              meeting={getMeeting(day)}
+              meetings={getMeeting(day)}
               tasks={getTask(day)}
             />
           ))}

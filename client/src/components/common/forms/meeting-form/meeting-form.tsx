@@ -21,6 +21,8 @@ const MeetingForm = ({
   handleSubmit,
   onSubmit,
   onClose,
+  onRemoveMeeting,
+  removeId,
   setValue,
   isValid,
   isEditMode = false,
@@ -105,6 +107,8 @@ const MeetingForm = ({
           isEditMode={isEditMode}
           isValid={!isValidAndHasAdress}
           onClose={onClose}
+          onRemove={onRemoveMeeting}
+          removeId={removeId}
         />
       </Form>
     </>

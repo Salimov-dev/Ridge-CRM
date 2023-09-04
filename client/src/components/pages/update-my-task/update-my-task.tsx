@@ -10,18 +10,22 @@ import MyTaskForm from "../../common/forms/my-task-form/my-task-form";
 import TitleWithCloseButton from "../../common/page-titles/title-with-close-button";
 // store
 import { getupdateMyTaskId } from "../../../store/task/update-my-task.store";
-import { getTaskById, updateMyTask } from "../../../store/task/tasks.store";
+import {
+  getTaskById,
+  removeTask,
+  updateMyTask,
+} from "../../../store/task/tasks.store";
 import { getObjectsList } from "../../../store/object/objects.store";
 import { getCurrentUserId } from "../../../store/user/users.store";
 // schema
 import { taskSchema } from "../../../schemas/schemas";
 
 const UpdateMyTask = ({ title, onClose }) => {
-  const dispatch = useDispatch();
   const taskId = useSelector(getupdateMyTaskId());
   const task = useSelector(getTaskById(taskId));
   const objects = useSelector(getObjectsList());
   const objectId = task?.objectId;
+  const dispatch = useDispatch();
 
   const currentUserId = useSelector(getCurrentUserId());
   const currentUserObjects = objects?.filter(
@@ -67,6 +71,12 @@ const UpdateMyTask = ({ title, onClose }) => {
       .then(toast.success("Задача себе успешно изменена!"));
   };
 
+  const handleRemoveTask = (taskId) => {
+    dispatch(removeTask(taskId))
+      .then(onClose())
+      .then(toast.success("Задача себе успешно удалена!"));
+  };
+
   useEffect(() => {
     if (objectId) {
       setValue("objectId", objectId);
@@ -88,6 +98,8 @@ const UpdateMyTask = ({ title, onClose }) => {
         handleSubmit={handleSubmit}
         onSubmit={onSubmit}
         onClose={onClose}
+        onRemoveTask={handleRemoveTask}
+        removeId={taskId}
         errors={errors}
         setValue={setValue}
         isValid={!isFullValid}

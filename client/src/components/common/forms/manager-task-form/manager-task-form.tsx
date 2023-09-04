@@ -9,6 +9,7 @@ import TimePickerStyled from "../../inputs/time-picker";
 import FooterButtons from "../footer-buttons/footer-buttons";
 // styled
 import { FieldsContainer, Form } from "../styled/styled";
+import getDateToday from "../../../../utils/date/get-date-today";
 
 const ManagerTaskForm = ({
   data,
@@ -19,14 +20,17 @@ const ManagerTaskForm = ({
   handleSubmit,
   onSubmit,
   onClose,
+  onRemoveTask,
+  removeId,
   errors,
   setValue,
   isValid,
   watch,
-  isObjectPage
+  isObjectPage,
 }) => {
   const watchObjectId = watch("objectId", "");
-  const watchManagerId  = watch("managerId", "");
+  const watchManagerId = watch("managerId", "");
+
   return (
     <Form onSubmit={handleSubmit(onSubmit)} noValidate>
       <FieldsContainer>
@@ -37,11 +41,10 @@ const ManagerTaskForm = ({
           value={data?.date}
           onChange={(value) => setValue("date", value)}
           errors={errors?.date}
-          minDate={null}
+          minDate={getDateToday()}
         />
         <TimePickerStyled
           register={register}
-          data={data}
           name="time"
           label="Время"
           value={data.time}
@@ -89,6 +92,8 @@ const ManagerTaskForm = ({
         isEditMode={isEditMode}
         isValid={isValid}
         onClose={onClose}
+        onRemove={onRemoveTask}
+        removeId={removeId}
       />
     </Form>
   );

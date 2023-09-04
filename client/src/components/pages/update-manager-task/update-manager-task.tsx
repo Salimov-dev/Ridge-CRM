@@ -11,7 +11,7 @@ import ManagerTaskForm from "../../common/forms/manager-task-form/manager-task-f
 // store
 import { getCurrentUserId } from "../../../store/user/users.store";
 import { getUpdateManagerTaskId } from "../../../store/task/update-manager-task.store";
-import { getTaskById, updateMyTask } from "../../../store/task/tasks.store";
+import { getTaskById, removeTask, updateMyTask } from "../../../store/task/tasks.store";
 // schema
 import { taskSchema } from "../../../schemas/schemas";
 
@@ -64,6 +64,12 @@ const UpdateManagerTask = ({ title, onClose, objects, users }) => {
       .then(toast.success("Задача менеджеру успешно изменена!"));
   };
 
+  const handleRemoveTask = (taskId) => {
+    dispatch(removeTask(taskId))
+      .then(onClose())
+      .then(toast.success("Задача себе успешно удалена!"));
+  };
+
   useEffect(() => {
     if (objectId) {
       setValue("objectId", objectId);
@@ -84,6 +90,8 @@ const UpdateManagerTask = ({ title, onClose, objects, users }) => {
         users={users}
         objects={objects}
         handleSubmit={handleSubmit}
+        onRemoveTask={handleRemoveTask}
+        removeId={taskId}
         onSubmit={onSubmit}
         onClose={onClose}
         errors={errors}

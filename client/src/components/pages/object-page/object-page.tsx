@@ -21,9 +21,7 @@ import {
 const ObjectPage = ({ onClose }) => {
   const objectId = useSelector(getOpenObjectPageId());
   const object = useSelector(getObjectById(objectId));
-  const isLoading = useSelector(getObjectsLoadingStatus());
-  console.log("object", object);
-  
+  const isLoading = useSelector(getObjectsLoadingStatus()); 
 
   const address = `${object?.location?.city}, ${object?.location?.address}`;
   const latitude = object?.location?.latitude || null;

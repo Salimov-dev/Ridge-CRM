@@ -19,6 +19,7 @@ import { getMeetingStatusesList } from "../../../store/meeting/meeting-status.st
 import { getUpdateMeetingId } from "../../../store/meeting/update-meeting.store";
 import {
   getMeetingById,
+  removeMeeting,
   updateMeeting,
 } from "../../../store/meeting/meetings.store";
 
@@ -72,6 +73,12 @@ const UpdateMeeting = ({ onClose }) => {
       .then(toast.success("Встреча успешно изменена!"));
   };
 
+  const handleRemoveMeeting = (meetingId) => {
+    dispatch(removeMeeting(meetingId))
+      .then(onClose())
+      .then(toast.success("Встреча себе успешно удалена!"));
+  };
+
   return meeting ? (
     <Box>
       <Header meeting={meeting} onClose={onClose} />
@@ -82,6 +89,8 @@ const UpdateMeeting = ({ onClose }) => {
         meetingTypes={meetingTypes}
         onSubmit={onSubmit}
         onClose={onClose}
+        onRemoveMeeting={handleRemoveMeeting}
+        removeId={meetingId}
         handleSubmit={handleSubmit}
         watch={watch}
         errors={errors}

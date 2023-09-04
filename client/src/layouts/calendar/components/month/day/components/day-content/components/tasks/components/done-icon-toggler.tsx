@@ -2,16 +2,28 @@ import { Box } from "@mui/material";
 import CheckIcon from "@mui/icons-material/Check";
 import DoDisturbAltOutlinedIcon from "@mui/icons-material/DoDisturbAltOutlined";
 
-const DoneIconToggler = ({ task, onDoneTask, onNotDoneTask }) => {
-  return !task?.isDone ? (
-    <Box onClick={() => onDoneTask(task)}>
-      {<CheckIcon sx={{ "&:hover": { transform: "scale(1.2)" } }} />}
+const DoneIconToggler = ({ item, onDoneItem, onNotDoneItem }) => {
+  const itemIsDone = item?.isDone
+
+  return !itemIsDone ? (
+    <Box onClick={() => onDoneItem(item)}>
+      {
+        <CheckIcon
+          sx={{
+            opacity: "0.5",
+            "&:hover": { opacity: "1", transform: "scale(1.2)" },
+          }}
+        />
+      }
     </Box>
   ) : (
-    <Box onClick={() => onNotDoneTask(task)}>
+    <Box onClick={() => onNotDoneItem(item)}>
       {
         <DoDisturbAltOutlinedIcon
-          sx={{ "&:hover": { transform: "scale(1.2)" } }}
+          sx={{
+            opacity: "0.5",
+            "&:hover": { opacity: "1", transform: "scale(1.2)" },
+          }}
         />
       }
     </Box>

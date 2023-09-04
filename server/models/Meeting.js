@@ -9,8 +9,8 @@ const schema = new Schema(
     date: String,
     time: String,
     comment: String,
+    objectId: String,
     company: { type: Schema.Types.ObjectId, ref: "Company" },
-    objectId: { type: Schema.Types.ObjectId, ref: "Object" },
     location: {
       city: String,
       address: String,

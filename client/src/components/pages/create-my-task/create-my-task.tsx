@@ -1,14 +1,19 @@
+// libraries
+import { useEffect } from "react";
 import { Box } from "@mui/material";
-import MyTaskForm from "../../common/forms/my-task-form/my-task-form";
-import TitleWithCloseButton from "../../common/page-titles/title-with-close-button";
+import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { taskSchema } from "../../../schemas/schemas";
-import { capitalizeFirstLetter } from "../../../utils/data/capitalize-first-letter";
+// components
+import MyTaskForm from "../../common/forms/my-task-form/my-task-form";
+import TitleWithCloseButton from "../../common/page-titles/title-with-close-button";
+// store
 import { createTask } from "../../../store/task/tasks.store";
-import { useEffect } from "react";
-import { toast } from "react-toastify";
+// schema
+import { taskSchema } from "../../../schemas/schemas";
+// utils
+import { capitalizeFirstLetter } from "../../../utils/data/capitalize-first-letter";
 
 const initialState = {
   comment: "",
@@ -44,6 +49,8 @@ const CreateMyTask = ({ objects, objectPageId, title, onClose, date }) => {
       comment: capitalizeFirstLetter(data.comment),
       managerId: null,
     };
+
+    console.log("newData", newData);
     
     dispatch(createTask(newData))
       .then(() => onClose())
