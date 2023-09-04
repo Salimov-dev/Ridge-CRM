@@ -39,14 +39,7 @@ const Dialogs = ({
           />
         }
       />
-
-      <MeetingUpdateDialog />
-      <DialogStyled
-        component={<CreateMeeting onClose={handleCloseCreateMeeting} />}
-        onClose={handleCloseCreateMeeting}
-        open={openCreateMeeting}
-      />
-
+      
       <MyTaskUpdateDialog />
       <DialogStyled
         onClose={handleCloseCreateMyTask}
@@ -62,6 +55,14 @@ const Dialogs = ({
           />
         }
       />
+
+      <MeetingUpdateDialog />
+      <DialogStyled
+        component={<CreateMeeting onClose={handleCloseCreateMeeting} />}
+        onClose={handleCloseCreateMeeting}
+        open={openCreateMeeting}
+      />
+
     </>
   );
 };

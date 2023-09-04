@@ -20,7 +20,7 @@ const { reducer: updateMyTaskReducer, actions } = updateMyTaskSlice;
 
 const { updateMyTaskOpenSetted, updateMyTaskId } = actions;
 
-export const setupdateMyTaskOpenState = (payload) => (dispatch) => {
+export const setUpdateMyTaskOpenState = (payload) => (dispatch) => {
   dispatch(updateMyTaskOpenSetted(payload));
 };
 

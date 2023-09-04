@@ -3,7 +3,7 @@ import DialogStyled from "../../../common/dialog/dialog-styled";
 import UpdateMyTask from "../../../pages/update-my-task/update-my-task";
 import {
   loadupdateMyTaskOpenState,
-  setupdateMyTaskOpenState,
+  setUpdateMyTaskOpenState,
 } from "../../../../store/task/update-my-task.store";
 
 const MyTaskUpdateDialog = () => {
@@ -11,7 +11,7 @@ const MyTaskUpdateDialog = () => {
   const isOpenUpdateMyTask = useSelector(loadupdateMyTaskOpenState());
 
   const handleCloseUpdateMyTask = () => {
-    dispatch(setupdateMyTaskOpenState(false));
+    dispatch(setUpdateMyTaskOpenState(false));
   };
 
   return (

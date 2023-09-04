@@ -35,7 +35,8 @@ const CreateMyTask = ({ objects, objectPageId, title, onClose, date }) => {
   });
   const data = watch();
   const watchDate = watch("date", null);
-  const isFullValid = !watchDate || !isValid;
+  const watchTime = watch("time", null);
+  const isFullValid = !watchDate || !watchTime || !isValid;
 
   const onSubmit = () => {
     const newData = {

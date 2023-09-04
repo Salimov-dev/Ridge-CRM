@@ -52,7 +52,9 @@ const UpdateMyTask = ({ title, onClose }) => {
   });
 
   const data = watch();
-  const isFullValid = data.date !== null && data.time !== null && isValid;
+  const watchDate = watch("date", null);
+  const watchTime = watch("time", null);
+  const isFullValid = watchDate !== null && watchTime !== null && isValid;
   const isEditMode = taskId ? true : false;
 
   const onSubmit = (data) => {

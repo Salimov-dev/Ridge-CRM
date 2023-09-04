@@ -47,8 +47,9 @@ const CreateManagerTask = ({
   });
   const data = watch();
   const watchDate = watch("date", null);
-
-  const isFullValid = !watchDate || !isValid;
+  const watchTime = watch("time", null);
+  const watchManagerId = watch("managerId", null);
+  const isFullValid = !watchDate || !watchTime || !watchManagerId || !isValid;
 
   const onSubmit = () => {
     const newData = {

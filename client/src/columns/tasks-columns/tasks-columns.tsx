@@ -13,7 +13,7 @@ import { FormatDate } from "../../utils/date/format-date";
 import { FormatTime } from "../../utils/date/format-time";
 import {
   setupdateMyTaskId,
-  setupdateMyTaskOpenState,
+  setUpdateMyTaskOpenState,
 } from "../../store/task/update-my-task.store";
 import { getTaskById } from "../../store/task/tasks.store";
 import { getCurrentUserId } from "../../store/user/users.store";
@@ -59,7 +59,7 @@ export const tasksColumns = [
   },
   {
     accessorKey: "objectId",
-    header: "Объект встречи",
+    header: "Объект задачи",
     cell: (info) => {
       const objectId = info.getValue();
       const object = useSelector(getObjectById(objectId));
@@ -160,7 +160,7 @@ export const tasksColumns = [
           dispatch(setUpdateManagerTaskId(taskId));
         } else {
           dispatch(setupdateMyTaskId(taskId));
-          dispatch(setupdateMyTaskOpenState(true));
+          dispatch(setUpdateMyTaskOpenState(true));
         }
       };
 

@@ -40,7 +40,6 @@ const MyTaskForm = ({
         />
         <TimePickerStyled
           register={register}
-          data={data}
           name="time"
           label="Время"
           value={data.time}

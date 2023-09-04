@@ -22,6 +22,8 @@ const ObjectPage = ({ onClose }) => {
   const objectId = useSelector(getOpenObjectPageId());
   const object = useSelector(getObjectById(objectId));
   const isLoading = useSelector(getObjectsLoadingStatus());
+  console.log("object", object);
+  
 
   const address = `${object?.location?.city}, ${object?.location?.address}`;
   const latitude = object?.location?.latitude || null;
@@ -29,7 +31,7 @@ const ObjectPage = ({ onClose }) => {
   const mapZoom = object?.location?.zoom || null;
   const center = [latitude, longitude];
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const handleOpenEditObject = () => {
     dispatch(setUpdateObjectId(objectId));
@@ -38,7 +40,12 @@ const ObjectPage = ({ onClose }) => {
 
   return (
     <Box>
-      <Header object={object} isLoading={isLoading} onClose={onClose}  onEdit={handleOpenEditObject} />
+      <Header
+        object={object}
+        isLoading={isLoading}
+        onClose={onClose}
+        onEdit={handleOpenEditObject}
+      />
       <ItemOnMap
         mapZoom={mapZoom}
         hintContent={address}

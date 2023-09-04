@@ -11,7 +11,7 @@ const FieldsContainer = styled(Box)`
   gap: 4px;
 `;
 
-const TimePickerStyled = ({ register, data, errors, setValue, name, value, label }) => {
+const TimePickerStyled = ({ register, errors, setValue, name, value, label }) => {
   return (
     <FieldsContainer>
       <Box sx={{ width: "100%", marginBottom: "-3px", marginTop: "-8px" }}>

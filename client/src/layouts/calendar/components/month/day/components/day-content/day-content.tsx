@@ -12,16 +12,11 @@ const Components = styled(Box)`
   padding-bottom: 28px;
 `;
 
-const DayContent = ({ meeting, tasks, day }) => {
-
+const DayContent = ({ meeting, tasks }) => {
   return (
     <Components>
-      <Tasks
-        tasks={tasks}
-      />
-      <Meetings
-        meeting={meeting}
-      />
+      <Tasks tasks={tasks} />
+      <Meetings meeting={meeting} />
     </Components>
   );
 };

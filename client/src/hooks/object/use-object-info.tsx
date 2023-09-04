@@ -1,7 +1,7 @@
 import dayjs from "dayjs";
 import { useDispatch } from "react-redux";
 import { setUpdateMeetingOpenState } from "../../store/meeting/update-meeting.store";
-import { setupdateMyTaskOpenState } from "../../store/task/update-my-task.store";
+import { setUpdateMyTaskOpenState } from "../../store/task/update-my-task.store";
 import { setUpdateManagerTaskOpenState } from "../../store/task/update-manager-task.store";
 
 const useObjectInfo = (
@@ -47,7 +47,7 @@ const useObjectInfo = (
     setOpenCreateManagerTask(false);
   };
   const handleCloseUpdateMyTask = () => {
-    dispatch(setupdateMyTaskOpenState(false));
+    dispatch(setUpdateMyTaskOpenState(false));
   };
 
   return {

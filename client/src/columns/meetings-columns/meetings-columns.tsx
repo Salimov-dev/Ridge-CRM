@@ -54,7 +54,7 @@ export const meetingsColumns = [
   },
   {
     accessorKey: "location",
-    header: "Место",
+    header: "Адрес встречи",
     cell: (info) => {
       const location = info.getValue();
       return (
