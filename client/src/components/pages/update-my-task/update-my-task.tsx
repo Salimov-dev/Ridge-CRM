@@ -12,6 +12,7 @@ import TitleWithCloseButton from "../../common/page-titles/title-with-close-butt
 import { getupdateMyTaskId } from "../../../store/task/update-my-task.store";
 import {
   getTaskById,
+  getTaskLoadingStatus,
   removeTask,
   updateMyTask,
 } from "../../../store/task/tasks.store";
@@ -23,6 +24,8 @@ import { taskSchema } from "../../../schemas/schemas";
 const UpdateMyTask = ({ title, onClose }) => {
   const taskId = useSelector(getupdateMyTaskId());
   const task = useSelector(getTaskById(taskId));
+  const isTasksLoading = useSelector(getTaskLoadingStatus())
+
   const objects = useSelector(getObjectsList());
   const objectId = task?.objectId;
   const dispatch = useDispatch();
@@ -104,6 +107,7 @@ const UpdateMyTask = ({ title, onClose }) => {
         setValue={setValue}
         isValid={!isFullValid}
         isEditMode={isEditMode}
+        isTasksLoading={isTasksLoading}
         watch={watch}
       />
     </>

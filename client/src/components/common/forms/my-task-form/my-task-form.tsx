@@ -11,6 +11,7 @@ import FooterButtons from "../footer-buttons/footer-buttons";
 import { FieldsContainer, Form } from "../styled/styled";
 // utils
 import getDateToday from "../../../../utils/date/get-date-today";
+import SimpleSwitch from "../../inputs/simple-switch";
 
 const MyTaskForm = ({
   data,
@@ -27,6 +28,7 @@ const MyTaskForm = ({
   isValid,
   watch,
   isObjectPage,
+  isTasksLoading
 }) => {
   const watchObjectId = watch("objectId", "");
 
@@ -76,6 +78,14 @@ const MyTaskForm = ({
               <CreateIcon />
             </InputAdornment>
           ),
+        }}
+      />
+      <SimpleSwitch
+        title="Задача выполненна"
+        checked={data?.isDone}
+        isLoading={isTasksLoading}
+        onChange={(e) => {
+          setValue("isDone", e.target.checked);
         }}
       />
 

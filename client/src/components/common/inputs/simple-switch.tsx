@@ -4,36 +4,37 @@ import {
   FormControlLabel,
   FormGroup,
   Switch,
+  styled,
 } from "@mui/material";
 
-const SearchSwitch = ({
-  title = "switch",
-  checked,
-  isLoading,
-  isChecked,
+const Component = styled(Box)`
+  width: 100%;
+  display: flex;
+  justify-content: end;
+`;
+
+const FormControlSyled = styled(FormControl)`
+  padding: 5px 15px 5px 0px;
+  display: flex;
+  justify-content: start;
+`;
+
+const SimpleSwitch = ({
+  title,
   onChange,
-  whiteSpace = "none",
+  checked,
+  whiteSpace = "nowrap",
+  isLoading,
 }) => {
   return (
-    <Box>
-      <FormControl
-        component="fieldset"
-        sx={{
-          padding: "5px 15px 5px 0px",
-          border: "1px solid",
-          borderColor: isChecked ? "green" : "gray",
-          borderRadius: "6px",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-        }}
-      >
+    <Component>
+      <FormControlSyled component="fieldset">
         <FormGroup aria-label="position" row sx={{ width: "100%" }}>
           <FormControlLabel
             control={
               <Switch
                 color="success"
-                checked={checked} // Set the initial value here
+                checked={checked}
                 disabled={isLoading ? true : false}
                 onChange={onChange}
               />
@@ -43,13 +44,13 @@ const SearchSwitch = ({
             sx={{
               width: "100%",
               whiteSpace: whiteSpace,
-              color: isChecked ? "white" : "gray",
+              color: checked ? "white" : "gray",
             }}
           />
         </FormGroup>
-      </FormControl>
-    </Box>
+      </FormControlSyled>
+    </Component>
   );
 };
 
-export default SearchSwitch;
+export default SimpleSwitch;

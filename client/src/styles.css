@@ -28,9 +28,14 @@
 .AnyClassForContainer:hover {
   border-color: white !important;
   fill: white !important;
-  transform: scale(1.1); 
+  transform: scale(1.1);
 }
 
 .AnyClassForTransition {
   /* right: 20px; */
+}
+
+/* белый "ОК" у timePicker`a */
+.css-13qp4b7-MuiButtonBase-root-MuiButton-root {
+  color: white !important;
 }

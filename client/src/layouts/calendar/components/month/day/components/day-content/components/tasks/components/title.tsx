@@ -59,7 +59,7 @@ const Title = ({ task }) => {
   return (
     <Component>
       <Typography sx={{ textDecoration: "underline" }}>
-        <b>Задача до: {task.time ? FormatTime(task.time) : "До вечера"}</b>
+        <b>Задача до: {task.time ? FormatTime(task.time) : "конца дня"}</b>
       </Typography>
       <ButtonsContainer>
         <UpdateTask onClick={handleUpdateTask} isTaskDone={isTaskDone} />
