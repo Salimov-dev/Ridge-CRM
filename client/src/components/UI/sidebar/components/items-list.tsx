@@ -1,5 +1,7 @@
 import { Tooltip } from "@mui/material";
 import Item from "./item";
+// components
+import ItemsTitle from "./items-title";
 // icons
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
@@ -10,7 +12,7 @@ import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
 import BusinessOutlinedIcon from "@mui/icons-material/BusinessOutlined";
 import AssignmentOutlinedIcon from "@mui/icons-material/AssignmentOutlined";
 import TableChartOutlinedIcon from "@mui/icons-material/TableChartOutlined";
-import ItemsTitle from "./items-title";
+import AppsOutlinedIcon from '@mui/icons-material/AppsOutlined';
 
 const ItemsList = ({ isCollapsed, selected, setSelected, colors }) => {
   return (
@@ -66,6 +68,17 @@ const ItemsList = ({ isCollapsed, selected, setSelected, colors }) => {
         icon={
           <Tooltip title="Календарь" placement="top-start" arrow>
             <CalendarTodayOutlinedIcon />
+          </Tooltip>
+        }
+        selected={selected}
+        setSelected={setSelected}
+      />
+      <Item
+        title="Грядка"
+        to="/ridge"
+        icon={
+          <Tooltip title="Грядка" placement="top-start" arrow>
+            <AppsOutlinedIcon />
           </Tooltip>
         }
         selected={selected}

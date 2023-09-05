@@ -31,7 +31,7 @@ const initialState = {
   address: "",
   phone: "",
   name: "",
-  onlyWithPhone: false,
+  objectActivity: "",
   startDate: null,
   endDate: null,
   selectedDistricts: [],
@@ -42,7 +42,6 @@ const initialState = {
   selectedEstateTypes: [],
   selectedObjectTypes: [],
   selectedMetro: [],
-  selectedObjectActivity: []
 };
 
 const Objects = () => {
@@ -67,7 +66,6 @@ const Objects = () => {
     endDate: localStorageState?.endDate
       ? dayjs(localStorageState?.endDate)
       : null,
-    onlyWithPhone: Boolean(localStorageState?.onlyWithPhone),
   };
 
   const { register, watch, setValue, reset } = useForm({

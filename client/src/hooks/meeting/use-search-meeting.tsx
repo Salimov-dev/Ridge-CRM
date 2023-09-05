@@ -44,12 +44,12 @@ const useSearchMeeting = (meetings, data) => {
     }
 
     // к проведению все
-    if (data.selectedDoneMeetTypes === "534gfsdtgfd3245tgdgfd") {
+    if (data.meetingsActivity === "534gfsdtgfd3245tgdgfd") {
       array = array?.filter((meet) => meet?.isDone !== true);
     }
 
     // К проведению на этой неделе
-    if (data.selectedDoneMeetTypes === "8734qfdsggb2534tgfdfs") {
+    if (data.meetingsActivity === "8734qfdsggb2534tgfdfs") {
       array = array?.filter(
         (meet) =>
           dayjs(meet.date).isBetween(startWeek, endWeek) &&
@@ -58,7 +58,7 @@ const useSearchMeeting = (meetings, data) => {
     }
 
     // Проведенные на этой неделе OK!
-    if (data.selectedDoneMeetTypes === "987645erasg1243tgfdsg3") {
+    if (data.meetingsActivity === "987645erasg1243tgfdsg3") {
       array = array?.filter(
         (meet) =>
           meet?.isDone === true &&
@@ -67,7 +67,7 @@ const useSearchMeeting = (meetings, data) => {
     }
 
     // Проведенные за всё время OK!
-    if (data.selectedDoneMeetTypes === "87634gsdf23gfds3425r43") {
+    if (data.meetingsActivity === "87634gsdf23gfds3425r43") {
       array = array?.filter((meet) => meet?.isDone === true);
     }
 

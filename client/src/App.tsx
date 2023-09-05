@@ -32,6 +32,7 @@ import "./styles.css";
 import AppLoader from "./hoc/app-loader";
 import ScrollToTop from "./utils/other/scroll-to-top";
 import { ColorModeContext, useMode } from "./theme";
+import Ridge from "./layouts/ridge/ridge";
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -95,6 +96,11 @@ function App() {
                 <Route path="calendar">
                   <Route index element={<Calendar />} />
                   <Route path="*" element={<Navigate to="/calendar" />} />
+                </Route>
+
+                <Route path="ridge">
+                  <Route index element={<Ridge />} />
+                  <Route path="*" element={<Navigate to="/ridge" />} />
                 </Route>
 
                 <Route path="presentations">

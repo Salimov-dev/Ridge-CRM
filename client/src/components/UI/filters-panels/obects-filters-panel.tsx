@@ -104,13 +104,13 @@ const ObjectsFiltersPanel = ({
         />
         <SearchSelectField
           register={register}
-          name="selectedObjectActivity"
-          labelId="selectedObjectActivity"
+          name="objectActivity"
+          labelId="objectActivity"
           label="Выбор по активности"
           itemsList={objectActivityVariants}
-          value={data.selectedObjectActivity}
+          value={data.objectActivity}
           disabled={isLoading ? true : false}
-          isSelect={Boolean(data.selectedObjectActivity.length)}
+          isSelect={Boolean(data?.objectActivity?.length)}
         />
       </FieldsContainer>
 

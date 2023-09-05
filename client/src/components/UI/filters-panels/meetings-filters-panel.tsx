@@ -60,13 +60,13 @@ const MeetingsFiltersPanel = ({ data, register, setValue, isLoading }) => {
         />
         <SearchSelectField
           register={register}
-          name="selectedDoneMeetTypes"
-          labelId="selectedDoneMeetTypes"
+          name="meetingsActivity"
+          labelId="meetingsActivity"
           label="Выбор по активности"
           itemsList={meetingDoneTypes}
-          value={data.selectedDoneMeetTypes}
+          value={data.meetingsActivity}
           disabled={isLoading ? true : false}
-          isSelect={Boolean(data.selectedDoneMeetTypes.length)}
+          isSelect={Boolean(data?.meetingsActivity?.length)}
         />
       </FieldsContainer>
     </Form>

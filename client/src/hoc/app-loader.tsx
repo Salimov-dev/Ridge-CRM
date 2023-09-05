@@ -18,6 +18,8 @@ import { loadMeetingsList } from "../store/meeting/meetings.store";
 import { loadMeetingStatusesList } from "../store/meeting/meeting-status.store";
 import { loadMeetingTypesList } from "../store/meeting/meeting-types.store";
 import { loadTasksList } from "../store/task/tasks.store";
+import { loadRidgeObjectsList } from "../store/ridge/ridge-objects.store";
+import { loadRidgeObjectStatusList } from "../store/ridge/ridge-object-status.store";
 
 interface AppLoaderProps {
   children: React.ReactNode;
@@ -50,6 +52,9 @@ const AppLoader = ({ children }: AppLoaderProps) => {
     dispatch<any>(loadMeetingTypesList());
     // tasks
     dispatch<any>(loadTasksList());
+    // ridge
+    dispatch<any>(loadRidgeObjectsList());
+    dispatch<any>(loadRidgeObjectStatusList());
   }, []);
 
   return children;

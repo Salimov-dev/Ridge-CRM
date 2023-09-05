@@ -133,35 +133,35 @@ const useSearchObject = (objects, data) => {
     }
 
     // c номером телефона
-    if (data.selectedObjectActivity === "534gdfsg2356hgd213mnbv") {
+    if (data.objectActivity === "534gdfsg2356hgd213mnbv") {
       array = array?.filter((item) => item?.contact.phone);
     }
     // без номера телефона
-    if (data.selectedObjectActivity === "976hd324gfdsg324534543") {
+    if (data.objectActivity === "976hd324gfdsg324534543") {
       array = array?.filter((item) => !item?.contact.phone);
     }
     // с задачами
-    if (data.selectedObjectActivity === "gf87634gdsfgsdf345tgdf") {
+    if (data.objectActivity === "gf87634gdsfgsdf345tgdf") {
       array = array?.filter((item) => hasTasks(item._id));
     }
     // без задач
-    if (data.selectedObjectActivity === "93254435gdf354yrt54hgh") {
+    if (data.objectActivity === "93254435gdf354yrt54hgh") {
       array = array?.filter((item) => !hasTasks(item._id));
     }
     // со встречами
-    if (data.selectedObjectActivity === "7653gfdsgsd23fgdsgdfg") {
+    if (data.objectActivity === "7653gfdsgsd23fgdsgdfg") {
       array = array?.filter((item) => hasMeetings(item._id));
     }
     // без встреч
-    if (data.selectedObjectActivity === "95459gdj239t54jgh95445") {
+    if (data.objectActivity === "95459gdj239t54jgh95445") {
       array = array?.filter((item) => !hasMeetings(item._id));
     }
     // с последним звонком
-    // if (data.selectedObjectActivity === "95459gdj239t54jgh95445") {
+    // if (data.objectActivity === "95459gdj239t54jgh95445") {
     //   array = array?.filter((item) => !hasMeetings(item._id));
     // }
     // без активности
-    if (data.selectedObjectActivity === "hgfd235654hjf324543qre") {
+    if (data.objectActivity === "hgfd235654hjf324543qre") {
       array = array?.filter(
         (item) => !hasMeetings(item._id) && !hasTasks(item._id)
       );

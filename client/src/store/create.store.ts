@@ -29,6 +29,8 @@ import updateManagerReducer from "./user/update-user.store";
 import updateMyTaskReducer from "./task/update-my-task.store";
 import updateManagerTaskReducer from "./task/update-manager-task.store";
 import openObjectPageReducer from "./object/open-object-page.store";
+import ridgeObjectsReducer from "./ridge/ridge-objects.store";
+import ridgeObjectStatusReducer from "./ridge/ridge-object-status.store";
 
 const rootReducer = combineReducers({
   // objects
@@ -61,6 +63,9 @@ const rootReducer = combineReducers({
   updateManagerTask: updateManagerTaskReducer,
   // calendar
   monthIndex: monthIndexReducer,
+  // ridge
+  ridgeObjects: ridgeObjectsReducer,
+  ridgeObjectStatus: ridgeObjectStatusReducer,
   // other
   sidebarCollapsState: sidebarCollapsStateReducer,
 });

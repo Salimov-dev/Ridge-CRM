@@ -33,10 +33,10 @@ import {
 const initialState = {
   startDate: null,
   endDate: null,
+  meetingsActivity: "",
   selectedUsers: [],
   selectedStatuses: [],
   selectedTypes: [],
-  selectedDoneMeetTypes: [],
 };
 
 const Meetings = () => {

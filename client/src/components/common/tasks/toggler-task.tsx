@@ -9,6 +9,12 @@ const Component = styled(Box)`
   margin-top: 20px;
 `;
 
+const Title = styled(Box)`
+  cursor: pointer;
+  display: flex;
+  gap: 6px;
+`;
+
 const ArrowLeft = styled(KeyboardArrowLeftOutlinedIcon)({
   cursor: "pointer",
   "&:hover": {
@@ -26,7 +32,7 @@ const ToggleTask = ({ title, onToggle, color, backgroundColor }) => {
   return (
     <Component>
       <ArrowLeft onClick={onToggle} />
-      <Box sx={{ display: "flex", gap: "6px" }}>
+      <Title onClick={onToggle}>
         <Typography>ПЕРЕКЛЮЧИТЬ НА</Typography>
         <Typography
           sx={{
@@ -38,7 +44,7 @@ const ToggleTask = ({ title, onToggle, color, backgroundColor }) => {
         >
           {title}
         </Typography>
-      </Box>
+      </Title>
       <ArrowRight onClick={onToggle} />
     </Component>
   );
