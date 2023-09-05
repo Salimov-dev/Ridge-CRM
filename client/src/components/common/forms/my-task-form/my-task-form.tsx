@@ -86,7 +86,6 @@ const MyTaskForm = ({
       {isEditMode ? (
         <SimpleSwitch
           title="Задача выполненна"
-          checked={data?.isDone}
           isLoading={isTasksLoading}
           onChange={(e) => {
             setValue("isDone", e.target.checked);

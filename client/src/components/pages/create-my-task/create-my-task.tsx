@@ -20,11 +20,11 @@ import { capitalizeFirstLetter } from "../../../utils/data/capitalize-first-lett
 import ToggleTask from "../../common/tasks/toggler-task";
 
 const initialState = {
-  comment: "",
   date: null,
   time: null,
   objectId: "",
   managerId: "",
+  comment: "",
   result: "",
 };
 

@@ -99,12 +99,12 @@ const MultiSelectField = ({
           itemsWithId ? (
             <MenuItem key={`item-${item?._id}`} value={isItemValueId ? item?._id : item?.name}>
               <Checkbox
-                key={`checkbox-${item?._id}`} // Ensure a unique key for the Checkbox
+                key={`checkbox-${item?._id}`} 
                 checked={selectedItems?.indexOf(isItemValueId ? item?._id : item?.name) > -1}
                 sx={{ color: "white !important" }}
               />
               <ListItemText
-                key={`text-${item?._id}`} // Ensure a unique key for the ListItemText
+                key={`text-${item?._id}`} 
                 primary={<span>{item?.name}</span>}
               />
             </MenuItem>

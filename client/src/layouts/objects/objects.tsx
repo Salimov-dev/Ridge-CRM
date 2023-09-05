@@ -42,6 +42,7 @@ const initialState = {
   selectedEstateTypes: [],
   selectedObjectTypes: [],
   selectedMetro: [],
+  selectedObjectActivity: []
 };
 
 const Objects = () => {

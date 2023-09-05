@@ -3,8 +3,11 @@ import SearchField from "../../common/inputs/search-field";
 import SearchDatePicker from "../../common/inputs/search-date-picker";
 import MultiSelectField from "../../common/inputs/multi-select-field";
 import { FieldsContainer, Form } from "../../common/forms/styled/styled";
+import SearchSelectField from "../../common/inputs/search-select-field";
 // hooks
 import useObjectsFiltersPanel from "../../../hooks/object/use-objects-filters-panel";
+// mock
+import { objectActivityVariants } from "../../../mock/object-activity-variants";
 
 const ObjectsFiltersPanel = ({
   setValue,
@@ -98,6 +101,16 @@ const ObjectsFiltersPanel = ({
           labelId="cities-label"
           label="Выбор по городу"
           disabled={isLoading ? true : false}
+        />
+        <SearchSelectField
+          register={register}
+          name="selectedObjectActivity"
+          labelId="selectedObjectActivity"
+          label="Выбор по активности"
+          itemsList={objectActivityVariants}
+          value={data.selectedObjectActivity}
+          disabled={isLoading ? true : false}
+          isSelect={Boolean(data.selectedObjectActivity.length)}
         />
       </FieldsContainer>
 

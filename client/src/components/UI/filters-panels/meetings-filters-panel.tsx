@@ -1,9 +1,12 @@
+// components
+import { FieldsContainer, Form } from "../../common/forms/styled/styled";
 import MultiSelectField from "../../common/inputs/multi-select-field";
 import SearchDatePicker from "../../common/inputs/search-date-picker";
-import { FieldsContainer, Form } from "../../common/forms/styled/styled";
+import SearchSelectField from "../../common/inputs/search-select-field";
+// hooks
 import useMeetingFiltersPanel from "../../../hooks/meeting/use-meeting-filters-panel";
+// mock
 import { meetingDoneTypes } from "../../../mock/meeting-done-status";
-import SimpleSelectField from "../../common/inputs/simple-select-field";
 
 const MeetingsFiltersPanel = ({ data, register, setValue, isLoading }) => {
   const { getActualUsersList, getActualStatusesList, getActuaTypesList } =
@@ -55,15 +58,15 @@ const MeetingsFiltersPanel = ({ data, register, setValue, isLoading }) => {
           label="Выбор по типу"
           disabled={isLoading ? true : false}
         />
-        <SimpleSelectField
+        <SearchSelectField
           register={register}
-          itemsList={meetingDoneTypes}
-          selectedItems={data.selectedDoneMeetTypes}
           name="selectedDoneMeetTypes"
           labelId="selectedDoneMeetTypes"
-          label="Выбрать по выполнению"
+          label="Выбор по активности"
+          itemsList={meetingDoneTypes}
           value={data.selectedDoneMeetTypes}
           disabled={isLoading ? true : false}
+          isSelect={Boolean(data.selectedDoneMeetTypes.length)}
         />
       </FieldsContainer>
     </Form>

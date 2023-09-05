@@ -3,7 +3,7 @@ import SimpleSelectField from "../../common/inputs/simple-select-field";
 import SearchSwitch from "../../common/inputs/search-switch";
 import { FieldsContainer, Form } from "../../common/forms/styled/styled";
 // mock
-import { taskDoneTypes } from "../../../mock/task-type";
+import { taskDoneTypes } from "../../../mock/task-done-status";
 
 const CalendarFiltersPanel = ({ data, register, setValue, isLoading }) => {
   return (

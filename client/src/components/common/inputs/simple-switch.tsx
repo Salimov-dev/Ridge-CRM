@@ -6,6 +6,7 @@ import {
   Switch,
   styled,
 } from "@mui/material";
+import { useState } from "react";
 
 const Component = styled(Box)`
   width: 100%;
@@ -22,10 +23,20 @@ const FormControlSyled = styled(FormControl)`
 const SimpleSwitch = ({
   title,
   onChange,
-  checked,
+  // checked,
   whiteSpace = "nowrap",
   isLoading,
+  initialChecked = false,
 }) => {
+  const [checked, setChecked] = useState(initialChecked);
+
+  const handleChange = (event) => {
+    setChecked(event.target.checked);
+    if (onChange) {
+      onChange(event);
+    }
+  };
+
   return (
     <Component>
       <FormControlSyled component="fieldset">
@@ -36,7 +47,7 @@ const SimpleSwitch = ({
                 color="success"
                 checked={checked}
                 disabled={isLoading ? true : false}
-                onChange={onChange}
+                onChange={handleChange}
               />
             }
             label={title}
