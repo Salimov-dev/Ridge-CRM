@@ -31,7 +31,6 @@ const initialState = {
 
 const Calendar = () => {
   const [currentMonth, setCurrentMonth] = useState(getMonth());
-
   const [dateCreateMyTask, setDateCreateMyTask] = useState(null);
   const [openCreateMyTask, setOpenCreateMyTask] = useState(false);
   const [openCreateManagerTask, setOpenCreateManagerTask] = useState(false);
@@ -107,9 +106,9 @@ const Calendar = () => {
         columns={tasksColumn}
         setValue={setValue}
         isTasksLoading={isTasksLoading}
-        handleOpenCreateMeeting={handleOpenCreateMeeting}
-        handleOpenCreateMyTask={handleOpenCreateMyTask}
-        handleOpenCreateManagerTask={handleOpenCreateManagerTask}
+        onOpenCreateMeeting={handleOpenCreateMeeting}
+        onOpenCreateMyTask={handleOpenCreateMyTask}
+        onOpenCreateManagerTask={handleOpenCreateManagerTask}
       />
       <CurrentWeeklyMeetings
         meetings={sortedCurrentWeeklyMeetings}
@@ -123,9 +122,11 @@ const Calendar = () => {
         openCreateMyTask={openCreateMyTask}
         openCreateManagerTask={openCreateManagerTask}
         openCreateMeeting={openCreateMeeting}
-        handleCloseCreateMyTask={handleCloseCreateMyTask}
-        handleCloseCreateManagerTask={handleCloseCreateManagerTask}
-        handleCloseCreateMeeting={handleCloseCreateMeeting}
+        onOpenCreateManagerTask={handleOpenCreateManagerTask}
+        onOpenCreateMyTask={handleOpenCreateMyTask}
+        onCloseCreateMyTask={handleCloseCreateMyTask}
+        onCloseCreateManagerTask={handleCloseCreateManagerTask}
+        onCloseCreateMeeting={handleCloseCreateMeeting}
       />
     </>
   );

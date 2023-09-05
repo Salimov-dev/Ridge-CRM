@@ -84,7 +84,7 @@ const useCalendar = (
 
   // my tasks
   const handleOpenCreateMyTask = (day) => {
-    const type = typeof day.date;
+    const type = typeof day?.date;
     setDateCreateMyTask(dayjs());
     setOpenCreateMyTask(true);
     if (type === "function") {

@@ -61,7 +61,7 @@ const MeetingsFiltersPanel = ({ data, register, setValue, isLoading }) => {
           selectedItems={data.selectedDoneMeetTypes}
           name="selectedDoneMeetTypes"
           labelId="selectedDoneMeetTypes"
-          label="Тип задачи"
+          label="Выбрать по выполнению"
           value={data.selectedDoneMeetTypes}
           disabled={isLoading ? true : false}
         />

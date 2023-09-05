@@ -17,18 +17,19 @@ const Tasks = ({
   columns,
   setValue,
   isTasksLoading,
-  handleOpenCreateMeeting,
-  handleOpenCreateMyTask,
-  handleOpenCreateManagerTask,
+  onOpenCreateMeeting,
+  onOpenCreateMyTask,
+  onOpenCreateManagerTask,
 }) => {
   return (
     <>
       <Header>
         <Typography variant="h3">Задачи:</Typography>
         <CreateButtons
-          onCreateMeeting={handleOpenCreateMeeting}
-          onCreateMyTask={handleOpenCreateMyTask}
-          onCreateManagerTask={handleOpenCreateManagerTask}
+          onCreateMeeting={onOpenCreateMeeting}
+          onCreateMyTask={onOpenCreateMyTask}
+          onCreateManagerTask={onOpenCreateManagerTask}
+          isLoading={!isTasksLoading}
         />
       </Header>
       <CalendarFiltersPanel

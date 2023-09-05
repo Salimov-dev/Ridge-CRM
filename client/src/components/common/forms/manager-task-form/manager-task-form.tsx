@@ -78,14 +78,16 @@ const ManagerTaskForm = ({
         rows="3"
         multiline={true}
         errors={errors?.comment}
+        onInputQuantities={200}
+      />
+      <TextFieldStyled
+        register={register}
+        label="Результат"
+        name="result"
+        value={data?.result}
+        rows="2"
+        multiline={true}
         onInputQuantities={100}
-        InputProps={{
-          endAdornment: (
-            <InputAdornment position="end">
-              <CreateIcon />
-            </InputAdornment>
-          ),
-        }}
       />
 
       <FooterButtons

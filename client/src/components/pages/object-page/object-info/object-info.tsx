@@ -77,9 +77,6 @@ const ObjectInfo = ({ object, isLoading }) => {
     handleCloseCreateMeeting,
     handleCloseCreateManagerTask,
     handleCloseCreateMyTask,
-    handleCloseUpdateMeeting,
-    handleCloseUpdateMyTask,
-    handleCloseUpdateManagerTask,
   } = useObjectInfo(
     setOpenCreateMeeting,
     setOpenCreateMyTask,

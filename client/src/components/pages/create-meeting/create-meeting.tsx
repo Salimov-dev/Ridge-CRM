@@ -14,13 +14,13 @@ import { Box, styled } from "@mui/material";
 import { getCurrentUserId } from "../../../store/user/users.store";
 import { createMeeting } from "../../../store/meeting/meetings.store";
 import { getObjectsList } from "../../../store/object/objects.store";
+import { getMeetingTypesList } from "../../../store/meeting/meeting-types.store";
 import { getMeetingStatusesList } from "../../../store/meeting/meeting-status.store";
 // schema
 import { meetingSchema } from "../../../schemas/schemas";
 // hooks
 import useFindObject from "../../../hooks/object/use-find-object";
 // utils
-import { getMeetingTypesList } from "../../../store/meeting/meeting-types.store";
 import { capitalizeFirstLetter } from "../../../utils/data/capitalize-first-letter";
 
 const Component = styled(Box)`
@@ -34,6 +34,7 @@ const initialState = {
   time: null,
   comment: "",
   objectId: "",
+  result: "",
   location: {
     city: "",
     address: "",
@@ -86,13 +87,14 @@ const CreateMeeting = ({ objectPageId, onClose }) => {
     const newData = {
       ...data,
       comment: capitalizeFirstLetter(data.comment),
+      result: capitalizeFirstLetter(data.comment),
       location: {
         ...data.location,
         zoom: 16,
       },
     };
     console.log("newData", newData);
-    
+
     dispatch(createMeeting(newData))
       .then(onClose())
       .then(toast.success("Встреча успешно создана!"));

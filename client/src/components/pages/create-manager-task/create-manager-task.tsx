@@ -15,6 +15,7 @@ import { createTask } from "../../../store/task/tasks.store";
 import { capitalizeFirstLetter } from "../../../utils/data/capitalize-first-letter";
 // schema
 import { taskSchema } from "../../../schemas/schemas";
+import ToggleTask from "../../common/tasks/toggler-task";
 
 const initialState = {
   comment: "",
@@ -22,6 +23,7 @@ const initialState = {
   time: null,
   objectId: "",
   managerId: "",
+  result: "",
 };
 
 const CreateManagerTask = ({
@@ -30,6 +32,7 @@ const CreateManagerTask = ({
   title,
   onClose,
   objectPageId,
+  onOpenCreateMyTask,
 }) => {
   const dispatch = useDispatch();
   const isObjectPage = Boolean(objectPageId?.length);
@@ -61,6 +64,11 @@ const CreateManagerTask = ({
       .then(() => toast.success("Задача успешно создана!"));
   };
 
+  const handleToggleToManagerTask = () => {
+    onClose();
+    onOpenCreateMyTask();
+  };
+
   useEffect(() => {
     if (objectPageId) {
       setValue("objectId", objectPageId);
@@ -88,6 +96,12 @@ const CreateManagerTask = ({
         isValid={isFullValid}
         watch={watch}
         isObjectPage={isObjectPage}
+      />
+      <ToggleTask
+        title="Задачу себе"
+        backgroundColor="orange"
+        color="black"
+        onToggle={handleToggleToManagerTask}
       />
     </Box>
   );

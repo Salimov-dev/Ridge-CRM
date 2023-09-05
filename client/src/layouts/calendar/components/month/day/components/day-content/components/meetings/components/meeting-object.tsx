@@ -10,6 +10,7 @@ import {
 const MeetingObject = ({ objects, meet }) => {
   const meetingObjectId = meet?.objectId;
   const isMeetingObjectId = Boolean(meetingObjectId);
+  const isMeetingDone = meet?.isDone
   const dispatch = useDispatch();
 
   const handleOpenObjectPage = (objectId) => {
@@ -25,7 +26,7 @@ const MeetingObject = ({ objects, meet }) => {
 
   return isMeetingObjectId ? (
     <>
-      <DividerStyled />
+      <DividerStyled color={isMeetingDone ? 'darkGray' : 'gray'}/>
       <Box sx={{ display: "flex", gap: "4px" }}>
         <Typography>
           <b>Объект:</b> {getObjectAddress(meetingObjectId)}

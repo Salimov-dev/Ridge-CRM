@@ -4,8 +4,10 @@ import TaskComment from "./components/task-comment";
 import { ItemContainer, ItemsContainer } from "../styled/styled";
 import ManagerTaskElements from "./components/manager-task-elements";
 import Loader from "../../../../../../../../../components/common/loader/loader";
+import Result from "./components/result";
 
 const Tasks = ({ tasks }) => {
+  
 
   return tasks ? (
     <ItemsContainer>
@@ -29,6 +31,7 @@ const Tasks = ({ tasks }) => {
           <TaskComment comment={task?.comment} />
           <TaksObject task={task} />
           <ManagerTaskElements task={task} />
+          <Result task={task} />
         </ItemContainer>
       ))}
     </ItemsContainer>

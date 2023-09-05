@@ -15,9 +15,11 @@ const Dialogs = ({
   openCreateMyTask,
   openCreateManagerTask,
   openCreateMeeting,
-  handleCloseCreateMyTask,
-  handleCloseCreateManagerTask,
-  handleCloseCreateMeeting,
+  onOpenCreateMyTask,
+  onOpenCreateManagerTask,
+  onCloseCreateMyTask,
+  onCloseCreateManagerTask,
+  onCloseCreateMeeting,
 }) => {
   return (
     <>
@@ -26,7 +28,7 @@ const Dialogs = ({
 
       <ManagerTaskUpdateDialog />
       <DialogStyled
-        onClose={handleCloseCreateManagerTask}
+        onClose={onCloseCreateManagerTask}
         open={openCreateManagerTask}
         maxWidth="lg"
         fullWidth={false}
@@ -35,14 +37,15 @@ const Dialogs = ({
             title="Поставить менеджеру задачу"
             objects={objects}
             users={users}
-            onClose={handleCloseCreateManagerTask}
+            onClose={onCloseCreateManagerTask}
+            onOpenCreateMyTask={onOpenCreateMyTask}
           />
         }
       />
       
       <MyTaskUpdateDialog />
       <DialogStyled
-        onClose={handleCloseCreateMyTask}
+        onClose={onCloseCreateMyTask}
         open={openCreateMyTask}
         maxWidth="sm"
         fullWidth={false}
@@ -51,15 +54,16 @@ const Dialogs = ({
             title="Добавить себе задачу"
             objects={objects}
             date={dateCreateMyTask}
-            onClose={handleCloseCreateMyTask}
+            onClose={onCloseCreateMyTask}
+            onOpenCreateManagerTask={onOpenCreateManagerTask}
           />
         }
       />
 
       <MeetingUpdateDialog />
       <DialogStyled
-        component={<CreateMeeting onClose={handleCloseCreateMeeting} />}
-        onClose={handleCloseCreateMeeting}
+        component={<CreateMeeting onClose={onCloseCreateMeeting} />}
+        onClose={onCloseCreateMeeting}
         open={openCreateMeeting}
       />
 

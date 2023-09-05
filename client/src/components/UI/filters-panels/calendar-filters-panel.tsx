@@ -31,7 +31,7 @@ const CalendarFiltersPanel = ({ data, register, setValue, isLoading }) => {
           selectedItems={data.selectedTaskTypes}
           name="selectedTaskTypes"
           labelId="selectedTaskTypes"
-          label="Тип задачи"
+          label="Выбрать по выполнению"
           value={data.selectedTaskTypes}
           disabled={isLoading ? true : false}
         />

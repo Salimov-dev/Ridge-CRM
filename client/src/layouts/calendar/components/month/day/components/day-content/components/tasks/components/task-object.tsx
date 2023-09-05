@@ -26,7 +26,7 @@ const TaksObject = ({ task }) => {
 
   return taskObjectId ? (
     <>
-      <DividerStyled />
+      <DividerStyled color={task?.isDone ? 'darkGray' : 'gray'}/>
       <Box sx={{ display: "flex", gap: "4px" }}>
       <Typography>
         <b>Объект:</b> {getObjectAddress(taskObjectId)}

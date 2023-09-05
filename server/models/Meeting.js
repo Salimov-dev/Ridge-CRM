@@ -10,6 +10,7 @@ const schema = new Schema(
     time: String,
     comment: String,
     objectId: String,
+    result: String,
     company: { type: Schema.Types.ObjectId, ref: "Company" },
     location: {
       city: String,

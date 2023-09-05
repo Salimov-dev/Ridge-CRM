@@ -9,6 +9,7 @@ const MeetingInfo = ({ meet }) => {
   const users = useSelector(getUsersList());
   const meetingTypes = useSelector(getMeetingTypesList());
   const meetingStatuses = useSelector(getMeetingStatusesList());
+  const isMeetingDone = meet?.isDone;
 
   const getManagerName = (id) => {
     const user = users?.find((user) => user._id === id);
@@ -32,7 +33,7 @@ const MeetingInfo = ({ meet }) => {
       <Typography>
         <b>Адрес:</b> {meet.location.city}, {meet.location.address}
       </Typography>
-      <DividerStyled />
+      <DividerStyled color={isMeetingDone ? "darkGray" : "gray"} />
       <Typography>
         <b>Статус:</b> {getMeetingStatusName(meet?.status)}
       </Typography>

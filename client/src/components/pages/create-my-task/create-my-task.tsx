@@ -1,10 +1,13 @@
 // libraries
-import { useEffect } from "react";
-import { Box } from "@mui/material";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+// mui
+import { Box, Typography } from "@mui/material";
+import KeyboardArrowLeftOutlinedIcon from "@mui/icons-material/KeyboardArrowLeftOutlined";
+import KeyboardArrowRightOutlinedIcon from "@mui/icons-material/KeyboardArrowRightOutlined";
 // components
 import MyTaskForm from "../../common/forms/my-task-form/my-task-form";
 import TitleWithCloseButton from "../../common/page-titles/title-with-close-button";
@@ -14,6 +17,7 @@ import { createTask } from "../../../store/task/tasks.store";
 import { taskSchema } from "../../../schemas/schemas";
 // utils
 import { capitalizeFirstLetter } from "../../../utils/data/capitalize-first-letter";
+import ToggleTask from "../../common/tasks/toggler-task";
 
 const initialState = {
   comment: "",
@@ -21,9 +25,17 @@ const initialState = {
   time: null,
   objectId: "",
   managerId: "",
+  result: "",
 };
 
-const CreateMyTask = ({ objects, objectPageId, title, onClose, date }) => {
+const CreateMyTask = ({
+  title,
+  date,
+  objects,
+  objectPageId,
+  onClose,
+  onOpenCreateManagerTask,
+}) => {
   const dispatch = useDispatch();
   const isObjectPage = Boolean(objectPageId?.length);
 
@@ -47,14 +59,20 @@ const CreateMyTask = ({ objects, objectPageId, title, onClose, date }) => {
     const newData = {
       ...data,
       comment: capitalizeFirstLetter(data.comment),
+      result: capitalizeFirstLetter(data.result),
       managerId: null,
     };
 
     // console.log("newData", newData);
-    
+
     dispatch(createTask(newData))
       .then(() => onClose())
       .then(() => toast.success("Задача успешно создана!"));
+  };
+
+  const handleToggleToManagerTask = () => {
+    onClose();
+    onOpenCreateManagerTask();
   };
 
   useEffect(() => {
@@ -89,6 +107,12 @@ const CreateMyTask = ({ objects, objectPageId, title, onClose, date }) => {
         isValid={isFullValid}
         watch={watch}
         isObjectPage={isObjectPage}
+      />
+      <ToggleTask
+        title="Задачу менеджеру"
+        backgroundColor="red"
+        color="white"
+        onToggle={handleToggleToManagerTask}
       />
     </Box>
   );

@@ -104,6 +104,16 @@ const MeetingForm = ({
             }}
           />
         </FieldsContainer>
+        <TextFieldStyled
+          register={register}
+          label="Результат"
+          name="result"
+          value={data?.result}
+          rows="2"
+          multiline={true}
+          onInputQuantities={100}
+        />
+
         {isEditMode ? (
           <SimpleSwitch
             title="Встреча выполненна"

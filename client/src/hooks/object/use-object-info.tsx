@@ -16,9 +16,6 @@ const useObjectInfo = (
   const handleOpenCreateMeeting = () => {
     setOpenCreateMeeting(true);
   };
-  const handleCloseUpdateMeeting = () => {
-    dispatch(setUpdateMeetingOpenState(false));
-  };
   const handleCloseCreateMeeting = () => {
     setOpenCreateMeeting(false);
   };
@@ -34,9 +31,6 @@ const useObjectInfo = (
     setDateCreateMyTask(dayjs());
     setOpenCreateMyTask(true);
   };
-  const handleCloseUpdateManagerTask = () => {
-    dispatch(setUpdateManagerTaskOpenState(false));
-  };
   const handleCloseCreateMyTask = () => {
     setOpenCreateMyTask(false);
     setDateCreateMyTask(null);
@@ -46,9 +40,6 @@ const useObjectInfo = (
   const handleCloseCreateManagerTask = () => {
     setOpenCreateManagerTask(false);
   };
-  const handleCloseUpdateMyTask = () => {
-    dispatch(setUpdateMyTaskOpenState(false));
-  };
 
   return {
     handleOpenCreateMeeting,
@@ -57,9 +48,6 @@ const useObjectInfo = (
     handleCloseCreateMeeting,
     handleCloseCreateManagerTask,
     handleCloseCreateMyTask,
-    handleCloseUpdateMeeting,
-    handleCloseUpdateMyTask,
-    handleCloseUpdateManagerTask,
   };
 };
 

@@ -28,7 +28,7 @@ const MyTaskForm = ({
   isValid,
   watch,
   isObjectPage,
-  isTasksLoading
+  isTasksLoading,
 }) => {
   const watchObjectId = watch("objectId", "");
 
@@ -72,22 +72,27 @@ const MyTaskForm = ({
         multiline={true}
         errors={errors?.comment}
         onInputQuantities={200}
-        InputProps={{
-          endAdornment: (
-            <InputAdornment position="end">
-              <CreateIcon />
-            </InputAdornment>
-          ),
-        }}
       />
-      {isEditMode ? <SimpleSwitch
-        title="Задача выполненна"
-        checked={data?.isDone}
-        isLoading={isTasksLoading}
-        onChange={(e) => {
-          setValue("isDone", e.target.checked);
-        }}
-      /> : null}
+      <TextFieldStyled
+        register={register}
+        label="Результат"
+        name="result"
+        value={data?.result}
+        rows="2"
+        multiline={true}
+        onInputQuantities={100}
+      />
+
+      {isEditMode ? (
+        <SimpleSwitch
+          title="Задача выполненна"
+          checked={data?.isDone}
+          isLoading={isTasksLoading}
+          onChange={(e) => {
+            setValue("isDone", e.target.checked);
+          }}
+        />
+      ) : null}
 
       <FooterButtons
         isEditMode={isEditMode}
