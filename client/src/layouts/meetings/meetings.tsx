@@ -36,6 +36,7 @@ const initialState = {
   selectedUsers: [],
   selectedStatuses: [],
   selectedTypes: [],
+  selectedDoneMeetTypes: [],
 };
 
 const Meetings = () => {

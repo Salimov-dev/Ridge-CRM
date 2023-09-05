@@ -8,6 +8,7 @@ import DatePickerStyled from "../../inputs/date-picker";
 import TimePickerStyled from "../../inputs/time-picker";
 import FooterButtons from "../footer-buttons/footer-buttons";
 import { FieldsContainer, Form } from "../styled/styled";
+import SimpleSwitch from "../../inputs/simple-switch";
 
 const MeetingForm = ({
   data,
@@ -27,6 +28,7 @@ const MeetingForm = ({
   isValid,
   isEditMode = false,
   isEmptyFindedObject,
+  isMeetingsLoading,
 }) => {
   const isValidAndHasAdress = Boolean(!isEmptyFindedObject) && isValid;
   const watchStatus = watch("status", "");
@@ -102,6 +104,16 @@ const MeetingForm = ({
             }}
           />
         </FieldsContainer>
+        {isEditMode ? (
+          <SimpleSwitch
+            title="Встреча выполненна"
+            checked={data?.isDone}
+            isLoading={isMeetingsLoading}
+            onChange={(e) => {
+              setValue("isDone", e.target.checked);
+            }}
+          />
+        ) : null}
 
         <FooterButtons
           isEditMode={isEditMode}

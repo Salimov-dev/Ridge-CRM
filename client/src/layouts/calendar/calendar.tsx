@@ -75,6 +75,7 @@ const Calendar = () => {
   const searchedTasks = useSearchTask(tasks, data);
   const sortedTasks = orderBy(searchedTasks, ["date"], ["asc"]);
 
+
   useEffect(() => {
     setCurrentMonth(getMonth(monthIndex));
   }, [monthIndex]);
@@ -102,10 +103,10 @@ const Calendar = () => {
       <Tasks
         register={register}
         data={data}
+        tasks={sortedTasks}
+        columns={tasksColumn}
         setValue={setValue}
         isTasksLoading={isTasksLoading}
-        sortedTasks={sortedTasks}
-        tasksColumn={tasksColumn}
         handleOpenCreateMeeting={handleOpenCreateMeeting}
         handleOpenCreateMyTask={handleOpenCreateMyTask}
         handleOpenCreateManagerTask={handleOpenCreateManagerTask}

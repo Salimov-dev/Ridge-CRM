@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { Box, styled } from "@mui/material";
 import { useSelector } from "react-redux";
+import { orderBy } from "lodash";
 // components
 import Dialogs from "./components/dialogs";
 import ObjectsParams from "./components/object-params";
@@ -38,9 +39,11 @@ const ObjectInfo = ({ object, isLoading }) => {
   const [dateCreateMyTask, setDateCreateMyTask] = useState(null);
 
   const meetings = useSelector(getObjectMeetingsList(object?._id));
+  const sortedMeetings = orderBy(meetings, ["date"], ["asc"]);
   const isMeetingsLoading = useSelector(getMeetingLoadingStatus());
 
   const tasks = useSelector(getObjectTasksList(object?._id));
+  const sortedTasks = orderBy(tasks, ["date"], ["asc"]);
   const isTasksLoading = useSelector(getTaskLoadingStatus());
 
   const users = useSelector(getUsersList());
@@ -88,13 +91,13 @@ const ObjectInfo = ({ object, isLoading }) => {
     <Component>
       <ObjectsParams object={object} isLoading={isLoading} />
       <ObjectMeetings
-        meetings={meetings}
+        meetings={sortedMeetings}
         object={object}
         isMeetingsLoading={isMeetingsLoading}
         onOpenCreateMeeting={handleOpenCreateMeeting}
       />
       <ObjectTasks
-        tasks={tasks}
+        tasks={sortedTasks}
         object={object}
         isTasksLoading={isTasksLoading}
         onCreateMyTask={handleOpenCreateMyTask}

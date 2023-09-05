@@ -7,6 +7,8 @@ import CreateButtons from "./components/create-buttons";
 import ControlButtons from "./components/control-buttons";
 // store
 import { getMonthIndexState } from "../../../../store/month-index.store";
+import { getTaskLoadingStatus } from "../../../../store/task/tasks.store";
+import { getMeetingLoadingStatus } from "../../../../store/meeting/meetings.store";
 
 const Component = styled(Box)`
   margin-bottom: 6px;
@@ -17,6 +19,10 @@ const Component = styled(Box)`
 
 const Header = ({ onCreateMyTask, onCreateManagerTask, onCreateMeeting }) => {
   const monthIndex = useSelector(getMonthIndexState());
+  const isTasksLoading = useSelector(getTaskLoadingStatus());
+  const isMeetingsLoading = useSelector(getMeetingLoadingStatus());
+  
+  const isLoading = !isTasksLoading && !isMeetingsLoading;
 
   return (
     <Component>
@@ -24,9 +30,10 @@ const Header = ({ onCreateMyTask, onCreateManagerTask, onCreateMeeting }) => {
         onCreateMeeting={onCreateMeeting}
         onCreateMyTask={onCreateMyTask}
         onCreateManagerTask={onCreateManagerTask}
+        isLoading={isLoading}
       />
       <MonthToday monthIndex={monthIndex} />
-      <ControlButtons />
+      <ControlButtons isLoading={isLoading}/>
     </Component>
   );
 };

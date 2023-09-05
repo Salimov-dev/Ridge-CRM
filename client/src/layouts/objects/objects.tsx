@@ -1,5 +1,6 @@
 // libraries
 import dayjs from "dayjs";
+import { orderBy } from "lodash";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
@@ -75,6 +76,7 @@ const Objects = () => {
 
   const data = watch();
   const searchedObjects = useSearchObject(objects, data);
+  const sortedObjects = orderBy(searchedObjects, ["created_at"], ["desc"]);
   const isInputEmpty = JSON.stringify(initialState) !== JSON.stringify(data);
 
   const handleOpenCreate = () => {
@@ -129,7 +131,7 @@ const Objects = () => {
       />
 
       <BasicTable
-        items={searchedObjects}
+        items={sortedObjects}
         itemsColumns={columns}
         isLoading={isLoading}
       />

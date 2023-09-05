@@ -68,10 +68,10 @@ const MyTaskForm = ({
         label="Комментарий"
         name="comment"
         value={data?.comment}
-        rows="3"
+        rows="4"
         multiline={true}
         errors={errors?.comment}
-        onInputQuantities={100}
+        onInputQuantities={200}
         InputProps={{
           endAdornment: (
             <InputAdornment position="end">
@@ -80,14 +80,14 @@ const MyTaskForm = ({
           ),
         }}
       />
-      <SimpleSwitch
+      {isEditMode ? <SimpleSwitch
         title="Задача выполненна"
         checked={data?.isDone}
         isLoading={isTasksLoading}
         onChange={(e) => {
           setValue("isDone", e.target.checked);
         }}
-      />
+      /> : null}
 
       <FooterButtons
         isEditMode={isEditMode}

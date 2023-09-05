@@ -13,10 +13,10 @@ const Header = styled(Box)`
 const Tasks = ({
   register,
   data,
+  tasks,
+  columns,
   setValue,
   isTasksLoading,
-  sortedTasks,
-  tasksColumn,
   handleOpenCreateMeeting,
   handleOpenCreateMyTask,
   handleOpenCreateManagerTask,
@@ -38,8 +38,8 @@ const Tasks = ({
         isLoading={isTasksLoading}
       />
       <BasicTable
-        items={sortedTasks}
-        itemsColumns={tasksColumn}
+        items={tasks}
+        itemsColumns={columns}
         isLoading={isTasksLoading}
       />
     </>

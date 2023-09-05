@@ -2,6 +2,8 @@ import MultiSelectField from "../../common/inputs/multi-select-field";
 import SearchDatePicker from "../../common/inputs/search-date-picker";
 import { FieldsContainer, Form } from "../../common/forms/styled/styled";
 import useMeetingFiltersPanel from "../../../hooks/meeting/use-meeting-filters-panel";
+import { meetingDoneTypes } from "../../../mock/meeting-done-status";
+import SimpleSelectField from "../../common/inputs/simple-select-field";
 
 const MeetingsFiltersPanel = ({ data, register, setValue, isLoading }) => {
   const { getActualUsersList, getActualStatusesList, getActuaTypesList } =
@@ -51,6 +53,16 @@ const MeetingsFiltersPanel = ({ data, register, setValue, isLoading }) => {
           name="selectedTypes"
           labelId="selectedTypes-label"
           label="Выбор по типу"
+          disabled={isLoading ? true : false}
+        />
+        <SimpleSelectField
+          register={register}
+          itemsList={meetingDoneTypes}
+          selectedItems={data.selectedDoneMeetTypes}
+          name="selectedDoneMeetTypes"
+          labelId="selectedDoneMeetTypes"
+          label="Тип задачи"
+          value={data.selectedDoneMeetTypes}
           disabled={isLoading ? true : false}
         />
       </FieldsContainer>

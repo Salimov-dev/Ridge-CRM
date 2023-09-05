@@ -1,7 +1,10 @@
 import dayjs from "dayjs";
 import "dayjs/locale/ru";
 import { useDispatch, useSelector } from "react-redux";
+// mui
 import { Box, Typography } from "@mui/material";
+import TaskAltOutlinedIcon from "@mui/icons-material/TaskAltOutlined";
+import DoDisturbAltOutlinedIcon from "@mui/icons-material/DoDisturbAltOutlined";
 // components
 import GoToButton from "../../components/common/buttons/go-to-button";
 import { FormatManagerName } from "../../components/common/table/helpers/helpers";
@@ -29,18 +32,36 @@ import {
 
 export const tasksColumns = [
   {
+    accessorKey: "isDone",
+    header: "",
+    enableSorting: false,
+    cell: (info) => {
+      const isDone = info.getValue();
+      return (
+        <Box sx={{ display: "flex", justifyContent: "center" }}>
+          {!isDone ? (
+            <TaskAltOutlinedIcon sx={{ color: "green" }} />
+          ) : (
+            <DoDisturbAltOutlinedIcon sx={{ color: "red" }} />
+          )}
+        </Box>
+      );
+    },
+  },
+  {
     accessorKey: "date",
     header: "Дата",
-    enableSorting: false,
+    // enableSorting: false,
     cell: (info) => {
       const date = info.getValue();
       const formattedDate = FormatDate(new Date(date));
       const dayOfWeek = dayjs(date).locale("ru").format("dd");
       return (
-        <Box sx={{ display: "flex", justifyContent: "center", gap: "6px" }}>
-          <Typography>{formattedDate}</Typography>
-          <Typography>{dayOfWeek}</Typography>{" "}
-        </Box>
+        <Typography>{formattedDate}</Typography>
+        // <Box sx={{ display: "flex", justifyContent: "center", gap: "6px" }}>
+        //   <Typography>{formattedDate}</Typography>
+        //   <Typography>{dayOfWeek}</Typography>{" "}
+        // </Box>
       );
     },
   },

@@ -50,7 +50,7 @@ const CreateMyTask = ({ objects, objectPageId, title, onClose, date }) => {
       managerId: null,
     };
 
-    console.log("newData", newData);
+    // console.log("newData", newData);
     
     dispatch(createTask(newData))
       .then(() => onClose())

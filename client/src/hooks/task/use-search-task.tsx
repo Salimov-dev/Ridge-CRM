@@ -3,10 +3,8 @@ import { useMemo } from "react";
 // utils
 import getStartWeekDate from "../../utils/date/get-start-week-date";
 import getEndWeekDate from "../../utils/date/get-end-week-date";
-import getDateYesterday from "../../utils/date/get-date-yesterday";
 
 const useSearchTask = (tasks, data) => {
-  const yesterday = getDateYesterday();
   const startWeek = getStartWeekDate();
   const endWeek = getEndWeekDate();
 
@@ -19,21 +17,28 @@ const useSearchTask = (tasks, data) => {
       );
     }
 
-    // актуальные
+    // к выполнению все
     if (data.selectedTaskTypes === "234gsfd345kgdsl23gf344") {
-      array = array?.filter((task) => dayjs(task.date).isAfter(yesterday));
+      array = array?.filter((task) => task?.isDone !== true);
     }
 
-    // на этой неделе
+    // К выполнению на этой неделе
+    if (data.selectedTaskTypes === "0543sadf23gdfs32423432") {
+      array = array?.filter((task) => 
+        dayjs(task.date).isBetween(startWeek, endWeek) && task?.isDone !== true
+      );
+    }
+
+    // Выполненные на этой неделе OK!
     if (data.selectedTaskTypes === "9345ghfdxzws9765gf2342") {
-      array = array?.filter((task) =>
+      array = array?.filter((task) => task?.isDone === true &&
         dayjs(task.date).isBetween(startWeek, endWeek)
       );
     }
 
-    // устаревшие
+    // Выполненные за всё время OK!
     if (data.selectedTaskTypes === "09432gdfsjk435gdsf3454") {
-      array = array?.filter((task) => dayjs(task.date).isBefore(yesterday));
+      array = array?.filter((task) => task?.isDone === true);
     }
 
     if (data.onlyMyTasks) {

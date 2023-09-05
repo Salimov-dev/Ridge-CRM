@@ -1,4 +1,5 @@
-import { Box, Tooltip, Typography, styled } from "@mui/material";
+import { Box, Typography } from "@mui/material";
+import { orderBy } from "lodash";
 import TableOpenButton from "../../components/common/buttons/table-open-button";
 import {
   FormatDistrict,
@@ -8,25 +9,24 @@ import {
   FormatPhone,
 } from "../../components/common/table/helpers/helpers";
 import { FormatDate } from "../../utils/date/format-date";
-import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getObjectMeetingsList } from "../../store/meeting/meetings.store";
+import {
+  getMeetingsByObjectId,
+  getObjectMeetingsList,
+} from "../../store/meeting/meetings.store";
 import { getTasksByObjectId } from "../../store/task/tasks.store";
 import Flags from "./components/flags";
 import {
   setOpenObjectPageId,
   setOpenObjectPageOpenState,
 } from "../../store/object/open-object-page.store";
-
-const AlignCenter = styled(Box)`
-  display: flex;
-  justify-content: center;
-`;
+import { AlignCenter } from "../styled/styled";
 
 export const objectsColumns = [
   {
     accessorKey: "created_at",
     header: "Дата",
+    enableSorting: false,
     cell: (info) => {
       const date = info.getValue();
       return <AlignCenter>{FormatDate(new Date(date))}</AlignCenter>;
@@ -94,7 +94,13 @@ export const objectsColumns = [
         header: "Телефон",
         cell: (info) => {
           const phone = info.getValue();
-          return <AlignCenter>{FormatPhone(phone)}</AlignCenter>;
+          return (
+            <AlignCenter>
+              <Typography sx={{ whiteSpace: "nowrap" }}>
+                {FormatPhone(phone)}
+              </Typography>
+            </AlignCenter>
+          );
         },
       },
       {
@@ -105,12 +111,36 @@ export const objectsColumns = [
           return <AlignCenter>{name}</AlignCenter>;
         },
       },
+    ],
+  },
+  {
+    header: "Последние контакты",
+    columns: [
       {
-        accessorKey: "",
-        header: "Последний контакт",
+        accessorFn: (row) => row,
+        header: "Встреча",
         cell: (info) => {
-          const contact = info.getValue();
-          return <AlignCenter>{contact}</AlignCenter>;
+          const object = info.getValue();
+          const objectId = object?._id;
+          const objectMeetings = useSelector(getMeetingsByObjectId(objectId));
+          const sortedObjectMeetings = orderBy(
+            objectMeetings,
+            ["date"],
+            ["asc"]
+          );
+          const lastMeeting =
+            sortedObjectMeetings[sortedObjectMeetings?.length - 1];
+          const dateOfLastMeeting = FormatDate(lastMeeting?.date);
+
+          return <AlignCenter>{dateOfLastMeeting}</AlignCenter>;
+        },
+      },
+      {
+        accessorFn: (row) => row,
+        header: "Звонок",
+        cell: (info) => {
+          const object = info.getValue();
+          return <AlignCenter>06.09.23</AlignCenter>;
         },
       },
     ],

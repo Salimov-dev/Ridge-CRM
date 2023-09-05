@@ -1,11 +1,12 @@
 import { Button, Typography } from "@mui/material";
 
-const CreateMeetingButton = ({ onOpen }) => {
+const CreateMeetingButton = ({ onOpen, disabled }) => {
   return (
     <Button
       variant="contained"
       color="success"
       onClick={onOpen}
+      disabled={disabled}
       sx={{
         color: "white",
         background: "blue",

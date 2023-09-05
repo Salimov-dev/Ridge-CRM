@@ -8,8 +8,9 @@ import {
 } from "../../../../../store/month-index.store";
 import dayjs from "dayjs";
 
-const ControlButtons = () => {
+const ControlButtons = ({isLoading}) => {
   const monthIndex = useSelector(getMonthIndexState());
+
   const dispatch = useDispatch();
 
   const handleTogglePrevMonth = () => {
@@ -27,6 +28,7 @@ const ControlButtons = () => {
         variant="outlined"
         color="success"
         onClick={handleTogglePrevMonth}
+        disabled={!isLoading}
       >
         <ArrowBackIosIcon />
       </Button>
@@ -34,6 +36,7 @@ const ControlButtons = () => {
         variant="outlined"
         color="success"
         onClick={handleToggleTodayMonth}
+        disabled={!isLoading}
       >
         Сегодня
       </Button>
@@ -41,6 +44,7 @@ const ControlButtons = () => {
         variant="outlined"
         color="success"
         onClick={handleToggleNextMonth}
+        disabled={!isLoading}
       >
         <ArrowForwardIosIcon />
       </Button>

@@ -15,7 +15,7 @@ import { meetingSchema } from "../../../schemas/schemas";
 import { getObjectsList } from "../../../store/object/objects.store";
 import { getCurrentUserId } from "../../../store/user/users.store";
 import { getMeetingTypesList } from "../../../store/meeting/meeting-types.store";
-import { getMeetingStatusesList } from "../../../store/meeting/meeting-status.store";
+import { getMeetingStatusesList, getMeetingStatusesLoadingStatus } from "../../../store/meeting/meeting-status.store";
 import { getUpdateMeetingId } from "../../../store/meeting/update-meeting.store";
 import {
   getMeetingById,
@@ -31,6 +31,7 @@ const UpdateMeeting = ({ onClose }) => {
   );
   const meetingId = useSelector(getUpdateMeetingId());
   const meeting = useSelector(getMeetingById(meetingId));
+  const isMeetingsLoading = useSelector(getMeetingStatusesLoadingStatus())
   const meetingTypes = useSelector(getMeetingTypesList());
   const statuses = useSelector(getMeetingStatusesList());
   const dispatch = useDispatch();
@@ -98,6 +99,7 @@ const UpdateMeeting = ({ onClose }) => {
         setValue={setValue}
         statuses={statuses}
         isEditMode={isEditMode}
+        isMeetingsLoading={isMeetingsLoading}
       />
     </Box>
   ) : (

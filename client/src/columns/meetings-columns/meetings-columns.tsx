@@ -1,6 +1,9 @@
 import dayjs from "dayjs";
-import { Box, Typography } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
+// mui
+import { Box, Typography } from "@mui/material";
+import TaskAltOutlinedIcon from "@mui/icons-material/TaskAltOutlined";
+import DoDisturbAltOutlinedIcon from "@mui/icons-material/DoDisturbAltOutlined";
 // components
 import GoToButton from "../../components/common/buttons/go-to-button";
 import { FormatManagerName } from "../../components/common/table/helpers/helpers";
@@ -21,8 +24,26 @@ import {
   setOpenObjectPageId,
   setOpenObjectPageOpenState,
 } from "../../store/object/open-object-page.store";
+import { AlignCenter } from "../styled/styled";
 
 export const meetingsColumns = [
+  {
+    accessorKey: "isDone",
+    header: "",
+    enableSorting: false,
+    cell: (info) => {
+      const isDone = info.getValue();
+      return (
+        <Box sx={{ display: "flex", justifyContent: "center" }}>
+          {!isDone ? (
+            <TaskAltOutlinedIcon sx={{ color: "green" }} />
+          ) : (
+            <DoDisturbAltOutlinedIcon sx={{ color: "red" }} />
+          )}
+        </Box>
+      );
+    },
+  },
   {
     accessorKey: "date",
     header: "Дата",
@@ -88,7 +109,7 @@ export const meetingsColumns = [
         dispatch(setOpenObjectPageOpenState(true));
       };
 
-      return (
+      return objectId ? (
         <Box
           sx={{
             display: "flex",
@@ -101,6 +122,8 @@ export const meetingsColumns = [
             <GoToButton text="Открыть" color="neutral" onClick={handleClick} />
           ) : null}
         </Box>
+      ) : (
+        "-"
       );
     },
   },
@@ -119,7 +142,7 @@ export const meetingsColumns = [
     header: "Инициатор",
     cell: (info) => {
       const userId = info.getValue();
-      return FormatManagerName(userId);
+      return <AlignCenter>{FormatManagerName(userId)}</AlignCenter> ;
     },
   },
 

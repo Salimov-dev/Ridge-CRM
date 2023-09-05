@@ -26,15 +26,15 @@ const Component = styled(Box)`
   margin-bottom: 20px;
 `;
 
-const BasicTable = ({ items, itemsColumns, isLoading, isPaginate = true,  }) => {
+const BasicTable = ({ items, itemsColumns, isLoading, isPaginate = true }) => {
   const [sorting, setSorting] = useState<SortingState>([]);
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const data = useMemo(() => items || [], [items]);
   const columns = useMemo(() => itemsColumns || [], [items]);
 
-  const isObjectPageOpen = useSelector(loadOpenObjectPageOpenState())
-  const isDialogMode = isObjectPageOpen
+  const isObjectPageOpen = useSelector(loadOpenObjectPageOpenState());
+  const isDialogMode = isObjectPageOpen;
 
   const table = useReactTable({
     data,
@@ -51,7 +51,7 @@ const BasicTable = ({ items, itemsColumns, isLoading, isPaginate = true,  }) => 
   return (
     <Component>
       <table>
-        <Thead table={table} colors={colors} isDialogMode={isDialogMode}/>
+        <Thead table={table} colors={colors} isDialogMode={isDialogMode} />
         {!isLoading && <Tbody table={table} />}
       </table>
       {isLoading && <Loader />}

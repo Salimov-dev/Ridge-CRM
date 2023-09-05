@@ -170,4 +170,10 @@ export const getMeetingById = (id) => (state) => {
   }
 };
 
+export const getMeetingsByObjectId = (objectId) => (state) => {
+  if (state.meetings.entities) {
+    return state.meetings.entities.filter((meet) => meet.objectId === objectId);
+  }
+};
+
 export default meetingsReducer;

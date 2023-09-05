@@ -3,7 +3,7 @@ import SimpleSelectField from "../../common/inputs/simple-select-field";
 import SearchSwitch from "../../common/inputs/search-switch";
 import { FieldsContainer, Form } from "../../common/forms/styled/styled";
 // mock
-import { taskTypeArray } from "../../../mock/task-type";
+import { taskDoneTypes } from "../../../mock/task-type";
 
 const CalendarFiltersPanel = ({ data, register, setValue, isLoading }) => {
   return (
@@ -27,7 +27,7 @@ const CalendarFiltersPanel = ({ data, register, setValue, isLoading }) => {
         />
         <SimpleSelectField
           register={register}
-          itemsList={taskTypeArray}
+          itemsList={taskDoneTypes}
           selectedItems={data.selectedTaskTypes}
           name="selectedTaskTypes"
           labelId="selectedTaskTypes"

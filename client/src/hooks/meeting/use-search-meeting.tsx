@@ -1,8 +1,13 @@
+import "dayjs/locale/ru";
 import { useMemo } from "react";
 import dayjs from "dayjs";
-import "dayjs/locale/ru";
+import getStartWeekDate from "../../utils/date/get-start-week-date";
+import getEndWeekDate from "../../utils/date/get-end-week-date";
 
-const useSearchMeeting = ( meetings, data ) => {
+const useSearchMeeting = (meetings, data) => {
+  const startWeek = getStartWeekDate();
+  const endWeek = getEndWeekDate();
+
   const searchedMeetings = useMemo(() => {
     let array = meetings;
 
@@ -13,9 +18,7 @@ const useSearchMeeting = ( meetings, data ) => {
     }
 
     if (data.selectedUsers?.length) {
-      array = array?.filter((obj) =>
-        data.selectedUsers.includes(obj.userId)
-      );
+      array = array?.filter((obj) => data.selectedUsers.includes(obj.userId));
     }
 
     if (data.selectedTypes?.length) {
@@ -38,6 +41,34 @@ const useSearchMeeting = ( meetings, data ) => {
     } else if (data.endDate) {
       const endDate = dayjs(data.endDate).endOf("day");
       array = array?.filter((item) => dayjs(item?.date) <= endDate);
+    }
+
+    // к проведению все
+    if (data.selectedDoneMeetTypes === "534gfsdtgfd3245tgdgfd") {
+      array = array?.filter((meet) => meet?.isDone !== true);
+    }
+
+    // К проведению на этой неделе
+    if (data.selectedDoneMeetTypes === "8734qfdsggb2534tgfdfs") {
+      array = array?.filter(
+        (meet) =>
+          dayjs(meet.date).isBetween(startWeek, endWeek) &&
+          meet?.isDone !== true
+      );
+    }
+
+    // Проведенные на этой неделе OK!
+    if (data.selectedDoneMeetTypes === "987645erasg1243tgfdsg3") {
+      array = array?.filter(
+        (meet) =>
+          meet?.isDone === true &&
+          dayjs(meet.date).isBetween(startWeek, endWeek)
+      );
+    }
+
+    // Проведенные за всё время OK!
+    if (data.selectedDoneMeetTypes === "87634gsdf23gfds3425r43") {
+      array = array?.filter((meet) => meet?.isDone === true);
     }
 
     return array;
