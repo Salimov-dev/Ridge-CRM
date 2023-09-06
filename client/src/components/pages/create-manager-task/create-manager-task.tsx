@@ -15,7 +15,6 @@ import { createTask } from "../../../store/task/tasks.store";
 import { capitalizeFirstLetter } from "../../../utils/data/capitalize-first-letter";
 // schema
 import { taskSchema } from "../../../schemas/schemas";
-import ToggleTask from "../../common/tasks/toggler-task";
 
 const initialState = {
   comment: "",
@@ -30,9 +29,9 @@ const CreateManagerTask = ({
   objects,
   users,
   title,
+  dateCreate,
   onClose,
   objectPageId,
-  onOpenCreateMyTask,
 }) => {
   const dispatch = useDispatch();
   const isObjectPage = Boolean(objectPageId?.length);
@@ -64,22 +63,25 @@ const CreateManagerTask = ({
       .then(() => toast.success("Задача успешно создана!"));
   };
 
-  const handleToggleToManagerTask = () => {
-    onClose();
-    onOpenCreateMyTask();
-  };
-
   useEffect(() => {
     if (objectPageId) {
       setValue("objectId", objectPageId);
     }
   }, [objectPageId]);
 
+  useEffect(() => {
+    if (dateCreate !== null) {
+      setValue("date", dateCreate);
+    } else {
+      setValue("date", dayjs());
+    }
+  }, [dateCreate]);
+
   return (
     <Box>
       <TitleWithCloseButton
         title={title}
-        background="red"
+        background="Crimson"
         color="white"
         onClose={onClose}
       />
@@ -96,12 +98,6 @@ const CreateManagerTask = ({
         isValid={isFullValid}
         watch={watch}
         isObjectPage={isObjectPage}
-      />
-      <ToggleTask
-        title="Задачу себе"
-        backgroundColor="orange"
-        color="black"
-        onToggle={handleToggleToManagerTask}
       />
     </Box>
   );

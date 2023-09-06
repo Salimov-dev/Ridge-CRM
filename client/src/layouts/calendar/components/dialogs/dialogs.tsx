@@ -3,70 +3,36 @@ import ObjectPageDialog from "../../../../components/UI/dialogs/object-page-dial
 import ObjectUpdatePageDialog from "../../../../components/UI/dialogs/objects/object-update-page";
 import ManagerTaskUpdateDialog from "../../../../components/UI/dialogs/tasks/manager-task-update-dialog";
 import MyTaskUpdateDialog from "../../../../components/UI/dialogs/tasks/my-task-update-dialog";
-import DialogStyled from "../../../../components/common/dialog/dialog-styled";
-import CreateManagerTask from "../../../../components/pages/create-manager-task/create-manager-task";
-import CreateMeeting from "../../../../components/pages/create-meeting/create-meeting";
-import CreateMyTask from "../../../../components/pages/create-my-task/create-my-task";
+import MeetingCreateDialog from "../../../../components/UI/dialogs/meetings/meeting-create-dialog";
+import MyTaskCreateDialog from "../../../../components/UI/dialogs/tasks/my-task-create-dialog";
+import ManagerTaskCreateDialog from "../../../../components/UI/dialogs/tasks/manager-task-create-dialog";
 
-const Dialogs = ({
-  objects,
-  users,
-  dateCreateMyTask,
-  openCreateMyTask,
-  openCreateManagerTask,
-  openCreateMeeting,
-  onOpenCreateMyTask,
-  onOpenCreateManagerTask,
-  onCloseCreateMyTask,
-  onCloseCreateManagerTask,
-  onCloseCreateMeeting,
-}) => {
+const Dialogs = ({ objects, users, dateCreate, setDateCreate }) => {
   return (
     <>
       <ObjectUpdatePageDialog />
       <ObjectPageDialog />
 
+      <ManagerTaskCreateDialog
+        objects={objects}
+        users={users}
+        dateCreate={dateCreate}
+        setDateCreate={setDateCreate}
+      />
       <ManagerTaskUpdateDialog />
-      <DialogStyled
-        onClose={onCloseCreateManagerTask}
-        open={openCreateManagerTask}
-        maxWidth="lg"
-        fullWidth={false}
-        component={
-          <CreateManagerTask
-            title="Поставить менеджеру задачу"
-            objects={objects}
-            users={users}
-            onClose={onCloseCreateManagerTask}
-            onOpenCreateMyTask={onOpenCreateMyTask}
-          />
-        }
+
+      <MyTaskCreateDialog
+        objects={objects}
+        dateCreate={dateCreate}
+        setDateCreate={setDateCreate}
       />
-      
       <MyTaskUpdateDialog />
-      <DialogStyled
-        onClose={onCloseCreateMyTask}
-        open={openCreateMyTask}
-        maxWidth="sm"
-        fullWidth={false}
-        component={
-          <CreateMyTask
-            title="Добавить себе задачу"
-            objects={objects}
-            date={dateCreateMyTask}
-            onClose={onCloseCreateMyTask}
-            onOpenCreateManagerTask={onOpenCreateManagerTask}
-          />
-        }
-      />
 
+      <MeetingCreateDialog
+        dateCreate={dateCreate}
+        setDateCreate={setDateCreate}
+      />
       <MeetingUpdateDialog />
-      <DialogStyled
-        component={<CreateMeeting onClose={onCloseCreateMeeting} />}
-        onClose={onCloseCreateMeeting}
-        open={openCreateMeeting}
-      />
-
     </>
   );
 };

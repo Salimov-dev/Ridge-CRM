@@ -38,7 +38,7 @@ const TitleWithAddress = ({
           <Typography
             variant="h2"
             sx={{
-              background: !isEmptyFindedObject ? "yellow" : "red",
+              background: !isEmptyFindedObject ? "yellow" : "Crimson",
               color: !isEmptyFindedObject ? "black" : "white",
               padding: '0 4px'
             }}

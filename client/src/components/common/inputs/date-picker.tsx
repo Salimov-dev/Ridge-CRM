@@ -17,7 +17,7 @@ const DatePickerStyled = ({
   helperText,
   errors,
   disabled,
-  color = "red",
+  color = "Crimson",
   minDate = today,
   maxDate = null,
   isEditMode,

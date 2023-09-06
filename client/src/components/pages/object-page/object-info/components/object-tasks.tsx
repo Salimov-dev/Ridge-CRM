@@ -1,7 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import DividerStyled from "../../../../common/divider/divider-styled";
 import { tasksColumns } from "../../../../../columns/tasks-columns/tasks-columns";
-import CreateTaskButton from "../../../../../layouts/calendar/components/header/components/create-task-button";
+import CreateTaskButton from "../../../../../layouts/calendar/components/header/components/create-my-task-button";
 import BasicTable from "../../../../common/table/basic-table";
 
 const ObjectTasks = ({
@@ -34,7 +34,7 @@ const ObjectTasks = ({
           <CreateTaskButton
             onClick={onCreateManagerTask}
             title="Поставить менеджеру задачу"
-            background="red"
+            background="Crimson"
           />
         </Box>
       </Box>

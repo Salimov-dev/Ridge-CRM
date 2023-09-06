@@ -2,6 +2,8 @@ import { Box, Typography, styled } from "@mui/material";
 import CreateButtons from "../header/components/create-buttons";
 import BasicTable from "../../../../components/common/table/basic-table";
 import CalendarFiltersPanel from "../../../../components/UI/filters-panels/calendar-filters-panel";
+import { useSelector } from "react-redux";
+import { getTaskLoadingStatus } from "../../../../store/task/tasks.store";
 
 const Header = styled(Box)`
   display: flex;
@@ -10,27 +12,14 @@ const Header = styled(Box)`
   margin-bottom: 12px;
 `;
 
-const Tasks = ({
-  register,
-  data,
-  tasks,
-  columns,
-  setValue,
-  isTasksLoading,
-  onOpenCreateMeeting,
-  onOpenCreateMyTask,
-  onOpenCreateManagerTask,
-}) => {
+const Tasks = ({ register, data, tasks, columns, setValue }) => {
+  const isTasksLoading = useSelector(getTaskLoadingStatus());
+
   return (
     <>
       <Header>
         <Typography variant="h3">Задачи:</Typography>
-        <CreateButtons
-          onCreateMeeting={onOpenCreateMeeting}
-          onCreateMyTask={onOpenCreateMyTask}
-          onCreateManagerTask={onOpenCreateManagerTask}
-          isLoading={!isTasksLoading}
-        />
+        <CreateButtons />
       </Header>
       <CalendarFiltersPanel
         data={data}

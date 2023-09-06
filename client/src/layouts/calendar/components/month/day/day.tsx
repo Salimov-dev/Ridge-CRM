@@ -1,10 +1,13 @@
 import { Box, Typography, styled } from "@mui/material";
 // components
 import DayContent from "./components/day-content/day-content";
-import CreateTaskIcon from "./components/day-content/components/create-task-icon/create-task-icon";
+import CreateTaskIcon from "./components/day-content/components/create-my-task-icon/create-my-task-icon";
 // utils
 import { chechIsCurrentDay } from "../../../../../utils/date/check-is-current-day";
 import { chechIsFutureDay } from "../../../../../utils/date/check-is-future-day";
+import CreateMeetingIcon from "./components/day-content/components/create-meeting-icon/create-meeting-icon";
+import CreateMyTaskIcon from "./components/day-content/components/create-my-task-icon/create-my-task-icon";
+import CreateManagerTaskIcon from "./components/day-content/components/create-manager-task-icon/create-manager-task-icon";
 
 const OneDayContainer = styled(Box)`
   display: flex;
@@ -32,7 +35,7 @@ const Date = styled(Typography)`
   width: 32px;
 `;
 
-const Day = ({ day, isWeekendColumn, onClick, meetings, tasks }) => {
+const Day = ({ day, tasks, meetings, isWeekendColumn, setDateCreate }) => {
   const isCurrentDay = chechIsCurrentDay(day);
   const isFutureDay = chechIsFutureDay(day);
   return (
@@ -51,7 +54,11 @@ const Day = ({ day, isWeekendColumn, onClick, meetings, tasks }) => {
           ? "1px solid white"
           : "1px solid gray",
         "&:hover": {
-          borderColor: isCurrentDay ? "yellow" : isFutureDay ? "yellow" : "red",
+          borderColor: isCurrentDay
+            ? "yellow"
+            : isFutureDay
+            ? "yellow"
+            : "Crimson",
         },
       }}
     >
@@ -60,7 +67,7 @@ const Day = ({ day, isWeekendColumn, onClick, meetings, tasks }) => {
           sx={{
             backgroundColor: isCurrentDay ? "yellow" : "inherit",
             color: isWeekendColumn
-              ? "red"
+              ? "Crimson"
               : isCurrentDay
               ? "black"
               : isFutureDay
@@ -72,12 +79,28 @@ const Day = ({ day, isWeekendColumn, onClick, meetings, tasks }) => {
         </Date>
       </ContainerDate>
       <DayContent meetings={meetings} tasks={tasks} />
-      <CreateTaskIcon
-        day={day}
-        onClick={onClick}
-        isCurrentDay={isCurrentDay}
-        isFutureDay={isFutureDay}
-      />
+      <Box sx={{ width: "100%", display: "flex", justifyContent: "end" }}>
+        <CreateManagerTaskIcon
+          day={day}
+          isCurrentDay={isCurrentDay}
+          isFutureDay={isFutureDay}
+          setDateCreate={setDateCreate}
+          hoverColor="FireBrick"
+        />
+        <CreateMeetingIcon
+          day={day}
+          isCurrentDay={isCurrentDay}
+          isFutureDay={isFutureDay}
+          setDateCreate={setDateCreate}
+        />
+        <CreateMyTaskIcon
+          day={day}
+          isCurrentDay={isCurrentDay}
+          isFutureDay={isFutureDay}
+          setDateCreate={setDateCreate}
+          hoverColor="orange"
+        />
+      </Box>
     </OneDayContainer>
   );
 };

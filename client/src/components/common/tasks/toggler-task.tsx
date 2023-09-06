@@ -29,6 +29,7 @@ const ArrowRight = styled(KeyboardArrowRightOutlinedIcon)({
 });
 
 const ToggleTask = ({ title, onToggle, color, backgroundColor }) => {
+  
   return (
     <Component>
       <ArrowLeft onClick={onToggle} />

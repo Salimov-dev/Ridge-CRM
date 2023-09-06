@@ -1,9 +1,10 @@
 // libraries
+import dayjs from "dayjs";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 // components
 import MeetingForm from "../../common/forms/meeting-form/meeting-form";
 import TitleWithAddress from "../../common/page-titles/title-with-address";
@@ -23,14 +24,10 @@ import useFindObject from "../../../hooks/object/use-find-object";
 // utils
 import { capitalizeFirstLetter } from "../../../utils/data/capitalize-first-letter";
 
-const Component = styled(Box)`
-  width: 100%;
-`;
-
 const initialState = {
   status: "",
   meetingType: "",
-  date: null,
+  date: dayjs(),
   time: null,
   comment: "",
   objectId: "",
@@ -43,9 +40,11 @@ const initialState = {
     zoom: null,
   },
 };
+const Component = styled(Box)`
+  width: 100%;
+`;
 
-const CreateMeeting = ({ objectPageId, onClose }) => {
-  const dispatch = useDispatch();
+const CreateMeeting = ({ objectPageId, onClose, dateCreate }) => {
   const statuses = useSelector(getMeetingStatusesList());
   const meetingTypes = useSelector(getMeetingTypesList());
   const currentUserId = useSelector(getCurrentUserId());
@@ -80,8 +79,11 @@ const CreateMeeting = ({ objectPageId, onClose }) => {
   } = useFindObject();
 
   const data = watch();
+  const watchDate = watch("date", null);
+  const watchTime = watch("time", null);
+  const isFullValid = !watchDate || !watchTime || !isValid;
+
   const isEmptyFindedObject = Boolean(!Object.keys(findedObject)?.length);
-  const isFullValid = data.date !== null && data.time !== null && isValid;
 
   const onSubmit = (data) => {
     const newData = {
@@ -113,6 +115,14 @@ const CreateMeeting = ({ objectPageId, onClose }) => {
     }
   }, [objectPageId]);
 
+  useEffect(() => {
+    if (dateCreate !== null) {
+      setValue("date", dateCreate);
+    } else {
+      setValue("date", dayjs());
+    }
+  }, [dateCreate]);
+
   return (
     <Component>
       <TitleWithAddress
@@ -128,6 +138,7 @@ const CreateMeeting = ({ objectPageId, onClose }) => {
 
       <MeetingForm
         register={register}
+        data={data}
         objects={transformObjects}
         statuses={statuses}
         meetingTypes={meetingTypes}

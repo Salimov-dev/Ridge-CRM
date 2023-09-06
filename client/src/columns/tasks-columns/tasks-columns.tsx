@@ -42,7 +42,7 @@ export const tasksColumns = [
           {!isDone ? (
             <TaskAltOutlinedIcon sx={{ color: "green" }} />
           ) : (
-            <DoDisturbAltOutlinedIcon sx={{ color: "red" }} />
+            <DoDisturbAltOutlinedIcon sx={{ color: "Crimson" }} />
           )}
         </Box>
       );
@@ -54,7 +54,7 @@ export const tasksColumns = [
     // enableSorting: false,
     cell: (info) => {
       const date = info.getValue();
-      const formattedDate = FormatDate(new Date(date));
+      const formattedDate = FormatDate(date);
       const dayOfWeek = dayjs(date).locale("ru").format("dd");
       return (
         <Typography>{formattedDate}</Typography>
@@ -73,7 +73,7 @@ export const tasksColumns = [
       const time = info.getValue();
       return (
         <Typography sx={{ textAlign: "center" }}>
-          {FormatTime(new Date(time))}
+          {FormatTime(time)}
         </Typography>
       );
     },
@@ -158,7 +158,7 @@ export const tasksColumns = [
       const date = info.getValue();
       return (
         <Typography sx={{ textAlign: "center" }}>
-          {FormatDate(new Date(date))}
+          {FormatDate(date)}
         </Typography>
       );
     },
@@ -191,7 +191,7 @@ export const tasksColumns = [
           onClick={handleClick}
           disabled={disable}
           fontColor={isCuratorTask ? "inherit" : "black"}
-          background={isCuratorTask ? "red" : "orange"}
+          background={isCuratorTask ? "Crimson" : "orange"}
           backgroudHover={isCuratorTask ? "darkRed" : "darkOrange"}
         />
       );

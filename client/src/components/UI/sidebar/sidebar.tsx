@@ -42,6 +42,9 @@ const Sidebar = () => {
     if (currentPath === "/calendar") {
       return "Календарь";
     }
+    if (currentPath === "/ridge") {
+      return "Грядка";
+    }
     return "";
   }
 

@@ -1,36 +1,21 @@
 import dayjs from "dayjs";
 import { orderBy } from "lodash";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 // store
 import { getObjectsList } from "../../store/object/objects.store";
-import {
-  getMeetingLoadingStatus,
-  getMeetingsList,
-} from "../../store/meeting/meetings.store";
-import { getTaskLoadingStatus } from "../../store/task/tasks.store";
+import { getMeetingsList } from "../../store/meeting/meetings.store";
 import { getCurrentUserId, getUsersList } from "../../store/user/users.store";
-import { setUpdateMyTaskOpenState } from "../../store/task/update-my-task.store";
-import { setUpdateMeetingOpenState } from "../../store/meeting/update-meeting.store";
-import { setUpdateManagerTaskOpenState } from "../../store/task/update-manager-task.store";
 // utils
 import getStartWeekDate from "../../utils/date/get-start-week-date";
 import getEndWeekDate from "../../utils/date/get-end-week-date";
 
-const useCalendar = (
-  setOpenCreateManagerTask,
-  setOpenCreateMyTask,
-  setDateCreateMyTask,
-  setOpenCreateMeeting
-) => {
+const useCalendar = () => {
   const objects = useSelector(getObjectsList());
   const users = useSelector(getUsersList());
   const meetings = useSelector(getMeetingsList());
   const currentUserId = useSelector(getCurrentUserId());
-  const isMeetingsLoading = useSelector(getMeetingLoadingStatus());
-  const isTasksLoading = useSelector(getTaskLoadingStatus());
   const startOfWeek = getStartWeekDate();
   const endOfWeek = getEndWeekDate();
-  const dispatch = useDispatch();
 
   const currentWeeklyMeetings = meetings?.filter((meet) =>
     dayjs(meet.date).isBetween(startOfWeek, endOfWeek, null, "[]")
@@ -60,60 +45,10 @@ const useCalendar = (
     transformObjects?.push({ _id: obj._id, name: obj.location.address });
   });
 
-  // meetings
-  const handleOpenCreateMeeting = () => {
-    setOpenCreateMeeting(true);
-  };
-  const handleCloseUpdateMeeting = () => {
-    dispatch(setUpdateMeetingOpenState(false));
-  };
-  const handleCloseCreateMeeting = () => {
-    setOpenCreateMeeting(false);
-  };
-
-  // manager tasks
-  const handleOpenCreateManagerTask = () => {
-    setOpenCreateManagerTask(true);
-  };
-  const handleCloseUpdateManagerTask = () => {
-    dispatch(setUpdateManagerTaskOpenState(false));
-  };
-  const handleCloseCreateManagerTask = () => {
-    setOpenCreateManagerTask(false);
-  };
-
-  // my tasks
-  const handleOpenCreateMyTask = (day) => {
-    const type = typeof day?.date;
-    setDateCreateMyTask(dayjs());
-    setOpenCreateMyTask(true);
-    if (type === "function") {
-      setDateCreateMyTask(day);
-    }
-  };
-  const handleCloseUpdateMyTask = () => {
-    dispatch(setUpdateMyTaskOpenState(false));
-  };
-  const handleCloseCreateMyTask = () => {
-    setOpenCreateMyTask(false);
-    setDateCreateMyTask(null);
-  };
-
   return {
-    handleCloseCreateMyTask,
-    handleCloseCreateManagerTask,
-    handleCloseCreateMeeting,
-    handleCloseUpdateMeeting,
-    handleCloseUpdateMyTask,
-    handleCloseUpdateManagerTask,
-    handleOpenCreateMyTask,
-    handleOpenCreateManagerTask,
-    handleOpenCreateMeeting,
-    isMeetingsLoading,
-    isTasksLoading,
-    sortedCurrentWeeklyMeetings,
     transformUsers,
     transformObjects,
+    sortedCurrentWeeklyMeetings,
   };
 };
 

@@ -1,21 +1,20 @@
 // libraries
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
-// MUI
-import { Box } from "@mui/material";
 // components
 import ObjectForm from "../../common/forms/object-form/object-form";
 import FindObjectOnMap from "../../common/find-object-on-map/find-object-on-map";
 import TitleWithAddress from "../../common/page-titles/title-with-address";
 // store
 import { createObject } from "../../../store/object/objects.store";
-// other
+// schemas
 import { objectSchema } from "../../../schemas/schemas";
+// hooks
 import useFindObject from "../../../hooks/object/use-find-object";
+// utils
 import { capitalizeFirstLetter } from "../../../utils/data/capitalize-first-letter";
 
 const initialState = {

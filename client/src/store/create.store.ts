@@ -31,6 +31,9 @@ import updateManagerTaskReducer from "./task/update-manager-task.store";
 import openObjectPageReducer from "./object/open-object-page.store";
 import ridgeObjectsReducer from "./ridge/ridge-objects.store";
 import ridgeObjectStatusReducer from "./ridge/ridge-object-status.store";
+import createMeetingReducer from "./meeting/create-meeting.store";
+import createManagerTaskReducer from "./task/create-manager-task.store";
+import createMyTaskReducer from "./task/create-my-task.store";
 
 const rootReducer = combineReducers({
   // objects
@@ -39,7 +42,6 @@ const rootReducer = combineReducers({
   objectConditions: objectConditionsReducer,
   objectTypes: objectTypesReducer,
   openObjectPage: openObjectPageReducer,
-
   updateObject: updateObjectReducer,
   // objects params
   metro: metroReducer,
@@ -57,9 +59,12 @@ const rootReducer = combineReducers({
   meetings: meetingsReducer,
   meetingTypes: meetingTypesReducer,
   updateMeeting: updateMeetingReducer,
+  createMeeting: createMeetingReducer,
   // tasks
   tasks: tasksReducer,
+  createMyTask: createMyTaskReducer,
   updateMyTask: updateMyTaskReducer,
+  createManagerTask: createManagerTaskReducer,
   updateManagerTask: updateManagerTaskReducer,
   // calendar
   monthIndex: monthIndexReducer,

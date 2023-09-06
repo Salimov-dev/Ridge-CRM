@@ -80,7 +80,7 @@ const UpdateManagerTask = ({ title, onClose, objects, users }) => {
     <>
       <TitleWithCloseButton
         title={title}
-        background="red"
+        background="Crimson"
         color="white"
         onClose={onClose}
       />

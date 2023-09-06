@@ -31,32 +31,13 @@ const initialState = {
 
 const Calendar = () => {
   const [currentMonth, setCurrentMonth] = useState(getMonth());
-  const [dateCreateMyTask, setDateCreateMyTask] = useState(null);
-  const [openCreateMyTask, setOpenCreateMyTask] = useState(false);
-  const [openCreateManagerTask, setOpenCreateManagerTask] = useState(false);
-  const [openCreateMeeting, setOpenCreateMeeting] = useState(false);
+  const [dateCreate, setDateCreate] = useState(null);
 
   const tasksColumn = tasksColumns;
   const monthIndex = useSelector(getMonthIndexState());
 
-  const {
-    sortedCurrentWeeklyMeetings,
-    transformUsers,
-    transformObjects,
-    isMeetingsLoading,
-    isTasksLoading,
-    handleCloseCreateMyTask,
-    handleCloseCreateManagerTask,
-    handleCloseCreateMeeting,
-    handleOpenCreateMyTask,
-    handleOpenCreateManagerTask,
-    handleOpenCreateMeeting,
-  } = useCalendar(
-    setOpenCreateManagerTask,
-    setOpenCreateMyTask,
-    setDateCreateMyTask,
-    setOpenCreateMeeting
-  );
+  const { sortedCurrentWeeklyMeetings, transformUsers, transformObjects } =
+    useCalendar();
 
   const localStorageState = JSON.parse(
     localStorage.getItem("search-tasks-data")
@@ -74,7 +55,6 @@ const Calendar = () => {
   const searchedTasks = useSearchTask(tasks, data);
   const sortedTasks = orderBy(searchedTasks, ["date"], ["asc"]);
 
-
   useEffect(() => {
     setCurrentMonth(getMonth(monthIndex));
   }, [monthIndex]);
@@ -90,43 +70,24 @@ const Calendar = () => {
   return (
     <>
       <LayoutTitle title="Календарь" />
-      <Header
-        onCreateMyTask={handleOpenCreateMyTask}
-        onCreateManagerTask={handleOpenCreateManagerTask}
-        onCreateMeeting={handleOpenCreateMeeting}
-      />
-      <CalendarBody
-        currentMonth={currentMonth}
-        onOpenCreateMyTask={handleOpenCreateMyTask}
-      />
+      <Header />
+      <CalendarBody currentMonth={currentMonth} setDateCreate={setDateCreate} />
       <Tasks
         register={register}
         data={data}
         tasks={sortedTasks}
         columns={tasksColumn}
         setValue={setValue}
-        isTasksLoading={isTasksLoading}
-        onOpenCreateMeeting={handleOpenCreateMeeting}
-        onOpenCreateMyTask={handleOpenCreateMyTask}
-        onOpenCreateManagerTask={handleOpenCreateManagerTask}
       />
       <CurrentWeeklyMeetings
         meetings={sortedCurrentWeeklyMeetings}
         columns={meetingsColumns}
-        isLoading={isMeetingsLoading}
       />
       <Dialogs
         users={transformUsers}
         objects={transformObjects}
-        dateCreateMyTask={dateCreateMyTask}
-        openCreateMyTask={openCreateMyTask}
-        openCreateManagerTask={openCreateManagerTask}
-        openCreateMeeting={openCreateMeeting}
-        onOpenCreateManagerTask={handleOpenCreateManagerTask}
-        onOpenCreateMyTask={handleOpenCreateMyTask}
-        onCloseCreateMyTask={handleCloseCreateMyTask}
-        onCloseCreateManagerTask={handleCloseCreateManagerTask}
-        onCloseCreateMeeting={handleCloseCreateMeeting}
+        dateCreate={dateCreate}
+        setDateCreate={setDateCreate}
       />
     </>
   );

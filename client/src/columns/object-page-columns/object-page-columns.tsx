@@ -27,7 +27,7 @@ export const locationColumns = [
     header: "Дата",
     cell: (info) => {
       const date = info.getValue();
-      return <AlignCenter>{FormatDate(new Date(date))}</AlignCenter>;
+      return <AlignCenter>{FormatDate(date)}</AlignCenter>;
     },
   },
   {

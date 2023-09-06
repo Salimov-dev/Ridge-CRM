@@ -1,17 +1,10 @@
 import { Box } from "@mui/material";
-import { nanoid } from "@reduxjs/toolkit";
 import DayOfWeek from "./components/day-of-week";
+import { daysOfWeekArray } from "../../../../mock/day-of-week";
 
 const DaysOfWeek = () => {
-  const daysArray = [
-    { _id: nanoid(), name: "ПН" },
-    { _id: nanoid(), name: "ВТ" },
-    { _id: nanoid(), name: "СР" },
-    { _id: nanoid(), name: "ЧТ" },
-    { _id: nanoid(), name: "ПТ" },
-    { _id: nanoid(), name: "СБ", color: "red" },
-    { _id: nanoid(), name: "ВС", color: "red" },
-  ];
+
+  const daysArray = daysOfWeekArray
 
   return (
     <Box
@@ -27,7 +20,7 @@ const DaysOfWeek = () => {
         borderRight: "3px solid gray",
       }}
     >
-      {daysArray.map((day) => (
+      {daysArray?.map((day) => (
         <DayOfWeek key={day._id} day={day.name} color={day.color} />
       ))}
     </Box>

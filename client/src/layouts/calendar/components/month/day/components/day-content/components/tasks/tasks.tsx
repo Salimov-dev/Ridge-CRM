@@ -7,8 +7,6 @@ import Loader from "../../../../../../../../../components/common/loader/loader";
 import Result from "./components/result";
 
 const Tasks = ({ tasks }) => {
-  
-
   return tasks ? (
     <ItemsContainer>
       {tasks?.map((task) => (
@@ -22,7 +20,7 @@ const Tasks = ({ tasks }) => {
               : "white",
             background: !task?.isDone
               ? task.managerId
-                ? "red"
+                ? "Crimson"
                 : "orange"
               : "gray",
           }}

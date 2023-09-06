@@ -28,7 +28,7 @@ export const usersColumns = [
         header: "Дата",
         cell: (info) => {
           const date = info.getValue();
-          return FormatDate(new Date(date));
+          return FormatDate(date);
         },
       },
       {
@@ -88,7 +88,7 @@ export const usersColumns = [
           const birthday = info.getValue();
           return (
             <Typography sx={{ textAlign: "center" }}>
-              {FormatDate(new Date(birthday))}
+              {FormatDate(birthday)}
             </Typography>
           );
         },
@@ -159,7 +159,7 @@ export const usersColumns = [
           const startDate = info.getValue();
           return (
             <Typography sx={{ textAlign: "center" }}>
-              {FormatDate(new Date(startDate))}
+              {FormatDate(startDate)}
             </Typography>
           );
         },
@@ -171,7 +171,7 @@ export const usersColumns = [
           const endDate = info.getValue();
           return (
             <Typography sx={{ textAlign: "center" }}>
-              {FormatDate(new Date(endDate))}
+              {FormatDate(endDate)}
             </Typography>
           );
         },
@@ -183,7 +183,7 @@ export const usersColumns = [
           const trialPeriod = info.getValue();
           return (
             <Typography sx={{ textAlign: "center" }}>
-              {trialPeriod ? FormatDate(new Date(trialPeriod)) : ""}
+              {trialPeriod ? FormatDate(trialPeriod) : ""}
             </Typography>
           );
         },

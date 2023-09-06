@@ -1,25 +1,22 @@
 import { Box } from "@mui/material";
-import CreateTaskButton from "./create-task-button";
+import CreateMyTaskButton from "./create-my-task-button";
 import CreateMeetingButton from "./create-meeting-button";
+import CreateManagerTaskButton from "./create-manager-task-button";
 
-const CreateButtons = ({ onCreateMeeting, onCreateMyTask, onCreateManagerTask, isLoading }) => {
+const CreateButtons = () => {
   return (
     <Box sx={{ display: "flex", gap: "4px" }}>
-      <CreateTaskButton
-        onClick={onCreateMyTask}
+      <CreateMyTaskButton
         title="Поставить себе задачу"
         color="black"
         background="orange"
         isMyTask={true}
-        disabled={!isLoading}
       />
-      <CreateTaskButton
-        onClick={onCreateManagerTask}
+      <CreateManagerTaskButton
         title="Поставить менеджеру задачу"
-        background="red"
-        disabled={!isLoading}
+        background="Crimson"
       />
-      <CreateMeetingButton onOpen={onCreateMeeting} disabled={!isLoading}/>
+      <CreateMeetingButton />
     </Box>
   );
 };

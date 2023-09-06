@@ -41,16 +41,13 @@ const MyTaskForm = ({
           label="Дата"
           value={data?.date}
           onChange={(value) => setValue("date", value)}
-          errors={errors?.date}
-          minDate={getDateToday()}
         />
         <TimePickerStyled
           register={register}
-          name="time"
           label="Время"
-          value={data.time}
+          name="time"
+          value={data?.time}
           setValue={setValue}
-          errors={errors?.time}
         />
       </FieldsContainer>
 

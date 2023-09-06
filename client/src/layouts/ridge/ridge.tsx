@@ -7,75 +7,86 @@ import { useSelector } from "react-redux";
 import dayjs from "dayjs";
 import { useForm } from "react-hook-form";
 import useSearchObject from "../../hooks/object/use-search-object";
+import {
+  getRidgeObjectById,
+  getRidgeObjectsList,
+  getRidgeObjectsLoadingStatus,
+} from "../../store/ridge/ridge-objects.store";
+import { ridgeObjectsColumns } from "../../columns/ridge-columns/ridge-objects-columns";
+import ItemsOnMap from "../../components/common/map/items-on-map/items-on-map";
+import ObjectBaloon from "../../components/UI/maps/object-baloon";
+import BasicTable from "../../components/common/table/basic-table";
+import CreateRidgeObject from "../../components/pages/create-ridge-object/create-ridge-object";
+import DialogStyled from "../../components/common/dialog/dialog-styled";
 
 const initialState = {
-    address: "",
-    phone: "",
-    name: "",
-    status: "",
-    selectedDistricts: [],
-    selectedCities: [],
-    selectedMetro: [],
-    startDate: null,
-    endDate: null,
-  };
+  address: "",
+  phone: "",
+  name: "",
+  status: "",
+  selectedDistricts: [],
+  selectedCities: [],
+  selectedMetro: [],
+  startDate: null,
+  endDate: null,
+};
 
 const Ridge = () => {
-    // const [selectedBaloon, setSelectedBaloon] = useState(null);
-    // const [openCreate, setOpenCreate] = useState(false);
-    // const objects = useSelector(getRidgeObjectsList());
-    // const selectedObject = useSelector(getRidgeObjectById(selectedBaloon));
-    // const columns = ridgeObjectsColumns;
-    // const center = [59.930320630519155, 30.32906024941998];
-    // const mapZoom = 11;
-    // const isLoading = useSelector(getRidgeObjectsLoadingStatus());
-  
-    // const localStorageState = JSON.parse(
-    //   localStorage.getItem("search-ridge-data")
-    // );
-  
-    // const formatedState = {
-    //   ...localStorageState,
-    //   startDate: localStorageState?.startDate
-    //     ? dayjs(localStorageState?.startDate)
-    //     : null,
-    //   endDate: localStorageState?.endDate
-    //     ? dayjs(localStorageState?.endDate)
-    //     : null,
-    // };
-  
-    // const { register, watch, setValue, reset } = useForm({
-    //   defaultValues: Boolean(localStorageState) ? formatedState : initialState,
-    //   mode: "onBlur",
-    // });
-  
-    // const data = watch();
-    // const searchedObjects = useSearchObject(objects, data);
-    // const sortedObjects = orderBy(searchedObjects, ["created_at"], ["desc"]);
-    // const isInputEmpty = JSON.stringify(initialState) !== JSON.stringify(data);
-  
-    // const handleOpenCreate = () => {
-    //   setOpenCreate(true);
-    // };
-  
-    // const handleCloseCreate = () => {
-    //   setOpenCreate(false);
-    // };
-  
-    // useEffect(() => {
-    //   const hasLocalStorageData = localStorage.getItem("search-ridge-data");
-  
-    //   if (hasLocalStorageData?.length) {
-    //     localStorage.setItem("search-ridge-data", JSON.stringify(initialState));
-    //   }
-    // }, []);
-  
-    // useEffect(() => {
-    //   localStorage.setItem("search-ridge-data", JSON.stringify(data));
-    // }, [data]);
+  const [selectedBaloon, setSelectedBaloon] = useState(null);
+  const [openCreate, setOpenCreate] = useState(false);
+  const objects = useSelector(getRidgeObjectsList());
+  const selectedObject = useSelector(getRidgeObjectById(selectedBaloon));
+  const columns = ridgeObjectsColumns;
+  const center = [59.930320630519155, 30.32906024941998];
+  const mapZoom = 11;
+  const isLoading = useSelector(getRidgeObjectsLoadingStatus());
+
+  const localStorageState = JSON.parse(
+    localStorage.getItem("search-ridge-data")
+  );
+
+  const formatedState = {
+    ...localStorageState,
+    startDate: localStorageState?.startDate
+      ? dayjs(localStorageState?.startDate)
+      : null,
+    endDate: localStorageState?.endDate
+      ? dayjs(localStorageState?.endDate)
+      : null,
+  };
+
+  const { register, watch, setValue, reset } = useForm({
+    defaultValues: Boolean(localStorageState) ? formatedState : initialState,
+    mode: "onBlur",
+  });
+
+  const data = watch();
+  const searchedObjects = useSearchObject(objects, data);
+  const sortedObjects = orderBy(searchedObjects, ["created_at"], ["desc"]);
+  const isInputEmpty = JSON.stringify(initialState) !== JSON.stringify(data);
+
+  const handleOpenCreate = () => {
+    setOpenCreate(true);
+  };
+
+  const handleCloseCreate = () => {
+    setOpenCreate(false);
+  };
+
+  useEffect(() => {
+    const hasLocalStorageData = localStorage.getItem("search-ridge-data");
+
+    if (hasLocalStorageData?.length) {
+      localStorage.setItem("search-ridge-data", JSON.stringify(initialState));
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("search-ridge-data", JSON.stringify(data));
+  }, [data]);
   return (
     <Box sx={{ width: "100%" }}>
-      {/* <LayoutTitle title="Грядка объектов" />
+      <LayoutTitle title="Грядка объектов" />
       <AddAndClearFiltersButton
         title="Добавить объект"
         isInputEmpty={isInputEmpty}
@@ -83,8 +94,8 @@ const Ridge = () => {
         initialState={initialState}
         onOpen={handleOpenCreate}
         disabled={isLoading}
-      /> */}
-      {/* <ItemsOnMap
+      />
+      <ItemsOnMap
         items={searchedObjects}
         mapZoom={mapZoom}
         hintContent={(item) =>
@@ -94,7 +105,7 @@ const Ridge = () => {
         onClick={setSelectedBaloon}
         baloon={<ObjectBaloon object={selectedObject} />}
         isLoading={isLoading}
-      /> */}
+      />
 
       {/* <ObjectsFiltersPanel
         data={data}
@@ -104,18 +115,18 @@ const Ridge = () => {
         isLoading={isLoading}
       /> */}
 
-      {/* <BasicTable
+      <BasicTable
         items={sortedObjects}
         itemsColumns={columns}
         isLoading={isLoading}
-      /> */}
+      />
 
-      {/* <DialogStyled
-        component={<CreateObject onClose={handleCloseCreate} />}
+      <DialogStyled
+        component={<CreateRidgeObject onClose={handleCloseCreate} />}
         onClose={handleCloseCreate}
         open={openCreate}
         maxWidth="xl"
-      /> */}
+      />
 
       {/* <ObjectPageDialog /> */}
       {/* <ObjectUpdatePageDialog /> */}

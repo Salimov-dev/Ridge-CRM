@@ -11,7 +11,8 @@ const Meetings = ({ meetings }) => {
         <ItemContainer
           key={meet._id}
           sx={{
-            background: !meet?.isDone ? "blue" : "gray",
+            color: 'GhostWhite',
+            background: !meet?.isDone ? "RoyalBlue" : "gray",
           }}
         >
           <Title meet={meet} />

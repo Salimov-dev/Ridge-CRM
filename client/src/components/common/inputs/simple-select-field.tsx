@@ -89,7 +89,7 @@ const SimpleSelectField = ({
           </MenuItem>
         ))}
       </StyledSelect>
-      <FormHelperText sx={{ color: "red" }}>{errors?.message}</FormHelperText>
+      <FormHelperText sx={{ color: "Crimson" }}>{errors?.message}</FormHelperText>
     </FormControl>
   );
 };

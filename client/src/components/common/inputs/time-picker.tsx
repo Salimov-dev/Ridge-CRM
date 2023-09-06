@@ -46,7 +46,7 @@ const TimePickerStyled = ({ register, errors, setValue, name, value, label }) =>
             }}
           />
         </DemoContainer>
-          <FormHelperText sx={{ color: "red" }}>
+          <FormHelperText sx={{ color: "Crimson" }}>
             {errors?.message}
           </FormHelperText>
       </LocalizationProvider>

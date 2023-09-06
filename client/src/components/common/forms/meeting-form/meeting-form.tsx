@@ -34,6 +34,7 @@ const MeetingForm = ({
   const watchStatus = watch("status", "");
   const watchObjectId = watch("objectId", "");
   const watchTypeMeeting = watch("meetingType", "");
+  const watchDate = watch("date", "");
 
   return (
     <>
@@ -45,17 +46,13 @@ const MeetingForm = ({
             label="Дата встречи"
             value={data?.date}
             onChange={(value) => setValue("date", value)}
-            errors={errors?.date}
-            isEditMode={isEditMode}
           />
           <TimePickerStyled
             register={register}
-            data={data}
-            errors={errors?.time}
-            setValue={setValue}
+            label="Время встречи"
             name="time"
             value={data?.time}
-            label="Время встречи"
+            setValue={setValue}
           />
           <SimpleSelectField
             register={register}
@@ -94,7 +91,7 @@ const MeetingForm = ({
             name="comment"
             errors={errors?.comment}
             value={data?.comment}
-            onInputQuantities={50}
+            onInputQuantities={150}
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">

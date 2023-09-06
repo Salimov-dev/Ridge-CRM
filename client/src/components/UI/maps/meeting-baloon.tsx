@@ -30,7 +30,7 @@ const MeetingBaloon = ({ meeting }) => {
   const meetingType = useSelector(getMeetingTypeNameById(meeting?.meetingType));
   const status = useSelector(getMeetingStatusNameById(meeting?.status));
   const manager = useSelector(getUserNameById(meeting?.userId));
-  const time = FormatTime(new Date(meeting?.time));
+  const time = FormatTime(meeting?.time);
   const date = FormatDate(meeting?.date);
 
   return (

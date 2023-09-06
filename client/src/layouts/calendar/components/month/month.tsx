@@ -2,13 +2,21 @@ import React from "react";
 import dayjs from "dayjs";
 import Day from "./day/day";
 import { orderBy } from "lodash";
-import { Box } from "@mui/material";
+import { Box, styled } from "@mui/material";
 import { useSelector } from "react-redux";
 // store
 import { getMeetingsList } from "../../../../store/meeting/meetings.store";
 import { getTasksList } from "../../../../store/task/tasks.store";
 
-const Month = ({ month, onClick }) => {
+const Component = styled(Box)`
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-template-rows: repeat(5, minmax(200px, auto));
+  border: 1px solid gray;
+`;
+
+const Month = ({ month, setDateCreate }) => {
   const meetings = useSelector(getMeetingsList());
   const tasks = useSelector(getTasksList());
 
@@ -39,30 +47,22 @@ const Month = ({ month, onClick }) => {
   };
 
   return (
-    <Box
-      sx={{
-        flex: "1",
-        display: "grid",
-        gridTemplateColumns: "repeat(7, 1fr)",
-        gridTemplateRows: "repeat(5, minmax(200px, auto))",
-        border: "1px solid gray",
-      }}
-    >
+    <Component>
       {month?.map((row, i) => (
         <React.Fragment key={i}>
           {row.map((day, idx) => (
             <Day
               day={day}
               key={idx}
-              onClick={() => onClick(day)}
               isWeekendColumn={idx === 5 || idx === 6}
               meetings={getMeeting(day)}
               tasks={getTask(day)}
+              setDateCreate={setDateCreate}
             />
           ))}
         </React.Fragment>
       ))}
-    </Box>
+    </Component>
   );
 };
 

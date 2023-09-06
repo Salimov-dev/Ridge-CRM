@@ -8,11 +8,11 @@ const Component = styled(Box)`
   margin-bottom: 20px;
 `;
 
-const CalendarBody = ({ currentMonth, onOpenCreateMyTask }) => {
+const CalendarBody = ({ currentMonth, setDateCreate }) => {
   return (
     <Component>
       <DaysOfWeek />
-      <Month month={currentMonth} onClick={onOpenCreateMyTask} />
+      <Month month={currentMonth} setDateCreate={setDateCreate}/>
     </Component>
   );
 };

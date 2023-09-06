@@ -13,7 +13,7 @@ const SearchDatePicker = ({
   helperText,
   errors,
   disabled,
-  color = "red",
+  color = "Crimson",
 }) => {
   return (
     <Box sx={{ width: "100%", marginBottom: "-3px" }}>
@@ -29,7 +29,7 @@ const SearchDatePicker = ({
             width: "100%",
             "& .MuiOutlinedInput-root": {
               "& fieldset": {
-                borderColor: errors ? "red" : value ? "green" : "gray",
+                borderColor: errors ? "Crimson" : value ? "green" : "gray",
               },
               "&.Mui-focused fieldset": {
                 borderColor: "green",

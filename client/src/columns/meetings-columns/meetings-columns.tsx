@@ -38,7 +38,7 @@ export const meetingsColumns = [
           {!isDone ? (
             <TaskAltOutlinedIcon sx={{ color: "green" }} />
           ) : (
-            <DoDisturbAltOutlinedIcon sx={{ color: "red" }} />
+            <DoDisturbAltOutlinedIcon sx={{ color: "Crimson" }} />
           )}
         </Box>
       );
@@ -50,7 +50,7 @@ export const meetingsColumns = [
     enableSorting: false,
     cell: (info) => {
       const date = info.getValue();
-      const formattedDate = FormatDate(new Date(date));
+      const formattedDate = FormatDate(date);
       const dayOfWeek = dayjs(date).locale("ru").format("dd");
       return (
         <Box sx={{ display: "flex", gap: "6px" }}>
@@ -68,7 +68,7 @@ export const meetingsColumns = [
       const time = info.getValue();
       return (
         <Typography sx={{ textAlign: "center" }}>
-          {FormatTime(new Date(time))}
+          {FormatTime(time)}
         </Typography>
       );
     },
@@ -162,7 +162,7 @@ export const meetingsColumns = [
       const date = info.getValue();
       return (
         <Typography sx={{ textAlign: "center" }}>
-          {FormatDate(new Date(date))}
+          {FormatDate(date)}
         </Typography>
       );
     },
@@ -183,8 +183,8 @@ export const meetingsColumns = [
         <TableOpenButton
           text="Править"
           onClick={handleClick}
-          background="blue"
-          backgroudHover="darkBlue"
+          background="RoyalBlue"
+          backgroudHover="blue"
         />
       );
     },

@@ -16,10 +16,9 @@ const Flags = ({ meetings, tasks }) => {
             sx={{
               width: "10px",
               height: "10px",
-              background: "blue",
+              background: "RoyalBlue",
               borderRadius: "50%",
               border: "1px solid gray",
-              boxShadow: "0 0 4px rgba(255, 255, 255, 0.5)",
             }}
           ></Box>
         </Tooltip>
@@ -33,7 +32,6 @@ const Flags = ({ meetings, tasks }) => {
               background: "orange",
               border: "1px solid orange",
               borderRadius: "50%",
-              boxShadow: "0 0 4px rgba(255, 255, 255, 0.5)",
             }}
           ></Box>
         </Tooltip>

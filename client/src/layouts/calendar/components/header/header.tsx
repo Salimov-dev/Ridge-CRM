@@ -17,23 +17,18 @@ const Component = styled(Box)`
   justify-content: space-between;
 `;
 
-const Header = ({ onCreateMyTask, onCreateManagerTask, onCreateMeeting }) => {
+const Header = () => {
   const monthIndex = useSelector(getMonthIndexState());
   const isTasksLoading = useSelector(getTaskLoadingStatus());
   const isMeetingsLoading = useSelector(getMeetingLoadingStatus());
-  
+
   const isLoading = !isTasksLoading && !isMeetingsLoading;
 
   return (
     <Component>
-      <CreateButtons
-        onCreateMeeting={onCreateMeeting}
-        onCreateMyTask={onCreateMyTask}
-        onCreateManagerTask={onCreateManagerTask}
-        isLoading={isLoading}
-      />
+      <CreateButtons />
       <MonthToday monthIndex={monthIndex} />
-      <ControlButtons isLoading={isLoading}/>
+      <ControlButtons isLoading={isLoading} />
     </Component>
   );
 };
