@@ -18,7 +18,9 @@ const ManagerTaskCreateDialog = ({
 
   const handleCloseCreateMyTask = () => {
     dispatch(setCreateManagerTaskOpenState(false));
-    setDateCreate(null);
+    if (setDateCreate !== undefined) {
+      setDateCreate(null);
+    }
   };
 
   return (

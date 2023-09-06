@@ -10,6 +10,7 @@ import FooterButtons from "../footer-buttons/footer-buttons";
 // styled
 import { FieldsContainer, Form } from "../styled/styled";
 import getDateToday from "../../../../utils/date/get-date-today";
+import SimpleSwitch from "../../inputs/simple-switch";
 
 const ManagerTaskForm = ({
   data,
@@ -27,9 +28,11 @@ const ManagerTaskForm = ({
   isValid,
   watch,
   isObjectPage,
+  isTasksLoading,
 }) => {
   const watchObjectId = watch("objectId", "");
   const watchManagerId = watch("managerId", "");
+  const watchIsDone = watch("isDone", false);
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)} noValidate>
@@ -80,15 +83,27 @@ const ManagerTaskForm = ({
         errors={errors?.comment}
         onInputQuantities={200}
       />
-      <TextFieldStyled
-        register={register}
-        label="Результат"
-        name="result"
-        value={data?.result}
-        rows="2"
-        multiline={true}
-        onInputQuantities={100}
-      />
+      {isEditMode ? (
+        <TextFieldStyled
+          register={register}
+          label="Результат"
+          name="result"
+          value={data?.result}
+          rows="2"
+          multiline={true}
+          onInputQuantities={100}
+        />
+      ) : null}
+      {isEditMode ? (
+        <SimpleSwitch
+          title="Задача выполненна"
+          value={watchIsDone}
+          isLoading={isTasksLoading}
+          onChange={(e) => {
+            setValue("isDone", e.target.checked);
+          }}
+        />
+      ) : null}
 
       <FooterButtons
         isEditMode={isEditMode}

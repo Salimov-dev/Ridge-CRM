@@ -82,8 +82,11 @@ const CreateObject = ({ onClose }) => {
 
   const dispatch = useDispatch();
   const data = watch();
-  const isEmptyFindedObject = !Boolean(Object.keys(findedObject)?.length);
-  const isObjectHasAddress = data?.location?.city && data?.location?.address;
+  const watchAddress = watch("location.address", "");
+  const watchCity = watch("location.city", "");
+  const isFindedObject = Boolean(Object.keys(findedObject)?.length);
+  const isObjectHasAddress = Boolean(watchCity) && Boolean(watchAddress);
+
 
   const onSubmit = (data) => {
     const newData = {
@@ -123,7 +126,7 @@ const CreateObject = ({ onClose }) => {
   return (
     <>
       <TitleWithAddress
-        isEmptyFindedObject={isEmptyFindedObject}
+        isFindedObject={isFindedObject}
         getCity={getCity}
         getAddress={getAddress}
         title="Создать объект:"
@@ -140,7 +143,7 @@ const CreateObject = ({ onClose }) => {
         errors={errors}
         isValid={isValid}
         watch={watch}
-        isEmptyFindedObject={isEmptyFindedObject}
+        isFindedObject={isFindedObject}
         isObjectHasAddress={isObjectHasAddress}
         onClose={onClose}
       />

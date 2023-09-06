@@ -23,7 +23,7 @@ const FormControlSyled = styled(FormControl)`
 const SimpleSwitch = ({
   title,
   onChange,
-  // checked,
+  value,
   whiteSpace = "nowrap",
   isLoading,
   initialChecked = false,
@@ -45,7 +45,7 @@ const SimpleSwitch = ({
             control={
               <Switch
                 color="success"
-                checked={checked}
+                checked={value}
                 disabled={isLoading ? true : false}
                 onChange={handleChange}
               />

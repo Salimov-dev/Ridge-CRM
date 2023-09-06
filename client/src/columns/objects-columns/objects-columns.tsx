@@ -177,7 +177,14 @@ export const objectsColumns = [
             dispatch(setOpenObjectPageOpenState(true));
           };
 
-          return <TableOpenButton background="seaGreen" fontColor="black" text="Открыть" onClick={handleClick} />;
+          return (
+            <TableOpenButton
+              background="seaGreen"
+              fontColor="black"
+              text="Открыть"
+              onClick={handleClick}
+            />
+          );
         },
       },
     ],

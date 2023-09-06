@@ -16,7 +16,7 @@ const Title = styled(Box)`
 `;
 
 const TitleWithAddress = ({
-  isEmptyFindedObject,
+  isFindedObject,
   getCity,
   getAddress,
   title,
@@ -27,10 +27,10 @@ const TitleWithAddress = ({
     <Component>
       <Title>
         <Typography variant="h2">{title}</Typography>
-        {!isEmptyFindedObject ? (
+        {isFindedObject ? (
           <Typography
             variant="h2"
-            sx={{ background: "yellow", color: "black", padding: '4px' }}
+            sx={{ background: "yellow", color: "black", padding: "4px" }}
           >
             {getCity()}, {getAddress()}
           </Typography>
@@ -38,9 +38,9 @@ const TitleWithAddress = ({
           <Typography
             variant="h2"
             sx={{
-              background: !isEmptyFindedObject ? "yellow" : "Crimson",
-              color: !isEmptyFindedObject ? "black" : "white",
-              padding: '0 4px'
+              background: isFindedObject ? "yellow" : "Crimson",
+              color: isFindedObject ? "black" : "white",
+              padding: "0 4px",
             }}
           >
             {subtitle}

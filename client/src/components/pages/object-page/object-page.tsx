@@ -21,7 +21,7 @@ import {
 const ObjectPage = ({ onClose }) => {
   const objectId = useSelector(getOpenObjectPageId());
   const object = useSelector(getObjectById(objectId));
-  const isLoading = useSelector(getObjectsLoadingStatus()); 
+  const isLoading = useSelector(getObjectsLoadingStatus());
 
   const address = `${object?.location?.city}, ${object?.location?.address}`;
   const latitude = object?.location?.latitude || null;
@@ -51,11 +51,7 @@ const ObjectPage = ({ onClose }) => {
         baloon={<ObjectPageBaloon object={object} />}
         isLoading={isLoading}
       />
-      {!isLoading ? (
-        <ObjectInfo object={object} isLoading={isLoading} />
-      ) : (
-        <Loader />
-      )}
+      <ObjectInfo object={object} isLoading={isLoading} />
       <FooterButtons
         isLoading={isLoading}
         onClose={onClose}

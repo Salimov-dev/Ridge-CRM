@@ -96,7 +96,6 @@ export const createRidgeObject = (payload) => async (dispatch) => {
   dispatch(ridgeObjectCreateRequested);
   try {
     const { content } = await ridgeObjectservice.create(payload);
-
     dispatch(ridgeObjectCreated(content));
   } catch (error) {
     dispatch(createRidgeObjectFailed(error.message));

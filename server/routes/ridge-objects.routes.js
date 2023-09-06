@@ -57,7 +57,7 @@ router.post("/create", auth, async (req, res) => {
       $or: [{ managers: userId }, { curators: userId }],
     });
 
-    const newObject = await Object.create({
+    const newObject = await RidgeObject.create({
       ...req.body,
       userId,
       company: company._id,

@@ -64,8 +64,6 @@ function App() {
 
                 <Route path="users">
                   <Route index element={<Users />} />
-                  <Route path="create" element={<CreateManager />} />
-                  <Route path=":userId?/edit" element={<UpdateManager />} />
                   <Route path="*" element={<Navigate to="/users" />} />
                 </Route>
 
@@ -80,16 +78,11 @@ function App() {
 
                 <Route path="objects">
                   <Route index element={<Objects />} />
-                  <Route path={":objectId/"} element={<ObjectPage />} />
-                  <Route path={"create"} element={<CreateObject />} />
-                  <Route path={":objectId/edit"} element={<UpdateObject />} />
                   <Route path="*" element={<Navigate to="/objects" />} />
                 </Route>
 
                 <Route path="meetings">
                   <Route index element={<Meetings />} />
-                  <Route path={"create"} element={<CreateMeeting />} />
-                  <Route path={":meetingId/edit"} element={<UpdateMeeting />} />
                   <Route path="*" element={<Navigate to="/meetings" />} />
                 </Route>
 

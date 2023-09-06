@@ -34,7 +34,6 @@ const MeetingForm = ({
   const watchStatus = watch("status", "");
   const watchObjectId = watch("objectId", "");
   const watchTypeMeeting = watch("meetingType", "");
-  const watchDate = watch("date", "");
 
   return (
     <>
@@ -101,7 +100,7 @@ const MeetingForm = ({
             }}
           />
         </FieldsContainer>
-        <TextFieldStyled
+       {isEditMode ? <TextFieldStyled
           register={register}
           label="Результат"
           name="result"
@@ -109,7 +108,7 @@ const MeetingForm = ({
           rows="2"
           multiline={true}
           onInputQuantities={100}
-        />
+        /> : null}
 
         {isEditMode ? (
           <SimpleSwitch

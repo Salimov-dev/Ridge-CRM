@@ -29,12 +29,13 @@ import updateManagerReducer from "./user/update-user.store";
 import updateMyTaskReducer from "./task/update-my-task.store";
 import updateManagerTaskReducer from "./task/update-manager-task.store";
 import openObjectPageReducer from "./object/open-object-page.store";
-import ridgeObjectsReducer from "./ridge/ridge-objects.store";
-import ridgeObjectStatusReducer from "./ridge/ridge-object-status.store";
+import ridgeObjectsReducer from "./ridge-object/ridge-objects.store";
+import ridgeObjectStatusReducer from "./ridge-object/ridge-object-status.store";
 import createMeetingReducer from "./meeting/create-meeting.store";
 import createManagerTaskReducer from "./task/create-manager-task.store";
 import createMyTaskReducer from "./task/create-my-task.store";
 import createObjectReducer from "./object/create-object.store";
+import createRidgeObjectReducer from "./ridge-object/create-ridge-object.store";
 
 const rootReducer = combineReducers({
   // objects
@@ -73,6 +74,7 @@ const rootReducer = combineReducers({
   // ridge
   ridgeObjects: ridgeObjectsReducer,
   ridgeObjectStatus: ridgeObjectStatusReducer,
+  createRidgeObject: createRidgeObjectReducer,
   // other
   sidebarCollapsState: sidebarCollapsStateReducer,
 });

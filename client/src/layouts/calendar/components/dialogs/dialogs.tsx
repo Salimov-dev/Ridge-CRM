@@ -6,8 +6,9 @@ import MyTaskUpdateDialog from "../../../../components/UI/dialogs/tasks/my-task-
 import MeetingCreateDialog from "../../../../components/UI/dialogs/meetings/meeting-create-dialog";
 import MyTaskCreateDialog from "../../../../components/UI/dialogs/tasks/my-task-create-dialog";
 import ManagerTaskCreateDialog from "../../../../components/UI/dialogs/tasks/manager-task-create-dialog";
+import getDateToday from "../../../../utils/date/get-date-today";
 
-const Dialogs = ({ objects, users, dateCreate, setDateCreate }) => {
+const Dialogs = ({ objects, users, dateCreate=getDateToday(), setDateCreate }) => {
   return (
     <>
       <ObjectUpdatePageDialog />

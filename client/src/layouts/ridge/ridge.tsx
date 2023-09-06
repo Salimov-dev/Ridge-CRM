@@ -11,13 +11,13 @@ import {
   getRidgeObjectById,
   getRidgeObjectsList,
   getRidgeObjectsLoadingStatus,
-} from "../../store/ridge/ridge-objects.store";
+} from "../../store/ridge-object/ridge-objects.store";
 import { ridgeObjectsColumns } from "../../columns/ridge-columns/ridge-objects-columns";
 import ItemsOnMap from "../../components/common/map/items-on-map/items-on-map";
 import ObjectBaloon from "../../components/UI/maps/object-baloon";
 import BasicTable from "../../components/common/table/basic-table";
-import CreateRidgeObject from "../../components/pages/create-ridge-object/create-ridge-object";
-import DialogStyled from "../../components/common/dialog/dialog-styled";
+import RidgeObjectCreatePageDialog from "../../components/UI/dialogs/ridge-objects/ridge-object-create-page-dialog";
+import CreateRidgeObjectButton from "../../components/UI/dialogs/buttons/create-ridge-object-button";
 
 const initialState = {
   address: "",
@@ -33,7 +33,6 @@ const initialState = {
 
 const Ridge = () => {
   const [selectedBaloon, setSelectedBaloon] = useState(null);
-  const [openCreate, setOpenCreate] = useState(false);
   const objects = useSelector(getRidgeObjectsList());
   const selectedObject = useSelector(getRidgeObjectById(selectedBaloon));
   const columns = ridgeObjectsColumns;
@@ -65,14 +64,6 @@ const Ridge = () => {
   const sortedObjects = orderBy(searchedObjects, ["created_at"], ["desc"]);
   const isInputEmpty = JSON.stringify(initialState) !== JSON.stringify(data);
 
-  const handleOpenCreate = () => {
-    setOpenCreate(true);
-  };
-
-  const handleCloseCreate = () => {
-    setOpenCreate(false);
-  };
-
   useEffect(() => {
     const hasLocalStorageData = localStorage.getItem("search-ridge-data");
 
@@ -88,12 +79,10 @@ const Ridge = () => {
     <Box sx={{ width: "100%" }}>
       <LayoutTitle title="Грядка объектов" />
       <AddAndClearFiltersButton
-        title="Добавить объект"
         isInputEmpty={isInputEmpty}
         reset={reset}
         initialState={initialState}
-        onOpen={handleOpenCreate}
-        disabled={isLoading}
+        button={<CreateRidgeObjectButton/>}
       />
       <ItemsOnMap
         items={searchedObjects}
@@ -120,16 +109,7 @@ const Ridge = () => {
         itemsColumns={columns}
         isLoading={isLoading}
       />
-
-      <DialogStyled
-        component={<CreateRidgeObject onClose={handleCloseCreate} />}
-        onClose={handleCloseCreate}
-        open={openCreate}
-        maxWidth="xl"
-      />
-
-      {/* <ObjectPageDialog /> */}
-      {/* <ObjectUpdatePageDialog /> */}
+      <RidgeObjectCreatePageDialog/>
     </Box>
   );
 };

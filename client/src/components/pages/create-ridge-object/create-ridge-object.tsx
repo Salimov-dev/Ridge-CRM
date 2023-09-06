@@ -8,9 +8,10 @@ import { useDispatch } from "react-redux";
 import TitleWithAddress from "../../common/page-titles/title-with-address";
 import FindObjectOnMap from "../../common/find-object-on-map/find-object-on-map";
 import RidgeObjectForm from "../../common/forms/ridge-object-form/ridge-object-form";
+import { ridgeObjectSchema } from "../../../schemas/schemas";
+import { createRidgeObject } from "../../../store/ridge-object/ridge-objects.store";
 
 const initialState = {
-  contacts: "",
   findedContacts: "",
   comment: "",
   status: "",
@@ -23,9 +24,16 @@ const initialState = {
 };
 
 const CreateRidgeObject = ({ onClose }) => {
-  const { register, watch, handleSubmit, setValue } = useForm({
+  const {
+    register,
+    watch,
+    handleSubmit,
+    setValue,
+    formState: { errors, isValid },
+  } = useForm({
     defaultValues: initialState,
     mode: "onBlur",
+    resolver: yupResolver(ridgeObjectSchema),
   });
 
   const {
@@ -37,21 +45,26 @@ const CreateRidgeObject = ({ onClose }) => {
   } = useFindObject();
 
   const dispatch = useDispatch();
-  const data = watch();
-  const isEmptyFindedObject = !Boolean(Object.keys(findedObject)?.length);
-  const isObjectHasAddress = data?.location?.city && data?.location?.address;
+  const watchAddress = watch("location.address", "");
+  const watchCity = watch("location.city", "");
+  const isFindedObject = Boolean(Object.keys(findedObject)?.length);
+  const isObjectHasAddress = Boolean(watchCity) && Boolean(watchAddress);
 
   const onSubmit = (data) => {
     const newData = {
       ...data,
-      contacts: capitalizeFirstLetter(data?.contacts),
       findedContacts: capitalizeFirstLetter(data?.findedContacts),
       comment: capitalizeFirstLetter(data?.comment),
+      location: {
+        ...data.location,
+        zoom: 16,
+      },
     };
+    console.log("newData", newData);
 
-    // dispatch(createObject(newData))
-    //   .then(onClose())
-    //   .then(toast.success("Объект успешно создан!"));
+    dispatch(createRidgeObject(newData))
+      .then(onClose())
+      .then(toast.success("Объект с грядки собран!"));
   };
 
   useEffect(() => {
@@ -63,7 +76,7 @@ const CreateRidgeObject = ({ onClose }) => {
   return (
     <>
       <TitleWithAddress
-        isEmptyFindedObject={isEmptyFindedObject}
+        isFindedObject={isFindedObject}
         getCity={getCity}
         getAddress={getAddress}
         title="Создать объект:"
@@ -77,9 +90,10 @@ const CreateRidgeObject = ({ onClose }) => {
         handleSubmit={handleSubmit}
         onSubmit={onSubmit}
         register={register}
-        isValid={isObjectHasAddress}
+        isValid={isValid}
         watch={watch}
-        isEmptyFindedObject={isEmptyFindedObject}
+        errors={errors}
+        isFindedObject={isFindedObject}
         isObjectHasAddress={isObjectHasAddress}
         onClose={onClose}
       />

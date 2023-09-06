@@ -29,6 +29,7 @@ import {
   setOpenObjectPageId,
   setOpenObjectPageOpenState,
 } from "../../store/object/open-object-page.store";
+import DoneStatusIcon from "../../components/common/columns/done-status-icon";
 
 export const tasksColumns = [
   {
@@ -37,31 +38,22 @@ export const tasksColumns = [
     enableSorting: false,
     cell: (info) => {
       const isDone = info.getValue();
-      return (
-        <Box sx={{ display: "flex", justifyContent: "center" }}>
-          {!isDone ? (
-            <TaskAltOutlinedIcon sx={{ color: "green" }} />
-          ) : (
-            <DoDisturbAltOutlinedIcon sx={{ color: "Crimson" }} />
-          )}
-        </Box>
-      );
+      return <DoneStatusIcon isDone={isDone} />;
     },
   },
   {
     accessorKey: "date",
     header: "Дата",
-    // enableSorting: false,
+    enableSorting: false,
     cell: (info) => {
       const date = info.getValue();
       const formattedDate = FormatDate(date);
       const dayOfWeek = dayjs(date).locale("ru").format("dd");
       return (
-        <Typography>{formattedDate}</Typography>
-        // <Box sx={{ display: "flex", justifyContent: "center", gap: "6px" }}>
-        //   <Typography>{formattedDate}</Typography>
-        //   <Typography>{dayOfWeek}</Typography>{" "}
-        // </Box>
+        <Box sx={{ display: "flex", justifyContent: "center", gap: "6px" }}>
+          <Typography>{formattedDate}</Typography>
+          <Typography>{dayOfWeek}</Typography>{" "}
+        </Box>
       );
     },
   },
@@ -72,9 +64,7 @@ export const tasksColumns = [
     cell: (info) => {
       const time = info.getValue();
       return (
-        <Typography sx={{ textAlign: "center" }}>
-          {FormatTime(time)}
-        </Typography>
+        <Typography sx={{ textAlign: "center" }}>{FormatTime(time)}</Typography>
       );
     },
   },
@@ -157,9 +147,7 @@ export const tasksColumns = [
     cell: (info) => {
       const date = info.getValue();
       return (
-        <Typography sx={{ textAlign: "center" }}>
-          {FormatDate(date)}
-        </Typography>
+        <Typography sx={{ textAlign: "center" }}>{FormatDate(date)}</Typography>
       );
     },
   },

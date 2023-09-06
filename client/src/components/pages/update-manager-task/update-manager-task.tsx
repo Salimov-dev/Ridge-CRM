@@ -11,7 +11,12 @@ import ManagerTaskForm from "../../common/forms/manager-task-form/manager-task-f
 // store
 import { getCurrentUserId } from "../../../store/user/users.store";
 import { getUpdateManagerTaskId } from "../../../store/task/update-manager-task.store";
-import { getTaskById, removeTask, updateMyTask } from "../../../store/task/tasks.store";
+import {
+  getTaskById,
+  getTaskLoadingStatus,
+  removeTask,
+  updateMyTask,
+} from "../../../store/task/tasks.store";
 // schema
 import { taskSchema } from "../../../schemas/schemas";
 
@@ -20,6 +25,7 @@ const UpdateManagerTask = ({ title, onClose, objects, users }) => {
 
   const taskId = useSelector(getUpdateManagerTaskId());
   const task = useSelector(getTaskById(taskId));
+  const isTasksLoading = useSelector(getTaskLoadingStatus());
   const currentUserId = useSelector(getCurrentUserId());
   const objectId = task?.objectId;
   const currentUserObjects = objects?.filter(
@@ -91,6 +97,7 @@ const UpdateManagerTask = ({ title, onClose, objects, users }) => {
         objects={objects}
         handleSubmit={handleSubmit}
         onRemoveTask={handleRemoveTask}
+        watch={watch}
         removeId={taskId}
         onSubmit={onSubmit}
         onClose={onClose}
@@ -98,7 +105,7 @@ const UpdateManagerTask = ({ title, onClose, objects, users }) => {
         setValue={setValue}
         isValid={!isFullValid}
         isEditMode={isEditMode}
-        watch={watch}
+        isTasksLoading={isTasksLoading}
       />
     </>
   );

@@ -34,13 +34,12 @@ const ObjectForm = ({
   handleSubmit,
   onSubmit,
   onClose,
+  watch,
   isValid,
   isEditMode = false,
-  isEmptyFindedObject,
+  isFindedObject,
   isObjectHasAddress,
-  watch,
 }) => {
-   
   const districts = useSelector(getDistrictsList());
   const workingPositions = useSelector(getWorkingPositionsList());
   const objectStatuses = useSelector(getObjectsStatusList());
@@ -63,8 +62,7 @@ const ObjectForm = ({
   const objectTypes = useSelector(getObjectTypesList());
   const estateTypes = useSelector(getEstateTypesList());
 
-  const isValidAndHasAdress =
-    (Boolean(isEmptyFindedObject) || isObjectHasAddress) && isValid;
+  const isValidAndHasAdress = isFindedObject && isObjectHasAddress && isValid;
 
   return (
     <>
@@ -164,7 +162,7 @@ const ObjectForm = ({
             value={data?.contact?.phone}
             errors={errors?.contact?.phone}
             onInputQuantities={12}
-            isHelperText = {true}
+            isHelperText={true}
             helperText="Вводите в формате 79045554433, 78129998877, 9995544"
             InputProps={{
               endAdornment: (

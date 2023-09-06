@@ -67,14 +67,6 @@ export const ridgeObjectsColumns = [
         },
       },
       {
-        accessorKey: "findedContacts",
-        header: "Попытки связаться",
-        cell: (info) => {
-          const findedContacts = info.getValue();
-          return <AlignCenter>{findedContacts}</AlignCenter>;
-        },
-      },
-      {
         accessorKey: "comment",
         header: "Комментарий",
         cell: (info) => {

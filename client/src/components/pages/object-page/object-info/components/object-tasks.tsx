@@ -1,43 +1,45 @@
-import { Box, Typography } from "@mui/material";
+import { useSelector } from "react-redux";
+import { Box, Typography, styled } from "@mui/material";
 import DividerStyled from "../../../../common/divider/divider-styled";
 import { tasksColumns } from "../../../../../columns/tasks-columns/tasks-columns";
-import CreateTaskButton from "../../../../UI/dialogs/buttons/create-my-task-button";
 import BasicTable from "../../../../common/table/basic-table";
+import CreateMyTaskButton from "../../../../UI/dialogs/buttons/create-my-task-button";
+import CreateManagerTaskButton from "../../../../UI/dialogs/buttons/create-manager-task-button";
+import { getTaskLoadingStatus } from "../../../../../store/task/tasks.store";
 
-const ObjectTasks = ({
-  tasks,
-  object,
-  isTasksLoading,
-  onCreateMyTask,
-  onCreateManagerTask,
-}) => {
+const Container = styled(Box)`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+const ButtonsContainer = styled(Box)`
+  display: flex;
+  gap: 4px;
+`;
+
+const ObjectTasks = ({ tasks, object }) => {
+  const isTasksLoading = useSelector(getTaskLoadingStatus());
   const address = `${object?.location?.city}, ${object?.location?.address}`;
+
   return (
     <>
       <DividerStyled />
-      <Box
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-        }}
-      >
+      <Container>
         <Typography variant="h3">Задачи по объекту: {address}</Typography>
-        <Box sx={{ display: "flex", gap: "4px" }}>
-          <CreateTaskButton
-            onClick={onCreateMyTask}
+        <ButtonsContainer>
+          <CreateMyTaskButton
             title="Поставить себе задачу"
             color="black"
             background="orange"
             isMyTask={true}
           />
-          <CreateTaskButton
-            onClick={onCreateManagerTask}
+          <CreateManagerTaskButton
             title="Поставить менеджеру задачу"
             background="Crimson"
           />
-        </Box>
-      </Box>
+        </ButtonsContainer>
+      </Container>
 
       {tasks?.length ? (
         <BasicTable

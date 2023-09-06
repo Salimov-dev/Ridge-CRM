@@ -2,8 +2,6 @@ import dayjs from "dayjs";
 import { useDispatch, useSelector } from "react-redux";
 // mui
 import { Box, Typography } from "@mui/material";
-import TaskAltOutlinedIcon from "@mui/icons-material/TaskAltOutlined";
-import DoDisturbAltOutlinedIcon from "@mui/icons-material/DoDisturbAltOutlined";
 // components
 import GoToButton from "../../components/common/buttons/go-to-button";
 import { FormatManagerName } from "../../components/common/table/helpers/helpers";
@@ -25,6 +23,7 @@ import {
   setOpenObjectPageOpenState,
 } from "../../store/object/open-object-page.store";
 import { AlignCenter } from "../styled/styled";
+import DoneStatusIcon from "../../components/common/columns/done-status-icon";
 
 export const meetingsColumns = [
   {
@@ -33,15 +32,7 @@ export const meetingsColumns = [
     enableSorting: false,
     cell: (info) => {
       const isDone = info.getValue();
-      return (
-        <Box sx={{ display: "flex", justifyContent: "center" }}>
-          {!isDone ? (
-            <TaskAltOutlinedIcon sx={{ color: "green" }} />
-          ) : (
-            <DoDisturbAltOutlinedIcon sx={{ color: "Crimson" }} />
-          )}
-        </Box>
-      );
+      return <DoneStatusIcon isDone={isDone} />;
     },
   },
   {
@@ -67,9 +58,7 @@ export const meetingsColumns = [
     cell: (info) => {
       const time = info.getValue();
       return (
-        <Typography sx={{ textAlign: "center" }}>
-          {FormatTime(time)}
-        </Typography>
+        <Typography sx={{ textAlign: "center" }}>{FormatTime(time)}</Typography>
       );
     },
   },
@@ -142,7 +131,7 @@ export const meetingsColumns = [
     header: "Инициатор",
     cell: (info) => {
       const userId = info.getValue();
-      return <AlignCenter>{FormatManagerName(userId)}</AlignCenter> ;
+      return <AlignCenter>{FormatManagerName(userId)}</AlignCenter>;
     },
   },
 
@@ -161,9 +150,7 @@ export const meetingsColumns = [
     cell: (info) => {
       const date = info.getValue();
       return (
-        <Typography sx={{ textAlign: "center" }}>
-          {FormatDate(date)}
-        </Typography>
+        <Typography sx={{ textAlign: "center" }}>{FormatDate(date)}</Typography>
       );
     },
   },

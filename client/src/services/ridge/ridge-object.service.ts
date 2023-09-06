@@ -7,10 +7,12 @@ const ridgeObjectService = {
     return data;
   },
   create: async (payload) => {
+    console.log("payload", payload);
     const { data } = await httpService.post(
       ridgeObjectEndpoint + "create",
       payload
     );
+
     return data;
   },
   remove: async (objectId) => {
