@@ -13,11 +13,11 @@ import ObjectsFiltersPanel from "../../components/UI/filters-panels/obects-filte
 import BasicTable from "../../components/common/table/basic-table";
 import LayoutTitle from "../../components/common/page-titles/layout-title";
 import ItemsOnMap from "../../components/common/map/items-on-map/items-on-map";
-import DialogStyled from "../../components/common/dialog/dialog-styled";
 import AddAndClearFiltersButton from "../../components/common/buttons/add-and-clear-filters-button";
 import ObjectPageDialog from "../../components/UI/dialogs/object-page-dialog/object-page-dialog";
-import ObjectUpdatePageDialog from "../../components/UI/dialogs/objects/object-update-page";
-import CreateObject from "../../components/pages/create-object/create-object";
+import ObjectUpdatePageDialog from "../../components/UI/dialogs/objects/object-update-page-dialog";
+import ObjectCreatePageDialog from "../../components/UI/dialogs/objects/object-create-page-dialog";
+import CreateObjectButton from "../../components/UI/dialogs/buttons/create-object-button";
 // hooks
 import useSearchObject from "../../hooks/object/use-search-object";
 // store
@@ -46,7 +46,6 @@ const initialState = {
 
 const Objects = () => {
   const [selectedBaloon, setSelectedBaloon] = useState(null);
-  const [openCreate, setOpenCreate] = useState(false);
   const objects = useSelector(getObjectsList());
   const selectedObject = useSelector(getObjectById(selectedBaloon));
   const columns = objectsColumns;
@@ -78,14 +77,6 @@ const Objects = () => {
   const sortedObjects = orderBy(searchedObjects, ["created_at"], ["desc"]);
   const isInputEmpty = JSON.stringify(initialState) !== JSON.stringify(data);
 
-  const handleOpenCreate = () => {
-    setOpenCreate(true);
-  };
-
-  const handleCloseCreate = () => {
-    setOpenCreate(false);
-  };
-
   useEffect(() => {
     const hasLocalStorageData = localStorage.getItem("search-objects-data");
 
@@ -102,12 +93,10 @@ const Objects = () => {
     <Box sx={{ width: "100%" }}>
       <LayoutTitle title="Таблица объектов" />
       <AddAndClearFiltersButton
-        title="Добавить объект"
         isInputEmpty={isInputEmpty}
         reset={reset}
         initialState={initialState}
-        onOpen={handleOpenCreate}
-        disabled={isLoading}
+        button={<CreateObjectButton />}
       />
       <ItemsOnMap
         items={searchedObjects}
@@ -135,13 +124,7 @@ const Objects = () => {
         isLoading={isLoading}
       />
 
-      <DialogStyled
-        component={<CreateObject onClose={handleCloseCreate} />}
-        onClose={handleCloseCreate}
-        open={openCreate}
-        maxWidth="xl"
-      />
-
+      <ObjectCreatePageDialog />
       <ObjectPageDialog />
       <ObjectUpdatePageDialog />
     </Box>

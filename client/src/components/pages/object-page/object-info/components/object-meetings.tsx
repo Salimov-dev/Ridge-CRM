@@ -2,7 +2,7 @@ import { Box, Typography } from "@mui/material";
 import BasicTable from "../../../../common/table/basic-table";
 import DividerStyled from "../../../../common/divider/divider-styled";
 import { meetingsColumns } from "../../../../../columns/meetings-columns/meetings-columns";
-import CreateMeetingButton from "../../../../../layouts/calendar/components/header/components/create-meeting-button";
+import CreateMeetingButton from "../../../../UI/dialogs/buttons/create-meeting-button";
 
 const ObjectMeetings = ({
   meetings,

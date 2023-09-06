@@ -11,12 +11,12 @@ import MeetingsFiltersPanel from "../../components/UI/filters-panels/meetings-fi
 import { meetingsColumns } from "../../columns/meetings-columns/meetings-columns";
 import BasicTable from "../../components/common/table/basic-table";
 import LayoutTitle from "../../components/common/page-titles/layout-title";
-import DialogStyled from "../../components/common/dialog/dialog-styled";
-import CreateMeeting from "../../components/pages/create-meeting/create-meeting";
 import ItemsOnMap from "../../components/common/map/items-on-map/items-on-map";
+import CreateMeetingButton from "../../components/UI/dialogs/buttons/create-meeting-button";
 import ObjectPageDialog from "../../components/UI/dialogs/object-page-dialog/object-page-dialog";
-import ObjectUpdatePageDialog from "../../components/UI/dialogs/objects/object-update-page";
+import ObjectUpdatePageDialog from "../../components/UI/dialogs/objects/object-update-page-dialog";
 import MeetingUpdateDialog from "../../components/UI/dialogs/meetings/meeting-update-dialog";
+import MeetingCreateDialog from "../../components/UI/dialogs/meetings/meeting-create-dialog";
 import AddAndClearFiltersButton from "../../components/common/buttons/add-and-clear-filters-button";
 // hooks
 import useSearchMeeting from "../../hooks/meeting/use-search-meeting";
@@ -41,7 +41,6 @@ const initialState = {
 
 const Meetings = () => {
   const [selectedMeetingBaloon, setSelectedMeetingBaloon] = useState(null);
-  const [openCreate, setOpenCreate] = useState(false);
   const meetings = useSelector(getMeetingsList());
   const columns = meetingsColumns;
   const selectedMeeting = useSelector(getMeetingById(selectedMeetingBaloon));
@@ -73,14 +72,6 @@ const Meetings = () => {
   const sortedMeetings = orderBy(searchedMeetings, ["date"], ["asc"]);
   const isInputEmpty = JSON.stringify(initialState) !== JSON.stringify(data);
 
-  const handleOpenCreate = () => {
-    setOpenCreate(true);
-  };
-
-  const handleCloseCreate = () => {
-    setOpenCreate(false);
-  };
-
   useEffect(() => {
     localStorage.setItem("search-meetings-data", JSON.stringify(data));
   }, [data]);
@@ -99,16 +90,12 @@ const Meetings = () => {
   return (
     <Box>
       <LayoutTitle title="Встречи" />
-
       <AddAndClearFiltersButton
-        title="Добавить встречу"
-        isInputEmpty={isInputEmpty}
         reset={reset}
+        isInputEmpty={isInputEmpty}
         initialState={initialState}
-        disabled={isLoading ? true : false}
-        onOpen={handleOpenCreate}
+        button={<CreateMeetingButton />}
       />
-
       <ItemsOnMap
         items={searchedMeetings}
         mapZoom={mapZoom}
@@ -122,26 +109,18 @@ const Meetings = () => {
         target={target}
         targetCluster={targetCluster}
       />
-
       <MeetingsFiltersPanel
         data={data}
         register={register}
         setValue={setValue}
         isLoading={isLoading}
       />
-
       <BasicTable
         items={sortedMeetings}
         itemsColumns={columns}
         isLoading={isLoading}
       />
-
-      <DialogStyled
-        component={<CreateMeeting onClose={handleCloseCreate} />}
-        onClose={handleCloseCreate}
-        open={openCreate}
-      />
-
+      <MeetingCreateDialog />
       <MeetingUpdateDialog />
       <ObjectPageDialog />
       <ObjectUpdatePageDialog />

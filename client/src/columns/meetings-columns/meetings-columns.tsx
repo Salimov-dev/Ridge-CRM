@@ -185,6 +185,7 @@ export const meetingsColumns = [
           onClick={handleClick}
           background="RoyalBlue"
           backgroudHover="blue"
+          fontColor="black"
         />
       );
     },

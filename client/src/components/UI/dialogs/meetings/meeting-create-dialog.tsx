@@ -5,14 +5,20 @@ import {
   getCreateMeetingOpenState,
   setCreateMeetingOpenState,
 } from "../../../../store/meeting/create-meeting.store";
+import getDateToday from "../../../../utils/date/get-date-today";
 
-const MeetingCreateDialog = ({ dateCreate, setDateCreate }) => {
+const MeetingCreateDialog = ({
+  dateCreate = getDateToday(),
+  setDateCreate,
+}) => {
   const dispatch = useDispatch();
 
   const isOpenCreateMeeting = useSelector(getCreateMeetingOpenState());
   const handleCloseCreateMeeting = () => {
     dispatch(setCreateMeetingOpenState(false));
-    setDateCreate(null)
+    if (setDateCreate !== undefined) {
+      setDateCreate(null);
+    }
   };
   return (
     <DialogStyled

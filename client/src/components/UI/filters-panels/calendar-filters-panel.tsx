@@ -32,7 +32,7 @@ const CalendarFiltersPanel = ({ data, register, setValue, isLoading }) => {
           name="selectedTaskTypes"
           labelId="selectedTaskTypes"
           label="Выбрать по выполнению"
-          value={data.selectedTaskTypes}
+          value={data.selectedTaskTypes || ""}
           disabled={isLoading ? true : false}
         />
         <SearchSwitch

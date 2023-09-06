@@ -1,6 +1,6 @@
 import MeetingUpdateDialog from "../../../../components/UI/dialogs/meetings/meeting-update-dialog";
 import ObjectPageDialog from "../../../../components/UI/dialogs/object-page-dialog/object-page-dialog";
-import ObjectUpdatePageDialog from "../../../../components/UI/dialogs/objects/object-update-page";
+import ObjectUpdatePageDialog from "../../../../components/UI/dialogs/objects/object-update-page-dialog";
 import ManagerTaskUpdateDialog from "../../../../components/UI/dialogs/tasks/manager-task-update-dialog";
 import MyTaskUpdateDialog from "../../../../components/UI/dialogs/tasks/my-task-update-dialog";
 import MeetingCreateDialog from "../../../../components/UI/dialogs/meetings/meeting-create-dialog";

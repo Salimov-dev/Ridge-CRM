@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
-import CreateMyTaskButton from "./create-my-task-button";
-import CreateMeetingButton from "./create-meeting-button";
-import CreateManagerTaskButton from "./create-manager-task-button";
+import CreateMyTaskButton from "../../../../../components/UI/dialogs/buttons/create-my-task-button";
+import CreateMeetingButton from "../../../../../components/UI/dialogs/buttons/create-meeting-button";
+import CreateManagerTaskButton from "../../../../../components/UI/dialogs/buttons/create-manager-task-button";
 
 const CreateButtons = () => {
   return (

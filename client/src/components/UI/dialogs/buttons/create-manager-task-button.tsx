@@ -1,19 +1,19 @@
 import { Button } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { getTaskLoadingStatus } from "../../../../../store/task/tasks.store";
-import { setCreateMyTaskOpenState } from "../../../../../store/task/create-my-task.store";
+import { setCreateManagerTaskOpenState } from "../../../../store/task/create-manager-task.store";
+import { getTaskLoadingStatus } from "../../../../store/task/tasks.store";
 
-const CreateMyTaskButton = ({
+const CreateManagerTaskButton = ({
   title,
   background,
-  color="inherit",
+  color = "inherit",
   isMyTask = false,
 }) => {
   const dispatch = useDispatch();
   const isLoading = useSelector(getTaskLoadingStatus());
 
   const handleOpenCreateMyTask = () => {
-    dispatch(setCreateMyTaskOpenState(true));
+    dispatch(setCreateManagerTaskOpenState(true));
   };
   return (
     <Button
@@ -31,4 +31,4 @@ const CreateMyTaskButton = ({
   );
 };
 
-export default CreateMyTaskButton;
+export default CreateManagerTaskButton;

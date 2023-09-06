@@ -1,7 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import DividerStyled from "../../../../common/divider/divider-styled";
 import { tasksColumns } from "../../../../../columns/tasks-columns/tasks-columns";
-import CreateTaskButton from "../../../../../layouts/calendar/components/header/components/create-my-task-button";
+import CreateTaskButton from "../../../../UI/dialogs/buttons/create-my-task-button";
 import BasicTable from "../../../../common/table/basic-table";
 
 const ObjectTasks = ({

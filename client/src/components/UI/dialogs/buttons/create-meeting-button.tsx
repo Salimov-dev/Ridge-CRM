@@ -1,11 +1,11 @@
 import { Button, Typography } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { setCreateMeetingOpenState } from "../../../../../store/meeting/create-meeting.store";
-import { getMeetingLoadingStatus } from "../../../../../store/meeting/meetings.store";
+import { setCreateMeetingOpenState } from "../../../../store/meeting/create-meeting.store";
+import { getMeetingLoadingStatus } from "../../../../store/meeting/meetings.store";
 
 const CreateMeetingButton = () => {
   const dispatch = useDispatch();
-  const isLoading = useSelector(getMeetingLoadingStatus())
+  const isLoading = useSelector(getMeetingLoadingStatus());
 
   const handleOpenCreateMeeting = () => {
     dispatch(setCreateMeetingOpenState(true));

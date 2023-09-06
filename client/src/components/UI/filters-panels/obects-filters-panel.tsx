@@ -108,7 +108,7 @@ const ObjectsFiltersPanel = ({
           labelId="objectActivity"
           label="Выбор по активности"
           itemsList={objectActivityVariants}
-          value={data.objectActivity}
+          value={data.objectActivity | ""}
           disabled={isLoading ? true : false}
           isSelect={Boolean(data?.objectActivity?.length)}
         />

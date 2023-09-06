@@ -34,6 +34,7 @@ import ridgeObjectStatusReducer from "./ridge/ridge-object-status.store";
 import createMeetingReducer from "./meeting/create-meeting.store";
 import createManagerTaskReducer from "./task/create-manager-task.store";
 import createMyTaskReducer from "./task/create-my-task.store";
+import createObjectReducer from "./object/create-object.store";
 
 const rootReducer = combineReducers({
   // objects
@@ -43,6 +44,7 @@ const rootReducer = combineReducers({
   objectTypes: objectTypesReducer,
   openObjectPage: openObjectPageReducer,
   updateObject: updateObjectReducer,
+  createObject: createObjectReducer,
   // objects params
   metro: metroReducer,
   districts: districtsReducer,

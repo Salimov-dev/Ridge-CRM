@@ -64,7 +64,7 @@ const MeetingsFiltersPanel = ({ data, register, setValue, isLoading }) => {
           labelId="meetingsActivity"
           label="Выбор по активности"
           itemsList={meetingDoneTypes}
-          value={data.meetingsActivity}
+          value={data.meetingsActivity | ""}
           disabled={isLoading ? true : false}
           isSelect={Boolean(data?.meetingsActivity?.length)}
         />

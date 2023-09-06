@@ -7,29 +7,34 @@ const Component = styled(Box)`
   gap: 4px;
 `;
 
-const AddAndClearFiltersButton = ({ title, isInputEmpty, reset, initialState, disabled, onOpen }) => {
+const ButtonStyled = styled(Button)`
+  display: flex;
+  align-items: center;
+  gap: 3px;
+`;
+
+const AddAndClearFiltersButton = ({
+  isInputEmpty,
+  reset,
+  initialState,
+  button,
+}) => {
+  const handleClearForm = () => {
+    reset(initialState);
+  };
 
   return (
     <Component>
-      <Button
-        variant="contained"
-        color="success"
-        onClick={onOpen}
-        disabled={disabled}
-      >
-        <Typography>{title}</Typography>
-      </Button>
-
+      {button}
       {isInputEmpty && (
-        <Button
+        <ButtonStyled
           variant="outlined"
           color="success"
-          onClick={() => reset(initialState)}
-          sx={{ display: "flex", alignItems: "center", gap: "3px" }}
+          onClick={handleClearForm}
         >
           <Typography>Очистить фильтры</Typography>
           <ClearOutlinedIcon />
-        </Button>
+        </ButtonStyled>
       )}
     </Component>
   );

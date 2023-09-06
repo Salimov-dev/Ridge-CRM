@@ -1,5 +1,5 @@
 import MeetingUpdateDialog from "../../../../UI/dialogs/meetings/meeting-update-dialog";
-import ObjectUpdatePageDialog from "../../../../UI/dialogs/objects/object-update-page";
+import ObjectUpdatePageDialog from "../../../../UI/dialogs/objects/object-update-page-dialog";
 import ManagerTaskUpdateDialog from "../../../../UI/dialogs/tasks/manager-task-update-dialog";
 import MyTaskUpdateDialog from "../../../../UI/dialogs/tasks/my-task-update-dialog";
 import DialogStyled from "../../../../common/dialog/dialog-styled";
