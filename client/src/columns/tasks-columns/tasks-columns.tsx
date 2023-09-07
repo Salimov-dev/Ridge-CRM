@@ -3,17 +3,13 @@ import "dayjs/locale/ru";
 import { useDispatch, useSelector } from "react-redux";
 // mui
 import { Box, Typography } from "@mui/material";
-import TaskAltOutlinedIcon from "@mui/icons-material/TaskAltOutlined";
-import DoDisturbAltOutlinedIcon from "@mui/icons-material/DoDisturbAltOutlined";
 // components
 import GoToButton from "../../components/common/buttons/go-to-button";
 import { FormatManagerName } from "../../components/common/table/helpers/helpers";
 import TableOpenButton from "../../components/common/buttons/table-open-button";
+import DoneStatusIcon from "../../components/common/columns/done-status-icon";
 // store
 import { getObjectById } from "../../store/object/objects.store";
-// utils
-import { FormatDate } from "../../utils/date/format-date";
-import { FormatTime } from "../../utils/date/format-time";
 import {
   setupdateMyTaskId,
   setUpdateMyTaskOpenState,
@@ -29,7 +25,9 @@ import {
   setOpenObjectPageId,
   setOpenObjectPageOpenState,
 } from "../../store/object/open-object-page.store";
-import DoneStatusIcon from "../../components/common/columns/done-status-icon";
+// utils
+import { FormatDate } from "../../utils/date/format-date";
+import { FormatTime } from "../../utils/date/format-time";
 
 export const tasksColumns = [
   {

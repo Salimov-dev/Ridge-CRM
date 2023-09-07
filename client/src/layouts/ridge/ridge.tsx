@@ -18,6 +18,10 @@ import ObjectBaloon from "../../components/UI/maps/object-baloon";
 import BasicTable from "../../components/common/table/basic-table";
 import RidgeObjectCreatePageDialog from "../../components/UI/dialogs/ridge-objects/ridge-object-create-page-dialog";
 import CreateRidgeObjectButton from "../../components/UI/dialogs/buttons/create-ridge-object-button";
+import ObjectCreatePageDialog from "../../components/UI/dialogs/objects/object-create-page-dialog";
+import RidgeObjectUpdatePageDialog from "../../components/UI/dialogs/ridge-objects/ridge-object-update-page-dialog";
+import RidgeObjectBaloon from "../../components/UI/maps/ridge-object-baloon";
+import ObjectFromRidgeCreatePageDialog from "../../components/UI/dialogs/ridge-objects/object-from-ridge-create-page-dialog";
 
 const initialState = {
   address: "",
@@ -92,7 +96,7 @@ const Ridge = () => {
         }
         center={center}
         onClick={setSelectedBaloon}
-        baloon={<ObjectBaloon object={selectedObject} />}
+        baloon={<RidgeObjectBaloon object={selectedObject} />}
         isLoading={isLoading}
       />
 
@@ -109,7 +113,10 @@ const Ridge = () => {
         itemsColumns={columns}
         isLoading={isLoading}
       />
+
+      <RidgeObjectUpdatePageDialog/>
       <RidgeObjectCreatePageDialog/>
+      <ObjectFromRidgeCreatePageDialog />
     </Box>
   );
 };

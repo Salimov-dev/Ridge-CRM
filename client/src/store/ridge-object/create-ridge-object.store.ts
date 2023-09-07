@@ -16,12 +16,12 @@ const { reducer: createRidgeObjectReducer, actions } = createRidgeObjectSlice;
 
 const { createRidgeObjectOpenSetted } = actions;
 
-export const setCreateRidgeObjectOpenState = (payload) => (dispatch) => {
-  dispatch(createRidgeObjectOpenSetted(payload));
-};
-
 export const loadCreateRidgeObjectOpenState = () => (state) => {
   return state?.createRidgeObject?.entities;
+};
+
+export const setCreateRidgeObjectOpenState = (payload) => (dispatch) => {
+  dispatch(createRidgeObjectOpenSetted(payload));
 };
 
 export const getCreateRidgeObjectOpenState = () => (state) => {

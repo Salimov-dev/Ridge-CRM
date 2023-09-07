@@ -12,11 +12,11 @@ const CreateButtons = () => {
         background="orange"
         isMyTask={true}
       />
+      <CreateMeetingButton />
       <CreateManagerTaskButton
         title="Поставить менеджеру задачу"
         background="Crimson"
       />
-      <CreateMeetingButton />
     </Box>
   );
 };

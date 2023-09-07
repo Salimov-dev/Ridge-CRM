@@ -11,6 +11,7 @@ import { Map, Placemark, Clusterer } from "@pbe/react-yandex-maps";
 import target_cluster from "../../../../assets/map/target_cluster.png";
 // styles
 import "./styles.css";
+import ObjectBaloon from "../../../UI/maps/object-baloon";
 
 const MapContainer = styled(Box)`
   width: 100%;
@@ -69,6 +70,15 @@ const ItemsOnMap = ({
         >
           <Clusterer
             instanceRef={(ref) => (clustererInstanceRef.current = ref)}
+            // onBalloonOpen={(e) => {
+            //   console.log(e?.get("cluster")?.properties?.get("geoObjects"));
+            // }}
+            // onMouseEnter={(e) => {
+            //   console.log("click");
+              
+            //   // e.get("target").options.set("balloonLayout", ObjectBaloon);
+            //   // setActivePortal(false);
+            // }}
             options={{
               clusterIcons: [
                 {

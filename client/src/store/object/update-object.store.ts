@@ -4,14 +4,14 @@ const updateObjectSlice = createSlice({
   name: "updateObject",
   initialState: {
     entities: false,
-    ObjectId: "",
+    objectId: "",
   },
   reducers: {
     updateObjectOpenSetted: (state, action) => {
       state.entities = action.payload;
     },
     updateObjectId: (state, action) => {
-      state.ObjectId = action.payload;
+      state.objectId = action.payload;
     },
   },
 });
@@ -24,16 +24,16 @@ export const setUpdateObjectOpenState = (payload) => (dispatch) => {
   dispatch(updateObjectOpenSetted(payload));
 };
 
-export const setUpdateObjectId = (payload) => (dispatch) => {
-  dispatch(updateObjectId(payload));
-};
-
 export const loadUpdateObjectOpenState = () => (state) => {
   return state?.updateObject?.entities;
 };
 
+export const setUpdateObjectId = (payload) => (dispatch) => {
+  dispatch(updateObjectId(payload));
+};
+
 export const getUpdateObjectId = () => (state) => {
-  return state.updateObject.ObjectId;
+  return state.updateObject.objectId;
 };
 
 export default updateObjectReducer;

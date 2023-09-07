@@ -1,11 +1,11 @@
 import { Button, Typography } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { getObjectsLoadingStatus } from "../../../../store/object/objects.store";
 import { setCreateRidgeObjectOpenState } from "../../../../store/ridge-object/create-ridge-object.store";
+import { getRidgeObjectStatusLoading } from "../../../../store/ridge-object/ridge-object-status.store";
 
 const CreateRidgeObjectButton = () => {
   const dispatch = useDispatch();
-  const isLoading = useSelector(getObjectsLoadingStatus());
+  const isLoading = useSelector(getRidgeObjectStatusLoading());
 
   const handleOpenCreateRidgeObject = () => {
     dispatch(setCreateRidgeObjectOpenState(true));

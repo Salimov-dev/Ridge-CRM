@@ -17,8 +17,8 @@ const Title = styled(Box)`
 
 const TitleWithAddress = ({
   isFindedObject,
-  getCity,
-  getAddress,
+  city,
+  address,
   title,
   subtitle,
   onClose,
@@ -32,7 +32,7 @@ const TitleWithAddress = ({
             variant="h2"
             sx={{ background: "yellow", color: "black", padding: "4px" }}
           >
-            {getCity()}, {getAddress()}
+            {city}, {address}
           </Typography>
         ) : (
           <Typography

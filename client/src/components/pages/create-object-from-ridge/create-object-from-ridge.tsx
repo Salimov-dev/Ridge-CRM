@@ -1,7 +1,7 @@
 // libraries
 import { useEffect } from "react";
 import { toast } from "react-toastify";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 // components
@@ -9,13 +9,18 @@ import ObjectForm from "../../common/forms/object-form/object-form";
 import FindObjectOnMap from "../../common/find-object-on-map/find-object-on-map";
 import TitleWithAddress from "../../common/page-titles/title-with-address";
 // store
-import { createObject } from "../../../store/object/objects.store";
+import {
+  createObject,
+  getObjectById,
+} from "../../../store/object/objects.store";
 // schemas
 import { objectSchema } from "../../../schemas/schemas";
 // hooks
 import useFindObject from "../../../hooks/object/use-find-object";
 // utils
 import { capitalizeFirstLetter } from "../../../utils/data/capitalize-first-letter";
+import { getUpdateObjectFromRidgeObjectId } from "../../../store/ridge-object/create-object-from-ridge.store";
+import { getRidgeObjectById } from "../../../store/ridge-object/ridge-objects.store";
 
 const initialState = {
   status: "",
@@ -59,7 +64,21 @@ const initialState = {
   },
 };
 
-const CreateObject = ({ onClose }) => {
+const CreateObjectFromRidge = ({ onClose }) => {
+  const objectId = useSelector(getUpdateObjectFromRidgeObjectId());
+  const object = useSelector(getRidgeObjectById(objectId));
+
+  console.log("object", object);
+
+  const comment = object?.comment;
+  const city = object?.location?.city;
+  const address = object?.location?.address;
+  const district = object?.location?.district;
+  const metro = object?.location?.metro;
+  const latitude = object?.location?.latitude;
+  const longitude = object?.location?.longitude;
+
+  console.log("city", city);
   const {
     register,
     watch,
@@ -72,21 +91,9 @@ const CreateObject = ({ onClose }) => {
     resolver: yupResolver(objectSchema),
   });
 
-  const {
-    getCity,
-    getAddress,
-    getLatitudeCoordinates,
-    getLongitudeCoordinates,
-    findedObject,
-  } = useFindObject();
-
   const dispatch = useDispatch();
   const data = watch();
-  const watchAddress = watch("location.address", "");
-  const watchCity = watch("location.city", "");
-  const isFindedObject = Boolean(Object.keys(findedObject)?.length);
-  const isObjectHasAddress = Boolean(watchCity) && Boolean(watchAddress);
-  const isValidAndHasAdress = isFindedObject && isObjectHasAddress && isValid;
+  console.log("data", data);
 
   const onSubmit = (data) => {
     const newData = {
@@ -117,36 +124,36 @@ const CreateObject = ({ onClose }) => {
   };
 
   useEffect(() => {
-    setValue("location.city", getCity());
-    setValue("location.address", getAddress());
-    setValue("location.latitude", getLatitudeCoordinates());
-    setValue("location.longitude", getLongitudeCoordinates());
-  }, [findedObject]);
+    setValue("description.fullDescription", comment);
+    setValue("location.city", city);
+    setValue("location.address", address);
+    setValue("location.latitude", latitude);
+    setValue("location.longitude", longitude);
+    setValue("location.district", district);
+    setValue("location.metro", metro);
+  }, []);
 
   return (
     <>
       <TitleWithAddress
-        isFindedObject={isFindedObject}
-        getCity={getCity}
-        getAddress={getAddress}
+        isFindedObject={true}
+        city={city}
+        address={address}
         title="Создать объект:"
         subtitle="Выберите объект на карте"
         onClose={onClose}
       />
-
-      <FindObjectOnMap />
-
       <ObjectForm
         register={register}
         onSubmit={onSubmit}
         handleSubmit={handleSubmit}
         errors={errors}
         watch={watch}
-        isValid={isValidAndHasAdress}
+        isValid={isValid}
         onClose={onClose}
       />
     </>
   );
 };
 
-export default CreateObject;
+export default CreateObjectFromRidge;

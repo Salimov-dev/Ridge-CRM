@@ -10,6 +10,7 @@ import { getDistrictsList } from "../../../../store/object/districts.store";
 import { getObjectsStatusList } from "../../../../store/object/object-status.store";
 // styled
 import { FieldsContainer, Form } from "../styled/styled";
+import { getRidgeObjectsStatusList } from "../../../../store/ridge-object/ridge-object-status.store";
 
 const RidgeObjectForm = ({
   register,
@@ -17,23 +18,21 @@ const RidgeObjectForm = ({
   handleSubmit,
   onSubmit,
   onClose,
+  onRemove,
+  removeId,
+  watch,
   isValid,
   isEditMode = false,
-  isFindedObject,
-  isObjectHasAddress,
-  watch,
 }) => {
   const districts = useSelector(getDistrictsList());
-  const objectStatuses = useSelector(getObjectsStatusList());
+  const objectStatuses = useSelector(getRidgeObjectsStatusList());
   const metros = useSelector(getMetroList());
 
-  const watchStatus = watch("status", "");
-  const watchDistrict = watch("location.district", "");
-  const watchMetro = watch("location.metro", "");
-  const watchFindedContacts = watch("findedContacts", "");
-  const watchComment = watch("comment", "");
-
-  const isValidAndHasAdress = isFindedObject && isObjectHasAddress && isValid;
+  const watchStatus = watch("status");
+  const watchDistrict = watch("location.district");
+  const watchMetro = watch("location.metro");
+  const watchFindedContacts = watch("findedContacts");
+  const watchComment = watch("comment");
 
   return (
     <>
@@ -74,7 +73,7 @@ const RidgeObjectForm = ({
             register={register}
             label="Найденные контакты"
             name="findedContacts"
-            rows="3"
+            rows="6"
             multiline={true}
             value={watchFindedContacts}
             onInputQuantities={900}
@@ -84,7 +83,7 @@ const RidgeObjectForm = ({
             register={register}
             label="Комментарий"
             name="comment"
-            rows="3"
+            rows="6"
             multiline={true}
             value={watchComment}
             onInputQuantities={900}
@@ -94,8 +93,10 @@ const RidgeObjectForm = ({
 
         <FooterButtons
           isEditMode={isEditMode}
-          isValid={!isValidAndHasAdress}
+          isValid={!isValid}
           onClose={onClose}
+          onRemove={onRemove}
+          removeId={removeId}
         />
       </Form>
     </>

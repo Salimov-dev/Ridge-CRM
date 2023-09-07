@@ -126,7 +126,7 @@ const CreateMeeting = ({ objectPageId, onClose, dateCreate }) => {
   return (
     <Component>
       <TitleWithAddress
-        isEmptyFindedObject={isEmptyFindedObject}
+        isFindedObject={isEmptyFindedObject}
         getCity={getCity}
         getAddress={getAddress}
         title="Добавить встречу:"

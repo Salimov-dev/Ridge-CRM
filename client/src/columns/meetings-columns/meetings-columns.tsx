@@ -122,7 +122,7 @@ export const meetingsColumns = [
     cell: (info) => {
       const status = info.getValue();
       const name = useSelector(getMeetingStatusNameById(status));
-      return <Typography sx={{ textAlign: "center" }}>{name}</Typography>;
+      return <AlignCenter>{name}</AlignCenter>;
     },
   },
 
@@ -170,8 +170,8 @@ export const meetingsColumns = [
         <TableOpenButton
           text="Править"
           onClick={handleClick}
-          background="RoyalBlue"
-          backgroudHover="blue"
+          background="royalBlue"
+          backgroudHover="cornflowerBlue"
           fontColor="black"
         />
       );

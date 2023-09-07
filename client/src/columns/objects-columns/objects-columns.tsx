@@ -123,6 +123,7 @@ export const objectsColumns = [
           const object = info.getValue();
           const objectId = object?._id;
           const objectMeetings = useSelector(getMeetingsByObjectId(objectId));
+          const isObjectMeetings = Boolean(objectMeetings.length)
           const sortedObjectMeetings = orderBy(
             objectMeetings,
             ["date"],
@@ -132,7 +133,7 @@ export const objectsColumns = [
             sortedObjectMeetings[sortedObjectMeetings?.length - 1];
           const dateOfLastMeeting = FormatDate(lastMeeting?.date);
 
-          return <AlignCenter>{dateOfLastMeeting}</AlignCenter>;
+          return isObjectMeetings ? <AlignCenter>{dateOfLastMeeting}</AlignCenter> : <AlignCenter>-</AlignCenter>;
         },
       },
       {
@@ -180,6 +181,7 @@ export const objectsColumns = [
           return (
             <TableOpenButton
               background="seaGreen"
+              backgroudHover="green"
               fontColor="black"
               text="Открыть"
               onClick={handleClick}

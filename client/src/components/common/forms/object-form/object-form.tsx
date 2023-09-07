@@ -37,8 +37,6 @@ const ObjectForm = ({
   watch,
   isValid,
   isEditMode = false,
-  isFindedObject,
-  isObjectHasAddress,
 }) => {
   const districts = useSelector(getDistrictsList());
   const workingPositions = useSelector(getWorkingPositionsList());
@@ -61,8 +59,6 @@ const ObjectForm = ({
   const rentTypes = useSelector(getRentTypesList());
   const objectTypes = useSelector(getObjectTypesList());
   const estateTypes = useSelector(getEstateTypesList());
-
-  const isValidAndHasAdress = isFindedObject && isObjectHasAddress && isValid;
 
   return (
     <>
@@ -422,7 +418,7 @@ const ObjectForm = ({
         />
         <FooterButtons
           isEditMode={isEditMode}
-          isValid={!isValidAndHasAdress}
+          isValid={!isValid}
           onClose={onClose}
         />
       </Form>

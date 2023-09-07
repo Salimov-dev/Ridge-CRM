@@ -19,8 +19,8 @@ const CreateMeetingButton = () => {
       disabled={isLoading}
       sx={{
         color: "white",
-        background: "RoyalBlue",
-        "&:hover": { background: "blue" },
+        background: "royalBlue",
+        "&:hover": { background: "cornflowerBlue" },
       }}
     >
       <Typography variant="body0">Создать встречу</Typography>

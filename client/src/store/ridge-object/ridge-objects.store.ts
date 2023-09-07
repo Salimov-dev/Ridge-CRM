@@ -129,9 +129,11 @@ export const getRidgeObjectById = (objectId) => (state) => {
 };
 
 export const getRidgeObjectsList = () => (state) => state.ridgeObjects.entities;
+
 export const getRidgeObjectsLoadingStatus = () => (state) =>
   state.ridgeObjects.isLoading;
-export const getDataRidgeObjectsStatus = () => (state) =>
+
+  export const getDataRidgeObjectsStatus = () => (state) =>
   state.ridgeObjects.dataLoaded;
 
 export default ridgeObjectsReducer;

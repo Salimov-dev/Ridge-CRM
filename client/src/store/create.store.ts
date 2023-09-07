@@ -36,6 +36,8 @@ import createManagerTaskReducer from "./task/create-manager-task.store";
 import createMyTaskReducer from "./task/create-my-task.store";
 import createObjectReducer from "./object/create-object.store";
 import createRidgeObjectReducer from "./ridge-object/create-ridge-object.store";
+import updateRidgeObjectReducer from "./ridge-object/update-ridge-object.store";
+import createObjectFromRidgeReducer from "./ridge-object/create-object-from-ridge.store";
 
 const rootReducer = combineReducers({
   // objects
@@ -75,6 +77,8 @@ const rootReducer = combineReducers({
   ridgeObjects: ridgeObjectsReducer,
   ridgeObjectStatus: ridgeObjectStatusReducer,
   createRidgeObject: createRidgeObjectReducer,
+  updateRidgeObject: updateRidgeObjectReducer,
+  createObjectFromRidge: createObjectFromRidgeReducer,
   // other
   sidebarCollapsState: sidebarCollapsStateReducer,
 });
