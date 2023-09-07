@@ -24,15 +24,15 @@ export const setUpdateMyTaskOpenState = (payload) => (dispatch) => {
   dispatch(updateMyTaskOpenSetted(payload));
 };
 
-export const setupdateMyTaskId = (payload) => (dispatch) => {
+export const setUpdateMyTaskId = (payload) => (dispatch) => {
   dispatch(updateMyTaskId(payload));
 };
 
-export const loadupdateMyTaskOpenState = () => (state) => {
+export const loadUpdateMyTaskOpenState = () => (state) => {
   return state?.updateMyTask?.entities;
 };
 
-export const getupdateMyTaskId = () => (state) => {
+export const getUpdateMyTaskId = () => (state) => {
   return state.updateMyTask.taskId;
 };
 

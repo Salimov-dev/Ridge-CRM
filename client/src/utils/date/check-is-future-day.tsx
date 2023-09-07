@@ -1,6 +1,7 @@
-import dayjs from "dayjs";
+import getDateToday from "./get-date-today";
 
 export const chechIsFutureDay = (day) => {
-  const currentDay = dayjs();
+  const currentDay = getDateToday();
+
   return day.isAfter(currentDay, "day");
 };

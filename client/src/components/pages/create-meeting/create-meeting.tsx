@@ -18,7 +18,7 @@ import { getObjectsList } from "../../../store/object/objects.store";
 import { getMeetingTypesList } from "../../../store/meeting/meeting-types.store";
 import { getMeetingStatusesList } from "../../../store/meeting/meeting-status.store";
 // schema
-import { meetingSchema } from "../../../schemas/schemas";
+import { meetingSchema } from "../../../schemas/meeting-schema";
 // hooks
 import useFindObject from "../../../hooks/object/use-find-object";
 // utils
@@ -81,9 +81,9 @@ const CreateMeeting = ({ objectPageId, onClose, dateCreate }) => {
   const data = watch();
   const watchDate = watch("date", null);
   const watchTime = watch("time", null);
-  const isFullValid = !watchDate || !watchTime || !isValid;
 
-  const isEmptyFindedObject = Boolean(!Object.keys(findedObject)?.length);
+  const isFullValid = !watchDate || !watchTime || !isValid;
+  const isEmptyFindedObject = Boolean(Object.keys(findedObject)?.length);
 
   const onSubmit = (data) => {
     const newData = {
@@ -95,7 +95,6 @@ const CreateMeeting = ({ objectPageId, onClose, dateCreate }) => {
         zoom: 16,
       },
     };
-    console.log("newData", newData);
 
     dispatch(createMeeting(newData))
       .then(onClose())
@@ -127,8 +126,8 @@ const CreateMeeting = ({ objectPageId, onClose, dateCreate }) => {
     <Component>
       <TitleWithAddress
         isFindedObject={isEmptyFindedObject}
-        getCity={getCity}
-        getAddress={getAddress}
+        city={getCity()}
+        address={getAddress()}
         title="Добавить встречу:"
         subtitle="Выберите место встречи на карте"
         onClose={onClose}

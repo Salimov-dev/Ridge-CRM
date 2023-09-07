@@ -4,8 +4,8 @@ import { setCreateMeetingOpenState } from "../../../../store/meeting/create-meet
 import { getMeetingLoadingStatus } from "../../../../store/meeting/meetings.store";
 
 const CreateMeetingButton = () => {
-  const dispatch = useDispatch();
   const isLoading = useSelector(getMeetingLoadingStatus());
+  const dispatch = useDispatch();
 
   const handleOpenCreateMeeting = () => {
     dispatch(setCreateMeetingOpenState(true));

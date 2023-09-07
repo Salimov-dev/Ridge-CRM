@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { getCreateObjectFromRidgeOpenState, setCreateObjectFromRidgeOpenState, setUpdateObjectFromRidgeObjectId } from "../../../../store/ridge-object/create-object-from-ridge.store";
 
 const CreateObjectFromRidgeButton = ({objectId}) => {
-  const dispatch = useDispatch();
   const isLoading = useSelector(getCreateObjectFromRidgeOpenState());
+  const dispatch = useDispatch();
 
   const handleOpenCreateObject = () => {
     dispatch(setUpdateObjectFromRidgeObjectId(objectId));

@@ -13,7 +13,7 @@ import TitleWithCloseButton from "../../common/page-titles/title-with-close-butt
 // store
 import { createTask } from "../../../store/task/tasks.store";
 // schema
-import { taskSchema } from "../../../schemas/schemas";
+import { taskSchema } from "../../../schemas/task-shema";
 // utils
 import { capitalizeFirstLetter } from "../../../utils/data/capitalize-first-letter";
 

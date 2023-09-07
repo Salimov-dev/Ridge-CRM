@@ -92,7 +92,6 @@ const Sidebar = () => {
             setIsCollapsed={handleSetCollapsed}
             colors={colors}
           />
-
           <ItemsList
             isCollapsed={isCollapsed}
             selected={selected}

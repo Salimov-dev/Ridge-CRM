@@ -1,15 +1,9 @@
 import { orderBy } from "lodash";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { getUserStatusesList } from "../../store/user/user-statuses.store";
 
-const useUsers = (
-  setOpenCreate,
-  setUpdateManagerOpenState,
-  users,
-  usersWithoutCurrentUser
-) => {
+const useUsers = (users, usersWithoutCurrentUser) => {
   const statuses = useSelector(getUserStatusesList());
-  const dispatch = useDispatch();
 
   const getActualUsersList = () => {
     const actualUsersArray = usersWithoutCurrentUser?.map((u) => {
@@ -47,23 +41,9 @@ const useUsers = (
     return sortedStatuses;
   };
 
-  const handleOpenCreate = () => {
-    setOpenCreate(true);
-  };
-
-  const handleCloseCreate = () => {
-    setOpenCreate(false);
-  };
-
-  const handleCloseUpdate = () => {
-    dispatch(setUpdateManagerOpenState(false));
-  };
   return {
     getActualUsersList,
     getActualStatusesList,
-    handleOpenCreate,
-    handleCloseCreate,
-    handleCloseUpdate,
   };
 };
 

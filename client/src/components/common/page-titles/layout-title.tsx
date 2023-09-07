@@ -8,7 +8,7 @@ const Component = styled(Box)`
   margin-right: 50px;
 `;
 
-const LayoutTitle = ({ title, background, color }) => {
+const LayoutTitle = ({ title, background = "yellow", color = "black" }) => {
   return (
     <Component>
       <Typography

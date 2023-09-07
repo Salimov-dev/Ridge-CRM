@@ -31,7 +31,6 @@ const Dialogs = ({ objects, users, dateCreate=getDateToday(), setDateCreate }) =
 
       <MeetingCreateDialog
         dateCreate={dateCreate}
-        setDateCreate={setDateCreate}
       />
       <MeetingUpdateDialog />
     </>

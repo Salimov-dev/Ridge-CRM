@@ -23,7 +23,6 @@ import useCalendar from "../../hooks/calendar/use-calendar";
 import useSearchTask from "../../hooks/task/use-search-task";
 
 const initialState = {
-  object: "",
   task: "",
   onlyMyTasks: false,
   selectedTaskTypes: [],

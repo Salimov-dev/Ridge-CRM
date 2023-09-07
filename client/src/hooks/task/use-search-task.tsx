@@ -17,26 +17,30 @@ const useSearchTask = (tasks, data) => {
       );
     }
 
-    // к выполнению все
+    // Все актуальные
     if (data.selectedTaskTypes === "234gsfd345kgdsl23gf344") {
       array = array?.filter((task) => task?.isDone !== true);
     }
 
-    // К выполнению на этой неделе
+    // Актуальные на этой неделе
     if (data.selectedTaskTypes === "0543sadf23gdfs32423432") {
-      array = array?.filter((task) => 
-        dayjs(task.date).isBetween(startWeek, endWeek) && task?.isDone !== true
+      array = array?.filter(
+        (task) =>
+          dayjs(task.date).isBetween(startWeek, endWeek) &&
+          task?.isDone !== true
       );
     }
 
-    // Выполненные на этой неделе OK!
+    // Выполненные на этой неделе
     if (data.selectedTaskTypes === "9345ghfdxzws9765gf2342") {
-      array = array?.filter((task) => task?.isDone === true &&
-        dayjs(task.date).isBetween(startWeek, endWeek)
+      array = array?.filter(
+        (task) =>
+          task?.isDone === true &&
+          dayjs(task.date).isBetween(startWeek, endWeek)
       );
     }
 
-    // Выполненные за всё время OK!
+    // Выполненные за всё время
     if (data.selectedTaskTypes === "09432gdfsjk435gdsf3454") {
       array = array?.filter((task) => task?.isDone === true);
     }

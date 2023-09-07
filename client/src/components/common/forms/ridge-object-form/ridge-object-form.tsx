@@ -7,10 +7,9 @@ import SimpleSelectField from "../../inputs/simple-select-field";
 // store
 import { getMetroList } from "../../../../store/object/metro.store";
 import { getDistrictsList } from "../../../../store/object/districts.store";
-import { getObjectsStatusList } from "../../../../store/object/object-status.store";
+import { getRidgeObjectsStatusList } from "../../../../store/ridge-object/ridge-object-status.store";
 // styled
 import { FieldsContainer, Form } from "../styled/styled";
-import { getRidgeObjectsStatusList } from "../../../../store/ridge-object/ridge-object-status.store";
 
 const RidgeObjectForm = ({
   register,
@@ -73,7 +72,7 @@ const RidgeObjectForm = ({
             register={register}
             label="Найденные контакты"
             name="findedContacts"
-            rows="6"
+            rows="4"
             multiline={true}
             value={watchFindedContacts}
             onInputQuantities={900}
@@ -83,7 +82,7 @@ const RidgeObjectForm = ({
             register={register}
             label="Комментарий"
             name="comment"
-            rows="6"
+            rows="4"
             multiline={true}
             value={watchComment}
             onInputQuantities={900}

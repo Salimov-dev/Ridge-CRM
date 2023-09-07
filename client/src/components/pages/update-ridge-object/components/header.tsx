@@ -1,5 +1,4 @@
 import { Box, Typography, styled } from "@mui/material";
-import PageBackButton from "../../../common/buttons/page-back-button";
 import CloseButton from "../../../common/buttons/close-button";
 
 const Component = styled(Box)`

@@ -40,10 +40,10 @@ export const loadObjectConditionsList = () => async (dispatch) => {
   }
 };
 
-export const getobjectConditionsList = () => (state) =>
+export const getObjectConditionsList = () => (state) =>
   state.objectConditions.entities;
 
-export const getobjectConditionsStatus = () => (state) =>
+export const getObjectConditionsStatus = () => (state) =>
   state.objectConditions.isLoading;
 
 export const getEstateConditionNameById = (id) => (state) => {

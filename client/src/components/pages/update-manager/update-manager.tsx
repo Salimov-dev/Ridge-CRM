@@ -14,16 +14,14 @@ import ManagerForm from "../../common/forms/manager-form/manager-form";
 import { getUserStatusesList } from "../../../store/user/user-statuses.store";
 import { getUserDataById, updateUser } from "../../../store/user/users.store";
 import { getUpdateManagerId } from "../../../store/user/update-user.store";
-// other
-import { managerSchema } from "../../../schemas/schemas";
+// schema
+import { managerSchema } from "../../../schemas/manager-schema";
 
 const UpdateManager = ({ onClose }) => {
+  const dispatch = useDispatch();
   const userId = useSelector(getUpdateManagerId());
   const user = useSelector(getUserDataById(userId));
   const userStatuses = useSelector(getUserStatusesList());
-
-  const dispatch = useDispatch();
-
   const isEditMode = userId ? true : false;
 
   const formatedUser = {

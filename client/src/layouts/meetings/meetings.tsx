@@ -41,13 +41,14 @@ const initialState = {
 
 const Meetings = () => {
   const [selectedMeetingBaloon, setSelectedMeetingBaloon] = useState(null);
-  const meetings = useSelector(getMeetingsList());
   const columns = meetingsColumns;
+  const meetings = useSelector(getMeetingsList());
   const selectedMeeting = useSelector(getMeetingById(selectedMeetingBaloon));
   const isLoading = useSelector(getMeetingLoadingStatus());
 
   const center = [59.930320630519155, 30.32906024941998];
   const mapZoom = 11;
+
   const localStorageState = JSON.parse(
     localStorage.getItem("search-meetings-data")
   );

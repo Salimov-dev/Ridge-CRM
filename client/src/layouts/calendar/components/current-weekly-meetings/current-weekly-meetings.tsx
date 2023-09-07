@@ -1,16 +1,20 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, styled } from "@mui/material";
 import BasicTable from "../../../../components/common/table/basic-table";
 import { useSelector } from "react-redux";
 import { getMeetingLoadingStatus } from "../../../../store/meeting/meetings.store";
+
+const Title = styled(Box)`
+  margin-bottom: "10px";
+`;
 
 const CurrentWeeklyMeetings = ({ meetings, columns }) => {
   const isMeetingsLoading = useSelector(getMeetingLoadingStatus());
 
   return (
     <>
-      <Box sx={{ marginBottom: "10px" }}>
+      <Title>
         <Typography variant="h3">Встречи на текущей неделе:</Typography>
-      </Box>
+      </Title>
       <BasicTable
         items={meetings}
         itemsColumns={columns}

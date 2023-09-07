@@ -4,8 +4,8 @@ import { setCreateRidgeObjectOpenState } from "../../../../store/ridge-object/cr
 import { getRidgeObjectStatusLoading } from "../../../../store/ridge-object/ridge-object-status.store";
 
 const CreateRidgeObjectButton = () => {
-  const dispatch = useDispatch();
   const isLoading = useSelector(getRidgeObjectStatusLoading());
+  const dispatch = useDispatch();
 
   const handleOpenCreateRidgeObject = () => {
     dispatch(setCreateRidgeObjectOpenState(true));

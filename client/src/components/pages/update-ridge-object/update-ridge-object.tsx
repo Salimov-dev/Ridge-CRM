@@ -10,7 +10,8 @@ import Header from "./components/header";
 import Loader from "../../common/loader/loader";
 import RidgeObjectForm from "../../common/forms/ridge-object-form/ridge-object-form";
 // schemas
-import { ridgeObjectSchema } from "../../../schemas/schemas";
+
+import { ridgeObjectSchema } from "../../../schemas/ridge-object-schema";
 // store
 import { getUpdateRidgeObjectId } from "../../../store/ridge-object/update-ridge-object.store";
 import {

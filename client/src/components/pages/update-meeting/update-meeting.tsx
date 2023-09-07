@@ -11,7 +11,6 @@ import Header from "./components/header";
 import Loader from "../../common/loader/loader";
 import MeetingForm from "../../common/forms/meeting-form/meeting-form";
 // store
-import { meetingSchema } from "../../../schemas/schemas";
 import { getObjectsList } from "../../../store/object/objects.store";
 import { getCurrentUserId } from "../../../store/user/users.store";
 import { getMeetingTypesList } from "../../../store/meeting/meeting-types.store";
@@ -22,6 +21,8 @@ import {
   removeMeeting,
   updateMeeting,
 } from "../../../store/meeting/meetings.store";
+// schema
+import { meetingSchema } from "../../../schemas/meeting-schema";
 
 const UpdateMeeting = ({ onClose }) => {
   const objects = useSelector(getObjectsList());

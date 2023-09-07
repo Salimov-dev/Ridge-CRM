@@ -1,4 +1,5 @@
 // libraries
+import { Typography } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 // components
 import TableOpenButton from "../../components/common/buttons/table-open-button";
@@ -17,7 +18,7 @@ import {
   setUpdateManagerId,
   setUpdateManagerOpenState,
 } from "../../store/user/update-user.store";
-import { Typography } from "@mui/material";
+import { AlignCenter } from "../styled/styled";
 
 export const usersColumns = [
   {
@@ -44,9 +45,7 @@ export const usersColumns = [
         header: "Фамилия",
         cell: (info) => {
           const lastName = info.getValue();
-          return (
-            <Typography sx={{ textAlign: "center" }}>{lastName}</Typography>
-          );
+          return <AlignCenter>{lastName}</AlignCenter>;
         },
       },
       {
@@ -54,9 +53,7 @@ export const usersColumns = [
         header: "Имя",
         cell: (info) => {
           const firstName = info.getValue();
-          return (
-            <Typography sx={{ textAlign: "center" }}>{firstName}</Typography>
-          );
+          return <AlignCenter>{firstName}</AlignCenter>;
         },
       },
       {
@@ -64,9 +61,7 @@ export const usersColumns = [
         header: "Отчество",
         cell: (info) => {
           const surName = info.getValue();
-          return (
-            <Typography sx={{ textAlign: "center" }}>{surName}</Typography>
-          );
+          return <AlignCenter>{surName}</AlignCenter>;
         },
       },
       {
@@ -75,9 +70,9 @@ export const usersColumns = [
         cell: (info) => {
           const gender = info.getValue();
           return (
-            <Typography sx={{ textAlign: "center" }}>
+            <AlignCenter>
               {gendersArray.find((gen) => gen._id === gender).name}
-            </Typography>
+            </AlignCenter>
           );
         },
       },
@@ -86,11 +81,7 @@ export const usersColumns = [
         header: "ДР",
         cell: (info) => {
           const birthday = info.getValue();
-          return (
-            <Typography sx={{ textAlign: "center" }}>
-              {FormatDate(birthday)}
-            </Typography>
-          );
+          return <AlignCenter>{FormatDate(birthday)}</AlignCenter>;
         },
       },
     ],
@@ -103,11 +94,7 @@ export const usersColumns = [
         header: "Телефон",
         cell: (info) => {
           const phone = info.getValue();
-          return (
-            <Typography sx={{ textAlign: "center" }}>
-              {FormatPhone(phone)}
-            </Typography>
-          );
+          return <AlignCenter>{FormatPhone(phone)}</AlignCenter>;
         },
       },
       {
@@ -115,7 +102,7 @@ export const usersColumns = [
         header: "Email",
         cell: (info) => {
           const email = info.getValue();
-          return <Typography sx={{ textAlign: "center" }}>{email}</Typography>;
+          return <AlignCenter>{email}</AlignCenter>;
         },
       },
     ],
@@ -129,9 +116,7 @@ export const usersColumns = [
         cell: (info) => {
           const curatorId = info.getValue();
           return (
-            <Typography sx={{ textAlign: "center" }}>
-              {useSelector(getUserNameById(curatorId))}
-            </Typography>
+            <AlignCenter>{useSelector(getUserNameById(curatorId))}</AlignCenter>
           );
         },
       },
@@ -141,9 +126,9 @@ export const usersColumns = [
         cell: (info) => {
           const status = info.getValue();
           return (
-            <Typography sx={{ textAlign: "center" }}>
+            <AlignCenter>
               {useSelector(getUserStatusNameById(status))}
-            </Typography>
+            </AlignCenter>
           );
         },
       },
@@ -157,11 +142,7 @@ export const usersColumns = [
         header: "От",
         cell: (info) => {
           const startDate = info.getValue();
-          return (
-            <Typography sx={{ textAlign: "center" }}>
-              {FormatDate(startDate)}
-            </Typography>
-          );
+          return <AlignCenter>{FormatDate(startDate)}</AlignCenter>;
         },
       },
       {
@@ -169,11 +150,7 @@ export const usersColumns = [
         header: "До",
         cell: (info) => {
           const endDate = info.getValue();
-          return (
-            <Typography sx={{ textAlign: "center" }}>
-              {FormatDate(endDate)}
-            </Typography>
-          );
+          return <AlignCenter>{FormatDate(endDate)}</AlignCenter>;
         },
       },
       {
@@ -182,9 +159,9 @@ export const usersColumns = [
         cell: (info) => {
           const trialPeriod = info.getValue();
           return (
-            <Typography sx={{ textAlign: "center" }}>
+            <AlignCenter>
               {trialPeriod ? FormatDate(trialPeriod) : ""}
-            </Typography>
+            </AlignCenter>
           );
         },
       },
@@ -195,13 +172,23 @@ export const usersColumns = [
     header: "Править",
     enableSorting: false,
     cell: (info) => {
-      const userId = info.getValue();
       const dispatch = useDispatch();
+      const userId = info.getValue();
+
       const handleClick = () => {
         dispatch(setUpdateManagerId(userId));
         dispatch(setUpdateManagerOpenState(true));
       };
-      return <TableOpenButton text="Править" onClick={handleClick} />;
+
+      return (
+        <TableOpenButton
+          text="Править"
+          onClick={handleClick}
+          background="chocolate"
+          backgroudHover="sienna"
+          fontColorHover="white"
+        />
+      );
     },
   },
 ];

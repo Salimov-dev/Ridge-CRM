@@ -5,18 +5,10 @@ import { FieldsContainer, Form } from "../../common/forms/styled/styled";
 // mock
 import { taskDoneTypes } from "../../../mock/task-done-status";
 
-const CalendarFiltersPanel = ({ data, register, setValue, isLoading }) => {
+const TasksFiltersPanel = ({ data, register, setValue, isLoading }) => {
   return (
     <Form>
       <FieldsContainer>
-        <SearchField
-          register={register}
-          label="Найти по объекту"
-          name="object"
-          // value={data.object}
-          inputProps={{ maxLength: 30 }}
-          disabled={isLoading ? true : false}
-        />
         <SearchField
           register={register}
           label="Найти по задаче"
@@ -26,17 +18,16 @@ const CalendarFiltersPanel = ({ data, register, setValue, isLoading }) => {
           disabled={isLoading ? true : false}
         />
         <SimpleSelectField
-          register={register}
-          itemsList={taskDoneTypes}
-          selectedItems={data.selectedTaskTypes}
           name="selectedTaskTypes"
           labelId="selectedTaskTypes"
           label="Выбрать по выполнению"
+          register={register}
+          itemsList={taskDoneTypes}
+          selectedItems={data.selectedTaskTypes}
           value={data.selectedTaskTypes || ""}
           disabled={isLoading ? true : false}
         />
         <SearchSwitch
-          data={data}
           title="Задачи куратора"
           isLoading={isLoading}
           isChecked={data?.onlyMyTasks}
@@ -51,4 +42,4 @@ const CalendarFiltersPanel = ({ data, register, setValue, isLoading }) => {
   );
 };
 
-export default CalendarFiltersPanel;
+export default TasksFiltersPanel;

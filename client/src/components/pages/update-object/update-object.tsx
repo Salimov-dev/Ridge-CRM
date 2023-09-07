@@ -16,17 +16,17 @@ import {
   getObjectById,
   updateObject,
 } from "../../../store/object/objects.store";
-// other
-import { objectSchema } from "../../../schemas/schemas";
+// schema
+import { objectSchema } from "../../../schemas/object-schema";
 
 const UpdateObject = ({ onClose }) => {
+  const dispatch = useDispatch();
   const objectId = useSelector(getUpdateObjectId());
   const object = useSelector(getObjectById(objectId));
+
   const isEditMode = objectId ? true : false;
   const isObjectHasAddress =
     object?.location?.city && object?.location?.address;
-
-  const dispatch = useDispatch();
 
   const {
     register,
@@ -38,6 +38,7 @@ const UpdateObject = ({ onClose }) => {
     mode: "onBlur",
     resolver: yupResolver(objectSchema),
   });
+  const isValidAndHasAdress = isObjectHasAddress && isValid;
 
   const onSubmit = (data) => {
     dispatch(updateObject(data, objectId))
@@ -95,8 +96,7 @@ const UpdateObject = ({ onClose }) => {
         watch={watch}
         errors={errors}
         isEditMode={isEditMode}
-        isValid={isValid}
-        isObjectHasAddress={isObjectHasAddress}
+        isValid={isValidAndHasAdress}
       />
     </Box>
   ) : (

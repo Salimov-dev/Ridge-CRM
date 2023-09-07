@@ -1,4 +1,4 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Box, Divider, Typography, styled } from "@mui/material";
 // utils
 import { FormatDate } from "../../../utils/date/format-date";
@@ -12,6 +12,10 @@ import { getMeetingStatusNameById } from "../../../store/meeting/meeting-status.
 import Attribute from "../../common/map/baloon/attribute";
 import DividerStyled from "../../common/divider/divider-styled";
 import OpenObjectButton from "../../common/map/baloon/open-object-button";
+import {
+  setOpenObjectPageId,
+  setOpenObjectPageOpenState,
+} from "../../../store/object/open-object-page.store";
 
 const BaloonContainer = styled(Box)`
   width: 100%;
@@ -24,14 +28,22 @@ const BaloonContainer = styled(Box)`
 `;
 
 const MeetingBaloon = ({ meeting }) => {
+  const dispatch = useDispatch();
   const object = useSelector(getObjectById(meeting?.objectId));
   const objectId = meeting?.objectId;
   const objectAddress = `${object?.location.city}, ${object?.location.address}`;
+
   const meetingType = useSelector(getMeetingTypeNameById(meeting?.meetingType));
   const status = useSelector(getMeetingStatusNameById(meeting?.status));
   const manager = useSelector(getUserNameById(meeting?.userId));
+
   const time = FormatTime(meeting?.time);
   const date = FormatDate(meeting?.date);
+
+  const handleOpenObjectPage = () => {
+    dispatch(setOpenObjectPageId(objectId));
+    dispatch(setOpenObjectPageOpenState(true));
+  };
 
   return (
     <BaloonContainer>
@@ -55,7 +67,7 @@ const MeetingBaloon = ({ meeting }) => {
       <Attribute title="" subTitle={objectAddress} gap="0" />
       <Divider />
 
-      <OpenObjectButton path={`/objects/${objectId}`} />
+      <OpenObjectButton onClick={handleOpenObjectPage} />
     </BaloonContainer>
   );
 };

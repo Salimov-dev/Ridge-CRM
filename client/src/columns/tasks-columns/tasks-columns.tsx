@@ -11,7 +11,7 @@ import DoneStatusIcon from "../../components/common/columns/done-status-icon";
 // store
 import { getObjectById } from "../../store/object/objects.store";
 import {
-  setupdateMyTaskId,
+  setUpdateMyTaskId,
   setUpdateMyTaskOpenState,
 } from "../../store/task/update-my-task.store";
 import { getTaskById } from "../../store/task/tasks.store";
@@ -28,6 +28,8 @@ import {
 // utils
 import { FormatDate } from "../../utils/date/format-date";
 import { FormatTime } from "../../utils/date/format-time";
+import { AlignCenter } from "../styled/styled";
+import EmptyTd from "../components/empty-td";
 
 export const tasksColumns = [
   {
@@ -61,9 +63,7 @@ export const tasksColumns = [
     enableSorting: false,
     cell: (info) => {
       const time = info.getValue();
-      return (
-        <Typography sx={{ textAlign: "center" }}>{FormatTime(time)}</Typography>
-      );
+      return <AlignCenter>{FormatTime(time)}</AlignCenter>;
     },
   },
   {
@@ -101,7 +101,7 @@ export const tasksColumns = [
               ) : null}
             </>
           ) : (
-            "-"
+            <EmptyTd />
           )}
         </Box>
       );
@@ -112,11 +112,7 @@ export const tasksColumns = [
     header: "Задачу поставил",
     cell: (info) => {
       const userId = info.getValue();
-      return (
-        <Typography sx={{ textAlign: "center" }}>
-          {FormatManagerName(userId)}
-        </Typography>
-      );
+      return <AlignCenter>{FormatManagerName(userId)}</AlignCenter>;
     },
   },
   {
@@ -125,9 +121,9 @@ export const tasksColumns = [
     cell: (info) => {
       const managerId = info.getValue();
       return (
-        <Typography sx={{ textAlign: "center" }}>
-          {managerId ? FormatManagerName(managerId) : "-"}
-        </Typography>
+        <AlignCenter>
+          {managerId ? FormatManagerName(managerId) : <EmptyTd />}
+        </AlignCenter>
       );
     },
   },
@@ -140,13 +136,19 @@ export const tasksColumns = [
     },
   },
   {
+    accessorKey: "result",
+    header: "Результат",
+    cell: (info) => {
+      const comment = info.getValue();
+      return comment ? comment : <EmptyTd />;
+    },
+  },
+  {
     accessorKey: "created_at",
     header: "Дата создания",
     cell: (info) => {
       const date = info.getValue();
-      return (
-        <Typography sx={{ textAlign: "center" }}>{FormatDate(date)}</Typography>
-      );
+      return <AlignCenter>{FormatDate(date)}</AlignCenter>;
     },
   },
   {
@@ -166,7 +168,7 @@ export const tasksColumns = [
           dispatch(setUpdateManagerTaskOpenState(true));
           dispatch(setUpdateManagerTaskId(taskId));
         } else {
-          dispatch(setupdateMyTaskId(taskId));
+          dispatch(setUpdateMyTaskId(taskId));
           dispatch(setUpdateMyTaskOpenState(true));
         }
       };

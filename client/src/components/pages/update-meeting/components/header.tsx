@@ -29,7 +29,7 @@ const Header = ({ meeting, onClose }) => {
             variant="h2"
             sx={{ background: "yellow", color: "black", marginLeft: "4px" }}
           >
-            {FormatDate(meeting?.date, "h2")}
+            {FormatDate(meeting?.date)}
           </Typography>
           <Typography
             variant="h2"
@@ -41,7 +41,7 @@ const Header = ({ meeting, onClose }) => {
             variant="h2"
             sx={{ background: "yellow", color: "black" }}
           >
-            {FormatTime(meeting?.time, "h2")}
+            {FormatTime(meeting?.time)}
           </Typography>
         </Box>
         <Typography variant="h2" sx={{ background: "yellow", color: "black" }}>

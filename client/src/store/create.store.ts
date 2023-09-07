@@ -1,10 +1,12 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 // objects
 import objectsReducer from "./object/objects.store";
+import updateObjectReducer from "./object/update-object.store";
+import openObjectPageReducer from "./object/open-object-page.store";
+// objects params
 import objectTypesReducer from "./object/object-types.store";
 import objectStatusReducer from "./object/object-status.store";
 import objectConditionsReducer from "./object/object-conditions.store";
-// objects params
 import metroReducer from "./object/metro.store";
 import districtsReducer from "./object/districts.store";
 import rentTypesReducer from "./object/rent-types.store";
@@ -15,29 +17,29 @@ import workingPositionReducer from "./user/working-position.store";
 import meetingsReducer from "./meeting/meetings.store";
 import meetingTypesReducer from "./meeting/meeting-types.store";
 import meetingStatusesReducer from "./meeting/meeting-status.store";
+import createMeetingReducer from "./meeting/create-meeting.store";
+import updateMeetingReducer from "./meeting/update-meeting.store";
 // users
 import usersListReducer from "./user/users.store";
 import userStatusesReducer from "./user/user-statuses.store";
+import updateManagerReducer from "./user/update-user.store";
+import updateManagerTaskReducer from "./task/update-manager-task.store";
 // tasks
 import tasksReducer from "./task/tasks.store";
-// other
-import sidebarCollapsStateReducer from "./sidebar-collaps-state.store";
-import monthIndexReducer from "./month-index.store";
-import updateMeetingReducer from "./meeting/update-meeting.store";
-import updateObjectReducer from "./object/update-object.store";
-import updateManagerReducer from "./user/update-user.store";
 import updateMyTaskReducer from "./task/update-my-task.store";
-import updateManagerTaskReducer from "./task/update-manager-task.store";
-import openObjectPageReducer from "./object/open-object-page.store";
+import createManagerTaskReducer from "./task/create-manager-task.store";
+import createObjectReducer from "./object/create-object.store";
+import createMyTaskReducer from "./task/create-my-task.store";
+// ridge
 import ridgeObjectsReducer from "./ridge-object/ridge-objects.store";
 import ridgeObjectStatusReducer from "./ridge-object/ridge-object-status.store";
-import createMeetingReducer from "./meeting/create-meeting.store";
-import createManagerTaskReducer from "./task/create-manager-task.store";
-import createMyTaskReducer from "./task/create-my-task.store";
-import createObjectReducer from "./object/create-object.store";
 import createRidgeObjectReducer from "./ridge-object/create-ridge-object.store";
 import updateRidgeObjectReducer from "./ridge-object/update-ridge-object.store";
 import createObjectFromRidgeReducer from "./ridge-object/create-object-from-ridge.store";
+// other
+import sidebarCollapsStateReducer from "./sidebar-collaps-state.store";
+import monthIndexReducer from "./month-index.store";
+import createUserReducer from "./user/create-user.store";
 
 const rootReducer = combineReducers({
   // objects
@@ -46,8 +48,8 @@ const rootReducer = combineReducers({
   objectConditions: objectConditionsReducer,
   objectTypes: objectTypesReducer,
   openObjectPage: openObjectPageReducer,
-  updateObject: updateObjectReducer,
   createObject: createObjectReducer,
+  updateObject: updateObjectReducer,
   // objects params
   metro: metroReducer,
   districts: districtsReducer,
@@ -59,12 +61,13 @@ const rootReducer = combineReducers({
   users: usersListReducer,
   userStatuses: userStatusesReducer,
   updateManager: updateManagerReducer,
+  createUser: createUserReducer,
   // meetings
   meetingStatuses: meetingStatusesReducer,
   meetings: meetingsReducer,
   meetingTypes: meetingTypesReducer,
-  updateMeeting: updateMeetingReducer,
   createMeeting: createMeetingReducer,
+  updateMeeting: updateMeetingReducer,
   // tasks
   tasks: tasksReducer,
   createMyTask: createMyTaskReducer,
@@ -77,8 +80,8 @@ const rootReducer = combineReducers({
   ridgeObjects: ridgeObjectsReducer,
   ridgeObjectStatus: ridgeObjectStatusReducer,
   createRidgeObject: createRidgeObjectReducer,
-  updateRidgeObject: updateRidgeObjectReducer,
   createObjectFromRidge: createObjectFromRidgeReducer,
+  updateRidgeObject: updateRidgeObjectReducer,
   // other
   sidebarCollapsState: sidebarCollapsStateReducer,
 });

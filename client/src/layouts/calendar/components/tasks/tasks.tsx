@@ -1,9 +1,9 @@
+import { useSelector } from "react-redux";
 import { Box, Typography, styled } from "@mui/material";
 import CreateButtons from "../header/components/create-buttons";
 import BasicTable from "../../../../components/common/table/basic-table";
-import CalendarFiltersPanel from "../../../../components/UI/filters-panels/calendar-filters-panel";
-import { useSelector } from "react-redux";
 import { getTaskLoadingStatus } from "../../../../store/task/tasks.store";
+import TasksFiltersPanel from "../../../../components/UI/filters-panels/tasks-filters-panel";
 
 const Header = styled(Box)`
   display: flex;
@@ -21,7 +21,7 @@ const Tasks = ({ register, data, tasks, columns, setValue }) => {
         <Typography variant="h3">Задачи:</Typography>
         <CreateButtons />
       </Header>
-      <CalendarFiltersPanel
+      <TasksFiltersPanel
         data={data}
         register={register}
         setValue={setValue}

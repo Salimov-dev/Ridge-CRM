@@ -9,8 +9,8 @@ const CreateMyTaskButton = ({
   color = "inherit",
   isMyTask = false,
 }) => {
-  const dispatch = useDispatch();
   const isLoading = useSelector(getTaskLoadingStatus());
+  const dispatch = useDispatch();
 
   const handleOpenCreateMyTask = () => {
     dispatch(setCreateMyTaskOpenState(true));

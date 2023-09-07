@@ -11,7 +11,6 @@ import { Map, Placemark, Clusterer } from "@pbe/react-yandex-maps";
 import target_cluster from "../../../../assets/map/target_cluster.png";
 // styles
 import "./styles.css";
-import ObjectBaloon from "../../../UI/maps/object-baloon";
 
 const MapContainer = styled(Box)`
   width: 100%;

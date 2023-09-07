@@ -14,7 +14,7 @@ import {
   getCurrentUserId,
 } from "../../../store/user/users.store";
 // schema
-import { managerSchema } from "../../../schemas/schemas";
+import { managerSchema } from "../../../schemas/manager-schema";
 // utils
 import getRandomInt from "../../../utils/other/get-random-int";
 

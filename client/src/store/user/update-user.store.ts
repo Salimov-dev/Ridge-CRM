@@ -20,16 +20,20 @@ const { reducer: updateManagerReducer, actions } = updateManagerSlice;
 
 const { updateManagerOpenSetted, updateManagerId } = actions;
 
+export const loadUpdateManagerOpenState = () => (state) => {
+  return state?.updateManager?.entities;
+};
+
 export const setUpdateManagerOpenState = (payload) => (dispatch) => {
   dispatch(updateManagerOpenSetted(payload));
 };
 
-export const setUpdateManagerId = (payload) => (dispatch) => {
-  dispatch(updateManagerId(payload));
+export const getUpdateManagerOpenState = () => (state) => {
+  return state?.updateManager?.entities;
 };
 
-export const loadUpdateManagerOpenState = () => (state) => {
-  return state?.updateManager?.entities;
+export const setUpdateManagerId = (payload) => (dispatch) => {
+  dispatch(updateManagerId(payload));
 };
 
 export const getUpdateManagerId = () => (state) => {

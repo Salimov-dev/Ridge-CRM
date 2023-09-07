@@ -14,7 +14,7 @@ import { createTask } from "../../../store/task/tasks.store";
 // utils
 import { capitalizeFirstLetter } from "../../../utils/data/capitalize-first-letter";
 // schema
-import { taskSchema } from "../../../schemas/schemas";
+import { taskSchema } from "../../../schemas/task-shema";
 
 const initialState = {
   comment: "",
@@ -51,6 +51,7 @@ const CreateManagerTask = ({
   const watchDate = watch("date", null);
   const watchTime = watch("time", null);
   const watchManagerId = watch("managerId", null);
+  
   const isFullValid = !watchDate || !watchTime || !watchManagerId || !isValid;
 
   const onSubmit = () => {

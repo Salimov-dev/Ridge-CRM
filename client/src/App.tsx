@@ -16,14 +16,7 @@ import Presentations from "./layouts/presentations/presentations";
 import TopBar from "./components/UI/topbar/topbar";
 import Sidebar from "./components/UI/sidebar/sidebar";
 import Footer from "./components/common/footer/footer";
-import ObjectPage from "./components/pages/object-page/object-page";
-import CreateObject from "./components/pages/create-object/create-object";
-import UpdateObject from "./components/pages/update-object/update-object";
 import UpdateProfile from "./components/pages/update-profile/update-profile";
-import CreateManager from "./components/pages/create-manager/create-manager";
-import UpdateManager from "./components/pages/update-manager/update-manager";
-import CreateMeeting from "./components/pages/create-meeting/create-meeting";
-import UpdateMeeting from "./components/pages/update-meeting/update-meeting";
 // styled
 import "react-toastify/dist/ReactToastify.css";
 import { AppStyled, RightSide } from "./styled";

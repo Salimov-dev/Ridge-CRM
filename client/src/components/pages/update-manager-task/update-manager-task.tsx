@@ -18,7 +18,8 @@ import {
   updateMyTask,
 } from "../../../store/task/tasks.store";
 // schema
-import { taskSchema } from "../../../schemas/schemas";
+import { taskSchema } from "../../../schemas/task-shema";
+
 
 const UpdateManagerTask = ({ title, onClose, objects, users }) => {
   const dispatch = useDispatch();

@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 // components
 import ObjectPageBaloon from "../../UI/maps/object-page-baloon";
 import Header from "./header/header";
-import Loader from "../../common/loader/loader";
 import ObjectInfo from "./object-info/object-info";
 import FooterButtons from "./footer-buttons/footer-buttons";
 import ItemOnMap from "../../common/map/item-on-map/item-on-map";
@@ -19,6 +18,7 @@ import {
 } from "../../../store/object/update-object.store";
 
 const ObjectPage = ({ onClose }) => {
+  const dispatch = useDispatch();
   const objectId = useSelector(getOpenObjectPageId());
   const object = useSelector(getObjectById(objectId));
   const isLoading = useSelector(getObjectsLoadingStatus());
@@ -28,8 +28,6 @@ const ObjectPage = ({ onClose }) => {
   const longitude = object?.location?.longitude || null;
   const mapZoom = object?.location?.zoom || null;
   const center = [latitude, longitude];
-
-  const dispatch = useDispatch();
 
   const handleOpenEditObject = () => {
     dispatch(setUpdateObjectId(objectId));

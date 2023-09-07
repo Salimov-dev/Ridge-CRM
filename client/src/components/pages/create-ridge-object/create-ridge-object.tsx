@@ -1,15 +1,20 @@
-import { yupResolver } from "@hookform/resolvers/yup";
-import { useForm } from "react-hook-form";
-import useFindObject from "../../../hooks/object/use-find-object";
-import { capitalizeFirstLetter } from "../../../utils/data/capitalize-first-letter";
-import { toast } from "react-toastify";
 import { useEffect } from "react";
+import { toast } from "react-toastify";
+import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
+import { yupResolver } from "@hookform/resolvers/yup";
+// components
 import TitleWithAddress from "../../common/page-titles/title-with-address";
 import FindObjectOnMap from "../../common/find-object-on-map/find-object-on-map";
 import RidgeObjectForm from "../../common/forms/ridge-object-form/ridge-object-form";
-import { ridgeObjectSchema } from "../../../schemas/schemas";
+// hooks
+import useFindObject from "../../../hooks/object/use-find-object";
+// utils
+import { capitalizeFirstLetter } from "../../../utils/data/capitalize-first-letter";
+// store
 import { createRidgeObject } from "../../../store/ridge-object/ridge-objects.store";
+// schema
+import { ridgeObjectSchema } from "../../../schemas/ridge-object-schema";
 
 const initialState = {
   findedContacts: "",
@@ -24,6 +29,7 @@ const initialState = {
 };
 
 const CreateRidgeObject = ({ onClose }) => {
+  const dispatch = useDispatch();
   const {
     register,
     watch,
@@ -44,9 +50,9 @@ const CreateRidgeObject = ({ onClose }) => {
     findedObject,
   } = useFindObject();
 
-  const dispatch = useDispatch();
   const watchAddress = watch("location.address", "");
   const watchCity = watch("location.city", "");
+
   const isFindedObject = Boolean(Object.keys(findedObject)?.length);
   const isObjectHasAddress = Boolean(watchCity) && Boolean(watchAddress);
 
@@ -60,8 +66,7 @@ const CreateRidgeObject = ({ onClose }) => {
         zoom: 16,
       },
     };
-    console.log("newData", newData);
-
+ 
     dispatch(createRidgeObject(newData))
       .then(onClose())
       .then(toast.success("Объект с грядки собран!"));
@@ -77,8 +82,8 @@ const CreateRidgeObject = ({ onClose }) => {
     <>
       <TitleWithAddress
         isFindedObject={isFindedObject}
-        getCity={getCity}
-        getAddress={getAddress}
+        city={getCity()}
+        address={getAddress()}
         title="Создать объект:"
         subtitle="Выберите объект на карте"
         onClose={onClose}
@@ -93,8 +98,6 @@ const CreateRidgeObject = ({ onClose }) => {
         isValid={isValid}
         watch={watch}
         errors={errors}
-        isFindedObject={isFindedObject}
-        isObjectHasAddress={isObjectHasAddress}
         onClose={onClose}
       />
     </>

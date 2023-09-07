@@ -55,51 +55,51 @@ const ObjectsFiltersPanel = ({
           disabled={isLoading ? true : false}
         />
         <MultiSelectField
-          itemsList={getActualStatusesList()}
-          selectedItems={data.selectedStatuses}
-          onChange={(e) => setValue("selectedStatuses", e.target.value)}
           name="status"
           labelId="status-label"
           label="Выбор по статусу"
+          itemsList={getActualStatusesList()}
+          selectedItems={data.selectedStatuses}
+          onChange={(e) => setValue("selectedStatuses", e.target.value)}
           disabled={isLoading ? true : false}
         />
         <MultiSelectField
-          itemsList={getActualUsersList()}
-          selectedItems={data.selectedUsers}
-          onChange={(e) => setValue("selectedUsers", e.target.value)}
           name="users"
           labelId="users-label"
           label="Выбор по менеджеру"
+          itemsList={getActualUsersList()}
+          selectedItems={data.selectedUsers}
+          onChange={(e) => setValue("selectedUsers", e.target.value)}
           disabled={isLoading ? true : false}
         />
       </FieldsContainer>
 
       <FieldsContainer>
         <MultiSelectField
-          itemsList={getActualMetroList()}
-          selectedItems={data.selectedMetro}
-          onChange={(e) => setValue("selectedMetro", e.target.value)}
           name="metro"
           labelId="metro-label"
           label="Выбор по метро"
+          itemsList={getActualMetroList()}
+          selectedItems={data.selectedMetro}
+          onChange={(e) => setValue("selectedMetro", e.target.value)}
           disabled={isLoading ? true : false}
         />
         <MultiSelectField
-          itemsList={getActualDistrictsList()}
-          selectedItems={data.selectedDistricts}
-          onChange={(e) => setValue("selectedDistricts", e.target.value)}
           name="districts"
           labelId="districts-label"
           label="Выбор по району"
+          itemsList={getActualDistrictsList()}
+          selectedItems={data.selectedDistricts}
+          onChange={(e) => setValue("selectedDistricts", e.target.value)}
           disabled={isLoading ? true : false}
         />
         <MultiSelectField
-          itemsList={getActualCitiesList()}
-          selectedItems={data.selectedCities}
-          onChange={(e) => setValue("selectedCities", e.target.value)}
           name="cities"
           labelId="cities-label"
           label="Выбор по городу"
+          itemsList={getActualCitiesList()}
+          selectedItems={data.selectedCities}
+          onChange={(e) => setValue("selectedCities", e.target.value)}
           disabled={isLoading ? true : false}
         />
         <SearchSelectField

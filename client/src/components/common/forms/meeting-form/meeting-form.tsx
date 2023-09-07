@@ -34,6 +34,7 @@ const MeetingForm = ({
   const watchStatus = watch("status", "");
   const watchObjectId = watch("objectId", "");
   const watchTypeMeeting = watch("meetingType", "");
+  const watchIsDone = watch("isDone", false);
 
   return (
     <>
@@ -55,19 +56,19 @@ const MeetingForm = ({
           />
           <SimpleSelectField
             register={register}
-            itemsList={meetingTypes}
             name="meetingType"
             labelId="meetingType"
             label="Тип встречи"
+            itemsList={meetingTypes}
             value={watchTypeMeeting}
             errors={errors?.meetingType}
           />
           <SimpleSelectField
             register={register}
-            itemsList={statuses}
             name="status"
             labelId="status"
             label="Статус"
+            itemsList={statuses}
             value={watchStatus}
             errors={errors?.status}
           />
@@ -76,10 +77,10 @@ const MeetingForm = ({
         <FieldsContainer>
           <SimpleSelectField
             register={register}
-            itemsList={objects}
             name="objectId"
             labelId="objectId"
             label="Объект встречи"
+            itemsList={objects}
             value={watchObjectId}
             errors={errors?.objectId}
             disabled={Boolean(objectPageId)}
@@ -113,7 +114,7 @@ const MeetingForm = ({
         {isEditMode ? (
           <SimpleSwitch
             title="Встреча выполненна"
-            checked={data?.isDone}
+            value={watchIsDone}
             isLoading={isMeetingsLoading}
             onChange={(e) => {
               setValue("isDone", e.target.checked);

@@ -32,30 +32,30 @@ const MeetingsFiltersPanel = ({ data, register, setValue, isLoading }) => {
           disabled={isLoading ? true : false}
         />
         <MultiSelectField
-          itemsList={getActualUsersList()}
-          selectedItems={data.selectedUsers}
-          onChange={(e) => setValue("selectedUsers", e.target.value)}
           name="users"
           labelId="users-label"
           label="Выбор по менеджеру"
+          itemsList={getActualUsersList()}
+          selectedItems={data.selectedUsers}
+          onChange={(e) => setValue("selectedUsers", e.target.value)}
           disabled={isLoading ? true : false}
         />
         <MultiSelectField
-          itemsList={getActualStatusesList()}
-          selectedItems={data.selectedStatuses}
-          onChange={(e) => setValue("selectedStatuses", e.target.value)}
           name="selectedStatuses"
           labelId="selectedStatuses-label"
           label="Выбор по статусу"
+          itemsList={getActualStatusesList()}
+          selectedItems={data.selectedStatuses}
+          onChange={(e) => setValue("selectedStatuses", e.target.value)}
           disabled={isLoading ? true : false}
         />
         <MultiSelectField
-          itemsList={getActuaTypesList()}
-          selectedItems={data.selectedTypes}
-          onChange={(e) => setValue("selectedTypes", e.target.value)}
           name="selectedTypes"
           labelId="selectedTypes-label"
           label="Выбор по типу"
+          itemsList={getActuaTypesList()}
+          selectedItems={data.selectedTypes}
+          onChange={(e) => setValue("selectedTypes", e.target.value)}
           disabled={isLoading ? true : false}
         />
         <SearchSelectField

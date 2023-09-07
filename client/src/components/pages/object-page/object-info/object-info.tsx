@@ -26,12 +26,14 @@ const Component = styled(Box)`
 `;
 
 const ObjectInfo = ({ object, isLoading }) => {
+  const objects = useSelector(getObjectsList());
   const meetings = useSelector(getObjectMeetingsList(object?._id));
   const sortedMeetings = orderBy(meetings, ["date"], ["asc"]);
+
   const tasks = useSelector(getObjectTasksList(object?._id));
   const sortedTasks = orderBy(tasks, ["date"], ["asc"]);
+
   const users = useSelector(getUsersList());
-  const objects = useSelector(getObjectsList());
   const currentUserId = useSelector(getCurrentUserId());
   const usersWithoutCurrentUser = users.filter(
     (user) => user?._id !== currentUserId
@@ -58,6 +60,7 @@ const ObjectInfo = ({ object, isLoading }) => {
       <ObjectsParams object={object} isLoading={isLoading} />
       <ObjectMeetings meetings={sortedMeetings} object={object} />
       <ObjectTasks tasks={sortedTasks} object={object} />
+      
       <Dialogs objects={transformObjects} users={transformUsers} />
     </Component>
   ) : (

@@ -1,10 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
+import DialogStyled from "../../../common/dialog/dialog-styled";
+import UpdateMeeting from "../../../pages/update-meeting/update-meeting";
 import {
   loadUpdateMeetingOpenState,
   setUpdateMeetingOpenState,
 } from "../../../../store/meeting/update-meeting.store";
-import DialogStyled from "../../../common/dialog/dialog-styled";
-import UpdateMeeting from "../../../pages/update-meeting/update-meeting";
 
 const MeetingUpdateDialog = () => {
   const dispatch = useDispatch();

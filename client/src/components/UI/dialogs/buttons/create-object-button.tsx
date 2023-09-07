@@ -4,8 +4,8 @@ import { getObjectsLoadingStatus } from "../../../../store/object/objects.store"
 import { setCreateObjectOpenState } from "../../../../store/object/create-object.store";
 
 const CreateObjectButton = () => {
-  const dispatch = useDispatch();
   const isLoading = useSelector(getObjectsLoadingStatus());
+  const dispatch = useDispatch();
 
   const handleOpenCreateObject = () => {
     dispatch(setCreateObjectOpenState(true));

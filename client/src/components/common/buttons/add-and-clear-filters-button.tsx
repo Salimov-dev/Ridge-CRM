@@ -14,9 +14,9 @@ const ButtonStyled = styled(Button)`
 `;
 
 const AddAndClearFiltersButton = ({
+  initialState,
   isInputEmpty,
   reset,
-  initialState,
   button,
 }) => {
   const handleClearForm = () => {

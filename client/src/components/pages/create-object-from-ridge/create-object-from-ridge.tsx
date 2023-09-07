@@ -6,21 +6,15 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 // components
 import ObjectForm from "../../common/forms/object-form/object-form";
-import FindObjectOnMap from "../../common/find-object-on-map/find-object-on-map";
 import TitleWithAddress from "../../common/page-titles/title-with-address";
 // store
-import {
-  createObject,
-  getObjectById,
-} from "../../../store/object/objects.store";
-// schemas
-import { objectSchema } from "../../../schemas/schemas";
-// hooks
-import useFindObject from "../../../hooks/object/use-find-object";
-// utils
-import { capitalizeFirstLetter } from "../../../utils/data/capitalize-first-letter";
 import { getUpdateObjectFromRidgeObjectId } from "../../../store/ridge-object/create-object-from-ridge.store";
 import { getRidgeObjectById } from "../../../store/ridge-object/ridge-objects.store";
+import { createObject } from "../../../store/object/objects.store";
+// schemas
+import { ridgeObjectSchema } from "../../../schemas/ridge-object-schema";
+// utils
+import { capitalizeFirstLetter } from "../../../utils/data/capitalize-first-letter";
 
 const initialState = {
   status: "",
@@ -65,10 +59,9 @@ const initialState = {
 };
 
 const CreateObjectFromRidge = ({ onClose }) => {
+  const dispatch = useDispatch();
   const objectId = useSelector(getUpdateObjectFromRidgeObjectId());
   const object = useSelector(getRidgeObjectById(objectId));
-
-  console.log("object", object);
 
   const comment = object?.comment;
   const city = object?.location?.city;
@@ -78,7 +71,6 @@ const CreateObjectFromRidge = ({ onClose }) => {
   const latitude = object?.location?.latitude;
   const longitude = object?.location?.longitude;
 
-  console.log("city", city);
   const {
     register,
     watch,
@@ -88,12 +80,8 @@ const CreateObjectFromRidge = ({ onClose }) => {
   } = useForm({
     defaultValues: initialState,
     mode: "onBlur",
-    resolver: yupResolver(objectSchema),
+    resolver: yupResolver(ridgeObjectSchema),
   });
-
-  const dispatch = useDispatch();
-  const data = watch();
-  console.log("data", data);
 
   const onSubmit = (data) => {
     const newData = {

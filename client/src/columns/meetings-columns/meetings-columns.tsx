@@ -6,6 +6,7 @@ import { Box, Typography } from "@mui/material";
 import GoToButton from "../../components/common/buttons/go-to-button";
 import { FormatManagerName } from "../../components/common/table/helpers/helpers";
 import TableOpenButton from "../../components/common/buttons/table-open-button";
+import DoneStatusIcon from "../../components/common/columns/done-status-icon";
 // store
 import { getObjectById } from "../../store/object/objects.store";
 import { getMeetingStatusNameById } from "../../store/meeting/meeting-status.store";
@@ -22,8 +23,8 @@ import {
   setOpenObjectPageId,
   setOpenObjectPageOpenState,
 } from "../../store/object/open-object-page.store";
+// styled
 import { AlignCenter } from "../styled/styled";
-import DoneStatusIcon from "../../components/common/columns/done-status-icon";
 
 export const meetingsColumns = [
   {
@@ -46,7 +47,7 @@ export const meetingsColumns = [
       return (
         <Box sx={{ display: "flex", gap: "6px" }}>
           <Typography>{formattedDate}</Typography>
-          <Typography>{dayOfWeek}</Typography>{" "}
+          <Typography>{dayOfWeek}</Typography>
         </Box>
       );
     },
@@ -57,9 +58,7 @@ export const meetingsColumns = [
     enableSorting: false,
     cell: (info) => {
       const time = info.getValue();
-      return (
-        <Typography sx={{ textAlign: "center" }}>{FormatTime(time)}</Typography>
-      );
+      return <AlignCenter>{FormatTime(time)}</AlignCenter>;
     },
   },
   {
@@ -80,7 +79,7 @@ export const meetingsColumns = [
     cell: (info) => {
       const type = info.getValue();
       const name = useSelector(getMeetingTypeNameById(type));
-      return <Typography sx={{ textAlign: "center" }}>{name}</Typography>;
+      return <AlignCenter>{name}</AlignCenter>;
     },
   },
   {
@@ -149,9 +148,7 @@ export const meetingsColumns = [
     header: "Дата создания",
     cell: (info) => {
       const date = info.getValue();
-      return (
-        <Typography sx={{ textAlign: "center" }}>{FormatDate(date)}</Typography>
-      );
+      return <AlignCenter>{FormatDate(date)}</AlignCenter>;
     },
   },
   {

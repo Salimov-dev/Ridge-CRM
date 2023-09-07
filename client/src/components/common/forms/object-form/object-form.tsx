@@ -23,7 +23,7 @@ import { getEstateTypesList } from "../../../../store/object/estate-types.store"
 import { getObjectsStatusList } from "../../../../store/object/object-status.store";
 import { getCurrentRentersList } from "../../../../store/object/current-renter.store";
 import { getWorkingPositionsList } from "../../../../store/user/working-position.store";
-import { getobjectConditionsList } from "../../../../store/object/object-conditions.store";
+import { getObjectConditionsList } from "../../../../store/object/object-conditions.store";
 // styled
 import { FieldsContainer, Form } from "../styled/styled";
 
@@ -42,7 +42,7 @@ const ObjectForm = ({
   const workingPositions = useSelector(getWorkingPositionsList());
   const objectStatuses = useSelector(getObjectsStatusList());
   const currentRenters = useSelector(getCurrentRentersList());
-  const objectConditions = useSelector(getobjectConditionsList());
+  const objectConditions = useSelector(getObjectConditionsList());
 
   const watchName = watch("contact.name", "");
   const watchStatus = watch("status", "");
@@ -96,10 +96,10 @@ const ObjectForm = ({
         <FieldsContainer>
           <SimpleSelectField
             register={register}
-            itemsList={objectTypes}
             name="estateOptions.objectTypes"
             labelId="objectTypes "
             label="Тип объекта*"
+            itemsList={objectTypes}
             value={watchObjectTypes || ""}
             errors={errors?.estateOptions?.objectTypes}
           />

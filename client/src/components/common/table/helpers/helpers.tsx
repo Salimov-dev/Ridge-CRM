@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import dayjs from "dayjs";
 // utils
 import { enterPhoneFormat } from "../../../../utils/data/enter-phone-format";

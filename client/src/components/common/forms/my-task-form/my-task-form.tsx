@@ -50,10 +50,10 @@ const MyTaskForm = ({
 
       <SimpleSelectField
         register={register}
-        itemsList={objects}
         name="objectId"
         labelId="objectId"
         label="Объект задачи"
+        itemsList={objects}
         value={watchObjectId}
         disabled={isObjectPage}
       />

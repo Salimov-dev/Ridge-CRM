@@ -6,9 +6,10 @@ import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 // MUI
 import { Box } from "@mui/material";
+// columns
+import { objectsColumns } from "../../columns/objects-columns/objects-columns";
 // components
 import ObjectBaloon from "../../components/UI/maps/object-baloon";
-import { objectsColumns } from "../../columns/objects-columns/objects-columns";
 import ObjectsFiltersPanel from "../../components/UI/filters-panels/obects-filters-panel";
 import BasicTable from "../../components/common/table/basic-table";
 import LayoutTitle from "../../components/common/page-titles/layout-title";
@@ -48,10 +49,11 @@ const Objects = () => {
   const [selectedBaloon, setSelectedBaloon] = useState(null);
   const objects = useSelector(getObjectsList());
   const selectedObject = useSelector(getObjectById(selectedBaloon));
+  const isLoading = useSelector(getObjectsLoadingStatus());
   const columns = objectsColumns;
+
   const center = [59.930320630519155, 30.32906024941998];
   const mapZoom = 11;
-  const isLoading = useSelector(getObjectsLoadingStatus());
 
   const localStorageState = JSON.parse(
     localStorage.getItem("search-objects-data")

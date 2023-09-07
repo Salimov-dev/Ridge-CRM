@@ -11,7 +11,7 @@ import TitleWithAddress from "../../common/page-titles/title-with-address";
 // store
 import { createObject } from "../../../store/object/objects.store";
 // schemas
-import { objectSchema } from "../../../schemas/schemas";
+import { objectSchema } from "../../../schemas/object-schema";
 // hooks
 import useFindObject from "../../../hooks/object/use-find-object";
 // utils
@@ -60,6 +60,7 @@ const initialState = {
 };
 
 const CreateObject = ({ onClose }) => {
+  const dispatch = useDispatch();
   const {
     register,
     watch,
@@ -80,10 +81,9 @@ const CreateObject = ({ onClose }) => {
     findedObject,
   } = useFindObject();
 
-  const dispatch = useDispatch();
-  const data = watch();
   const watchAddress = watch("location.address", "");
   const watchCity = watch("location.city", "");
+  
   const isFindedObject = Boolean(Object.keys(findedObject)?.length);
   const isObjectHasAddress = Boolean(watchCity) && Boolean(watchAddress);
   const isValidAndHasAdress = isFindedObject && isObjectHasAddress && isValid;
@@ -127,8 +127,8 @@ const CreateObject = ({ onClose }) => {
     <>
       <TitleWithAddress
         isFindedObject={isFindedObject}
-        getCity={getCity}
-        getAddress={getAddress}
+        city={getCity()}
+        address={getAddress()}
         title="Создать объект:"
         subtitle="Выберите объект на карте"
         onClose={onClose}

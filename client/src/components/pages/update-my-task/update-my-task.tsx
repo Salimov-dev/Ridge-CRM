@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import MyTaskForm from "../../common/forms/my-task-form/my-task-form";
 import TitleWithCloseButton from "../../common/page-titles/title-with-close-button";
 // store
-import { getupdateMyTaskId } from "../../../store/task/update-my-task.store";
+import { getUpdateMyTaskId } from "../../../store/task/update-my-task.store";
 import {
   getTaskById,
   getTaskLoadingStatus,
@@ -19,12 +19,12 @@ import {
 import { getObjectsList } from "../../../store/object/objects.store";
 import { getCurrentUserId } from "../../../store/user/users.store";
 // schema
-import { taskSchema } from "../../../schemas/schemas";
+import { taskSchema } from "../../../schemas/task-shema";
 
 const UpdateMyTask = ({ title, onClose }) => {
-  const taskId = useSelector(getupdateMyTaskId());
+  const taskId = useSelector(getUpdateMyTaskId());
   const task = useSelector(getTaskById(taskId));
-  const isTasksLoading = useSelector(getTaskLoadingStatus())
+  const isTasksLoading = useSelector(getTaskLoadingStatus());
 
   const objects = useSelector(getObjectsList());
   const objectId = task?.objectId;

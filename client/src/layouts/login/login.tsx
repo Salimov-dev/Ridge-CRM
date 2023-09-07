@@ -11,7 +11,7 @@ import { login } from "../../store/user/users.store";
 // components
 import LoginForm from "./components/login-form";
 import { Component, AuthForm, Title } from "./styled/styled";
-import { loginSchema } from "../../schemas/schemas";
+import { loginSchema } from "../../schemas/login-schema";
 
 const Login = () => {
   const {

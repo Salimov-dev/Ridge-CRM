@@ -1,11 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
 import DialogStyled from "../../../common/dialog/dialog-styled";
+import UpdateManagerTask from "../../../pages/update-manager-task/update-manager-task";
+import { getObjectsList } from "../../../../store/object/objects.store";
 import {
   loadUpdateManagerTaskOpenState,
   setUpdateManagerTaskOpenState,
 } from "../../../../store/task/update-manager-task.store";
-import UpdateManagerTask from "../../../pages/update-manager-task/update-manager-task";
-import { getObjectsList } from "../../../../store/object/objects.store";
 import {
   getCurrentUserId,
   getUsersList,

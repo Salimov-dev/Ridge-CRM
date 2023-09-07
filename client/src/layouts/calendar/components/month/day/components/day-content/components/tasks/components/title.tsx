@@ -10,7 +10,7 @@ import { FormatTime } from "../../../../../../../../../../utils/date/format-time
 import { setIsDoneTaskStatus } from "../../../../../../../../../../store/task/tasks.store";
 import { getCurrentUserId } from "../../../../../../../../../../store/user/users.store";
 import {
-  setupdateMyTaskId,
+  setUpdateMyTaskId,
   setUpdateMyTaskOpenState,
 } from "../../../../../../../../../../store/task/update-my-task.store";
 import {
@@ -51,7 +51,7 @@ const Title = ({ task }) => {
       dispatch(setUpdateManagerTaskOpenState(true));
       dispatch(setUpdateManagerTaskId(taskId));
     } else {
-      dispatch(setupdateMyTaskId(taskId));
+      dispatch(setUpdateMyTaskId(taskId));
       dispatch(setUpdateMyTaskOpenState(true));
     }
   };

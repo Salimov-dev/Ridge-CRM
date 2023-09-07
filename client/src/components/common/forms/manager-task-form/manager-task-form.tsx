@@ -1,16 +1,14 @@
-// MUI
-import CreateIcon from "@mui/icons-material/Create";
-import { InputAdornment } from "@mui/material";
 // components
 import TextFieldStyled from "../../inputs/text-field-styled";
 import SimpleSelectField from "../../inputs/simple-select-field";
 import DatePickerStyled from "../../inputs/date-picker";
 import TimePickerStyled from "../../inputs/time-picker";
 import FooterButtons from "../footer-buttons/footer-buttons";
+import SimpleSwitch from "../../inputs/simple-switch";
 // styled
 import { FieldsContainer, Form } from "../styled/styled";
+// utils
 import getDateToday from "../../../../utils/date/get-date-today";
-import SimpleSwitch from "../../inputs/simple-switch";
 
 const ManagerTaskForm = ({
   data,
@@ -58,19 +56,19 @@ const ManagerTaskForm = ({
 
       <SimpleSelectField
         register={register}
-        itemsList={objects}
         name="objectId"
         labelId="objectId"
         label="Объект задачи"
+        itemsList={objects}
         value={watchObjectId}
         disabled={isObjectPage}
       />
       <SimpleSelectField
         register={register}
-        itemsList={users}
         name="managerId"
         labelId="managerId"
         label="Менеджер"
+        itemsList={users}
         value={watchManagerId}
       />
       <TextFieldStyled

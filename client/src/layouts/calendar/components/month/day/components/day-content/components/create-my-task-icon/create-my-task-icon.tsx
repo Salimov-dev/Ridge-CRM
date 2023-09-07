@@ -1,17 +1,20 @@
 import { useDispatch } from "react-redux";
 import { Box, Tooltip, styled } from "@mui/material";
 import ControlPointOutlinedIcon from "@mui/icons-material/ControlPointOutlined";
-import {
-  setCreateMyTaskDay,
-  setCreateMyTaskOpenState,
-} from "../../../../../../../../../store/task/create-my-task.store";
+import { setCreateMyTaskOpenState } from "../../../../../../../../../store/task/create-my-task.store";
 
 const Component = styled(Box)`
   display: flex;
   justify-content: end;
 `;
 
-const CreateMyTaskIcon = ({ day, isCurrentDay, isFutureDay, setDateCreate, hoverColor }) => {
+const CreateMyTaskIcon = ({
+  day,
+  isCurrentDay,
+  isFutureDay,
+  setDateCreate,
+  hoverColor,
+}) => {
   const dispatch = useDispatch();
 
   const handleOpenCreateTask = () => {

@@ -15,7 +15,7 @@ const sidebarCollapsStateSlice = createSlice({
 const { reducer: sidebarCollapsStateReducer, actions } =
   sidebarCollapsStateSlice;
 
-const {sidebarCollapsStateSetted} = actions;
+const { sidebarCollapsStateSetted } = actions;
 
 export const loadSidebarCollapsState = () => (dispatch) => {
   const localStorageValue = localStorage.getItem("sidebar-collaps-state");

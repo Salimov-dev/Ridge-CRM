@@ -1,5 +1,6 @@
 // libraries
 import { useMemo, useState } from "react";
+import { useSelector } from "react-redux";
 // MUI
 import { Box, useTheme, styled } from "@mui/material";
 // styles
@@ -17,10 +18,10 @@ import {
   useReactTable,
   SortingState,
 } from "@tanstack/react-table";
+// store
+import { loadOpenObjectPageOpenState } from "../../../store/object/open-object-page.store";
 // other
 import { tokens } from "../../../theme";
-import { useSelector } from "react-redux";
-import { loadOpenObjectPageOpenState } from "../../../store/object/open-object-page.store";
 
 const Component = styled(Box)`
   margin-bottom: 20px;

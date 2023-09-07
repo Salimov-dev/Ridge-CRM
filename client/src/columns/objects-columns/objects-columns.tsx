@@ -21,6 +21,7 @@ import {
   setOpenObjectPageOpenState,
 } from "../../store/object/open-object-page.store";
 import { AlignCenter } from "../styled/styled";
+import EmptyTd from "../components/empty-td";
 
 export const objectsColumns = [
   {
@@ -56,7 +57,7 @@ export const objectsColumns = [
         header: "Метро",
         cell: (info) => {
           const metro = info.getValue();
-          return <AlignCenter>{FormatMetro(metro)}</AlignCenter>;
+          return metro ? <AlignCenter>{FormatMetro(metro)}</AlignCenter> : <EmptyTd />;
         },
       },
       {
@@ -95,11 +96,11 @@ export const objectsColumns = [
         cell: (info) => {
           const phone = info.getValue();
           return (
-            <AlignCenter>
+            phone ? <AlignCenter>
               <Typography sx={{ whiteSpace: "nowrap" }}>
                 {FormatPhone(phone)}
               </Typography>
-            </AlignCenter>
+            </AlignCenter> : <EmptyTd />
           );
         },
       },
@@ -108,7 +109,7 @@ export const objectsColumns = [
         header: "Имя",
         cell: (info) => {
           const name = info.getValue();
-          return <AlignCenter>{name}</AlignCenter>;
+          return name ? <AlignCenter>{name}</AlignCenter> : <EmptyTd />;
         },
       },
     ],
@@ -141,7 +142,7 @@ export const objectsColumns = [
         header: "Звонок",
         cell: (info) => {
           const object = info.getValue();
-          return <AlignCenter>06.09.23</AlignCenter>;
+          return object ? <AlignCenter>06.09.23</AlignCenter> : <EmptyTd />;
         },
       },
     ],

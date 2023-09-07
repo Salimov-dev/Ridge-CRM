@@ -1,6 +1,4 @@
 import { Box, Button, styled } from "@mui/material";
-import { getupdateMyTaskId } from "../../../../store/task/update-my-task.store";
-import { useSelector } from "react-redux";
 
 const Component = styled(Box)`
   width: 100%;
@@ -9,8 +7,13 @@ const Component = styled(Box)`
   margin-top: 30px;
 `;
 
-const FooterButtons = ({ isEditMode, isValid, onClose, onRemove, removeId }) => {
-
+const FooterButtons = ({
+  isEditMode,
+  isValid,
+  onClose,
+  onRemove,
+  removeId,
+}) => {
   return (
     <Component>
       <Box sx={{ display: "flex", gap: "4px" }}>
