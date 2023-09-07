@@ -32,8 +32,8 @@ const useSearchUser = ({ users, data }) => {
     }
 
     if (data.selectedStatuses?.length) {
-      array = array?.filter((item) =>
-        data.selectedStatuses?.includes(item?.status)
+      array = array?.filter((user) =>
+        data.selectedStatuses?.includes(user?.status)
       );
     }
 

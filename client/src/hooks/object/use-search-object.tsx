@@ -59,32 +59,32 @@ const useSearchObject = (objects, data) => {
       );
     }
     if (data.selectedUsers?.length) {
-      array = array?.filter((item) =>
-        data.selectedUsers?.includes(item?.userId)
+      array = array?.filter((obj) =>
+        data.selectedUsers?.includes(obj?.userId)
       );
     }
     if (data.selectedCurrentRenters?.length) {
-      array = array?.filter((item) =>
+      array = array?.filter((obj) =>
         data.selectedCurrentRenters?.includes(
-          item?.estateOptions.currentRenters
+          obj?.estateOptions.currentRenters
         )
       );
     }
     if (data.selectedEstateTypes?.length) {
-      array = array?.filter((item) =>
-        data.selectedEstateTypes?.includes(item?.estateOptions.estateTypes)
+      array = array?.filter((obj) =>
+        data.selectedEstateTypes?.includes(obj?.estateOptions.estateTypes)
       );
     }
     if (data.selectedObjectTypes?.length) {
-      array = array?.filter((item) =>
-        data.selectedObjectTypes?.includes(item?.estateOptions.objectTypes)
+      array = array?.filter((obj) =>
+        data.selectedObjectTypes?.includes(obj?.estateOptions.objectTypes)
       );
     }
 
     // Фильтр для выбранных районов и городов
     if (data.selectedDistricts?.length) {
-      array = array?.filter((item) =>
-        data.selectedDistricts.includes(item.location.district)
+      array = array?.filter((obj) =>
+        data.selectedDistricts.includes(obj.location.district)
       );
 
       // Обновляем список выбранных городов на основе отфильтрованных районов
@@ -92,8 +92,8 @@ const useSearchObject = (objects, data) => {
         (cities, district) => {
           return cities.concat(
             array
-              ?.filter((item) => item.location?.district === district)
-              .map((item) => item.location?.city)
+              ?.filter((obj) => obj.location?.district === district)
+              .map((obj) => obj.location?.city)
           );
         },
         []
@@ -101,17 +101,17 @@ const useSearchObject = (objects, data) => {
 
       // Фильтруем города исходя из списка отфильтрованных городов
       if (data.selectedCities?.length) {
-        array = array?.filter((item) =>
-          filteredCities?.includes(item.location.city)
+        array = array?.filter((obj) =>
+          filteredCities?.includes(obj.location.city)
         );
       } else {
-        array = array?.filter((item) =>
-          data.selectedDistricts?.includes(item.location.district)
+        array = array?.filter((obj) =>
+          data.selectedDistricts?.includes(obj.location.district)
         );
       }
     } else if (data.selectedCities?.length) {
-      array = array?.filter((item) =>
-        data.selectedCities?.includes(item.location?.city)
+      array = array?.filter((obj) =>
+        data.selectedCities?.includes(obj.location?.city)
       );
     }
 
@@ -120,50 +120,50 @@ const useSearchObject = (objects, data) => {
       const startDate = dayjs(data.startDate);
       const endDate = dayjs(data.endDate).endOf("day");
 
-      array = array?.filter((item) => {
-        const itemDate = dayjs(item.created_at);
-        return itemDate.isBetween(startDate, endDate, null, "[]");
+      array = array?.filter((obj) => {
+        const objDate = dayjs(obj.created_at);
+        return objDate.isBetween(startDate, endDate, null, "[]");
       });
     } else if (data.startDate) {
       const selectedDate = dayjs(data.startDate);
-      array = array?.filter((item) => dayjs(item.created_at) >= selectedDate);
+      array = array?.filter((obj) => dayjs(obj.created_at) >= selectedDate);
     } else if (data.endDate) {
       const endDate = dayjs(data.endDate).endOf("day");
-      array = array?.filter((item) => dayjs(item?.created_at) <= endDate);
+      array = array?.filter((obj) => dayjs(obj?.created_at) <= endDate);
     }
 
     // c номером телефона
     if (data.objectActivity === "534gdfsg2356hgd213mnbv") {
-      array = array?.filter((item) => item?.contact.phone);
+      array = array?.filter((obj) => obj?.contact.phone);
     }
     // без номера телефона
     if (data.objectActivity === "976hd324gfdsg324534543") {
-      array = array?.filter((item) => !item?.contact.phone);
+      array = array?.filter((obj) => !obj?.contact.phone);
     }
     // с задачами
     if (data.objectActivity === "gf87634gdsfgsdf345tgdf") {
-      array = array?.filter((item) => hasTasks(item._id));
+      array = array?.filter((obj) => hasTasks(obj._id));
     }
     // без задач
     if (data.objectActivity === "93254435gdf354yrt54hgh") {
-      array = array?.filter((item) => !hasTasks(item._id));
+      array = array?.filter((obj) => !hasTasks(obj._id));
     }
     // со встречами
     if (data.objectActivity === "7653gfdsgsd23fgdsgdfg") {
-      array = array?.filter((item) => hasMeetings(item._id));
+      array = array?.filter((obj) => hasMeetings(obj._id));
     }
     // без встреч
     if (data.objectActivity === "95459gdj239t54jgh95445") {
-      array = array?.filter((item) => !hasMeetings(item._id));
+      array = array?.filter((obj) => !hasMeetings(obj._id));
     }
     // с последним звонком
     // if (data.objectActivity === "95459gdj239t54jgh95445") {
-    //   array = array?.filter((item) => !hasMeetings(item._id));
+    //   array = array?.filter((obj) => !hasMeetings(obj._id));
     // }
     // без активности
     if (data.objectActivity === "hgfd235654hjf324543qre") {
       array = array?.filter(
-        (item) => !hasMeetings(item._id) && !hasTasks(item._id)
+        (obj) => !hasMeetings(obj._id) && !hasTasks(obj._id)
       );
     }
 

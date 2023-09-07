@@ -114,8 +114,8 @@ const Objects = () => {
 
       <ObjectsFiltersPanel
         data={data}
-        register={register}
         objects={objects}
+        register={register}
         setValue={setValue}
         isLoading={isLoading}
       />

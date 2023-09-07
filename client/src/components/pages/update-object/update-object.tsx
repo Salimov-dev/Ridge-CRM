@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from "react-toastify";
-import cloneDeep from "lodash.clonedeep";
 // MUI
 import { Box } from "@mui/material";
 // components
@@ -46,50 +45,12 @@ const UpdateObject = ({ onClose }) => {
       .then(toast.success("Объект успешно изменен!"));
   };
 
-  const newObject = cloneDeep(object);
-
-  function replaceNullWithEmptyString(obj) {
-    if (obj.commercialTerms.agentComission === null) {
-      obj.commercialTerms.agentComission = "";
-    }
-    if (obj.commercialTerms.indexingAnnual === null) {
-      obj.commercialTerms.indexingAnnual = "";
-    }
-    if (obj.commercialTerms.rentPrice === null) {
-      obj.commercialTerms.rentPrice = "";
-    }
-    if (obj.commercialTerms.rentSquare === null) {
-      obj.commercialTerms.rentSquare = "";
-    }
-    if (obj.commercialTerms.securityDeposit === null) {
-      obj.commercialTerms.securityDeposit = "";
-    }
-    if (obj.commercialTerms.totalSquare === null) {
-      obj.commercialTerms.totalSquare = "";
-    }
-    if (obj.contact.phone === null) {
-      obj.contact.phone = "";
-    }
-
-    if (obj.estateOptions.electricityKw === null) {
-      obj.estateOptions.electricityKw = "";
-    }
-    if (obj.estateOptions.parkingQuantity === null) {
-      obj.estateOptions.parkingQuantity = "";
-    }
-    if (obj.estateOptions.premisesHeight === null) {
-      obj.estateOptions.premisesHeight = "";
-    }
-    return obj;
-  }
-  const transformObject = replaceNullWithEmptyString(newObject);
-
   return object ? (
     <Box>
       <Header object={object} onClose={onClose} />
       <ObjectForm
         register={register}
-        data={transformObject}
+        data={object}
         handleSubmit={handleSubmit}
         onSubmit={onSubmit}
         onClose={onClose}

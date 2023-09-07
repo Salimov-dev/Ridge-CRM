@@ -14,19 +14,18 @@ import {
 } from "../../store/ridge-object/ridge-objects.store";
 import { ridgeObjectsColumns } from "../../columns/ridge-columns/ridge-objects-columns";
 import ItemsOnMap from "../../components/common/map/items-on-map/items-on-map";
-import ObjectBaloon from "../../components/UI/maps/object-baloon";
 import BasicTable from "../../components/common/table/basic-table";
 import RidgeObjectCreatePageDialog from "../../components/UI/dialogs/ridge-objects/ridge-object-create-page-dialog";
 import CreateRidgeObjectButton from "../../components/UI/dialogs/buttons/create-ridge-object-button";
-import ObjectCreatePageDialog from "../../components/UI/dialogs/objects/object-create-page-dialog";
 import RidgeObjectUpdatePageDialog from "../../components/UI/dialogs/ridge-objects/ridge-object-update-page-dialog";
 import RidgeObjectBaloon from "../../components/UI/maps/ridge-object-baloon";
 import ObjectFromRidgeCreatePageDialog from "../../components/UI/dialogs/ridge-objects/object-from-ridge-create-page-dialog";
+import RidgeObjectsFiltersPanel from "../../components/UI/filters-panels/ridge-objects-filters-panel";
+import useSearchRidgeObject from "../../hooks/ridge-object/use-search-ridge-object";
 
 const initialState = {
-  address: "",
-  phone: "",
-  name: "",
+  comment: "",
+  contacts: "",
   status: "",
   selectedDistricts: [],
   selectedCities: [],
@@ -64,7 +63,7 @@ const Ridge = () => {
   });
 
   const data = watch();
-  const searchedObjects = useSearchObject(objects, data);
+  const searchedObjects = useSearchRidgeObject(objects, data);
   const sortedObjects = orderBy(searchedObjects, ["created_at"], ["desc"]);
   const isInputEmpty = JSON.stringify(initialState) !== JSON.stringify(data);
 
@@ -79,6 +78,7 @@ const Ridge = () => {
   useEffect(() => {
     localStorage.setItem("search-ridge-data", JSON.stringify(data));
   }, [data]);
+
   return (
     <Box sx={{ width: "100%" }}>
       <LayoutTitle title="Грядка объектов" />
@@ -86,7 +86,7 @@ const Ridge = () => {
         isInputEmpty={isInputEmpty}
         reset={reset}
         initialState={initialState}
-        button={<CreateRidgeObjectButton/>}
+        button={<CreateRidgeObjectButton />}
       />
       <ItemsOnMap
         items={searchedObjects}
@@ -99,23 +99,21 @@ const Ridge = () => {
         baloon={<RidgeObjectBaloon object={selectedObject} />}
         isLoading={isLoading}
       />
-
-      {/* <ObjectsFiltersPanel
+      <RidgeObjectsFiltersPanel
         data={data}
-        register={register}
         objects={objects}
+        register={register}
         setValue={setValue}
         isLoading={isLoading}
-      /> */}
-
+      />
       <BasicTable
         items={sortedObjects}
         itemsColumns={columns}
         isLoading={isLoading}
       />
 
-      <RidgeObjectUpdatePageDialog/>
-      <RidgeObjectCreatePageDialog/>
+      <RidgeObjectUpdatePageDialog />
+      <RidgeObjectCreatePageDialog />
       <ObjectFromRidgeCreatePageDialog />
     </Box>
   );

@@ -124,7 +124,7 @@ export const objectsColumns = [
           const object = info.getValue();
           const objectId = object?._id;
           const objectMeetings = useSelector(getMeetingsByObjectId(objectId));
-          const isObjectMeetings = Boolean(objectMeetings.length)
+          const isObjectMeetings = Boolean(objectMeetings?.length)
           const sortedObjectMeetings = orderBy(
             objectMeetings,
             ["date"],
