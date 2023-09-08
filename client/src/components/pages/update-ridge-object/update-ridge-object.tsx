@@ -16,16 +16,25 @@ import { ridgeObjectSchema } from "../../../schemas/ridge-object-schema";
 import { getUpdateRidgeObjectId } from "../../../store/ridge-object/update-ridge-object.store";
 import {
   getRidgeObjectById,
+  getRidgeObjectsLoadingStatus,
   removeRidgeObject,
   updateRidgeObject,
 } from "../../../store/ridge-object/ridge-objects.store";
+import ItemOnMap from "../../common/map/item-on-map/item-on-map";
+import RidgeObjectBaloon from "../../UI/maps/ridge-object-baloon";
 
 const UpdateRidgeObject = ({ onClose }) => {
+  const dispatch = useDispatch();
   const objectId = useSelector(getUpdateRidgeObjectId());
   const object = useSelector(getRidgeObjectById(objectId));
+  const isLoading = useSelector(getRidgeObjectsLoadingStatus())
   const isEditMode = objectId ? true : false;
 
-  const dispatch = useDispatch();
+  const address = `${object?.location?.city}, ${object?.location?.address}`;
+  const latitude = object?.location?.latitude || null;
+  const longitude = object?.location?.longitude || null;
+  const mapZoom = object?.location?.zoom || null;
+  const center = [latitude, longitude];
 
   const {
     register,
@@ -53,6 +62,13 @@ const UpdateRidgeObject = ({ onClose }) => {
   return object ? (
     <Box>
       <Header object={object} onClose={onClose} />
+      <ItemOnMap
+        mapZoom={mapZoom}
+        hintContent={address}
+        center={center}
+        baloon={<RidgeObjectBaloon object={object} />}
+        isLoading={isLoading}
+      />
       <RidgeObjectForm
         handleSubmit={handleSubmit}
         onSubmit={onSubmit}

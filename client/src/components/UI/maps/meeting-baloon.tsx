@@ -49,11 +49,17 @@ const MeetingBaloon = ({ meeting }) => {
     <BaloonContainer>
       <Attribute title="Дата встречи:" subTitle={date} />
       <Attribute title="Время встречи:" subTitle={time} />
+      <Typography>
+        <b>Адрес:</b>
+      </Typography>
       <Attribute
-        title="Адрес:"
+        gap="0"
         subTitle={`${meeting?.location?.city}, ${meeting?.location?.address}`}
       />
-      <Attribute title="Коммент:" subTitle={meeting?.comment} />
+      <Typography>
+        <b>Коммент:</b>
+      </Typography>
+      <Attribute subTitle={meeting?.comment} gap="0" />
 
       <DividerStyled />
       <Attribute title="Статус:" subTitle={status} />

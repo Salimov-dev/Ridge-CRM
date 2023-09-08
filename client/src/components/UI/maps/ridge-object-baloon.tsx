@@ -44,11 +44,7 @@ const RidgeObjectBaloon = ({ object }) => {
     <BaloonContainer>
       <OpenObjectButton onClick={handleOpenObjectPage} />
       <DividerStyled />
-      <Attribute
-        title="Дата создания:"
-        subTitle={createdAt}
-        withoutTypography={true}
-      />
+      <Attribute title="Дата создания:" subTitle={createdAt} />
       <Attribute title="Менеджер:" subTitle={manager} />
       <Attribute title="Город:" subTitle={city} />
       <Attribute title="Район:" subTitle={district} />

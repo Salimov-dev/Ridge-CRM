@@ -32,6 +32,7 @@ const UpdateMeeting = ({ onClose }) => {
   );
   const meetingId = useSelector(getUpdateMeetingId());
   const meeting = useSelector(getMeetingById(meetingId));
+  
   const isMeetingsLoading = useSelector(getMeetingStatusesLoadingStatus())
   const meetingTypes = useSelector(getMeetingTypesList());
   const statuses = useSelector(getMeetingStatusesList());

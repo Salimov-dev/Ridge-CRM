@@ -23,6 +23,7 @@ const initialState = {
   objectId: "",
   managerId: "",
   result: "",
+  isDone: false,
 };
 
 const CreateManagerTask = ({

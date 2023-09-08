@@ -1,9 +1,9 @@
 import SearchField from "../../common/inputs/search-field";
-import SimpleSelectField from "../../common/inputs/simple-select-field";
 import SearchSwitch from "../../common/inputs/search-switch";
 import { FieldsContainer, Form } from "../../common/forms/styled/styled";
 // mock
 import { taskDoneTypes } from "../../../mock/task-done-status";
+import SearchSelectField from "../../common/inputs/search-select-field";
 
 const TasksFiltersPanel = ({ data, register, setValue, isLoading }) => {
   return (
@@ -17,7 +17,7 @@ const TasksFiltersPanel = ({ data, register, setValue, isLoading }) => {
           inputProps={{ maxLength: 30 }}
           disabled={isLoading ? true : false}
         />
-        <SimpleSelectField
+        <SearchSelectField
           name="selectedTaskTypes"
           labelId="selectedTaskTypes"
           label="Выбрать по выполнению"

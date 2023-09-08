@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { Box, styled } from "@mui/material";
+import { Box, Typography, styled } from "@mui/material";
 // components
 import { FormatPhone } from "../../common/table/helpers/helpers";
 import DividerStyled from "../../common/divider/divider-styled";
@@ -69,7 +69,6 @@ const ObjectBaloon = ({ object }) => {
       <Attribute
         title="Дата создания:"
         subTitle={createdAt}
-        withoutTypography={true}
       />
       <Attribute title="Менеджер:" subTitle={manager} />
       <Attribute title="Город:" subTitle={city} />
@@ -105,8 +104,7 @@ const ObjectBaloon = ({ object }) => {
       <Attribute title="Контакт:" subTitle={name ? `${name}` : "-"} />
       <Attribute
         title="Телефон:"
-        subTitle={phone ? FormatPhone(phone) : "-"}
-        withoutTypography={true}
+        subTitle={phone ? <Typography>{FormatPhone(phone)}</Typography>  : "-"}
       />
       <Attribute title="Email:" subTitle={email ? email : "-"} />
 

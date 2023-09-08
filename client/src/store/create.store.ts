@@ -20,6 +20,7 @@ import meetingStatusesReducer from "./meeting/meeting-status.store";
 import createMeetingReducer from "./meeting/create-meeting.store";
 import updateMeetingReducer from "./meeting/update-meeting.store";
 // users
+import createUserReducer from "./user/create-user.store";
 import usersListReducer from "./user/users.store";
 import userStatusesReducer from "./user/user-statuses.store";
 import updateManagerReducer from "./user/update-user.store";
@@ -30,7 +31,12 @@ import updateMyTaskReducer from "./task/update-my-task.store";
 import createManagerTaskReducer from "./task/create-manager-task.store";
 import createObjectReducer from "./object/create-object.store";
 import createMyTaskReducer from "./task/create-my-task.store";
-// ridge
+// ridge tasks
+import ridgeTasksReducer from "./ridge-task/ridge-tasks.store";
+import createRidgeTaskReducer from "./ridge-task/create-ridge-task.store";
+import updateRidgeTaskReducer from "./ridge-task/update-ridge-task.store";
+import openRidgeObjectPageReducer from "./ridge-object/open-ridge-object-page.store";
+// ridge object
 import ridgeObjectsReducer from "./ridge-object/ridge-objects.store";
 import ridgeObjectStatusReducer from "./ridge-object/ridge-object-status.store";
 import createRidgeObjectReducer from "./ridge-object/create-ridge-object.store";
@@ -39,7 +45,6 @@ import createObjectFromRidgeReducer from "./ridge-object/create-object-from-ridg
 // other
 import sidebarCollapsStateReducer from "./sidebar-collaps-state.store";
 import monthIndexReducer from "./month-index.store";
-import createUserReducer from "./user/create-user.store";
 
 const rootReducer = combineReducers({
   // objects
@@ -63,8 +68,8 @@ const rootReducer = combineReducers({
   updateManager: updateManagerReducer,
   createUser: createUserReducer,
   // meetings
-  meetingStatuses: meetingStatusesReducer,
   meetings: meetingsReducer,
+  meetingStatuses: meetingStatusesReducer,
   meetingTypes: meetingTypesReducer,
   createMeeting: createMeetingReducer,
   updateMeeting: updateMeetingReducer,
@@ -74,9 +79,14 @@ const rootReducer = combineReducers({
   updateMyTask: updateMyTaskReducer,
   createManagerTask: createManagerTaskReducer,
   updateManagerTask: updateManagerTaskReducer,
+  // ridge tasks
+  ridgeTasks: ridgeTasksReducer,
+  createRidgeTask: createRidgeTaskReducer,
+  updateRidgeTask: updateRidgeTaskReducer,
+  openRidgeObjectPage: openRidgeObjectPageReducer,
   // calendar
   monthIndex: monthIndexReducer,
-  // ridge
+  // ridge object
   ridgeObjects: ridgeObjectsReducer,
   ridgeObjectStatus: ridgeObjectStatusReducer,
   createRidgeObject: createRidgeObjectReducer,

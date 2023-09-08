@@ -21,6 +21,7 @@ import { loadUsersList } from "../store/user/users.store";
 import { loadUserStatusesList } from "../store/user/user-statuses.store";
 // tasks
 import { loadTasksList } from "../store/task/tasks.store";
+import { loadRidgeTasksList } from "../store/ridge-task/ridge-tasks.store";
 // ridge
 import { loadRidgeObjectsList } from "../store/ridge-object/ridge-objects.store";
 import { loadRidgeObjectStatusList } from "../store/ridge-object/ridge-object-status.store";
@@ -57,6 +58,8 @@ const AppLoader = ({ children }: AppLoaderProps) => {
     dispatch<any>(loadMeetingTypesList());
     // tasks
     dispatch<any>(loadTasksList());
+    // ridge tasks
+    dispatch<any>(loadRidgeTasksList());
     // ridge
     dispatch<any>(loadRidgeObjectsList());
     dispatch<any>(loadRidgeObjectStatusList());

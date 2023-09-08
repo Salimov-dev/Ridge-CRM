@@ -6,6 +6,7 @@ const Component = styled(Box)`
   justify-content: space-between;
   align-items: center;
   gap: 8px;
+  margin-bottom: 20px;
 `;
 
 const Title = styled(Box)`

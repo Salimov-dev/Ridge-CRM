@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import { Box, Typography, styled } from "@mui/material";
-import CreateButtons from "../header/components/create-buttons";
+import CreateButtons from "../create-tasks-buttons/create-tasks-buttons";
 import BasicTable from "../../../../components/common/table/basic-table";
 import { getTaskLoadingStatus } from "../../../../store/task/tasks.store";
 import TasksFiltersPanel from "../../../../components/UI/filters-panels/tasks-filters-panel";

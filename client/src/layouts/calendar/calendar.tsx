@@ -4,10 +4,10 @@ import { useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 // components
-import Header from "./components/header/header";
+import Header from "../../components/common/calendar/header/header";
 import Tasks from "./components/tasks/tasks";
 import Dialogs from "./components/dialogs/dialogs";
-import CalendarBody from "./components/calendar-body/calendar-body";
+import CalendarBody from "../../components/common/calendar/calendar-body/calendar-body";
 import LayoutTitle from "../../components/common/page-titles/layout-title";
 import CurrentWeeklyMeetings from "./components/current-weekly-meetings/current-weekly-meetings";
 // columns
@@ -21,6 +21,9 @@ import { getMonthIndexState } from "../../store/month-index.store";
 // hooks
 import useCalendar from "../../hooks/calendar/use-calendar";
 import useSearchTask from "../../hooks/task/use-search-task";
+import { getMeetingsList } from "../../store/meeting/meetings.store";
+import dayjs from "dayjs";
+import CreateTasksButtons from "./components/create-tasks-buttons/create-tasks-buttons";
 
 const initialState = {
   task: "",
@@ -51,6 +54,7 @@ const Calendar = () => {
 
   const data = watch();
   const tasks = useSelector(getTasksList());
+  const meetings = useSelector(getMeetingsList());
   const searchedTasks = useSearchTask(tasks, data);
   const sortedTasks = orderBy(searchedTasks, ["date"], ["asc"]);
 
@@ -66,11 +70,42 @@ const Calendar = () => {
     localStorage.setItem("search-tasks-data", JSON.stringify(initialState));
   }, []);
 
+  const getMeeting = (day) => {
+    const meeting = meetings?.filter(
+      (meet) => dayjs(meet?.date).format() === dayjs(day)?.format()
+    );
+    const sortedMeetings = orderBy(meeting, ["date"], ["asc"]);
+    return sortedMeetings;
+  };
+
+  const getTask = (day) => {
+    const currentTasks = tasks?.filter((task) => {
+      const taskDate = dayjs(task?.date);
+      const targetDate = dayjs(day);
+      return (
+        taskDate.format("YYYY-MM-DD") === targetDate.format("YYYY-MM-DD") &&
+        taskDate.isSame(targetDate, "day")
+      );
+    });
+
+    const sortedTasks = orderBy(
+      currentTasks,
+      [(task) => dayjs(task.time)],
+      ["asc"]
+    );
+    return sortedTasks;
+  };
+
   return (
     <>
       <LayoutTitle title="Календарь" />
-      <Header />
-      <CalendarBody currentMonth={currentMonth} setDateCreate={setDateCreate} />
+      <Header buttons={<CreateTasksButtons />} />
+      <CalendarBody
+        currentMonth={currentMonth}
+        setDateCreate={setDateCreate}
+        meetings={getMeeting}
+        tasks={getTask}
+      />
       <Tasks
         register={register}
         data={data}

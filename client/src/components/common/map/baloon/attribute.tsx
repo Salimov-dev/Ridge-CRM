@@ -1,9 +1,8 @@
 import { Box, Typography, styled } from "@mui/material";
 
 const Attribute = ({
-  title,
+  title=null,
   subTitle,
-  withoutTypography = false,
   gap = "4px",
 }) => {
   const StringContainer = styled(Box)`
@@ -18,7 +17,7 @@ const Attribute = ({
       <Typography>
         <b>{title}</b>
       </Typography>
-      {!withoutTypography ? <Typography>{subTitle}</Typography> : subTitle}
+      {<Typography>{subTitle}</Typography>}
     </StringContainer>
   );
 };

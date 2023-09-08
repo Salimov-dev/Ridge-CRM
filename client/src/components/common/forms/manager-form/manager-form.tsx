@@ -195,8 +195,9 @@ const ManagerForm = ({
       </FieldsContainer>
 
       <FooterButtons
-        isEditMode={isEditMode}
+        onClose={onClose}
         isValid={!isValid}
+        isEditMode={isEditMode}
       />
     </Form>
   );

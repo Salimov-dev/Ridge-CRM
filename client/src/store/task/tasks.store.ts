@@ -68,9 +68,7 @@ const taskUpdateFailed = createAction("tasks/taskUpdateFailed");
 const removeTaskRequested = createAction("tasks/removetaskRequested");
 const removeTaskFailed = createAction("tasks/removetaskFailed");
 const taskIsDoneRequested = createAction("tasks/taskIsDoneRequested");
-const taskNotDoneRequested = createAction("tasks/taskNotDoneRequested");
 const taskIsDoneFailed = createAction("tasks/taskIsDoneFailed");
-const taskNotDoneFailed = createAction("tasks/taskNotDoneFailed");
 
 const { reducer: tasksReducer, actions } = tasksSlice;
 const {
@@ -136,16 +134,6 @@ export const setIsDoneTaskStatus = (payload) => async (dispatch) => {
     await tasksService.update(payload);
   } catch (error) {
     dispatch(taskIsDoneFailed(error.message));
-  }
-};
-
-export const setIsNotDoneTaskStatus = (payload) => async (dispatch) => {
-  dispatch(taskNotDoneRequested());
-  try {
-    dispatch(taskIsDoneStatus(payload));
-    await tasksService.update(payload);
-  } catch (error) {
-    dispatch(taskNotDoneFailed(error.message));
   }
 };
 

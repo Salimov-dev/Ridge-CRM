@@ -24,6 +24,7 @@ const initialState = {
   managerId: "",
   comment: "",
   result: "",
+  isDone: false,
 };
 
 const CreateMyTask = ({

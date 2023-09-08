@@ -6,7 +6,6 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import dayjs from "dayjs";
 import { useForm } from "react-hook-form";
-import useSearchObject from "../../hooks/object/use-search-object";
 import {
   getRidgeObjectById,
   getRidgeObjectsList,
@@ -15,13 +14,18 @@ import {
 import { ridgeObjectsColumns } from "../../columns/ridge-columns/ridge-objects-columns";
 import ItemsOnMap from "../../components/common/map/items-on-map/items-on-map";
 import BasicTable from "../../components/common/table/basic-table";
-import RidgeObjectCreatePageDialog from "../../components/UI/dialogs/ridge-objects/ridge-object-create-page-dialog";
 import CreateRidgeObjectButton from "../../components/UI/dialogs/buttons/create-ridge-object-button";
-import RidgeObjectUpdatePageDialog from "../../components/UI/dialogs/ridge-objects/ridge-object-update-page-dialog";
 import RidgeObjectBaloon from "../../components/UI/maps/ridge-object-baloon";
-import ObjectFromRidgeCreatePageDialog from "../../components/UI/dialogs/ridge-objects/object-from-ridge-create-page-dialog";
 import RidgeObjectsFiltersPanel from "../../components/UI/filters-panels/ridge-objects-filters-panel";
 import useSearchRidgeObject from "../../hooks/ridge-object/use-search-ridge-object";
+import CalendarBody from "../../components/common/calendar/calendar-body/calendar-body";
+import getMonth from "../../utils/calendar/get-month";
+import { getMonthIndexState } from "../../store/month-index.store";
+import Header from "../../components/common/calendar/header/header";
+import CreateRidgeTasksButtons from "./components/create-ridge-tasks-buttons/create-ridge-tasks-buttons";
+import RidgeTaskCreateDialog from "../../components/UI/dialogs/ridge-tasks/ridge-task-create-dialog";
+import { getRidgeTasksList } from "../../store/ridge-task/ridge-tasks.store";
+import Dialogs from "./components/dialogs/dialogs";
 
 const initialState = {
   comment: "",
@@ -35,7 +39,13 @@ const initialState = {
 };
 
 const Ridge = () => {
+  const [currentMonth, setCurrentMonth] = useState(getMonth());
+  const [dateCreate, setDateCreate] = useState(null);
   const [selectedBaloon, setSelectedBaloon] = useState(null);
+
+  const monthIndex = useSelector(getMonthIndexState());
+  const tasks = useSelector(getRidgeTasksList());
+
   const objects = useSelector(getRidgeObjectsList());
   const selectedObject = useSelector(getRidgeObjectById(selectedBaloon));
   const columns = ridgeObjectsColumns;
@@ -67,6 +77,24 @@ const Ridge = () => {
   const sortedObjects = orderBy(searchedObjects, ["created_at"], ["desc"]);
   const isInputEmpty = JSON.stringify(initialState) !== JSON.stringify(data);
 
+  const getTask = (day) => {
+    const currentTasks = tasks?.filter((task) => {
+      const taskDate = dayjs(task?.date);
+      const targetDate = dayjs(day);
+      return (
+        taskDate.format("YYYY-MM-DD") === targetDate.format("YYYY-MM-DD") &&
+        taskDate.isSame(targetDate, "day")
+      );
+    });
+
+    const sortedTasks = orderBy(
+      currentTasks,
+      [(task) => dayjs(task.time)],
+      ["asc"]
+    );
+    return sortedTasks;
+  };
+
   useEffect(() => {
     const hasLocalStorageData = localStorage.getItem("search-ridge-data");
 
@@ -78,6 +106,10 @@ const Ridge = () => {
   useEffect(() => {
     localStorage.setItem("search-ridge-data", JSON.stringify(data));
   }, [data]);
+
+  useEffect(() => {
+    setCurrentMonth(getMonth(monthIndex));
+  }, [monthIndex]);
 
   return (
     <Box sx={{ width: "100%" }}>
@@ -111,10 +143,20 @@ const Ridge = () => {
         itemsColumns={columns}
         isLoading={isLoading}
       />
+      <Header buttons={<CreateRidgeTasksButtons />} />
+      <CalendarBody
+        currentMonth={currentMonth}
+        setDateCreate={setDateCreate}
+        tasks={getTask}
+      />
 
-      <RidgeObjectUpdatePageDialog />
-      <RidgeObjectCreatePageDialog />
-      <ObjectFromRidgeCreatePageDialog />
+      <RidgeTaskCreateDialog
+        dateCreate={dateCreate}
+        objects={sortedObjects}
+        setDateCreate={setDateCreate}
+      />
+
+      <Dialogs />
     </Box>
   );
 };
