@@ -11,48 +11,54 @@ const FieldsContainer = styled(Box)`
   gap: 4px;
 `;
 
-const TimePickerStyled = ({ register, errors, setValue, name, value, label }) => {
+const TimePickerStyled = ({
+  register,
+  label,
+  name,
+  value,
+  setValue,
+  errors = null,
+}) => {
   return (
     <FieldsContainer>
       <Box sx={{ width: "100%", marginBottom: "-3px", marginTop: "-8px" }}>
-      <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="ru">
-        <DemoContainer
-          components={["TimePicker"]}
-          sx={{
-            paddingTop: "8px",
-          }}
-        >
-          <TimePicker
-            {...register(name)}
-            label={label}
-            ampm={false}
-            onChange={(value) => setValue(name, value)}
-            errors={errors?.time}
-            value={value}
+        <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="ru">
+          <DemoContainer
+            components={["TimePicker"]}
             sx={{
-              width: "100%",
-
-              "& .MuiOutlinedInput-root": {
-                "&.Mui-focused fieldset": {
-                  borderColor: "green",
-                },
-              },
-              "& .MuiInputLabel-root": {
-                color: "gray",
-              },
-              "& label.Mui-focused": {
-                color: "white",
-              },
+              paddingTop: "8px",
             }}
-          />
-        </DemoContainer>
+          >
+            <TimePicker
+              {...register(name)}
+              label={label}
+              ampm={false}
+              onChange={(value) => setValue(name, value)}
+              errors={errors?.time}
+              value={value}
+              sx={{
+                width: "100%",
+
+                "& .MuiOutlinedInput-root": {
+                  "&.Mui-focused fieldset": {
+                    borderColor: "green",
+                  },
+                },
+                "& .MuiInputLabel-root": {
+                  color: "gray",
+                },
+                "& label.Mui-focused": {
+                  color: "white",
+                },
+              }}
+            />
+          </DemoContainer>
           <FormHelperText sx={{ color: "Crimson" }}>
             {errors?.message}
           </FormHelperText>
-      </LocalizationProvider>
-    </Box>
+        </LocalizationProvider>
+      </Box>
     </FieldsContainer>
-    
   );
 };
 

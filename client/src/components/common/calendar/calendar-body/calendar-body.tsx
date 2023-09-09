@@ -8,10 +8,16 @@ const Component = styled(Box)`
   margin-bottom: 20px;
 `;
 
-const CalendarBody = ({ currentMonth, setDateCreate, meetings, tasks }) => {
+const CalendarBody = ({
+  tasks,
+  currentMonth,
+  setDateCreate,
+  meetings,
+  background,
+}) => {
   return (
     <Component>
-      <DaysOfWeek />
+      <DaysOfWeek background={background} />
       <Month
         month={currentMonth}
         setDateCreate={setDateCreate}

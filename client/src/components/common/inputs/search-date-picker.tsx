@@ -10,9 +10,9 @@ const SearchDatePicker = ({
   label,
   value,
   onChange,
-  helperText,
-  errors,
-  disabled,
+  helperText = "",
+  errors = null,
+  disabled = false,
   color = "Crimson",
 }) => {
   return (

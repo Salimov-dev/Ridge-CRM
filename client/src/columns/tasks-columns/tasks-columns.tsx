@@ -30,6 +30,7 @@ import { FormatDate } from "../../utils/date/format-date";
 import { FormatTime } from "../../utils/date/format-time";
 import { AlignCenter } from "../styled/styled";
 import EmptyTd from "../components/empty-td";
+import { useEffect, useState } from "react";
 
 export const tasksColumns = [
   {
@@ -163,6 +164,13 @@ export const tasksColumns = [
       const isCurrentUserIsCuratorTask = currentUserId !== task?.userId;
       const disable = isCuratorTask && isCurrentUserIsCuratorTask;
 
+      const [currentPath, setCurrentPath] = useState("");
+      const isRidgePage = currentPath === "/ridge";
+
+      useEffect(() => {
+        setCurrentPath(window.location.pathname);
+      }, []);
+
       const handleClick = () => {
         if (isCuratorTask) {
           dispatch(setUpdateManagerTaskOpenState(true));
@@ -179,8 +187,16 @@ export const tasksColumns = [
           onClick={handleClick}
           disabled={disable}
           fontColor={isCuratorTask ? "inherit" : "black"}
-          background={isCuratorTask ? "Crimson" : "orange"}
-          backgroudHover={isCuratorTask ? "darkRed" : "darkOrange"}
+          background={
+            isCuratorTask ? "crimson" : isRidgePage ? "darkGreen" : "orange"
+          }
+          backgroudHover={
+            isCuratorTask
+              ? "darkRed"
+              : isRidgePage
+              ? "forestGreen"
+              : "darkOrange"
+          }
         />
       );
     },

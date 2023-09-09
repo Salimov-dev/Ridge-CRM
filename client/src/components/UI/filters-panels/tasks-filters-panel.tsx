@@ -5,7 +5,13 @@ import { FieldsContainer, Form } from "../../common/forms/styled/styled";
 import { taskDoneTypes } from "../../../mock/task-done-status";
 import SearchSelectField from "../../common/inputs/search-select-field";
 
-const TasksFiltersPanel = ({ data, register, setValue, isLoading }) => {
+const TasksFiltersPanel = ({
+  data,
+  register,
+  setValue,
+  isLoading,
+  isRidgeObject,
+}) => {
   return (
     <Form>
       <FieldsContainer>
@@ -17,17 +23,24 @@ const TasksFiltersPanel = ({ data, register, setValue, isLoading }) => {
           inputProps={{ maxLength: 30 }}
           disabled={isLoading ? true : false}
         />
+        <SearchField
+          register={register}
+          label="Найти по результату"
+          name="result"
+          value={data.result}
+          inputProps={{ maxLength: 30 }}
+          disabled={isLoading ? true : false}
+        />
         <SearchSelectField
           name="selectedTaskTypes"
           labelId="selectedTaskTypes"
           label="Выбрать по выполнению"
           register={register}
           itemsList={taskDoneTypes}
-          selectedItems={data.selectedTaskTypes}
-          value={data.selectedTaskTypes || ""}
+          value={data.selectedTaskTypes}
           disabled={isLoading ? true : false}
         />
-        <SearchSwitch
+        {!isRidgeObject ?<SearchSwitch
           title="Задачи куратора"
           isLoading={isLoading}
           isChecked={data?.onlyMyTasks}
@@ -36,7 +49,7 @@ const TasksFiltersPanel = ({ data, register, setValue, isLoading }) => {
           onChange={(e) => {
             setValue("onlyMyTasks", e.target.checked);
           }}
-        />
+        /> : null}
       </FieldsContainer>
     </Form>
   );

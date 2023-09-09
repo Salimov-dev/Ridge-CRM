@@ -23,15 +23,15 @@ const StyledSelect = styled(Select)(() => ({
 }));
 
 const SearchSelectField = ({
-  itemsList,
+  register,
   name,
-  errors,
   labelId,
   label,
-  register,
+  itemsList,
+  errors = null,
   disabled = false,
   value,
-  isSelect
+  isSelect = false,
 }) => {
   const sortedItems = orderBy(itemsList, ["name"], ["asc"]);
 
@@ -89,7 +89,9 @@ const SearchSelectField = ({
           </MenuItem>
         ))}
       </StyledSelect>
-      <FormHelperText sx={{ color: "Crimson" }}>{errors?.message}</FormHelperText>
+      <FormHelperText sx={{ color: "Crimson" }}>
+        {errors?.message}
+      </FormHelperText>
     </FormControl>
   );
 };

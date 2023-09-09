@@ -22,13 +22,13 @@ import {
 import { taskSchema } from "../../../schemas/task-shema";
 
 const UpdateRidgeTask = ({ title, onClose }) => {
+  const dispatch = useDispatch();
   const taskId = useSelector(getUpdateRidgeTaskId());
   const task = useSelector(getRidgeTaskById(taskId));
   const isTasksLoading = useSelector(getRidgeTaskLoadingStatus());
 
   const objects = useSelector(getRidgeObjectsList());
   const objectId = task?.objectId;
-  const dispatch = useDispatch();
 
   const currentUserId = useSelector(getCurrentUserId());
   const currentUserObjects = objects?.filter(
@@ -69,7 +69,7 @@ const UpdateRidgeTask = ({ title, onClose }) => {
     const transformedTime = dayjs(data.time).format("YYYY-MM-DDTHH:mm:ss.SSSZ");
     const newData = { ...data, date: transformedDate, time: transformedTime };
 
-    dispatch(updateRidgeTask(newData, taskId))
+    dispatch(updateRidgeTask(newData))
       .then(onClose())
       .then(toast.success("Задача себе успешно изменена!"));
   };
@@ -90,7 +90,7 @@ const UpdateRidgeTask = ({ title, onClose }) => {
     <>
       <TitleWithCloseButton
         title={title}
-        background="orange"
+        background="darkGreen"
         color="white"
         onClose={onClose}
       />

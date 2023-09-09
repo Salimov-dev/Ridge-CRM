@@ -5,14 +5,13 @@ import {
 } from "../../components/common/table/helpers/helpers";
 import { FormatDate } from "../../utils/date/format-date";
 import { AlignCenter } from "../styled/styled";
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import OpenRidgeObjectButton from "../../components/common/buttons/open-ridge-object-button";
 import {
   setUpdateRidgeObjectId,
   setUpdateRidgeObjectOpenState,
 } from "../../store/ridge-object/update-ridge-object.store";
 import { getRidgeObjectStatusNameById } from "../../store/ridge-object/ridge-object-status.store";
-import CreateObjectFromRidgeButton from "../../components/UI/dialogs/buttons/create-object-from-ridge-button";
 import EmptyTd from "../components/empty-td";
 
 export const ridgeObjectsColumns = [
@@ -122,7 +121,6 @@ export const ridgeObjectsColumns = [
             fontColor="white"
             backgroudHover="darkOrchid"
           />
-          <CreateObjectFromRidgeButton objectId={objectId} />
         </Box>
       );
     },

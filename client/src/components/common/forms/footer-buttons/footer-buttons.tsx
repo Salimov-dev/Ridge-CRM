@@ -1,4 +1,5 @@
 import { Box, Button, styled } from "@mui/material";
+import CreateObjectFromRidgeButton from "../../../UI/dialogs/buttons/create-object-from-ridge-button";
 
 const Component = styled(Box)`
   width: 100%;
@@ -8,11 +9,13 @@ const Component = styled(Box)`
 `;
 
 const FooterButtons = ({
-  isEditMode,
-  isValid,
+  objectId = "",
+  removeId,
   onClose,
   onRemove,
-  removeId,
+  isEditMode,
+  isValid,
+  isRidgeObject = false,
 }) => {
   return (
     <Component>
@@ -36,7 +39,9 @@ const FooterButtons = ({
           </Button>
         ) : null}
       </Box>
-
+      {isRidgeObject ? (
+        <CreateObjectFromRidgeButton objectId={objectId} />
+      ) : null}
       <Box sx={{ display: "flex", gap: "4px" }}>
         <Button
           type="button"

@@ -70,16 +70,18 @@ const UpdateRidgeObject = ({ onClose }) => {
         isLoading={isLoading}
       />
       <RidgeObjectForm
+        register={register}
         handleSubmit={handleSubmit}
         onSubmit={onSubmit}
-        register={register}
-        isValid={isValid}
+        objectId={objectId}
         watch={watch}
         errors={errors}
         onClose={onClose}
-        isEditMode={isEditMode}
         onRemove={handleRemoveTask}
         removeId={objectId}
+        isValid={isValid}
+        isEditMode={isEditMode}
+        isRidgeObject={true}
       />
     </Box>
   ) : (

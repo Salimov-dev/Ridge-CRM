@@ -11,6 +11,12 @@ const useSearchMeeting = (meetings, data) => {
   const searchedMeetings = useMemo(() => {
     let array = meetings;
 
+    if (data?.result) {
+      array = array?.filter((task) =>
+        task?.result?.toLowerCase().includes(data?.result?.toLowerCase())
+      );
+    }
+
     if (data.selectedStatuses?.length) {
       array = array?.filter((obj) =>
         data.selectedStatuses.includes(obj.status)

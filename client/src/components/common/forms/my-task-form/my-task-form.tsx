@@ -10,21 +10,21 @@ import { FieldsContainer, Form } from "../styled/styled";
 import SimpleSwitch from "../../inputs/simple-switch";
 
 const MyTaskForm = ({
+  register,
   data,
   objects,
-  register,
   handleSubmit,
   onSubmit,
   onClose,
   onRemoveTask,
-  removeId,
-  errors,
+  removeId = "",
+  errors = null,
   setValue,
   isValid,
   watch,
-  isObjectPage,
+  isObjectPage = false,
   isEditMode = false,
-  isTasksLoading,
+  isTasksLoading = false,
 }) => {
   const watchObjectId = watch("objectId", "");
   const watchIsDone = watch("isDone", false);
@@ -91,11 +91,11 @@ const MyTaskForm = ({
       ) : null}
 
       <FooterButtons
-        isEditMode={isEditMode}
-        isValid={isValid}
+        removeId={removeId}
         onClose={onClose}
         onRemove={onRemoveTask}
-        removeId={removeId}
+        isEditMode={isEditMode}
+        isValid={isValid}
       />
     </Form>
   );

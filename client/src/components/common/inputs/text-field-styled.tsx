@@ -21,22 +21,21 @@ const StyledTextField = styled(TextField)(({ theme }) => ({
 }));
 
 const TextFieldStyled = ({
-  errors,
   register,
   label,
   name,
-  onKeyDown,
   value,
-  InputProps,
-  inputProps,
-  type = "text",
   rows = "1",
+  multiline = false,
+  errors = null,
   onInputQuantities,
+  InputProps = {},
+  inputProps = {},
+  type = "text",
   valueAsNumber = false,
   disabled = false,
-  multiline = false,
   isHelperText = false,
-  helperText,
+  helperText = "",
 }) => {
   const handleInput = (e) => {
     const maxLength = onInputQuantities;
@@ -56,7 +55,6 @@ const TextFieldStyled = ({
         value={value}
         label={label}
         rows={rows}
-        onKeyDown={onKeyDown}
         InputProps={InputProps}
         inputProps={inputProps}
         multiline={multiline}

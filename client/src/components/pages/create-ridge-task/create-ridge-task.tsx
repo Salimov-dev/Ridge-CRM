@@ -2,7 +2,7 @@
 import dayjs from "dayjs";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 // mui
@@ -11,12 +11,12 @@ import { Box } from "@mui/material";
 import MyTaskForm from "../../common/forms/my-task-form/my-task-form";
 import TitleWithCloseButton from "../../common/page-titles/title-with-close-button";
 // store
-import { createTask } from "../../../store/task/tasks.store";
+import { createRidgeTask } from "../../../store/ridge-task/ridge-tasks.store";
+import { getCurrentUserId } from "../../../store/user/users.store";
 // schema
 import { taskSchema } from "../../../schemas/task-shema";
 // utils
 import { capitalizeFirstLetter } from "../../../utils/data/capitalize-first-letter";
-import { createRidgeTask } from "../../../store/ridge-task/ridge-tasks.store";
 
 const initialState = {
   date: dayjs(),
@@ -29,11 +29,11 @@ const initialState = {
 };
 
 const CreateRidgeTask = ({
+  objects,
   title,
   dateCreate,
-  objects,
   onClose,
-  objectPageId,
+  objectPageId=null,
 }) => {
   const dispatch = useDispatch();
   const isObjectPage = Boolean(objectPageId?.length);
@@ -53,6 +53,16 @@ const CreateRidgeTask = ({
   const watchDate = watch("date", null);
   const watchTime = watch("time", null);
   const isFullValid = !watchDate || !watchTime || !isValid;
+
+  const currentUserId = useSelector(getCurrentUserId());
+  const currentUserObjects = objects?.filter(
+    (obj) => obj?.userId === currentUserId
+  );
+
+  let transformObjects = [];
+  currentUserObjects?.forEach((obj) => {
+    transformObjects?.push({ _id: obj._id, name: obj.location.address });
+  });
 
   const onSubmit = () => {
     const newData = {
@@ -85,14 +95,14 @@ const CreateRidgeTask = ({
     <Box>
       <TitleWithCloseButton
         title={title}
-        background="orange"
+        background="darkGreen"
         color="white"
         onClose={onClose}
       />
       <MyTaskForm
         register={register}
         data={data}
-        objects={objects}
+        objects={transformObjects}
         handleSubmit={handleSubmit}
         onSubmit={onSubmit}
         onClose={onClose}

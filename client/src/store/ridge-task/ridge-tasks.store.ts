@@ -107,7 +107,7 @@ export function createRidgeTask(payload) {
   };
 }
 
-export const updateRidgeTask = (payload) => async (dispatch) => {
+export const updateRidgeTask = (payload) => async (dispatch) => { 
   dispatch(taskUpdateRequested());
   try {
     dispatch(taskUpdateSuccessed(payload));

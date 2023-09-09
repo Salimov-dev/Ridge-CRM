@@ -26,7 +26,7 @@ const RidgeTaskCreateDialog = ({ objects, dateCreate, setDateCreate }) => {
       fullWidth={false}
       component={
         <CreateRidgeTask
-          title="Добавить себе задачу"
+          title="Поставить задачу из грядки"
           objects={objects}
           dateCreate={dateCreate}
           onClose={handleCloseCreateMyTask}

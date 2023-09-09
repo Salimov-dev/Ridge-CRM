@@ -1,11 +1,13 @@
 // libraries
+import dayjs from "dayjs";
 import { orderBy } from "lodash";
 import { useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 // components
 import Header from "../../components/common/calendar/header/header";
-import Tasks from "./components/tasks/tasks";
+import CreateTasksButtons from "./components/create-tasks-buttons/create-tasks-buttons";
+import TasksTable from "../../components/common/tasks/tasks-table";
 import Dialogs from "./components/dialogs/dialogs";
 import CalendarBody from "../../components/common/calendar/calendar-body/calendar-body";
 import LayoutTitle from "../../components/common/page-titles/layout-title";
@@ -22,11 +24,10 @@ import { getMonthIndexState } from "../../store/month-index.store";
 import useCalendar from "../../hooks/calendar/use-calendar";
 import useSearchTask from "../../hooks/task/use-search-task";
 import { getMeetingsList } from "../../store/meeting/meetings.store";
-import dayjs from "dayjs";
-import CreateTasksButtons from "./components/create-tasks-buttons/create-tasks-buttons";
 
 const initialState = {
   task: "",
+  result: "",
   onlyMyTasks: false,
   selectedTaskTypes: [],
 };
@@ -105,8 +106,9 @@ const Calendar = () => {
         setDateCreate={setDateCreate}
         meetings={getMeeting}
         tasks={getTask}
+        background="darkOrange"
       />
-      <Tasks
+      <TasksTable
         register={register}
         data={data}
         tasks={sortedTasks}

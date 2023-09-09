@@ -22,6 +22,42 @@ const RidgeObjectsFiltersPanel = ({
   return (
     <Form>
       <FieldsContainer>
+        <SearchField
+          register={register}
+          label="Найти по контактам"
+          name="contacts"
+          value={data.contacts}
+          inputProps={{ maxLength: 20 }}
+          disabled={isLoading ? true : false}
+        />
+        <SearchField
+          register={register}
+          label="Найти по комментарию"
+          name="comment"
+          value={data.comment}
+          inputProps={{ maxLength: 20 }}
+          disabled={isLoading ? true : false}
+        />
+        <MultiSelectField
+          name="selectedStatuses"
+          labelId="selectedStatuses-label"
+          label="Выбор по статусу"
+          itemsList={getActualStatusesList()}
+          selectedItems={data.selectedStatuses}
+          onChange={(e) => setValue("selectedStatuses", e.target.value)}
+          disabled={isLoading ? true : false}
+        />
+        {/* <MultiSelectField
+          name="selectedTypes"
+          labelId="selectedTypes-label"
+          label="Выбор по активности"
+          itemsList={getActuaTypesList()}
+          selectedItems={data.selectedTypes}
+          onChange={(e) => setValue("selectedTypes", e.target.value)}
+          disabled={isLoading ? true : false}
+        /> */}
+      </FieldsContainer>
+      <FieldsContainer>
         <MultiSelectField
           name="metro"
           labelId="metro-label"
@@ -67,42 +103,7 @@ const RidgeObjectsFiltersPanel = ({
           disabled={isLoading ? true : false}
         />
       </FieldsContainer>
-      <FieldsContainer>
-        <SearchField
-          register={register}
-          label="Найти по контактам"
-          name="contacts"
-          value={data.contacts}
-          inputProps={{ maxLength: 20 }}
-          disabled={isLoading ? true : false}
-        />
-        <SearchField
-          register={register}
-          label="Найти по комментарию"
-          name="comment"
-          value={data.comment}
-          inputProps={{ maxLength: 20 }}
-          disabled={isLoading ? true : false}
-        />
-        <MultiSelectField
-          name="selectedStatuses"
-          labelId="selectedStatuses-label"
-          label="Выбор по статусу"
-          itemsList={getActualStatusesList()}
-          selectedItems={data.selectedStatuses}
-          onChange={(e) => setValue("selectedStatuses", e.target.value)}
-          disabled={isLoading ? true : false}
-        />
-        {/* <MultiSelectField
-          name="selectedTypes"
-          labelId="selectedTypes-label"
-          label="Выбор по активности"
-          itemsList={getActuaTypesList()}
-          selectedItems={data.selectedTypes}
-          onChange={(e) => setValue("selectedTypes", e.target.value)}
-          disabled={isLoading ? true : false}
-        /> */}
-      </FieldsContainer>
+      
     </Form>
   );
 };

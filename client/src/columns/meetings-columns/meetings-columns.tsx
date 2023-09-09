@@ -133,7 +133,6 @@ export const meetingsColumns = [
       return <AlignCenter>{FormatManagerName(userId)}</AlignCenter>;
     },
   },
-
   {
     accessorKey: "comment",
     header: "Комментарий",
@@ -142,7 +141,14 @@ export const meetingsColumns = [
       return comment;
     },
   },
-
+  {
+    accessorKey: "result",
+    header: "Результат",
+    cell: (info) => {
+      const result = info.getValue();
+      return result ? result : <AlignCenter>-</AlignCenter>;
+    },
+  },
   {
     accessorKey: "created_at",
     header: "Дата создания",

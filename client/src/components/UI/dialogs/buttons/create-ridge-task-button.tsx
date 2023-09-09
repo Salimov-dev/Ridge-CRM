@@ -1,9 +1,7 @@
 import { Button } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  getCreateRidgeTaskOpenState,
-  setCreateRidgeTaskOpenState,
-} from "../../../../store/ridge-task/create-ridge-task.store";
+import { getRidgeTaskLoadingStatus } from "../../../../store/ridge-task/ridge-tasks.store";
+import { setCreateRidgeTaskOpenState } from "../../../../store/ridge-task/create-ridge-task.store";
 
 const CreateRidgeTaskButton = ({
   title,
@@ -11,7 +9,7 @@ const CreateRidgeTaskButton = ({
   color = "inherit",
   isMyTask = false,
 }) => {
-  const isLoading = useSelector(getCreateRidgeTaskOpenState());
+  const isLoading = useSelector(getRidgeTaskLoadingStatus());
   const dispatch = useDispatch();
 
   const handleOpenCreateMyTask = () => {

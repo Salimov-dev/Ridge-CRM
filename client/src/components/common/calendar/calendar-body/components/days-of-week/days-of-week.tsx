@@ -8,17 +8,16 @@ const Components = styled(Box)`
   width: 100%;
   height: 22px;
   justify-content: space-between;
-  background: darkGreen;
   border-top: 3px solid gray;
   border-left: 3px solid gray;
   border-right: 3px solid gray;
 `;
 
-const DaysOfWeek = () => {
+const DaysOfWeek = ({background}) => {
   const daysArray = daysOfWeekArray;
 
   return (
-    <Components>
+    <Components sx={{  background: background}}>
       {daysArray?.map((day) => (
         <DayOfWeek key={day._id} day={day.name} color={day.color} />
       ))}

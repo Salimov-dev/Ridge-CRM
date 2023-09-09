@@ -13,6 +13,7 @@ import { FieldsContainer, Form } from "../styled/styled";
 
 const RidgeObjectForm = ({
   register,
+  objectId,
   errors,
   handleSubmit,
   onSubmit,
@@ -22,6 +23,7 @@ const RidgeObjectForm = ({
   watch,
   isValid,
   isEditMode = false,
+  isRidgeObject
 }) => {
   const districts = useSelector(getDistrictsList());
   const objectStatuses = useSelector(getRidgeObjectsStatusList());
@@ -91,11 +93,13 @@ const RidgeObjectForm = ({
         </FieldsContainer>
 
         <FooterButtons
-          isEditMode={isEditMode}
-          isValid={!isValid}
-          onClose={onClose}
-          onRemove={onRemove}
-          removeId={removeId}
+        objectId={objectId}
+        onClose={onClose}
+        onRemove={onRemove}
+        removeId={removeId}
+        isEditMode={isEditMode}
+        isValid={!isValid}
+        isRidgeObject={isRidgeObject}
         />
       </Form>
     </>

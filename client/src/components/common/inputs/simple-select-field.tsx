@@ -23,15 +23,15 @@ const StyledSelect = styled(Select)(() => ({
 }));
 
 const SimpleSelectField = ({
-  itemsList,
+  register,
   name,
-  errors,
   labelId,
   label,
-  register,
-  disabled = false,
+  itemsList,
   value,
-  selectedItems,
+  disabled = false,
+  errors = null,
+  selectedItems = null,
 }) => {
   const sortedItems = orderBy(itemsList, ["name"], ["asc"]);
 
@@ -89,7 +89,9 @@ const SimpleSelectField = ({
           </MenuItem>
         ))}
       </StyledSelect>
-      <FormHelperText sx={{ color: "Crimson" }}>{errors?.message}</FormHelperText>
+      <FormHelperText sx={{ color: "Crimson" }}>
+        {errors?.message}
+      </FormHelperText>
     </FormControl>
   );
 };

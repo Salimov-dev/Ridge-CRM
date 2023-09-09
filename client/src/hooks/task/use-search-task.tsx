@@ -17,6 +17,12 @@ const useSearchTask = (tasks, data) => {
       );
     }
 
+    if (data?.result) {
+      array = array?.filter((task) =>
+        task?.result?.toLowerCase().includes(data?.result?.toLowerCase())
+      );
+    }
+
     // Все актуальные
     if (data.selectedTaskTypes === "234gsfd345kgdsl23gf344") {
       array = array?.filter((task) => task?.isDone !== true);

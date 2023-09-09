@@ -14,13 +14,13 @@ const DatePickerStyled = ({
   label,
   value,
   onChange,
-  helperText,
-  errors,
-  disabled,
+  helperText="",
+  errors=null,
+  disabled=false,
   color = "Crimson",
   minDate = today,
   maxDate = null,
-  isEditMode,
+  isEditMode=false,
 }) => {
   return (
     <Box sx={{ width: "100%", marginBottom: "-3px" }}>

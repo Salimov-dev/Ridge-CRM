@@ -23,9 +23,11 @@ import getMonth from "../../utils/calendar/get-month";
 import { getMonthIndexState } from "../../store/month-index.store";
 import Header from "../../components/common/calendar/header/header";
 import CreateRidgeTasksButtons from "./components/create-ridge-tasks-buttons/create-ridge-tasks-buttons";
-import RidgeTaskCreateDialog from "../../components/UI/dialogs/ridge-tasks/ridge-task-create-dialog";
 import { getRidgeTasksList } from "../../store/ridge-task/ridge-tasks.store";
 import Dialogs from "./components/dialogs/dialogs";
+import TasksTable from "../../components/common/tasks/tasks-table";
+import { tasksColumns } from "../../columns/tasks-columns/tasks-columns";
+import useSearchTask from "../../hooks/task/use-search-task";
 
 const initialState = {
   comment: "",
@@ -42,10 +44,9 @@ const Ridge = () => {
   const [currentMonth, setCurrentMonth] = useState(getMonth());
   const [dateCreate, setDateCreate] = useState(null);
   const [selectedBaloon, setSelectedBaloon] = useState(null);
-
+  const tasksColumn = tasksColumns;
+  const tasksList = useSelector(getRidgeTasksList());
   const monthIndex = useSelector(getMonthIndexState());
-  const tasks = useSelector(getRidgeTasksList());
-
   const objects = useSelector(getRidgeObjectsList());
   const selectedObject = useSelector(getRidgeObjectById(selectedBaloon));
   const columns = ridgeObjectsColumns;
@@ -73,12 +74,15 @@ const Ridge = () => {
   });
 
   const data = watch();
+  const searchedTasks = useSearchTask(tasksList, data);
   const searchedObjects = useSearchRidgeObject(objects, data);
+
+  const sortedTasks = orderBy(searchedTasks, ["date"], ["asc"]);
   const sortedObjects = orderBy(searchedObjects, ["created_at"], ["desc"]);
   const isInputEmpty = JSON.stringify(initialState) !== JSON.stringify(data);
 
   const getTask = (day) => {
-    const currentTasks = tasks?.filter((task) => {
+    const currentTasks = tasksList?.filter((task) => {
       const taskDate = dayjs(task?.date);
       const targetDate = dayjs(day);
       return (
@@ -121,7 +125,7 @@ const Ridge = () => {
         button={<CreateRidgeObjectButton />}
       />
       <ItemsOnMap
-        items={searchedObjects}
+        items={sortedObjects}
         mapZoom={mapZoom}
         hintContent={(item) =>
           `${item?.location?.city}, ${item?.location?.address}`
@@ -133,7 +137,7 @@ const Ridge = () => {
       />
       <RidgeObjectsFiltersPanel
         data={data}
-        objects={objects}
+        objects={sortedObjects}
         register={register}
         setValue={setValue}
         isLoading={isLoading}
@@ -145,18 +149,25 @@ const Ridge = () => {
       />
       <Header buttons={<CreateRidgeTasksButtons />} />
       <CalendarBody
+        tasks={getTask}
         currentMonth={currentMonth}
         setDateCreate={setDateCreate}
-        tasks={getTask}
+        background="darkGreen"
+      />
+      <TasksTable
+        register={register}
+        data={data}
+        tasks={sortedTasks}
+        columns={tasksColumn}
+        setValue={setValue}
+        isRidgeObject={true}
       />
 
-      <RidgeTaskCreateDialog
-        dateCreate={dateCreate}
+      <Dialogs
         objects={sortedObjects}
+        dateCreate={dateCreate}
         setDateCreate={setDateCreate}
       />
-
-      <Dialogs />
     </Box>
   );
 };
