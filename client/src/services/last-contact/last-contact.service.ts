@@ -14,9 +14,9 @@ const lastContactService = {
     );
     return data;
   },
-  remove: async (meetingId) => {
+  remove: async (lastContactId) => {
     const { data } = await httpService.delete(
-      lastContactEndpoint + "/" + meetingId
+      lastContactEndpoint + "/" + lastContactId
     );
     return data;
   },

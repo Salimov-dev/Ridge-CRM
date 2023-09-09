@@ -1,10 +1,15 @@
 import { Button } from "@mui/material";
 
-const PositiveOutlinedButton = ({ title, onClick, isValid = false }) => {
+const PositiveOutlinedButton = ({
+  title,
+  onClick,
+  isValid = false,
+  type = "button",
+}) => {
   return (
     <Button
-      type="button"
       variant="outlined"
+      type={type}
       onClick={onClick}
       disabled={isValid}
       sx={{

@@ -11,7 +11,7 @@ const Component = styled(Box)`
 const FooterButtons = ({ onClose, onEdit, isEdit,isLoading }) => {
   return !isLoading ? (
     <Component>
-      <ButtonsPanel onClose={onClose} isEdit={isEdit} onEdit={onEdit} isLoading={isLoading}/>
+      <ButtonsPanel onClose={onClose} isEdit={isEdit} onEdit={onEdit}/>
     </Component>
   ) : (
     <Loader />

@@ -15,7 +15,7 @@ const CreateObjectFromRidgeButton = ({ objectId }) => {
 
   return (
     <PositiveOutlinedButton
-      title="Создать объект в талицу"
+      title="Создать объект в таблицу"
       onClick={handleOpenCreateObject}
     />
   );

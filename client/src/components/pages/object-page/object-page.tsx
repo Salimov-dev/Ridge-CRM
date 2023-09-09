@@ -38,9 +38,10 @@ const ObjectPage = ({ onClose }) => {
     <Box>
       <Header
         object={object}
-        isLoading={isLoading}
         onClose={onClose}
         onEdit={handleOpenEditObject}
+        isLoading={isLoading}
+        isEdit={true}
       />
       <ItemOnMap
         mapZoom={mapZoom}

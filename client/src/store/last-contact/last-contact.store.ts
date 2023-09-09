@@ -141,6 +141,8 @@ export const updateLastContact = (payload) => async (dispatch) => {
 
 export const removeLastContact = (lastContactId) => async (dispatch) => {
   dispatch(removeLastContactRequested());
+  console.log("lastContactId removeLastContact", lastContactId);
+  
   try {
     dispatch(lastContactRemoved(lastContactId));
     await lastContactService.remove(lastContactId);

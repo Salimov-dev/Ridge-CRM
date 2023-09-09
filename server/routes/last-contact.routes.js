@@ -39,7 +39,7 @@ router.post("/create", auth, async (req, res) => {
 router.patch("/:lastContactId?/edit", auth, async (req, res) => {
   try {
     const { lastContactId } = req.params;
-    await Task.findByIdAndUpdate(lastContactId, req.body);
+    await LastContact.findByIdAndUpdate(lastContactId, req.body);
   } catch (e) {
     res.status(500).json({
       message: "На сервере произошла ошибка, попробуйте позже",

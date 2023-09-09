@@ -21,7 +21,6 @@ const MeetingCreateDialog = ({ dateCreate = getDateToday() }) => {
         <CreateMeeting
           onClose={handleCloseCreateMeeting}
           dateCreate={dateCreate}
-          objectPageId=""
         />
       }
       onClose={handleCloseCreateMeeting}

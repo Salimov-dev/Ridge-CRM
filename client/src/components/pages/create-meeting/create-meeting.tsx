@@ -44,7 +44,7 @@ const Component = styled(Box)`
   width: 100%;
 `;
 
-const CreateMeeting = ({ objectPageId, onClose, dateCreate }) => {
+const CreateMeeting = ({ objectPageId="", onClose, dateCreate }) => {
   const statuses = useSelector(getMeetingStatusesList());
   const meetingTypes = useSelector(getMeetingTypesList());
   const currentUserId = useSelector(getCurrentUserId());

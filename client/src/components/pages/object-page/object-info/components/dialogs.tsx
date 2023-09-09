@@ -1,3 +1,5 @@
+import LastContactCreateDialog from "../../../../UI/dialogs/last-contacts/last-contact-create-dialog";
+import LastContactUpdateDialog from "../../../../UI/dialogs/last-contacts/last-contact-update-dialog";
 import MeetingCreateDialog from "../../../../UI/dialogs/meetings/meeting-create-dialog";
 import MeetingUpdateDialog from "../../../../UI/dialogs/meetings/meeting-update-dialog";
 import ManagerTaskCreateDialog from "../../../../UI/dialogs/tasks/manager-task-create-dialog";
@@ -16,6 +18,9 @@ const Dialogs = ({ objects, users }) => {
 
       <MeetingCreateDialog />
       <MeetingUpdateDialog />
+
+      <LastContactCreateDialog />
+      <LastContactUpdateDialog />
     </>
   );
 };

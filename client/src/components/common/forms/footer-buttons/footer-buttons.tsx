@@ -1,7 +1,7 @@
-import { Box, styled } from "@mui/material";
+import { Box, Button, styled } from "@mui/material";
 import CreateObjectFromRidgeButton from "../../../UI/dialogs/buttons/create-object-from-ridge-button";
-import PositiveOutlinedButton from "../../buttons/positive-outlined-button";
 import NegativeOutlinedButton from "../../buttons/negative-outlined-button";
+import PositiveOutlinedButton from "../../buttons/positive-outlined-button";
 
 const Component = styled(Box)`
   width: 100%;
@@ -24,8 +24,8 @@ const FooterButtons = ({
       <Box sx={{ display: "flex", gap: "4px" }}>
         <PositiveOutlinedButton
           title={isEditMode ? "Сохранить" : "Создать"}
-          onClick={() => onRemove(removeId)}
           isValid={isValid}
+          type = "submit"
         />
         {isEditMode ? (
           <NegativeOutlinedButton
@@ -37,10 +37,7 @@ const FooterButtons = ({
           <CreateObjectFromRidgeButton objectId={objectId} />
         ) : null}
       </Box>
-      <NegativeOutlinedButton
-        title="Отмена"
-        onClick={onClose}
-      />
+      <NegativeOutlinedButton title="Отмена" onClick={onClose} />
     </Component>
   );
 };

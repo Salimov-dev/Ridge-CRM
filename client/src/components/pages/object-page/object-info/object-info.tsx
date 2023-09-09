@@ -7,8 +7,10 @@ import Dialogs from "./components/dialogs";
 import ObjectsParams from "./components/object-params";
 import ObjectTasks from "./components/object-tasks";
 import ObjectMeetings from "./components/object-meetings";
-// components
 import Loader from "../../../common/loader/loader";
+import LastContacts from "./components/last-contacts";
+import CreateLastContactButton from "../../../UI/dialogs/buttons/create-last-contact-button";
+import CreateTasksButtons from "../../../../layouts/calendar/components/create-tasks-buttons/create-tasks-buttons";
 // store
 import { getObjectsList } from "../../../../store/object/objects.store";
 import { getObjectMeetingsList } from "../../../../store/meeting/meetings.store";
@@ -17,7 +19,7 @@ import {
   getCurrentUserId,
   getUsersList,
 } from "../../../../store/user/users.store";
-import CreateTasksButtons from "../../../../layouts/calendar/components/create-tasks-buttons/create-tasks-buttons";
+import { getLastContactsByObjectId } from "../../../../store/last-contact/last-contact.store";
 
 const Component = styled(Box)`
   display: flex;
@@ -33,6 +35,9 @@ const ObjectInfo = ({ object, isLoading }) => {
 
   const tasks = useSelector(getObjectTasksList(object?._id));
   const sortedTasks = orderBy(tasks, ["date"], ["asc"]);
+
+  const lastContacts = useSelector(getLastContactsByObjectId(object?._id));
+  const sortedLastContacts = orderBy(lastContacts, ["date"], ["asc"]);
 
   const users = useSelector(getUsersList());
   const currentUserId = useSelector(getCurrentUserId());
@@ -64,6 +69,11 @@ const ObjectInfo = ({ object, isLoading }) => {
         tasks={sortedTasks}
         object={object}
         buttons={<CreateTasksButtons withoutMeeting={true} />}
+      />
+      <LastContacts
+        lastContacts={sortedLastContacts}
+        object={object}
+        buttons={<CreateLastContactButton title="Добавить последний контакт" />}
       />
 
       <Dialogs objects={transformObjects} users={transformUsers} />
