@@ -29,6 +29,8 @@ import ridgeObjectsRoutes from "./ridge-objects.routes.js";
 import ridgeObjectStatusRoutes from "./ridge-object-status.routes.js";
 // uploads
 import uploadRoutes from "./upload-avatar.routes.js";
+// last contact
+import lastContactRoutes from "./last-contact.routes.js";
 
 const router = express.Router({ mergeParams: true });
 
@@ -62,5 +64,7 @@ router.use("/ridgeTasks", ridgeTasksRoutes);
 router.use("/ridgeObjectStatus", ridgeObjectStatusRoutes);
 // uploads
 router.use("/upload", uploadRoutes);
+// last contact
+router.use("/lastContact", lastContactRoutes);
 
 export default router;

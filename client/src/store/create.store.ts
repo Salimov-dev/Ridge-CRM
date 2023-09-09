@@ -44,6 +44,9 @@ import createObjectFromRidgeReducer from "./ridge-object/create-object-from-ridg
 // other
 import sidebarCollapsStateReducer from "./sidebar-collaps-state.store";
 import monthIndexReducer from "./month-index.store";
+import lastContactReducer from "./last-contact/last-contact.store";
+import createLastContactReducer from "./last-contact/create-last-contact.store";
+import updateLastContactReducer from "./last-contact/update-last-contact.store";
 
 const rootReducer = combineReducers({
   // objects
@@ -90,6 +93,10 @@ const rootReducer = combineReducers({
   createRidgeObject: createRidgeObjectReducer,
   createObjectFromRidge: createObjectFromRidgeReducer,
   updateRidgeObject: updateRidgeObjectReducer,
+  // last contact
+  lastContact: lastContactReducer,
+  createLastContact: createLastContactReducer,
+  updateLastContact: updateLastContactReducer,
   // other
   sidebarCollapsState: sidebarCollapsStateReducer,
 });

@@ -25,6 +25,8 @@ import { loadRidgeTasksList } from "../store/ridge-task/ridge-tasks.store";
 // ridge
 import { loadRidgeObjectsList } from "../store/ridge-object/ridge-objects.store";
 import { loadRidgeObjectStatusList } from "../store/ridge-object/ridge-object-status.store";
+// last contact
+import { loadLastContactsList } from "../store/last-contact/last-contact.store";
 // other
 import { loadSidebarCollapsState } from "../store/sidebar-collaps-state.store";
 
@@ -63,6 +65,8 @@ const AppLoader = ({ children }: AppLoaderProps) => {
     // ridge
     dispatch<any>(loadRidgeObjectsList());
     dispatch<any>(loadRidgeObjectStatusList());
+    // last contact
+    dispatch<any>(loadLastContactsList());
     // other
     dispatch<any>(loadSidebarCollapsState());
   }, []);
