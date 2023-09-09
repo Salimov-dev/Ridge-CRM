@@ -1,33 +1,39 @@
+import { useState } from "react";
 import { Box } from "@mui/material";
 import { orderBy } from "lodash";
-import LayoutTitle from "../../components/common/page-titles/layout-title";
-import AddAndClearFiltersButton from "../../components/common/buttons/add-and-clear-filters-button";
-import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import dayjs from "dayjs";
 import { useForm } from "react-hook-form";
-import {
-  getRidgeObjectById,
-  getRidgeObjectsList,
-  getRidgeObjectsLoadingStatus,
-} from "../../store/ridge-object/ridge-objects.store";
-import { ridgeObjectsColumns } from "../../columns/ridge-columns/ridge-objects-columns";
+// components
+import LayoutTitle from "../../components/common/page-titles/layout-title";
+import AddAndClearFiltersButton from "../../components/common/buttons/add-and-clear-filters-button";
 import ItemsOnMap from "../../components/common/map/items-on-map/items-on-map";
 import BasicTable from "../../components/common/table/basic-table";
 import CreateRidgeObjectButton from "../../components/UI/dialogs/buttons/create-ridge-object-button";
 import RidgeObjectBaloon from "../../components/UI/maps/ridge-object-baloon";
 import RidgeObjectsFiltersPanel from "../../components/UI/filters-panels/ridge-objects-filters-panel";
-import useSearchRidgeObject from "../../hooks/ridge-object/use-search-ridge-object";
 import CalendarBody from "../../components/common/calendar/calendar-body/calendar-body";
-import getMonth from "../../utils/calendar/get-month";
-import { getMonthIndexState } from "../../store/month-index.store";
 import Header from "../../components/common/calendar/header/header";
 import CreateRidgeTasksButtons from "./components/create-ridge-tasks-buttons/create-ridge-tasks-buttons";
-import { getRidgeTasksList } from "../../store/ridge-task/ridge-tasks.store";
 import Dialogs from "./components/dialogs/dialogs";
 import TasksTable from "../../components/common/tasks/tasks-table";
-import { tasksColumns } from "../../columns/tasks-columns/tasks-columns";
+// hooks
+import useSearchRidgeObject from "../../hooks/ridge-object/use-search-ridge-object";
 import useSearchTask from "../../hooks/task/use-search-task";
+import useRidge from "../../hooks/ridge-task/use-ridge";
+// utils
+import getMonth from "../../utils/calendar/get-month";
+// columns
+import { ridgeObjectsColumns } from "../../columns/ridge-columns/ridge-objects-columns";
+import { tasksColumns } from "../../columns/tasks-columns/tasks-columns";
+// store
+import { getMonthIndexState } from "../../store/month-index.store";
+import { getRidgeTasksList } from "../../store/ridge-task/ridge-tasks.store";
+import {
+  getRidgeObjectById,
+  getRidgeObjectsList,
+  getRidgeObjectsLoadingStatus,
+} from "../../store/ridge-object/ridge-objects.store";
 
 const initialState = {
   comment: "",
@@ -38,26 +44,30 @@ const initialState = {
   selectedMetro: [],
   startDate: null,
   endDate: null,
+  task: "",
+  result: "",
+  selectedTaskTypes: [],
 };
 
 const Ridge = () => {
   const [currentMonth, setCurrentMonth] = useState(getMonth());
   const [dateCreate, setDateCreate] = useState(null);
   const [selectedBaloon, setSelectedBaloon] = useState(null);
+  const monthIndex = useSelector(getMonthIndexState());
+
   const tasksColumn = tasksColumns;
   const tasksList = useSelector(getRidgeTasksList());
-  const monthIndex = useSelector(getMonthIndexState());
+
   const objects = useSelector(getRidgeObjectsList());
   const selectedObject = useSelector(getRidgeObjectById(selectedBaloon));
   const columns = ridgeObjectsColumns;
+
   const center = [59.930320630519155, 30.32906024941998];
   const mapZoom = 11;
   const isLoading = useSelector(getRidgeObjectsLoadingStatus());
-
   const localStorageState = JSON.parse(
     localStorage.getItem("search-ridge-data")
   );
-
   const formatedState = {
     ...localStorageState,
     startDate: localStorageState?.startDate
@@ -68,18 +78,25 @@ const Ridge = () => {
       : null,
   };
 
-  const { register, watch, setValue, reset } = useForm({
+  const { register, watch, setValue } = useForm({
     defaultValues: Boolean(localStorageState) ? formatedState : initialState,
     mode: "onBlur",
   });
 
   const data = watch();
-  const searchedTasks = useSearchTask(tasksList, data);
-  const searchedObjects = useSearchRidgeObject(objects, data);
 
+  const {
+    isInputObjectEmpty,
+    isInputTaskEmpty,
+    handleClearObjectForm,
+    handleClearTaskForm,
+  } = useRidge(data, initialState, setValue, monthIndex, setCurrentMonth);
+
+  const searchedTasks = useSearchTask(tasksList, data);
   const sortedTasks = orderBy(searchedTasks, ["date"], ["asc"]);
+
+  const searchedObjects = useSearchRidgeObject(objects, data);
   const sortedObjects = orderBy(searchedObjects, ["created_at"], ["desc"]);
-  const isInputEmpty = JSON.stringify(initialState) !== JSON.stringify(data);
 
   const getTask = (day) => {
     const currentTasks = tasksList?.filter((task) => {
@@ -99,28 +116,12 @@ const Ridge = () => {
     return sortedTasks;
   };
 
-  useEffect(() => {
-    const hasLocalStorageData = localStorage.getItem("search-ridge-data");
-
-    if (hasLocalStorageData?.length) {
-      localStorage.setItem("search-ridge-data", JSON.stringify(initialState));
-    }
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem("search-ridge-data", JSON.stringify(data));
-  }, [data]);
-
-  useEffect(() => {
-    setCurrentMonth(getMonth(monthIndex));
-  }, [monthIndex]);
-
   return (
     <Box sx={{ width: "100%" }}>
       <LayoutTitle title="Грядка объектов" />
       <AddAndClearFiltersButton
-        isInputEmpty={isInputEmpty}
-        reset={reset}
+        isInputEmpty={isInputObjectEmpty}
+        reset={handleClearObjectForm}
         initialState={initialState}
         button={<CreateRidgeObjectButton />}
       />
@@ -161,6 +162,9 @@ const Ridge = () => {
         columns={tasksColumn}
         setValue={setValue}
         isRidgeObject={true}
+        isInputEmpty={isInputTaskEmpty}
+        reset={handleClearTaskForm}
+        initialState={initialState}
       />
 
       <Dialogs

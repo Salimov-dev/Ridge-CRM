@@ -28,7 +28,6 @@ import { getMeetingsList } from "../../store/meeting/meetings.store";
 const initialState = {
   task: "",
   result: "",
-  onlyMyTasks: false,
   selectedTaskTypes: [],
 };
 
