@@ -1,7 +1,7 @@
 import { createAction, createSlice } from "@reduxjs/toolkit";
 import isOutDated from "../../utils/auth/is-out-date";
 import localStorageService from "../../services/user/local.storage-service";
-import lastContactService from "../../services/last-contact/last-contact.service";
+import lastContactService from "../../services/last-contact/ridge-last-contact.service";
 import { createSelector } from "reselect";
 
 const initialState = localStorageService.getAccessToken()
@@ -142,7 +142,7 @@ export const updateLastContact = (payload) => async (dispatch) => {
 export const removeLastContact = (lastContactId) => async (dispatch) => {
   dispatch(removeLastContactRequested());
   console.log("lastContactId removeLastContact", lastContactId);
-  
+
   try {
     dispatch(lastContactRemoved(lastContactId));
     await lastContactService.remove(lastContactId);

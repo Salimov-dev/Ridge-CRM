@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from "react-toastify";
+import { orderBy } from "lodash";
 // MUI
 import { Box } from "@mui/material";
 // components
@@ -12,7 +13,11 @@ import RidgeObjectForm from "../../common/forms/ridge-object-form/ridge-object-f
 import ObjectTasks from "../object-page/object-info/components/object-tasks";
 import ItemOnMap from "../../common/map/item-on-map/item-on-map";
 import RidgeObjectBaloon from "../../UI/maps/ridge-object-baloon";
+import FooterButtons from "../object-page/footer-buttons/footer-buttons";
+import RidgeLastContacts from "../../../layouts/ridge/components/ridge-last-contacts/ridge-last-contacts";
 import CreateRidgeTasksButtons from "../../../layouts/ridge/components/create-ridge-tasks-buttons/create-ridge-tasks-buttons";
+import CreateRidgeLastContactButton from "../../UI/dialogs/buttons/create-ridge-last-contact-button";
+import { ridgeTasksColumnsDialog } from "../../../columns/ridge-tasks-columns/ridge-tasks-columns-dialog";
 // schemas
 import { ridgeObjectSchema } from "../../../schemas/ridge-object-schema";
 // store
@@ -24,15 +29,19 @@ import {
   removeRidgeObject,
   updateRidgeObject,
 } from "../../../store/ridge-object/ridge-objects.store";
-import FooterButtons from "../object-page/footer-buttons/footer-buttons";
+import { getRidgeLastContactsByObjectId } from "../../../store/ridge-last-contact/last-ridge-contact.store";
 
 const UpdateRidgeObject = ({ onClose }) => {
   const dispatch = useDispatch();
 
+  const tasksColumns = ridgeTasksColumnsDialog;
+
   const objectId = useSelector(getUpdateRidgeObjectId());
-  
   const tasks = useSelector(getRidgeTasksByObjectId(objectId));
   const object = useSelector(getRidgeObjectById(objectId));
+
+  const lastContacts = useSelector(getRidgeLastContactsByObjectId(objectId));
+  const sortedLastContacts = orderBy(lastContacts, ["date"], ["asc"]);
 
   const address = `${object?.location?.city}, ${object?.location?.address}`;
   const latitude = object?.location?.latitude || null;
@@ -91,16 +100,24 @@ const UpdateRidgeObject = ({ onClose }) => {
         isRidgeObject={true}
       />
       <ObjectTasks
+        columns={tasksColumns}
         tasks={tasks}
         object={object}
         margin="20px 0"
         buttons={<CreateRidgeTasksButtons />}
       />
-      <FooterButtons
-        onClose={onClose}
-        isLoading={isLoading}
-        isEdit={false}
+      <RidgeLastContacts
+        lastContacts={sortedLastContacts}
+        object={object}
+        margin="20px 0"
+        buttons={
+          <CreateRidgeLastContactButton
+            title="Добавить последний контакт"
+            objectId={objectId}
+          />
+        }
       />
+      <FooterButtons isLoading={isLoading} onClose={onClose} isEdit={false} />
     </Box>
   ) : (
     <Loader />

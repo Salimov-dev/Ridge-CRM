@@ -20,6 +20,7 @@ import {
   getUsersList,
 } from "../../../../store/user/users.store";
 import { getLastContactsByObjectId } from "../../../../store/last-contact/last-contact.store";
+import { tasksColumnsDialog } from "../../../../columns/tasks-columns/tasks-columns-dialog";
 
 const Component = styled(Box)`
   display: flex;
@@ -32,6 +33,8 @@ const ObjectInfo = ({ object, isLoading }) => {
   const objects = useSelector(getObjectsList());
   const meetings = useSelector(getObjectMeetingsList(object?._id));
   const sortedMeetings = orderBy(meetings, ["date"], ["asc"]);
+
+  const tasksColumns = tasksColumnsDialog
 
   const tasks = useSelector(getObjectTasksList(object?._id));
   const sortedTasks = orderBy(tasks, ["date"], ["asc"]);
@@ -66,6 +69,7 @@ const ObjectInfo = ({ object, isLoading }) => {
       <ObjectsParams object={object} isLoading={isLoading} />
       <ObjectMeetings meetings={sortedMeetings} object={object} />
       <ObjectTasks
+      columns={tasksColumns}
         tasks={sortedTasks}
         object={object}
         buttons={<CreateTasksButtons withoutMeeting={true} />}

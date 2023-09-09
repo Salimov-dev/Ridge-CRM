@@ -2,9 +2,9 @@ import { useSelector } from "react-redux";
 import { Box, Typography, styled } from "@mui/material";
 import BasicTable from "../../../../common/table/basic-table";
 import DividerStyled from "../../../../common/divider/divider-styled";
-import { meetingsColumns } from "../../../../../columns/meetings-columns/meetings-columns";
 import CreateMeetingButton from "../../../../UI/dialogs/buttons/create-meeting-button";
 import { getMeetingLoadingStatus } from "../../../../../store/meeting/meetings.store";
+import { meetingsColumnsDialog } from "../../../../../columns/meetings-columns-dialog/meetings-columns-dialog";
 
 const Title = styled(Box)`
   display: flex;
@@ -26,7 +26,7 @@ const ObjectMeetings = ({ meetings, object }) => {
       {meetings?.length ? (
         <BasicTable
           items={meetings}
-          itemsColumns={meetingsColumns}
+          itemsColumns={meetingsColumnsDialog}
           isLoading={isMeetingsLoading}
         />
       ) : (

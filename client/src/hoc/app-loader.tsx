@@ -21,13 +21,16 @@ import { loadUsersList } from "../store/user/users.store";
 import { loadUserStatusesList } from "../store/user/user-statuses.store";
 // tasks
 import { loadTasksList } from "../store/task/tasks.store";
+// ridge tasks
 import { loadRidgeTasksList } from "../store/ridge-task/ridge-tasks.store";
-// ridge
+// ridge objects
 import { loadRidgeObjectsList } from "../store/ridge-object/ridge-objects.store";
 import { loadRidgeObjectStatusList } from "../store/ridge-object/ridge-object-status.store";
 // last contact
 import { loadLastContactsList } from "../store/last-contact/last-contact.store";
-// other
+// ridge last contact
+import { loadRidgeLastContactsList } from "../store/ridge-last-contact/last-ridge-contact.store";
+// sidebar collaps
 import { loadSidebarCollapsState } from "../store/sidebar-collaps-state.store";
 
 interface AppLoaderProps {
@@ -62,12 +65,14 @@ const AppLoader = ({ children }: AppLoaderProps) => {
     dispatch<any>(loadTasksList());
     // ridge tasks
     dispatch<any>(loadRidgeTasksList());
-    // ridge
+    // ridge objects
     dispatch<any>(loadRidgeObjectsList());
     dispatch<any>(loadRidgeObjectStatusList());
     // last contact
     dispatch<any>(loadLastContactsList());
-    // other
+    // ridge last contact
+    dispatch<any>(loadRidgeLastContactsList());
+    // sidebar collaps
     dispatch<any>(loadSidebarCollapsState());
   }, []);
 

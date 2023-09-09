@@ -1,3 +1,5 @@
+import RidgeLastContactCreateDialog from "../../../../components/UI/dialogs/ridge-last-contacts/ridge-last-contact-create-dialog";
+import RidgeLastContactUpdateDialog from "../../../../components/UI/dialogs/ridge-last-contacts/ridge-last-contact-update-dialog";
 import ObjectFromRidgeCreatePageDialog from "../../../../components/UI/dialogs/ridge-objects/object-from-ridge-create-page-dialog";
 import RidgeObjectCreatePageDialog from "../../../../components/UI/dialogs/ridge-objects/ridge-object-create-page-dialog";
 import RidgeObjectUpdatePageDialog from "../../../../components/UI/dialogs/ridge-objects/ridge-object-update-page-dialog";
@@ -12,12 +14,15 @@ const Dialogs = ({ objects, dateCreate, setDateCreate }) => {
         dateCreate={dateCreate}
         setDateCreate={setDateCreate}
       />
-      <RidgeTaskUpdateDialog/>
+      <RidgeTaskUpdateDialog />
 
       <RidgeObjectCreatePageDialog />
       <RidgeObjectUpdatePageDialog />
 
       <ObjectFromRidgeCreatePageDialog />
+
+      <RidgeLastContactCreateDialog />
+      <RidgeLastContactUpdateDialog />
     </>
   );
 };

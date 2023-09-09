@@ -35,6 +35,7 @@ import {
   getRidgeObjectsLoadingStatus,
 } from "../../store/ridge-object/ridge-objects.store";
 import { ridgeTasksColumns } from "../../columns/ridge-tasks-columns/ridge-tasks-columns";
+import RidgeLastContacts from "./components/ridge-last-contacts/ridge-last-contacts";
 
 const initialState = {
   comment: "",

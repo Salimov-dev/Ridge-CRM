@@ -47,6 +47,9 @@ import monthIndexReducer from "./month-index.store";
 import lastContactReducer from "./last-contact/last-contact.store";
 import createLastContactReducer from "./last-contact/create-last-contact.store";
 import updateLastContactReducer from "./last-contact/update-last-contact.store";
+import ridgeLastContactReducer from "./ridge-last-contact/last-ridge-contact.store";
+import createRidgeLastContactReducer from "./ridge-last-contact/create-ridge-last-contact.store";
+import updateRidgeLastContactReducer from "./ridge-last-contact/update-ridge-last-contact.store";
 
 const rootReducer = combineReducers({
   // objects
@@ -97,6 +100,10 @@ const rootReducer = combineReducers({
   lastContact: lastContactReducer,
   createLastContact: createLastContactReducer,
   updateLastContact: updateLastContactReducer,
+  // ridge last contact
+  ridgeLastContact: ridgeLastContactReducer,
+  createRidgeLastContact: createRidgeLastContactReducer,
+  updateRidgeLastContact: updateRidgeLastContactReducer,
   // other
   sidebarCollapsState: sidebarCollapsStateReducer,
 });
