@@ -1,3 +1,4 @@
+import { Box, styled } from "@mui/material";
 import { useSelector } from "react-redux";
 // components
 import Title from "../title/title";
@@ -11,6 +12,10 @@ import { getRidgeObjectsStatusList } from "../../../../store/ridge-object/ridge-
 // styled
 import { FieldsContainer, Form } from "../styled/styled";
 
+const Component = styled(Box)`
+  margin-bottom: 30px;
+`;
+
 const RidgeObjectForm = ({
   register,
   objectId,
@@ -23,7 +28,7 @@ const RidgeObjectForm = ({
   watch,
   isValid,
   isEditMode = false,
-  isRidgeObject
+  isRidgeObject,
 }) => {
   const districts = useSelector(getDistrictsList());
   const objectStatuses = useSelector(getRidgeObjectsStatusList());
@@ -36,7 +41,7 @@ const RidgeObjectForm = ({
   const watchComment = watch("comment");
 
   return (
-    <>
+    <Component>
       <Form onSubmit={handleSubmit(onSubmit)} noValidate>
         <Title title="Объект" />
         <FieldsContainer>
@@ -93,16 +98,16 @@ const RidgeObjectForm = ({
         </FieldsContainer>
 
         <FooterButtons
-        objectId={objectId}
-        onClose={onClose}
-        onRemove={onRemove}
-        removeId={removeId}
-        isEditMode={isEditMode}
-        isValid={!isValid}
-        isRidgeObject={isRidgeObject}
+          objectId={objectId}
+          onClose={onClose}
+          onRemove={onRemove}
+          removeId={removeId}
+          isEditMode={isEditMode}
+          isValid={!isValid}
+          isRidgeObject={isRidgeObject}
         />
       </Form>
-    </>
+    </Component>
   );
 };
 

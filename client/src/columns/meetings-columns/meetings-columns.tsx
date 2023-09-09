@@ -5,7 +5,7 @@ import { Box, Typography } from "@mui/material";
 // components
 import GoToButton from "../../components/common/buttons/go-to-button";
 import { FormatManagerName } from "../../components/common/table/helpers/helpers";
-import TableOpenButton from "../../components/common/buttons/table-open-button";
+import MultiColorContainedButton from "../../components/common/buttons/multi-color-contained-button";
 import DoneStatusIcon from "../../components/common/columns/done-status-icon";
 // store
 import { getObjectById } from "../../store/object/objects.store";
@@ -170,12 +170,12 @@ export const meetingsColumns = [
       };
 
       return (
-        <TableOpenButton
+        <MultiColorContainedButton
           text="Править"
-          onClick={handleClick}
+          fontColor="white"
           background="royalBlue"
           backgroudHover="cornflowerBlue"
-          fontColor="black"
+          onClick={handleClick}
         />
       );
     },

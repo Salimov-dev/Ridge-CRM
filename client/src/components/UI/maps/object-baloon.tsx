@@ -3,7 +3,7 @@ import { Box, Typography, styled } from "@mui/material";
 // components
 import { FormatPhone } from "../../common/table/helpers/helpers";
 import DividerStyled from "../../common/divider/divider-styled";
-import OpenObjectButton from "../../common/map/baloon/open-object-button";
+import MultiColorOutlinedButton from "../../common/buttons/multi-color-outlined-button";
 import Attribute from "../../common/map/baloon/attribute";
 // utils
 import { FormatDate } from "../../../utils/date/format-date";
@@ -64,12 +64,15 @@ const ObjectBaloon = ({ object }) => {
 
   return (
     <BaloonContainer>
-      <OpenObjectButton onClick={handleOpenObjectPage} />
-      <DividerStyled />
-      <Attribute
-        title="Дата создания:"
-        subTitle={createdAt}
+      <MultiColorOutlinedButton
+        text="Открыть страницу объекта"
+        fontColor="black"
+        borderColor="SlateGrey"
+        backgroundHover="ForestGreen"
+        onClick={handleOpenObjectPage}
       />
+      <DividerStyled />
+      <Attribute title="Дата создания:" subTitle={createdAt} />
       <Attribute title="Менеджер:" subTitle={manager} />
       <Attribute title="Город:" subTitle={city} />
       <Attribute title="Район:" subTitle={district} />
@@ -104,12 +107,18 @@ const ObjectBaloon = ({ object }) => {
       <Attribute title="Контакт:" subTitle={name ? `${name}` : "-"} />
       <Attribute
         title="Телефон:"
-        subTitle={phone ? <Typography>{FormatPhone(phone)}</Typography>  : "-"}
+        subTitle={phone ? <Typography>{FormatPhone(phone)}</Typography> : "-"}
       />
       <Attribute title="Email:" subTitle={email ? email : "-"} />
 
       <DividerStyled />
-      <OpenObjectButton onClick={handleOpenObjectPage} />
+      <MultiColorOutlinedButton
+        text="Открыть страницу объекта"
+        fontColor="black"
+        borderColor="SlateGrey"
+        backgroundHover="ForestGreen"
+        onClick={handleOpenObjectPage}
+      />
     </BaloonContainer>
   );
 };

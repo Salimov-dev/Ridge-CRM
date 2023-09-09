@@ -2,7 +2,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { Box, Typography, styled } from "@mui/material";
 // components
 import DividerStyled from "../../common/divider/divider-styled";
-import OpenObjectButton from "../../common/map/baloon/open-object-button";
 import Attribute from "../../common/map/baloon/attribute";
 // utils
 import { FormatDate } from "../../../utils/date/format-date";
@@ -13,6 +12,7 @@ import {
   setUpdateRidgeObjectId,
   setUpdateRidgeObjectOpenState,
 } from "../../../store/ridge-object/update-ridge-object.store";
+import MultiColorOutlinedButton from "../../common/buttons/multi-color-outlined-button";
 
 const BaloonContainer = styled(Box)`
   width: 100%;
@@ -42,7 +42,13 @@ const RidgeObjectBaloon = ({ object }) => {
 
   return (
     <BaloonContainer>
-      <OpenObjectButton onClick={handleOpenObjectPage} />
+      <MultiColorOutlinedButton
+        text="Открыть страницу объекта"
+        fontColor="black"
+        borderColor="SlateGrey"
+        backgroundHover="ForestGreen"
+        onClick={handleOpenObjectPage}
+      />
       <DividerStyled />
       <Attribute title="Дата создания:" subTitle={createdAt} />
       <Attribute title="Менеджер:" subTitle={manager} />
@@ -57,7 +63,13 @@ const RidgeObjectBaloon = ({ object }) => {
         <Attribute subTitle={comment} />
       </Box>
       <DividerStyled />
-      <OpenObjectButton onClick={handleOpenObjectPage} />
+      <MultiColorOutlinedButton
+        text="Открыть страницу объекта"
+        fontColor="black"
+        borderColor="SlateGrey"
+        backgroundHover="ForestGreen"
+        onClick={handleOpenObjectPage}
+      />
     </BaloonContainer>
   );
 };

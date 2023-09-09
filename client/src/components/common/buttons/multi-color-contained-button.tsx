@@ -1,13 +1,14 @@
 import { Button } from "@mui/material";
 
-const TableOpenButton = ({
+const MultiColorContainedButton = ({
   text,
-  background,
-  onClick,
-  disabled,
   fontColor,
+  background,
   backgroudHover,
   fontColorHover = "white",
+  onClick,
+  width="100%",
+  disabled=false,
 }) => {
   return (
     <Button
@@ -15,7 +16,7 @@ const TableOpenButton = ({
       onClick={onClick}
       disabled={disabled}
       sx={{
-        width: "100%",
+        width: width,
         background: background,
         color: fontColor,
         "&:hover": { color: fontColorHover, background: backgroudHover },
@@ -26,4 +27,4 @@ const TableOpenButton = ({
   );
 };
 
-export default TableOpenButton;
+export default MultiColorContainedButton;

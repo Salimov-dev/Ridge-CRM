@@ -11,7 +11,8 @@ import { getMeetingStatusNameById } from "../../../store/meeting/meeting-status.
 // components
 import Attribute from "../../common/map/baloon/attribute";
 import DividerStyled from "../../common/divider/divider-styled";
-import OpenObjectButton from "../../common/map/baloon/open-object-button";
+
+import MultiColorOutlinedButton from "../../common/buttons/multi-color-outlined-button";
 import {
   setOpenObjectPageId,
   setOpenObjectPageOpenState,
@@ -73,7 +74,13 @@ const MeetingBaloon = ({ meeting }) => {
       <Attribute title="" subTitle={objectAddress} gap="0" />
       <Divider />
 
-      <OpenObjectButton onClick={handleOpenObjectPage} />
+      <MultiColorOutlinedButton
+        text="Открыть страницу объекта"
+        fontColor="black"
+        borderColor="SlateGrey"
+        backgroundHover="ForestGreen"
+        onClick={handleOpenObjectPage}
+      />
     </BaloonContainer>
   );
 };

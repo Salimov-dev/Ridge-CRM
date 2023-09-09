@@ -1,38 +1,32 @@
-import dayjs from "dayjs";
 import "dayjs/locale/ru";
+import dayjs from "dayjs";
 import { useDispatch, useSelector } from "react-redux";
 // mui
 import { Box, Typography } from "@mui/material";
 // components
 import GoToButton from "../../components/common/buttons/go-to-button";
-import EmptyTd from "../components/empty-td";
 import { FormatManagerName } from "../../components/common/table/helpers/helpers";
 import MultiColorContainedButton from "../../components/common/buttons/multi-color-contained-button";
 import DoneStatusIcon from "../../components/common/columns/done-status-icon";
-// store
-import { getObjectById } from "../../store/object/objects.store";
-import {
-  setUpdateMyTaskId,
-  setUpdateMyTaskOpenState,
-} from "../../store/task/update-my-task.store";
-import { getTaskById } from "../../store/task/tasks.store";
-import { getCurrentUserId } from "../../store/user/users.store";
-import {
-  setUpdateManagerTaskId,
-  setUpdateManagerTaskOpenState,
-} from "../../store/task/update-manager-task.store";
-import {
-  loadOpenObjectPageOpenState,
-  setOpenObjectPageId,
-  setOpenObjectPageOpenState,
-} from "../../store/object/open-object-page.store";
+import EmptyTd from "../components/empty-td";
 // utils
 import { FormatDate } from "../../utils/date/format-date";
 import { FormatTime } from "../../utils/date/format-time";
 // styled
 import { AlignCenter } from "../styled/styled";
+// store
+import { getRidgeObjectById } from "../../store/ridge-object/ridge-objects.store";
+import {
+  loadUpdateRidgeObjectOpenState,
+  setUpdateRidgeObjectId,
+  setUpdateRidgeObjectOpenState,
+} from "../../store/ridge-object/update-ridge-object.store";
+import {
+  setUpdateRidgeTaskId,
+  setUpdateRidgeTaskOpenState,
+} from "../../store/ridge-task/update-ridge-task.store";
 
-export const tasksColumns = [
+export const ridgeTasksColumns = [
   {
     accessorKey: "isDone",
     header: "",
@@ -72,14 +66,14 @@ export const tasksColumns = [
     header: "Объект задачи",
     cell: (info) => {
       const dispatch = useDispatch();
-      const objectId = info.getValue();
-      const isObjectPage = useSelector(loadOpenObjectPageOpenState());
-      const object = useSelector(getObjectById(objectId));
-      const fullAddress = `${object?.location.city}, ${object?.location.address}`;
+      const objectId = info?.getValue();
+      const isRidgePage = useSelector(loadUpdateRidgeObjectOpenState());
+      const object = useSelector(getRidgeObjectById(objectId));
+      const fullAddress = `${object?.location?.city}, ${object?.location?.address}`;
 
       const handleClick = () => {
-        dispatch(setOpenObjectPageId(objectId));
-        dispatch(setOpenObjectPageOpenState(true));
+        dispatch(setUpdateRidgeObjectId(objectId));
+        dispatch(setUpdateRidgeObjectOpenState(true));
       };
 
       return (
@@ -93,7 +87,7 @@ export const tasksColumns = [
           {objectId ? (
             <>
               {fullAddress}
-              {!isObjectPage ? (
+              {!isRidgePage ? (
                 <GoToButton
                   text="Открыть"
                   color="neutral"
@@ -158,30 +152,17 @@ export const tasksColumns = [
     cell: (info) => {
       const dispatch = useDispatch();
       const taskId = info.getValue();
-      const task = useSelector(getTaskById(taskId));
-      const currentUserId = useSelector(getCurrentUserId());
-      const isCuratorTask = Boolean(task?.managerId);
-      const isCurrentUserIsCuratorTask = currentUserId !== task?.userId;
-      const disable = isCuratorTask && isCurrentUserIsCuratorTask;
-
-      const handleClick = () => {
-        if (isCuratorTask) {
-          dispatch(setUpdateManagerTaskOpenState(true));
-          dispatch(setUpdateManagerTaskId(taskId));
-        } else {
-          dispatch(setUpdateMyTaskId(taskId));
-          dispatch(setUpdateMyTaskOpenState(true));
-        }
+      const handleUpdateRidgeTask = () => {
+        dispatch(setUpdateRidgeTaskId(taskId));
+        dispatch(setUpdateRidgeTaskOpenState(true));
       };
-
       return (
         <MultiColorContainedButton
           text="Править"
-          onClick={handleClick}
-          disabled={disable}
-          fontColor={isCuratorTask ? "inherit" : "black"}
-          background={isCuratorTask ? "crimson" : "orange"}
-          backgroudHover={isCuratorTask ? "darkRed" : "darkOrange"}
+          onClick={handleUpdateRidgeTask}
+          fontColor="white"
+          background="darkGreen"
+          backgroudHover="forestGreen"
         />
       );
     },

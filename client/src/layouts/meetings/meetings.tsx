@@ -31,12 +31,13 @@ import {
 } from "../../store/meeting/meetings.store";
 
 const initialState = {
-  startDate: null,
-  endDate: null,
   meetingsActivity: "",
+  result: "",
   selectedUsers: [],
   selectedStatuses: [],
   selectedTypes: [],
+  startDate: null,
+  endDate: null,
 };
 
 const Meetings = () => {

@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { Box, Typography } from "@mui/material";
 // components
 import GoToButton from "../../components/common/buttons/go-to-button";
-import EmptyTd from "../components/empty-td";
 import { FormatManagerName } from "../../components/common/table/helpers/helpers";
 import MultiColorContainedButton from "../../components/common/buttons/multi-color-contained-button";
 import DoneStatusIcon from "../../components/common/columns/done-status-icon";
@@ -29,8 +28,16 @@ import {
 // utils
 import { FormatDate } from "../../utils/date/format-date";
 import { FormatTime } from "../../utils/date/format-time";
-// styled
 import { AlignCenter } from "../styled/styled";
+import EmptyTd from "../components/empty-td";
+import { useEffect, useState } from "react";
+import { getRidgeObjectById } from "../../store/ridge-object/ridge-objects.store";
+import { loadOpenRidgeObjectPageOpenState } from "../../store/ridge-object/open-ridge-object-page.store";
+import {
+  loadUpdateRidgeObjectOpenState,
+  setUpdateRidgeObjectId,
+  setUpdateRidgeObjectOpenState,
+} from "../../store/ridge-object/update-ridge-object.store";
 
 export const tasksColumns = [
   {
@@ -73,13 +80,25 @@ export const tasksColumns = [
     cell: (info) => {
       const dispatch = useDispatch();
       const objectId = info.getValue();
+
+      const isRidgePage = useSelector(loadUpdateRidgeObjectOpenState());
       const isObjectPage = useSelector(loadOpenObjectPageOpenState());
-      const object = useSelector(getObjectById(objectId));
+
+      const object = isRidgePage
+        ? useSelector(getObjectById(objectId))
+        : useSelector(getRidgeObjectById(objectId));
+      console.log("object", object);
+
       const fullAddress = `${object?.location.city}, ${object?.location.address}`;
 
       const handleClick = () => {
-        dispatch(setOpenObjectPageId(objectId));
-        dispatch(setOpenObjectPageOpenState(true));
+        if (!isRidgePage) {
+          dispatch(setUpdateRidgeObjectId(objectId));
+          dispatch(setUpdateRidgeObjectOpenState(true));
+        } else {
+          dispatch(setOpenObjectPageId(objectId));
+          dispatch(setOpenObjectPageOpenState(true));
+        }
       };
 
       return (
@@ -93,7 +112,7 @@ export const tasksColumns = [
           {objectId ? (
             <>
               {fullAddress}
-              {!isObjectPage ? (
+              {!isObjectPage || !isRidgePage ? (
                 <GoToButton
                   text="Открыть"
                   color="neutral"
@@ -164,6 +183,13 @@ export const tasksColumns = [
       const isCurrentUserIsCuratorTask = currentUserId !== task?.userId;
       const disable = isCuratorTask && isCurrentUserIsCuratorTask;
 
+      const [currentPath, setCurrentPath] = useState("");
+      const isRidgePage = currentPath === "/ridge";
+
+      useEffect(() => {
+        setCurrentPath(window.location.pathname);
+      }, []);
+
       const handleClick = () => {
         if (isCuratorTask) {
           dispatch(setUpdateManagerTaskOpenState(true));
@@ -175,13 +201,21 @@ export const tasksColumns = [
       };
 
       return (
-        <MultiColorContainedButton
+        <TableMultiColorContainedButtonOpenButton
           text="Править"
           onClick={handleClick}
           disabled={disable}
           fontColor={isCuratorTask ? "inherit" : "black"}
-          background={isCuratorTask ? "crimson" : "orange"}
-          backgroudHover={isCuratorTask ? "darkRed" : "darkOrange"}
+          background={
+            isCuratorTask ? "crimson" : isRidgePage ? "darkGreen" : "orange"
+          }
+          backgroudHover={
+            isCuratorTask
+              ? "darkRed"
+              : isRidgePage
+              ? "forestGreen"
+              : "darkOrange"
+          }
         />
       );
     },

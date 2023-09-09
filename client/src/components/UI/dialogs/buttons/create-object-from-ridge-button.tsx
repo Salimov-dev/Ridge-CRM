@@ -1,9 +1,11 @@
-import { Button, Typography } from "@mui/material";
-import { useDispatch, useSelector } from "react-redux";
-import { getCreateObjectFromRidgeOpenState, setCreateObjectFromRidgeOpenState, setUpdateObjectFromRidgeObjectId } from "../../../../store/ridge-object/create-object-from-ridge.store";
+import { useDispatch } from "react-redux";
+import {
+  setCreateObjectFromRidgeOpenState,
+  setUpdateObjectFromRidgeObjectId,
+} from "../../../../store/ridge-object/create-object-from-ridge.store";
+import PositiveOutlinedButton from "../../../common/buttons/positive-outlined-button";
 
-const CreateObjectFromRidgeButton = ({objectId}) => {
-  const isLoading = useSelector(getCreateObjectFromRidgeOpenState());
+const CreateObjectFromRidgeButton = ({ objectId }) => {
   const dispatch = useDispatch();
 
   const handleOpenCreateObject = () => {
@@ -12,19 +14,10 @@ const CreateObjectFromRidgeButton = ({objectId}) => {
   };
 
   return (
-    <Button
-      variant="contained"
-      color="success"
+    <PositiveOutlinedButton
+      title="Создать объект в талицу"
       onClick={handleOpenCreateObject}
-      disabled={isLoading}
-      sx={{
-        color: "white",
-        background: "seaGreen",
-        "&:hover": { background: "green" },
-      }}
-    >
-      <Typography variant="body0">Создать объект</Typography>
-    </Button>
+    />
   );
 };
 

@@ -1,8 +1,7 @@
 // libraries
-import { Typography } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 // components
-import TableOpenButton from "../../components/common/buttons/table-open-button";
+import MultiColorContainedButton from "../../components/common/buttons/multi-color-contained-button";
 import {
   FormatPhone,
   UserAvatar,
@@ -181,12 +180,12 @@ export const usersColumns = [
       };
 
       return (
-        <TableOpenButton
+        <MultiColorContainedButton
           text="Править"
           onClick={handleClick}
           background="chocolate"
           backgroudHover="sienna"
-          fontColorHover="white"
+          fontColor="white"
         />
       );
     },

@@ -1,6 +1,6 @@
 import CloseIcon from "@mui/icons-material/Close";
 
-const CloseButton = ({ onClose }) => {
+const CloseButtonIcon = ({ onClose }) => {
   return (
     <CloseIcon
       onClick={onClose}
@@ -16,4 +16,4 @@ const CloseButton = ({ onClose }) => {
   );
 };
 
-export default CloseButton;
+export default CloseButtonIcon;

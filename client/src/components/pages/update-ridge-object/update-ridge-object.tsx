@@ -9,32 +9,39 @@ import { Box } from "@mui/material";
 import Header from "./components/header";
 import Loader from "../../common/loader/loader";
 import RidgeObjectForm from "../../common/forms/ridge-object-form/ridge-object-form";
+import ObjectTasks from "../object-page/object-info/components/object-tasks";
+import ItemOnMap from "../../common/map/item-on-map/item-on-map";
+import RidgeObjectBaloon from "../../UI/maps/ridge-object-baloon";
+import CreateRidgeTasksButtons from "../../../layouts/ridge/components/create-ridge-tasks-buttons/create-ridge-tasks-buttons";
 // schemas
-
 import { ridgeObjectSchema } from "../../../schemas/ridge-object-schema";
 // store
 import { getUpdateRidgeObjectId } from "../../../store/ridge-object/update-ridge-object.store";
+import { getRidgeTasksByObjectId } from "../../../store/ridge-task/ridge-tasks.store";
 import {
   getRidgeObjectById,
   getRidgeObjectsLoadingStatus,
   removeRidgeObject,
   updateRidgeObject,
 } from "../../../store/ridge-object/ridge-objects.store";
-import ItemOnMap from "../../common/map/item-on-map/item-on-map";
-import RidgeObjectBaloon from "../../UI/maps/ridge-object-baloon";
+import FooterButtons from "../object-page/footer-buttons/footer-buttons";
 
 const UpdateRidgeObject = ({ onClose }) => {
   const dispatch = useDispatch();
+
   const objectId = useSelector(getUpdateRidgeObjectId());
+  
+  const tasks = useSelector(getRidgeTasksByObjectId(objectId));
   const object = useSelector(getRidgeObjectById(objectId));
-  const isLoading = useSelector(getRidgeObjectsLoadingStatus())
-  const isEditMode = objectId ? true : false;
 
   const address = `${object?.location?.city}, ${object?.location?.address}`;
   const latitude = object?.location?.latitude || null;
   const longitude = object?.location?.longitude || null;
   const mapZoom = object?.location?.zoom || null;
   const center = [latitude, longitude];
+
+  const isLoading = useSelector(getRidgeObjectsLoadingStatus());
+  const isEditMode = objectId ? true : false;
 
   const {
     register,
@@ -82,6 +89,17 @@ const UpdateRidgeObject = ({ onClose }) => {
         isValid={isValid}
         isEditMode={isEditMode}
         isRidgeObject={true}
+      />
+      <ObjectTasks
+        tasks={tasks}
+        object={object}
+        margin="20px 0"
+        buttons={<CreateRidgeTasksButtons />}
+      />
+      <FooterButtons
+        onClose={onClose}
+        isLoading={isLoading}
+        isEdit={false}
       />
     </Box>
   ) : (

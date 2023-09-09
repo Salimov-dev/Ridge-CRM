@@ -1,30 +1,20 @@
-import { Box, Button, styled } from "@mui/material";
+import { Box, styled } from "@mui/material";
+import NegativeOutlinedButton from "../../../common/buttons/negative-outlined-button";
+import PositiveOutlinedButton from "../../../common/buttons/positive-outlined-button";
 
 const Component = styled(Box)`
   display: flex;
   gap: 4px;
 `;
 
-const ButtonsPanel = ({ onClose, onEdit }) => {
+const ButtonsPanel = ({ onClose, onEdit, isEdit }) => {
   return (
     <Component>
       <Box sx={{ display: "flex", gap: "4px" }}>
-        <Button
-          color="secondary"
-          variant="contained"
-          onClick={onEdit}
-          sx={{ height: "40px" }}
-        >
-          Править
-        </Button>
-        <Button
-          color="error"
-          variant="contained"
-          onClick={onClose}
-          sx={{ height: "40px" }}
-        >
-          Закрыть
-        </Button>
+        {isEdit ? (
+          <PositiveOutlinedButton title="Править" onClick={onEdit} />
+        ) : null}
+        <NegativeOutlinedButton title="Отмена" onClick={onClose} />
       </Box>
     </Component>
   );

@@ -1,7 +1,7 @@
 import { Box, Typography, styled } from "@mui/material";
 import { FormatTime } from "../../../../utils/date/format-time";
 import { FormatDate } from "../../../../utils/date/format-date";
-import CloseButton from "../../../common/buttons/close-button";
+import CloseButtonIcon from "../../../common/buttons/close-button-icon";
 
 const Component = styled(Box)`
   display: flex;
@@ -53,7 +53,7 @@ const Header = ({ meeting, onClose }) => {
         </Typography>
       </Title>
 
-      <CloseButton onClose={onClose} />
+      <CloseButtonIcon onClose={onClose} />
     </Component>
   );
 };

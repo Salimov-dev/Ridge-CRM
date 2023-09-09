@@ -2,6 +2,7 @@ import { Button, Typography } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { setCreateUserOpenState } from "../../../../store/user/create-user.store";
 import { getUsersLoadingStatus } from "../../../../store/user/users.store";
+import MultiColorContainedButton from "../../../common/buttons/multi-color-contained-button";
 
 const CreateManagerButton = () => {
   const isLoading = useSelector(getUsersLoadingStatus());
@@ -12,18 +13,14 @@ const CreateManagerButton = () => {
   };
 
   return (
-    <Button
-      variant="contained"
+    <MultiColorContainedButton
+      text="Добавить менеджера"
+      fontColor="white"
+      background="chocolate"
+      backgroudHover="sienna"
+      width={null}
       onClick={handleOpenCreateManager}
-      disabled={isLoading}
-      sx={{
-        color: "white",
-        background: "chocolate",
-        "&:hover": { background: "sienna" },
-      }}
-    >
-      <Typography variant="body0">Добавить менеджера</Typography>
-    </Button>
+    />
   );
 };
 

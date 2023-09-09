@@ -35,7 +35,6 @@ import createMyTaskReducer from "./task/create-my-task.store";
 import ridgeTasksReducer from "./ridge-task/ridge-tasks.store";
 import createRidgeTaskReducer from "./ridge-task/create-ridge-task.store";
 import updateRidgeTaskReducer from "./ridge-task/update-ridge-task.store";
-import openRidgeObjectPageReducer from "./ridge-object/open-ridge-object-page.store";
 // ridge object
 import ridgeObjectsReducer from "./ridge-object/ridge-objects.store";
 import ridgeObjectStatusReducer from "./ridge-object/ridge-object-status.store";
@@ -83,7 +82,6 @@ const rootReducer = combineReducers({
   ridgeTasks: ridgeTasksReducer,
   createRidgeTask: createRidgeTaskReducer,
   updateRidgeTask: updateRidgeTaskReducer,
-  openRidgeObjectPage: openRidgeObjectPageReducer,
   // calendar
   monthIndex: monthIndexReducer,
   // ridge object

@@ -20,7 +20,8 @@ import {
 } from "@tanstack/react-table";
 // store
 import { loadOpenObjectPageOpenState } from "../../../store/object/open-object-page.store";
-// other
+import { loadUpdateRidgeObjectOpenState } from "../../../store/ridge-object/update-ridge-object.store";
+// theme
 import { tokens } from "../../../theme";
 
 const Component = styled(Box)`
@@ -35,7 +36,8 @@ const BasicTable = ({ items, itemsColumns, isLoading, isPaginate = true }) => {
   const columns = useMemo(() => itemsColumns || [], [items]);
 
   const isObjectPageOpen = useSelector(loadOpenObjectPageOpenState());
-  const isDialogMode = isObjectPageOpen;
+  const isRidgeObjectPageOpen = useSelector(loadUpdateRidgeObjectOpenState());
+  const isDialogMode = isObjectPageOpen || isRidgeObjectPageOpen;
 
   const table = useReactTable({
     data,

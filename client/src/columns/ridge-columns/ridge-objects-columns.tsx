@@ -13,6 +13,7 @@ import {
 } from "../../store/ridge-object/update-ridge-object.store";
 import { getRidgeObjectStatusNameById } from "../../store/ridge-object/ridge-object-status.store";
 import EmptyTd from "../components/empty-td";
+import MultiColorContainedButton from "../../components/common/buttons/multi-color-contained-button";
 
 export const ridgeObjectsColumns = [
   {
@@ -114,12 +115,12 @@ export const ridgeObjectsColumns = [
             gap: "4px",
           }}
         >
-          <OpenRidgeObjectButton
+          <MultiColorContainedButton
             text="Открыть"
-            background="purple"
-            onClick={handleClick}
             fontColor="white"
+            background="purple"
             backgroudHover="darkOrchid"
+            onClick={handleClick}
           />
         </Box>
       );

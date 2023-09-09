@@ -17,6 +17,7 @@ import {
   getCurrentUserId,
   getUsersList,
 } from "../../../../store/user/users.store";
+import CreateTasksButtons from "../../../../layouts/calendar/components/create-tasks-buttons/create-tasks-buttons";
 
 const Component = styled(Box)`
   display: flex;
@@ -59,8 +60,12 @@ const ObjectInfo = ({ object, isLoading }) => {
     <Component>
       <ObjectsParams object={object} isLoading={isLoading} />
       <ObjectMeetings meetings={sortedMeetings} object={object} />
-      <ObjectTasks tasks={sortedTasks} object={object} />
-      
+      <ObjectTasks
+        tasks={sortedTasks}
+        object={object}
+        buttons={<CreateTasksButtons withoutMeeting={true} />}
+      />
+
       <Dialogs objects={transformObjects} users={transformUsers} />
     </Component>
   ) : (

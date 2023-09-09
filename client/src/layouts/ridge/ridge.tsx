@@ -34,6 +34,7 @@ import {
   getRidgeObjectsList,
   getRidgeObjectsLoadingStatus,
 } from "../../store/ridge-object/ridge-objects.store";
+import { ridgeTasksColumns } from "../../columns/ridge-tasks-columns/ridge-tasks-columns";
 
 const initialState = {
   comment: "",
@@ -55,7 +56,7 @@ const Ridge = () => {
   const [selectedBaloon, setSelectedBaloon] = useState(null);
   const monthIndex = useSelector(getMonthIndexState());
 
-  const tasksColumn = tasksColumns;
+  const tasksColumn = ridgeTasksColumns
   const tasksList = useSelector(getRidgeTasksList());
 
   const objects = useSelector(getRidgeObjectsList());

@@ -3,7 +3,7 @@ import CreateMyTaskButton from "../../../../components/UI/dialogs/buttons/create
 import CreateMeetingButton from "../../../../components/UI/dialogs/buttons/create-meeting-button";
 import CreateManagerTaskButton from "../../../../components/UI/dialogs/buttons/create-manager-task-button";
 
-const CreateTasksButtons = () => {
+const CreateTasksButtons = ({ withoutMeeting = false }) => {
   return (
     <Box sx={{ display: "flex", gap: "4px" }}>
       <CreateMyTaskButton
@@ -12,7 +12,7 @@ const CreateTasksButtons = () => {
         background="orange"
         isMyTask={true}
       />
-      <CreateMeetingButton />
+      {!withoutMeeting ? <CreateMeetingButton /> : null}
       <CreateManagerTaskButton
         title="Поставить менеджеру задачу"
         background="Crimson"

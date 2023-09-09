@@ -53,6 +53,7 @@ const ObjectPage = ({ onClose }) => {
       <FooterButtons
         isLoading={isLoading}
         onClose={onClose}
+        isEdit={true}
         onEdit={handleOpenEditObject}
       />
     </Box>

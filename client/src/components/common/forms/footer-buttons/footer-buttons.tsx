@@ -1,5 +1,7 @@
-import { Box, Button, styled } from "@mui/material";
+import { Box, styled } from "@mui/material";
 import CreateObjectFromRidgeButton from "../../../UI/dialogs/buttons/create-object-from-ridge-button";
+import PositiveOutlinedButton from "../../buttons/positive-outlined-button";
+import NegativeOutlinedButton from "../../buttons/negative-outlined-button";
 
 const Component = styled(Box)`
   width: 100%;
@@ -20,38 +22,25 @@ const FooterButtons = ({
   return (
     <Component>
       <Box sx={{ display: "flex", gap: "4px" }}>
-        <Button
-          type="submit"
-          variant="outlined"
-          color="success"
-          disabled={isValid}
-        >
-          {isEditMode ? "Сохранить" : "Создать"}
-        </Button>
+        <PositiveOutlinedButton
+          title={isEditMode ? "Сохранить" : "Создать"}
+          onClick={() => onRemove(removeId)}
+          isValid={isValid}
+        />
         {isEditMode ? (
-          <Button
-            type="button"
-            variant="outlined"
-            color="error"
+          <NegativeOutlinedButton
+            title="Удалить"
             onClick={() => onRemove(removeId)}
-          >
-            Удалить
-          </Button>
+          />
+        ) : null}
+        {isRidgeObject ? (
+          <CreateObjectFromRidgeButton objectId={objectId} />
         ) : null}
       </Box>
-      {isRidgeObject ? (
-        <CreateObjectFromRidgeButton objectId={objectId} />
-      ) : null}
-      <Box sx={{ display: "flex", gap: "4px" }}>
-        <Button
-          type="button"
-          variant="outlined"
-          color="error"
-          onClick={onClose}
-        >
-          Отмена
-        </Button>
-      </Box>
+      <NegativeOutlinedButton
+        title="Отмена"
+        onClick={onClose}
+      />
     </Component>
   );
 };

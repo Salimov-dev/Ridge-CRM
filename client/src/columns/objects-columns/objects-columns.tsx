@@ -1,6 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import { orderBy } from "lodash";
-import TableOpenButton from "../../components/common/buttons/table-open-button";
+import MultiColorContainedButton from "../../components/common/buttons/multi-color-contained-button";
 import {
   FormatDistrict,
   FormatManagerName,
@@ -57,7 +57,11 @@ export const objectsColumns = [
         header: "Метро",
         cell: (info) => {
           const metro = info.getValue();
-          return metro ? <AlignCenter>{FormatMetro(metro)}</AlignCenter> : <EmptyTd />;
+          return metro ? (
+            <AlignCenter>{FormatMetro(metro)}</AlignCenter>
+          ) : (
+            <EmptyTd />
+          );
         },
       },
       {
@@ -95,12 +99,14 @@ export const objectsColumns = [
         header: "Телефон",
         cell: (info) => {
           const phone = info.getValue();
-          return (
-            phone ? <AlignCenter>
+          return phone ? (
+            <AlignCenter>
               <Typography sx={{ whiteSpace: "nowrap" }}>
                 {FormatPhone(phone)}
               </Typography>
-            </AlignCenter> : <EmptyTd />
+            </AlignCenter>
+          ) : (
+            <EmptyTd />
           );
         },
       },
@@ -124,7 +130,7 @@ export const objectsColumns = [
           const object = info.getValue();
           const objectId = object?._id;
           const objectMeetings = useSelector(getMeetingsByObjectId(objectId));
-          const isObjectMeetings = Boolean(objectMeetings?.length)
+          const isObjectMeetings = Boolean(objectMeetings?.length);
           const sortedObjectMeetings = orderBy(
             objectMeetings,
             ["date"],
@@ -134,7 +140,11 @@ export const objectsColumns = [
             sortedObjectMeetings[sortedObjectMeetings?.length - 1];
           const dateOfLastMeeting = FormatDate(lastMeeting?.date);
 
-          return isObjectMeetings ? <AlignCenter>{dateOfLastMeeting}</AlignCenter> : <AlignCenter>-</AlignCenter>;
+          return isObjectMeetings ? (
+            <AlignCenter>{dateOfLastMeeting}</AlignCenter>
+          ) : (
+            <AlignCenter>-</AlignCenter>
+          );
         },
       },
       {
@@ -180,10 +190,10 @@ export const objectsColumns = [
           };
 
           return (
-            <TableOpenButton
+            <MultiColorContainedButton
               background="seaGreen"
               backgroudHover="green"
-              fontColor="black"
+              fontColor="white"
               text="Открыть"
               onClick={handleClick}
             />

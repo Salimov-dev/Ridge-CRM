@@ -1,6 +1,6 @@
 import { Box, styled } from "@mui/material";
 import LayoutTitle from "./layout-title";
-import CloseButton from "../buttons/close-button";
+import CloseButtonIcon from "../buttons/close-button-icon";
 
 const Component = styled(Box)`
   display: flex;
@@ -11,8 +11,8 @@ const Component = styled(Box)`
 const TitleWithCloseButton = ({ title, onClose, background, color }) => {
   return (
     <Component>
-      <LayoutTitle title={title} background={background} color={color}/>
-      <CloseButton onClose={onClose} />
+      <LayoutTitle title={title} background={background} color={color} />
+      <CloseButtonIcon onClose={onClose} />
     </Component>
   );
 };

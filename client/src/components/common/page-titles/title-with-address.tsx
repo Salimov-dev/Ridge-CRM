@@ -1,5 +1,5 @@
 import { Box, Typography, styled } from "@mui/material";
-import CloseButton from "../buttons/close-button";
+import CloseButtonIcon from "../buttons/close-button-icon";
 
 const Component = styled(Box)`
   display: flex;
@@ -47,7 +47,7 @@ const TitleWithAddress = ({
           </Typography>
         )}
       </Title>
-      <CloseButton onClose={onClose} />
+      <CloseButtonIcon onClose={onClose} />
     </Component>
   );
 };
