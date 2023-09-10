@@ -50,6 +50,7 @@ import updateLastContactReducer from "./last-contact/update-last-contact.store";
 import ridgeLastContactReducer from "./ridge-last-contact/last-ridge-contact.store";
 import createRidgeLastContactReducer from "./ridge-last-contact/create-ridge-last-contact.store";
 import updateRidgeLastContactReducer from "./ridge-last-contact/update-ridge-last-contact.store";
+import dealsReducer from "./deal/deal.store";
 
 const rootReducer = combineReducers({
   // objects
@@ -104,8 +105,10 @@ const rootReducer = combineReducers({
   ridgeLastContact: ridgeLastContactReducer,
   createRidgeLastContact: createRidgeLastContactReducer,
   updateRidgeLastContact: updateRidgeLastContactReducer,
-  // other
+  // sidebar collaps state
   sidebarCollapsState: sidebarCollapsStateReducer,
+  // deals
+  deals: dealsReducer,
 });
 
 export function createStore() {

@@ -33,6 +33,8 @@ import uploadRoutes from "./upload-avatar.routes.js";
 import lastContactRoutes from "./last-contact.routes.js";
 // ridge last contact
 import ridgeLastContactRoutes from "./ridge-last-contact.routes.js";
+// deals
+import dealsRoutes from "./deals.routes.js";
 
 const router = express.Router({ mergeParams: true });
 
@@ -71,5 +73,7 @@ router.use("/upload", uploadRoutes);
 router.use("/lastContact", lastContactRoutes);
 // ridge last contact
 router.use("/ridgeLastContact", ridgeLastContactRoutes);
+// deal
+router.use("/deals", dealsRoutes);
 
 export default router;

@@ -45,6 +45,9 @@ const Sidebar = () => {
     if (currentPath === "/ridge") {
       return "Грядка";
     }
+    if (currentPath === "/deals") {
+      return "Сделки";
+    }
     return "";
   }
 

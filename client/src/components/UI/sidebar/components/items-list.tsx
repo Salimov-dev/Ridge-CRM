@@ -12,7 +12,7 @@ import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
 import BusinessOutlinedIcon from "@mui/icons-material/BusinessOutlined";
 import AssignmentOutlinedIcon from "@mui/icons-material/AssignmentOutlined";
 import TableChartOutlinedIcon from "@mui/icons-material/TableChartOutlined";
-import AppsOutlinedIcon from '@mui/icons-material/AppsOutlined';
+import AppsOutlinedIcon from "@mui/icons-material/AppsOutlined";
 
 const ItemsList = ({ isCollapsed, selected, setSelected, colors }) => {
   return (
@@ -46,8 +46,12 @@ const ItemsList = ({ isCollapsed, selected, setSelected, colors }) => {
       />
       <Item
         title="Сделки"
-        to="/deal"
-        icon={<BusinessCenterOutlinedIcon />}
+        to="/deals"
+        icon={
+          <Tooltip title="Сделки" placement="top-start" arrow>
+            <BusinessCenterOutlinedIcon />
+          </Tooltip>
+        }
         selected={selected}
         setSelected={setSelected}
       />

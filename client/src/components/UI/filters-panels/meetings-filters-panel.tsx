@@ -44,16 +44,6 @@ const MeetingsFiltersPanel = ({ data, register, setValue, isLoading }) => {
         />
       </FieldsContainer>
       <FieldsContainer>
-        <SearchSelectField
-          register={register}
-          name="meetingsActivity"
-          labelId="meetingsActivity"
-          label="Выбор по активности"
-          itemsList={meetingDoneTypes}
-          value={data.meetingsActivity}
-          disabled={isLoading ? true : false}
-          isSelect={Boolean(data?.meetingsActivity?.length)}
-        />
         <SearchDatePicker
           register={register}
           name="startDate"
@@ -78,6 +68,16 @@ const MeetingsFiltersPanel = ({ data, register, setValue, isLoading }) => {
           selectedItems={data.selectedUsers}
           onChange={(e) => setValue("selectedUsers", e.target.value)}
           disabled={isLoading ? true : false}
+        />
+                <SearchSelectField
+          register={register}
+          name="meetingsActivity"
+          labelId="meetingsActivity"
+          label="Выбор по активности"
+          itemsList={meetingDoneTypes}
+          value={data.meetingsActivity}
+          disabled={isLoading ? true : false}
+          isSelect={Boolean(data?.meetingsActivity?.length)}
         />
       </FieldsContainer>
     </Form>

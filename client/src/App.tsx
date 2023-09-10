@@ -26,6 +26,7 @@ import AppLoader from "./hoc/app-loader";
 import ScrollToTop from "./utils/other/scroll-to-top";
 import { ColorModeContext, useMode } from "./theme";
 import Ridge from "./layouts/ridge/ridge";
+import Deals from "./layouts/deals/deals";
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -87,6 +88,11 @@ function App() {
                 <Route path="ridge">
                   <Route index element={<Ridge />} />
                   <Route path="*" element={<Navigate to="/ridge" />} />
+                </Route>
+
+                <Route path="deals">
+                  <Route index element={<Deals />} />
+                  <Route path="*" element={<Navigate to="/deals" />} />
                 </Route>
 
                 <Route path="presentations">

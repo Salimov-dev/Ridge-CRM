@@ -1,7 +1,7 @@
 const meetingDoneTypes = [
   {
     _id: "534gfsdtgfd3245tgdgfd",
-    name: "Все актульные",
+    name: "Все актуальные",
   },
   {
     _id: "8734qfdsggb2534tgfdfs",

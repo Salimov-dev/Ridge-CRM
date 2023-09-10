@@ -25,7 +25,6 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
         <BrowserRouter>
           <App />
           <Box style={{ width: "10px" }}>
-            {/* <ScrollUpButton /> */}
             <ScrollUpButton
               ContainerClassName="AnyClassForContainer"
               TransitionClassName="AnyClassForTransition"

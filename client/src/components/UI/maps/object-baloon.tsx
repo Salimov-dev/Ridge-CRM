@@ -27,7 +27,7 @@ const BaloonContainer = styled(Box)`
   gap: 4px;
   flex-direction: column;
   align-items: start;
-  padding: 10px 0;
+  padding: 20px 0;
 `;
 
 const ObjectBaloon = ({ object }) => {
@@ -61,7 +61,6 @@ const ObjectBaloon = ({ object }) => {
     dispatch(setOpenObjectPageId(objectId));
     dispatch(setOpenObjectPageOpenState(true));
   };
-
   return (
     <BaloonContainer>
       <MultiColorOutlinedButton

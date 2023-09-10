@@ -1,6 +1,7 @@
 /* custom scroll bar styles */
 ::-webkit-scrollbar {
   width: 5px;
+  height: 10px;
 }
 
 ::-webkit-scrollbar-track {
@@ -29,10 +30,6 @@
   border-color: white !important;
   fill: white !important;
   transform: scale(1.1);
-}
-
-.AnyClassForTransition {
-  /* right: 20px; */
 }
 
 /* белый "ОК" у timePicker`a */
