@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Box, Typography } from "@mui/material";
 // components
 import GoToButton from "../../components/common/buttons/go-to-button";
-import EmptyTd from "../components/empty-td";
+import EmptyTd from "../../components/common/columns/empty-td";
 import { FormatManagerName } from "../../components/common/table/helpers/helpers";
 import MultiColorContainedButton from "../../components/common/buttons/multi-color-contained-button";
 import DoneStatusIcon from "../../components/common/columns/done-status-icon";
@@ -30,7 +30,7 @@ import {
 import { FormatDate } from "../../utils/date/format-date";
 import { FormatTime } from "../../utils/date/format-time";
 // styled
-import { AlignCenter } from "../styled/styled";
+import { AlignCenter } from "../../components/common/columns/styled";
 
 export const tasksColumns = [
   {

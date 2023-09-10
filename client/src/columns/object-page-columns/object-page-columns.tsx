@@ -14,7 +14,7 @@ import {
   FormatWorkingPosition,
   priceForMetr,
 } from "../../components/common/table/helpers/helpers";
-import EmptyTd from "../components/empty-td";
+import EmptyTd from "../../components/common/columns/empty-td";
 
 const AlignCenter = styled(Box)`
   display: flex;

@@ -8,13 +8,12 @@ import EmptyTd from "../../components/common/columns/empty-td";
 import MultiColorContainedButton from "../../components/common/buttons/multi-color-contained-button";
 // utils
 import { FormatDate } from "../../utils/date/format-date";
-// store
 import {
-  setUpdateRidgeLastContactId,
-  setUpdateRidgeLastContactOpenState,
-} from "../../store/ridge-last-contact/update-ridge-last-contact.store";
+  setUpdateLastContactId,
+  setUpdateLastContactOpenState,
+} from "../../store/last-contact/update-last-contact.store";
 
-export const ridgeTastContactColumns = [
+export const lastContactColumns = [
   {
     accessorKey: "date",
     header: "Дата",
@@ -50,8 +49,8 @@ export const ridgeTastContactColumns = [
       const lastContactId = info.getValue();
 
       const handleClick = () => {
-        dispatch(setUpdateRidgeLastContactId(lastContactId));
-        dispatch(setUpdateRidgeLastContactOpenState(true));
+        dispatch(setUpdateLastContactId(lastContactId));
+        dispatch(setUpdateLastContactOpenState(true));
       };
 
       return (

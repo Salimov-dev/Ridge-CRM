@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 // mui
 import { Box, Typography } from "@mui/material";
 // components
-import EmptyTd from "../components/empty-td";
+import EmptyTd from "../../components/common/columns/empty-td";
 import MultiColorContainedButton from "../../components/common/buttons/multi-color-contained-button";
 // utils
 import { FormatDate } from "../../utils/date/format-date";
@@ -18,6 +18,7 @@ export const lastContactColumns = [
     accessorKey: "date",
     header: "Дата",
     enableSorting: false,
+    size: 30,
     cell: (info) => {
       const date = info.getValue();
       const formattedDate = FormatDate(date);

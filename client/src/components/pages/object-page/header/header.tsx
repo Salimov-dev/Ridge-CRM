@@ -26,7 +26,7 @@ const Header = ({ object, isLoading, onClose, onEdit, isEdit }) => {
         <Typography variant="h2">Объект: </Typography>
         <ObjectName city={city} address={address} />
       </Title>
-      <ButtonsPanel onClose={onClose} isEdit={isEdit} onEdit={onEdit} />
+      <ButtonsPanel onClose={onClose} isEdit={isEdit} onEdit={onEdit} negativeTitle="Закрыть"/>
     </HeaderContainer>
   ) : (
     <Loader />

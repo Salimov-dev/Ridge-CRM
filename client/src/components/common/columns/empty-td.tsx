@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import { AlignCenter } from "../styled/styled";
+import { AlignCenter } from "./styled";
 
 const EmptyTd = () => {
   return (

@@ -3,7 +3,11 @@ import { FieldsContainer, Form } from "../../common/forms/styled/styled";
 import MultiSelectField from "../../common/inputs/multi-select-field";
 import SearchDatePicker from "../../common/inputs/search-date-picker";
 import SearchField from "../../common/inputs/search-field";
+import SearchSelectField from "../../common/inputs/search-select-field";
+// hooks
 import useRidgeObjectsFiltersPanel from "../../../hooks/ridge-object/use-ridge-object-filters-panel";
+// mock
+import { ridgeObjectActivityVariants } from "../../../mock/ridge-object-activity-variants";
 
 const RidgeObjectsFiltersPanel = ({
   objects,
@@ -47,15 +51,16 @@ const RidgeObjectsFiltersPanel = ({
           onChange={(e) => setValue("selectedStatuses", e.target.value)}
           disabled={isLoading ? true : false}
         />
-        {/* <MultiSelectField
-          name="selectedTypes"
-          labelId="selectedTypes-label"
+        <SearchSelectField
+          register={register}
+          name="objectActivity"
+          labelId="objectActivity"
           label="Выбор по активности"
-          itemsList={getActuaTypesList()}
-          selectedItems={data.selectedTypes}
-          onChange={(e) => setValue("selectedTypes", e.target.value)}
+          itemsList={ridgeObjectActivityVariants}
+          value={data.objectActivity}
           disabled={isLoading ? true : false}
-        /> */}
+          isSelect={Boolean(data?.objectActivity?.length)}
+        />
       </FieldsContainer>
       <FieldsContainer>
         <MultiSelectField
@@ -103,7 +108,6 @@ const RidgeObjectsFiltersPanel = ({
           disabled={isLoading ? true : false}
         />
       </FieldsContainer>
-      
     </Form>
   );
 };

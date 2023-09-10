@@ -7,14 +7,14 @@ const Component = styled(Box)`
   gap: 4px;
 `;
 
-const ButtonsPanel = ({ onClose, onEdit, isEdit }) => {
+const ButtonsPanel = ({ onClose, onEdit, isEdit, negativeTitle = 'отмена' }) => {
   return (
     <Component>
       <Box sx={{ display: "flex", gap: "4px" }}>
         {isEdit ? (
           <PositiveOutlinedButton title="Править" onClick={onEdit} />
         ) : null}
-        <NegativeOutlinedButton title="Отмена" onClick={onClose} />
+        <NegativeOutlinedButton title={negativeTitle} onClick={onClose} />
       </Box>
     </Component>
   );

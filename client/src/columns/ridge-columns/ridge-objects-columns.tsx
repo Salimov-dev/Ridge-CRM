@@ -1,19 +1,25 @@
 import { useDispatch, useSelector } from "react-redux";
+import { orderBy } from "lodash";
+import { Box, Typography } from "@mui/material";
+// components
+import EmptyTd from "../../components/common/columns/empty-td";
+import { AlignCenter } from "../../components/common/columns/styled";
+import MultiColorContainedButton from "../../components/common/buttons/multi-color-contained-button";
+import Flags from "../../components/common/columns/flags";
 import {
   FormatDistrict,
   FormatMetro,
 } from "../../components/common/table/helpers/helpers";
+// utils
 import { FormatDate } from "../../utils/date/format-date";
-import { AlignCenter } from "../styled/styled";
-import { Box, Typography } from "@mui/material";
-import OpenRidgeObjectButton from "../../components/common/buttons/open-ridge-object-button";
+// store
+import { getRidgeObjectStatusNameById } from "../../store/ridge-object/ridge-object-status.store";
+import { getRidgeLastContactsByObjectId } from "../../store/ridge-last-contact/last-ridge-contact.store";
+import { getRidgeTasksByObjectId } from "../../store/ridge-task/ridge-tasks.store";
 import {
   setUpdateRidgeObjectId,
   setUpdateRidgeObjectOpenState,
 } from "../../store/ridge-object/update-ridge-object.store";
-import { getRidgeObjectStatusNameById } from "../../store/ridge-object/ridge-object-status.store";
-import EmptyTd from "../components/empty-td";
-import MultiColorContainedButton from "../../components/common/buttons/multi-color-contained-button";
 
 export const ridgeObjectsColumns = [
   {
@@ -57,11 +63,33 @@ export const ridgeObjectsColumns = [
         },
       },
       {
-        accessorKey: "location.address",
+        accessorFn: (row) => row,
         header: "Адрес",
         cell: (info) => {
-          const address = info.getValue();
-          return <Typography>{address}</Typography>;
+          const object = info.getValue();
+          const objectId = object?._id;
+          const address = object?.location?.address;
+
+          const tasks = useSelector(getRidgeTasksByObjectId(objectId));
+          const lastContacts = useSelector(
+            getRidgeLastContactsByObjectId(objectId)
+          );
+
+          if (objectId) {
+            return (
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  gap: "12px",
+                }}
+              >
+                <Typography>{address}</Typography>
+                <Flags tasks={tasks} lastContacts={lastContacts} />
+              </Box>
+            );
+          } else return null;
         },
       },
       {
@@ -92,6 +120,34 @@ export const ridgeObjectsColumns = [
         cell: (info) => {
           const comment = info.getValue();
           return comment ? <Typography>{comment}</Typography> : <EmptyTd />;
+        },
+      },
+      {
+        accessorFn: (row) => row,
+        header: "Звонок",
+        cell: (info) => {
+          const object = info.getValue();
+          const objectId = object?._id;
+          const lastContacts = useSelector(
+            getRidgeLastContactsByObjectId(objectId)
+          );
+          const sortedLastContacts = orderBy(lastContacts, "date", ["desc"]);
+          const isSortedLastContacts = Boolean(sortedLastContacts?.length);
+
+          const dateLastContact = () => {
+            if (isSortedLastContacts) {
+              const date = FormatDate(sortedLastContacts[0]?.date);
+              return date;
+            } else {
+              return null;
+            }
+          };
+
+          return isSortedLastContacts ? (
+            <AlignCenter>{dateLastContact()}</AlignCenter>
+          ) : (
+            <EmptyTd />
+          );
         },
       },
     ],

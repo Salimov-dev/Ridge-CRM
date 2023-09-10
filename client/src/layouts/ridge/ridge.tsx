@@ -25,7 +25,7 @@ import useRidge from "../../hooks/ridge-task/use-ridge";
 import getMonth from "../../utils/calendar/get-month";
 // columns
 import { ridgeObjectsColumns } from "../../columns/ridge-columns/ridge-objects-columns";
-import { tasksColumns } from "../../columns/tasks-columns/tasks-columns";
+import { ridgeTasksColumns } from "../../columns/ridge-tasks-columns/ridge-tasks-columns";
 // store
 import { getMonthIndexState } from "../../store/month-index.store";
 import { getRidgeTasksList } from "../../store/ridge-task/ridge-tasks.store";
@@ -34,8 +34,6 @@ import {
   getRidgeObjectsList,
   getRidgeObjectsLoadingStatus,
 } from "../../store/ridge-object/ridge-objects.store";
-import { ridgeTasksColumns } from "../../columns/ridge-tasks-columns/ridge-tasks-columns";
-import RidgeLastContacts from "./components/ridge-last-contacts/ridge-last-contacts";
 
 const initialState = {
   comment: "",
@@ -49,6 +47,7 @@ const initialState = {
   task: "",
   result: "",
   selectedTaskTypes: [],
+  objectActivity: ""
 };
 
 const Ridge = () => {

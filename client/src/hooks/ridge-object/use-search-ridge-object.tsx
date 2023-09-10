@@ -3,13 +3,35 @@ import { useMemo } from "react";
 import dayjs from "dayjs";
 import getStartWeekDate from "../../utils/date/get-start-week-date";
 import getEndWeekDate from "../../utils/date/get-end-week-date";
+import { getRidgeTasksList } from "../../store/ridge-task/ridge-tasks.store";
+import { getRidgeLastContactsList } from "../../store/ridge-last-contact/last-ridge-contact.store";
+import { useSelector } from "react-redux";
 
-const useSearchRidgeObject = (meetings, data) => {
-  const startWeek = getStartWeekDate();
-  const endWeek = getEndWeekDate();
+const useSearchRidgeObject = (objects, data) => {
 
-  const searchedMeetings = useMemo(() => {
-    let array = meetings;
+  const tasks = useSelector(getRidgeTasksList());
+  const lastContacts = useSelector(getRidgeLastContactsList());
+
+  const hasTasks = (objectId) => {
+    const objectsWithTasks = tasks.filter(
+      (task) => task?.objectId === objectId
+    );
+    const hasTasks = objectsWithTasks.length > 0;
+
+    return hasTasks;
+  };
+
+  const hasLastContact = (objectId) => {
+    const objectsWithLastContact = lastContacts.filter(
+      (contact) => contact?.objectId === objectId
+    );
+    const hasLastContact = objectsWithLastContact.length > 0;
+
+    return hasLastContact;
+  };
+
+  const searchedObjects = useMemo(() => {
+    let array = objects;
 
     if (data?.comment?.length) {
       array = array?.filter((obj) =>
@@ -85,35 +107,41 @@ const useSearchRidgeObject = (meetings, data) => {
       array = array?.filter((item) => dayjs(item?.date) <= endDate);
     }
 
-    // Все актуальные
-    if (data.meetingsActivity === "534gfsdtgfd3245tgdgfd") {
-      array = array?.filter((meet) => meet?.isDone !== true);
-    }
-    // Актуальные на этой неделе
-    if (data.meetingsActivity === "8734qfdsggb2534tgfdfs") {
-      array = array?.filter(
-        (meet) =>
-          dayjs(meet.date).isBetween(startWeek, endWeek) &&
-          meet?.isDone !== true
-      );
-    }
-    // Проведенные на этой неделе
-    if (data.meetingsActivity === "987645erasg1243tgfdsg3") {
-      array = array?.filter(
-        (meet) =>
-          meet?.isDone === true &&
-          dayjs(meet.date).isBetween(startWeek, endWeek)
-      );
-    }
-    // Проведенные за всё время
-    if (data.meetingsActivity === "87634gsdf23gfds3425r43") {
-      array = array?.filter((meet) => meet?.isDone === true);
-    }
+       // c контактами
+       if (data.objectActivity === "09345gdsnvla234t4gdgdfs43") {
+        array = array?.filter((obj) => obj?.findedContacts);
+      }
+      // без контактов
+      if (data.objectActivity === "7634nhgdxsadwe235thshd3245") {
+        array = array?.filter((obj) => !obj?.findedContacts);
+      }
+      // с задачами
+      if (data.objectActivity === "9076342sg234yhgdfdsf345435") {
+        array = array?.filter((obj) => hasTasks(obj._id));
+      }
+      // без задач
+      if (data.objectActivity === "3487549ogokbnmsakwe4gdfs52") {
+        array = array?.filter((obj) => !hasTasks(obj._id));
+      }
+      // с последним звонком
+      if (data.objectActivity === "78650gkfh9030bawrlgjgsdf43") {
+        array = array?.filter((obj) => hasLastContact(obj._id));
+      }
+      // без последнего звонка
+      if (data.objectActivity === "3240gfdk10934pqvma3214f390") {
+        array = array?.filter((obj) => !hasLastContact(obj._id));
+      }
+      // без активности
+      if (data.objectActivity === "7652fgdnhgawqgzcv456g56873") {
+        array = array?.filter(
+          (obj) => !hasLastContact(obj._id) && !hasTasks(obj._id)
+        );
+      }
 
     return array;
-  }, [data, meetings]);
+  }, [data, objects]);
 
-  return searchedMeetings;
+  return searchedObjects;
 };
 
 export default useSearchRidgeObject;

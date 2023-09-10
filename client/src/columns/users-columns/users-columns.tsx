@@ -17,7 +17,7 @@ import {
   setUpdateManagerId,
   setUpdateManagerOpenState,
 } from "../../store/user/update-user.store";
-import { AlignCenter } from "../styled/styled";
+import { AlignCenter } from "../../components/common/columns/styled";
 
 export const usersColumns = [
   {

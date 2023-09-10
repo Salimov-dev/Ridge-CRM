@@ -1,5 +1,12 @@
 import { Box, Typography } from "@mui/material";
 import { orderBy } from "lodash";
+import { useDispatch, useSelector } from "react-redux";
+// utils
+import { FormatDate } from "../../utils/date/format-date";
+// components
+import Flags from "../../components/common/columns/flags";
+import { AlignCenter } from "../../components/common/columns/styled";
+import EmptyTd from "../../components/common/columns/empty-td";
 import MultiColorContainedButton from "../../components/common/buttons/multi-color-contained-button";
 import {
   FormatDistrict,
@@ -8,20 +15,17 @@ import {
   FormatObjectStatus,
   FormatPhone,
 } from "../../components/common/table/helpers/helpers";
-import { FormatDate } from "../../utils/date/format-date";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  getMeetingsByObjectId,
-  getObjectMeetingsList,
-} from "../../store/meeting/meetings.store";
+// store
+import { getLastContactsByObjectId } from "../../store/last-contact/last-contact.store";
 import { getTasksByObjectId } from "../../store/task/tasks.store";
-import Flags from "./components/flags";
 import {
   setOpenObjectPageId,
   setOpenObjectPageOpenState,
 } from "../../store/object/open-object-page.store";
-import { AlignCenter } from "../styled/styled";
-import EmptyTd from "../components/empty-td";
+import {
+  getMeetingsByObjectId,
+  getObjectMeetingsList,
+} from "../../store/meeting/meetings.store";
 
 export const objectsColumns = [
   {
@@ -72,6 +76,7 @@ export const objectsColumns = [
           const objectId = object?._id;
           const meetings = useSelector(getObjectMeetingsList(objectId));
           const tasks = useSelector(getTasksByObjectId(objectId));
+          const lastContacts = useSelector(getLastContactsByObjectId(objectId));
           if (objectId) {
             return (
               <Box
@@ -83,7 +88,11 @@ export const objectsColumns = [
                 }}
               >
                 <Typography>{object?.location?.address}</Typography>
-                <Flags meetings={meetings} tasks={tasks} />
+                <Flags
+                  meetings={meetings}
+                  tasks={tasks}
+                  lastContacts={lastContacts}
+                />
               </Box>
             );
           } else return null;
@@ -152,7 +161,25 @@ export const objectsColumns = [
         header: "Звонок",
         cell: (info) => {
           const object = info.getValue();
-          return object ? <AlignCenter>06.09.23</AlignCenter> : <EmptyTd />;
+          const objectId = object?._id;
+          const lastContacts = useSelector(getLastContactsByObjectId(objectId));
+          const sortedLastContacts = orderBy(lastContacts, "date", ["desc"]);
+          const isSortedLastContacts = Boolean(sortedLastContacts?.length);
+
+          const dateLastContact = () => {
+            if (isSortedLastContacts) {
+              const date = FormatDate(sortedLastContacts[0]?.date);
+              return date;
+            } else {
+              return null;
+            }
+          };
+
+          return isSortedLastContacts ? (
+            <AlignCenter>{dateLastContact()}</AlignCenter>
+          ) : (
+            <EmptyTd />
+          );
         },
       },
     ],

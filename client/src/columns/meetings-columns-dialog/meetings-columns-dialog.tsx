@@ -17,7 +17,7 @@ import {
   setUpdateMeetingOpenState,
 } from "../../store/meeting/update-meeting.store";
 // styled
-import { AlignCenter } from "../styled/styled";
+import { AlignCenter } from "../../components/common/columns/styled";
 
 export const meetingsColumnsDialog = [
   {

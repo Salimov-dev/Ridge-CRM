@@ -28,6 +28,10 @@ const objectActivityVariants = [
     name: "С последним звонком",
   },
   {
+    _id: "5149gjgnvmzofhwey45568",
+    name: "Без последнего звонка",
+  },
+  {
     _id: "hgfd235654hjf324543qre",
     name: "Без активности",
   },

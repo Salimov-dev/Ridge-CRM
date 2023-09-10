@@ -4,10 +4,12 @@ import { useMemo } from "react";
 import { useSelector } from "react-redux";
 import { getMeetingsList } from "../../store/meeting/meetings.store";
 import { getTasksList } from "../../store/task/tasks.store";
+import { getLastContactsList } from "../../store/last-contact/last-contact.store";
 
 const useSearchObject = (objects, data) => {
   const meetings = useSelector(getMeetingsList());
   const tasks = useSelector(getTasksList());
+  const lastContacts = useSelector(getLastContactsList());
 
   const hasMeetings = (objectId) => {
     const objectsWithMeetings = meetings.filter(
@@ -25,6 +27,15 @@ const useSearchObject = (objects, data) => {
     const hasTasks = objectsWithTasks.length > 0;
 
     return hasTasks;
+  };
+
+  const hasLastContact = (objectId) => {
+    const objectsWithLastContact = lastContacts.filter(
+      (contact) => contact?.objectId === objectId
+    );
+    const hasLastContact = objectsWithLastContact.length > 0;
+
+    return hasLastContact;
   };
 
   const searchedObjects = useMemo(() => {
@@ -59,15 +70,11 @@ const useSearchObject = (objects, data) => {
       );
     }
     if (data.selectedUsers?.length) {
-      array = array?.filter((obj) =>
-        data.selectedUsers?.includes(obj?.userId)
-      );
+      array = array?.filter((obj) => data.selectedUsers?.includes(obj?.userId));
     }
     if (data.selectedCurrentRenters?.length) {
       array = array?.filter((obj) =>
-        data.selectedCurrentRenters?.includes(
-          obj?.estateOptions.currentRenters
-        )
+        data.selectedCurrentRenters?.includes(obj?.estateOptions.currentRenters)
       );
     }
     if (data.selectedEstateTypes?.length) {
@@ -157,9 +164,13 @@ const useSearchObject = (objects, data) => {
       array = array?.filter((obj) => !hasMeetings(obj._id));
     }
     // с последним звонком
-    // if (data.objectActivity === "95459gdj239t54jgh95445") {
-    //   array = array?.filter((obj) => !hasMeetings(obj._id));
-    // }
+    if (data.objectActivity === "765gdf2345ytrhgfd2354") {
+      array = array?.filter((obj) => hasLastContact(obj._id));
+    }
+    // без последнего звонка
+    if (data.objectActivity === "5149gjgnvmzofhwey45568") {
+      array = array?.filter((obj) => !hasLastContact(obj._id));
+    }
     // без активности
     if (data.objectActivity === "hgfd235654hjf324543qre") {
       array = array?.filter(

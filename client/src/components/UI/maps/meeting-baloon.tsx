@@ -17,6 +17,10 @@ import {
   setOpenObjectPageId,
   setOpenObjectPageOpenState,
 } from "../../../store/object/open-object-page.store";
+import {
+  setUpdateMeetingId,
+  setUpdateMeetingOpenState,
+} from "../../../store/meeting/update-meeting.store";
 
 const BaloonContainer = styled(Box)`
   width: 100%;
@@ -32,6 +36,7 @@ const MeetingBaloon = ({ meeting }) => {
   const dispatch = useDispatch();
   const object = useSelector(getObjectById(meeting?.objectId));
   const objectId = meeting?.objectId;
+  const meetingId = meeting?._id;
   const objectAddress = `${object?.location.city}, ${object?.location.address}`;
 
   const meetingType = useSelector(getMeetingTypeNameById(meeting?.meetingType));
@@ -46,8 +51,20 @@ const MeetingBaloon = ({ meeting }) => {
     dispatch(setOpenObjectPageOpenState(true));
   };
 
+  const handleOpenUpdateMeeting = () => {
+    dispatch(setUpdateMeetingId(meetingId));
+    dispatch(setUpdateMeetingOpenState(true));
+  };
+
   return (
     <BaloonContainer>
+      <MultiColorOutlinedButton
+        text="Править встречу"
+        fontColor="black"
+        borderColor="royalBlue"
+        backgroundHover="cornflowerBlue"
+        onClick={handleOpenUpdateMeeting}
+      />
       <Attribute title="Дата встречи:" subTitle={date} />
       <Attribute title="Время встречи:" subTitle={time} />
       <Typography>

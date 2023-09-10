@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from "react-toastify";
+import { cloneDeep } from "lodash";
 // MUI
 import { Box } from "@mui/material";
 // components
@@ -17,11 +18,14 @@ import {
 } from "../../../store/object/objects.store";
 // schema
 import { objectSchema } from "../../../schemas/object-schema";
+import { replaceNullsWithEmptyString } from "../../../utils/data/replace-nulls-with-empty-string";
 
 const UpdateObject = ({ onClose }) => {
   const dispatch = useDispatch();
   const objectId = useSelector(getUpdateObjectId());
   const object = useSelector(getObjectById(objectId));
+  const newObject = cloneDeep(object);
+  const objectWithoutNull = replaceNullsWithEmptyString(newObject);
 
   const isEditMode = objectId ? true : false;
   const isObjectHasAddress =
@@ -33,11 +37,12 @@ const UpdateObject = ({ onClose }) => {
     handleSubmit,
     formState: { errors, isValid },
   } = useForm({
-    defaultValues: object,
+    defaultValues: objectWithoutNull,
     mode: "onBlur",
     resolver: yupResolver(objectSchema),
   });
   const isValidAndHasAdress = isObjectHasAddress && isValid;
+  const data = watch();
 
   const onSubmit = (data) => {
     dispatch(updateObject(data, objectId))
@@ -50,7 +55,7 @@ const UpdateObject = ({ onClose }) => {
       <Header object={object} onClose={onClose} />
       <ObjectForm
         register={register}
-        data={object}
+        data={objectWithoutNull}
         handleSubmit={handleSubmit}
         onSubmit={onSubmit}
         onClose={onClose}
