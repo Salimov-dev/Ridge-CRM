@@ -18,6 +18,7 @@ const FooterButtons = ({
   isEditMode,
   isValid,
   isRidgeObject = false,
+  withoutRemoveButton
 }) => {
   return (
     <Component>
@@ -27,7 +28,7 @@ const FooterButtons = ({
           isValid={isValid}
           type = "submit"
         />
-        {isEditMode ? (
+        {isEditMode && !withoutRemoveButton ? (
           <NegativeOutlinedButton
             title="Удалить"
             onClick={() => onRemove(removeId)}

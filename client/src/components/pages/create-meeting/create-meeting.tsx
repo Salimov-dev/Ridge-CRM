@@ -81,6 +81,8 @@ const CreateMeeting = ({ objectPageId="", onClose, dateCreate }) => {
   const data = watch();
   const watchDate = watch("date", null);
   const watchTime = watch("time", null);
+  console.log("data", data);
+  
 
   const isFullValid = !watchDate || !watchTime || !isValid;
   const isEmptyFindedObject = Boolean(Object.keys(findedObject)?.length);

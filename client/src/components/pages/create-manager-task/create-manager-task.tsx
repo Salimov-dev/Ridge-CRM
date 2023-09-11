@@ -32,7 +32,7 @@ const CreateManagerTask = ({
   title,
   dateCreate,
   onClose,
-  objectPageId,
+  objectPageId="",
 }) => {
   const dispatch = useDispatch();
   const isObjectPage = Boolean(objectPageId?.length);

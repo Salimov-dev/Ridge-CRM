@@ -55,7 +55,7 @@ const MyTaskForm = ({
         label="Объект задачи"
         itemsList={objects}
         value={watchObjectId}
-        disabled={isObjectPage}
+        disabled={isObjectPage || isEditMode}
       />
       <TextFieldStyled
         register={register}

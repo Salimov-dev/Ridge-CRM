@@ -156,7 +156,7 @@ export const usersColumns = [
         accessorKey: "contract.trialPeriod",
         header: "ИС",
         cell: (info) => {
-          const trialPeriod = info.getValue();
+          const trialPeriod = info?.getValue();
           return (
             <AlignCenter>
               {trialPeriod ? FormatDate(trialPeriod) : ""}

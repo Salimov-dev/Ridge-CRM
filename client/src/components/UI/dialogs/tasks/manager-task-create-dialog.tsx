@@ -5,6 +5,7 @@ import {
   getCreateManagerTaskOpenState,
   setCreateManagerTaskOpenState,
 } from "../../../../store/task/create-manager-task.store";
+import { getOpenObjectPageId } from "../../../../store/object/open-object-page.store";
 
 const ManagerTaskCreateDialog = ({
   objects,
@@ -13,8 +14,8 @@ const ManagerTaskCreateDialog = ({
   dateCreate,
 }) => {
   const dispatch = useDispatch();
-
   const isOpenCreateTask = useSelector(getCreateManagerTaskOpenState());
+  const objectPageId = useSelector(getOpenObjectPageId())
 
   const handleCloseCreateMyTask = () => {
     dispatch(setCreateManagerTaskOpenState(false));
@@ -33,6 +34,7 @@ const ManagerTaskCreateDialog = ({
         <CreateManagerTask
           title="Поставить менеджеру задачу"
           objects={objects}
+          objectPageId={objectPageId}
           users={users}
           dateCreate={dateCreate}
           onClose={handleCloseCreateMyTask}

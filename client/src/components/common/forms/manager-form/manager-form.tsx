@@ -198,6 +198,7 @@ const ManagerForm = ({
         onClose={onClose}
         isValid={!isValid}
         isEditMode={isEditMode}
+        withoutRemoveButton={true}
       />
     </Form>
   );

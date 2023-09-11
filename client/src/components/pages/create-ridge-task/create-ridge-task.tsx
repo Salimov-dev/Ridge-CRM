@@ -33,7 +33,7 @@ const CreateRidgeTask = ({
   title,
   dateCreate,
   onClose,
-  objectPageId=null,
+  objectPageId="",
 }) => {
   const dispatch = useDispatch();
   const isObjectPage = Boolean(objectPageId?.length);
@@ -50,6 +50,8 @@ const CreateRidgeTask = ({
     resolver: yupResolver(taskSchema),
   });
   const data = watch();
+  console.log("data", data);
+  
   const watchDate = watch("date", null);
   const watchTime = watch("time", null);
   const isFullValid = !watchDate || !watchTime || !isValid;

@@ -38,15 +38,9 @@ router.post("/signUp", [
 
       const hashedPassword = await bcrypt.hash(password, 12);
 
-      const userId = req.user._id;
-      const company = await Company.findOne({
-        $or: [{ managers: userId }, { curators: userId }],
-      });
-  
       const newUser = await User.create({
         ...req.body,
         password: hashedPassword,
-        company: company._id,
       });
 
       const tokens = tokenService.generate({ _id: newUser._id });

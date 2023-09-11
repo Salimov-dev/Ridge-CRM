@@ -7,25 +7,12 @@ const schema = new Schema(
       required: true,
       unique: true,
     },
-    password: {
-      type: String,
-    },
-    curatorId: {
-      type: String,
-    },
-    image: {
-      type: String,
-    },
-    gender: {
-      type: String,
-    },
-    birthday: {
-      type: String,
-    },
-    status: {
-      type: String,
-      required: true,
-    },
+    password: String,
+    curatorId: String,
+    image: String,
+    gender: String,
+    birthday: String,
+    status: String,
     name: {
       firstName: String,
       surName: String,

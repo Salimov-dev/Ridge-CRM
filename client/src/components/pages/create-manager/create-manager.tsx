@@ -17,6 +17,7 @@ import {
 import { managerSchema } from "../../../schemas/manager-schema";
 // utils
 import getRandomInt from "../../../utils/other/get-random-int";
+import dayjs from "dayjs";
 
 const initialState = {
   email: "",
@@ -24,6 +25,7 @@ const initialState = {
   status: "",
   birthday: null,
   gender: "",
+  curatorId: "",
   name: {
     firstName: "",
     surName: "",
@@ -57,9 +59,18 @@ const CreateManager = ({ onClose }) => {
   const currentUserId = useSelector(getCurrentUserId());
   const dispatch = useDispatch();
 
+  const transformedStartDate = dayjs(data?.contract?.startDate).format("YYYY-MM-DDTHH:mm:ss.SSSZ");
+  const transformedEndDate = dayjs(data?.contract?.endDate).format("YYYY-MM-DDTHH:mm:ss.SSSZ");
+  const transformedTrialPeriod = dayjs(data?.contract?.trialPeriod).format("YYYY-MM-DDTHH:mm:ss.SSSZ");
+
   const onSubmit = (data) => {
     const newData = {
       ...data,
+      contract: {
+        startDate: transformedStartDate,
+        endDate: transformedEndDate,
+        trialPeriod: transformedTrialPeriod,
+      },
       image: `https://randomuser.me/api/portraits/women/${getRandomInt()}.jpg`,
       curatorId: currentUserId,
     };

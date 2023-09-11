@@ -61,7 +61,7 @@ const ManagerTaskForm = ({
         label="Объект задачи"
         itemsList={objects}
         value={watchObjectId}
-        disabled={isObjectPage}
+        disabled={isObjectPage || isEditMode}
       />
       <SimpleSelectField
         register={register}

@@ -7,11 +7,11 @@ const useUsers = (users, usersWithoutCurrentUser) => {
 
   const getActualUsersList = () => {
     const actualUsersArray = usersWithoutCurrentUser?.map((u) => {
-      const foundObject = users?.find((user) => user._id === u._id);
+      const foundObject = users?.find((user) => user?._id === u?._id);
       return foundObject
         ? {
-            _id: foundObject._id,
-            name: `${foundObject.name.lastName} ${foundObject.name.firstName}`,
+            _id: foundObject?._id,
+            name: `${foundObject?.name?.lastName} ${foundObject?.name?.firstName}`,
           }
         : null;
     });
