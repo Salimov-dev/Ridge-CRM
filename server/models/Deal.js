@@ -4,6 +4,7 @@ const schema = new Schema(
   {
     name: String,
     items: Array,
+    isArchived: Boolean,
     userId: { type: Schema.Types.ObjectId, ref: "User" },
     company: { type: Schema.Types.ObjectId, ref: "Company" },
   },

@@ -25,7 +25,7 @@ const Footer = () => {
         <Divider orientation="vertical" flexItem />
         <Item title="Объекты" path="/objects" />
         <Divider orientation="vertical" flexItem />
-        <Item title="Сделки" path="/" />
+        <Item title="Сделки" path="/deals" />
         <Divider orientation="vertical" flexItem />
         <Item title="Встречи" path="/meetings" />
         <Divider orientation="vertical" flexItem />
@@ -36,8 +36,6 @@ const Footer = () => {
         <Item title="Менеджеры" path="/users" />
         <Divider orientation="vertical" flexItem />
         <Item title="Презентации" path="/" />
-        <Divider orientation="vertical" flexItem />
-        <Item title="Результаты" path="/" />
       </Menu>
     </Component>
   );

@@ -8,10 +8,8 @@ import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
 import GroupsOutlinedIcon from "@mui/icons-material/GroupsOutlined";
 import BusinessCenterOutlinedIcon from "@mui/icons-material/BusinessCenterOutlined";
 import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined";
-import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
 import BusinessOutlinedIcon from "@mui/icons-material/BusinessOutlined";
 import AssignmentOutlinedIcon from "@mui/icons-material/AssignmentOutlined";
-import TableChartOutlinedIcon from "@mui/icons-material/TableChartOutlined";
 import AppsOutlinedIcon from "@mui/icons-material/AppsOutlined";
 
 const ItemsList = ({ isCollapsed, selected, setSelected, colors }) => {
@@ -113,26 +111,6 @@ const ItemsList = ({ isCollapsed, selected, setSelected, colors }) => {
             <AssignmentOutlinedIcon />
           </Tooltip>
         }
-        selected={selected}
-        setSelected={setSelected}
-      />
-      <Item
-        title="Результаты"
-        to="/results"
-        icon={<TableChartOutlinedIcon />}
-        selected={selected}
-        setSelected={setSelected}
-      />
-
-      <ItemsTitle
-        title="Другое"
-        colors={colors.grey[300]}
-        isCollapsed={isCollapsed}
-      />
-      <Item
-        title="Материалы"
-        to="/materials"
-        icon={<HelpOutlineOutlinedIcon />}
         selected={selected}
         setSelected={setSelected}
       />

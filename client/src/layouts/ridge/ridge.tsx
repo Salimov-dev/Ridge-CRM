@@ -139,7 +139,7 @@ const Ridge = () => {
       />
       <RidgeObjectsFiltersPanel
         data={data}
-        objects={sortedObjects}
+        objects={objects}
         register={register}
         setValue={setValue}
         isLoading={isLoading}
@@ -159,6 +159,7 @@ const Ridge = () => {
       <TasksTable
         register={register}
         data={data}
+        objects={sortedObjects}
         tasks={sortedTasks}
         columns={tasksColumn}
         setValue={setValue}

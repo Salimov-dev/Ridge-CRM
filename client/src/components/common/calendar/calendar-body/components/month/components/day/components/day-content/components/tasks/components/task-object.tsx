@@ -1,23 +1,24 @@
 import { Box, Tooltip, Typography } from "@mui/material";
 import { useDispatch } from "react-redux";
 import OpenInNewOutlinedIcon from "@mui/icons-material/OpenInNewOutlined";
+import DividerStyled from "../../../../../../../../../../../divider/divider-styled";
 import {
   setOpenObjectPageId,
   setOpenObjectPageOpenState,
 } from "../../../../../../../../../../../../../store/object/open-object-page.store";
-import DividerStyled from "../../../../../../../../../../../divider/divider-styled";
 import {
   setUpdateRidgeObjectId,
   setUpdateRidgeObjectOpenState,
 } from "../../../../../../../../../../../../../store/ridge-object/update-ridge-object.store";
 
 const TaksObject = ({ task, objects, isRidgePage }) => {
-  const taskObjectId = task?.objectId;
   const dispatch = useDispatch();
+  const taskObjectId = task?.objectId;
 
   const getObjectAddress = (id) => {
     const object = objects?.find((obj) => obj._id === id);
-    const result = `${object?.location.city}, ${object?.location.address}`;
+    const result = `${object?.location?.city}, ${object?.location?.address}`;
+
     return result;
   };
 
