@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 // mui
 import { Box, Typography } from "@mui/material";
 // components
-import GoToButton from "../../components/common/buttons/go-to-button";
+import RedirectButton from "../../components/common/buttons/redirect-button";
 import { FormatManagerName } from "../../components/common/table/helpers/helpers";
 import MultiColorContainedButton from "../../components/common/buttons/multi-color-contained-button";
 import DoneStatusIcon from "../../components/common/columns/done-status-icon";
@@ -107,7 +107,11 @@ export const meetingsColumns = [
         >
           {fullAddress}
           {!isObjectPage && objectId ? (
-            <GoToButton text="Открыть" color="neutral" onClick={handleClick} />
+            <RedirectButton
+              text="Открыть"
+              color="neutral"
+              onClick={handleClick}
+            />
           ) : null}
         </Box>
       ) : (

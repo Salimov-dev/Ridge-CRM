@@ -1,6 +1,9 @@
 import { useDispatch, useSelector } from "react-redux";
 import { orderBy } from "lodash";
-import { Box, Typography } from "@mui/material";
+// MUI
+import { Box, Button, Typography } from "@mui/material";
+import CloudDoneIcon from "@mui/icons-material/CloudDone";
+import CloudOffIcon from "@mui/icons-material/CloudOff";
 // components
 import EmptyTd from "../../components/common/columns/empty-td";
 import { AlignCenter } from "../../components/common/columns/styled";
@@ -9,6 +12,7 @@ import Flags from "../../components/common/columns/flags";
 import {
   FormatDistrict,
   FormatMetro,
+  FormatPhone,
 } from "../../components/common/table/helpers/helpers";
 // utils
 import { FormatDate } from "../../utils/date/format-date";
@@ -86,7 +90,11 @@ export const ridgeObjectsColumns = [
                 }}
               >
                 <Typography>{address}</Typography>
-                <Flags tasks={tasks} lastContacts={lastContacts} />
+                <Flags
+                  tasks={tasks}
+                  lastContacts={lastContacts}
+                  taskBackgroundColor="ForestGreen"
+                />
               </Box>
             );
           } else return null;
@@ -101,6 +109,45 @@ export const ridgeObjectsColumns = [
           return <AlignCenter>{name}</AlignCenter>;
         },
       },
+      {
+        accessorKey: "estateOptions.cadastralNumber",
+        header: "Кадастровый №",
+        cell: (info) => {
+          const cadastralNumber = info.getValue();
+          return cadastralNumber?.length ? (
+            <AlignCenter>{cadastralNumber}</AlignCenter>
+          ) : (
+            <AlignCenter>-</AlignCenter>
+          );
+        },
+      },
+      {
+        accessorKey: "cloudLink",
+        header: "Облако",
+        cell: (info) => {
+          const cloudLink = info.getValue();
+
+          const handleOpenCloud = () => {
+            console.log("click");
+            const cloudLink = info.getValue();
+
+            if (cloudLink) {
+              window.open(cloudLink, "_blank"); // Открывает ссылку в новой вкладке браузера
+            }
+          };
+          return cloudLink?.length ? (
+            <AlignCenter>
+              <Button onClick={handleOpenCloud}>
+                <CloudDoneIcon />
+              </Button>
+            </AlignCenter>
+          ) : (
+            <AlignCenter>
+              <CloudOffIcon />
+            </AlignCenter>
+          );
+        },
+      },
     ],
   },
   {
@@ -112,6 +159,30 @@ export const ridgeObjectsColumns = [
         cell: (info) => {
           const contacts = info.getValue();
           return contacts ? <Typography>{contacts}</Typography> : <EmptyTd />;
+        },
+      },
+      {
+        accessorKey: "contact.phone",
+        header: "Телефон",
+        cell: (info) => {
+          const phone = info.getValue();
+          return phone ? (
+            <AlignCenter>
+              <Typography sx={{ whiteSpace: "nowrap" }}>
+                {FormatPhone(phone)}
+              </Typography>
+            </AlignCenter>
+          ) : (
+            <EmptyTd />
+          );
+        },
+      },
+      {
+        accessorKey: "contact.name",
+        header: "Имя",
+        cell: (info) => {
+          const name = info.getValue();
+          return name ? <AlignCenter>{name}</AlignCenter> : <EmptyTd />;
         },
       },
       {

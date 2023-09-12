@@ -5,6 +5,15 @@ const schema = new Schema(
     contacts: String,
     findedContacts: String,
     comment: String,
+    contact: {
+      phone: Number,
+      name: String,
+      position: String,
+      email: String,
+    },
+    estateOptions: {
+      cadastralNumber: String,
+    },
     status: {
       type: Schema.Types.ObjectId,
       ref: "RidgeObjectStatus",
@@ -21,6 +30,7 @@ const schema = new Schema(
       longitude: { type: Number, required: true },
       zoom: { type: Number, required: true },
     },
+    cloudLink: String,
   },
   {
     timestamps: { createdAt: "created_at", updatedAt: "edited_at" },

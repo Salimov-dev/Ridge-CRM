@@ -18,6 +18,7 @@ import {
   setUpdateManagerOpenState,
 } from "../../store/user/update-user.store";
 import { AlignCenter } from "../../components/common/columns/styled";
+import Loader from "../../components/common/loader/loader";
 
 export const usersColumns = [
   {
@@ -36,7 +37,7 @@ export const usersColumns = [
         header: "Аватар",
         cell: (info) => {
           const ava = info.getValue();
-          return <UserAvatar path={ava} />;
+          return ava ? <UserAvatar path={ava} /> : <Loader/>;
         },
       },
       {

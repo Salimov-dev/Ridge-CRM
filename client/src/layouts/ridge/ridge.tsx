@@ -39,6 +39,7 @@ const initialState = {
   comment: "",
   contacts: "",
   status: "",
+  selectedStatuses: [],
   selectedDistricts: [],
   selectedCities: [],
   selectedMetro: [],
@@ -47,7 +48,7 @@ const initialState = {
   task: "",
   result: "",
   selectedTaskTypes: [],
-  objectActivity: ""
+  objectActivity: "",
 };
 
 const Ridge = () => {
@@ -56,7 +57,7 @@ const Ridge = () => {
   const [selectedBaloon, setSelectedBaloon] = useState(null);
   const monthIndex = useSelector(getMonthIndexState());
 
-  const tasksColumn = ridgeTasksColumns
+  const tasksColumn = ridgeTasksColumns;
   const tasksList = useSelector(getRidgeTasksList());
 
   const objects = useSelector(getRidgeObjectsList());
@@ -85,7 +86,7 @@ const Ridge = () => {
   });
 
   const data = watch();
-
+  
   const {
     isInputObjectEmpty,
     isInputTaskEmpty,
@@ -159,7 +160,6 @@ const Ridge = () => {
       <TasksTable
         register={register}
         data={data}
-        objects={sortedObjects}
         tasks={sortedTasks}
         columns={tasksColumn}
         setValue={setValue}

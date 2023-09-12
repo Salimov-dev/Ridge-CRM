@@ -18,6 +18,7 @@ import {
 } from "../../../store/object/objects.store";
 // schema
 import { objectSchema } from "../../../schemas/object-schema";
+// utils
 import { replaceNullsWithEmptyString } from "../../../utils/data/replace-nulls-with-empty-string";
 
 const UpdateObject = ({ onClose }) => {
@@ -43,6 +44,8 @@ const UpdateObject = ({ onClose }) => {
   });
   const isValidAndHasAdress = isObjectHasAddress && isValid;
   const data = watch();
+  console.log("data", data);
+  
 
   const onSubmit = (data) => {
     dispatch(updateObject(data, objectId))
@@ -54,15 +57,15 @@ const UpdateObject = ({ onClose }) => {
     <Box>
       <Header object={object} onClose={onClose} />
       <ObjectForm
+        data={data}
         register={register}
-        data={objectWithoutNull}
+        errors={errors}
         handleSubmit={handleSubmit}
         onSubmit={onSubmit}
         onClose={onClose}
         watch={watch}
-        errors={errors}
-        isEditMode={isEditMode}
         isValid={isValidAndHasAdress}
+        isEditMode={isEditMode}
       />
     </Box>
   ) : (

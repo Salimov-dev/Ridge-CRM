@@ -52,6 +52,7 @@ const ObjectPage = ({ onClose }) => {
       />
       <ObjectInfo object={object} isLoading={isLoading} />
       <FooterButtons
+        object={object}
         isLoading={isLoading}
         onClose={onClose}
         isEdit={true}

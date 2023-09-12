@@ -51,7 +51,7 @@ const CreateMyTask = ({
   const data = watch();
   const watchDate = watch("date", null);
   const watchTime = watch("time", null);
-  const isFullValid = !watchDate || !watchTime || !isValid;
+  const isFullValid = isValid && !watchDate && watchTime
 
   const onSubmit = () => {
     const newData = {

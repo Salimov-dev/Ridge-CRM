@@ -13,7 +13,7 @@ export function setTokens({
     localStorage.setItem(USERID_KEY, userId);
     localStorage.setItem(TOKEN_KEY, accessToken);
     localStorage.setItem(REFRESH_KEY, refreshToken);
-    localStorage.setItem(EXPIRES_KEY, expiresDate);
+    localStorage.setItem(EXPIRES_KEY, String(expiresDate));
 }
 export function getAccessToken() {
     return localStorage.getItem(TOKEN_KEY);

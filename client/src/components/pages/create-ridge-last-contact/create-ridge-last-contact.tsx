@@ -71,7 +71,7 @@ const CreateRidgeLastContact = ({ onClose }) => {
       <TitleWithCloseButton
         title="Добавить последний контакт"
         onClose={onClose}
-        background="blue"
+        background="DarkOrange"
         color="white"
       />
       <LastContactForm

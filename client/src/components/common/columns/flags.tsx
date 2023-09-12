@@ -1,6 +1,11 @@
 import { Box, Tooltip } from "@mui/material";
 
-const Flags = ({ meetings = [], tasks = [], lastContacts = [] }) => {
+const Flags = ({
+  meetings = [],
+  tasks = [],
+  lastContacts = [],
+  taskBackgroundColor = "orange",
+}) => {
   return (
     <Box
       sx={{
@@ -43,7 +48,7 @@ const Flags = ({ meetings = [], tasks = [], lastContacts = [] }) => {
             sx={{
               width: "10px",
               height: "10px",
-              background: "orange",
+              background: taskBackgroundColor,
               border: "1px solid orange",
               borderRadius: "50%",
             }}

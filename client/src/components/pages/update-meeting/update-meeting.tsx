@@ -62,8 +62,9 @@ const UpdateMeeting = ({ onClose }) => {
   });
 
   const data = watch();
-
-  const isFullValid = data.date !== null && data.time !== null && isValid;
+  const watchDate = watch("date", null);
+  const watchTime = watch("time", null);
+  const isFullValid = !isValid && watchDate&& watchTime;
   const isEditMode = meetingId ? true : false;
 
   const onSubmit = (data) => {

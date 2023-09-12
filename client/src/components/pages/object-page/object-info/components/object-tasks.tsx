@@ -1,9 +1,7 @@
 import { useSelector } from "react-redux";
 import { Box, Typography, styled } from "@mui/material";
-import DividerStyled from "../../../../common/divider/divider-styled";
 import BasicTable from "../../../../common/table/basic-table";
 import { getTaskLoadingStatus } from "../../../../../store/task/tasks.store";
-import { tasksColumns } from "../../../../../columns/tasks-columns/tasks-columns";
 
 const Container = styled(Box)`
   display: flex;
@@ -17,7 +15,6 @@ const ObjectTasks = ({ columns, tasks, object, margin = "0", buttons }) => {
 
   return (
     <>
-      <DividerStyled />
       <Container>
         <Typography variant="h3" sx={{ margin: margin }}>
           Задачи по объекту: {address}
@@ -32,7 +29,7 @@ const ObjectTasks = ({ columns, tasks, object, margin = "0", buttons }) => {
           isLoading={isTasksLoading}
         />
       ) : (
-        <Typography>Не обнаружены</Typography>
+        <Typography sx={{ marginBottom: "20px" }}>Не обнаружены</Typography>
       )}
     </>
   );

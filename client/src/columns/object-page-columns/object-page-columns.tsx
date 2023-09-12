@@ -15,6 +15,8 @@ import {
   priceForMetr,
 } from "../../components/common/table/helpers/helpers";
 import EmptyTd from "../../components/common/columns/empty-td";
+import { useSelector } from "react-redux";
+import { getEstateConditionNameById } from "../../store/object/object-conditions.store";
 
 const AlignCenter = styled(Box)`
   display: flex;
@@ -114,7 +116,13 @@ export const estateTypeColumns = [
     header: "Состояние помещения",
     cell: (info) => {
       const сondition = info.getValue();
-      return сondition ? <AlignCenter>{сondition}</AlignCenter> : <EmptyTd />;
+      const conditionName = useSelector(getEstateConditionNameById(сondition));
+
+      return сondition ? (
+        <AlignCenter>{conditionName}</AlignCenter>
+      ) : (
+        <EmptyTd />
+      );
     },
   },
   {

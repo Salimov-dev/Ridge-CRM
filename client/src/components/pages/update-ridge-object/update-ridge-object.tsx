@@ -13,7 +13,7 @@ import RidgeObjectForm from "../../common/forms/ridge-object-form/ridge-object-f
 import ObjectTasks from "../object-page/object-info/components/object-tasks";
 import ItemOnMap from "../../common/map/item-on-map/item-on-map";
 import RidgeObjectBaloon from "../../UI/maps/ridge-object-baloon";
-import FooterButtons from "../object-page/footer-buttons/footer-buttons";
+import FooterButtons from "../../common/forms/footer-buttons/footer-buttons";
 import RidgeLastContacts from "../../../layouts/ridge/components/ridge-last-contacts/ridge-last-contacts";
 import CreateRidgeTasksButtons from "../../../layouts/ridge/components/create-ridge-tasks-buttons/create-ridge-tasks-buttons";
 import CreateRidgeLastContactButton from "../../UI/dialogs/buttons/create-ridge-last-contact-button";
@@ -87,17 +87,10 @@ const UpdateRidgeObject = ({ onClose }) => {
       />
       <RidgeObjectForm
         register={register}
+        errors={errors}
         handleSubmit={handleSubmit}
         onSubmit={onSubmit}
-        objectId={objectId}
         watch={watch}
-        errors={errors}
-        onClose={onClose}
-        onRemove={handleRemoveTask}
-        removeId={objectId}
-        isValid={isValid}
-        isEditMode={isEditMode}
-        isRidgeObject={true}
       />
       <ObjectTasks
         columns={tasksColumns}
@@ -117,7 +110,17 @@ const UpdateRidgeObject = ({ onClose }) => {
           />
         }
       />
-      <FooterButtons isLoading={isLoading} onClose={onClose} isEdit={false} />
+      <FooterButtons
+        object={object}
+        objectId={objectId}
+        onClose={onClose}
+        onUpdate={handleSubmit(onSubmit)}
+        onRemove={handleRemoveTask}
+        removeId={objectId}
+        isValid={isValid}
+        isEditMode={isEditMode}
+        isRidgeObject={true}
+      />
     </Box>
   ) : (
     <Loader />

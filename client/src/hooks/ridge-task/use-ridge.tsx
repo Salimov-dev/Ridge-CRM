@@ -12,6 +12,8 @@ const useRidge = (
     comment: "",
     contacts: "",
     status: "",
+    objectActivity: "",
+    selectedStatuses: [],
     selectedDistricts: [],
     selectedCities: [],
     selectedMetro: [],
@@ -22,6 +24,8 @@ const useRidge = (
     comment: data.comment,
     contacts: data.contacts,
     status: data.status,
+    objectActivity: data.objectActivity,
+    selectedStatuses: data.selectedStatuses,
     selectedDistricts: data.selectedDistricts,
     selectedCities: data.selectedCities,
     selectedMetro: data.selectedMetro,
@@ -43,11 +47,13 @@ const useRidge = (
   const handleClearObjectForm = () => {
     setValue("comment", "");
     setValue("contacts", "");
+    setValue("selectedStatuses", []);
     setValue("selectedDistricts", []);
     setValue("selectedCities", []);
     setValue("selectedMetro", []);
     setValue("startDate", null);
     setValue("endDate", null);
+    setValue("objectActivity", "");
   };
 
   const handleClearTaskForm = () => {

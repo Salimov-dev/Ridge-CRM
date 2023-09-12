@@ -7,6 +7,14 @@ const httpAuth = axios.create({
   params: {},
 });
 
+httpAuth.interceptors.request.use((config) => {
+  const token = localStorageService.getAccessToken();
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
+
 const authService = {
   register: async (payload) => {
     const { data } = await httpAuth.post(`signUp`, payload);

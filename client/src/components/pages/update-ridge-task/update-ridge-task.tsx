@@ -61,7 +61,8 @@ const UpdateRidgeTask = ({ title, onClose }) => {
   const data = watch();
   const watchDate = watch("date", null);
   const watchTime = watch("time", null);
-  const isFullValid = watchDate !== null && watchTime !== null && isValid;
+  const isFullValid = isValid && watchDate&& watchTime;
+
   const isEditMode = taskId ? true : false;
 
   const onSubmit = (data) => {
@@ -105,7 +106,7 @@ const UpdateRidgeTask = ({ title, onClose }) => {
         removeId={taskId}
         errors={errors}
         setValue={setValue}
-        isValid={!isFullValid}
+        isValid={isFullValid}
         isEditMode={isEditMode}
         isTasksLoading={isTasksLoading}
         watch={watch}

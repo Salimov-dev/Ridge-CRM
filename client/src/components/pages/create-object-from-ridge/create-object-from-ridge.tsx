@@ -56,6 +56,7 @@ const initialState = {
   description: {
     fullDescription: "",
   },
+  cloudLink: "",
 };
 
 const CreateObjectFromRidge = ({ onClose }) => {
@@ -63,13 +64,20 @@ const CreateObjectFromRidge = ({ onClose }) => {
   const objectId = useSelector(getUpdateObjectFromRidgeObjectId());
   const object = useSelector(getRidgeObjectById(objectId));
 
-  const comment = object?.comment;
+  const phone = object?.contact?.phone;
+  const name = object?.contact?.name;
+  const position = object?.contact?.position;
+  const email = object?.contact?.email;
+
   const city = object?.location?.city;
   const address = object?.location?.address;
   const district = object?.location?.district;
   const metro = object?.location?.metro;
   const latitude = object?.location?.latitude;
   const longitude = object?.location?.longitude;
+
+  const cadastralNumber = object?.estateOptions?.cadastralNumber;
+  const comment = object?.comment;
 
   const {
     register,
@@ -88,10 +96,14 @@ const CreateObjectFromRidge = ({ onClose }) => {
       ...data,
       contact: {
         ...data.contact,
-        name: capitalizeFirstLetter(data.contact.name),
+        name: capitalizeFirstLetter(name),
+        phone: phone,
+        position: position,
+        email: email,
       },
       estateOptions: {
         ...data.estateOptions,
+        cadastralNumber: cadastralNumber,
         premisesFloor: capitalizeFirstLetter(data.estateOptions.premisesFloor),
       },
       location: {
@@ -105,6 +117,7 @@ const CreateObjectFromRidge = ({ onClose }) => {
         ),
       },
     };
+    console.log("newData", newData);
 
     dispatch(createObject(newData))
       .then(onClose())
@@ -119,8 +132,13 @@ const CreateObjectFromRidge = ({ onClose }) => {
     setValue("location.longitude", longitude);
     setValue("location.district", district);
     setValue("location.metro", metro);
-  }, []);
 
+    setValue("contact.name", name);
+    setValue("contact.phone", phone);
+    setValue("contact.position", position);
+    setValue("contact.email", email);
+    setValue("estateOptions.cadastralNumber", cadastralNumber);
+  }, []);
   return (
     <>
       <TitleWithAddress
@@ -139,6 +157,7 @@ const CreateObjectFromRidge = ({ onClose }) => {
         watch={watch}
         isValid={isValid}
         onClose={onClose}
+        onCreate={handleSubmit(onSubmit)}
       />
     </>
   );

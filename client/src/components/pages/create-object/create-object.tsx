@@ -57,6 +57,7 @@ const initialState = {
   description: {
     fullDescription: "",
   },
+  cloudLink: "",
 };
 
 const CreateObject = ({ onClose }) => {

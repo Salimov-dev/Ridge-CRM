@@ -27,6 +27,14 @@ const ridgeObjectActivityVariants = [
     _id: "7652fgdnhgawqgzcv456g56873",
     name: "Без активности",
   },
+  {
+    _id: "30968fdjdsfsdj324igjfg2342",
+    name: "Не сдаём в аренду",
+  },
+  {
+    _id: "049832ugnfdskwe43fr0987655",
+    name: "Получить ОС",
+  },
 ];
 
 export { ridgeObjectActivityVariants };

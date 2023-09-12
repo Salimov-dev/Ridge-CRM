@@ -1,8 +1,8 @@
 import { Button } from "@mui/material";
 
 const PositiveOutlinedButton = ({
-  title,
-  onClick,
+  title = "",
+  onClick = () => {},
   isValid = false,
   type = "button",
 }) => {

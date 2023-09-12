@@ -67,13 +67,13 @@ const ObjectInfo = ({ object, isLoading }) => {
   return !isLoading ? (
     <Component>
       <ObjectsParams object={object} isLoading={isLoading} />
-      <ObjectMeetings meetings={sortedMeetings} object={object} />
       <ObjectTasks
       columns={tasksColumns}
         tasks={sortedTasks}
         object={object}
         buttons={<CreateTasksButtons withoutMeeting={true} />}
       />
+      <ObjectMeetings meetings={sortedMeetings} object={object} />
       <LastContacts
         lastContacts={sortedLastContacts}
         object={object}

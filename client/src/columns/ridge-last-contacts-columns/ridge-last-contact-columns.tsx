@@ -58,8 +58,8 @@ export const ridgeTastContactColumns = [
         <MultiColorContainedButton
           text="Править"
           fontColor="white"
-          background="SaddleBrown"
-          backgroudHover="Sienna"
+          background="Chocolate"
+          backgroudHover="SaddleBrown"
           onClick={handleClick}
         />
       );

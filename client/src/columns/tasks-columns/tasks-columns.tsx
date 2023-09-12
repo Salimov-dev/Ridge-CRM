@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 // mui
 import { Box, Typography } from "@mui/material";
 // components
-import GoToButton from "../../components/common/buttons/go-to-button";
+import RedirectButton from "../../components/common/buttons/redirect-button";
 import EmptyTd from "../../components/common/columns/empty-td";
 import { FormatManagerName } from "../../components/common/table/helpers/helpers";
 import MultiColorContainedButton from "../../components/common/buttons/multi-color-contained-button";
@@ -94,7 +94,7 @@ export const tasksColumns = [
             <>
               {fullAddress}
               {!isObjectPage ? (
-                <GoToButton
+                <RedirectButton
                   text="Открыть"
                   color="neutral"
                   onClick={handleClick}

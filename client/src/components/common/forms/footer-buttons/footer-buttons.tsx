@@ -1,7 +1,8 @@
-import { Box, Button, styled } from "@mui/material";
+import { Box, styled } from "@mui/material";
 import CreateObjectFromRidgeButton from "../../../UI/dialogs/buttons/create-object-from-ridge-button";
 import NegativeOutlinedButton from "../../buttons/negative-outlined-button";
 import PositiveOutlinedButton from "../../buttons/positive-outlined-button";
+import OpenObjectCloudButton from "../../../UI/dialogs/buttons/open-object-cloud-button";
 
 const Component = styled(Box)`
   width: 100%;
@@ -10,35 +11,50 @@ const Component = styled(Box)`
   margin-top: 30px;
 `;
 
+const Container = styled(Box)`
+  display: flex;
+  gap: 4px;
+`;
+
 const FooterButtons = ({
+  object,
   objectId = "",
-  removeId,
-  onClose,
-  onRemove,
-  isEditMode,
-  isValid,
+  removeId = "",
+  onCreate = () => {},
+  onUpdate = () => {},
+  onClose = () => {},
+  onRemove = () => {},
+  isValid = false,
+  isEditMode = false,
   isRidgeObject = false,
-  withoutRemoveButton
+  withoutRemoveButton = false,
 }) => {
   return (
     <Component>
-      <Box sx={{ display: "flex", gap: "4px" }}>
+      <Container>
         <PositiveOutlinedButton
           title={isEditMode ? "Сохранить" : "Создать"}
-          isValid={isValid}
-          type = "submit"
+          isValid={!isValid}
+          type="text"
+          onClick={() => (isEditMode ? onUpdate() : onCreate())}
         />
+
+        {isRidgeObject && isEditMode ? (
+          <CreateObjectFromRidgeButton objectId={objectId} />
+        ) : null}
+        {isRidgeObject && isEditMode ? (
+          <OpenObjectCloudButton object={object} />
+        ) : null}
+      </Container>
+      <Container>
         {isEditMode && !withoutRemoveButton ? (
           <NegativeOutlinedButton
             title="Удалить"
             onClick={() => onRemove(removeId)}
           />
         ) : null}
-        {isRidgeObject ? (
-          <CreateObjectFromRidgeButton objectId={objectId} />
-        ) : null}
-      </Box>
-      <NegativeOutlinedButton title="Отмена" onClick={onClose} />
+        <NegativeOutlinedButton title="Отмена" onClick={onClose} />
+      </Container>
     </Component>
   );
 };

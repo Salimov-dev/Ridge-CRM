@@ -8,10 +8,11 @@ const Component = styled(Box)`
   gap: 4px;
 `;
 
-const FooterButtons = ({ onClose, onEdit, isEdit, isLoading }) => {
+const FooterButtons = ({ object, onClose, onEdit, isEdit, isLoading }) => {
   return !isLoading ? (
     <Component>
       <ButtonsPanel
+        object={object}
         onClose={onClose}
         isEdit={isEdit}
         onEdit={onEdit}

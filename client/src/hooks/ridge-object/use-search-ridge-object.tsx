@@ -6,7 +6,6 @@ import { getRidgeLastContactsList } from "../../store/ridge-last-contact/last-ri
 import { useSelector } from "react-redux";
 
 const useSearchRidgeObject = (objects, data) => {
-
   const tasks = useSelector(getRidgeTasksList());
   const lastContacts = useSelector(getRidgeLastContactsList());
 
@@ -39,7 +38,9 @@ const useSearchRidgeObject = (objects, data) => {
 
     if (data?.contacts?.length) {
       array = array?.filter((obj) =>
-        obj?.findedContacts?.toLowerCase().includes(data?.contacts?.toLowerCase())
+        obj?.findedContacts
+          ?.toLowerCase()
+          .includes(data?.contacts?.toLowerCase())
       );
     }
 
@@ -55,8 +56,8 @@ const useSearchRidgeObject = (objects, data) => {
       );
     }
 
-     // Фильтр для выбранных районов и городов
-     if (data.selectedDistricts?.length) {
+    // Фильтр для выбранных районов и городов
+    if (data.selectedDistricts?.length) {
       array = array?.filter((obj) =>
         data.selectedDistricts.includes(obj.location.district)
       );
@@ -105,36 +106,47 @@ const useSearchRidgeObject = (objects, data) => {
       array = array?.filter((item) => dayjs(item?.date) <= endDate);
     }
 
-       // c контактами
-       if (data.objectActivity === "09345gdsnvla234t4gdgdfs43") {
-        array = array?.filter((obj) => obj?.findedContacts);
-      }
-      // без контактов
-      if (data.objectActivity === "7634nhgdxsadwe235thshd3245") {
-        array = array?.filter((obj) => !obj?.findedContacts);
-      }
-      // с задачами
-      if (data.objectActivity === "9076342sg234yhgdfdsf345435") {
-        array = array?.filter((obj) => hasTasks(obj._id));
-      }
-      // без задач
-      if (data.objectActivity === "3487549ogokbnmsakwe4gdfs52") {
-        array = array?.filter((obj) => !hasTasks(obj._id));
-      }
-      // с последним звонком
-      if (data.objectActivity === "78650gkfh9030bawrlgjgsdf43") {
-        array = array?.filter((obj) => hasLastContact(obj._id));
-      }
-      // без последнего звонка
-      if (data.objectActivity === "3240gfdk10934pqvma3214f390") {
-        array = array?.filter((obj) => !hasLastContact(obj._id));
-      }
-      // без активности
-      if (data.objectActivity === "7652fgdnhgawqgzcv456g56873") {
-        array = array?.filter(
-          (obj) => !hasLastContact(obj._id) && !hasTasks(obj._id)
+    // c контактами
+    if (data.objectActivity === "09345gdsnvla234t4gdgdfs43") {
+      array = array?.filter((obj) => obj?.findedContacts);
+    }
+    // без контактов
+    if (data.objectActivity === "7634nhgdxsadwe235thshd3245") {
+      array = array?.filter((obj) => !obj?.findedContacts);
+    }
+    // с задачами
+    if (data.objectActivity === "9076342sg234yhgdfdsf345435") {
+      array = array?.filter((obj) => hasTasks(obj._id));
+    }
+    // без задач
+    if (data.objectActivity === "3487549ogokbnmsakwe4gdfs52") {
+      array = array?.filter((obj) => !hasTasks(obj._id));
+    }
+    // с последним звонком
+    if (data.objectActivity === "78650gkfh9030bawrlgjgsdf43") {
+      array = array?.filter((obj) => hasLastContact(obj._id));
+    }
+    // без последнего звонка
+    if (data.objectActivity === "3240gfdk10934pqvma3214f390") {
+      array = array?.filter((obj) => !hasLastContact(obj._id));
+    }
+    // без активности
+    if (data.objectActivity === "7652fgdnhgawqgzcv456g56873") {
+      array = array?.filter(
+        (obj) => !hasLastContact(obj._id) && !hasTasks(obj._id)
         );
-      }
+    }
+    // не сдаём в аренду
+    if (data.objectActivity === "30968fdjdsfsdj324igjfg2342") {
+      array = array?.filter((obj) => obj?.status === "65004bc75b4362d9d53cc602");
+      console.log("array", array);
+    }
+    // получить ОС
+    if (data.objectActivity === "049832ugnfdskwe43fr0987655") {
+        array = array?.filter((obj) => obj?.status === "65004f055b4362d9d53cc603");
+        console.log("array", array);
+        
+    }
 
     return array;
   }, [data, objects]);

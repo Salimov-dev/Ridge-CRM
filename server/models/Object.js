@@ -13,7 +13,6 @@ const schema = new Schema(
       phone: Number,
       name: String,
       position: String,
-      // position: { type: Schema.Types.ObjectId, ref: "WorkingPosition" },
       email: String,
     },
     description: {
@@ -33,7 +32,6 @@ const schema = new Schema(
       currentRenters: { type: Schema.Types.ObjectId, ref: "CurrentRenter" },
       objectConditions: String,
       estateTypes: { type: Schema.Types.ObjectId, ref: "EstateType" },
-      // objectConditions: { type: Schema.Types.ObjectId, ref: "ObjectCondition" },
       objectTypes: { type: Schema.Types.ObjectId, ref: "ObjectType" },
       loadingArea: String,
       premisesHeight: Number,
@@ -45,13 +43,14 @@ const schema = new Schema(
     },
     location: {
       city: { type: String, required: true },
-      district:  { type: String, required: true },
-      metro:  String,
+      district: { type: String, required: true },
+      metro: String,
       address: { type: String, required: true },
       latitude: { type: Number, required: true },
       longitude: { type: Number, required: true },
       zoom: { type: Number, required: true },
     },
+    cloudLink: String,
   },
   {
     timestamps: { createdAt: "created_at", updatedAt: "edited_at" },

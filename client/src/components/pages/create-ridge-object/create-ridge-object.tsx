@@ -15,17 +15,28 @@ import { capitalizeFirstLetter } from "../../../utils/data/capitalize-first-lett
 import { createRidgeObject } from "../../../store/ridge-object/ridge-objects.store";
 // schema
 import { ridgeObjectSchema } from "../../../schemas/ridge-object-schema";
+import FooterButtons from "../../common/forms/footer-buttons/footer-buttons";
 
 const initialState = {
   findedContacts: "",
   comment: "",
   status: "",
+  contact: {
+    phone: null,
+    name: "",
+    position: "",
+    email: "",
+  },
+  estateOptions: {
+    cadastralNumber: "",
+  },
   location: {
     city: "",
     address: "",
     district: "",
     metro: "",
   },
+  cloudLink: "",
 };
 
 const CreateRidgeObject = ({ onClose }) => {
@@ -50,15 +61,23 @@ const CreateRidgeObject = ({ onClose }) => {
     findedObject,
   } = useFindObject();
 
+  const data = watch()
   const watchAddress = watch("location.address", "");
   const watchCity = watch("location.city", "");
 
   const isFindedObject = Boolean(Object.keys(findedObject)?.length);
   const isObjectHasAddress = Boolean(watchCity) && Boolean(watchAddress);
+  const isValidAndHasAdress = isFindedObject && isObjectHasAddress && isValid;
 
   const onSubmit = (data) => {
+    console.log("onSubmit");
+
     const newData = {
       ...data,
+      contact: {
+        ...data.contact,
+        name: capitalizeFirstLetter(data.contact.name),
+      },
       findedContacts: capitalizeFirstLetter(data?.findedContacts),
       comment: capitalizeFirstLetter(data?.comment),
       location: {
@@ -66,7 +85,7 @@ const CreateRidgeObject = ({ onClose }) => {
         zoom: 16,
       },
     };
- 
+
     dispatch(createRidgeObject(newData))
       .then(onClose())
       .then(toast.success("Объект с грядки собран!"));
@@ -92,13 +111,18 @@ const CreateRidgeObject = ({ onClose }) => {
       <FindObjectOnMap />
 
       <RidgeObjectForm
+      data={data}
         handleSubmit={handleSubmit}
         onSubmit={onSubmit}
         register={register}
-        isValid={isValid}
         watch={watch}
         errors={errors}
+      />
+      <FooterButtons
+        onCreate={handleSubmit(onSubmit)}
         onClose={onClose}
+        isValid={isValidAndHasAdress}
+        isRidgeObject={true}
       />
     </>
   );

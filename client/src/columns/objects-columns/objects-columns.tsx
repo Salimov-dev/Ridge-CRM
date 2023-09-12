@@ -1,6 +1,9 @@
-import { Box, Typography } from "@mui/material";
 import { orderBy } from "lodash";
 import { useDispatch, useSelector } from "react-redux";
+// MUI
+import { Box, Button, Typography } from "@mui/material";
+import CloudDoneIcon from "@mui/icons-material/CloudDone";
+import CloudOffIcon from "@mui/icons-material/CloudOff";
 // utils
 import { FormatDate } from "../../utils/date/format-date";
 // components
@@ -201,6 +204,33 @@ export const objectsColumns = [
         cell: (info) => {
           const status = info.getValue();
           return <AlignCenter>{FormatObjectStatus(status)}</AlignCenter>;
+        },
+      },
+      {
+        accessorKey: "cloudLink",
+        header: "Облако",
+        cell: (info) => {
+          const cloudLink = info.getValue();
+
+          const handleOpenCloud = () => {
+            console.log("click");
+            const cloudLink = info.getValue();
+
+            if (cloudLink) {
+              window.open(cloudLink, "_blank"); // Открывает ссылку в новой вкладке браузера
+            }
+          };
+          return cloudLink?.length ? (
+            <AlignCenter>
+              <Button onClick={handleOpenCloud}>
+                <CloudDoneIcon />
+              </Button>
+            </AlignCenter>
+          ) : (
+            <AlignCenter>
+              <CloudOffIcon />
+            </AlignCenter>
+          );
         },
       },
       {

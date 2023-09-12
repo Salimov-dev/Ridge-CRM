@@ -50,11 +50,10 @@ const CreateRidgeTask = ({
     resolver: yupResolver(taskSchema),
   });
   const data = watch();
-  console.log("data", data);
   
   const watchDate = watch("date", null);
   const watchTime = watch("time", null);
-  const isFullValid = !watchDate || !watchTime || !isValid;
+  const isFullValid = isValid && watchDate&& watchTime;
 
   const currentUserId = useSelector(getCurrentUserId());
   const currentUserObjects = objects?.filter(

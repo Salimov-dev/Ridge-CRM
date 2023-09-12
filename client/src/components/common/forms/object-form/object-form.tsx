@@ -28,15 +28,16 @@ import { getObjectConditionsList } from "../../../../store/object/object-conditi
 import { FieldsContainer, Form } from "../styled/styled";
 
 const ObjectForm = ({
-  data,
+  data = "",
   register,
   errors,
   handleSubmit,
+  onCreate = () => {},
   onSubmit,
   onClose,
   watch,
   isValid,
-  isEditMode = false,
+  isEditMode=false,
 }) => {
   const districts = useSelector(getDistrictsList());
   const workingPositions = useSelector(getWorkingPositionsList());
@@ -59,6 +60,7 @@ const ObjectForm = ({
   const rentTypes = useSelector(getRentTypesList());
   const objectTypes = useSelector(getObjectTypesList());
   const estateTypes = useSelector(getEstateTypesList());
+  const watchCloudLink = watch("cloudLink");
 
   return (
     <>
@@ -299,7 +301,6 @@ const ObjectForm = ({
               label="Состояние помещения"
               itemsList={objectConditions}
               value={watchobjectConditions || ""}
-              watch={watchobjectConditions}
             />
             <TextFieldStyled
               register={register}
@@ -416,10 +417,21 @@ const ObjectForm = ({
           errors={errors?.description?.fullDescription}
           onInputQuantities={20000}
         />
+                <FieldsContainer>
+          <TextFieldStyled
+            register={register}
+            label="Ссылка на папку в облако"
+            name="cloudLink"
+            value={watchCloudLink}
+            onInputQuantities={200}
+          />
+        </FieldsContainer>
         <FooterButtons
-          isEditMode={isEditMode}
-          isValid={!isValid}
+          onCreate={onCreate}
+          isEditMode={true}
+          isValid={isValid}
           onClose={onClose}
+          withoutRemoveButton={true}
         />
       </Form>
     </>
