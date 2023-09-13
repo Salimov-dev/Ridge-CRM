@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-import dealStagesService from "../../services/meeting/meeting-type.service";
+import dealStagesService from "../../services/deal/deal-stages.service";
+
 
 const dealStagesSlice = createSlice({
   name: "dealStages",

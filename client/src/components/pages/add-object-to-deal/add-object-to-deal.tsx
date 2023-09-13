@@ -1,6 +1,8 @@
 // libraries
+import { useEffect } from "react";
 import { Box } from "@mui/material";
-import { useDispatch } from "react-redux";
+import { toast } from "react-toastify";
+import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 // components
@@ -9,6 +11,9 @@ import DealForm from "../../common/forms/deal-form/deal-form";
 import FooterButtons from "../../common/forms/footer-buttons/footer-buttons";
 // store
 import { createDeal } from "../../../store/deal/deal.store";
+import {
+  getAddObjectToDealStageId,
+} from "../../../store/deal/add-object-to-deal.store";
 // schema
 import { dealSchema } from "../../../schemas/deal-shema";
 
@@ -24,11 +29,13 @@ const AddObjectToDeal = ({
   onClose = () => {},
 }) => {
   const dispatch = useDispatch();
+  const selectedStageId = useSelector(getAddObjectToDealStageId());
 
   const {
     register,
     watch,
     handleSubmit,
+    setValue,
     formState: { errors, isValid },
   } = useForm({
     defaultValues: initialState,
@@ -36,11 +43,17 @@ const AddObjectToDeal = ({
     resolver: yupResolver(dealSchema),
   });
 
+  const data = watch();
+
   const onSubmit = () => {
     dispatch(createDeal(data))
       .then(() => onClose())
       .then(() => toast.success("Объект в сделку добавлен!"));
   };
+
+  useEffect(() => {
+    setValue("stageId", selectedStageId);
+  }, [selectedStageId]);
 
   return (
     <Box>

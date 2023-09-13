@@ -24,12 +24,12 @@ export const setUpdateLastContactOpenState = (payload) => (dispatch) => {
   dispatch(updateLastContactOpenSetted(payload));
 };
 
-export const setUpdateLastContactId = (payload) => (dispatch) => {
-  dispatch(updateLastContactId(payload));
-};
-
 export const loadUpdateLastContactOpenState = () => (state) => {
   return state?.updateLastContact?.entities;
+};
+
+export const setUpdateLastContactId = (payload) => (dispatch) => {
+  dispatch(updateLastContactId(payload));
 };
 
 export const getUpdateLastContactId = () => (state) => {
