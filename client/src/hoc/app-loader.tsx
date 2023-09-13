@@ -33,6 +33,7 @@ import { loadRidgeLastContactsList } from "../store/ridge-last-contact/last-ridg
 // sidebar collaps
 import { loadSidebarCollapsState } from "../store/sidebar-collaps-state.store";
 import { loadDealsList } from "../store/deal/deal.store";
+import { loadDealStagesList } from "../store/deal/deal-stages.store";
 
 interface AppLoaderProps {
   children: React.ReactNode;
@@ -77,6 +78,7 @@ const AppLoader = ({ children }: AppLoaderProps) => {
     dispatch<any>(loadSidebarCollapsState());
     // deals
     dispatch<any>(loadDealsList());
+    dispatch<any>(loadDealStagesList());
   }, []);
 
   return children;

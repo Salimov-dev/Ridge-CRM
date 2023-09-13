@@ -52,8 +52,8 @@ export const getMeetingStatusesLoadingStatus = () => (state) =>
   state.meetingStatuses.isLoading;
 
 export const getMeetingStatusNameById = (id) => (state) => {
-  if (state.meetingStatuses.entities) {
-    return state.meetingStatuses.entities.find((meet) => meet._id === id).name;
+  if (state?.meetingStatuses?.entities) {
+    return state?.meetingStatuses?.entities.find((meet) => meet?._id === id)?.name;
   }
 };
 

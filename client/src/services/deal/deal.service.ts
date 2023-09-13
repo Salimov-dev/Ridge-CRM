@@ -8,16 +8,11 @@ const dealsService = {
     return data;
   },
   create: async (payload) => {
-    const { data } = await httpService.post(
-      dealsEndpoint + "/create",
-      payload
-    );
+    const { data } = await httpService.post(dealsEndpoint + "/create", payload);
     return data;
   },
   remove: async (dealId) => {
-    const { data } = await httpService.delete(
-      dealsEndpoint + "/" + dealId
-    );
+    const { data } = await httpService.delete(dealsEndpoint + "/" + dealId);
     return data;
   },
   update: async (payload) => {

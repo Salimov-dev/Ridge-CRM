@@ -6,7 +6,6 @@ import TextFieldStyled from "../../inputs/text-field-styled";
 import SimpleSelectField from "../../inputs/simple-select-field";
 import DatePickerStyled from "../../inputs/date-picker";
 import TimePickerStyled from "../../inputs/time-picker";
-import FooterButtons from "../footer-buttons/footer-buttons";
 import { FieldsContainer, Form } from "../styled/styled";
 import SimpleSwitch from "../../inputs/simple-switch";
 
@@ -21,16 +20,10 @@ const MeetingForm = ({
   errors,
   handleSubmit,
   onSubmit,
-  onClose,
-  onRemoveMeeting,
-  removeId,
   setValue,
-  isValid,
   isEditMode = false,
-  isEmptyFindedObject,
   isMeetingsLoading,
 }) => {
-  const isValidAndHasAdress = Boolean(!isEmptyFindedObject) && isValid;
   const watchStatus = watch("status", "");
   const watchObjectId = watch("objectId", "");
   const watchTypeMeeting = watch("meetingType", "");
@@ -101,15 +94,17 @@ const MeetingForm = ({
             }}
           />
         </FieldsContainer>
-       {isEditMode ? <TextFieldStyled
-          register={register}
-          label="Результат"
-          name="result"
-          value={data?.result}
-          rows="2"
-          multiline={true}
-          onInputQuantities={100}
-        /> : null}
+        {isEditMode ? (
+          <TextFieldStyled
+            register={register}
+            label="Результат"
+            name="result"
+            value={data?.result}
+            rows="2"
+            multiline={true}
+            onInputQuantities={100}
+          />
+        ) : null}
 
         {isEditMode ? (
           <SimpleSwitch
@@ -121,14 +116,6 @@ const MeetingForm = ({
             }}
           />
         ) : null}
-
-        <FooterButtons
-          isEditMode={isEditMode}
-          isValid={!isValidAndHasAdress}
-          onClose={onClose}
-          onRemove={onRemoveMeeting}
-          removeId={removeId}
-        />
       </Form>
     </>
   );

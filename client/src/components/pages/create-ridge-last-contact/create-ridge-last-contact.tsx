@@ -46,8 +46,7 @@ const CreateRidgeLastContact = ({ onClose }) => {
 
   const data = watch();
   const watchDate = watch("date", null);
-
-  const isFullValid = !watchDate || !isValid;
+  const isFullValid = isValid && watchDate
 
   const onSubmit = (data) => {
     const newData = {

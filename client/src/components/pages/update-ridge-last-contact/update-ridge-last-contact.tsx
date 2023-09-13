@@ -40,7 +40,7 @@ const UpdateRidgeLastContact = ({ onClose }) => {
 
   const data = watch();
   const watchDate = watch("date", null);
-  const isFullValid = !watchDate || !isValid;
+  const isFullValid = isValid && watchDate
   const isEditMode = lastContactId ? true : false;
 
   const onSubmit = (data) => {

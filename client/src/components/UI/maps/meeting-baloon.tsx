@@ -84,6 +84,8 @@ const MeetingBaloon = ({ meeting }) => {
       <Attribute title="Повод:" subTitle={meetingType} />
       <Attribute title="Менеджер:" subTitle={manager} />
 
+      {objectId ? 
+      <>
       <DividerStyled />
       <Typography>
         <b>Объект встречи:</b>
@@ -97,7 +99,10 @@ const MeetingBaloon = ({ meeting }) => {
         borderColor="SlateGrey"
         backgroundHover="ForestGreen"
         onClick={handleOpenObjectPage}
-      />
+        /> 
+      
+        </>
+      : null}
     </BaloonContainer>
   );
 };

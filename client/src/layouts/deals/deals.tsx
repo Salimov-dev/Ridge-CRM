@@ -1,11 +1,23 @@
 import { Box, Button, Paper, Typography, styled } from "@mui/material";
 import LayoutTitle from "../../components/common/page-titles/layout-title";
 import AddBoxOutlinedIcon from "@mui/icons-material/AddBoxOutlined";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getDealsList } from "../../store/deal/deal.store";
 import { getSidebarCollapsState } from "../../store/sidebar-collaps-state.store";
 import { useEffect, useState } from "react";
 import DividerStyled from "../../components/common/divider/divider-styled";
+import AddObjectToDealDialog from "../../components/UI/dialogs/deals/add-object-to-deal-dialog";
+import {
+  getAddObjectToDealOpenState,
+  setAddObjectToDealOpenState,
+} from "../../store/deal/add-object-to-deal.store";
+import { getCurrentUserId } from "../../store/user/users.store";
+import {
+  getObjectAddressById,
+  getObjectById,
+  getObjectsList,
+} from "../../store/object/objects.store";
+import { getDealStagesList } from "../../store/deal/deal-stages.store";
 
 const DealsContainer = styled(Box)`
   display: flex;
@@ -13,16 +25,17 @@ const DealsContainer = styled(Box)`
   justify-content: start;
   gap: 20px;
   overflow-x: scroll;
+  padding-bottom: 20px;
 `;
 
 const DealContainer = styled(Paper)`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  height: 150px;
+  justify-content: start;
   color: black;
-  background: white;
+  background: inherit;
+  border: 1px solid white;
   padding: 20px;
 `;
 
@@ -33,44 +46,64 @@ const DealTitle = styled(Box)`
   margin-bottom: 6px;
 `;
 
+const ObjectsContainer = styled(Box)`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: start;
+  gap: 12px;
+`;
+
 const ObjectContainer = styled(Paper)`
-  width: 250px;
   color: black;
   background: white;
-  margin-bottom: 20px;
+  padding: 10px;
 `;
 
 const Deals = () => {
-  const isCollapsedSidebar = useSelector(getSidebarCollapsState());
-  const dealsList = useSelector(getDealsList());
-  const screenWidth = window?.innerWidth;
+  const dispatch = useDispatch();
+  const dealStages = useSelector(getDealStagesList());
+  console.log("dealStages", dealStages);
 
+  const objects = useSelector(getObjectsList());
+  const currentUserId = useSelector(getCurrentUserId());
+  const currentUserObjects = objects?.filter(
+    (obj) => obj?.userId === currentUserId
+  );
+
+  let transformDealsStages = [];
+  dealStages?.forEach((deal) => {
+    transformDealsStages?.push({ _id: deal?._id, name: deal?.name });
+  });
+
+  let transformObjects = [];
+  currentUserObjects?.forEach((obj) => {
+    transformObjects?.push({ _id: obj._id, name: obj.location.address });
+  });
+
+  const handleCloseAddObjectToDeal = () => {
+    dispatch(setAddObjectToDealOpenState(false));
+  };
+
+  const handleAddObject = () => {
+    // updateDeal
+    dispatch(setAddObjectToDealOpenState(true));
+  };
+
+  // разобраться с шириной компонента, глючит
+  const isCollapsedSidebar = useSelector(getSidebarCollapsState());
+  const screenWidth = window?.innerWidth;
   const fullWidth = screenWidth - 262;
   const collapseWidth = screenWidth - 122;
   const [width, setWidth] = useState(0);
-
+  useEffect(() => {
+    setWidth(isCollapsedSidebar ? collapseWidth : fullWidth);
+  }, [isCollapsedSidebar]);
   useEffect(() => {
     setTimeout(() => {
       setWidth(isCollapsedSidebar ? collapseWidth : fullWidth);
     }, 0);
   }, []);
-
-  useEffect(() => {
-    setWidth(isCollapsedSidebar ? collapseWidth : fullWidth);
-  }, [isCollapsedSidebar]);
-
-  const handleAddObject = () => {};
-
-  const items = [
-    {
-      companyId: "companyId",
-      users: [
-        { userId: "userId", objectsId: ["1", "2", "3"] },
-        { userId: "userId", objectsId: ["4", "5", "6"] },
-        { userId: "userId", objectsId: ["7", "8", "9"] },
-      ],
-    },
-  ];
 
   return (
     <Box
@@ -81,15 +114,17 @@ const Deals = () => {
     >
       <LayoutTitle title="Сделки" />
       <DealsContainer>
-        {dealsList?.map((deal) => (
+        {dealStages?.map((deal) => (
           <DealContainer key={deal._id}>
             <DealTitle>
-              <Typography variant="h5">
+              <Typography variant="h5" sx={{ color: "white" }}>
                 <b>{deal.name}</b>
               </Typography>
             </DealTitle>
-            <DividerStyled />
-            <ObjectContainer elevation={3}>fds</ObjectContainer>
+            <DividerStyled margin="12px 0 20px 0" />
+            <Box sx={{ width: "230px" }}>
+              <Typography>Тут будет сделка</Typography>
+            </Box>
             <Button
               sx={{
                 display: "flex",
@@ -104,6 +139,10 @@ const Deals = () => {
           </DealContainer>
         ))}
       </DealsContainer>
+      <AddObjectToDealDialog
+        objects={transformObjects}
+        stages={transformDealsStages}
+      />
     </Box>
   );
 };

@@ -37,7 +37,7 @@ const ObjectForm = ({
   onClose,
   watch,
   isValid,
-  isEditMode=false,
+  isEditMode = false,
 }) => {
   const districts = useSelector(getDistrictsList());
   const workingPositions = useSelector(getWorkingPositionsList());
@@ -412,12 +412,12 @@ const ObjectForm = ({
           label="Опишите объект"
           name="description.fullDescription"
           value={data?.description?.fullDescription}
-          rows="3"
+          rows="6"
           multiline={true}
           errors={errors?.description?.fullDescription}
           onInputQuantities={20000}
         />
-                <FieldsContainer>
+        <FieldsContainer>
           <TextFieldStyled
             register={register}
             label="Ссылка на папку в облако"

@@ -2,9 +2,7 @@ import { Schema, model } from "mongoose";
 
 const schema = new Schema(
   {
-    stageId: String,
-    objectId: String,
-    isArchived: Boolean,
+    objectId: { type: Schema.Types.ObjectId, ref: "Object" },
     userId: { type: Schema.Types.ObjectId, ref: "User" },
     company: { type: Schema.Types.ObjectId, ref: "Company" },
   },
@@ -13,4 +11,4 @@ const schema = new Schema(
   }
 );
 
-export default model("Deal", schema);
+export default model("DealStage", schema);

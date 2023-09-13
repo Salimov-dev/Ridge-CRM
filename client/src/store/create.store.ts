@@ -41,16 +41,22 @@ import ridgeObjectStatusReducer from "./ridge-object/ridge-object-status.store";
 import createRidgeObjectReducer from "./ridge-object/create-ridge-object.store";
 import updateRidgeObjectReducer from "./ridge-object/update-ridge-object.store";
 import createObjectFromRidgeReducer from "./ridge-object/create-object-from-ridge.store";
-// other
-import sidebarCollapsStateReducer from "./sidebar-collaps-state.store";
-import monthIndexReducer from "./month-index.store";
+// last contact
 import lastContactReducer from "./last-contact/last-contact.store";
 import createLastContactReducer from "./last-contact/create-last-contact.store";
 import updateLastContactReducer from "./last-contact/update-last-contact.store";
+// ridge last contact
 import ridgeLastContactReducer from "./ridge-last-contact/last-ridge-contact.store";
 import createRidgeLastContactReducer from "./ridge-last-contact/create-ridge-last-contact.store";
 import updateRidgeLastContactReducer from "./ridge-last-contact/update-ridge-last-contact.store";
+// deal
 import dealsReducer from "./deal/deal.store";
+import dealStagesReducer from "./deal/deal-stages.store";
+// sidebar
+import sidebarCollapsStateReducer from "./sidebar-collaps-state.store";
+import addObjectToDealReducer from "./deal/add-object-to-deal.store";
+// other
+import monthIndexReducer from "./month-index.store";
 
 const rootReducer = combineReducers({
   // objects
@@ -109,6 +115,8 @@ const rootReducer = combineReducers({
   sidebarCollapsState: sidebarCollapsStateReducer,
   // deals
   deals: dealsReducer,
+  addObjectToDeal: addObjectToDealReducer,
+  dealStages: dealStagesReducer,
 });
 
 export function createStore() {

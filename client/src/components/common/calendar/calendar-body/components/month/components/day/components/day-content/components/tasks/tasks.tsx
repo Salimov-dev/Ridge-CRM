@@ -14,22 +14,24 @@ import { getRidgeObjectsList } from "../../../../../../../../../../../../store/r
 const Tasks = ({ tasks, isRidgePage }) => {
   const objects = useSelector(getObjectsList());
   const ridgeObjects = useSelector(getRidgeObjectsList());
+  
   return tasks ? (
     <ItemsContainer>
-      {tasks?.map((task) => (
+      {tasks?.map((task) => {
+        const taskIsDone = task?.isDone
+        
+        return(
         <ItemContainer
           key={task._id}
           sx={{
             border:
-              !task?.isDone || isRidgePage
-                ? "3px solid darkGreen"
-                : "3px solid darkGreen",
-            color: !task?.isDone
+            isRidgePage ?  "3px solid darkGreen" : "3px solid darkOrange",
+            color: !taskIsDone
               ? task.managerId || isRidgePage
                 ? "white"
                 : "black"
               : "white",
-            background: !task?.isDone
+            background: !taskIsDone
               ? task.managerId
                 ? "Crimson"
                 : isRidgePage
@@ -46,8 +48,8 @@ const Tasks = ({ tasks, isRidgePage }) => {
             isRidgePage={isRidgePage}
           />
           <Result task={task} />
-        </ItemContainer>
-      ))}
+        </ItemContainer>)
+      })}
     </ItemsContainer>
   ) : (
     <Loader />

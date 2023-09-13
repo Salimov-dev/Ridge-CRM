@@ -17,7 +17,7 @@ const Container = styled(Box)`
 `;
 
 const FooterButtons = ({
-  object,
+  object="",
   objectId = "",
   removeId = "",
   onCreate = () => {},

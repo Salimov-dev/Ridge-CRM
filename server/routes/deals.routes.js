@@ -23,7 +23,7 @@ router.post("/create", auth, async (req, res) => {
       $or: [{ managers: userId }, { curators: userId }],
     });
 
-    const newDeal = await LastContact.create({
+    const newDeal = await Deal.create({
       ...req.body,
       userId,
       company: company._id,

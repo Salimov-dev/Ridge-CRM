@@ -35,6 +35,7 @@ import lastContactRoutes from "./last-contact.routes.js";
 import ridgeLastContactRoutes from "./ridge-last-contact.routes.js";
 // deals
 import dealsRoutes from "./deals.routes.js";
+import dealStagesRoutes from "./deal-stages.routes.js";
 
 const router = express.Router({ mergeParams: true });
 
@@ -75,5 +76,6 @@ router.use("/lastContact", lastContactRoutes);
 router.use("/ridgeLastContact", ridgeLastContactRoutes);
 // deal
 router.use("/deals", dealsRoutes);
+router.use("/dealStages", dealStagesRoutes);
 
 export default router;

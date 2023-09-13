@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 // components
 import MeetingForm from "../../common/forms/meeting-form/meeting-form";
 import TitleWithAddress from "../../common/page-titles/title-with-address";
@@ -23,6 +23,7 @@ import { meetingSchema } from "../../../schemas/meeting-schema";
 import useFindObject from "../../../hooks/object/use-find-object";
 // utils
 import { capitalizeFirstLetter } from "../../../utils/data/capitalize-first-letter";
+import FooterButtons from "../../common/forms/footer-buttons/footer-buttons";
 
 const initialState = {
   status: "",
@@ -44,7 +45,8 @@ const Component = styled(Box)`
   width: 100%;
 `;
 
-const CreateMeeting = ({ objectPageId="", onClose, dateCreate }) => {
+const CreateMeeting = ({ objectPageId = "", onClose, dateCreate }) => {
+  const dispatch = useDispatch();
   const statuses = useSelector(getMeetingStatusesList());
   const meetingTypes = useSelector(getMeetingTypesList());
   const currentUserId = useSelector(getCurrentUserId());
@@ -81,11 +83,8 @@ const CreateMeeting = ({ objectPageId="", onClose, dateCreate }) => {
   const data = watch();
   const watchDate = watch("date", null);
   const watchTime = watch("time", null);
-  console.log("data", data);
-  
-
-  const isFullValid = !watchDate || !watchTime || !isValid;
   const isEmptyFindedObject = Boolean(Object.keys(findedObject)?.length);
+  const isFullValid = isValid && watchDate && watchTime && isEmptyFindedObject;
 
   const onSubmit = (data) => {
     const newData = {
@@ -145,13 +144,16 @@ const CreateMeeting = ({ objectPageId="", onClose, dateCreate }) => {
         meetingTypes={meetingTypes}
         objectPageId={objectPageId}
         onSubmit={onSubmit}
-        onClose={onClose}
         handleSubmit={handleSubmit}
         watch={watch}
         errors={errors}
         setValue={setValue}
+      />
+
+      <FooterButtons
         isValid={isFullValid}
-        isEmptyFindedObject={isEmptyFindedObject}
+        onClose={onClose}
+        onCreate={handleSubmit(onSubmit)}
       />
     </Component>
   );

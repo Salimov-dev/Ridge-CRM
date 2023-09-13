@@ -14,7 +14,10 @@ import MeetingForm from "../../common/forms/meeting-form/meeting-form";
 import { getObjectsList } from "../../../store/object/objects.store";
 import { getCurrentUserId } from "../../../store/user/users.store";
 import { getMeetingTypesList } from "../../../store/meeting/meeting-types.store";
-import { getMeetingStatusesList, getMeetingStatusesLoadingStatus } from "../../../store/meeting/meeting-status.store";
+import {
+  getMeetingStatusesList,
+  getMeetingStatusesLoadingStatus,
+} from "../../../store/meeting/meeting-status.store";
 import { getUpdateMeetingId } from "../../../store/meeting/update-meeting.store";
 import {
   getMeetingById,
@@ -23,6 +26,7 @@ import {
 } from "../../../store/meeting/meetings.store";
 // schema
 import { meetingSchema } from "../../../schemas/meeting-schema";
+import FooterButtons from "../../common/forms/footer-buttons/footer-buttons";
 
 const UpdateMeeting = ({ onClose }) => {
   const objects = useSelector(getObjectsList());
@@ -32,8 +36,8 @@ const UpdateMeeting = ({ onClose }) => {
   );
   const meetingId = useSelector(getUpdateMeetingId());
   const meeting = useSelector(getMeetingById(meetingId));
-  
-  const isMeetingsLoading = useSelector(getMeetingStatusesLoadingStatus())
+
+  const isMeetingsLoading = useSelector(getMeetingStatusesLoadingStatus());
   const meetingTypes = useSelector(getMeetingTypesList());
   const statuses = useSelector(getMeetingStatusesList());
   const dispatch = useDispatch();
@@ -64,7 +68,7 @@ const UpdateMeeting = ({ onClose }) => {
   const data = watch();
   const watchDate = watch("date", null);
   const watchTime = watch("time", null);
-  const isFullValid = !isValid && watchDate&& watchTime;
+  const isFullValid = isValid && watchDate && watchTime;
   const isEditMode = meetingId ? true : false;
 
   const onSubmit = (data) => {
@@ -103,6 +107,14 @@ const UpdateMeeting = ({ onClose }) => {
         statuses={statuses}
         isEditMode={isEditMode}
         isMeetingsLoading={isMeetingsLoading}
+      />
+      <FooterButtons
+        onClose={onClose}
+        onUpdate={handleSubmit(onSubmit)}
+        onRemove={handleRemoveMeeting}
+        removeId={meetingId}
+        isValid={isFullValid}
+        isEditMode={isEditMode}
       />
     </Box>
   ) : (
