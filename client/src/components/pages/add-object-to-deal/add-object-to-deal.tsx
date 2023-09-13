@@ -20,6 +20,7 @@ import { dealSchema } from "../../../schemas/deal-shema";
 const initialState = {
   stageId: "",
   objectId: "",
+  isArchived: false
 };
 
 const AddObjectToDeal = ({

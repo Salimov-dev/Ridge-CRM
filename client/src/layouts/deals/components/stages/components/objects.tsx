@@ -3,7 +3,7 @@ import DividerStyled from "../../../../../components/common/divider/divider-styl
 import { FormatDate } from "../../../../../utils/date/format-date";
 
 const ObjectsContainer = styled(Box)`
-  width: 230px;
+  width: 265px;
   color: white;
   display: flex;
   flex-direction: column;
@@ -11,6 +11,9 @@ const ObjectsContainer = styled(Box)`
   justify-content: start;
   gap: 12px;
   margin-bottom: 14px;
+  overflow-y: scroll;
+  padding-right: 4px;
+  margin-right: -8px;
 `;
 
 const ObjectContainer = styled(Paper)`

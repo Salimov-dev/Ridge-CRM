@@ -21,7 +21,6 @@ import {
 
 const Deals = () => {
   const dispatch = useDispatch();
-  const [width, setWidth] = useState(0);
   const deals = useSelector(getDealsList());
   const dealStages = useSelector(getDealStagesList());
   const objects = useSelector(getObjectsList());
@@ -32,6 +31,7 @@ const Deals = () => {
   );
 
   const isCollapsedSidebar = useSelector(getSidebarCollapsState());
+  const [width, setWidth] = useState(0);
   const screenWidth = window?.innerWidth;
   const fullWidth = screenWidth - 262;
   const collapseWidth = screenWidth - 122;
@@ -54,13 +54,7 @@ const Deals = () => {
 
   useEffect(() => {
     setWidth(isCollapsedSidebar ? collapseWidth : fullWidth);
-  }, [isCollapsedSidebar, fullWidth, collapseWidth]);
-
-  useEffect(() => {
-    setTimeout(() => {
-      setWidth(isCollapsedSidebar ? collapseWidth : fullWidth);
-    }, 0);
-  }, [isCollapsedSidebar, fullWidth, collapseWidth]);
+  }, [isCollapsedSidebar]);
 
   return (
     <Box
