@@ -9,6 +9,7 @@ const useRidge = (
   setCurrentMonth
 ) => {
   const objectInitialState = {
+    address: "",
     comment: "",
     contacts: "",
     status: "",
@@ -21,6 +22,7 @@ const useRidge = (
     endDate: null,
   };
   const objectData = {
+    address: data.address,
     comment: data.comment,
     contacts: data.contacts,
     status: data.status,
@@ -45,21 +47,15 @@ const useRidge = (
     JSON.stringify(taskInitialState) !== JSON.stringify(taskData);
 
   const handleClearObjectForm = () => {
-    setValue("comment", "");
-    setValue("contacts", "");
-    setValue("selectedStatuses", []);
-    setValue("selectedDistricts", []);
-    setValue("selectedCities", []);
-    setValue("selectedMetro", []);
-    setValue("startDate", null);
-    setValue("endDate", null);
-    setValue("objectActivity", "");
+    for (const key in objectInitialState) {
+      setValue(key, objectInitialState[key]);
+    }
   };
 
   const handleClearTaskForm = () => {
-    setValue("task", "");
-    setValue("result", "");
-    setValue("selectedTaskTypes", []);
+    for (const key in taskInitialState) {
+      setValue(key, taskInitialState[key]);
+    }
   };
 
   useEffect(() => {

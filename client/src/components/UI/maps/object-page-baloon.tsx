@@ -19,6 +19,8 @@ const BaloonContainer = styled(Box)`
 `;
 
 const ObjectPageBaloon = ({ object }) => {
+  console.log("object", object);
+  
   const date = FormatDate(object.created_at);
   const manager = useSelector(getUserNameById(object?.userId));
   const city = object?.location?.city;

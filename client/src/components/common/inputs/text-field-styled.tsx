@@ -1,4 +1,5 @@
 import { Box, TextField, styled, FormHelperText } from "@mui/material";
+import debounce from "debounce";
 
 const StyledTextField = styled(TextField)(({ theme }) => ({
   minWidth: "30px",
@@ -43,6 +44,7 @@ const TextFieldStyled = ({
       e.target.value = e.target.value.slice(0, maxLength);
     }
   };
+  
   return (
     <Box sx={{ width: "100%" }}>
       <StyledTextField

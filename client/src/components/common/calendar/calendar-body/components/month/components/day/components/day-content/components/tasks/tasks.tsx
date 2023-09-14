@@ -14,41 +14,45 @@ import { getRidgeObjectsList } from "../../../../../../../../../../../../store/r
 const Tasks = ({ tasks, isRidgePage }) => {
   const objects = useSelector(getObjectsList());
   const ridgeObjects = useSelector(getRidgeObjectsList());
-  
+
   return tasks ? (
     <ItemsContainer>
       {tasks?.map((task) => {
-        const taskIsDone = task?.isDone
-        
-        return(
-        <ItemContainer
-          key={task._id}
-          sx={{
-            border:
-            isRidgePage ?  "3px solid darkGreen" : "3px solid darkOrange",
-            color: !taskIsDone
-              ? task.managerId || isRidgePage
-                ? "white"
-                : "black"
-              : "white",
-            background: !taskIsDone
-              ? task.managerId
-                ? "Crimson"
-                : isRidgePage
-                ? "darkGreen"
-                : "orange"
-              : "gray",
-          }}
-        >
-          <Title task={task} isRidgePage={isRidgePage} />
-          <TaskComment comment={task?.comment} />
-          <TaksObject
-            task={task}
-            objects={isRidgePage ? ridgeObjects : objects}
-            isRidgePage={isRidgePage}
-          />
-          <Result task={task} />
-        </ItemContainer>)
+        const taskIsDone = task?.isDone;
+
+        return (
+          <ItemContainer
+            key={task._id}
+            sx={{
+              border: isRidgePage
+                ? "3px solid darkGreen"
+                : task.managerId
+                ? "3px solid red"
+                : "3px solid darkOrange",
+              color: !taskIsDone
+                ? task.managerId || isRidgePage
+                  ? "white"
+                  : "black"
+                : "white",
+              background: !taskIsDone
+                ? task.managerId
+                  ? "Crimson"
+                  : isRidgePage
+                  ? "darkGreen"
+                  : "orange"
+                : "gray",
+            }}
+          >
+            <Title task={task} isRidgePage={isRidgePage} />
+            <TaskComment comment={task?.comment} />
+            <TaksObject
+              task={task}
+              objects={isRidgePage ? ridgeObjects : objects}
+              isRidgePage={isRidgePage}
+            />
+            <Result task={task} />
+          </ItemContainer>
+        );
       })}
     </ItemsContainer>
   ) : (

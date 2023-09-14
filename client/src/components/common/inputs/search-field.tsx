@@ -28,6 +28,7 @@ const SearchField = ({
   inputProps,
   disabled = false,
 }) => {
+
   return (
     <StyledTextField
       {...register(name)}

@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useDispatch, useSelector } from "react-redux";
+import { useConfirm } from "material-ui-confirm";
 // components
 import MyTaskForm from "../../common/forms/my-task-form/my-task-form";
 import TitleWithCloseButton from "../../common/page-titles/title-with-close-button";
@@ -22,6 +23,7 @@ import { getCurrentUserId } from "../../../store/user/users.store";
 import { taskSchema } from "../../../schemas/task-shema";
 
 const UpdateMyTask = ({ title, onClose }) => {
+  const confirm = useConfirm();
   const taskId = useSelector(getUpdateMyTaskId());
   const task = useSelector(getTaskById(taskId));
   const isTasksLoading = useSelector(getTaskLoadingStatus());
@@ -61,7 +63,7 @@ const UpdateMyTask = ({ title, onClose }) => {
   const data = watch();
   const watchDate = watch("date", null);
   const watchTime = watch("time", null);
-  const isFullValid = !isValid && watchDate&& watchTime;
+  const isFullValid = !isValid && watchDate && watchTime;
   const isEditMode = taskId ? true : false;
 
   const onSubmit = (data) => {
@@ -75,9 +77,20 @@ const UpdateMyTask = ({ title, onClose }) => {
   };
 
   const handleRemoveTask = (taskId) => {
-    dispatch(removeTask(taskId))
-      .then(onClose())
-      .then(toast.success("Задача себе успешно удалена!"));
+    confirm({
+      title: "Подтвердите удаление своей задачи",
+      description: "Удалить задачу себе безвозвратно?",
+      cancellationButtonProps: { color: "error" },
+      confirmationButtonProps: { color: "success" },
+    })
+      .then(() => {
+        dispatch(removeTask(taskId))
+          .then(onClose())
+          .then(toast.success("Задача себе успешно удалена!"));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   useEffect(() => {

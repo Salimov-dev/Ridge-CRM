@@ -29,7 +29,7 @@ const LastContactForm = ({
             name="date"
             label="Дата последнего контакта"
             value={data?.date}
-            minDate = {null}
+            minDate={null}
             onChange={(value) => setValue("date", value)}
           />
           <TextFieldStyled
@@ -40,7 +40,7 @@ const LastContactForm = ({
             errors={errors?.result}
             rows="2"
             multiline={true}
-            onInputQuantities={100}
+            onInputQuantities={200}
           />
         </FieldsContainer>
 

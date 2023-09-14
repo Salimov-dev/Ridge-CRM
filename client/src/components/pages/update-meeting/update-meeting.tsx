@@ -27,8 +27,10 @@ import {
 // schema
 import { meetingSchema } from "../../../schemas/meeting-schema";
 import FooterButtons from "../../common/forms/footer-buttons/footer-buttons";
+import { useConfirm } from "material-ui-confirm";
 
 const UpdateMeeting = ({ onClose }) => {
+  const confirm = useConfirm();
   const objects = useSelector(getObjectsList());
   const currentUserId = useSelector(getCurrentUserId());
   const currentUserObjects = objects?.filter(
@@ -82,9 +84,20 @@ const UpdateMeeting = ({ onClose }) => {
   };
 
   const handleRemoveMeeting = (meetingId) => {
-    dispatch(removeMeeting(meetingId))
-      .then(onClose())
-      .then(toast.success("Встреча себе успешно удалена!"));
+    confirm({
+      title: "Подтвердите удаление встречи",
+      description: "Удалить встречу безвозвратно?",
+      cancellationButtonProps: { color: "error" },
+      confirmationButtonProps: { color: "success" },
+    })
+      .then(() => {
+        dispatch(removeMeeting(meetingId))
+          .then(onClose())
+          .then(toast.success("Встреча успешно удалена!"));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return meeting ? (

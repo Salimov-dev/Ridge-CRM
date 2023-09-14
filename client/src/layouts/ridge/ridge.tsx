@@ -18,9 +18,9 @@ import CreateRidgeTasksButtons from "./components/create-ridge-tasks-buttons/cre
 import Dialogs from "./components/dialogs/dialogs";
 import TasksTable from "../../components/common/tasks/tasks-table";
 // hooks
-import useSearchRidgeObject from "../../hooks/ridge-object/use-search-ridge-object";
+import useSearchRidgeObject from "../../hooks/ridge/use-search-ridge-object";
 import useSearchTask from "../../hooks/task/use-search-task";
-import useRidge from "../../hooks/ridge-task/use-ridge";
+import useRidge from "../../hooks/ridge/use-ridge";
 // utils
 import getMonth from "../../utils/calendar/get-month";
 // columns
@@ -36,6 +36,7 @@ import {
 } from "../../store/ridge-object/ridge-objects.store";
 
 const initialState = {
+  address: "",
   comment: "",
   contacts: "",
   status: "",
@@ -80,13 +81,13 @@ const Ridge = () => {
       : null,
   };
 
-  const { register, watch, setValue } = useForm({
+  const { register, watch, reset, setValue } = useForm({
     defaultValues: Boolean(localStorageState) ? formatedState : initialState,
     mode: "onBlur",
   });
 
   const data = watch();
-  
+
   const {
     isInputObjectEmpty,
     isInputTaskEmpty,

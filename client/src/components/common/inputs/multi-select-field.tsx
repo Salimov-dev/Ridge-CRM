@@ -46,12 +46,9 @@ const MultiSelectField = ({
     }
     return false;
   }
-
   const itemsWithId = checkArrayElements(itemsList);
-
   const selectedItemsArray = Array.isArray(selectedItems) ? selectedItems : [];
 
-  
   return (
     <FormControl sx={{ minWidth: "100px", width: "100%" }}>
       <InputLabel

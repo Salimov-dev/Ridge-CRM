@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { orderBy } from "lodash";
 // MUI
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button, Tooltip, Typography } from "@mui/material";
 import CloudDoneIcon from "@mui/icons-material/CloudDone";
 import CloudOffIcon from "@mui/icons-material/CloudOff";
 // components
@@ -137,13 +137,17 @@ export const ridgeObjectsColumns = [
           };
           return cloudLink?.length ? (
             <AlignCenter>
-              <Button onClick={handleOpenCloud}>
-                <CloudDoneIcon />
-              </Button>
+              <Tooltip title="Открыть облако" placement="top-start" arrow>
+                <Button onClick={handleOpenCloud}>
+                  <CloudDoneIcon />
+                </Button>
+              </Tooltip>
             </AlignCenter>
           ) : (
             <AlignCenter>
-              <CloudOffIcon />
+              <Tooltip title="Облако отсутствует" placement="top-start" arrow>
+                <CloudOffIcon />
+              </Tooltip>
             </AlignCenter>
           );
         },
@@ -153,14 +157,6 @@ export const ridgeObjectsColumns = [
   {
     header: "Контактная информация",
     columns: [
-      {
-        accessorKey: "findedContacts",
-        header: "Найденные контакты",
-        cell: (info) => {
-          const contacts = info.getValue();
-          return contacts ? <Typography>{contacts}</Typography> : <EmptyTd />;
-        },
-      },
       {
         accessorKey: "contact.phone",
         header: "Телефон",
@@ -190,7 +186,15 @@ export const ridgeObjectsColumns = [
         header: "Комментарий",
         cell: (info) => {
           const comment = info.getValue();
-          return comment ? <Typography>{comment}</Typography> : <EmptyTd />;
+          const isLongComment = comment && comment.split("\n").length > 2;
+          const truncatedComment = isLongComment
+            ? comment.slice(0, 90) + "..."
+            : comment;
+          return comment ? (
+            <Typography>{truncatedComment}</Typography>
+          ) : (
+            <EmptyTd />
+          );
         },
       },
       {

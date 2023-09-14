@@ -19,7 +19,7 @@ const MapContainer = styled(Box)`
   margin-bottom: 20px;
 `;
 
-const ItemOnMap = ({ baloon, hintContent, center, mapZoom, isLoading }) => {
+const ItemOnMap = ({ baloon="", hintContent, center, mapZoom, isLoading }) => {
   const [activePortal, setActivePortal] = useState(false);
 
   const Portal = ({ children, getHTMLElementId }) => {
@@ -33,27 +33,8 @@ const ItemOnMap = ({ baloon, hintContent, center, mapZoom, isLoading }) => {
       };
     }, [el, mount]);
 
-    if (!mount) return null;
     return createPortal(children, el);
   };
-
-  useEffect(() => {
-    const ymapsBalloonCloseButton = document.querySelector(
-      ".ymaps-2-1-79-balloon__close-button"
-    );
-
-    if (ymapsBalloonCloseButton) {
-      const closeBalloon = () => {
-        setActivePortal(false);
-      };
-
-      ymapsBalloonCloseButton.addEventListener("click", closeBalloon);
-
-      return () => {
-        ymapsBalloonCloseButton.removeEventListener("click", closeBalloon);
-      };
-    }
-  });
 
   return (
     <MapContainer>
@@ -83,7 +64,7 @@ const ItemOnMap = ({ baloon, hintContent, center, mapZoom, isLoading }) => {
             geometry={center}
             properties={{
               hintContent: hintContent,
-              balloonContent: '<div id="baloon" class="baloon"></div>',
+              // balloonContentBody: '<div id="baloon" class="baloon"></div>',
             }}
             onClick={() => {
               setTimeout(() => {

@@ -64,6 +64,7 @@ const CreateObjectFromRidge = ({ onClose }) => {
   const objectId = useSelector(getUpdateObjectFromRidgeObjectId());
   const object = useSelector(getRidgeObjectById(objectId));
 
+  const cloudLink = object?.cloudLink;
   const phone = object?.contact?.phone;
   const name = object?.contact?.name;
   const position = object?.contact?.position;
@@ -133,6 +134,7 @@ const CreateObjectFromRidge = ({ onClose }) => {
     setValue("location.district", district);
     setValue("location.metro", metro);
 
+    setValue("cloudLink", cloudLink);
     setValue("contact.name", name);
     setValue("contact.phone", phone);
     setValue("contact.position", position);

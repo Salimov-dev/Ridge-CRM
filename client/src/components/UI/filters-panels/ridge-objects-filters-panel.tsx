@@ -5,7 +5,7 @@ import SearchDatePicker from "../../common/inputs/search-date-picker";
 import SearchField from "../../common/inputs/search-field";
 import SearchSelectField from "../../common/inputs/search-select-field";
 // hooks
-import useRidgeObjectsFiltersPanel from "../../../hooks/ridge-object/use-ridge-object-filters-panel";
+import useRidgeObjectsFiltersPanel from "../../../hooks/ridge/use-ridge-object-filters-panel";
 // mock
 import { ridgeObjectActivityVariants } from "../../../mock/ridge-object-activity-variants";
 
@@ -26,6 +26,14 @@ const RidgeObjectsFiltersPanel = ({
   return (
     <Form>
       <FieldsContainer>
+      <SearchField
+          register={register}
+          label="Найти по адресу"
+          name="address"
+          value={data.address}
+          inputProps={{ maxLength: 30 }}
+          disabled={isLoading ? true : false}
+        />
         <SearchField
           register={register}
           label="Найти по контактам"

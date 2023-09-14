@@ -105,7 +105,7 @@ const ManagerTaskForm = ({
 
       <FooterButtons
         isEditMode={isEditMode}
-        isValid={isValid}
+        isValid={!isValid}
         onClose={onClose}
         onRemove={onRemoveTask}
         removeId={removeId}

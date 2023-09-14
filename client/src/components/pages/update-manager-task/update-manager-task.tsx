@@ -19,10 +19,11 @@ import {
 } from "../../../store/task/tasks.store";
 // schema
 import { taskSchema } from "../../../schemas/task-shema";
-
+import { useConfirm } from "material-ui-confirm";
 
 const UpdateManagerTask = ({ title, onClose, objects, users }) => {
   const dispatch = useDispatch();
+  const confirm = useConfirm();
 
   const taskId = useSelector(getUpdateManagerTaskId());
   const task = useSelector(getTaskById(taskId));
@@ -57,8 +58,9 @@ const UpdateManagerTask = ({ title, onClose, objects, users }) => {
   });
 
   const data = watch();
-
-  const isFullValid = data.date !== null && data.time !== null && isValid;
+  const watchDate = watch("date", null);
+  const watchTime = watch("time", null);
+  const isFullValid = !isValid && watchDate && watchTime;
   const isEditMode = taskId ? true : false;
 
   const onSubmit = (data) => {
@@ -72,9 +74,20 @@ const UpdateManagerTask = ({ title, onClose, objects, users }) => {
   };
 
   const handleRemoveTask = (taskId) => {
-    dispatch(removeTask(taskId))
-      .then(onClose())
-      .then(toast.success("Задача себе успешно удалена!"));
+    confirm({
+      title: "Подтвердите удаление задачи менеджеру",
+      description: "Удалить задачу менеджеру безвозвратно?",
+      cancellationButtonProps: { color: "error" },
+      confirmationButtonProps: { color: "success" },
+    })
+      .then(() => {
+        dispatch(removeTask(taskId))
+          .then(onClose())
+          .then(toast.success("Задача себе успешно удалена!"));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   useEffect(() => {
@@ -104,7 +117,7 @@ const UpdateManagerTask = ({ title, onClose, objects, users }) => {
         onClose={onClose}
         errors={errors}
         setValue={setValue}
-        isValid={!isFullValid}
+        isValid={isFullValid}
         isEditMode={isEditMode}
         isTasksLoading={isTasksLoading}
       />

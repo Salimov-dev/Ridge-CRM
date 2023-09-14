@@ -149,7 +149,6 @@ const ObjectForm = ({
             label="Позиция"
             itemsList={workingPositions}
             value={watchWorkingPosition}
-            disabled={!watchName?.length && true}
           />
           <TextFieldStyled
             register={register}

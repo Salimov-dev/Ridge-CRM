@@ -30,8 +30,10 @@ import {
   updateRidgeObject,
 } from "../../../store/ridge-object/ridge-objects.store";
 import { getRidgeLastContactsByObjectId } from "../../../store/ridge-last-contact/last-ridge-contact.store";
+import { useConfirm } from "material-ui-confirm";
 
 const UpdateRidgeObject = ({ onClose }) => {
+  const confirm = useConfirm();
   const dispatch = useDispatch();
 
   const tasksColumns = ridgeTasksColumnsDialog;
@@ -62,6 +64,7 @@ const UpdateRidgeObject = ({ onClose }) => {
     mode: "onBlur",
     resolver: yupResolver(ridgeObjectSchema),
   });
+  const data = watch();
 
   const onSubmit = (data) => {
     dispatch(updateRidgeObject(data, objectId))
@@ -69,10 +72,21 @@ const UpdateRidgeObject = ({ onClose }) => {
       .then(toast.success("Объект успешно изменен!"));
   };
 
-  const handleRemoveTask = (objectId) => {
-    dispatch(removeRidgeObject(objectId))
-      .then(onClose())
-      .then(toast.success("Объект успешно удален с грядки!"));
+  const handleRemoveObject = (objectId) => {
+    confirm({
+      title: "Подтвердите удаление объекта с грядки",
+      description: "Удалить объект с грядки безвозвратно?",
+      cancellationButtonProps: { color: "error" },
+      confirmationButtonProps: { color: "success" },
+    })
+      .then(() => {
+        dispatch(removeRidgeObject(objectId))
+          .then(onClose())
+          .then(toast.success("Объект успешно удален с грядки!"));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return object ? (
@@ -82,10 +96,10 @@ const UpdateRidgeObject = ({ onClose }) => {
         mapZoom={mapZoom}
         hintContent={address}
         center={center}
-        baloon={<RidgeObjectBaloon object={object} />}
         isLoading={isLoading}
       />
       <RidgeObjectForm
+        data={data}
         register={register}
         errors={errors}
         handleSubmit={handleSubmit}
@@ -115,7 +129,7 @@ const UpdateRidgeObject = ({ onClose }) => {
         objectId={objectId}
         onClose={onClose}
         onUpdate={handleSubmit(onSubmit)}
-        onRemove={handleRemoveTask}
+        onRemove={handleRemoveObject}
         removeId={objectId}
         isValid={isValid}
         isEditMode={isEditMode}

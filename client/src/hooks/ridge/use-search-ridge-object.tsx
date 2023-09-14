@@ -30,6 +30,12 @@ const useSearchRidgeObject = (objects, data) => {
   const searchedObjects = useMemo(() => {
     let array = objects;
 
+    if (data?.address?.length) {
+      array = array?.filter((obj) =>
+        obj.location.address.toLowerCase().includes(data.address.toLowerCase())
+      );
+    }
+
     if (data?.comment?.length) {
       array = array?.filter((obj) =>
         obj.comment.toLowerCase().includes(data.comment.toLowerCase())

@@ -1,6 +1,6 @@
 import "dayjs/locale/ru";
 import dayjs from "dayjs";
-import { useMemo } from "react";
+import { useMemo} from "react";
 import { useSelector } from "react-redux";
 import { getMeetingsList } from "../../store/meeting/meetings.store";
 import { getTasksList } from "../../store/task/tasks.store";
@@ -59,6 +59,7 @@ const useSearchObject = (objects, data) => {
         obj.location.address.toLowerCase().includes(data.address.toLowerCase())
       );
     }
+
     if (data.selectedStatuses?.length) {
       array = array?.filter((obj) =>
         data.selectedStatuses.includes(obj.status)

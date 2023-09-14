@@ -74,7 +74,7 @@ const ItemsOnMap = ({
             // }}
             // onMouseEnter={(e) => {
             //   console.log("click");
-              
+
             //   // e.get("target").options.set("balloonLayout", ObjectBaloon);
             //   // setActivePortal(false);
             // }}
@@ -87,6 +87,7 @@ const ItemsOnMap = ({
                 },
               ],
               groupByCoordinates: false,
+              hasBalloon: true,
             }}
           >
             {items?.map((item) => (
