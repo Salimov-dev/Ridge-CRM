@@ -6,12 +6,13 @@ import {
   getCreateMeetingOpenState,
   setCreateMeetingOpenState,
 } from "../../../../store/meeting/create-meeting.store";
-import { getOpenObjectPageId } from "../../../../store/object/open-object-page.store";
+import { getOpenObjectPageId, loadOpenObjectPageOpenState } from "../../../../store/object/open-object-page.store";
 
 const MeetingCreateDialog = ({ dateCreate = getDateToday() }) => {
   const dispatch = useDispatch();
   const isOpenCreateMeeting = useSelector(getCreateMeetingOpenState());
   const objectPageId = useSelector(getOpenObjectPageId());
+  const isObjectPage = useSelector(loadOpenObjectPageOpenState())
 
   const handleCloseCreateMeeting = () => {
     dispatch(setCreateMeetingOpenState(false));
@@ -24,6 +25,7 @@ const MeetingCreateDialog = ({ dateCreate = getDateToday() }) => {
           objectPageId={objectPageId}
           dateCreate={dateCreate}
           onClose={handleCloseCreateMeeting}
+          isObjectPage={isObjectPage}
         />
       }
       onClose={handleCloseCreateMeeting}

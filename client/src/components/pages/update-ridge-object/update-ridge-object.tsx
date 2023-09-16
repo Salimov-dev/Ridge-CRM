@@ -12,7 +12,6 @@ import Loader from "../../common/loader/loader";
 import RidgeObjectForm from "../../common/forms/ridge-object-form/ridge-object-form";
 import ObjectTasks from "../object-page/object-info/components/object-tasks";
 import ItemOnMap from "../../common/map/item-on-map/item-on-map";
-import RidgeObjectBaloon from "../../UI/maps/ridge-object-baloon";
 import FooterButtons from "../../common/forms/footer-buttons/footer-buttons";
 import RidgeLastContacts from "../../../layouts/ridge/components/ridge-last-contacts/ridge-last-contacts";
 import CreateRidgeTasksButtons from "../../../layouts/ridge/components/create-ridge-tasks-buttons/create-ridge-tasks-buttons";
@@ -31,6 +30,7 @@ import {
 } from "../../../store/ridge-object/ridge-objects.store";
 import { getRidgeLastContactsByObjectId } from "../../../store/ridge-last-contact/last-ridge-contact.store";
 import { useConfirm } from "material-ui-confirm";
+import { capitalizeFirstLetter } from "../../../utils/data/capitalize-first-letter";
 
 const UpdateRidgeObject = ({ onClose }) => {
   const confirm = useConfirm();
@@ -67,7 +67,17 @@ const UpdateRidgeObject = ({ onClose }) => {
   const data = watch();
 
   const onSubmit = (data) => {
-    dispatch(updateRidgeObject(data, objectId))
+    const newData = {
+      ...data,
+      contact: {
+        ...data.contact,
+        name: capitalizeFirstLetter(data.contact.name),
+      },
+      result: capitalizeFirstLetter(data.result),
+      comment: capitalizeFirstLetter(data.comment),
+    };
+
+    dispatch(updateRidgeObject(newData, objectId))
       .then(onClose())
       .then(toast.success("Объект успешно изменен!"));
   };
@@ -78,6 +88,8 @@ const UpdateRidgeObject = ({ onClose }) => {
       description: "Удалить объект с грядки безвозвратно?",
       cancellationButtonProps: { color: "error" },
       confirmationButtonProps: { color: "success" },
+      confirmationText: "Подтвердить",
+      cancellationText: "Отмена",
     })
       .then(() => {
         dispatch(removeRidgeObject(objectId))
@@ -125,6 +137,7 @@ const UpdateRidgeObject = ({ onClose }) => {
         }
       />
       <FooterButtons
+        data={data}
         object={object}
         objectId={objectId}
         onClose={onClose}

@@ -30,7 +30,6 @@ const Component = styled(Box)`
 const CreateRidgeLastContact = ({ onClose }) => {
   const dispatch = useDispatch();
   const objectPageId = useSelector(getUpdateRidgeLastContactId());
-  console.log("objectPageId", objectPageId);
 
   const {
     register,

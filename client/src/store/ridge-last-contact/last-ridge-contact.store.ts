@@ -142,11 +142,6 @@ export const updateRidgeLastContact = (payload) => async (dispatch) => {
 export const removeRidgeLastContact =
   (ridgeLastContactId) => async (dispatch) => {
     dispatch(removeRidgeLastContactRequested());
-    console.log(
-      "ridgeLastContactId removeridgeLastContact",
-      ridgeLastContactId
-    );
-
     try {
       dispatch(ridgeLastContactRemoved(ridgeLastContactId));
       await ridgeLastContactService.remove(ridgeLastContactId);

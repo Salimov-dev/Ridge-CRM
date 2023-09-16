@@ -82,6 +82,8 @@ const UpdateMyTask = ({ title, onClose }) => {
       description: "Удалить задачу себе безвозвратно?",
       cancellationButtonProps: { color: "error" },
       confirmationButtonProps: { color: "success" },
+      confirmationText: "Подтвердить",
+      cancellationText: "Отмена",
     })
       .then(() => {
         dispatch(removeTask(taskId))

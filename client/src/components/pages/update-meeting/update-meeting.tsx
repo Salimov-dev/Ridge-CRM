@@ -68,6 +68,8 @@ const UpdateMeeting = ({ onClose }) => {
   });
 
   const data = watch();
+  console.log("data", data);
+  
   const watchDate = watch("date", null);
   const watchTime = watch("time", null);
   const isFullValid = isValid && watchDate && watchTime;
@@ -89,6 +91,8 @@ const UpdateMeeting = ({ onClose }) => {
       description: "Удалить встречу безвозвратно?",
       cancellationButtonProps: { color: "error" },
       confirmationButtonProps: { color: "success" },
+      confirmationText: "Подтвердить",
+      cancellationText: "Отмена",
     })
       .then(() => {
         dispatch(removeMeeting(meetingId))

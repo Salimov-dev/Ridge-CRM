@@ -17,6 +17,7 @@ const Container = styled(Box)`
 `;
 
 const FooterButtons = ({
+  data={},
   object="",
   objectId = "",
   removeId = "",
@@ -40,7 +41,7 @@ const FooterButtons = ({
         />
 
         {isRidgeObject && isEditMode ? (
-          <CreateObjectFromRidgeButton objectId={objectId} />
+          <CreateObjectFromRidgeButton data={data} objectId={objectId} onUpdate={onUpdate}/>
         ) : null}
         {isRidgeObject && isEditMode ? (
           <OpenObjectCloudButton object={object} />

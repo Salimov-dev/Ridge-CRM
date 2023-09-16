@@ -14,7 +14,6 @@ const MeetingForm = ({
   objects,
   statuses,
   meetingTypes,
-  objectPageId,
   register,
   watch,
   errors,
@@ -23,6 +22,7 @@ const MeetingForm = ({
   setValue,
   isEditMode = false,
   isMeetingsLoading,
+  isObjectPage=false
 }) => {
   const watchStatus = watch("status", "");
   const watchObjectId = watch("objectId", "");
@@ -76,7 +76,7 @@ const MeetingForm = ({
             itemsList={objects}
             value={watchObjectId}
             errors={errors?.objectId}
-            disabled={Boolean(objectPageId) || isEditMode}
+            disabled={isObjectPage || isEditMode}
           />
           <TextFieldStyled
             register={register}

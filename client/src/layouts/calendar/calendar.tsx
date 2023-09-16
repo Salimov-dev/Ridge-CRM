@@ -20,10 +20,10 @@ import getMonth from "../../utils/calendar/get-month";
 // store
 import { getTasksList } from "../../store/task/tasks.store";
 import { getMonthIndexState } from "../../store/month-index.store";
+import { getMeetingsList } from "../../store/meeting/meetings.store";
 // hooks
 import useCalendar from "../../hooks/calendar/use-calendar";
 import useSearchTask from "../../hooks/task/use-search-task";
-import { getMeetingsList } from "../../store/meeting/meetings.store";
 
 const initialState = {
   task: "",

@@ -12,7 +12,7 @@ import {
   setUpdateMeetingId,
   setUpdateMeetingOpenState,
 } from "../../../../../../../../../../../../../store/meeting/update-meeting.store";
-import UpdateMeeting from "../../tasks/components/update-meeting";
+import UpdateElement from "../../../../../../../../../../../buttons/icons buttons/update-element-icon";
 
 const Component = styled(Box)`
   display: flex;
@@ -48,10 +48,7 @@ const Title = ({ meet }) => {
         <b>Встреча в: {FormatTime(meet.time)}</b>
       </Typography>
       <ButtonsContainer>
-        <UpdateMeeting
-          onClick={handleUpdateMeeting}
-          isMeetingDone={isMeetingDone}
-        />
+        <UpdateElement onClick={handleUpdateMeeting} isDone={isMeetingDone} />
         <DoneIconToggler
           item={meet}
           onDoneItem={handleDoneMeeting}

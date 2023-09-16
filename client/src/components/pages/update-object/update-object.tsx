@@ -20,6 +20,7 @@ import {
 import { objectSchema } from "../../../schemas/object-schema";
 // utils
 import { replaceNullsWithEmptyString } from "../../../utils/data/replace-nulls-with-empty-string";
+import { capitalizeFirstLetter } from "../../../utils/data/capitalize-first-letter";
 
 const UpdateObject = ({ onClose }) => {
   const dispatch = useDispatch();
@@ -44,11 +45,32 @@ const UpdateObject = ({ onClose }) => {
   });
   const isValidAndHasAdress = isObjectHasAddress && isValid;
   const data = watch();
-  console.log("data", data);
-  
 
   const onSubmit = (data) => {
-    dispatch(updateObject(data, objectId))
+    const newData = {
+      ...data,
+      contact: {
+        ...data.contact,
+        name: capitalizeFirstLetter(data.contact.name),
+      },
+      description: {
+        ...data.description,
+        fullDescription: capitalizeFirstLetter(
+          data.description.fullDescription
+        ),
+      },
+      estateOptions: {
+        ...data.estateOptions,
+        loadingArea: capitalizeFirstLetter(data.estateOptions.loadingArea),
+        premisesFloor: capitalizeFirstLetter(data.estateOptions.premisesFloor),
+      },
+      location: {
+        ...data.location,
+        city: capitalizeFirstLetter(data.location.city),
+        address: capitalizeFirstLetter(data.location.address),
+      },
+    };
+    dispatch(updateObject(newData, objectId))
       .then(onClose())
       .then(toast.success("Объект успешно изменен!"));
   };

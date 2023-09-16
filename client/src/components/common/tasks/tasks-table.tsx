@@ -23,10 +23,10 @@ const TasksTable = ({
   tasks,
   columns,
   setValue,
-  isRidgeObject,
-  isInputEmpty,
-  reset,
-  initialState,
+  isRidgeObject = false,
+  isInputEmpty = false,
+  reset = () => {},
+  initialState = "",
 }) => {
   const isTasksLoading = useSelector(getTaskLoadingStatus());
 

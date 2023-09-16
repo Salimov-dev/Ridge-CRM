@@ -18,6 +18,7 @@ import {
   getCurrentUserId,
   getUserNameById,
 } from "../../store/user/users.store";
+import ObjectPageDialog from "../../components/UI/dialogs/object-page-dialog/object-page-dialog";
 
 const Deals = () => {
   const dispatch = useDispatch();
@@ -73,6 +74,7 @@ const Deals = () => {
       />
 
       <AddObjectToDealDialog objects={transformObjects} stages={dealStages} />
+      <ObjectPageDialog/>
     </Box>
   );
 };

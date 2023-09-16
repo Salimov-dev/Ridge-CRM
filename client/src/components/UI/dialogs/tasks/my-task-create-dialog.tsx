@@ -5,12 +5,13 @@ import {
   getCreateMyTaskOpenState,
   setCreateMyTaskOpenState,
 } from "../../../../store/task/create-my-task.store";
-import { getOpenObjectPageId } from "../../../../store/object/open-object-page.store";
+import { getOpenObjectPageId, loadOpenObjectPageOpenState } from "../../../../store/object/open-object-page.store";
 
 const MyTaskCreateDialog = ({ dateCreate, objects, setDateCreate }) => {
   const dispatch = useDispatch();
   const isOpenCreateTask = useSelector(getCreateMyTaskOpenState());
   const objectPageId = useSelector(getOpenObjectPageId())
+  const isObjectPage = useSelector(loadOpenObjectPageOpenState())
 
   const handleCloseCreateMyTask = () => {
     dispatch(setCreateMyTaskOpenState(false));
@@ -29,6 +30,7 @@ const MyTaskCreateDialog = ({ dateCreate, objects, setDateCreate }) => {
         <CreateMyTask
           title="Добавить себе задачу"
           objectPageId={objectPageId}
+          isObjectPage={isObjectPage}
           objects={objects}
           dateCreate={dateCreate}
           onClose={handleCloseCreateMyTask}

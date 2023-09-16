@@ -1,6 +1,4 @@
-import { Box, Tooltip, Typography } from "@mui/material";
 import { useDispatch } from "react-redux";
-import OpenInNewOutlinedIcon from "@mui/icons-material/OpenInNewOutlined";
 import DividerStyled from "../../../../../../../../../../../divider/divider-styled";
 import {
   setOpenObjectPageId,
@@ -10,6 +8,8 @@ import {
   setUpdateRidgeObjectId,
   setUpdateRidgeObjectOpenState,
 } from "../../../../../../../../../../../../../store/ridge-object/update-ridge-object.store";
+import OpenPageObjectIconButton from "../../../../../../../../../../../buttons/icons buttons/open-page-object-icon";
+import { Box, Typography } from "@mui/material";
 
 const TaksObject = ({ task, objects, isRidgePage }) => {
   const dispatch = useDispatch();
@@ -36,25 +36,15 @@ const TaksObject = ({ task, objects, isRidgePage }) => {
     <>
       <DividerStyled color={task?.isDone ? "darkGray" : "gray"} />
       <Box sx={{ display: "flex", gap: "4px" }}>
-        <Typography>
-          <b>Объект:</b> {getObjectAddress(taskObjectId)}
-        </Typography>
-        <Box
+        <Typography variant="h6">{getObjectAddress(taskObjectId)}</Typography>
+        <OpenPageObjectIconButton
           onClick={() =>
             isRidgePage
               ? handleOpenRidgeObjectPage(taskObjectId)
               : handleOpenObjectPage(taskObjectId)
           }
-        >
-          <Tooltip title="Открыть объект" placement="top-start" arrow>
-            <OpenInNewOutlinedIcon
-              sx={{
-                opacity: "0.5",
-                "&:hover": { opacity: "1", transform: "scale(1.2)" },
-              }}
-            />
-          </Tooltip>
-        </Box>
+          address={getObjectAddress(taskObjectId)}
+        />
       </Box>
     </>
   ) : null;

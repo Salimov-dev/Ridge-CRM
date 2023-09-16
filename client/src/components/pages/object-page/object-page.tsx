@@ -1,7 +1,6 @@
 import { Box } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 // components
-import ObjectPageBaloon from "../../UI/maps/object-page-baloon";
 import Header from "./header/header";
 import ObjectInfo from "./object-info/object-info";
 import FooterButtons from "./footer-buttons/footer-buttons";
@@ -47,7 +46,6 @@ const ObjectPage = ({ onClose }) => {
         mapZoom={mapZoom}
         hintContent={address}
         center={center}
-        baloon={<ObjectPageBaloon object={object} />}
         isLoading={isLoading}
       />
       <ObjectInfo object={object} isLoading={isLoading} />

@@ -79,6 +79,8 @@ const UpdateManagerTask = ({ title, onClose, objects, users }) => {
       description: "Удалить задачу менеджеру безвозвратно?",
       cancellationButtonProps: { color: "error" },
       confirmationButtonProps: { color: "success" },
+      confirmationText: "Подтвердить",
+      cancellationText: "Отмена",
     })
       .then(() => {
         dispatch(removeTask(taskId))

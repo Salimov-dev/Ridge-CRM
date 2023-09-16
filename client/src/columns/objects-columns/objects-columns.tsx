@@ -1,7 +1,7 @@
 import { orderBy } from "lodash";
 import { useDispatch, useSelector } from "react-redux";
 // MUI
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button, Tooltip, Typography } from "@mui/material";
 import CloudDoneIcon from "@mui/icons-material/CloudDone";
 import CloudOffIcon from "@mui/icons-material/CloudOff";
 // utils
@@ -221,13 +221,17 @@ export const objectsColumns = [
           };
           return cloudLink?.length ? (
             <AlignCenter>
-              <Button onClick={handleOpenCloud}>
-                <CloudDoneIcon />
-              </Button>
+              <Tooltip title="Открыть облако" placement="top-start" arrow>
+                <Button onClick={handleOpenCloud}>
+                  <CloudDoneIcon />
+                </Button>
+              </Tooltip>
             </AlignCenter>
           ) : (
             <AlignCenter>
-              <CloudOffIcon />
+              <Tooltip title="Облако отсутствует" placement="top-start" arrow>
+                <CloudOffIcon />
+              </Tooltip>
             </AlignCenter>
           );
         },

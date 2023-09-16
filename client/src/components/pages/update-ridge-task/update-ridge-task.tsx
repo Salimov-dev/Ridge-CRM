@@ -20,9 +20,12 @@ import {
 } from "../../../store/ridge-task/ridge-tasks.store";
 // schema
 import { taskSchema } from "../../../schemas/task-shema";
+import { useConfirm } from "material-ui-confirm";
+import { capitalizeFirstLetter } from "../../../utils/data/capitalize-first-letter";
 
 const UpdateRidgeTask = ({ title, onClose }) => {
   const dispatch = useDispatch();
+  const confirm = useConfirm();
   const taskId = useSelector(getUpdateRidgeTaskId());
   const task = useSelector(getRidgeTaskById(taskId));
   const isTasksLoading = useSelector(getRidgeTaskLoadingStatus());
@@ -61,14 +64,19 @@ const UpdateRidgeTask = ({ title, onClose }) => {
   const data = watch();
   const watchDate = watch("date", null);
   const watchTime = watch("time", null);
-  const isFullValid = isValid && watchDate&& watchTime;
+  const isFullValid = isValid && watchDate && watchTime;
 
   const isEditMode = taskId ? true : false;
 
   const onSubmit = (data) => {
     const transformedDate = dayjs(data.date).format("YYYY-MM-DDTHH:mm:ss.SSSZ");
     const transformedTime = dayjs(data.time).format("YYYY-MM-DDTHH:mm:ss.SSSZ");
-    const newData = { ...data, date: transformedDate, time: transformedTime };
+    const newData = {
+      ...data,
+      date: transformedDate,
+      time: transformedTime,
+      comment: capitalizeFirstLetter(data.comment),
+    };
 
     dispatch(updateRidgeTask(newData))
       .then(onClose())
@@ -76,9 +84,22 @@ const UpdateRidgeTask = ({ title, onClose }) => {
   };
 
   const handleRemoveTask = (taskId) => {
-    dispatch(removeRidgeTask(taskId))
-      .then(onClose())
-      .then(toast.success("Задача себе успешно удалена!"));
+    confirm({
+      title: "Подтвердите удаление встречи",
+      description: "Удалить встречу безвозвратно?",
+      cancellationButtonProps: { color: "error" },
+      confirmationButtonProps: { color: "success" },
+      confirmationText: "Подтвердить",
+      cancellationText: "Отмена",
+    })
+      .then(() => {
+        dispatch(removeRidgeTask(taskId))
+          .then(onClose())
+          .then(toast.success("Задача себе успешно удалена!"));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   useEffect(() => {

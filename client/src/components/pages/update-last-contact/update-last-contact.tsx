@@ -19,8 +19,10 @@ import {
 } from "../../../store/last-contact/last-contact.store";
 // schema
 import { lastContactSchema } from "../../../schemas/last-contact-schema";
+import { useConfirm } from "material-ui-confirm";
 
 const UpdateLastContact = ({ onClose }) => {
+  const confirm = useConfirm();
   const dispatch = useDispatch();
   const lastContactId = useSelector(getUpdateLastContactId());
   const lastContact = useSelector(getLastContactsById(lastContactId));
@@ -44,7 +46,7 @@ const UpdateLastContact = ({ onClose }) => {
 
   const data = watch();
   const watchDate = watch("date", null);
-  const isFullValid = isValid && watchDate
+  const isFullValid = isValid && watchDate;
   const isEditMode = lastContactId ? true : false;
 
   const onSubmit = (data) => {
@@ -57,9 +59,22 @@ const UpdateLastContact = ({ onClose }) => {
   };
 
   const handleRemoveLastContact = (lastContactId) => {
-    dispatch(removeLastContact(lastContactId))
-      .then(onClose())
-      .then(toast.success("Последний контакт успешно удален!"));
+    confirm({
+      title: "Подтвердите удаление своей задачи",
+      description: "Удалить задачу себе безвозвратно?",
+      cancellationButtonProps: { color: "error" },
+      confirmationButtonProps: { color: "success" },
+      confirmationText: "Подтвердить",
+      cancellationText: "Отмена",
+    })
+      .then(() => {
+        dispatch(removeLastContact(lastContactId))
+          .then(onClose())
+          .then(toast.success("Последний контакт успешно удален!"));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return lastContact ? (

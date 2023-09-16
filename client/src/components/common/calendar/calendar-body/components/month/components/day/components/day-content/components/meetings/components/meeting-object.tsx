@@ -1,16 +1,16 @@
 import { useDispatch } from "react-redux";
-import { Box, Tooltip, Typography } from "@mui/material";
 import DividerStyled from "../../../../../../../../../../../../../components/common/divider/divider-styled";
-import OpenInNewOutlinedIcon from "@mui/icons-material/OpenInNewOutlined";
 import {
   setOpenObjectPageId,
   setOpenObjectPageOpenState,
 } from "../../../../../../../../../../../../../store/object/open-object-page.store";
+import OpenPageObjectIconButton from "../../../../../../../../../../../buttons/icons buttons/open-page-object-icon";
+import { Box, Typography } from "@mui/material";
 
 const MeetingObject = ({ objects, meet }) => {
   const meetingObjectId = meet?.objectId;
   const isMeetingObjectId = Boolean(meetingObjectId);
-  const isMeetingDone = meet?.isDone
+  const isMeetingDone = meet?.isDone;
   const dispatch = useDispatch();
 
   const handleOpenObjectPage = (objectId) => {
@@ -26,21 +26,14 @@ const MeetingObject = ({ objects, meet }) => {
 
   return isMeetingObjectId ? (
     <>
-      <DividerStyled color={isMeetingDone ? 'darkGray' : 'gray'}/>
+      <DividerStyled color={isMeetingDone ? "darkGray" : "gray"} />
       <Box sx={{ display: "flex", gap: "4px" }}>
-        <Typography>
-          <b>Объект:</b> {getObjectAddress(meetingObjectId)}
+        <Typography variant="h6">
+          {getObjectAddress(meetingObjectId)}
         </Typography>
-        <Box onClick={() => handleOpenObjectPage(meetingObjectId)}>
-          <Tooltip title="Открыть объект" placement="top-start" arrow>
-            <OpenInNewOutlinedIcon
-              sx={{
-                opacity: "0.5",
-                "&:hover": { opacity: "1", transform: "scale(1.2)" },
-              }}
-            />
-          </Tooltip>
-        </Box>
+        <OpenPageObjectIconButton
+          onClick={() => handleOpenObjectPage(meetingObjectId)}
+        />
       </Box>
     </>
   ) : null;

@@ -32,10 +32,10 @@ const CreateManagerTask = ({
   title,
   dateCreate,
   onClose,
-  objectPageId="",
+  objectPageId = "",
+  isObjectPage = false,
 }) => {
   const dispatch = useDispatch();
-  const isObjectPage = Boolean(objectPageId?.length);
 
   const {
     register,
@@ -52,7 +52,7 @@ const CreateManagerTask = ({
   const watchDate = watch("date", null);
   const watchTime = watch("time", null);
   const watchManagerId = watch("managerId", null);
-  
+
   const isFullValid = !watchDate || !watchTime || !watchManagerId || !isValid;
 
   const onSubmit = () => {
@@ -66,7 +66,7 @@ const CreateManagerTask = ({
   };
 
   useEffect(() => {
-    if (objectPageId) {
+    if (isObjectPage) {
       setValue("objectId", objectPageId);
     }
   }, [objectPageId]);

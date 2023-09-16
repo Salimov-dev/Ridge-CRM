@@ -84,7 +84,7 @@ const CreateObject = ({ onClose }) => {
 
   const watchAddress = watch("location.address", "");
   const watchCity = watch("location.city", "");
-  
+
   const isFindedObject = Boolean(Object.keys(findedObject)?.length);
   const isObjectHasAddress = Boolean(watchCity) && Boolean(watchAddress);
   const isValidAndHasAdress = isFindedObject && isObjectHasAddress && isValid;
@@ -102,6 +102,8 @@ const CreateObject = ({ onClose }) => {
       },
       location: {
         ...data.location,
+        city: capitalizeFirstLetter(data.location.city),
+        address: capitalizeFirstLetter(data.location.address),
         zoom: 16,
       },
       description: {

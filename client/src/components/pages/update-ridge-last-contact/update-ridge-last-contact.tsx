@@ -12,12 +12,19 @@ import Loader from "../../common/loader/loader";
 import LastContactForm from "../../common/forms/last-contact-form/last-contact-form";
 // store
 import { getUpdateRidgeLastContactId } from "../../../store/ridge-last-contact/update-ridge-last-contact.store";
-import { getRidgeLastContactsById, removeRidgeLastContact, updateRidgeLastContact } from "../../../store/ridge-last-contact/last-ridge-contact.store";
+import {
+  getRidgeLastContactsById,
+  removeRidgeLastContact,
+  updateRidgeLastContact,
+} from "../../../store/ridge-last-contact/last-ridge-contact.store";
 // schema
 import { lastContactSchema } from "../../../schemas/last-contact-schema";
+import { useConfirm } from "material-ui-confirm";
+import { capitalizeFirstLetter } from "../../../utils/data/capitalize-first-letter";
 
 const UpdateRidgeLastContact = ({ onClose }) => {
   const dispatch = useDispatch();
+  const confirm = useConfirm();
   const lastContactId = useSelector(getUpdateRidgeLastContactId());
   const lastContact = useSelector(getRidgeLastContactsById(lastContactId));
 
@@ -40,12 +47,17 @@ const UpdateRidgeLastContact = ({ onClose }) => {
 
   const data = watch();
   const watchDate = watch("date", null);
-  const isFullValid = isValid && watchDate
+  const isFullValid = isValid && watchDate;
   const isEditMode = lastContactId ? true : false;
 
   const onSubmit = (data) => {
     const transformedDate = dayjs(data.date).format("YYYY-MM-DDTHH:mm:ss.SSSZ");
-    const newData = { ...data, date: transformedDate };
+    const newData = {
+      ...data,
+      result: capitalizeFirstLetter(data.result),
+      comment: capitalizeFirstLetter(data.comment),
+      date: transformedDate,
+    };
 
     dispatch(updateRidgeLastContact(newData, lastContactId))
       .then(onClose())
@@ -53,9 +65,22 @@ const UpdateRidgeLastContact = ({ onClose }) => {
   };
 
   const handleRemoveRidgeLastContact = (lastContactId) => {
-    dispatch(removeRidgeLastContact(lastContactId))
-      .then(onClose())
-      .then(toast.success("Последний контакт успешно удален!"));
+    confirm({
+      title: "Подтвердите удаление задачи менеджеру",
+      description: "Удалить задачу менеджеру безвозвратно?",
+      cancellationButtonProps: { color: "error" },
+      confirmationButtonProps: { color: "success" },
+      confirmationText: "Подтвердить",
+      cancellationText: "Отмена",
+    })
+      .then(() => {
+        dispatch(removeRidgeLastContact(lastContactId))
+          .then(onClose())
+          .then(toast.success("Последний контакт успешно удален!"));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return lastContact ? (

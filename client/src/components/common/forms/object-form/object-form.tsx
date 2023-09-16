@@ -37,7 +37,6 @@ const ObjectForm = ({
   onClose,
   watch,
   isValid,
-  isEditMode = false,
 }) => {
   const districts = useSelector(getDistrictsList());
   const workingPositions = useSelector(getWorkingPositionsList());
@@ -45,7 +44,6 @@ const ObjectForm = ({
   const currentRenters = useSelector(getCurrentRentersList());
   const objectConditions = useSelector(getObjectConditionsList());
 
-  const watchName = watch("contact.name", "");
   const watchStatus = watch("status", "");
   const watchDistrict = watch("location.district", "");
   const watchMetro = watch("location.metro", "");

@@ -3,11 +3,12 @@ import { useDispatch } from "react-redux";
 import DoneIconToggler from "./done-icon-toggler";
 import { Box, Typography, styled } from "@mui/material";
 // components
-import UpdateTask from "./update-task";
+import UpdateElement from "../../../../../../../../../../../buttons/icons buttons/update-element-icon";
 // utils
 import { FormatTime } from "../../../../../../../../../../../../../utils/date/format-time";
 // store
 import { setIsDoneTaskStatus } from "../../../../../../../../../../../../../store/task/tasks.store";
+import { setIsDoneRidgeTaskStatus } from "../../../../../../../../../../../../../store/ridge-task/ridge-tasks.store";
 import {
   setUpdateMyTaskId,
   setUpdateMyTaskOpenState,
@@ -20,7 +21,6 @@ import {
   setUpdateRidgeTaskId,
   setUpdateRidgeTaskOpenState,
 } from "../../../../../../../../../../../../../store/ridge-task/update-ridge-task.store";
-import { setIsDoneRidgeTaskStatus } from "../../../../../../../../../../../../../store/ridge-task/ridge-tasks.store";
 
 const Component = styled(Box)`
   display: flex;
@@ -79,9 +79,9 @@ const Title = ({ task, isRidgePage }) => {
         <b>Задача до: {task.time ? FormatTime(task.time) : "конца дня"}</b>
       </Typography>
       <ButtonsContainer>
-        <UpdateTask
+        <UpdateElement
           onClick={isRidgePage ? handleUpdateRidgeTask : handleUpdateTask}
-          isTaskDone={isTaskDone}
+          isDone={isTaskDone}
         />
         <DoneIconToggler
           item={task}

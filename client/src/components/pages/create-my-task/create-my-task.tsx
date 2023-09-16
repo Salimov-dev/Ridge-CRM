@@ -33,9 +33,9 @@ const CreateMyTask = ({
   objects,
   onClose,
   objectPageId="",
+  isObjectPage=false,
 }) => {
   const dispatch = useDispatch();
-  const isObjectPage = Boolean(objectPageId?.length);
 
   const {
     register,
@@ -67,7 +67,7 @@ const CreateMyTask = ({
   };
 
   useEffect(() => {
-    if (objectPageId) {
+    if (isObjectPage) {
       setValue("objectId", objectPageId);
     }
   }, [objectPageId]);

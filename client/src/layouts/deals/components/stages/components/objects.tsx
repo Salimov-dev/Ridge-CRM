@@ -1,6 +1,13 @@
 import { Box, Paper, Typography, styled } from "@mui/material";
 import DividerStyled from "../../../../../components/common/divider/divider-styled";
 import { FormatDate } from "../../../../../utils/date/format-date";
+import {
+  setOpenObjectPageId,
+  setOpenObjectPageOpenState,
+} from "../../../../../store/object/open-object-page.store";
+import { useDispatch } from "react-redux";
+import OpenPageObjectIconButton from "../../../../../components/common/buttons/icons buttons/open-page-object-icon";
+import UpdateElementIconButton from "../../../../../components/common/buttons/icons buttons/update-element-icon";
 
 const ObjectsContainer = styled(Box)`
   width: 265px;
@@ -25,6 +32,16 @@ const ObjectContainer = styled(Paper)`
 `;
 
 const Objects = ({ deals, item, getObjectAddress, userName }) => {
+  const dispatch = useDispatch();
+
+  const handleUpdateDeal = (dealId) => {};
+
+  const handleOpenObjectPage = (objectId) => {
+    console.log("objectId", objectId);
+    dispatch(setOpenObjectPageId(objectId));
+    dispatch(setOpenObjectPageOpenState(true));
+  };
+
   return (
     <ObjectsContainer>
       {deals?.map((deal) => {
@@ -32,12 +49,20 @@ const Objects = ({ deals, item, getObjectAddress, userName }) => {
 
         return isDeal ? (
           <ObjectContainer key={deal?._id}>
-            <Typography variant="h5">
-              {getObjectAddress(deal?.objectId)}
-            </Typography>
+            <Box sx={{ display: "flex", gap: "4px" }}>
+              <Typography variant="h6">
+                {getObjectAddress(deal?.objectId)}
+              </Typography>
+              <OpenPageObjectIconButton
+                onClick={() => handleOpenObjectPage(deal?.objectId)}
+              />
+            </Box>
             <DividerStyled />
             <Typography>{FormatDate(deal?.created_at)}</Typography>
-            <Typography sx={{ fontStyle: "italic" }}>{userName}</Typography>
+            <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+              <Typography sx={{ fontStyle: "italic" }}>{userName}</Typography>
+              <UpdateElementIconButton onClick={handleUpdateDeal} />
+            </Box>
           </ObjectContainer>
         ) : null;
       })}

@@ -12,7 +12,7 @@ const CalendarBody = ({
   tasks,
   currentMonth,
   setDateCreate,
-  meetings,
+  meetings=()=>{},
   background,
 }) => {
   return (

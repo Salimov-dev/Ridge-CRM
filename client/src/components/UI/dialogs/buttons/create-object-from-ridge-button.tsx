@@ -5,12 +5,14 @@ import {
 } from "../../../../store/ridge-object/create-object-from-ridge.store";
 import PositiveOutlinedButton from "../../../common/buttons/positive-outlined-button";
 
-const CreateObjectFromRidgeButton = ({ objectId }) => {
+const CreateObjectFromRidgeButton = ({ data, objectId, onUpdate }) => {
   const dispatch = useDispatch();
 
   const handleOpenCreateObject = () => {
-    dispatch(setUpdateObjectFromRidgeObjectId(objectId));
-    dispatch(setCreateObjectFromRidgeOpenState(true));
+    const updateData = {...data}
+    onUpdate(updateData)
+      .then(()=>dispatch(setUpdateObjectFromRidgeObjectId(objectId)))
+      .then(()=>dispatch(setCreateObjectFromRidgeOpenState(true)));
   };
 
   return (
