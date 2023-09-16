@@ -54,16 +54,10 @@ const UpdateDeal = ({ title, objects, onClose, stages }) => {
 
   const isEditMode = dealId ? true : false;
 
-  const onSubmit = (data) => {
-    dispatch(updateDeal(data, dealId))
-      .then(onClose())
-      .then(toast.success("Задача себе успешно изменена!"));
-  };
-
   const handleUpdateDeal = () => {
     dispatch(updateDeal(data, dealId))
       .then(onClose())
-      .then(toast.success("Задача себе успешно изменена!"));
+      .then(toast.success("Сделка успешно изменена!"));
   };
 
   const handleRemoveDeal = (dealId) => {
@@ -103,8 +97,6 @@ const UpdateDeal = ({ title, objects, onClose, stages }) => {
         stages={stages}
         objects={objects}
         register={register}
-        handleSubmit={handleSubmit}
-        onSubmit={onSubmit}
         errors={errors}
         watch={watch}
         isEditMode={isEditMode}

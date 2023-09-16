@@ -6,7 +6,7 @@ import {
 } from "../../../../store/deal/add-object-to-deal.store";
 import CreateDeal from "../../../pages/create-deal/create-deal";
 
-const CreateDealDialog = ({ objects, stages }) => {
+const CreateDealDialog = ({ objects, deals, stages }) => {
   const dispatch = useDispatch();
   const isOpenAddObject = useSelector(getCreateDealOpenState());
 
@@ -24,6 +24,7 @@ const CreateDealDialog = ({ objects, stages }) => {
         <CreateDeal
           title="Добавить объект в сделку"
           objects={objects}
+          deals={deals}
           stages={stages}
           onClose={handleCloseCreateDeal}
         />

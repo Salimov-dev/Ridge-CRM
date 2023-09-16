@@ -1,8 +1,9 @@
+import { useState } from "react";
 import { Box, Paper, styled } from "@mui/material";
-import DividerStyled from "../../../../components/common/divider/divider-styled";
 import Title from "./components/title";
 import Objects from "./components/objects";
-import CreateDealButton from "./components/add-object-to-deal-button";
+import CreateDealButton from "./components/create-deal-button";
+import DividerStyled from "../../../../components/common/divider/divider-styled";
 
 const DealsContainer = styled(Box)`
   display: flex;
@@ -24,20 +25,39 @@ const DealContainer = styled(Paper)`
   padding: 20px;
 `;
 
-const Stages = ({ deals, dealStages, userName, onOpen, getObjectAddress }) => {
+const Stages = ({ deals, stages, userName, onOpen, getObjectAddress }) => {
+  const [draggableStageId, setDraggableStageId] = useState(null);
+
+  const handleDragOver = (e, stageId) => {
+    e.preventDefault();
+    setDraggableStageId(stageId);
+  };
+
   return (
     <DealsContainer>
-      {dealStages?.map((item) => (
-        <DealContainer key={item._id}>
-          <Title item={item} />
-          <DividerStyled margin="12px 0 20px 0" />
+      {stages?.map((stage) => (
+        <DealContainer
+          key={stage._id}
+          onDragOver={(e) => handleDragOver(e, stage._id)}
+          sx={{
+            border:
+              draggableStageId === stage?._id ? `1px dashed yellow` : null,
+          }}
+        >
+          <Title item={stage} />
+          <DividerStyled
+            margin="12px 0 20px 0"
+            color={draggableStageId === stage?._id ? "yellow" : "inherit"}
+          />
           <Objects
             deals={deals}
-            item={item}
-            getObjectAddress={getObjectAddress}
+            stage={stage}
             userName={userName}
+            draggableStageId={draggableStageId}
+            getObjectAddress={getObjectAddress}
+            setDraggableStageId={setDraggableStageId}
           />
-          <CreateDealButton item={item} onOpen={onOpen} />
+          <CreateDealButton stage={stage} onOpen={onOpen} />
         </DealContainer>
       ))}
     </DealsContainer>

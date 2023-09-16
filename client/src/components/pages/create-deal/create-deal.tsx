@@ -23,6 +23,7 @@ const initialState = {
 
 const CreateDeal = ({
   title = "",
+  deals = [],
   objects = [],
   stages = [],
   onClose = () => {},
@@ -33,7 +34,6 @@ const CreateDeal = ({
   const {
     register,
     watch,
-    handleSubmit,
     setValue,
     formState: { errors, isValid },
   } = useForm({
@@ -41,13 +41,16 @@ const CreateDeal = ({
     mode: "onBlur",
     resolver: yupResolver(dealSchema),
   });
-
   const data = watch();
 
-  const onSubmit = () => {
-    dispatch(createDeal(data))
-      .then(() => onClose())
-      .then(() => toast.success("Объект в сделку добавлен!"));
+  const handleCreateDeal = () => {
+    if (!deals?.some((deal) => deal?.objectId === data?.objectId)) {
+      dispatch(createDeal(data))
+        .then(() => onClose())
+        .then(() => toast.success("Объект в сделку добавлен!"));
+    } else {
+      toast.error("Объект с таким адресом уже в сделках, выберитие другой");
+    }
   };
 
   useEffect(() => {
@@ -66,14 +69,12 @@ const CreateDeal = ({
         stages={stages}
         objects={objects}
         register={register}
-        handleSubmit={handleSubmit}
-        onSubmit={onSubmit}
         errors={errors}
         watch={watch}
       />
       <FooterButtons
         isValid={isValid}
-        onCreate={handleSubmit(onSubmit)}
+        onCreate={handleCreateDeal}
         onClose={onClose}
       />
     </Box>

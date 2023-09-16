@@ -5,9 +5,11 @@ import {
   setOpenObjectPageId,
   setOpenObjectPageOpenState,
 } from "../../../../../store/object/open-object-page.store";
+import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
-import OpenPageObjectIconButton from "../../../../../components/common/buttons/icons buttons/open-page-object-icon";
-import UpdateElementIconButton from "../../../../../components/common/buttons/icons buttons/update-element-icon";
+import Footer from "./components/footer";
+import ObjectAddress from "./components/object-address";
+import { updateDeal } from "../../../../../store/deal/deal.store";
 import {
   setUpdateDealId,
   setUpdateDealOpenState,
@@ -33,9 +35,17 @@ const ObjectContainer = styled(Paper)`
   background: white;
   padding: 10px;
   border: 1px solid gray;
+  cursor: grab;
 `;
 
-const Objects = ({ deals, item, getObjectAddress, userName }) => {
+const Objects = ({
+  deals,
+  stage,
+  getObjectAddress,
+  userName,
+  draggableStageId,
+  setDraggableStageId,
+}) => {
   const dispatch = useDispatch();
 
   const handleUpdateDeal = (dealId) => {
@@ -48,29 +58,42 @@ const Objects = ({ deals, item, getObjectAddress, userName }) => {
     dispatch(setOpenObjectPageOpenState(true));
   };
 
+  const handleDragEnd = (e, deal, stage) => {
+    if (stage?._id !== draggableStageId) {
+      const dealId = deal?._id;
+      const newDeal = { ...deal, stageId: draggableStageId };
+
+      dispatch(updateDeal(newDeal, dealId)).then(
+        toast.success("Сделка успешно перемещена!")
+      );
+      setDraggableStageId(null);
+    } else {
+      setDraggableStageId(null);
+    }
+  };
+
   return (
     <ObjectsContainer>
       {deals?.map((deal) => {
-        const isDeal = deal?.stageId === item?._id;
+        const isDeal = deal?.stageId === stage?._id;
 
         return isDeal ? (
-          <ObjectContainer key={deal?._id}>
-            <Box sx={{ display: "flex", gap: "4px" }}>
-              <Typography variant="h6">
-                {getObjectAddress(deal?.objectId)}
-              </Typography>
-              <OpenPageObjectIconButton
-                onClick={() => handleOpenObjectPage(deal?.objectId)}
-              />
-            </Box>
+          <ObjectContainer
+            key={deal?._id}
+            draggable={true}
+            onDragEnd={(e) => handleDragEnd(e, deal, stage)}
+          >
+            <ObjectAddress
+              deal={deal}
+              onClick={() => handleOpenObjectPage(deal?.objectId)}
+              getObjectAddress={getObjectAddress}
+            />
             <DividerStyled />
-            <Typography>{FormatDate(deal?.created_at)}</Typography>
-            <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-              <Typography sx={{ fontStyle: "italic" }}>{userName}</Typography>
-              <UpdateElementIconButton
-                onClick={() => handleUpdateDeal(deal?._id)}
-              />
-            </Box>
+            <Footer
+              deal={deal}
+              userName={userName}
+              onClick={() => handleUpdateDeal(deal?._id)}
+            />
           </ObjectContainer>
         ) : null;
       })}

@@ -2,14 +2,16 @@ import { Box } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 // components
-import LayoutTitle from "../../components/common/page-titles/layout-title";
 import Stages from "./components/stages/stages";
+import LayoutTitle from "../../components/common/page-titles/layout-title";
 import CreateDealDialog from "../../components/UI/dialogs/deals/create-deal-dialog";
+import UpdateDealDialog from "../../components/UI/dialogs/deals/update-deal-dialog";
+import ObjectPageDialog from "../../components/UI/dialogs/object-page-dialog/object-page-dialog";
 // store
 import { getDealsList } from "../../store/deal/deal.store";
-import { getSidebarCollapsState } from "../../store/sidebar-collaps-state.store";
 import { getObjectsList } from "../../store/object/objects.store";
 import { getDealStagesList } from "../../store/deal/deal-stages.store";
+import { getSidebarCollapsState } from "../../store/sidebar-collaps-state.store";
 import {
   setCreateDealOpenState,
   setCreateDealStageId,
@@ -18,8 +20,6 @@ import {
   getCurrentUserId,
   getUserNameById,
 } from "../../store/user/users.store";
-import ObjectPageDialog from "../../components/UI/dialogs/object-page-dialog/object-page-dialog";
-import UpdateDealDialog from "../../components/UI/dialogs/deals/update-deal-dialog";
 
 const Deals = () => {
   const dispatch = useDispatch();
@@ -49,7 +49,7 @@ const Deals = () => {
     return address;
   };
 
-  const handleAddObject = (id) => {
+  const handleCreateDeal = (id) => {
     dispatch(setCreateDealOpenState(true));
     dispatch(setCreateDealStageId(id));
   };
@@ -68,13 +68,17 @@ const Deals = () => {
       <LayoutTitle title="Сделки" />
       <Stages
         deals={deals}
-        dealStages={dealStages}
+        stages={dealStages}
         userName={userName}
-        onOpen={handleAddObject}
+        onOpen={handleCreateDeal}
         getObjectAddress={getObjectAddress}
       />
 
-      <CreateDealDialog objects={transformObjects} stages={dealStages} />
+      <CreateDealDialog
+        objects={transformObjects}
+        deals={deals}
+        stages={dealStages}
+      />
       <UpdateDealDialog objects={transformObjects} stages={dealStages} />
       <ObjectPageDialog />
     </Box>

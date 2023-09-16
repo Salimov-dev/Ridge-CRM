@@ -1,7 +1,7 @@
 import { Button } from "@mui/material";
 import AddBoxOutlinedIcon from "@mui/icons-material/AddBoxOutlined";
 
-const CreateDealButton = ({ item, onOpen }) => {
+const CreateDealButton = ({ stage, onOpen }) => {
   return (
     <Button
       sx={{
@@ -13,7 +13,7 @@ const CreateDealButton = ({ item, onOpen }) => {
           color: "white",
         },
       }}
-      onClick={() => onOpen(item?._id)}
+      onClick={() => onOpen(stage?._id)}
     >
       <AddBoxOutlinedIcon /> Добавить объект
     </Button>

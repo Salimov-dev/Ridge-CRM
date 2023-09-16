@@ -4,13 +4,10 @@ import SimpleSelectField from "../../inputs/simple-select-field";
 import { FieldsContainer, Form } from "../styled/styled";
 
 const DealForm = ({
-  data = "",
   stages = [],
   objects = [],
   isEditMode = false,
   register,
-  handleSubmit,
-  onSubmit,
   errors = null,
   watch,
 }) => {
@@ -18,7 +15,7 @@ const DealForm = ({
   const watchObjectId = watch("objectId", "");
 
   return (
-    <Form onSubmit={handleSubmit(onSubmit)} noValidate>
+    <Form noValidate>
       <FieldsContainer sx={{ flexDirection: "column" }}>
         <SimpleSelectField
           register={register}
