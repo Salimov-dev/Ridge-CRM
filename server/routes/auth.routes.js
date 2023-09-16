@@ -11,7 +11,6 @@ router.post("/signUp", [
   check("password", "Минимальная длина пароля 8 символов").isLength({ min: 8 }),
   async (req, res) => {
     try {
-      console.log("req.body", req.body);
       const errors = validationResult(req);
 
       if (!errors.isEmpty()) {

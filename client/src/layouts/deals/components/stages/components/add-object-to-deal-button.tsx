@@ -1,7 +1,7 @@
 import { Button } from "@mui/material";
 import AddBoxOutlinedIcon from "@mui/icons-material/AddBoxOutlined";
 
-const AddObjectToDealButton = ({ item, onOpen }) => {
+const CreateDealButton = ({ item, onOpen }) => {
   return (
     <Button
       sx={{
@@ -20,4 +20,4 @@ const AddObjectToDealButton = ({ item, onOpen }) => {
   );
 };
 
-export default AddObjectToDealButton;
+export default CreateDealButton;

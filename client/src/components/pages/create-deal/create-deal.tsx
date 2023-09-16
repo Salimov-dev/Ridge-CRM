@@ -11,26 +11,24 @@ import DealForm from "../../common/forms/deal-form/deal-form";
 import FooterButtons from "../../common/forms/footer-buttons/footer-buttons";
 // store
 import { createDeal } from "../../../store/deal/deal.store";
-import {
-  getAddObjectToDealStageId,
-} from "../../../store/deal/add-object-to-deal.store";
+import { getCreateDealStageId } from "../../../store/deal/add-object-to-deal.store";
 // schema
 import { dealSchema } from "../../../schemas/deal-shema";
 
 const initialState = {
   stageId: "",
   objectId: "",
-  isArchived: false
+  isArchived: false,
 };
 
-const AddObjectToDeal = ({
+const CreateDeal = ({
   title = "",
   objects = [],
   stages = [],
   onClose = () => {},
 }) => {
   const dispatch = useDispatch();
-  const selectedStageId = useSelector(getAddObjectToDealStageId());
+  const selectedStageId = useSelector(getCreateDealStageId());
 
   const {
     register,
@@ -82,4 +80,4 @@ const AddObjectToDeal = ({
   );
 };
 
-export default AddObjectToDeal;
+export default CreateDeal;

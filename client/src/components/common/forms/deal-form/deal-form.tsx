@@ -28,7 +28,6 @@ const DealForm = ({
           itemsList={stages}
           value={watchStageId}
           errors={errors?.stageId}
-          // disabled={isObjectPage || isEditMode}
         />
         <SimpleSelectField
           register={register}
@@ -38,7 +37,7 @@ const DealForm = ({
           itemsList={objects}
           value={watchObjectId}
           errors={errors?.objectId}
-          // disabled={isObjectPage || isEditMode}
+          disabled={isEditMode}
         />
       </FieldsContainer>
     </Form>

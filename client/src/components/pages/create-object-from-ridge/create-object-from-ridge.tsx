@@ -118,7 +118,6 @@ const CreateObjectFromRidge = ({ onClose }) => {
         ),
       },
     };
-    console.log("newData", newData);
 
     dispatch(createObject(newData))
       .then(onClose())

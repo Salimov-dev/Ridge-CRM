@@ -145,13 +145,10 @@ const useSearchRidgeObject = (objects, data) => {
     // не сдаём в аренду
     if (data.objectActivity === "30968fdjdsfsdj324igjfg2342") {
       array = array?.filter((obj) => obj?.status === "65004bc75b4362d9d53cc602");
-      console.log("array", array);
     }
     // получить ОС
     if (data.objectActivity === "049832ugnfdskwe43fr0987655") {
-        array = array?.filter((obj) => obj?.status === "65004f055b4362d9d53cc603");
-        console.log("array", array);
-        
+        array = array?.filter((obj) => obj?.status === "65004f055b4362d9d53cc603");        
     }
 
     return array;

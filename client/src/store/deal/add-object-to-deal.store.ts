@@ -1,13 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const addObjectToDealSlice = createSlice({
-  name: "addObjectToDeal",
+const CreateDealSlice = createSlice({
+  name: "CreateDeal",
   initialState: {
     entities: false,
     stageId: "",
   },
   reducers: {
-    addObjectToDealOpenSetted: (state, action) => {
+    CreateDealOpenSetted: (state, action) => {
       state.entities = action.payload;
     },
     updateStageId: (state, action) => {
@@ -16,28 +16,28 @@ const addObjectToDealSlice = createSlice({
   },
 });
 
-const { reducer: addObjectToDealReducer, actions } = addObjectToDealSlice;
+const { reducer: CreateDealReducer, actions } = CreateDealSlice;
 
-const { addObjectToDealOpenSetted, updateStageId } = actions;
+const { CreateDealOpenSetted, updateStageId } = actions;
 
-export const setAddObjectToDealOpenState = (payload) => (dispatch) => {
-  dispatch(addObjectToDealOpenSetted(payload));
+export const setCreateDealOpenState = (payload) => (dispatch) => {
+  dispatch(CreateDealOpenSetted(payload));
 };
 
-export const loadAddObjectToDealOpenState = () => (state) => {
-  return state?.addObjectToDeal?.entities;
+export const loadCreateDealOpenState = () => (state) => {
+  return state?.CreateDeal?.entities;
 };
 
-export const getAddObjectToDealOpenState = () => (state) => {
-  return state?.addObjectToDeal.entities;
+export const getCreateDealOpenState = () => (state) => {
+  return state?.CreateDeal.entities;
 };
 
-export const setAddObjectToDealStageId = (payload) => (dispatch) => {
+export const setCreateDealStageId = (payload) => (dispatch) => {
   dispatch(updateStageId(payload));
 };
 
-export const getAddObjectToDealStageId = () => (state) => {
-  return state.addObjectToDeal.stageId;
+export const getCreateDealStageId = () => (state) => {
+  return state.CreateDeal.stageId;
 };
 
-export default addObjectToDealReducer;
+export default CreateDealReducer;

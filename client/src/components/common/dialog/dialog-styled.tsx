@@ -6,8 +6,8 @@ const Container = styled(Box)`
 
 const DialogStyled = ({
   component,
-  onClose,
-  open,
+  onClose=()=>{},
+  open=false,
   fullWidth = true,
   maxWidth = "lg",
 }) => {

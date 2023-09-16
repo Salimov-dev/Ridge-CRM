@@ -1,39 +1,39 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const updateLastContactSlice = createSlice({
-  name: "updateLastContact",
+const updateDealSlice = createSlice({
+  name: "updateDeal",
   initialState: {
     entities: false,
-    contactId: "",
+    dealId: "",
   },
   reducers: {
-    updateLastContactOpenSetted: (state, action) => {
+    updateDealOpenSetted: (state, action) => {
       state.entities = action.payload;
     },
-    updateLastContactId: (state, action) => {
-      state.contactId = action.payload;
+    updateDealId: (state, action) => {
+      state.dealId = action.payload;
     },
   },
 });
 
-const { reducer: updateLastContactReducer, actions } = updateLastContactSlice;
+const { reducer: updateDealReducer, actions } = updateDealSlice;
 
-const { updateLastContactOpenSetted, updateLastContactId } = actions;
+const { updateDealOpenSetted, updateDealId } = actions;
 
-export const setUpdateLastContactOpenState = (payload) => (dispatch) => {
-  dispatch(updateLastContactOpenSetted(payload));
+export const setUpdateDealOpenState = (payload) => (dispatch) => {
+  dispatch(updateDealOpenSetted(payload));
 };
 
-export const setUpdateLastContactId = (payload) => (dispatch) => {
-  dispatch(updateLastContactId(payload));
+export const setUpdateDealId = (payload) => (dispatch) => {
+  dispatch(updateDealId(payload));
 };
 
-export const loadUpdateLastContactOpenState = () => (state) => {
-  return state?.updateLastContact?.entities;
+export const loadUpdateDealOpenState = () => (state) => {
+  return state?.updateDeal?.entities;
 };
 
-export const getUpdateLastContactId = () => (state) => {
-  return state.updateLastContact.contactId;
+export const getUpdateDealId = () => (state) => {
+  return state.updateDeal.dealId;
 };
 
-export default updateLastContactReducer;
+export default updateDealReducer;

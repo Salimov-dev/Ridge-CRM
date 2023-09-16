@@ -2,7 +2,7 @@ import { Box, Paper, styled } from "@mui/material";
 import DividerStyled from "../../../../components/common/divider/divider-styled";
 import Title from "./components/title";
 import Objects from "./components/objects";
-import AddObjectToDealButton from "./components/add-object-to-deal-button";
+import CreateDealButton from "./components/add-object-to-deal-button";
 
 const DealsContainer = styled(Box)`
   display: flex;
@@ -37,7 +37,7 @@ const Stages = ({ deals, dealStages, userName, onOpen, getObjectAddress }) => {
             getObjectAddress={getObjectAddress}
             userName={userName}
           />
-          <AddObjectToDealButton item={item} onOpen={onOpen} />
+          <CreateDealButton item={item} onOpen={onOpen} />
         </DealContainer>
       ))}
     </DealsContainer>

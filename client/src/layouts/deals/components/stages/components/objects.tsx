@@ -8,6 +8,10 @@ import {
 import { useDispatch } from "react-redux";
 import OpenPageObjectIconButton from "../../../../../components/common/buttons/icons buttons/open-page-object-icon";
 import UpdateElementIconButton from "../../../../../components/common/buttons/icons buttons/update-element-icon";
+import {
+  setUpdateDealId,
+  setUpdateDealOpenState,
+} from "../../../../../store/deal/update-deal.store";
 
 const ObjectsContainer = styled(Box)`
   width: 265px;
@@ -34,10 +38,12 @@ const ObjectContainer = styled(Paper)`
 const Objects = ({ deals, item, getObjectAddress, userName }) => {
   const dispatch = useDispatch();
 
-  const handleUpdateDeal = (dealId) => {};
+  const handleUpdateDeal = (dealId) => {
+    dispatch(setUpdateDealId(dealId));
+    dispatch(setUpdateDealOpenState(true));
+  };
 
   const handleOpenObjectPage = (objectId) => {
-    console.log("objectId", objectId);
     dispatch(setOpenObjectPageId(objectId));
     dispatch(setOpenObjectPageOpenState(true));
   };
@@ -61,7 +67,9 @@ const Objects = ({ deals, item, getObjectAddress, userName }) => {
             <Typography>{FormatDate(deal?.created_at)}</Typography>
             <Box sx={{ display: "flex", justifyContent: "space-between" }}>
               <Typography sx={{ fontStyle: "italic" }}>{userName}</Typography>
-              <UpdateElementIconButton onClick={handleUpdateDeal} />
+              <UpdateElementIconButton
+                onClick={() => handleUpdateDeal(deal?._id)}
+              />
             </Box>
           </ObjectContainer>
         ) : null;

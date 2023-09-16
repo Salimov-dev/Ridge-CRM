@@ -7,7 +7,7 @@ const Components = styled(Box)`
   cursor: pointer;
 `;
 
-const OpenPageObjectIconButton = ({ onClick, address, variant = "h6" }) => {
+const OpenPageObjectIconButton = ({ onClick }) => {
   return (
     <Components onClick={onClick}>
       <Tooltip title="Открыть объект" placement="top-start" arrow>

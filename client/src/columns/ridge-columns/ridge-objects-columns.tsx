@@ -128,7 +128,6 @@ export const ridgeObjectsColumns = [
           const cloudLink = info.getValue();
 
           const handleOpenCloud = () => {
-            console.log("click");
             const cloudLink = info.getValue();
 
             if (cloudLink) {

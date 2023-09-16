@@ -52,9 +52,10 @@ import updateRidgeLastContactReducer from "./ridge-last-contact/update-ridge-las
 // deal
 import dealsReducer from "./deal/deal.store";
 import dealStagesReducer from "./deal/deal-stages.store";
+import updateDealReducer from "./deal/update-deal.store";
 // sidebar
 import sidebarCollapsStateReducer from "./sidebar-collaps-state.store";
-import addObjectToDealReducer from "./deal/add-object-to-deal.store";
+import CreateDealReducer from "./deal/add-object-to-deal.store";
 // other
 import monthIndexReducer from "./month-index.store";
 
@@ -115,7 +116,8 @@ const rootReducer = combineReducers({
   sidebarCollapsState: sidebarCollapsStateReducer,
   // deals
   deals: dealsReducer,
-  addObjectToDeal: addObjectToDealReducer,
+  CreateDeal: CreateDealReducer,
+  updateDeal: updateDealReducer,
   dealStages: dealStagesReducer,
 });
 

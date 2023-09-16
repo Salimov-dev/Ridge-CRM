@@ -2,7 +2,6 @@ import { createAction, createSlice } from "@reduxjs/toolkit";
 import isOutDated from "../../utils/auth/is-out-date";
 import localStorageService from "../../services/user/local.storage-service";
 import dealsService from "../../services/deal/deal.service";
-import { createSelector } from "reselect";
 
 const initialState = localStorageService.getAccessToken()
   ? {
@@ -117,6 +116,12 @@ export const removeDeal = (dealsId) => async (dispatch) => {
     await dealsService.remove(dealsId);
   } catch (error) {
     dispatch(removeDealFailed(error.message));
+  }
+};
+
+export const getDealById = (dealId) => (state) => {
+  if (state?.deals?.entities) {
+    return state?.deals?.entities?.find((deal) => deal?._id === dealId);
   }
 };
 

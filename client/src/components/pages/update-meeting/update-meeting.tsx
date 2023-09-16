@@ -68,8 +68,7 @@ const UpdateMeeting = ({ onClose }) => {
   });
 
   const data = watch();
-  console.log("data", data);
-  
+
   const watchDate = watch("date", null);
   const watchTime = watch("time", null);
   const isFullValid = isValid && watchDate && watchTime;

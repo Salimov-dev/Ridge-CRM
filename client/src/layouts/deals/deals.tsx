@@ -4,21 +4,22 @@ import { useDispatch, useSelector } from "react-redux";
 // components
 import LayoutTitle from "../../components/common/page-titles/layout-title";
 import Stages from "./components/stages/stages";
-import AddObjectToDealDialog from "../../components/UI/dialogs/deals/add-object-to-deal-dialog";
+import CreateDealDialog from "../../components/UI/dialogs/deals/create-deal-dialog";
 // store
 import { getDealsList } from "../../store/deal/deal.store";
 import { getSidebarCollapsState } from "../../store/sidebar-collaps-state.store";
 import { getObjectsList } from "../../store/object/objects.store";
 import { getDealStagesList } from "../../store/deal/deal-stages.store";
 import {
-  setAddObjectToDealOpenState,
-  setAddObjectToDealStageId,
+  setCreateDealOpenState,
+  setCreateDealStageId,
 } from "../../store/deal/add-object-to-deal.store";
 import {
   getCurrentUserId,
   getUserNameById,
 } from "../../store/user/users.store";
 import ObjectPageDialog from "../../components/UI/dialogs/object-page-dialog/object-page-dialog";
+import UpdateDealDialog from "../../components/UI/dialogs/deals/update-deal-dialog";
 
 const Deals = () => {
   const dispatch = useDispatch();
@@ -49,8 +50,8 @@ const Deals = () => {
   };
 
   const handleAddObject = (id) => {
-    dispatch(setAddObjectToDealOpenState(true));
-    dispatch(setAddObjectToDealStageId(id));
+    dispatch(setCreateDealOpenState(true));
+    dispatch(setCreateDealStageId(id));
   };
 
   useEffect(() => {
@@ -73,8 +74,9 @@ const Deals = () => {
         getObjectAddress={getObjectAddress}
       />
 
-      <AddObjectToDealDialog objects={transformObjects} stages={dealStages} />
-      <ObjectPageDialog/>
+      <CreateDealDialog objects={transformObjects} stages={dealStages} />
+      <UpdateDealDialog objects={transformObjects} stages={dealStages} />
+      <ObjectPageDialog />
     </Box>
   );
 };

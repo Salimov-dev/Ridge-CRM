@@ -70,8 +70,6 @@ const CreateRidgeObject = ({ onClose }) => {
   const isValidAndHasAdress = isFindedObject && isObjectHasAddress && isValid;
 
   const onSubmit = (data) => {
-    console.log("onSubmit");
-
     const newData = {
       ...data,
       contact: {
