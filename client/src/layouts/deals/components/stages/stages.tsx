@@ -46,7 +46,7 @@ const Stages = ({ deals, stages, userName, onOpen, getObjectAddress }) => {
         >
           <Title item={stage} />
           <DividerStyled
-            margin="12px 0 20px 0"
+            margin="20px 0 20px 0"
             color={draggableStageId === stage?._id ? "yellow" : "inherit"}
           />
           <Objects

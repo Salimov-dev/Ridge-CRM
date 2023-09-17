@@ -22,7 +22,7 @@ const ObjectsContainer = styled(Box)`
   flex-direction: column;
   align-items: center;
   justify-content: start;
-  gap: 12px;
+  gap: 4px;
   margin-bottom: 14px;
   overflow-y: scroll;
   padding-right: 4px;
