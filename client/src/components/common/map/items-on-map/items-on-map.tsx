@@ -42,9 +42,9 @@ const ItemsOnMap = ({
   targetCluster = target_cluster,
 }) => {
   const [activePortal, setActivePortal] = useState(false);
-  const [width, setWidth] = useState(window.innerWidth - 262);
   const isCollapsedSidebar = useSelector(getSidebarCollapsState());
 
+  const [width, setWidth] = useState(null);
   const screenWidth = window?.innerWidth;
   const fullWidth = screenWidth - 262;
   const collapseWidth = screenWidth - 126;
@@ -65,16 +65,17 @@ const ItemsOnMap = ({
   };
 
   const handleResize = () => {
-    setWidth(window.innerWidth - 262);
+    setWidth(fullWidth);
   };
 
   useEffect(() => {
+    setWidth(isCollapsedSidebar ? collapseWidth : fullWidth)
     window.addEventListener("resize", handleResize);
     return () => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
-  
+
   useEffect(() => {
     setWidth(isCollapsedSidebar ? collapseWidth : fullWidth);
   }, [isCollapsedSidebar]);

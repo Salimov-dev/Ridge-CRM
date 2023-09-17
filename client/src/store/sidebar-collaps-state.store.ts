@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const sidebarCollapsStateSlice = createSlice({
   name: "sidebarCollaps",
   initialState: {
-    entities: false,
+    entities: true,
   },
   reducers: {
     sidebarCollapsStateSetted: (state, action) => {
@@ -22,7 +22,7 @@ export const loadSidebarCollapsState = () => (dispatch) => {
   if (localStorageValue) {
     return dispatch(sidebarCollapsStateSetted(localStorageValue));
   } else {
-    localStorage.setItem("sidebar-collaps-state", false);
+    localStorage.setItem("sidebar-collaps-state", true);
   }
 };
 

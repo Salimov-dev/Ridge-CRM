@@ -19,9 +19,8 @@ const Component = styled(Box)`
 const Sidebar = () => {
   const [currentPath, setCurrentPath] = useState("");
   const [selected, setSelected] = useState(setSelectedMenuItem());
-  const [isCollapsed, setIsCollapsed] = useState(
-    JSON.parse(localStorage.getItem("sidebar-collaps-state"))
-  );
+  const [isCollapsed, setIsCollapsed] = useState(true);
+
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const dispatch = useDispatch();
