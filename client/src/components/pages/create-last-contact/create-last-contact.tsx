@@ -17,6 +17,7 @@ import { createLastContact } from "../../../store/last-contact/last-contact.stor
 import { lastContactSchema } from "../../../schemas/last-contact-schema";
 // utils
 import { capitalizeFirstLetter } from "../../../utils/data/capitalize-first-letter";
+import FooterButtons from "../../common/forms/footer-buttons/footer-buttons";
 
 const initialState = {
   date: dayjs(),
@@ -76,13 +77,13 @@ const CreateLastContact = ({ onClose }) => {
       <LastContactForm
         data={data}
         register={register}
-        onSubmit={onSubmit}
-        onClose={onClose}
-        handleSubmit={handleSubmit}
         errors={errors}
         setValue={setValue}
+      />
+      <FooterButtons
+        onCreate={handleSubmit(onSubmit)}
+        onClose={onClose}
         isValid={isFullValid}
-        isEditMode={false}
       />
     </Component>
   );

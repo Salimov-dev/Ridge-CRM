@@ -165,6 +165,9 @@ export const themeSettings = (mode) => {
     a: {
       color: "white",
     },
+    zIndex: {
+      modal: 999000, // Устанавливаем zIndex по умолчанию для модальных окон
+    },
     typography: {
       fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
       fontSize: 12,

@@ -3,25 +3,18 @@ import TextFieldStyled from "../../inputs/text-field-styled";
 import SimpleSelectField from "../../inputs/simple-select-field";
 import DatePickerStyled from "../../inputs/date-picker";
 import TimePickerStyled from "../../inputs/time-picker";
-import FooterButtons from "../footer-buttons/footer-buttons";
 // styled
 import { FieldsContainer, Form } from "../styled/styled";
 // utils
 import SimpleSwitch from "../../inputs/simple-switch";
 
 const MyTaskForm = ({
-  register,
   data,
   objects,
-  handleSubmit,
-  onSubmit,
-  onClose,
-  onRemoveTask,
-  removeId = "",
+  register,
+  watch,
   errors = null,
   setValue,
-  isValid,
-  watch,
   isObjectPage = false,
   isEditMode = false,
   isTasksLoading = false,
@@ -30,7 +23,7 @@ const MyTaskForm = ({
   const watchIsDone = watch("isDone", false);
 
   return (
-    <Form onSubmit={handleSubmit(onSubmit)} noValidate>
+    <Form noValidate>
       <FieldsContainer>
         <DatePickerStyled
           register={register}
@@ -89,14 +82,6 @@ const MyTaskForm = ({
           }}
         />
       ) : null}
-
-      <FooterButtons
-        removeId={removeId}
-        onClose={onClose}
-        onRemove={onRemoveTask}
-        isEditMode={isEditMode}
-        isValid={isValid}
-      />
     </Form>
   );
 };

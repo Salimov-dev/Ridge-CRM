@@ -1,6 +1,6 @@
 // liraries
 import dayjs from "dayjs";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -19,11 +19,12 @@ import {
 } from "../../../store/task/tasks.store";
 // schema
 import { taskSchema } from "../../../schemas/task-shema";
-import { useConfirm } from "material-ui-confirm";
+import FooterButtons from "../../common/forms/footer-buttons/footer-buttons";
+import ConfirmRemoveDialog from "../../common/dialog/confirm-remove-dialog";
 
 const UpdateManagerTask = ({ title, onClose, objects, users }) => {
   const dispatch = useDispatch();
-  const confirm = useConfirm();
+  const [open, setOpen] = useState(false);
 
   const taskId = useSelector(getUpdateManagerTaskId());
   const task = useSelector(getTaskById(taskId));
@@ -74,22 +75,17 @@ const UpdateManagerTask = ({ title, onClose, objects, users }) => {
   };
 
   const handleRemoveTask = (taskId) => {
-    confirm({
-      title: "Подтвердите удаление задачи менеджеру",
-      description: "Удалить задачу менеджеру безвозвратно?",
-      cancellationButtonProps: { color: "error" },
-      confirmationButtonProps: { color: "success" },
-      confirmationText: "Подтвердить",
-      cancellationText: "Отмена",
-    })
-      .then(() => {
-        dispatch(removeTask(taskId))
-          .then(onClose())
-          .then(toast.success("Задача себе успешно удалена!"));
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    dispatch(removeTask(taskId))
+      .then(onClose())
+      .then(toast.success("Задача себе успешно удалена!"));
+  };
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
   };
 
   useEffect(() => {
@@ -107,21 +103,29 @@ const UpdateManagerTask = ({ title, onClose, objects, users }) => {
         onClose={onClose}
       />
       <ManagerTaskForm
-        register={register}
         data={data}
-        users={users}
         objects={objects}
-        handleSubmit={handleSubmit}
-        onRemoveTask={handleRemoveTask}
+        users={users}
+        register={register}
         watch={watch}
-        removeId={taskId}
-        onSubmit={onSubmit}
-        onClose={onClose}
         errors={errors}
         setValue={setValue}
-        isValid={isFullValid}
         isEditMode={isEditMode}
         isTasksLoading={isTasksLoading}
+      />
+      <FooterButtons
+        onUpdate={handleSubmit(onSubmit)}
+        onClose={onClose}
+        onRemove={handleClickOpen}
+        removeId={taskId}
+        isEditMode={isEditMode}
+        isValid={isFullValid}
+      />
+      <ConfirmRemoveDialog
+        removeId={taskId}
+        open={open}
+        onClose={handleClose}
+        onRemove={handleRemoveTask}
       />
     </>
   );

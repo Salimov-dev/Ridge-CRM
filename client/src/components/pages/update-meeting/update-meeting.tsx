@@ -1,4 +1,5 @@
 // libraries
+import { useState } from "react";
 import dayjs from "dayjs";
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
@@ -10,6 +11,8 @@ import { Box } from "@mui/material";
 import Header from "./components/header";
 import Loader from "../../common/loader/loader";
 import MeetingForm from "../../common/forms/meeting-form/meeting-form";
+import FooterButtons from "../../common/forms/footer-buttons/footer-buttons";
+import ConfirmRemoveDialog from "../../common/dialog/confirm-remove-dialog";
 // store
 import { getObjectsList } from "../../../store/object/objects.store";
 import { getCurrentUserId } from "../../../store/user/users.store";
@@ -26,11 +29,9 @@ import {
 } from "../../../store/meeting/meetings.store";
 // schema
 import { meetingSchema } from "../../../schemas/meeting-schema";
-import FooterButtons from "../../common/forms/footer-buttons/footer-buttons";
-import { useConfirm } from "material-ui-confirm";
 
 const UpdateMeeting = ({ onClose }) => {
-  const confirm = useConfirm();
+  const [open, setOpen] = useState(false);
   const objects = useSelector(getObjectsList());
   const currentUserId = useSelector(getCurrentUserId());
   const currentUserObjects = objects?.filter(
@@ -85,52 +86,46 @@ const UpdateMeeting = ({ onClose }) => {
   };
 
   const handleRemoveMeeting = (meetingId) => {
-    confirm({
-      title: "Подтвердите удаление встречи",
-      description: "Удалить встречу безвозвратно?",
-      cancellationButtonProps: { color: "error" },
-      confirmationButtonProps: { color: "success" },
-      confirmationText: "Подтвердить",
-      cancellationText: "Отмена",
-    })
-      .then(() => {
-        dispatch(removeMeeting(meetingId))
-          .then(onClose())
-          .then(toast.success("Встреча успешно удалена!"));
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    dispatch(removeMeeting(meetingId))
+      .then(onClose())
+      .then(toast.success("Встреча успешно удалена!"));
+  };
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
   };
 
   return meeting ? (
     <Box>
       <Header meeting={meeting} onClose={onClose} />
       <MeetingForm
-        register={register}
         data={data}
         objects={transformObjects}
         meetingTypes={meetingTypes}
-        onSubmit={onSubmit}
-        onClose={onClose}
-        onRemoveMeeting={handleRemoveMeeting}
-        removeId={meetingId}
-        handleSubmit={handleSubmit}
+        statuses={statuses}
+        register={register}
         watch={watch}
         errors={errors}
-        isValid={isFullValid}
         setValue={setValue}
-        statuses={statuses}
         isEditMode={isEditMode}
         isMeetingsLoading={isMeetingsLoading}
       />
       <FooterButtons
         onClose={onClose}
         onUpdate={handleSubmit(onSubmit)}
-        onRemove={handleRemoveMeeting}
-        removeId={meetingId}
+        onRemove={handleClickOpen}
         isValid={isFullValid}
         isEditMode={isEditMode}
+      />
+      <ConfirmRemoveDialog
+        removeId={meetingId}
+        open={open}
+        onClose={handleClose}
+        onRemove={handleRemoveMeeting}
       />
     </Box>
   ) : (

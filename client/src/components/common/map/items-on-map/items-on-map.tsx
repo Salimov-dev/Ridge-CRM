@@ -7,10 +7,17 @@ import { Box, styled } from "@mui/material";
 import Loader from "../../loader/loader";
 // yandex map
 import targetDefault from "../../../../assets/map/target.png";
-import { Map, Placemark, Clusterer } from "@pbe/react-yandex-maps";
+import {
+  Map,
+  Placemark,
+  Clusterer,
+  FullscreenControl,
+} from "@pbe/react-yandex-maps";
 import target_cluster from "../../../../assets/map/target_cluster.png";
 // styles
 import "./styles.css";
+import { getSidebarCollapsState } from "../../../../store/sidebar-collaps-state.store";
+import { useSelector } from "react-redux";
 
 const MapContainer = styled(Box)`
   width: 100%;
@@ -33,6 +40,11 @@ const ItemsOnMap = ({
   targetCluster = target_cluster,
 }) => {
   const [activePortal, setActivePortal] = useState(false);
+  const isCollapsedSidebar = useSelector(getSidebarCollapsState());
+  const [width, setWidth] = useState(0);
+  const screenWidth = window?.innerWidth;
+  const fullWidth = screenWidth - 262;
+  const collapseWidth = screenWidth - 126;
   const clustererInstanceRef = useRef(null);
 
   const Portal = ({ children, getHTMLElementId }) => {
@@ -49,11 +61,15 @@ const ItemsOnMap = ({
     return createPortal(children, el);
   };
 
+  useEffect(() => {
+    setWidth(isCollapsedSidebar ? collapseWidth : fullWidth);
+  }, [isCollapsedSidebar]);
+
   return (
     <MapContainer>
       {!isLoading ? (
         <Map
-          style={{ width: "100%" }}
+          style={{ width: width ? width : "100%" }}
           defaultState={{
             center: center,
             zoom: mapZoom,
@@ -67,6 +83,7 @@ const ItemsOnMap = ({
             "clusterer.addon.balloon",
           ]}
         >
+          <FullscreenControl />
           <Clusterer
             instanceRef={(ref) => (clustererInstanceRef.current = ref)}
             // onBalloonOpen={(e) => {

@@ -17,6 +17,7 @@ import { createRidgeLastContact } from "../../../store/ridge-last-contact/last-r
 import { lastContactSchema } from "../../../schemas/last-contact-schema";
 // utils
 import { capitalizeFirstLetter } from "../../../utils/data/capitalize-first-letter";
+import FooterButtons from "../../common/forms/footer-buttons/footer-buttons";
 
 const initialState = {
   date: dayjs(),
@@ -45,7 +46,7 @@ const CreateRidgeLastContact = ({ onClose }) => {
 
   const data = watch();
   const watchDate = watch("date", null);
-  const isFullValid = isValid && watchDate
+  const isFullValid = isValid && watchDate;
 
   const onSubmit = (data) => {
     const newData = {
@@ -75,13 +76,13 @@ const CreateRidgeLastContact = ({ onClose }) => {
       <LastContactForm
         data={data}
         register={register}
-        onSubmit={onSubmit}
-        onClose={onClose}
-        handleSubmit={handleSubmit}
         errors={errors}
         setValue={setValue}
+      />
+      <FooterButtons
+        onCreate={handleSubmit(onSubmit)}
+        onClose={onClose}
         isValid={isFullValid}
-        isEditMode={false}
       />
     </Component>
   );

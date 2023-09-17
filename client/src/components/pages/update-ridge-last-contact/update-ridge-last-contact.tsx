@@ -1,4 +1,5 @@
 // libraries
+import { useState } from "react";
 import dayjs from "dayjs";
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
@@ -9,6 +10,8 @@ import { Box } from "@mui/material";
 // components
 import Header from "./components/header";
 import Loader from "../../common/loader/loader";
+import FooterButtons from "../../common/forms/footer-buttons/footer-buttons";
+import ConfirmRemoveDialog from "../../common/dialog/confirm-remove-dialog";
 import LastContactForm from "../../common/forms/last-contact-form/last-contact-form";
 // store
 import { getUpdateRidgeLastContactId } from "../../../store/ridge-last-contact/update-ridge-last-contact.store";
@@ -19,12 +22,12 @@ import {
 } from "../../../store/ridge-last-contact/last-ridge-contact.store";
 // schema
 import { lastContactSchema } from "../../../schemas/last-contact-schema";
-import { useConfirm } from "material-ui-confirm";
+// utils
 import { capitalizeFirstLetter } from "../../../utils/data/capitalize-first-letter";
 
 const UpdateRidgeLastContact = ({ onClose }) => {
   const dispatch = useDispatch();
-  const confirm = useConfirm();
+  const [open, setOpen] = useState(false);
   const lastContactId = useSelector(getUpdateRidgeLastContactId());
   const lastContact = useSelector(getRidgeLastContactsById(lastContactId));
 
@@ -55,32 +58,26 @@ const UpdateRidgeLastContact = ({ onClose }) => {
     const newData = {
       ...data,
       result: capitalizeFirstLetter(data.result),
-      comment: capitalizeFirstLetter(data.comment),
       date: transformedDate,
     };
-
     dispatch(updateRidgeLastContact(newData, lastContactId))
       .then(onClose())
       .then(toast.success("Последний контакт успешно изменен!"));
   };
 
   const handleRemoveRidgeLastContact = (lastContactId) => {
-    confirm({
-      title: "Подтвердите удаление задачи менеджеру",
-      description: "Удалить задачу менеджеру безвозвратно?",
-      cancellationButtonProps: { color: "error" },
-      confirmationButtonProps: { color: "success" },
-      confirmationText: "Подтвердить",
-      cancellationText: "Отмена",
-    })
-      .then(() => {
-        dispatch(removeRidgeLastContact(lastContactId))
-          .then(onClose())
-          .then(toast.success("Последний контакт успешно удален!"));
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    dispatch(removeRidgeLastContact(lastContactId))
+      .then(onClose())
+      .then(toast.success("Последний контакт успешно удален!"));
+    setOpen(false);
+  };
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
   };
 
   return lastContact ? (
@@ -89,15 +86,23 @@ const UpdateRidgeLastContact = ({ onClose }) => {
       <LastContactForm
         data={data}
         register={register}
-        onSubmit={onSubmit}
-        onClose={onClose}
-        removeId={lastContactId}
-        onRemoveLastContact={handleRemoveRidgeLastContact}
-        handleSubmit={handleSubmit}
         errors={errors}
         setValue={setValue}
-        isValid={isFullValid}
+      />
+      <FooterButtons
+        onUpdate={handleSubmit(onSubmit)}
+        onClose={onClose}
+        onRemove={handleClickOpen}
+        removeId={lastContactId}
         isEditMode={isEditMode}
+        isValid={isFullValid}
+      />
+
+      <ConfirmRemoveDialog
+        removeId={lastContactId}
+        open={open}
+        onClose={handleClose}
+        onRemove={handleRemoveRidgeLastContact}
       />
     </Box>
   ) : (

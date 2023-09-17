@@ -1,13 +1,14 @@
 // liraries
 import dayjs from "dayjs";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useDispatch, useSelector } from "react-redux";
-import { useConfirm } from "material-ui-confirm";
 // components
 import MyTaskForm from "../../common/forms/my-task-form/my-task-form";
+import FooterButtons from "../../common/forms/footer-buttons/footer-buttons";
+import ConfirmRemoveDialog from "../../common/dialog/confirm-remove-dialog";
 import TitleWithCloseButton from "../../common/page-titles/title-with-close-button";
 // store
 import { getUpdateMyTaskId } from "../../../store/task/update-my-task.store";
@@ -23,7 +24,7 @@ import { getCurrentUserId } from "../../../store/user/users.store";
 import { taskSchema } from "../../../schemas/task-shema";
 
 const UpdateMyTask = ({ title, onClose }) => {
-  const confirm = useConfirm();
+  const [open, setOpen] = useState(false);
   const taskId = useSelector(getUpdateMyTaskId());
   const task = useSelector(getTaskById(taskId));
   const isTasksLoading = useSelector(getTaskLoadingStatus());
@@ -77,22 +78,17 @@ const UpdateMyTask = ({ title, onClose }) => {
   };
 
   const handleRemoveTask = (taskId) => {
-    confirm({
-      title: "Подтвердите удаление своей задачи",
-      description: "Удалить задачу себе безвозвратно?",
-      cancellationButtonProps: { color: "error" },
-      confirmationButtonProps: { color: "success" },
-      confirmationText: "Подтвердить",
-      cancellationText: "Отмена",
-    })
-      .then(() => {
-        dispatch(removeTask(taskId))
-          .then(onClose())
-          .then(toast.success("Задача себе успешно удалена!"));
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    dispatch(removeTask(taskId))
+      .then(onClose())
+      .then(toast.success("Задача себе успешно удалена!"));
+  };
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
   };
 
   useEffect(() => {
@@ -110,20 +106,28 @@ const UpdateMyTask = ({ title, onClose }) => {
         onClose={onClose}
       />
       <MyTaskForm
-        register={register}
         data={data}
         objects={transformObjects}
-        handleSubmit={handleSubmit}
-        onSubmit={onSubmit}
-        onClose={onClose}
-        onRemoveTask={handleRemoveTask}
-        removeId={taskId}
+        register={register}
+        watch={watch}
         errors={errors}
         setValue={setValue}
-        isValid={!isFullValid}
         isEditMode={isEditMode}
         isTasksLoading={isTasksLoading}
-        watch={watch}
+      />
+      <FooterButtons
+        onUpdate={handleSubmit(onSubmit)}
+        onClose={onClose}
+        onRemove={handleClickOpen}
+        removeId={taskId}
+        isEditMode={isEditMode}
+        isValid={isFullValid}
+      />
+      <ConfirmRemoveDialog
+        removeId={taskId}
+        open={open}
+        onClose={handleClose}
+        onRemove={handleRemoveTask}
       />
     </>
   );

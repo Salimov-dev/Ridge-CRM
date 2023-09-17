@@ -14,26 +14,20 @@ const ManagerTaskForm = ({
   data,
   objects,
   users,
-  isEditMode = false,
   register,
-  handleSubmit,
-  onSubmit,
-  onClose,
-  onRemoveTask,
-  removeId,
   errors,
-  setValue,
-  isValid,
   watch,
-  isObjectPage,
-  isTasksLoading,
+  setValue,
+  isObjectPage=false,
+  isTasksLoading=false,
+  isEditMode = false,
 }) => {
   const watchObjectId = watch("objectId", "");
   const watchManagerId = watch("managerId", "");
   const watchIsDone = watch("isDone", false);
 
   return (
-    <Form onSubmit={handleSubmit(onSubmit)} noValidate>
+    <Form noValidate>
       <FieldsContainer>
         <DatePickerStyled
           register={register}
@@ -102,14 +96,6 @@ const ManagerTaskForm = ({
           }}
         />
       ) : null}
-
-      <FooterButtons
-        isEditMode={isEditMode}
-        isValid={!isValid}
-        onClose={onClose}
-        onRemove={onRemoveTask}
-        removeId={removeId}
-      />
     </Form>
   );
 };

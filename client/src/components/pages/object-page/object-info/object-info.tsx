@@ -32,15 +32,15 @@ const Component = styled(Box)`
 const ObjectInfo = ({ object, isLoading }) => {
   const objects = useSelector(getObjectsList());
   const meetings = useSelector(getObjectMeetingsList(object?._id));
-  const sortedMeetings = orderBy(meetings, ["date"], ["asc"]);
+  const sortedMeetings = orderBy(meetings, ["date"], ["desc"]);
 
   const tasksColumns = tasksColumnsDialog
 
   const tasks = useSelector(getObjectTasksList(object?._id));
-  const sortedTasks = orderBy(tasks, ["date"], ["asc"]);
+  const sortedTasks = orderBy(tasks, ["date"], ["desc"]);
 
   const lastContacts = useSelector(getLastContactsByObjectId(object?._id));
-  const sortedLastContacts = orderBy(lastContacts, ["date"], ["asc"]);
+  const sortedLastContacts = orderBy(lastContacts, ["date"], ["desc"]);
 
   const users = useSelector(getUsersList());
   const currentUserId = useSelector(getCurrentUserId());

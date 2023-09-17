@@ -46,7 +46,7 @@ const ridgeLastContactSlice = createSlice({
     },
     ridgeLastContactUpdateSuccessed: (state, action) => {
       state.entities[
-        state.entities.findIndex((m) => m._id === action.payload._id)
+        state.entities.findIndex((contact) => contact._id === action.payload._id)
       ] = action.payload;
     },
     ridgeLastContactRemoved: (state, action) => {

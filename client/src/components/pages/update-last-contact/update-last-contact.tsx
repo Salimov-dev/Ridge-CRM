@@ -1,5 +1,6 @@
 // libraries
 import dayjs from "dayjs";
+import { useState } from "react";
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
@@ -10,6 +11,8 @@ import { Box } from "@mui/material";
 import Header from "./components/header";
 import Loader from "../../common/loader/loader";
 import LastContactForm from "../../common/forms/last-contact-form/last-contact-form";
+import FooterButtons from "../../common/forms/footer-buttons/footer-buttons";
+import ConfirmRemoveDialog from "../../common/dialog/confirm-remove-dialog";
 // store
 import { getUpdateLastContactId } from "../../../store/last-contact/update-last-contact.store";
 import {
@@ -19,10 +22,9 @@ import {
 } from "../../../store/last-contact/last-contact.store";
 // schema
 import { lastContactSchema } from "../../../schemas/last-contact-schema";
-import { useConfirm } from "material-ui-confirm";
 
 const UpdateLastContact = ({ onClose }) => {
-  const confirm = useConfirm();
+  const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
   const lastContactId = useSelector(getUpdateLastContactId());
   const lastContact = useSelector(getLastContactsById(lastContactId));
@@ -59,22 +61,17 @@ const UpdateLastContact = ({ onClose }) => {
   };
 
   const handleRemoveLastContact = (lastContactId) => {
-    confirm({
-      title: "Подтвердите удаление своей задачи",
-      description: "Удалить задачу себе безвозвратно?",
-      cancellationButtonProps: { color: "error" },
-      confirmationButtonProps: { color: "success" },
-      confirmationText: "Подтвердить",
-      cancellationText: "Отмена",
-    })
-      .then(() => {
-        dispatch(removeLastContact(lastContactId))
-          .then(onClose())
-          .then(toast.success("Последний контакт успешно удален!"));
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    dispatch(removeLastContact(lastContactId))
+      .then(onClose())
+      .then(toast.success("Последний контакт успешно удален!"));
+  };
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
   };
 
   return lastContact ? (
@@ -83,15 +80,23 @@ const UpdateLastContact = ({ onClose }) => {
       <LastContactForm
         data={data}
         register={register}
-        onSubmit={onSubmit}
-        onClose={onClose}
-        removeId={lastContactId}
-        onRemoveLastContact={handleRemoveLastContact}
-        handleSubmit={handleSubmit}
         errors={errors}
         setValue={setValue}
-        isValid={isFullValid}
         isEditMode={isEditMode}
+      />
+      <FooterButtons
+        onUpdate={handleSubmit(onSubmit)}
+        onClose={onClose}
+        onRemove={handleClickOpen}
+        removeId={lastContactId}
+        isEditMode={isEditMode}
+        isValid={isFullValid}
+      />
+      <ConfirmRemoveDialog
+        removeId={lastContactId}
+        open={open}
+        onClose={handleClose}
+        onRemove={handleRemoveLastContact}
       />
     </Box>
   ) : (

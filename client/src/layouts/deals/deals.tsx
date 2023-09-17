@@ -1,5 +1,6 @@
 import { Box } from "@mui/material";
 import { useEffect, useState } from "react";
+import { orderBy } from "lodash";
 import { useDispatch, useSelector } from "react-redux";
 // components
 import Stages from "./components/stages/stages";
@@ -38,6 +39,7 @@ const Deals = () => {
   const fullWidth = screenWidth - 262;
   const collapseWidth = screenWidth - 122;
 
+  const sortedDeals = orderBy(deals, ["created_at"], ["desc"]);
   let transformObjects = [];
   currentUserObjects?.forEach((obj) => {
     transformObjects?.push({ _id: obj._id, name: obj.location.address });
@@ -61,13 +63,13 @@ const Deals = () => {
   return (
     <Box
       sx={{
-        height: "480px",
+        height: "580px",
         width: width,
       }}
     >
       <LayoutTitle title="Сделки" />
       <Stages
-        deals={deals}
+        deals={sortedDeals}
         stages={dealStages}
         userName={userName}
         onOpen={handleCreateDeal}

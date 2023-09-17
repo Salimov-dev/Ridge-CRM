@@ -10,6 +10,7 @@ import { Box } from "@mui/material";
 // components
 import MyTaskForm from "../../common/forms/my-task-form/my-task-form";
 import TitleWithCloseButton from "../../common/page-titles/title-with-close-button";
+import FooterButtons from "../../common/forms/footer-buttons/footer-buttons";
 // store
 import { createRidgeTask } from "../../../store/ridge-task/ridge-tasks.store";
 import { getCurrentUserId } from "../../../store/user/users.store";
@@ -33,7 +34,7 @@ const CreateRidgeTask = ({
   title,
   dateCreate,
   onClose,
-  objectPageId="",
+  objectPageId = "",
 }) => {
   const dispatch = useDispatch();
   const isObjectPage = Boolean(objectPageId?.length);
@@ -50,10 +51,10 @@ const CreateRidgeTask = ({
     resolver: yupResolver(taskSchema),
   });
   const data = watch();
-  
+
   const watchDate = watch("date", null);
   const watchTime = watch("time", null);
-  const isFullValid = isValid && watchDate&& watchTime;
+  const isFullValid = isValid && watchDate && watchTime;
 
   const currentUserId = useSelector(getCurrentUserId());
   const currentUserObjects = objects?.filter(
@@ -101,17 +102,18 @@ const CreateRidgeTask = ({
         onClose={onClose}
       />
       <MyTaskForm
-        register={register}
         data={data}
         objects={transformObjects}
-        handleSubmit={handleSubmit}
-        onSubmit={onSubmit}
-        onClose={onClose}
+        register={register}
+        watch={watch}
         errors={errors}
         setValue={setValue}
-        isValid={isFullValid}
-        watch={watch}
         isObjectPage={isObjectPage}
+      />
+      <FooterButtons
+        onCreate={handleSubmit(onSubmit)}
+        onClose={onClose}
+        isValid={isFullValid}
       />
     </Box>
   );

@@ -1,5 +1,6 @@
 import { Box } from "@mui/material";
 import styled from "@emotion/styled";
+import grassImage from "./assets/grass.png"; // Путь к изображению
 
 export const AppStyled = styled(Box)`
   display: flex;
@@ -7,6 +8,10 @@ export const AppStyled = styled(Box)`
 `;
 
 export const RightSide = styled(Box)`
-  padding: 0 20px 30px 20px;
+  padding: 0 20px 50px 20px;
   width: 100%;
+  background-image: url(${grassImage}); // Устанавливаем изображение в качестве фона
+  background-repeat: repeat-x; // Повторяем по горизонтали (X)
+  background-size: auto 35px; // Задаем высоту 50px, а ширину автоматически
+  background-position: bottom; // Устанавливаем фон внизу
 `;

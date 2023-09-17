@@ -17,8 +17,6 @@ const MeetingForm = ({
   register,
   watch,
   errors,
-  handleSubmit,
-  onSubmit,
   setValue,
   isEditMode = false,
   isMeetingsLoading,
@@ -31,7 +29,7 @@ const MeetingForm = ({
 
   return (
     <>
-      <Form onSubmit={handleSubmit(onSubmit)} noValidate>
+      <Form noValidate>
         <FieldsContainer>
           <DatePickerStyled
             register={register}

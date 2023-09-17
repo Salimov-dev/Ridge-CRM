@@ -1,13 +1,13 @@
 // liraries
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useDispatch, useSelector } from "react-redux";
-import { useConfirm } from "material-ui-confirm";
 // components
 import TitleWithCloseButton from "../../common/page-titles/title-with-close-button";
 import DealForm from "../../common/forms/deal-form/deal-form";
+import ConfirmRemoveDialog from "../../common/dialog/confirm-remove-dialog";
 import FooterButtons from "../../common/forms/footer-buttons/footer-buttons";
 // store
 import { getCurrentUserId } from "../../../store/user/users.store";
@@ -21,12 +21,10 @@ import {
 import { taskSchema } from "../../../schemas/task-shema";
 
 const UpdateDeal = ({ title, objects, onClose, stages }) => {
-  const confirm = useConfirm();
+  const [open, setOpen] = useState(false);
   const dealId = useSelector(getUpdateDealId());
   const deal = useSelector(getDealById(dealId));
-
   const objectId = deal?.objectId;
-
   const dispatch = useDispatch();
 
   const currentUserId = useSelector(getCurrentUserId());
@@ -42,7 +40,6 @@ const UpdateDeal = ({ title, objects, onClose, stages }) => {
   const {
     register,
     watch,
-    handleSubmit,
     formState: { errors, isValid },
     setValue,
   } = useForm({
@@ -61,22 +58,17 @@ const UpdateDeal = ({ title, objects, onClose, stages }) => {
   };
 
   const handleRemoveDeal = (dealId) => {
-    confirm({
-      title: "Подтвердите удаление сделки",
-      description: "Удалить сделку безвозвратно?",
-      cancellationButtonProps: { color: "error" },
-      confirmationButtonProps: { color: "success" },
-      confirmationText: "Подтвердить",
-      cancellationText: "Отмена",
-    })
-      .then(() => {
-        dispatch(removeDeal(dealId))
-          .then(onClose())
-          .then(toast.success("Сделка успешно удалена!"));
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    dispatch(removeDeal(dealId))
+      .then(onClose())
+      .then(toast.success("Сделка успешно удалена!"));
+  };
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
   };
 
   useEffect(() => {
@@ -102,12 +94,18 @@ const UpdateDeal = ({ title, objects, onClose, stages }) => {
         isEditMode={isEditMode}
       />
       <FooterButtons
-        removeId={dealId}
         onUpdate={handleUpdateDeal}
-        onRemove={handleRemoveDeal}
         onClose={onClose}
+        onRemove={handleClickOpen}
+        removeId={dealId}
+        isEditMode={isEditMode}
         isValid={!isValid}
-        isEditMode={true}
+      />
+      <ConfirmRemoveDialog
+        removeId={dealId}
+        open={open}
+        onClose={handleClose}
+        onRemove={handleRemoveDeal}
       />
     </>
   );

@@ -1,7 +1,7 @@
 import { createAction, createSlice } from "@reduxjs/toolkit";
 import isOutDated from "../../utils/auth/is-out-date";
 import localStorageService from "../../services/user/local.storage-service";
-import lastContactService from "../../services/last-contact/ridge-last-contact.service";
+import lastContactService from "../../services/last-contact/last-contact.service copy";
 import { createSelector } from "reselect";
 
 const initialState = localStorageService.getAccessToken()

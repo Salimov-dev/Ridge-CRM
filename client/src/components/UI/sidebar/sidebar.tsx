@@ -1,7 +1,7 @@
 // libraries
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { Box, styled, useTheme } from "@mui/material";
+import { Box, Typography, styled, useTheme } from "@mui/material";
 import { Sidebar as ProSidebar, Menu } from "react-pro-sidebar";
 // components
 import Header from "./components/header";
@@ -67,6 +67,7 @@ const Sidebar = () => {
   return (
     <Component
       sx={{
+        display: "flex",
         height: "inherit",
         "& .ps-sidebar-container": {
           overflow: "hidden",
@@ -88,6 +89,14 @@ const Sidebar = () => {
         },
       }}
     >
+      <Box
+        sx={{
+          minWidth: "6px",
+          backgroundImage:
+            "linear-gradient(to bottom, white, white 33%, blue 33%, blue 66%, red 66%, red)",
+          height: "100%",
+        }}
+      ></Box>
       <ProSidebar collapsed={isCollapsed}>
         <Menu>
           <Header

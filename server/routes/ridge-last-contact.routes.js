@@ -38,7 +38,7 @@ router.post("/create", auth, async (req, res) => {
 
 router.patch("/:ridgeLastContactId?/edit", auth, async (req, res) => {
   try {
-    const { lastContactId } = req.params;
+    const  lastContactId  = req.body._id;
     await RidgeLastContact.findByIdAndUpdate(lastContactId, req.body);
   } catch (e) {
     res.status(500).json({

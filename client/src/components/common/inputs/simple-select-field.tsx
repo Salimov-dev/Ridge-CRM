@@ -10,7 +10,7 @@ import {
   FormHelperText,
 } from "@mui/material";
 
-const StyledSelect = styled(Select)(() => ({
+const StyledSelect = styled(Select)(({ theme }) => ({
   "&.Mui-focused": {
     "& .MuiOutlinedInput-notchedOutline": {
       borderColor: "green",
@@ -20,6 +20,7 @@ const StyledSelect = styled(Select)(() => ({
     marginTop: "-5px",
     height: "24px !important",
   },
+  zIndex: theme.zIndex.modal + 1
 }));
 
 const SimpleSelectField = ({
@@ -77,6 +78,7 @@ const SimpleSelectField = ({
           },
           "& .MuiInputLabel-root": {
             color: selectedItems ? "white" : "gray",
+  
           },
         }}
       >

@@ -16,6 +16,7 @@ import { createTask } from "../../../store/task/tasks.store";
 import { taskSchema } from "../../../schemas/task-shema";
 // utils
 import { capitalizeFirstLetter } from "../../../utils/data/capitalize-first-letter";
+import FooterButtons from "../../common/forms/footer-buttons/footer-buttons";
 
 const initialState = {
   date: dayjs(),
@@ -89,17 +90,18 @@ const CreateMyTask = ({
         onClose={onClose}
       />
       <MyTaskForm
-        register={register}
         data={data}
         objects={objects}
-        handleSubmit={handleSubmit}
-        onSubmit={onSubmit}
-        onClose={onClose}
+        register={register}
+        watch={watch}
         errors={errors}
         setValue={setValue}
-        isValid={isFullValid}
-        watch={watch}
         isObjectPage={isObjectPage}
+      />
+       <FooterButtons
+        onCreate={handleSubmit(onSubmit)}
+        onClose={onClose}
+        isValid={isFullValid}
       />
     </Box>
   );

@@ -1,4 +1,5 @@
 // libraries
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -16,6 +17,8 @@ import FooterButtons from "../../common/forms/footer-buttons/footer-buttons";
 import RidgeLastContacts from "../../../layouts/ridge/components/ridge-last-contacts/ridge-last-contacts";
 import CreateRidgeTasksButtons from "../../../layouts/ridge/components/create-ridge-tasks-buttons/create-ridge-tasks-buttons";
 import CreateRidgeLastContactButton from "../../UI/dialogs/buttons/create-ridge-last-contact-button";
+import ConfirmRemoveDialog from "../../common/dialog/confirm-remove-dialog";
+// columns
 import { ridgeTasksColumnsDialog } from "../../../columns/ridge-tasks-columns/ridge-tasks-columns-dialog";
 // schemas
 import { ridgeObjectSchema } from "../../../schemas/ridge-object-schema";
@@ -29,11 +32,11 @@ import {
   updateRidgeObject,
 } from "../../../store/ridge-object/ridge-objects.store";
 import { getRidgeLastContactsByObjectId } from "../../../store/ridge-last-contact/last-ridge-contact.store";
-import { useConfirm } from "material-ui-confirm";
+// utils
 import { capitalizeFirstLetter } from "../../../utils/data/capitalize-first-letter";
 
 const UpdateRidgeObject = ({ onClose }) => {
-  const confirm = useConfirm();
+  const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
 
   const tasksColumns = ridgeTasksColumnsDialog;
@@ -43,7 +46,7 @@ const UpdateRidgeObject = ({ onClose }) => {
   const object = useSelector(getRidgeObjectById(objectId));
 
   const lastContacts = useSelector(getRidgeLastContactsByObjectId(objectId));
-  const sortedLastContacts = orderBy(lastContacts, ["date"], ["asc"]);
+  const sortedLastContacts = orderBy(lastContacts, ["date"], ["desc"]);
 
   const address = `${object?.location?.city}, ${object?.location?.address}`;
   const latitude = object?.location?.latitude || null;
@@ -83,22 +86,17 @@ const UpdateRidgeObject = ({ onClose }) => {
   };
 
   const handleRemoveObject = (objectId) => {
-    confirm({
-      title: "Подтвердите удаление объекта с грядки",
-      description: "Удалить объект с грядки безвозвратно?",
-      cancellationButtonProps: { color: "error" },
-      confirmationButtonProps: { color: "success" },
-      confirmationText: "Подтвердить",
-      cancellationText: "Отмена",
-    })
-      .then(() => {
-        dispatch(removeRidgeObject(objectId))
-          .then(onClose())
-          .then(toast.success("Объект успешно удален с грядки!"));
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    dispatch(removeRidgeObject(objectId))
+      .then(onClose())
+      .then(toast.success("Объект успешно удален с грядки!"));
+  };
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
   };
 
   return object ? (
@@ -142,11 +140,17 @@ const UpdateRidgeObject = ({ onClose }) => {
         objectId={objectId}
         onClose={onClose}
         onUpdate={handleSubmit(onSubmit)}
-        onRemove={handleRemoveObject}
+        onRemove={handleClickOpen}
         removeId={objectId}
         isValid={isValid}
         isEditMode={isEditMode}
         isRidgeObject={true}
+      />
+      <ConfirmRemoveDialog
+        removeId={objectId}
+        open={open}
+        onClose={handleClose}
+        onRemove={handleRemoveObject}
       />
     </Box>
   ) : (

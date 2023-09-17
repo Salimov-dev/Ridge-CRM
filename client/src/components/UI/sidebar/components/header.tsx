@@ -20,7 +20,7 @@ const Header = ({ isCollapsed, setIsCollapsed, colors }) => {
           sx={{ margin: "0 20px 0 8px" }}
         >
           <Typography variant="h3" color={colors.grey[100]}>
-            Ridge
+            Грядка
           </Typography>
           <IconButton onClick={() => setIsCollapsed(!isCollapsed)}>
             <MenuOutlinedIcon />
