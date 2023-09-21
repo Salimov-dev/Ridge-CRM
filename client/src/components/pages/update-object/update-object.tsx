@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from "react-toastify";
-import { cloneDeep } from "lodash";
 // MUI
 import { Box } from "@mui/material";
 // components
@@ -19,15 +18,12 @@ import {
 // schema
 import { objectSchema } from "../../../schemas/object-schema";
 // utils
-import { replaceNullsWithEmptyString } from "../../../utils/data/replace-nulls-with-empty-string";
 import { capitalizeFirstLetter } from "../../../utils/data/capitalize-first-letter";
 
 const UpdateObject = ({ onClose }) => {
   const dispatch = useDispatch();
   const objectId = useSelector(getUpdateObjectId());
   const object = useSelector(getObjectById(objectId));
-  const newObject = cloneDeep(object);
-  const objectWithoutNull = replaceNullsWithEmptyString(newObject);
 
   const isEditMode = objectId ? true : false;
   const isObjectHasAddress =
@@ -39,7 +35,7 @@ const UpdateObject = ({ onClose }) => {
     handleSubmit,
     formState: { errors, isValid },
   } = useForm({
-    defaultValues: objectWithoutNull,
+    defaultValues: object,
     mode: "onBlur",
     resolver: yupResolver(objectSchema),
   });

@@ -19,7 +19,7 @@ import { capitalizeFirstLetter } from "../../../utils/data/capitalize-first-lett
 import FooterButtons from "../../common/forms/footer-buttons/footer-buttons";
 
 const initialState = {
-  date: dayjs(),
+  date: null,
   time: null,
   objectId: "",
   managerId: "",
@@ -33,8 +33,8 @@ const CreateMyTask = ({
   dateCreate,
   objects,
   onClose,
-  objectPageId="",
-  isObjectPage=false,
+  objectPageId = "",
+  isObjectPage = false,
 }) => {
   const dispatch = useDispatch();
 
@@ -52,7 +52,7 @@ const CreateMyTask = ({
   const data = watch();
   const watchDate = watch("date", null);
   const watchTime = watch("time", null);
-  const isFullValid = isValid && watchDate && watchTime
+  const isFullValid = isValid && watchDate && watchTime;
 
   const onSubmit = () => {
     const newData = {
@@ -98,7 +98,7 @@ const CreateMyTask = ({
         setValue={setValue}
         isObjectPage={isObjectPage}
       />
-       <FooterButtons
+      <FooterButtons
         onCreate={handleSubmit(onSubmit)}
         onClose={onClose}
         isValid={isFullValid}

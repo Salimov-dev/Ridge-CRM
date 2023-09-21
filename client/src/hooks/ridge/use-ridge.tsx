@@ -11,7 +11,7 @@ const useRidge = (
   const objectInitialState = {
     address: "",
     comment: "",
-    contacts: "",
+    phone: "",
     status: "",
     objectActivity: "",
     selectedStatuses: [],
@@ -24,7 +24,7 @@ const useRidge = (
   const objectData = {
     address: data.address,
     comment: data.comment,
-    contacts: data.contacts,
+    phone: data.phone,
     status: data.status,
     objectActivity: data.objectActivity,
     selectedStatuses: data.selectedStatuses,

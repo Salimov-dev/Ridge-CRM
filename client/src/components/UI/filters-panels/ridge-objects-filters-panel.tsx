@@ -36,9 +36,9 @@ const RidgeObjectsFiltersPanel = ({
         />
         <SearchField
           register={register}
-          label="Найти по контактам"
-          name="contacts"
-          value={data.contacts}
+          label="Найти по телефону"
+          name="phone"
+          value={data?.phone}
           inputProps={{ maxLength: 20 }}
           disabled={isLoading ? true : false}
         />

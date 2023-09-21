@@ -12,7 +12,6 @@ import { getSidebarCollapsState } from "../../../../store/sidebar-collaps-state.
 import targetDefault from "../../../../assets/map/target.png";
 import {
   Map,
-  YMaps,
   Placemark,
   Clusterer,
   FullscreenControl,
@@ -69,7 +68,7 @@ const ItemsOnMap = ({
   };
 
   useEffect(() => {
-    setWidth(isCollapsedSidebar ? collapseWidth : fullWidth)
+    setWidth(isCollapsedSidebar ? collapseWidth : fullWidth);
     window.addEventListener("resize", handleResize);
     return () => {
       window.removeEventListener("resize", handleResize);
@@ -83,79 +82,76 @@ const ItemsOnMap = ({
   return (
     <MapContainer>
       {!isLoading ? (
-        <YMaps>
-          <Map
-            width={width}
-            height="100%"
-            defaultState={{
-              center: center,
-              zoom: mapZoom,
-              controls: ["zoomControl", "searchControl"],
-            }}
-            modules={[
-              "geoObject.addon.balloon",
-              "geoObject.addon.hint",
-              "control.ZoomControl",
-              "control.SearchControl",
-              "clusterer.addon.balloon",
-            ]}
-          >
-            <FullscreenControl />
-            <Clusterer
-              instanceRef={(ref) => (clustererInstanceRef.current = ref)}
-              // onBalloonOpen={(e) => {
-              //   console.log(e?.get("cluster")?.properties?.get("geoObjects"));
-              // }}
-              // onMouseEnter={(e) => {
-              //   console.log("click");
+        <Map
+          width={width}
+          height="100%"
+          defaultState={{
+            center: center,
+            zoom: mapZoom,
+            controls: ["zoomControl", "searchControl"],
+          }}
+          modules={[
+            "geoObject.addon.balloon",
+            "geoObject.addon.hint",
+            "control.ZoomControl",
+            "control.SearchControl",
+            "clusterer.addon.balloon",
+          ]}
+        >
+          <FullscreenControl />
+          <Clusterer
+            instanceRef={(ref) => (clustererInstanceRef.current = ref)}
+            // onBalloonOpen={(e) => {
+            //   console.log(e?.get("cluster")?.properties?.get("geoObjects"));
+            // }}
+            // onMouseEnter={(e) => {
+            //   console.log("click");
 
-              //   // e.get("target").options.set("balloonLayout", ObjectBaloon);
-              //   // setActivePortal(false);
-              // }}
-              options={{
-                clusterIcons: [
-                  {
-                    href: targetCluster,
-                    size: [50, 50],
-                    offset: [-25, -25],
-                  },
-                ],
-                groupByCoordinates: false,
-                hasBalloon: true,
-              }}
-            >
-              {items?.map((item) => (
-                <Placemark
-                  key={item._id}
-                  modules={["geoObject.addon.balloon", "geoObject.addon.hint"]}
-                  options={{
-                    iconLayout: "default#image",
-                    iconImageHref: target,
-                    iconImageSize: [40, 40],
-                    iconImageOffset: [-20, -40],
-                  }}
-                  geometry={
-                    item.location?.latitude && item.location?.longitude
-                      ? [item.location.latitude, item.location.longitude]
-                      : null
-                  }
-                  properties={{
-                    hintContent: hintContent(item),
-                    balloonContentBody:
-                      '<div id="baloon" class="baloon"></div>',
-                    clusterCaption: dayjs(item?.created_at).format("DD.MM.YY"),
-                  }}
-                  onClick={() => {
-                    setTimeout(() => {
-                      onClick(item?._id);
-                      setActivePortal(true);
-                    }, 0);
-                  }}
-                />
-              ))}
-            </Clusterer>
-          </Map>
-        </YMaps>
+            //   // e.get("target").options.set("balloonLayout", ObjectBaloon);
+            //   // setActivePortal(false);
+            // }}
+            options={{
+              clusterIcons: [
+                {
+                  href: targetCluster,
+                  size: [50, 50],
+                  offset: [-25, -25],
+                },
+              ],
+              groupByCoordinates: false,
+              hasBalloon: true,
+            }}
+          >
+            {items?.map((item) => (
+              <Placemark
+                key={item._id}
+                modules={["geoObject.addon.balloon", "geoObject.addon.hint"]}
+                options={{
+                  iconLayout: "default#image",
+                  iconImageHref: target,
+                  iconImageSize: [40, 40],
+                  iconImageOffset: [-20, -40],
+                }}
+                geometry={
+                  item.location?.latitude && item.location?.longitude
+                    ? [item.location.latitude, item.location.longitude]
+                    : null
+                }
+                properties={{
+                  hintContent: hintContent(item),
+                  balloonContentBody: '<div id="baloon" class="baloon"></div>',
+                  clusterCaption: dayjs(item?.created_at).format("DD.MM.YY"),
+                }}
+                onClick={() => {
+                  setTimeout(() => {
+                    onClick(item?._id);
+                    setActivePortal(true);
+                  }, 0);
+                }}
+              />
+            ))}
+          </Clusterer>
+        </Map>
       ) : (
         <Loader />
       )}

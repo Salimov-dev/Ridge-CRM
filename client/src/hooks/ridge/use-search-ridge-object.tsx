@@ -42,12 +42,12 @@ const useSearchRidgeObject = (objects, data) => {
       );
     }
 
-    if (data?.contacts?.length) {
-      array = array?.filter((obj) =>
-        obj?.findedContacts
-          ?.toLowerCase()
-          .includes(data?.contacts?.toLowerCase())
-      );
+    if (data?.phone?.length) {
+      if (data?.phone?.length) {
+        array = array?.filter((obj) =>
+          String(obj.contact?.phone).includes(data?.phone)
+        );
+      }
     }
 
     if (data.selectedStatuses?.length) {
@@ -140,15 +140,19 @@ const useSearchRidgeObject = (objects, data) => {
     if (data.objectActivity === "7652fgdnhgawqgzcv456g56873") {
       array = array?.filter(
         (obj) => !hasLastContact(obj._id) && !hasTasks(obj._id)
-        );
+      );
     }
     // не сдаём в аренду
     if (data.objectActivity === "30968fdjdsfsdj324igjfg2342") {
-      array = array?.filter((obj) => obj?.status === "65004bc75b4362d9d53cc602");
+      array = array?.filter(
+        (obj) => obj?.status === "65004bc75b4362d9d53cc602"
+      );
     }
     // получить ОС
     if (data.objectActivity === "049832ugnfdskwe43fr0987655") {
-        array = array?.filter((obj) => obj?.status === "65004f055b4362d9d53cc603");        
+      array = array?.filter(
+        (obj) => obj?.status === "65004f055b4362d9d53cc603"
+      );
     }
 
     return array;

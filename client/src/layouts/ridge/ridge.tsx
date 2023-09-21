@@ -38,7 +38,7 @@ import {
 const initialState = {
   address: "",
   comment: "",
-  contacts: "",
+  phone: "",
   status: "",
   selectedStatuses: [],
   selectedDistricts: [],

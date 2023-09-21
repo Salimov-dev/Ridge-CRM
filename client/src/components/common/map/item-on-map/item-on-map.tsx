@@ -1,5 +1,3 @@
-import { useEffect, useState } from "react";
-import { createPortal } from "react-dom";
 // MUI
 import { Box, styled } from "@mui/material";
 // components
@@ -19,23 +17,7 @@ const MapContainer = styled(Box)`
   margin-bottom: 20px;
 `;
 
-const ItemOnMap = ({ baloon="", hintContent, center, mapZoom, isLoading }) => {
-  const [activePortal, setActivePortal] = useState(false);
-
-  const Portal = ({ children, getHTMLElementId }) => {
-    const mount = document.getElementById(getHTMLElementId);
-    const el = document.createElement("div");
-
-    useEffect(() => {
-      if (mount) mount.appendChild(el);
-      return () => {
-        if (mount) mount.removeChild(el);
-      };
-    }, [el, mount]);
-
-    return createPortal(children, el);
-  };
-
+const ItemOnMap = ({ hintContent, center, mapZoom, isLoading }) => {
   return (
     <MapContainer>
       {!isLoading ? (
@@ -47,14 +29,13 @@ const ItemOnMap = ({ baloon="", hintContent, center, mapZoom, isLoading }) => {
             controls: ["zoomControl", "searchControl"],
           }}
           modules={[
-            "geoObject.addon.balloon",
             "geoObject.addon.hint",
             "control.ZoomControl",
             "control.SearchControl",
           ]}
         >
           <Placemark
-            modules={["geoObject.addon.balloon", "geoObject.addon.hint"]}
+            modules={["geoObject.addon.hint"]}
             options={{
               iconLayout: "default#image",
               iconImageHref: target,
@@ -64,19 +45,12 @@ const ItemOnMap = ({ baloon="", hintContent, center, mapZoom, isLoading }) => {
             geometry={center}
             properties={{
               hintContent: hintContent,
-              // balloonContentBody: '<div id="baloon" class="baloon"></div>',
-            }}
-            onClick={() => {
-              setTimeout(() => {
-                setActivePortal(true);
-              }, 0);
             }}
           />
         </Map>
       ) : (
         <Loader />
       )}
-      {activePortal && <Portal getHTMLElementId="baloon">{baloon}</Portal>}
     </MapContainer>
   );
 };
