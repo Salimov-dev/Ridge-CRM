@@ -12,7 +12,13 @@ import BusinessOutlinedIcon from "@mui/icons-material/BusinessOutlined";
 import AssignmentOutlinedIcon from "@mui/icons-material/AssignmentOutlined";
 import AppsOutlinedIcon from "@mui/icons-material/AppsOutlined";
 
-const ItemsList = ({ isCollapsed, selected, setSelected, colors }) => {
+const ItemsList = ({
+  selected,
+  setSelected,
+  colors,
+  isCurator,
+  isCollapsed,
+}) => {
   return (
     <>
       <Item
@@ -30,7 +36,7 @@ const ItemsList = ({ isCollapsed, selected, setSelected, colors }) => {
         title="Активность"
         colors={colors.grey[300]}
         isCollapsed={isCollapsed}
-        sx={{fontSize: '10px'}}
+        sx={{ fontSize: "10px" }}
       />
       <Item
         title="Объекты"
@@ -87,34 +93,37 @@ const ItemsList = ({ isCollapsed, selected, setSelected, colors }) => {
         selected={selected}
         setSelected={setSelected}
       />
-
-      <ItemsTitle
-        title="Команда"
-        colors={colors.grey[300]}
-        isCollapsed={isCollapsed}
-      />
-      <Item
-        title="Менеджеры"
-        to="/users"
-        icon={
-          <Tooltip title="Менеджеры" placement="top-start" arrow>
-            <PeopleOutlinedIcon />
-          </Tooltip>
-        }
-        selected={selected}
-        setSelected={setSelected}
-      />
-      <Item
-        title="Презентации"
-        to="/presentations"
-        icon={
-          <Tooltip title="Презентации" placement="top-start" arrow>
-            <AssignmentOutlinedIcon />
-          </Tooltip>
-        }
-        selected={selected}
-        setSelected={setSelected}
-      />
+      {isCurator ? (
+        <>
+          <ItemsTitle
+            title="Команда"
+            colors={colors.grey[300]}
+            isCollapsed={isCollapsed}
+          />
+          <Item
+            title="Менеджеры"
+            to="/users"
+            icon={
+              <Tooltip title="Менеджеры" placement="top-start" arrow>
+                <PeopleOutlinedIcon />
+              </Tooltip>
+            }
+            selected={selected}
+            setSelected={setSelected}
+          />
+          <Item
+            title="Презентации"
+            to="/presentations"
+            icon={
+              <Tooltip title="Презентации" placement="top-start" arrow>
+                <AssignmentOutlinedIcon />
+              </Tooltip>
+            }
+            selected={selected}
+            setSelected={setSelected}
+          />
+        </>
+      ) : null}
     </>
   );
 };

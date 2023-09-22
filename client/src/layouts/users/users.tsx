@@ -40,8 +40,8 @@ const Users = () => {
   const isLoading = useSelector(getUsersLoadingStatus());
   const users = useSelector(getUsersList());
   const currentUserId = useSelector(getCurrentUserId());
-  const usersWithoutCurrentUser = users.filter(
-    (user) => user._id !== currentUserId
+  const usersWithoutCurrentUser = users?.filter(
+    (user) => user?._id !== currentUserId
   );
 
   const { getActualUsersList, getActualStatusesList } = useUsers(

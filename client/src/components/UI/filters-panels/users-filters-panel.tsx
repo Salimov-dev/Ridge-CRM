@@ -5,6 +5,7 @@ import SimpleSelectField from "../../common/inputs/simple-select-field";
 import { FieldsContainer, Form } from "../../common/forms/styled/styled";
 // mock
 import { gendersArray } from "../../../mock/genders";
+import SearchSelectField from "../../common/inputs/search-select-field";
 
 const UsersFiltersPanel = ({
   register,
@@ -59,14 +60,13 @@ const UsersFiltersPanel = ({
           onChange={(e) => setValue("selectedStatuses", e.target.value)}
           disabled={isLoading ? true : false}
         />
-        <SimpleSelectField
+        <SearchSelectField
           register={register}
           name="gender"
           labelId="gender"
           label="Пол"
           value={data.gender}
           itemsList={gendersArray}
-          selectedItems={data.gender}
           disabled={isLoading ? true : false}
         />
       </FieldsContainer>

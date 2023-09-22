@@ -98,12 +98,7 @@ export const meetingsColumns = [
       };
 
       return objectId ? (
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-          }}
+        <AlignCenter
         >
           {fullAddress}
           {!isObjectPage && objectId ? (
@@ -113,7 +108,7 @@ export const meetingsColumns = [
               onClick={handleClick}
             />
           ) : null}
-        </Box>
+        </AlignCenter>
       ) : (
         "-"
       );

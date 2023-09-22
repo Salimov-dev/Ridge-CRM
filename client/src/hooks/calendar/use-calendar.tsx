@@ -20,8 +20,8 @@ const useCalendar = () => {
   const currentWeeklyMeetings = meetings?.filter((meet) =>
     dayjs(meet.date).isBetween(startOfWeek, endOfWeek, null, "[]")
   );
-  const usersWithoutCurrentUser = users.filter(
-    (user) => user._id !== currentUserId
+  const usersWithoutCurrentUser = users?.filter(
+    (user) => user?._id !== currentUserId
   );
   const currentUserObjects = objects?.filter(
     (obj) => obj?.userId === currentUserId

@@ -13,6 +13,7 @@ const schema = new Schema(
     gender: String,
     birthday: String,
     status: String,
+    role: String,
     name: {
       firstName: String,
       surName: String,

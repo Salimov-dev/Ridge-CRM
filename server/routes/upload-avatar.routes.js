@@ -51,6 +51,7 @@ router.post("/", auth, upload.single("avatar"), async (req, res) => {
         .split(".")
         .pop()}`,
     });
+    
   } catch (e) {
     res.status(500).json({
       message: "На сервере произошла ошибка, попробуйте позже",

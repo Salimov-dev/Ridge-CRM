@@ -27,6 +27,8 @@ import {
   getObjectsList,
   getObjectsLoadingStatus,
 } from "../../store/object/objects.store";
+import { getCurrentUserId, getIsUserCurator } from "../../store/user/users.store";
+import { objectsColumnsCurator } from "../../columns/objects-columns/objects-columns-curator";
 
 const initialState = {
   address: "",
@@ -50,7 +52,10 @@ const Objects = () => {
   const objects = useSelector(getObjectsList());
   const selectedObject = useSelector(getObjectById(selectedBaloon));
   const isLoading = useSelector(getObjectsLoadingStatus());
-  const columns = objectsColumns;
+  const currentUserId = useSelector(getCurrentUserId())
+  const isCurator = useSelector(getIsUserCurator(currentUserId))
+
+  const columns = isCurator ? objectsColumnsCurator  : objectsColumns;
 
   const center = [59.930320630519155, 30.32906024941998];
   const mapZoom = 11;

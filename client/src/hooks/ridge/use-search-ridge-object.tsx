@@ -148,12 +148,6 @@ const useSearchRidgeObject = (objects, data) => {
         (obj) => obj?.status === "65004bc75b4362d9d53cc602"
       );
     }
-    // получить ОС
-    if (data.objectActivity === "049832ugnfdskwe43fr0987655") {
-      array = array?.filter(
-        (obj) => obj?.status === "65004f055b4362d9d53cc603"
-      );
-    }
 
     return array;
   }, [data, objects]);

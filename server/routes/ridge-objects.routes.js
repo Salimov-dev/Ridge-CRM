@@ -2,13 +2,38 @@ import express from "express";
 import Company from "../models/Company.js";
 import auth from "../middleware/auth.middleware.js";
 import RidgeObject from "../models/Ridge-object.js";
+import User from "../models/User.js";
 
 const router = express.Router({ mergeParams: true });
 
-router.get("/", async (req, res) => {
+router.get("/", auth, async (req, res) => {
   try {
-    const list = await RidgeObject.find();
-    res.status(200).send(list);
+    const userId = req.user._id;
+    const user = await User.findOne({ _id: userId });
+    const userRole = user.role;
+
+    if (userRole === "MANAGER") {
+      // Если пользователь - менеджер, то показать только его объекты
+      const objects = await RidgeObject.find({ userId });
+      return res.status(200).send(objects);
+    }
+
+    // Найти объекты, принадлежащие текущему пользователю
+    const objects = await RidgeObject.find({ userId });
+
+    // Найти менеджеров текущего пользователя
+    const managers = await User.find({ curatorId: userId });
+
+    // Создать массив идентификаторов менеджеров
+    const managerIds = managers.map(manager => manager._id);
+
+    // Найти объекты, принадлежащие менеджерам
+    const managerObjects = await RidgeObject.find({ userId: { $in: managerIds } });
+
+    // Объединить объекты текущего пользователя и объекты менеджеров
+    const allObjects = [...objects, ...managerObjects];
+
+    return res.status(200).send(allObjects);
   } catch (e) {
     res.status(500).json({
       message: "На сервере произошла ошибка, попробуйте позже",

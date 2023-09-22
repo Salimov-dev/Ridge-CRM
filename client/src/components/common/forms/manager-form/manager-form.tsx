@@ -167,7 +167,7 @@ const ManagerForm = ({
           name="email"
           errors={errors?.email}
           value={data?.email || ""}
-          onInputQuantities={25}
+          onInputQuantities={125}
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">

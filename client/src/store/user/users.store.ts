@@ -126,17 +126,6 @@ export const addNewManager = (payload) => async (dispatch) => {
   }
 };
 
-// export const addNewManager = (payload) => async (dispatch) => {
-//   dispatch(authRequested());
-//   try {
-//     const data = await authService.register(payload);
-//     dispatch(authRequestSuccess({ userId: data.userId }));
-//     dispatch(loadUsersList());
-//   } catch (error) {
-//     dispatch(authRequestFailed(error.message));
-//   }
-// };
-
 export const logOut = () => (dispatch) => {
   localStorageService.removeAuthData();
   dispatch(userLoggedOut());
@@ -189,6 +178,18 @@ export const getUserDataById = (id) => (state) => {
 };
 
 export const getUsersList = () => (state) => state?.users?.entities;
+
+export const getIsUserManager = (userId) => (state) => {
+  const user = state.users.entities?.find((user) => user?._id === userId);
+  const isManager = user?.role === "MANAGER";
+  return isManager;
+};
+
+export const getIsUserCurator = (userId) => (state) => {
+  const user = state.users.entities?.find((user) => user?._id === userId);
+  const isCurator = user?.role === "CURATOR";
+  return isCurator;
+};
 
 export const getIsLoggedIn = () => (state) => state.users.isLoggedIn;
 export const getDataStatus = () => (state) => state.users.dataLoaded;

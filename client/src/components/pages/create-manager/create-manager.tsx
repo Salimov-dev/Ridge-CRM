@@ -96,7 +96,7 @@ const CreateManager = ({ onClose }) => {
         errors={errors}
         setValue={setValue}
         userStatuses={userStatuses}
-        isValid={isValid}
+        isValid={!isValid}
       />
     </Box>
   );

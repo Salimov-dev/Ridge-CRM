@@ -34,6 +34,10 @@ import {
   getRidgeObjectsList,
   getRidgeObjectsLoadingStatus,
 } from "../../store/ridge-object/ridge-objects.store";
+import { getCurrentUserId, getIsUserCurator } from "../../store/user/users.store";
+import { AlignCenter } from "../../components/common/columns/styled";
+import { FormatManagerName } from "../../components/common/table/helpers/helpers";
+import { ridgeObjectsColumnsCurator } from "../../columns/ridge-columns/ridge-objects-columns-curator";
 
 const initialState = {
   address: "",
@@ -57,13 +61,15 @@ const Ridge = () => {
   const [dateCreate, setDateCreate] = useState(null);
   const [selectedBaloon, setSelectedBaloon] = useState(null);
   const monthIndex = useSelector(getMonthIndexState());
+  const currentUserId = useSelector(getCurrentUserId())
+  const isCurator = useSelector(getIsUserCurator(currentUserId))
 
   const tasksColumn = ridgeTasksColumns;
   const tasksList = useSelector(getRidgeTasksList());
 
   const objects = useSelector(getRidgeObjectsList());
   const selectedObject = useSelector(getRidgeObjectById(selectedBaloon));
-  const columns = ridgeObjectsColumns;
+  const columns = isCurator ? ridgeObjectsColumnsCurator : ridgeObjectsColumns;
 
   const center = [59.930320630519155, 30.32906024941998];
   const mapZoom = 11;

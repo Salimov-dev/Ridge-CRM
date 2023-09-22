@@ -1,8 +1,8 @@
-import express from"express"
-import bcrypt from"bcryptjs"
-import { check, validationResult } from "express-validator"
-import User from"../models/User.js"
-import tokenService from"../services/token.service.js"
+import express from "express";
+import bcrypt from "bcryptjs";
+import { check, validationResult } from "express-validator";
+import User from "../models/User.js";
+import tokenService from "../services/token.service.js";
 
 const router = express.Router({ mergeParams: true });
 
@@ -23,7 +23,7 @@ router.post("/signUp", [
       }
 
       const { email, password } = req.body;
-      
+
       const existingUser = await User.findOne({ email });
 
       if (existingUser) {
@@ -40,6 +40,7 @@ router.post("/signUp", [
       const newUser = await User.create({
         ...req.body,
         password: hashedPassword,
+        role: "MANAGER",
       });
 
       const tokens = tokenService.generate({ _id: newUser._id });
@@ -83,7 +84,7 @@ router.post("/signInWithPassword", [
         });
       }
 
-      const isPasswordEqual = await bcrypt.compare(
+      const isPasswordEqual = await bcrypt.compareSync(
         password,
         existingUser.password
       );

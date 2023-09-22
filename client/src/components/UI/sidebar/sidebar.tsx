@@ -1,6 +1,6 @@
 // libraries
 import { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Box, Typography, styled, useTheme } from "@mui/material";
 import { Sidebar as ProSidebar, Menu } from "react-pro-sidebar";
 // components
@@ -10,6 +10,7 @@ import ItemsList from "./components/items-list";
 import { setSidebarCollapsState } from "../../../store/sidebar-collaps-state.store";
 // other
 import { tokens } from "../../../theme";
+import { getCurrentUserId, getIsUserCurator } from "../../../store/user/users.store";
 
 const Component = styled(Box)`
   height: 100vh;
@@ -20,6 +21,8 @@ const Sidebar = () => {
   const [currentPath, setCurrentPath] = useState("");
   const [selected, setSelected] = useState(setSelectedMenuItem());
   const [isCollapsed, setIsCollapsed] = useState(true);
+  const currentUserId = useSelector(getCurrentUserId())
+  const isCurator = useSelector(getIsUserCurator(currentUserId))
 
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -104,10 +107,11 @@ const Sidebar = () => {
             colors={colors}
           />
           <ItemsList
-            isCollapsed={isCollapsed}
             selected={selected}
             setSelected={setSelected}
             colors={colors}
+            isCurator={isCurator}
+            isCollapsed={isCollapsed}
           />
         </Menu>
       </ProSidebar>

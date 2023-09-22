@@ -115,7 +115,7 @@ export const meetingsColumns = [
           ) : null}
         </Box>
       ) : (
-        "-"
+        <AlignCenter>-</AlignCenter>
       );
     },
   },

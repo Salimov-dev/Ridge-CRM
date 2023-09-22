@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 // objects
 import { loadObjectsList } from "../store/object/objects.store";
 import { loadObjectStatusList } from "../store/object/object-status.store";
@@ -17,7 +17,7 @@ import { loadMeetingsList } from "../store/meeting/meetings.store";
 import { loadMeetingStatusesList } from "../store/meeting/meeting-status.store";
 import { loadMeetingTypesList } from "../store/meeting/meeting-types.store";
 // users
-import { loadUsersList } from "../store/user/users.store";
+import { getIsLoggedIn, loadUsersList } from "../store/user/users.store";
 import { loadUserStatusesList } from "../store/user/user-statuses.store";
 // tasks
 import { loadTasksList } from "../store/task/tasks.store";
@@ -41,45 +41,48 @@ interface AppLoaderProps {
 
 const AppLoader = ({ children }: AppLoaderProps) => {
   const dispatch = useDispatch();
+  const isLoggedIn = useSelector(getIsLoggedIn());
 
   useEffect(() => {
-    // objects
-    dispatch<any>(loadObjectsList());
-    dispatch<any>(loadObjectStatusList());
-    dispatch<any>(loadObjectConditionsList());
-    dispatch<any>(loadObjectTypesList());
-    // objects params
-    dispatch<any>(loadMetroList());
-    dispatch<any>(loadDistrictsList());
-    dispatch<any>(loadWorkingPositionList());
-    dispatch<any>(loadWorkingPositionList());
-    dispatch<any>(loadCurrentRentersList());
-    dispatch<any>(loadRentTypesList());
-    dispatch<any>(loadEstateTypesList());
-    // users
-    dispatch<any>(loadUsersList());
-    dispatch<any>(loadUserStatusesList());
-    // meetings
-    dispatch<any>(loadMeetingsList());
-    dispatch<any>(loadMeetingStatusesList());
-    dispatch<any>(loadMeetingTypesList());
-    // tasks
-    dispatch<any>(loadTasksList());
-    // ridge tasks
-    dispatch<any>(loadRidgeTasksList());
-    // ridge objects
-    dispatch<any>(loadRidgeObjectsList());
-    dispatch<any>(loadRidgeObjectStatusList());
-    // last contact
-    dispatch<any>(loadLastContactsList());
-    // ridge last contact
-    dispatch<any>(loadRidgeLastContactsList());
-    // sidebar collaps
-    dispatch<any>(loadSidebarCollapsState());
-    // deals
-    dispatch<any>(loadDealsList());
-    dispatch<any>(loadDealStagesList());
-  }, []);
+    if (isLoggedIn) {
+      // objects
+      dispatch<any>(loadObjectsList());
+      dispatch<any>(loadObjectStatusList());
+      dispatch<any>(loadObjectConditionsList());
+      dispatch<any>(loadObjectTypesList());
+      // objects params
+      dispatch<any>(loadMetroList());
+      dispatch<any>(loadDistrictsList());
+      dispatch<any>(loadWorkingPositionList());
+      dispatch<any>(loadWorkingPositionList());
+      dispatch<any>(loadCurrentRentersList());
+      dispatch<any>(loadRentTypesList());
+      dispatch<any>(loadEstateTypesList());
+      // users
+      dispatch<any>(loadUsersList());
+      dispatch<any>(loadUserStatusesList());
+      // meetings
+      dispatch<any>(loadMeetingsList());
+      dispatch<any>(loadMeetingStatusesList());
+      dispatch<any>(loadMeetingTypesList());
+      // tasks
+      dispatch<any>(loadTasksList());
+      // ridge tasks
+      dispatch<any>(loadRidgeTasksList());
+      // ridge objects
+      dispatch<any>(loadRidgeObjectsList());
+      dispatch<any>(loadRidgeObjectStatusList());
+      // last contact
+      dispatch<any>(loadLastContactsList());
+      // ridge last contact
+      dispatch<any>(loadRidgeLastContactsList());
+      // sidebar collaps
+      dispatch<any>(loadSidebarCollapsState());
+      // deals
+      dispatch<any>(loadDealStagesList());
+      dispatch<any>(loadDealsList());
+    }
+  }, [isLoggedIn]);
 
   return children;
 };

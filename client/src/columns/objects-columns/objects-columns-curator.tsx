@@ -30,7 +30,7 @@ import {
   getObjectMeetingsList,
 } from "../../store/meeting/meetings.store";
 
-export const objectsColumns = [
+export const objectsColumnsCurator = [
   {
     accessorKey: "created_at",
     header: "Дата",
@@ -190,6 +190,14 @@ export const objectsColumns = [
   {
     header: "Другое",
     columns: [
+      {
+        accessorKey: "userId",
+        header: "Менеджер",
+        cell: (info) => {
+          const userId = info.getValue();
+          return <AlignCenter>{FormatManagerName(userId)}</AlignCenter>;
+        },
+      },
       {
         accessorKey: "status",
         header: "Статус",

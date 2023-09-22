@@ -25,9 +25,8 @@ import {
   setUpdateRidgeObjectId,
   setUpdateRidgeObjectOpenState,
 } from "../../store/ridge-object/update-ridge-object.store";
-import { getIsUserCurator } from "../../store/user/users.store";
 
-export const ridgeObjectsColumns = [
+export const ridgeObjectsColumnsCurator = [
   {
     accessorKey: "created_at",
     header: "Дата",
@@ -153,6 +152,14 @@ export const ridgeObjectsColumns = [
           );
         },
       },
+ {
+        accessorKey: "userId",
+        header: "Менеджер",
+        cell: (info) => {
+          const userId = info.getValue();
+          return <AlignCenter>{FormatManagerName(userId)}</AlignCenter>;
+        },
+      } ,
     ],
   },
   {
