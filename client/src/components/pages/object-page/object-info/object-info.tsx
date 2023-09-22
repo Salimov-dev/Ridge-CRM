@@ -30,12 +30,12 @@ const Component = styled(Box)`
   margin-bottom: 20px;
 `;
 
-const ObjectInfo = ({ object, isLoading }) => {
+const ObjectInfo = ({ object, isLoading, isAuthorEntity=true }) => {
   const objects = useSelector(getObjectsList());
   const meetings = useSelector(getObjectMeetingsList(object?._id));
   const sortedMeetings = orderBy(meetings, ["date"], ["desc"]);
 
-  const tasksColumns = tasksColumnsDialog
+  const tasksColumns = tasksColumnsDialog;
 
   const tasks = useSelector(getObjectTasksList(object?._id));
   const sortedTasks = orderBy(tasks, ["date"], ["desc"]);
@@ -69,16 +69,18 @@ const ObjectInfo = ({ object, isLoading }) => {
     <Component>
       <ObjectsParams object={object} isLoading={isLoading} />
       <ObjectTasks
-      columns={tasksColumns}
+        columns={tasksColumns}
         tasks={sortedTasks}
         object={object}
-        buttons={<CreateTasksButtons withoutMeeting={true} />}
+        buttons={<CreateTasksButtons withoutMeeting={true} 
+        isAuthorEntity={isAuthorEntity}
+        />}
       />
-      <ObjectMeetings meetings={sortedMeetings} object={object} />
+      <ObjectMeetings meetings={sortedMeetings} object={object} isAuthorEntity={isAuthorEntity}/>
       <LastContacts
         lastContacts={sortedLastContacts}
         object={object}
-        buttons={<CreateLastContactButton title="Добавить последний контакт" />}
+        buttons={<CreateLastContactButton title="Добавить последний контакт" isAuthorEntity={isAuthorEntity} />}
       />
 
       <Dialogs objects={transformObjects} users={transformUsers} />

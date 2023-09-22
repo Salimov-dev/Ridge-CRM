@@ -29,18 +29,19 @@ const FooterButtons = ({
   isEditMode = false,
   isRidgeObject = false,
   withoutRemoveButton = false,
+  isAuthorEntity=true
 }) => {
   return (
     <Component>
       <Container>
-        <PositiveOutlinedButton
+        {isAuthorEntity ? <PositiveOutlinedButton
           title={isEditMode ? "Сохранить" : "Создать"}
           isValid={!isValid}
           type="text"
           onClick={() => (isEditMode ? onUpdate() : onCreate())}
-        />
+        /> : null}
 
-        {isRidgeObject && isEditMode ? (
+        {isRidgeObject && isEditMode && isAuthorEntity ? (
           <CreateObjectFromRidgeButton data={data} objectId={objectId} onUpdate={onUpdate}/>
         ) : null}
         {isRidgeObject && isEditMode ? (
@@ -48,7 +49,7 @@ const FooterButtons = ({
         ) : null}
       </Container>
       <Container>
-        {isEditMode && !withoutRemoveButton ? (
+        {isEditMode && !withoutRemoveButton && isAuthorEntity ? (
           <NegativeOutlinedButton
             title="Удалить"
             onClick={() => onRemove(removeId)}

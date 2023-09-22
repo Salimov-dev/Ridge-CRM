@@ -1,6 +1,6 @@
 import dayjs from "dayjs";
 import "dayjs/locale/ru";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 // mui
 import { Box, Typography } from "@mui/material";
 // components
@@ -12,6 +12,11 @@ import {
   setUpdateLastContactId,
   setUpdateLastContactOpenState,
 } from "../../store/last-contact/update-last-contact.store";
+import { getLastContactsById } from "../../store/last-contact/last-contact.store";
+import {
+  getCurrentUserId,
+  getIsUserAuthorThisEntity,
+} from "../../store/user/users.store";
 
 export const lastContactColumns = [
   {
@@ -48,6 +53,11 @@ export const lastContactColumns = [
     cell: (info) => {
       const dispatch = useDispatch();
       const lastContactId = info.getValue();
+      const lastContact = useSelector(getLastContactsById(lastContactId));
+      const currentUserId = useSelector(getCurrentUserId());
+      const isAuthorEntity = useSelector(
+        getIsUserAuthorThisEntity(currentUserId, lastContact)
+      );
 
       const handleClick = () => {
         dispatch(setUpdateLastContactId(lastContactId));
@@ -61,6 +71,7 @@ export const lastContactColumns = [
           background="SaddleBrown"
           backgroudHover="Sienna"
           onClick={handleClick}
+          disabled={!isAuthorEntity}
         />
       );
     },

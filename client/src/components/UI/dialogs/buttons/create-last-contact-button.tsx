@@ -3,7 +3,7 @@ import { setCreateLastContactOpenState } from "../../../../store/last-contact/cr
 import { getLastContactsLoadingStatus } from "../../../../store/last-contact/last-contact.store";
 import MultiColorContainedButton from "../../../common/buttons/multi-color-contained-button";
 
-const CreateLastContactButton = ({ title }) => {
+const CreateLastContactButton = ({ title, isAuthorEntity =true }) => {
   const isLoading = useSelector(getLastContactsLoadingStatus());
   const dispatch = useDispatch();
 
@@ -12,7 +12,7 @@ const CreateLastContactButton = ({ title }) => {
   };
 
   return (
-    <MultiColorContainedButton
+    isAuthorEntity ? <MultiColorContainedButton
       text="Добавить последний контакт"
       fontColor="white"
       background="SaddleBrown"
@@ -22,7 +22,7 @@ const CreateLastContactButton = ({ title }) => {
       disabled={isLoading}
     >
       {title}
-    </MultiColorContainedButton>
+    </MultiColorContainedButton> : null
   );
 };
 

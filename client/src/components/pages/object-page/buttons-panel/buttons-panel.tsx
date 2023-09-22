@@ -15,6 +15,7 @@ const ButtonsPanel = ({
   onEdit,
   isEdit,
   negativeTitle = "отмена",
+  isAuthorEntity = true,
 }) => {
   return (
     <Component>
@@ -22,7 +23,9 @@ const ButtonsPanel = ({
         {isEdit ? (
           <>
             <OpenObjectCloudButton object={object} />
-            <PositiveOutlinedButton title="Править" onClick={onEdit} />
+            {isAuthorEntity ? (
+              <PositiveOutlinedButton title="Править" onClick={onEdit} />
+            ) : null}
           </>
         ) : null}
         <NegativeOutlinedButton title={negativeTitle} onClick={onClose} />

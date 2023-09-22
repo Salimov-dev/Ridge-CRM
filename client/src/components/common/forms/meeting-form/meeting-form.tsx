@@ -74,7 +74,7 @@ const MeetingForm = ({
             itemsList={objects}
             value={watchObjectId}
             errors={errors?.objectId}
-            disabled={isObjectPage || isEditMode}
+            disabled={isObjectPage}
           />
           <TextFieldStyled
             register={register}

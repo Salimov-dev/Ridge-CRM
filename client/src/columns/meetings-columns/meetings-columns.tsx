@@ -25,6 +25,8 @@ import {
 } from "../../store/object/open-object-page.store";
 // styled
 import { AlignCenter } from "../../components/common/columns/styled";
+import { getCurrentUserId, getIsUserAuthorThisEntity } from "../../store/user/users.store";
+import { getMeetingById } from "../../store/meeting/meetings.store";
 
 export const meetingsColumns = [
   {
@@ -166,7 +168,12 @@ export const meetingsColumns = [
     header: "",
     cell: (info) => {
       const meetingId = info.getValue();
+      const meeting = useSelector(getMeetingById(meetingId))
       const dispatch = useDispatch();
+      const currentUserId = useSelector(getCurrentUserId())
+      const isAuthorEntity = useSelector(
+        getIsUserAuthorThisEntity(currentUserId, meeting)
+      );
 
       const handleClick = () => {
         dispatch(setUpdateMeetingId(meetingId));
@@ -180,6 +187,7 @@ export const meetingsColumns = [
           background="royalBlue"
           backgroudHover="cornflowerBlue"
           onClick={handleClick}
+          disabled={!isAuthorEntity}
         />
       );
     },

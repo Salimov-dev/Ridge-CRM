@@ -15,12 +15,21 @@ import {
   setUpdateObjectId,
   setUpdateObjectOpenState,
 } from "../../../store/object/update-object.store";
+import {
+  getCurrentUserId,
+  getIsUserAuthorThisEntity,
+} from "../../../store/user/users.store";
 
 const ObjectPage = ({ onClose }) => {
   const dispatch = useDispatch();
   const objectId = useSelector(getOpenObjectPageId());
   const object = useSelector(getObjectById(objectId));
   const isLoading = useSelector(getObjectsLoadingStatus());
+
+  const currentUserId = useSelector(getCurrentUserId());
+  const isAuthorEntity = useSelector(
+    getIsUserAuthorThisEntity(currentUserId, object)
+  );
 
   const address = `${object?.location?.city}, ${object?.location?.address}`;
   const latitude = object?.location?.latitude || null;
@@ -41,6 +50,7 @@ const ObjectPage = ({ onClose }) => {
         onEdit={handleOpenEditObject}
         isLoading={isLoading}
         isEdit={true}
+        isAuthorEntity={isAuthorEntity}
       />
       <ItemOnMap
         mapZoom={mapZoom}
@@ -48,13 +58,14 @@ const ObjectPage = ({ onClose }) => {
         center={center}
         isLoading={isLoading}
       />
-      <ObjectInfo object={object} isLoading={isLoading} />
+      <ObjectInfo object={object} isLoading={isLoading} isAuthorEntity={isAuthorEntity} />
       <FooterButtons
         object={object}
-        isLoading={isLoading}
         onClose={onClose}
-        isEdit={true}
         onEdit={handleOpenEditObject}
+        isEdit={true}
+        isLoading={isLoading}
+        isAuthorEntity={isAuthorEntity}
       />
     </Box>
   );

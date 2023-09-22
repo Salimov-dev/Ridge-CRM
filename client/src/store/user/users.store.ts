@@ -191,6 +191,12 @@ export const getIsUserCurator = (userId) => (state) => {
   return isCurator;
 };
 
+export const getIsUserAuthorThisEntity = (userId, entity) => (state) => {
+  const user = state.users.entities?.find((user) => user?._id === userId);
+  const isUserAuthorThisEntity = entity?.userId === user?._id
+  return isUserAuthorThisEntity
+};
+
 export const getIsLoggedIn = () => (state) => state.users.isLoggedIn;
 export const getDataStatus = () => (state) => state.users.dataLoaded;
 export const getUsersLoadingStatus = () => (state) => state.users.isLoading;

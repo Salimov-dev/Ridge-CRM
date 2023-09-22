@@ -9,7 +9,13 @@ const Container = styled(Box)`
   justify-content: space-between;
 `;
 
-const ObjectTasks = ({ columns, tasks, object, margin = "0", buttons }) => {
+const ObjectTasks = ({
+  columns,
+  tasks,
+  object,
+  margin = "0",
+  buttons,
+}) => {
   const isTasksLoading = useSelector(getTaskLoadingStatus());
   const address = `${object?.location?.city}, ${object?.location?.address}`;
 

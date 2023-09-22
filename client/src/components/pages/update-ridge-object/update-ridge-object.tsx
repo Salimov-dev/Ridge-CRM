@@ -34,6 +34,7 @@ import {
 import { getRidgeLastContactsByObjectId } from "../../../store/ridge-last-contact/last-ridge-contact.store";
 // utils
 import { capitalizeFirstLetter } from "../../../utils/data/capitalize-first-letter";
+import { getCurrentUserId, getIsUserAuthorThisEntity } from "../../../store/user/users.store";
 
 const UpdateRidgeObject = ({ onClose }) => {
   const [open, setOpen] = useState(false);
@@ -44,6 +45,11 @@ const UpdateRidgeObject = ({ onClose }) => {
   const objectId = useSelector(getUpdateRidgeObjectId());
   const tasks = useSelector(getRidgeTasksByObjectId(objectId));
   const object = useSelector(getRidgeObjectById(objectId));
+
+  const currentUserId = useSelector(getCurrentUserId());
+  const isAuthorEntity = useSelector(
+    getIsUserAuthorThisEntity(currentUserId, object)
+  );
 
   const lastContacts = useSelector(getRidgeLastContactsByObjectId(objectId));
   const sortedLastContacts = orderBy(lastContacts, ["date"], ["desc"]);
@@ -145,6 +151,7 @@ const UpdateRidgeObject = ({ onClose }) => {
         isValid={isValid}
         isEditMode={isEditMode}
         isRidgeObject={true}
+        isAuthorEntity={isAuthorEntity}
       />
       <ConfirmRemoveDialog
         removeId={objectId}
