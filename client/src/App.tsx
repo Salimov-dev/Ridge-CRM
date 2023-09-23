@@ -13,6 +13,8 @@ import Calendar from "./layouts/calendar/calendar";
 import Meetings from "./layouts/meetings/meetings";
 import Presentations from "./layouts/presentations/presentations";
 // components
+import Ridge from "./layouts/ridge/ridge";
+import Deals from "./layouts/deals/deals";
 import TopBar from "./components/UI/topbar/topbar";
 import Sidebar from "./components/UI/sidebar/sidebar";
 import Footer from "./components/common/footer/footer";
@@ -21,12 +23,12 @@ import UpdateProfile from "./components/pages/update-profile/update-profile";
 import "react-toastify/dist/ReactToastify.css";
 import { AppStyled, RightSide } from "./styled";
 import "./styles.css";
-// other
+// hoc
 import AppLoader from "./hoc/app-loader";
+// utils
 import ScrollToTop from "./utils/other/scroll-to-top";
+// theme
 import { ColorModeContext, useMode } from "./theme";
-import Ridge from "./layouts/ridge/ridge";
-import Deals from "./layouts/deals/deals";
 
 function App() {
   const [theme, colorMode] = useMode();
