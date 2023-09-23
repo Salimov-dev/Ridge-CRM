@@ -18,6 +18,7 @@ const TimePickerStyled = ({
   value,
   setValue,
   errors = null,
+  disabled=false
 }) => {
   return (
     <FieldsContainer>
@@ -36,6 +37,7 @@ const TimePickerStyled = ({
               onChange={(value) => setValue(name, value)}
               errors={errors?.time}
               value={value}
+              disabled={disabled}
               sx={{
                 width: "100%",
 

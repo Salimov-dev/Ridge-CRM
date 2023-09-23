@@ -24,6 +24,7 @@ import { getMeetingsList } from "../../store/meeting/meetings.store";
 // hooks
 import useCalendar from "../../hooks/calendar/use-calendar";
 import useSearchTask from "../../hooks/task/use-search-task";
+import { getCurrentUserId, getIsUserCurator } from "../../store/user/users.store";
 
 const initialState = {
   task: "",
@@ -34,6 +35,9 @@ const initialState = {
 const Calendar = () => {
   const [currentMonth, setCurrentMonth] = useState(getMonth());
   const [dateCreate, setDateCreate] = useState(null);
+
+  const currentUserId = useSelector(getCurrentUserId())
+  const isCurator = useSelector(getIsUserCurator(currentUserId))
 
   const tasksColumn = tasksColumns;
   const monthIndex = useSelector(getMonthIndexState());
@@ -53,10 +57,13 @@ const Calendar = () => {
   });
 
   const data = watch();
-  const tasks = useSelector(getTasksList());
   const meetings = useSelector(getMeetingsList());
-  const searchedTasks = useSearchTask(tasks, data);
-  const sortedTasks = orderBy(searchedTasks, ["date"], ["asc"]);
+
+  let tasks = useSelector(getTasksList());
+  const currentUserTasks = tasks?.filter(task => task?.userId === currentUserId)
+  const actualTasks = isCurator ? currentUserTasks : tasks
+  const searchedTasks = useSearchTask(actualTasks, data);
+  const sortedTasks = orderBy(searchedTasks, ["date"], ["desc"]);
 
   useEffect(() => {
     setCurrentMonth(getMonth(monthIndex));
@@ -74,12 +81,12 @@ const Calendar = () => {
     const meeting = meetings?.filter(
       (meet) => dayjs(meet?.date).format() === dayjs(day)?.format()
     );
-    const sortedMeetings = orderBy(meeting, ["date"], ["asc"]);
+    const sortedMeetings = orderBy(meeting, ["date"], ["desc"]);
     return sortedMeetings;
   };
 
   const getTask = (day) => {
-    const currentTasks = tasks?.filter((task) => {
+    const currentTasks = actualTasks?.filter((task) => {
       const taskDate = dayjs(task?.date);
       const targetDate = dayjs(day);
       return (

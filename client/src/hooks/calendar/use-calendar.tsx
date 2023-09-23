@@ -4,16 +4,21 @@ import { useSelector } from "react-redux";
 // store
 import { getObjectsList } from "../../store/object/objects.store";
 import { getMeetingsList } from "../../store/meeting/meetings.store";
-import { getCurrentUserId, getUsersList } from "../../store/user/users.store";
+import {
+  getCurrentUserId,
+  getIsUserCurator,
+  getUsersList,
+} from "../../store/user/users.store";
 // utils
 import getStartWeekDate from "../../utils/date/get-start-week-date";
 import getEndWeekDate from "../../utils/date/get-end-week-date";
 
 const useCalendar = () => {
   const objects = useSelector(getObjectsList());
+  const currentUserId = useSelector(getCurrentUserId());
+  const isCurator = useSelector(getIsUserCurator(currentUserId));
   const users = useSelector(getUsersList());
   const meetings = useSelector(getMeetingsList());
-  const currentUserId = useSelector(getCurrentUserId());
   const startOfWeek = getStartWeekDate();
   const endOfWeek = getEndWeekDate();
 
@@ -41,7 +46,8 @@ const useCalendar = () => {
   });
 
   let transformObjects = [];
-  currentUserObjects?.forEach((obj) => {
+  const actualObjects = isCurator ? objects : currentUserObjects;
+  actualObjects?.forEach((obj) => {
     transformObjects?.push({ _id: obj._id, name: obj.location.address });
   });
 

@@ -4,7 +4,8 @@ import { ItemContainer, ItemsContainer } from "../styled/styled";
 import Loader from "../../../../../../../../../../loader/loader";
 import Result from "./components/result";
 
-const Meetings = ({ meetings }) => {
+const Meetings = ({ meetings, currentUserId }) => {
+
   return meetings ? (
     <ItemsContainer>
       {meetings?.map((meet) => (
@@ -16,8 +17,8 @@ const Meetings = ({ meetings }) => {
             background: !meet?.isDone ? "RoyalBlue" : "gray",
           }}
         >
-          <Title meet={meet} />
-          <Body meet={meet} />
+          <Title meet={meet} currentUserId={currentUserId}/>
+          <Body meet={meet}/>
           <Result meet={meet} />
         </ItemContainer>
       ))}

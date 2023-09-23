@@ -9,6 +9,7 @@ const schema = new Schema(
     },
     company: { type: Schema.Types.ObjectId, ref: "Company", required: true },
     userId: { type: Schema.Types.ObjectId, ref: "User", required: true },
+    fromRidgeObject: String,
     contact: {
       phone: Number,
       name: String,

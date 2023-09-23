@@ -10,30 +10,35 @@ const router = express.Router({ mergeParams: true });
 router.get("/", auth, async (req, res) => {
   try {
     const userId = req.user._id;
-    const userRole = req.user.role; // Получить роль пользователя
+    const managerId = req.user.managerId;
+    const user = await User.findOne({ _id: userId });
+    const userRole = user.role;
 
     if (userRole === "MANAGER") {
       // Если пользователь - менеджер, то показать только его объекты
       const tasks = await Task.find({ userId });
-      return res.status(200).send(tasks);
+      const curatorTasks = await Task.find({ managerId: userId });
+      const allTasks = [...tasks, ...curatorTasks];
+
+      return res.status(200).send(allTasks);
+    } else {
+      // Найти объекты, принадлежащие текущему пользователю
+      const tasks = await Task.find({ userId });
+
+      // Найти менеджеров текущего пользователя
+      const managers = await User.find({ curatorId: userId });
+
+      // Создать массив идентификаторов менеджеров
+      const managerIds = managers.map((manager) => manager._id);
+
+      // Найти объекты, принадлежащие менеджерам
+      const managerTasks = await Task.find({ userId: { $in: managerIds } });
+
+      // Объединить объекты текущего пользователя и объекты менеджеров
+      const allTasks = [...tasks, ...managerTasks];
+
+      return res.status(200).send(allTasks);
     }
-
-    // Найти объекты, принадлежащие текущему пользователю
-    const tasks = await Task.find({ userId });
-
-    // Найти менеджеров текущего пользователя
-    const managers = await User.find({ curatorId: userId });
-
-    // Создать массив идентификаторов менеджеров
-    const managerIds = managers.map(manager => manager._id);
-
-    // Найти объекты, принадлежащие менеджерам
-    const managerTasks = await Task.find({ userId: { $in: managerIds } });
-
-    // Объединить объекты текущего пользователя и объекты менеджеров
-    const allTasks = [...tasks, ...managerTasks];
-
-    return res.status(200).send(tasks);
   } catch (e) {
     res.status(500).json({
       message: "На сервере произошла ошибка, попробуйте позже",

@@ -3,7 +3,6 @@ import TextFieldStyled from "../../inputs/text-field-styled";
 import SimpleSelectField from "../../inputs/simple-select-field";
 import DatePickerStyled from "../../inputs/date-picker";
 import TimePickerStyled from "../../inputs/time-picker";
-import FooterButtons from "../footer-buttons/footer-buttons";
 import SimpleSwitch from "../../inputs/simple-switch";
 // styled
 import { FieldsContainer, Form } from "../styled/styled";
@@ -21,6 +20,7 @@ const ManagerTaskForm = ({
   isObjectPage=false,
   isTasksLoading=false,
   isEditMode = false,
+  isCurator=false
 }) => {
   const watchObjectId = watch("objectId", "");
   const watchManagerId = watch("managerId", "");
@@ -37,6 +37,7 @@ const ManagerTaskForm = ({
           onChange={(value) => setValue("date", value)}
           errors={errors?.date}
           minDate={getDateToday()}
+          disabled={!isCurator}
         />
         <TimePickerStyled
           register={register}
@@ -45,6 +46,7 @@ const ManagerTaskForm = ({
           value={data.time}
           setValue={setValue}
           errors={errors?.time}
+          disabled={!isCurator}
         />
       </FieldsContainer>
 
@@ -55,16 +57,16 @@ const ManagerTaskForm = ({
         label="Объект задачи"
         itemsList={objects}
         value={watchObjectId}
-        disabled={isObjectPage || isEditMode}
+        disabled={isObjectPage || !isCurator}
       />
-      <SimpleSelectField
+      {isCurator ? <SimpleSelectField
         register={register}
         name="managerId"
         labelId="managerId"
         label="Менеджер"
         itemsList={users}
         value={watchManagerId}
-      />
+      /> : null}
       <TextFieldStyled
         register={register}
         label="Комментарий"
@@ -74,6 +76,7 @@ const ManagerTaskForm = ({
         multiline={true}
         errors={errors?.comment}
         onInputQuantities={200}
+        disabled={!isCurator}
       />
       {isEditMode ? (
         <TextFieldStyled

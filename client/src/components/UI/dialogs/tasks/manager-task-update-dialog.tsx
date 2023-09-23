@@ -11,31 +11,22 @@ import {
   getUsersList,
 } from "../../../../store/user/users.store";
 
-const ManagerTaskUpdateDialog = () => {
-  const objects = useSelector(getObjectsList());
+const ManagerTaskUpdateDialog = ({ objects }) => {
   const users = useSelector(getUsersList());
   const currentUserId = useSelector(getCurrentUserId());
   const isOpenUpdateManagerTask = useSelector(loadUpdateManagerTaskOpenState());
   const dispatch = useDispatch();
 
-  const usersWithoutCurrentUser = users.filter(
-    (user) => user._id !== currentUserId
-  );
-  const currentUserObjects = objects?.filter(
-    (obj) => obj?.userId === currentUserId
+  const usersWithoutCurrentUser = users?.filter(
+    (user) => user?._id !== currentUserId
   );
 
   let transformUsers = [];
   usersWithoutCurrentUser?.forEach((user) => {
     transformUsers?.push({
-      _id: user._id,
+      _id: user?._id,
       name: `${user.name.lastName} ${user.name.firstName}`,
     });
-  });
-
-  let transformObjects = [];
-  currentUserObjects?.forEach((obj) => {
-    transformObjects?.push({ _id: obj._id, name: obj.location.address });
   });
 
   const handleCloseUpdateManagerTask = () => {
@@ -51,7 +42,7 @@ const ManagerTaskUpdateDialog = () => {
       component={
         <UpdateManagerTask
           title="Изменить задачу менеджеру"
-          objects={transformObjects}
+          objects={objects}
           users={transformUsers}
           onClose={handleCloseUpdateManagerTask}
         />

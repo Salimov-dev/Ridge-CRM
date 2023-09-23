@@ -28,6 +28,13 @@ const DealContainer = styled(Paper)`
 const Stages = ({ deals, stages, userName, onOpen, getObjectAddress }) => {
   const [draggableStageId, setDraggableStageId] = useState(null);
 
+  const getDealsStageCount = (stageId) => {
+    const dealsArray = deals?.filter(deal => deal?.stageId === stageId)
+    const dealsCount = dealsArray?.length
+
+    return dealsCount
+  }
+
   const handleDragOver = (e, stageId) => {
     e.preventDefault();
     setDraggableStageId(stageId);
@@ -44,7 +51,7 @@ const Stages = ({ deals, stages, userName, onOpen, getObjectAddress }) => {
               draggableStageId === stage?._id ? `1px dashed yellow` : null,
           }}
         >
-          <Title item={stage} />
+          <Title item={stage} count={getDealsStageCount}/>
           <DividerStyled
             margin="20px 0 20px 0"
             color={draggableStageId === stage?._id ? "yellow" : "inherit"}

@@ -23,10 +23,12 @@ const ButtonsContainer = styled(Box)`
   display: flex;
 `;
 
-const Title = ({ meet }) => {
+const Title = ({ meet, currentUserId }) => {
   const meetingId = meet?._id;
   const isMeetingDone = meet?.isDone;
   const dispatch = useDispatch();
+
+  const isAuthor = meet?.userId === currentUserId;
 
   const handleDoneMeeting = (meet) => {
     const newMeeting = { ...meet, isDone: true };
@@ -48,12 +50,13 @@ const Title = ({ meet }) => {
         <b>Встреча в: {FormatTime(meet.time)}</b>
       </Typography>
       <ButtonsContainer>
-        <UpdateElement onClick={handleUpdateMeeting} isDone={isMeetingDone} />
-        <DoneIconToggler
+        {isAuthor ? <UpdateElement onClick={handleUpdateMeeting} isDone={isMeetingDone} /> : null}
+        {isAuthor ? <DoneIconToggler
           item={meet}
           onDoneItem={handleDoneMeeting}
           onNotDoneItem={handleNotDoneMeeting}
-        />
+        /> : null}
+        
       </ButtonsContainer>
     </Component>
   );

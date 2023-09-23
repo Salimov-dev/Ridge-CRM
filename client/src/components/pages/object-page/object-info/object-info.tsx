@@ -18,6 +18,7 @@ import { getObjectMeetingsList } from "../../../../store/meeting/meetings.store"
 import { getObjectTasksList } from "../../../../store/task/tasks.store";
 import {
   getCurrentUserId,
+  getIsUserCurator,
   getUsersList,
 } from "../../../../store/user/users.store";
 import { getLastContactsByObjectId } from "../../../../store/last-contact/last-contact.store";
@@ -30,7 +31,7 @@ const Component = styled(Box)`
   margin-bottom: 20px;
 `;
 
-const ObjectInfo = ({ object, isLoading, isAuthorEntity=true }) => {
+const ObjectInfo = ({ object, isLoading, isAuthorEntity = true }) => {
   const objects = useSelector(getObjectsList());
   const meetings = useSelector(getObjectMeetingsList(object?._id));
   const sortedMeetings = orderBy(meetings, ["date"], ["desc"]);
@@ -45,6 +46,8 @@ const ObjectInfo = ({ object, isLoading, isAuthorEntity=true }) => {
 
   const users = useSelector(getUsersList());
   const currentUserId = useSelector(getCurrentUserId());
+
+  const isCurator = useSelector(getIsUserCurator(currentUserId));
   const usersWithoutCurrentUser = users.filter(
     (user) => user?._id !== currentUserId
   );
@@ -61,9 +64,15 @@ const ObjectInfo = ({ object, isLoading, isAuthorEntity=true }) => {
   });
 
   let transformObjects = [];
-  currentUserObjects?.forEach((obj) => {
-    transformObjects?.push({ _id: obj?._id, name: obj?.location.address });
-  });
+  if (isCurator) {
+    objects?.forEach((obj) => {
+      transformObjects?.push({ _id: obj?._id, name: obj?.location.address });
+    });
+  } else {
+    currentUserObjects?.forEach((obj) => {
+      transformObjects?.push({ _id: obj?._id, name: obj?.location.address });
+    });
+  }
 
   return !isLoading ? (
     <Component>
@@ -72,15 +81,27 @@ const ObjectInfo = ({ object, isLoading, isAuthorEntity=true }) => {
         columns={tasksColumns}
         tasks={sortedTasks}
         object={object}
-        buttons={<CreateTasksButtons withoutMeeting={true} 
-        isAuthorEntity={isAuthorEntity}
-        />}
+        buttons={
+          <CreateTasksButtons
+            withoutMeeting={true}
+            isAuthorEntity={isAuthorEntity}
+          />
+        }
       />
-      <ObjectMeetings meetings={sortedMeetings} object={object} isAuthorEntity={isAuthorEntity}/>
+      <ObjectMeetings
+        meetings={sortedMeetings}
+        object={object}
+        isAuthorEntity={isAuthorEntity}
+      />
       <LastContacts
         lastContacts={sortedLastContacts}
         object={object}
-        buttons={<CreateLastContactButton title="Добавить последний контакт" isAuthorEntity={isAuthorEntity} />}
+        buttons={
+          <CreateLastContactButton
+            title="Добавить последний контакт"
+            isAuthorEntity={isAuthorEntity}
+          />
+        }
       />
 
       <Dialogs objects={transformObjects} users={transformUsers} />

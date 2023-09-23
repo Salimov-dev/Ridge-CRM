@@ -57,6 +57,7 @@ const initialState = {
     fullDescription: "",
   },
   cloudLink: "",
+  fromRidgeObject: ""
 };
 
 const CreateObjectFromRidge = ({ onClose }) => {
@@ -117,6 +118,7 @@ const CreateObjectFromRidge = ({ onClose }) => {
           data.description.fullDescription
         ),
       },
+      fromRidgeObject: object?._id
     };
 
     dispatch(createObject(newData))

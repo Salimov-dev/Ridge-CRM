@@ -10,10 +10,19 @@ import { ItemContainer, ItemsContainer } from "../styled/styled";
 // store
 import { getObjectsList } from "../../../../../../../../../../../../store/object/objects.store";
 import { getRidgeObjectsList } from "../../../../../../../../../../../../store/ridge-object/ridge-objects.store";
+import { getUsersList } from "../../../../../../../../../../../../store/user/users.store";
+import { Typography } from "@mui/material";
 
-const Tasks = ({ tasks, isRidgePage }) => {
+const Tasks = ({ tasks, isRidgePage, isCurator }) => {
   const objects = useSelector(getObjectsList());
   const ridgeObjects = useSelector(getRidgeObjectsList());
+  const users = useSelector(getUsersList());
+
+  const getManagerName = (id) => {
+    const user = users?.find((user) => user._id === id);
+    const result = `${user?.name.lastName} ${user?.name.firstName}`;
+    return result;
+  };
 
   return tasks ? (
     <ItemsContainer>
@@ -45,6 +54,11 @@ const Tasks = ({ tasks, isRidgePage }) => {
           >
             <Title task={task} isRidgePage={isRidgePage} />
             <TaskComment comment={task?.comment} />
+            {isCurator && task?.managerId?.length ? (
+              <Typography>
+                <b>Менеджер:</b> {getManagerName(task?.managerId)}
+              </Typography>
+            ) : null}
             <TaksObject
               task={task}
               objects={isRidgePage ? ridgeObjects : objects}

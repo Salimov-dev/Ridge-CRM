@@ -9,16 +9,17 @@ import { yupResolver } from "@hookform/resolvers/yup";
 // components
 import TitleWithCloseButton from "../../common/page-titles/title-with-close-button";
 import ManagerTaskForm from "../../common/forms/manager-task-form/manager-task-form";
+import FooterButtons from "../../common/forms/footer-buttons/footer-buttons";
 // store
 import { createTask } from "../../../store/task/tasks.store";
 // utils
 import { capitalizeFirstLetter } from "../../../utils/data/capitalize-first-letter";
 // schema
-import { taskSchema } from "../../../schemas/task-shema";
+import { taskManagerSchema } from "../../../schemas/task-manager-shema";
 
 const initialState = {
   comment: "",
-  date: dayjs(),
+  date: null,
   time: null,
   objectId: "",
   managerId: "",
@@ -46,14 +47,13 @@ const CreateManagerTask = ({
   } = useForm({
     defaultValues: initialState,
     mode: "onBlur",
-    resolver: yupResolver(taskSchema),
+    resolver: yupResolver(taskManagerSchema),
   });
   const data = watch();
   const watchDate = watch("date", null);
   const watchTime = watch("time", null);
   const watchManagerId = watch("managerId", null);
-
-  const isFullValid = !watchDate || !watchTime || !watchManagerId || !isValid;
+  const isFullValid = isValid && watchDate && watchTime && watchManagerId;
 
   const onSubmit = () => {
     const newData = {
@@ -88,18 +88,19 @@ const CreateManagerTask = ({
         onClose={onClose}
       />
       <ManagerTaskForm
+        data={data}
         objects={objects}
         users={users}
         register={register}
-        data={data}
-        handleSubmit={handleSubmit}
-        onSubmit={onSubmit}
-        onClose={onClose}
         errors={errors}
-        setValue={setValue}
-        isValid={isFullValid}
         watch={watch}
+        setValue={setValue}
         isObjectPage={isObjectPage}
+      />
+      <FooterButtons
+        onCreate={handleSubmit(onSubmit)}
+        onClose={onClose}
+        isValid={isFullValid}
       />
     </Box>
   );

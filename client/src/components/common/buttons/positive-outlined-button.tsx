@@ -5,13 +5,14 @@ const PositiveOutlinedButton = ({
   onClick = () => {},
   isValid = false,
   type = "button",
+
 }) => {
   return (
     <Button
       variant="outlined"
       type={type}
       onClick={onClick}
-      disabled={isValid}
+      disabled={ isValid}
       sx={{
         color: "MediumSeaGreen",
         borderColor: "MediumSeaGreen",

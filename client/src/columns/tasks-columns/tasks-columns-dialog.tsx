@@ -14,7 +14,7 @@ import {
   setUpdateMyTaskOpenState,
 } from "../../store/task/update-my-task.store";
 import { getTaskById } from "../../store/task/tasks.store";
-import { getCurrentUserId } from "../../store/user/users.store";
+import { getCurrentUserId, getIsUserAuthorThisEntity } from "../../store/user/users.store";
 import {
   setUpdateManagerTaskId,
   setUpdateManagerTaskOpenState,
@@ -114,7 +114,13 @@ export const tasksColumnsDialog = [
       const currentUserId = useSelector(getCurrentUserId());
       const isCuratorTask = Boolean(task?.managerId);
       const isCurrentUserIsCuratorTask = currentUserId !== task?.userId;
-      const disable = isCuratorTask && isCurrentUserIsCuratorTask;
+
+      const isAuthorEntity = useSelector(
+        getIsUserAuthorThisEntity(currentUserId, task)
+      );
+      const disable =
+        (isCuratorTask && isCurrentUserIsCuratorTask) || !isAuthorEntity;
+
 
       const handleClick = () => {
         if (isCuratorTask) {

@@ -79,6 +79,7 @@ const Title = ({ task, isRidgePage }) => {
         <b>Задача до: {task.time ? FormatTime(task.time) : "конца дня"}</b>
       </Typography>
       <ButtonsContainer>
+
         <UpdateElement
           onClick={isRidgePage ? handleUpdateRidgeTask : handleUpdateTask}
           isDone={isTaskDone}

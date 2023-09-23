@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import TitleWithCloseButton from "../../common/page-titles/title-with-close-button";
 import ManagerTaskForm from "../../common/forms/manager-task-form/manager-task-form";
 // store
-import { getCurrentUserId } from "../../../store/user/users.store";
+import { getCurrentUserId, getIsUserCurator } from "../../../store/user/users.store";
 import { getUpdateManagerTaskId } from "../../../store/task/update-manager-task.store";
 import {
   getTaskById,
@@ -29,8 +29,11 @@ const UpdateManagerTask = ({ title, onClose, objects, users }) => {
   const taskId = useSelector(getUpdateManagerTaskId());
   const task = useSelector(getTaskById(taskId));
   const isTasksLoading = useSelector(getTaskLoadingStatus());
-  const currentUserId = useSelector(getCurrentUserId());
+
   const objectId = task?.objectId;
+  const currentUserId = useSelector(getCurrentUserId());
+  
+  const isCurator = useSelector(getIsUserCurator(currentUserId));
   const currentUserObjects = objects?.filter(
     (obj) => obj?.userId === currentUserId
   );
@@ -61,7 +64,9 @@ const UpdateManagerTask = ({ title, onClose, objects, users }) => {
   const data = watch();
   const watchDate = watch("date", null);
   const watchTime = watch("time", null);
-  const isFullValid = !isValid && watchDate && watchTime;
+  const isFullValid = isValid && watchDate && watchTime 
+
+
   const isEditMode = taskId ? true : false;
 
   const onSubmit = (data) => {
@@ -110,6 +115,7 @@ const UpdateManagerTask = ({ title, onClose, objects, users }) => {
         watch={watch}
         errors={errors}
         setValue={setValue}
+        isCurator={isCurator}
         isEditMode={isEditMode}
         isTasksLoading={isTasksLoading}
       />

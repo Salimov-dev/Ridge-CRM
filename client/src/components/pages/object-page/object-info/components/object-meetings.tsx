@@ -17,13 +17,16 @@ const ObjectMeetings = ({ meetings, object, isAuthorEntity = true }) => {
   const address = `${object?.location?.city}, ${object?.location?.address}`;
   const path = window.location.pathname;
   const isCalendarPath = path === "/calendar";
+  const isMeetingsPath = path === "/meetings";
 
   return (
     <>
       <DividerStyled />
       <Title>
         <Typography variant="h3">Встречи по объекту: {address}</Typography>
-        {isAuthorEntity && !isCalendarPath ? <CreateMeetingButton /> : null}
+        {isAuthorEntity && !isCalendarPath && !isMeetingsPath ? (
+          <CreateMeetingButton />
+        ) : null}
       </Title>
       {meetings?.length ? (
         <BasicTable

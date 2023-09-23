@@ -6,7 +6,7 @@ const DealTitleContainer = styled(Box)`
   width: 100%;
 `;
 
-const Title = ({ item }) => {
+const Title = ({ item, count }) => {
   return (
     <DealTitleContainer
       sx={{
@@ -15,9 +15,16 @@ const Title = ({ item }) => {
         padding: "8px 10px",
       }}
     >
-      <Typography variant="h5">
-        <b>{item.name}</b>
-      </Typography>
+      <Box sx={{ display: "flex", gap: "4px" }}>
+        <Typography variant="h5">
+          <b>{item?.name}</b>
+        </Typography>
+        {count(item?._id) ? (
+          <Typography variant="h5">
+            <b>[{count(item?._id)}]</b>
+          </Typography>
+        ) : null}
+      </Box>
     </DealTitleContainer>
   );
 };

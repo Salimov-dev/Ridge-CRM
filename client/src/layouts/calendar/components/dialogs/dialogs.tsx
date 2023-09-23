@@ -20,7 +20,7 @@ const Dialogs = ({ objects, users, dateCreate=getDateToday(), setDateCreate }) =
         dateCreate={dateCreate}
         setDateCreate={setDateCreate}
       />
-      <ManagerTaskUpdateDialog />
+      <ManagerTaskUpdateDialog objects={objects}/>
 
       <MyTaskCreateDialog
         objects={objects}

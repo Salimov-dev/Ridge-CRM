@@ -8,6 +8,10 @@ import Loader from "../../../../../../../../loader/loader";
 import { getTaskLoadingStatus } from "../../../../../../../../../../store/task/tasks.store";
 import { getMeetingLoadingStatus } from "../../../../../../../../../../store/meeting/meetings.store";
 import { getRidgeTaskLoadingStatus } from "../../../../../../../../../../store/ridge-task/ridge-tasks.store";
+import {
+  getCurrentUserId,
+  getIsUserCurator,
+} from "../../../../../../../../../../store/user/users.store";
 
 const Components = styled(Box)`
   height: 100%;
@@ -23,6 +27,9 @@ const DayContent = ({ meetings, tasks, isRidgePage }) => {
   const isRidgeTasksLoading = useSelector(getRidgeTaskLoadingStatus());
   const isMeetingsLoading = useSelector(getMeetingLoadingStatus());
 
+  const currentUserId = useSelector(getCurrentUserId());
+  const isCurator = useSelector(getIsUserCurator(currentUserId));
+
   const isLoading =
     !isTasksLoading && !isMeetingsLoading && !isRidgeTasksLoading;
   const isTasks = tasks.length;
@@ -30,8 +37,12 @@ const DayContent = ({ meetings, tasks, isRidgePage }) => {
 
   return isLoading ? (
     <Components>
-      {isTasks ? <Tasks tasks={tasks} isRidgePage={isRidgePage} /> : null}
-      {isMeetings ? <Meetings meetings={meetings} /> : null}
+      {isTasks ? (
+        <Tasks tasks={tasks} isRidgePage={isRidgePage} isCurator={isCurator} />
+      ) : null}
+      {isMeetings ? (
+        <Meetings meetings={meetings} currentUserId={currentUserId} />
+      ) : null}
     </Components>
   ) : (
     <Loader />
