@@ -1,5 +1,7 @@
 import { Box, Divider, styled } from "@mui/material";
 import Item from "./components/item";
+import { useSelector } from "react-redux";
+import { getAuthState } from "../../../store/user/auth.store";
 
 const Component = styled(Box)`
   height: 200px;
@@ -18,8 +20,9 @@ const Menu = styled(Box)`
 `;
 
 const Footer = () => {
+  const isAuth = useSelector(getAuthState())
   return (
-    <Component>
+    isAuth ? <Component>
       <Menu>
         <Item title="Главная" path="/" />
         <Divider orientation="vertical" flexItem />
@@ -36,8 +39,8 @@ const Footer = () => {
         <Item title="Менеджеры" path="/users" />
         <Divider orientation="vertical" flexItem />
         <Item title="Презентации" path="/" />
-      </Menu>
-    </Component>
+      </Menu> 
+    </Component>: null
   );
 };
 

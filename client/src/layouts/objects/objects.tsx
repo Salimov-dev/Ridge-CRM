@@ -74,7 +74,7 @@ const Objects = () => {
       : null,
   };
 
-  const { register, watch, setValue, reset, handleSubmit } = useForm({
+  const { register, watch, setValue, reset } = useForm({
     defaultValues: Boolean(localStorageState) ? formatedState : initialState,
     mode: "onBlur",
   });

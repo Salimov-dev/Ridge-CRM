@@ -58,8 +58,11 @@ import sidebarCollapsStateReducer from "./sidebar-collaps-state.store";
 import CreateDealReducer from "./deal/add-object-to-deal.store";
 // other
 import monthIndexReducer from "./month-index.store";
+import authStateReducer from "./user/auth.store";
 
 const rootReducer = combineReducers({
+  // auth state
+  authState: authStateReducer,
   // objects
   objects: objectsReducer,
   objectStatus: objectStatusReducer,

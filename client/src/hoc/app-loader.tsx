@@ -34,6 +34,7 @@ import { loadRidgeLastContactsList } from "../store/ridge-last-contact/last-ridg
 import { loadSidebarCollapsState } from "../store/sidebar-collaps-state.store";
 import { loadDealsList } from "../store/deal/deal.store";
 import { loadDealStagesList } from "../store/deal/deal-stages.store";
+import { loadAuthState } from "../store/user/auth.store";
 
 interface AppLoaderProps {
   children: React.ReactNode;
@@ -45,6 +46,7 @@ const AppLoader = ({ children }: AppLoaderProps) => {
 
   useEffect(() => {
     if (isLoggedIn) {
+      dispatch<any>(loadAuthState(true));
       // objects
       dispatch<any>(loadObjectsList());
       dispatch<any>(loadObjectStatusList());
@@ -81,6 +83,8 @@ const AppLoader = ({ children }: AppLoaderProps) => {
       // deals
       dispatch<any>(loadDealStagesList());
       dispatch<any>(loadDealsList());
+    } else {
+      dispatch<any>(loadAuthState(false));
     }
   }, [isLoggedIn]);
 

@@ -20,15 +20,17 @@ import Sidebar from "./components/UI/sidebar/sidebar";
 import Footer from "./components/common/footer/footer";
 import UpdateProfile from "./components/pages/update-profile/update-profile";
 // styled
-import "react-toastify/dist/ReactToastify.css";
-import { AppStyled, RightSide } from "./styled";
 import "./styles.css";
+import { AppStyled, RightSide } from "./styled";
+import "react-toastify/dist/ReactToastify.css";
 // hoc
 import AppLoader from "./hoc/app-loader";
 // utils
 import ScrollToTop from "./utils/other/scroll-to-top";
 // theme
 import { ColorModeContext, useMode } from "./theme";
+import NoMatchRoute from "./components/common/rout/no-match";
+import RequireAuth from "./layouts/users/require-auth";
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -44,61 +46,60 @@ function App() {
               <TopBar />
 
               <Routes>
-                <Route index path="" element={<Main />} />
+                <Route index path="/" element={<RequireAuth><Main /></RequireAuth>} />
+                <Route index path="*" element={<RequireAuth><NoMatchRoute /></RequireAuth>} />
 
                 <Route path="auth" element={<Login />}>
                   <Route index element={<Navigate to="/auth/login" />} />
-                  <Route path={"login"} element={<Login />} />
-                  <Route path="*" element={<Navigate to="" />} />
+                  <Route path="login" element={<Login />} />
+                  <Route path="*" element={<Navigate to="/" />} />
                 </Route>
 
                 <Route path="auth" element={<Signup />}>
                   <Route index element={<Navigate to="/auth/SignUp" />} />
-                  <Route path={"signup"} element={<Signup />} />
-                  <Route path="*" element={<Navigate to="" />} />
+                  <Route path="signup" element={<Signup />} />
+                  <Route path="*" element={<Navigate to="/" />} />
                 </Route>
 
                 <Route path="users">
-                  <Route index element={<Users />} />
+                  <Route index element={<RequireAuth><Users /></RequireAuth>} />
                   <Route path="*" element={<Navigate to="/users" />} />
                 </Route>
 
                 <Route path="profile" element={<Profile />}>
                   <Route index element={<Navigate to="/profile" />} />
-                  <Route
-                    path=":userId?/profileUpdate"
-                    element={<UpdateProfile />}
+                  <Route path=":userId?/profileUpdate" element={<RequireAuth><UpdateProfile /></RequireAuth>}
                   />
                   <Route path="*" element={<Navigate to="/profile" />} />
                 </Route>
 
                 <Route path="objects">
-                  <Route index element={<Objects />} />
-                  <Route path="*" element={<Navigate to="/objects" />} />
+                  <Route index element={<RequireAuth><Objects /></RequireAuth>} />
+                  <Route path="*" element={<Navigate to="/objects" />}/>
                 </Route>
 
                 <Route path="meetings">
-                  <Route index element={<Meetings />} />
+                  <Route index element={<RequireAuth><Meetings /></RequireAuth>} />
                   <Route path="*" element={<Navigate to="/meetings" />} />
                 </Route>
 
                 <Route path="calendar">
-                  <Route index element={<Calendar />} />
+                  <Route index element={<RequireAuth><Calendar /></RequireAuth>} />
                   <Route path="*" element={<Navigate to="/calendar" />} />
                 </Route>
 
                 <Route path="ridge">
-                  <Route index element={<Ridge />} />
+                  <Route index element={<RequireAuth><Ridge /></RequireAuth>} />
                   <Route path="*" element={<Navigate to="/ridge" />} />
                 </Route>
 
                 <Route path="deals">
-                  <Route index element={<Deals />} />
+                  <Route index element={<RequireAuth><Deals /></RequireAuth>} />
                   <Route path="*" element={<Navigate to="/deals" />} />
                 </Route>
 
                 <Route path="presentations">
-                  <Route index element={<Presentations />} />
+                  <Route index element={<RequireAuth><Presentations /></RequireAuth>} />
                   <Route path="*" element={<Navigate to="/presentations" />} />
                 </Route>
               </Routes>
