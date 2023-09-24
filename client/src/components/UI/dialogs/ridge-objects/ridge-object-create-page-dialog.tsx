@@ -11,7 +11,7 @@ const RidgeObjectCreatePageDialog = () => {
 
   const isOpenCreateRidgeObject = useSelector(getCreateRidgeObjectOpenState());
   const handleCloseCreateRidgeObject = () => {
-    dispatch(setCreateRidgeObjectOpenState(false));
+    dispatch<any>(setCreateRidgeObjectOpenState(false));
   };
   return (
     <DialogStyled

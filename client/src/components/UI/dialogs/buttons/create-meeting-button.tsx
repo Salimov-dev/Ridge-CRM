@@ -8,7 +8,7 @@ const CreateMeetingButton = () => {
   const dispatch = useDispatch();
 
   const handleOpenCreateMeeting = () => {
-    dispatch(setCreateMeetingOpenState(true));
+    dispatch<any>(setCreateMeetingOpenState(true));
   };
 
   return (
@@ -23,7 +23,7 @@ const CreateMeetingButton = () => {
         "&:hover": { background: "cornflowerBlue" },
       }}
     >
-      <Typography variant="body0">Создать встречу</Typography>
+      Создать встречу
     </Button>
   );
 };

@@ -11,7 +11,7 @@ const MyTaskUpdateDialog = () => {
   const isOpenUpdateMyTask = useSelector(loadUpdateMyTaskOpenState());
 
   const handleCloseUpdateMyTask = () => {
-    dispatch(setUpdateMyTaskOpenState(false));
+    dispatch<any>(setUpdateMyTaskOpenState(false));
   };
 
   return (

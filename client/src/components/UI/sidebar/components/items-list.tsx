@@ -36,7 +36,6 @@ const ItemsList = ({
         title="Активность"
         colors={colors.grey[300]}
         isCollapsed={isCollapsed}
-        sx={{ fontSize: "10px" }}
       />
       <Item
         title="Объекты"

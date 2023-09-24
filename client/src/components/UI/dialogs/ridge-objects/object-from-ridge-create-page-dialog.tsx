@@ -10,8 +10,8 @@ const ObjectFromRidgeCreatePageDialog = () => {
   const isOpenCreateObject = useSelector(getCreateObjectFromRidgeOpenState());
 
   const handleCloseCreateObject = () => {
-    dispatch(setCreateObjectFromRidgeOpenState(false));
-    dispatch(setUpdateRidgeObjectOpenState(true));
+    dispatch<any>(setCreateObjectFromRidgeOpenState(false));
+    dispatch<any>(setUpdateRidgeObjectOpenState(true));
   };
   
   return (

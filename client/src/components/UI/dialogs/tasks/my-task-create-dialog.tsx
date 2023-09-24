@@ -14,7 +14,7 @@ const MyTaskCreateDialog = ({ dateCreate, objects, setDateCreate }) => {
   const isObjectPage = useSelector(loadOpenObjectPageOpenState())
 
   const handleCloseCreateMyTask = () => {
-    dispatch(setCreateMyTaskOpenState(false));
+    dispatch<any>(setCreateMyTaskOpenState(false));
     if (setDateCreate !== undefined) {
       setDateCreate(null);
     }

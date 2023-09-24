@@ -80,13 +80,13 @@ const UpdateRidgeTask = ({ title, onClose }) => {
       comment: capitalizeFirstLetter(data.comment),
     };
 
-    dispatch(updateRidgeTask(newData))
+    dispatch<any>(updateRidgeTask(newData))
       .then(onClose())
       .then(toast.success("Задача себе успешно изменена!"));
   };
 
   const handleRemoveTask = (taskId) => {
-    dispatch(removeRidgeTask(taskId))
+    dispatch<any>(removeRidgeTask(taskId))
       .then(onClose())
       .then(toast.success("Задача себе успешно удалена!"));
   };

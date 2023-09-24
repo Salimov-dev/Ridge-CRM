@@ -1,6 +1,5 @@
 // libraries
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 // MUI
 import { Box } from "@mui/material";
 // styled

@@ -19,7 +19,7 @@ const ManagerTaskCreateDialog = ({
   const isObjectPage = useSelector(loadOpenObjectPageOpenState())
 
   const handleCloseCreateMyTask = () => {
-    dispatch(setCreateManagerTaskOpenState(false));
+    dispatch<any>(setCreateManagerTaskOpenState(false));
     if (setDateCreate !== undefined) {
       setDateCreate(null);
     }

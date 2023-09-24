@@ -1,7 +1,6 @@
 // components
 import SearchField from "../../common/inputs/search-field";
 import MultiSelectField from "../../common/inputs/multi-select-field";
-import SimpleSelectField from "../../common/inputs/simple-select-field";
 import { FieldsContainer, Form } from "../../common/forms/styled/styled";
 // mock
 import { gendersArray } from "../../../mock/genders";

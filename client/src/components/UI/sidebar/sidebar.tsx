@@ -1,7 +1,7 @@
 // libraries
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Box, Typography, styled, useTheme } from "@mui/material";
+import { Box, styled, useTheme } from "@mui/material";
 import { Sidebar as ProSidebar, Menu } from "react-pro-sidebar";
 // components
 import Header from "./components/header";
@@ -55,7 +55,7 @@ const Sidebar = () => {
 
   const handleSetCollapsed = (value) => {
     setIsCollapsed(value);
-    dispatch(setSidebarCollapsState(value));
+    dispatch<any>(setSidebarCollapsState(value));
   };
 
   useEffect(() => {

@@ -11,7 +11,7 @@ const ObjectPageDialog = () => {
   const isOpenObjectPage = useSelector(loadOpenObjectPageOpenState());
 
   const handleCloseObjectPage = () => {
-    dispatch(setOpenObjectPageOpenState(false));
+    dispatch<any>(setOpenObjectPageOpenState(false));
   };
 
   return (

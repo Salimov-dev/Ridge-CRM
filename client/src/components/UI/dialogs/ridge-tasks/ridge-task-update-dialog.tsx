@@ -1,6 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
 import DialogStyled from "../../../common/dialog/dialog-styled";
-import UpdateMyTask from "../../../pages/update-my-task/update-my-task";
 import {
   loadUpdateRidgeTaskOpenState,
   setUpdateRidgeTaskOpenState,
@@ -12,7 +11,7 @@ const RidgeTaskUpdateDialog = () => {
   const isOpenUpdateMyTask = useSelector(loadUpdateRidgeTaskOpenState());
 
   const handleCloseUpdateRidgeTask = () => {
-    dispatch(setUpdateRidgeTaskOpenState(false));
+    dispatch<any>(setUpdateRidgeTaskOpenState(false));
   };
 
   return (

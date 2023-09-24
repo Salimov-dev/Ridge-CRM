@@ -11,7 +11,7 @@ const MeetingUpdateDialog = () => {
   const isOpenUpdateMeeting = useSelector(loadUpdateMeetingOpenState());
 
   const handleCloseUpdate = () => {
-    dispatch(setUpdateMeetingOpenState(false));
+    dispatch<any>(setUpdateMeetingOpenState(false));
   };
 
   return (

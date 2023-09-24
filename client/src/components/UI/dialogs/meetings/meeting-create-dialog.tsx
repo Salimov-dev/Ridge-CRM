@@ -15,7 +15,7 @@ const MeetingCreateDialog = ({ dateCreate = getDateToday() }) => {
   const isObjectPage = useSelector(loadOpenObjectPageOpenState())
 
   const handleCloseCreateMeeting = () => {
-    dispatch(setCreateMeetingOpenState(false));
+    dispatch<any>(setCreateMeetingOpenState(false));
   };
 
   return (

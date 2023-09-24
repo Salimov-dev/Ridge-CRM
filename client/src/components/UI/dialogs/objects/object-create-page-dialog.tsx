@@ -11,7 +11,7 @@ const ObjectCreatePageDialog = () => {
 
   const isOpenCreateObject = useSelector(getCreateObjectOpenState());
   const handleCloseCreateObject = () => {
-    dispatch(setCreateObjectOpenState(false));
+    dispatch<any>(setCreateObjectOpenState(false));
   };
   return (
     <DialogStyled

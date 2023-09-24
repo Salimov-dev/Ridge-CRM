@@ -72,13 +72,13 @@ const UpdateMyTask = ({ title, onClose }) => {
     const transformedTime = dayjs(data.time).format("YYYY-MM-DDTHH:mm:ss.SSSZ");
     const newData = { ...data, date: transformedDate, time: transformedTime };
 
-    dispatch(updateMyTask(newData, taskId))
+    dispatch<any>(updateMyTask(newData))
       .then(onClose())
       .then(toast.success("Задача себе успешно изменена!"));
   };
 
-  const handleRemoveTask = (taskId) => {
-    dispatch(removeTask(taskId))
+  const handleRemoveTask = (taskId: number) => {
+    dispatch<any>(removeTask(taskId))
       .then(onClose())
       .then(toast.success("Задача себе успешно удалена!"));
   };

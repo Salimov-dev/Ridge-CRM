@@ -1,14 +1,15 @@
 import { Button } from "@mui/material";
 
 const MultiColorContainedButton = ({
-  text,
-  fontColor,
-  background,
-  backgroudHover,
+  text = "",
+  fontColor = "white",
+  background = "inherit",
+  backgroudHover = "inherit",
   fontColorHover = "white",
-  onClick,
-  width="100%",
-  disabled=false,
+  onClick = () => {},
+  width = "100%",
+  disabled = false,
+  children,
 }) => {
   return (
     <Button

@@ -1,7 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import DialogStyled from "../../../common/dialog/dialog-styled";
 import UpdateManagerTask from "../../../pages/update-manager-task/update-manager-task";
-import { getObjectsList } from "../../../../store/object/objects.store";
 import {
   loadUpdateManagerTaskOpenState,
   setUpdateManagerTaskOpenState,
@@ -30,7 +29,7 @@ const ManagerTaskUpdateDialog = ({ objects }) => {
   });
 
   const handleCloseUpdateManagerTask = () => {
-    dispatch(setUpdateManagerTaskOpenState(false));
+    dispatch<any>(setUpdateManagerTaskOpenState(false));
   };
 
   return (

@@ -11,7 +11,7 @@ const ManagerCreatePageDialog = () => {
   const dispatch = useDispatch();
 
   const handleCloseCreateObject = () => {
-    dispatch(setCreateUserOpenState(false));
+    dispatch<any>(setCreateUserOpenState(false));
   };
   return (
     <DialogStyled

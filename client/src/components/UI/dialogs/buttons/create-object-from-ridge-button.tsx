@@ -11,8 +11,8 @@ const CreateObjectFromRidgeButton = ({ data, objectId, onUpdate }) => {
   const handleOpenCreateObject = () => {
     const updateData = {...data}
     onUpdate(updateData)
-      .then(()=>dispatch(setUpdateObjectFromRidgeObjectId(objectId)))
-      .then(()=>dispatch(setCreateObjectFromRidgeOpenState(true)));
+      .then(()=>dispatch<any>(setUpdateObjectFromRidgeObjectId(objectId)))
+      .then(()=>dispatch<any>(setCreateObjectFromRidgeOpenState(true)));
   };
 
   return (

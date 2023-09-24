@@ -8,7 +8,7 @@ const RidgeLastContactCreateDialog = () => {
   const isOpenCreateRidgeLastContact = useSelector(getCreateRidgeLastContactOpenState());
 
   const handleCloseCreateLastContact = () => {
-    dispatch(setCreateRidgeLastContactOpenState(false));
+    dispatch<any>(setCreateRidgeLastContactOpenState(false));
   };
 
   return (

@@ -58,8 +58,8 @@ const ObjectBaloon = ({ object }) => {
   );
 
   const handleOpenObjectPage = () => {
-    dispatch(setOpenObjectPageId(objectId));
-    dispatch(setOpenObjectPageOpenState(true));
+    dispatch<any>(setOpenObjectPageId(objectId));
+    dispatch<any>(setOpenObjectPageOpenState(true));
   };
   return (
     <BaloonContainer>

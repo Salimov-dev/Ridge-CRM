@@ -11,7 +11,7 @@ const RidgeObjectUpdatePageDialog = () => {
   const isOpenUpdateObject = useSelector(loadUpdateRidgeObjectOpenState());
 
   const handleCloseEditRidgeObject = () => {
-    dispatch(setUpdateRidgeObjectOpenState(false));
+    dispatch<any>(setUpdateRidgeObjectOpenState(false));
   };
 
   return (

@@ -36,8 +36,8 @@ const RidgeObjectBaloon = ({ object }) => {
   const dispatch = useDispatch();
 
   const handleOpenObjectPage = () => {
-    dispatch(setUpdateRidgeObjectId(objectId));
-    dispatch(setUpdateRidgeObjectOpenState(true));
+    dispatch<any>(setUpdateRidgeObjectId(objectId));
+    dispatch<any>(setUpdateRidgeObjectOpenState(true));
   };
 
   return (

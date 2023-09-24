@@ -60,13 +60,13 @@ const UpdateRidgeLastContact = ({ onClose }) => {
       result: capitalizeFirstLetter(data.result),
       date: transformedDate,
     };
-    dispatch(updateRidgeLastContact(newData, lastContactId))
+    dispatch<any>(updateRidgeLastContact(newData))
       .then(onClose())
       .then(toast.success("Последний контакт успешно изменен!"));
   };
 
   const handleRemoveRidgeLastContact = (lastContactId) => {
-    dispatch(removeRidgeLastContact(lastContactId))
+    dispatch<any>(removeRidgeLastContact(lastContactId))
       .then(onClose())
       .then(toast.success("Последний контакт успешно удален!"));
     setOpen(false);

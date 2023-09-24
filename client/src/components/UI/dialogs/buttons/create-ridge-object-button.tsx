@@ -8,7 +8,7 @@ const CreateRidgeObjectButton = () => {
   const dispatch = useDispatch();
 
   const handleOpenCreateRidgeObject = () => {
-    dispatch(setCreateRidgeObjectOpenState(true));
+    dispatch<any>(setCreateRidgeObjectOpenState(true));
   };
 
   return (
@@ -23,7 +23,7 @@ const CreateRidgeObjectButton = () => {
         "&:hover": { background: "darkOrchid" },
       }}
     >
-      <Typography variant="body0">Создать объект</Typography>
+      Создать объект
     </Button>
   );
 };

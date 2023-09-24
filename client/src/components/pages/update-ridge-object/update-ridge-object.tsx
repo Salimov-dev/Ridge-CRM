@@ -25,16 +25,16 @@ import { ridgeObjectSchema } from "../../../schemas/ridge-object-schema";
 // store
 import { getUpdateRidgeObjectId } from "../../../store/ridge-object/update-ridge-object.store";
 import { getRidgeTasksByObjectId } from "../../../store/ridge-task/ridge-tasks.store";
+import { getRidgeLastContactsByObjectId } from "../../../store/ridge-last-contact/last-ridge-contact.store";
+import { getCurrentUserId, getIsUserAuthorThisEntity } from "../../../store/user/users.store";
 import {
   getRidgeObjectById,
   getRidgeObjectsLoadingStatus,
   removeRidgeObject,
   updateRidgeObject,
 } from "../../../store/ridge-object/ridge-objects.store";
-import { getRidgeLastContactsByObjectId } from "../../../store/ridge-last-contact/last-ridge-contact.store";
 // utils
 import { capitalizeFirstLetter } from "../../../utils/data/capitalize-first-letter";
-import { getCurrentUserId, getIsUserAuthorThisEntity } from "../../../store/user/users.store";
 
 const UpdateRidgeObject = ({ onClose }) => {
   const [open, setOpen] = useState(false);
@@ -86,13 +86,13 @@ const UpdateRidgeObject = ({ onClose }) => {
       comment: capitalizeFirstLetter(data.comment),
     };
 
-    dispatch(updateRidgeObject(newData, objectId))
+    dispatch<any>(updateRidgeObject(newData))
       .then(onClose())
       .then(toast.success("Объект успешно изменен!"));
   };
 
   const handleRemoveObject = (objectId) => {
-    dispatch(removeRidgeObject(objectId))
+    dispatch<any>(removeRidgeObject(objectId))
       .then(onClose())
       .then(toast.success("Объект успешно удален с грядки!"));
   };

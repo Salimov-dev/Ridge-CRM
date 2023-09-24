@@ -1,6 +1,7 @@
 import dayjs from "dayjs";
 import { orderBy } from "lodash";
 import { useSelector } from "react-redux";
+import isBetween from 'dayjs/plugin/isBetween';
 // store
 import { getObjectsList } from "../../store/object/objects.store";
 import { getMeetingsList } from "../../store/meeting/meetings.store";
@@ -14,6 +15,7 @@ import getStartWeekDate from "../../utils/date/get-start-week-date";
 import getEndWeekDate from "../../utils/date/get-end-week-date";
 
 const useCalendar = () => {
+  dayjs.extend(isBetween)
   const objects = useSelector(getObjectsList());
   const currentUserId = useSelector(getCurrentUserId());
   const isCurator = useSelector(getIsUserCurator(currentUserId));

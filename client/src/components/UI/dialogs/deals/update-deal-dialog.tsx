@@ -11,7 +11,7 @@ const UpdateDealDialog = ({ stages, objects }) => {
   const isOpenUpdateDeal = useSelector(loadUpdateDealOpenState());
 
   const handleCloseCreateDeal = () => {
-    dispatch(setUpdateDealOpenState(false));
+    dispatch<any>(setUpdateDealOpenState(false));
   };
 
   return (

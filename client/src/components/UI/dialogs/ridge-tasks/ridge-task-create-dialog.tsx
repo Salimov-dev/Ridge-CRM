@@ -14,7 +14,7 @@ const RidgeTaskCreateDialog = ({ objects, dateCreate, setDateCreate }) => {
   const objectPageId = useSelector(getUpdateRidgeObjectId());
 
   const handleCloseCreateMyTask = () => {
-    dispatch(setCreateRidgeTaskOpenState(false));
+    dispatch<any>(setCreateRidgeTaskOpenState(false));
     if (setDateCreate !== undefined) {
       setDateCreate(null);
     }

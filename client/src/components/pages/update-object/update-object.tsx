@@ -25,7 +25,6 @@ const UpdateObject = ({ onClose }) => {
   const objectId = useSelector(getUpdateObjectId());
   const object = useSelector(getObjectById(objectId));
 
-  const isEditMode = objectId ? true : false;
   const isObjectHasAddress =
     object?.location?.city && object?.location?.address;
 
@@ -66,7 +65,7 @@ const UpdateObject = ({ onClose }) => {
         address: capitalizeFirstLetter(data.location.address),
       },
     };
-    dispatch(updateObject(newData, objectId))
+    dispatch<any>(updateObject(newData))
       .then(onClose())
       .then(toast.success("Объект успешно изменен!"));
   };
@@ -83,7 +82,6 @@ const UpdateObject = ({ onClose }) => {
         onClose={onClose}
         watch={watch}
         isValid={isValidAndHasAdress}
-        isEditMode={isEditMode}
       />
     </Box>
   ) : (

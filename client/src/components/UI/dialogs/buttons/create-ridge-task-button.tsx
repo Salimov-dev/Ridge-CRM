@@ -13,7 +13,7 @@ const CreateRidgeTaskButton = ({
   const dispatch = useDispatch();
 
   const handleOpenCreateMyTask = () => {
-    dispatch(setCreateRidgeTaskOpenState(true));
+    dispatch<any>(setCreateRidgeTaskOpenState(true));
   };
   return (
     <Button

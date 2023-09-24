@@ -9,8 +9,8 @@ const CreateRidgeLastContactButton = ({ title, objectId }) => {
   const dispatch = useDispatch();
 
   const handleOpenCreateRidgeLastContact = () => {
-    dispatch(setCreateRidgeLastContactOpenState(true));
-    dispatch(setUpdateRidgeLastContactId(objectId));
+    dispatch<any>(setCreateRidgeLastContactOpenState(true));
+    dispatch<any>(setUpdateRidgeLastContactId(objectId));
   };
 
   return (

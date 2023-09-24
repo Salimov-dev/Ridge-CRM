@@ -1,6 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
 import DialogStyled from "../../../common/dialog/dialog-styled";
-import UpdateLastContact from "../../../pages/update-last-contact/update-last-contact";
 import {
   getUpdateRidgeLastContactOpenState,
   setUpdateRidgeLastContactOpenState,
@@ -12,7 +11,7 @@ const RidgeLastContactUpdateDialog = () => {
   const isOpenUpdateMeeting = useSelector(getUpdateRidgeLastContactOpenState());
 
   const handleCloseUpdate = () => {
-    dispatch(setUpdateRidgeLastContactOpenState(false));
+    dispatch<any>(setUpdateRidgeLastContactOpenState(false));
   };
 
   return (

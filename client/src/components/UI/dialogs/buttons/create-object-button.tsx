@@ -8,7 +8,7 @@ const CreateObjectButton = () => {
   const dispatch = useDispatch();
 
   const handleOpenCreateObject = () => {
-    dispatch(setCreateObjectOpenState(true));
+    dispatch<any>(setCreateObjectOpenState(true));
   };
 
   return (
@@ -23,7 +23,7 @@ const CreateObjectButton = () => {
         "&:hover": { background: "green" },
       }}
     >
-      <Typography variant="body0">Создать объект</Typography>
+      Создать объект
     </Button>
   );
 };

@@ -47,13 +47,13 @@ const MeetingBaloon = ({ meeting }) => {
   const date = FormatDate(meeting?.date);
 
   const handleOpenObjectPage = () => {
-    dispatch(setOpenObjectPageId(objectId));
-    dispatch(setOpenObjectPageOpenState(true));
+    dispatch<any>(setOpenObjectPageId(objectId));
+    dispatch<any>(setOpenObjectPageOpenState(true));
   };
 
   const handleOpenUpdateMeeting = () => {
-    dispatch(setUpdateMeetingId(meetingId));
-    dispatch(setUpdateMeetingOpenState(true));
+    dispatch<any>(setUpdateMeetingId(meetingId));
+    dispatch<any>(setUpdateMeetingOpenState(true));
   };
 
   return (

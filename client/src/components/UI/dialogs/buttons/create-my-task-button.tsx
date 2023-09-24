@@ -13,7 +13,7 @@ const CreateMyTaskButton = ({
   const dispatch = useDispatch();
 
   const handleOpenCreateMyTask = () => {
-    dispatch(setCreateMyTaskOpenState(true));
+    dispatch<any>(setCreateMyTaskOpenState(true));
   };
   return (
     <Button

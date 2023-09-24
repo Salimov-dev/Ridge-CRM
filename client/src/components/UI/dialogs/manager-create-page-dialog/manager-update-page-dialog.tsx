@@ -11,7 +11,7 @@ const ManagerUpdatePageDialog = () => {
   const dispatch = useDispatch();
 
   const handleCloseCreateUser = () => {
-    dispatch(setUpdateManagerOpenState(false));
+    dispatch<any>(setUpdateManagerOpenState(false));
   };
 
   return (
