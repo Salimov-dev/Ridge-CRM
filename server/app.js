@@ -21,7 +21,7 @@ app.use(cors(corsOptions));
 app.use("/api", routes);
 app.use("/api/uploads", express.static("uploads"));
 
-const PORT = config.get("port") ?? 8081;
+const PORT = config.get("port") ?? 8080;
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
