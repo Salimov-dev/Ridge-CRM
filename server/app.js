@@ -8,7 +8,7 @@ import path from "path";
 import routes from "./routes/index.js";
 
 const corsOptions = {
-  origin: "https//ridge-qnj1hsf42-salimov-dev.vercel.app",
+  origin: "httpы://www.ridge-crm.ru",
   credentials: true,
   optionSuccessStatus: 200,
 };
