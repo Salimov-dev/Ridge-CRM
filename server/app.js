@@ -8,9 +8,18 @@ import path from "path";
 import routes from "./routes/index.js";
 
 const corsOptions = {
+  allowedHeaders: [
+    "content-type",
+    "Access-Control-Allow-Origin",
+    "Access-Control-Allow-Credentials",
+    "Authorization",
+    "Accept",
+  ],
   origin: "httpы://www.ridge-crm.ru",
   credentials: true,
+  methods: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE", "OPTIONS"],
   optionSuccessStatus: 200,
+  credentials: true,
 };
 
 const app = express();
