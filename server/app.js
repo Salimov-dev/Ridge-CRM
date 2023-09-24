@@ -18,6 +18,7 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cors(corsOptions));
+app.options('*', cors(corsOptions));
 app.use("/api", routes);
 app.use("/api/uploads", express.static("uploads"));
 
