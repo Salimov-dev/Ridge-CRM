@@ -17,7 +17,7 @@ const { reducer: authStateReducer, actions } = authSlice;
 const { authSetted } = actions;
 
 export const loadAuthState = (state) => (dispatch) => {
-  dispatch(authSetted(state));
+  dispatch(authSetted(state))
 };
 
 export const setAuthState = (payload) => (dispatch) => {
