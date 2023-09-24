@@ -1,7 +1,7 @@
 {
-  "name": "CRM",
+  "name": "Ridge-crm",
   "version": "1.0.0",
-  "description": "",
+  "description": "Наша система автоматизации для отделов развития",
   "main": "index.js",
   "type": "module",
   "scripts": {

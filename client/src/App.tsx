@@ -44,7 +44,6 @@ function App() {
             <Sidebar />
             <RightSide>
               <TopBar />
-
               <Routes>
                 <Route index path="/" element={<RequireAuth><Main /></RequireAuth>} />
                 <Route index path="*" element={<RequireAuth><NoMatchRoute /></RequireAuth>} />
