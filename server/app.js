@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import config from "config";
 import chalk from "chalk";
 import cors from "cors";
+import path from "path";
 import routes from "./routes/index.js";
 
 const corsOptions = {
@@ -21,11 +22,21 @@ app.use("/api/uploads", express.static("uploads"));
 
 const PORT = config.get("port") ?? 8080;
 
+if (process.env.NODE_ENV === "production") {
+  app.use("/", express.static(path.join(__dirname, "client")));
+
+  const indexPath = path.join(__dirname, "client", "index.html");
+
+  app.get("*", (req, res) => {
+    res.sendFile(indexPath);
+  });
+}
+
 async function start() {
   try {
     await mongoose.connect(config.get("mongoUri"));
     console.log(chalk.green("MongoDB connected"));
-    
+
     app.listen(PORT, () =>
       console.log(chalk.green(`Server has been started on port ${PORT}`))
     );
