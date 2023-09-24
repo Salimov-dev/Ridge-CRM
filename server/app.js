@@ -15,11 +15,10 @@ const corsOptions = {
     "Authorization",
     "Accept",
   ],
-  origin: "httpы://www.ridge-crm.ru",
+  origin: "https://www.ridge-crm.ru",
   credentials: true,
   methods: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE", "OPTIONS"],
   optionSuccessStatus: 200,
-  credentials: true,
 };
 
 const app = express();
