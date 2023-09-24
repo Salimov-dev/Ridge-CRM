@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "name": "project-007-server",
+  "name": "ridge-crm",
   "builds": [{ "src": "index.js", "use": "@vercel/node" }],
   "routes": [{ "src": "/(.*)", "dest": "/" }]
 }
