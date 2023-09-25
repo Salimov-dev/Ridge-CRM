@@ -10,7 +10,11 @@ const app = express();
 const PORT = 8080;
 
 const corsOptions = {
-  origin: ["https://dev-craft-kappa.vercel.app", "http://localhost:5173"],
+  origin: [
+    "https://dev-craft-kappa.vercel.app",
+    "https://www.ridge-crm.ru",
+    "http://localhost:5173",
+  ],
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   allowedHeaders: [
     "Origin",
