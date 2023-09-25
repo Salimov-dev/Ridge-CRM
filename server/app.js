@@ -32,6 +32,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use("/api", routes);
 app.use("/api/uploads", express.static("uploads"));
 
+app.get("/", (req, res) => {
+  res.send("Привет из Грядки!");
+});
+
 async function start() {
   try {
     await mongoose.connect(
