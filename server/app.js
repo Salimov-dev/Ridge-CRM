@@ -29,23 +29,23 @@ app.use(express.urlencoded({ extended: false }));
 app.use("/api", routes);
 app.use("/api/uploads", express.static("uploads"));
 
-
 app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
 async function start() {
   try {
-    // await mongoose.connect(config.get("mongoUri"));
+    await mongoose.connect(
+      "mongodb+srv://ruspb1987:rtkNpn2w1Jc8poKQ@cluster0.ejnptrn.mongodb.net/?retryWrites=true&w=majority/test"
+    );
 
     app.listen(PORT, () => {
       console.log(`Server is running on http://localhost:${PORT}`);
     });
   } catch (e) {
-    console.log(e.message)
+    console.log(e.message);
     process.exit(1);
   }
 }
 
 start();
-
