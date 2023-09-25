@@ -6,6 +6,8 @@ import cors from "cors";
 import http from "http";
 import routes from "./routes/index.js";
 
+const app = express();
+
 const corsOptions = {
   origin: [
     "https://www.ridge-crm.ru",
@@ -23,7 +25,6 @@ const corsOptions = {
   credentials: true,
 };
 
-const app = express();
 
 app.use(cors(corsOptions));
 app.use(express.json());
