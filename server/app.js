@@ -7,7 +7,17 @@ import http from "http";
 import routes from "./routes/index.js";
 
 const corsOptions = {
-  origin: ["https://www.ridge-crm.ru", "https://dev-craft-kappa.vercel.app"],
+  allowedHeaders: [
+    "Access-Control-Allow-Credentials",
+    "Origin",
+    "X-Requested-With",
+    "Authorization",
+  ],
+  origin: [
+    "https://www.ridge-crm.ru",
+    "https://dev-craft-kappa.vercel.app",
+    "http://localhost:5173",
+  ],
   credentials: true,
   optionSuccessStatus: 200,
 };
