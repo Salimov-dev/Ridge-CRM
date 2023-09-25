@@ -26,12 +26,12 @@ const corsOptions = {
 };
 
 
-app.use(cors(corsOptions));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+// app.use(cors(corsOptions));
+// app.use(express.json());
+// app.use(express.urlencoded({ extended: false }));
 
 // app.use("/api", routes);
-app.use("/api/uploads", express.static("uploads"));
+// app.use("/api/uploads", express.static("uploads"));
 
 const PORT = config.get("port") || 5000;
 
