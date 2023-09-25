@@ -33,11 +33,6 @@ app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
-
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
-});
-
 // mongoose.connect(config.get("mongoUri"))
 //   .then(() => {
 //     console.log(chalk.green("MongoDB connected"));
@@ -51,19 +46,19 @@ app.listen(PORT, () => {
 //     process.exit(1);
 //   });
 
-// async function start() {
-//   try {
-//     await mongoose.connect(config.get("mongoUri"));
-//     console.log(chalk.green("MongoDB connected"));
+async function start() {
+  try {
+    // await mongoose.connect(config.get("mongoUri"));
+    // console.log(chalk.green("MongoDB connected"));
 
-//     app.listen(PORT, () =>
-//       console.log(chalk.green(`Server has been started on port ${PORT}`))
-//     );
-//   } catch (e) {
-//     console.log(chalk.red(e.message));
-//     process.exit(1);
-//   }
-// }
+    app.listen(PORT, () => {
+      console.log(`Server is running on http://localhost:${PORT}`);
+    });
+  } catch (e) {
+    console.log(e.message)
+    process.exit(1);
+  }
+}
 
-// start();
+start();
 
