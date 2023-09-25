@@ -7,10 +7,11 @@ import http from "http";
 import routes from "./routes/index.js";
 
 const corsOptions = {
-  origin: "https://www.ridge-crm.ru",
+  origin: ["https://www.ridge-crm.ru", "https://dev-craft-kappa.vercel.app"],
   credentials: true,
   optionSuccessStatus: 200,
 };
+
 
 const app = express();
 
@@ -30,7 +31,7 @@ async function start() {
     await mongoose.connect(config.get("mongoUri"));
     console.log(chalk.green("MongoDB connected"));
 
-    server.listen(PORT, () =>
+    app.listen(PORT, () =>
       console.log(chalk.green(`Server has been started on port ${PORT}`))
     );
   } catch (e) {
