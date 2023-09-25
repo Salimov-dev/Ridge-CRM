@@ -33,7 +33,7 @@ app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
-mongoose.connect(config.get("mongoUri"))
+
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
