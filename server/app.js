@@ -28,23 +28,18 @@ app.use(express.urlencoded({ extended: false }));
 app.use("/api", routes);
 app.use("/api/uploads", express.static("uploads"));
 
-
 app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
-// app.listen(PORT, () => {
-//   console.log(`Server is running on http://localhost:${PORT}`);
-// });
-
 async function start() {
   try {
     await mongoose.connect(config.get("mongoUri"));
-    console.log(chalk.green("MongoDB connected"));
+    console.log("MongoDB connected");
 
-    app.listen(PORT, () =>
-      console.log(chalk.green(`Server has been started on port ${PORT}`))
-    );
+    app.listen(PORT, () => {
+      console.log(`Server is running on http://localhost:${PORT}`);
+    });
   } catch (e) {
     console.log(chalk.red(e.message));
     process.exit(1);
@@ -52,4 +47,3 @@ async function start() {
 }
 
 start();
-
