@@ -8,7 +8,7 @@ import path from "path";
 import routes from "./routes/index.js";
 
 const corsOptions = {
-  origin: "http://localhost:5173",
+  origin: "https://www.ridge-crm.ru",
   credentials: true,
   optionSuccessStatus: 200,
 };
