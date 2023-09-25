@@ -7,7 +7,7 @@ import http from "http";
 import routes from "./routes/index.js";
 
 const app = express();
-const PORT = 3000;
+const PORT = 8080;
 
 const corsOptions = {
   origin: ["https://dev-craft-kappa.vercel.app", "http://localhost:5173"],
