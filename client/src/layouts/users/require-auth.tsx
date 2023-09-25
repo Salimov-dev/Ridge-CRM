@@ -7,12 +7,6 @@ import { getIsLoggedIn } from "../../store/user/users.store";
 const RequireAuth = ({ children }) => {
   const location = useLocation();
 
-  const isLoggedIn = useSelector(getIsLoggedIn());
-
-  if (!isLoggedIn) {
-    return <Navigate to="/auth/login" state={{ path: location.pathname }} />;
-  }
-
   return children;
 };
 
