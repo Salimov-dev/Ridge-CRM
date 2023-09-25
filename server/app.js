@@ -1,13 +1,13 @@
-import express from "express";
+import routes from "./routes/index.js";
 import mongoose from "mongoose";
+import express from "express";
 import config from "config";
 import chalk from "chalk";
 import cors from "cors";
 import http from "http";
-import routes from "./routes/index.js";
 
 const app = express();
-const PORT = 8080;
+const PORT = process.env.PORT || 8080;
 
 const corsOptions = {
   origin: [
@@ -32,23 +32,38 @@ app.use(express.urlencoded({ extended: false }));
 app.use("/api", routes);
 app.use("/api/uploads", express.static("uploads"));
 
-app.get("/", (req, res) => {
-  res.send("Привет из Грядки!");
-});
+const server = http.createServer(app);
 
-async function start() {
-  try {
-    await mongoose.connect(
-      "mongodb://ruspb1987:rtkNpn2w1Jc8poKQ@ac-1hnuvn3-shard-00-00.ejnptrn.mongodb.net:27017,ac-1hnuvn3-shard-00-01.ejnptrn.mongodb.net:27017,ac-1hnuvn3-shard-00-02.ejnptrn.mongodb.net:27017/?ssl=true&replicaSet=atlas-ty0rfj-shard-0&authSource=admin&retryWrites=true&w=majority/test"
+mongoose
+  .connect("mongodb://ruspb1987:rtkNpn2w1Jc8poKQ@ac-1hnuvn3-shard-00-00.ejnptrn.mongodb.net:27017,ac-1hnuvn3-shard-00-01.ejnptrn.mongodb.net:27017,ac-1hnuvn3-shard-00-02.ejnptrn.mongodb.net:27017/?ssl=true&replicaSet=atlas-ty0rfj-shard-0&authSource=admin&retryWrites=true&w=majority")
+  .then(() => {
+    console.log(chalk.green("MongoDB connected"));
+
+    server.listen(PORT, () =>
+      console.log(chalk.green(`Server has been started on port ${PORT}`))
     );
-
-    app.listen(PORT, () => {
-      console.log(`Server is running on http://localhost:${PORT}`);
-    });
-  } catch (e) {
-    console.log(e.message);
+  })
+  .catch((e) => {
+    console.log(chalk.red(e.message));
     process.exit(1);
-  }
-}
+  });
 
-start();
+// async function start() {
+//   try {
+//     await mongoose.connect(config.get("mongoUri"));
+//     console.log(chalk.green("MongoDB connected"));
+
+//     await mongoose.connect(
+//       "mongodb://ruspb1987:rtkNpn2w1Jc8poKQ@ac-1hnuvn3-shard-00-00.ejnptrn.mongodb.net:27017,ac-1hnuvn3-shard-00-01.ejnptrn.mongodb.net:27017,ac-1hnuvn3-shard-00-02.ejnptrn.mongodb.net:27017/?ssl=true&replicaSet=atlas-ty0rfj-shard-0&authSource=admin&retryWrites=true&w=majority/test"
+//     );
+
+//     server.listen(PORT, () =>
+//       console.log(chalk.green(`Server has been started on port ${PORT}`))
+//     );
+//   } catch (e) {
+//     console.log(chalk.red(e.message));
+//     process.exit(1);
+//   }
+// }
+
+// start();
