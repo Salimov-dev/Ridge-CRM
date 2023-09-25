@@ -6,14 +6,13 @@ import cors from "cors";
 import http from "http";
 import routes from "./routes/index.js";
 
+
 const app = express();
+const PORT = 3000;
+
 
 const corsOptions = {
-  origin: [
-    "https://www.ridge-crm.ru",
-    "https://dev-craft-kappa.vercel.app",
-    "http://localhost:5173",
-  ],
+  origin: process.env.CORS_DOMAIN,
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   allowedHeaders: [
     "Origin",
@@ -25,15 +24,7 @@ const corsOptions = {
   credentials: true,
 };
 
-
-// app.use(cors(corsOptions));
-// app.use(express.json());
-// app.use(express.urlencoded({ extended: false }));
-
-// app.use("/api", routes);
-// app.use("/api/uploads", express.static("uploads"));
-
-const PORT = config.get("port") || 5000;
+app.use(cors(corsOptions));
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
