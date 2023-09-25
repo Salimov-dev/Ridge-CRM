@@ -8,16 +8,8 @@ import path from "path";
 import routes from "./routes/index.js";
 
 const corsOptions = {
-  allowedHeaders: [
-    "content-type",
-    "Access-Control-Allow-Origin",
-    "Access-Control-Allow-Credentials",
-    "Authorization",
-    "Accept",
-  ],
-  origin: "https://www.ridge-crm.ru",
+  origin: "http://localhost:5173",
   credentials: true,
-  methods: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE", "OPTIONS"],
   optionSuccessStatus: 200,
 };
 
@@ -26,7 +18,6 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cors(corsOptions));
-app.options("*", cors(corsOptions));
 app.use("/api", routes);
 app.use("/api/uploads", express.static("uploads"));
 
@@ -35,6 +26,7 @@ const PORT = config.get("port") ?? 8080;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+// check
 if (process.env.NODE_ENV === "production") {
   app.use("/", express.static(path.join(__dirname, "client")));
   const indexPath = path.join(__dirname, "client", "index.html");
