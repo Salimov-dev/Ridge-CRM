@@ -8,6 +8,7 @@ import routes from "./routes/index.js";
 
 const corsOptions = {
   allowedHeaders: [
+    "Access-Control-Allow-Origin",
     "Access-Control-Allow-Credentials",
     "Origin",
     "X-Requested-With",
