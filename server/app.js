@@ -8,7 +8,6 @@ import routes from "./routes/index.js";
 
 const app = express();
 const PORT = 3000;
-// const PORT = config.get("port") ?? 8080;
 
 const corsOptions = {
   origin: ["https://dev-craft-kappa.vercel.app", "http://localhost:5173"],
@@ -28,10 +27,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use("/api", routes);
 app.use("/api/uploads", express.static("uploads"));
-
-app.get("/", (req, res) => {
-  res.send("Hello World!");
-});
 
 async function start() {
   try {
