@@ -7,7 +7,8 @@ import http from "http";
 import routes from "./routes/index.js";
 
 const app = express();
-const PORT = config.get("port") ?? 8080;
+const PORT = 3000;
+// const PORT = config.get("port") ?? 8080;
 
 const corsOptions = {
   origin: ["https://dev-craft-kappa.vercel.app", "http://localhost:5173"],
@@ -28,6 +29,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use("/api", routes);
 app.use("/api/uploads", express.static("uploads"));
 
+
 app.get("/", (req, res) => {
   res.send("Hello World!");
 });
@@ -40,9 +42,10 @@ async function start() {
       console.log(`Server is running on http://localhost:${PORT}`);
     });
   } catch (e) {
-    console.log(e.message);
+    console.log(e.message)
     process.exit(1);
   }
 }
 
 start();
+
