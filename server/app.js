@@ -12,7 +12,6 @@ const corsOptions = {
   optionSuccessStatus: 200,
 };
 
-
 const app = express();
 
 app.use(cors(corsOptions));
@@ -22,7 +21,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use("/api", routes);
 app.use("/api/uploads", express.static("uploads"));
 
-const PORT = config.get("port") ?? 8080;
+const PORT = config.get("port") || 5000;
 
 const server = http.createServer(app);
 
@@ -31,7 +30,7 @@ async function start() {
     await mongoose.connect(config.get("mongoUri"));
     console.log(chalk.green("MongoDB connected"));
 
-    app.listen(PORT, () =>
+    server.listen(PORT, () =>
       console.log(chalk.green(`Server has been started on port ${PORT}`))
     );
   } catch (e) {
