@@ -37,20 +37,10 @@ app.use("/api/uploads", express.static("uploads"));
 
 const PORT = config.get("port") || 5000;
 
-const server = http.createServer(app);
+app.get("/", (req, res) => {
+  res.send("Hello World!");
+});
 
-async function start() {
-  try {
-    await mongoose.connect(config.get("mongoUri"));
-    console.log(chalk.green("MongoDB connected"));
-
-    server.listen(PORT, () =>
-      console.log(chalk.green(`Server has been started on port ${PORT}`))
-    );
-  } catch (e) {
-    console.log(chalk.red(e.message));
-    process.exit(1);
-  }
-}
-
-start();
+app.listen(PORT, () => {
+  console.log(`Server is running on http://localhost:${PORT}`);
+});
