@@ -8,19 +8,22 @@ import routes from "./routes/index.js";
 
 const corsOptions = {
   allowedHeaders: [
+    "content-type",
     "Access-Control-Allow-Origin",
     "Access-Control-Allow-Credentials",
     "Origin",
     "X-Requested-With",
     "Authorization",
+    "Accept",
   ],
   origin: [
     "https://www.ridge-crm.ru",
     "https://dev-craft-kappa.vercel.app",
     "http://localhost:5173",
   ],
-  credentials: true,
+  methods: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE", "OPTIONS"],
   optionSuccessStatus: 200,
+  credentials: true,
 };
 
 const app = express();
