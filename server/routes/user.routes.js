@@ -5,9 +5,9 @@ import auth from "../middleware/auth.middleware.js";
 const router = express.Router({ mergeParams: true });
 
 router.get("/", async (req, res) => {
+  console.log("req", req);
   try {
     const userId = req.user._id;
-    console.log("req", req);
     console.log("req.user._id", req.user._id);
     console.log("userId", userId);
     const user = await User.findById(userId); // Найти пользователя по _id
@@ -27,6 +27,8 @@ router.get("/", async (req, res) => {
 
     return res.status(200).send(allUsers);
   } catch (e) {
+    console.log("e", e);
+    console.log("e", e.message);
     res.status(500).json({
       message: "На сервере произошла ошибка. Попробуйте позже",
     });
