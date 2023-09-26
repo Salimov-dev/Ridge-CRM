@@ -4,11 +4,11 @@ import Token from "../models/Tokens.js"
 
 class TokenService {
   generate(payload) {
-    const accessToken = jwt.sign(payload, config.get("accessSecret"), {
+    const accessToken = jwt.sign(payload, process.env.accessSecret, {
       expiresIn: "1h",
     });
 
-    const refreshToken = jwt.sign(payload, config.get("refreshSecret"));
+    const refreshToken = jwt.sign(payload, process.env.refreshSecret);
 
     return { accessToken, refreshToken, expiresIn: 3600 };
   }

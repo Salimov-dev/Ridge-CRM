@@ -32,9 +32,7 @@ app.use("/api", routes);
 app.use("/api/uploads", express.static("uploads"));
 
 mongoose
-  .connect(
-    "mongodb://ruspb1987:rtkNpn2w1Jc8poKQ@ac-1hnuvn3-shard-00-00.ejnptrn.mongodb.net:27017,ac-1hnuvn3-shard-00-01.ejnptrn.mongodb.net:27017,ac-1hnuvn3-shard-00-02.ejnptrn.mongodb.net:27017/?ssl=true&replicaSet=atlas-ty0rfj-shard-0&authSource=admin&retryWrites=true&w=majority"
-  )
+  .connect(process.env.MONGODB_URI)
   .then(() => {
     console.log(chalk.green("MongoDB connected"));
 
@@ -46,23 +44,3 @@ mongoose
     console.log(chalk.red(e.message));
     process.exit(1);
   });
-
-// async function start() {
-//   try {
-//     await mongoose.connect(config.get("mongoUri"));
-//     console.log(chalk.green("MongoDB connected"));
-
-//     await mongoose.connect(
-//       "mongodb://ruspb1987:rtkNpn2w1Jc8poKQ@ac-1hnuvn3-shard-00-00.ejnptrn.mongodb.net:27017,ac-1hnuvn3-shard-00-01.ejnptrn.mongodb.net:27017,ac-1hnuvn3-shard-00-02.ejnptrn.mongodb.net:27017/?ssl=true&replicaSet=atlas-ty0rfj-shard-0&authSource=admin&retryWrites=true&w=majority/test"
-//     );
-
-//     server.listen(PORT, () =>
-//       console.log(chalk.green(`Server has been started on port ${PORT}`))
-//     );
-//   } catch (e) {
-//     console.log(chalk.red(e.message));
-//     process.exit(1);
-//   }
-// }
-
-// start();
