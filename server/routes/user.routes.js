@@ -5,8 +5,9 @@ import auth from "../middleware/auth.middleware.js";
 const router = express.Router({ mergeParams: true });
 
 router.get("/", async (req, res) => {
-  console.log("req", req);
+  console.log("ПОЛУЧИЛ ГЕТ ЗАПРОС");
   try {
+    console.log("ПОПАЛ В БЛОК ТРАЙ");
     const userId = req.user._id;
     console.log("req.user._id", req.user._id);
     console.log("userId", userId);
