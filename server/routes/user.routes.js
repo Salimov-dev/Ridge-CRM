@@ -4,7 +4,7 @@ import auth from "../middleware/auth.middleware.js";
 
 const router = express.Router({ mergeParams: true });
 
-router.get("/", auth, async (req, res) => {
+router.get("/", async (req, res) => {
   try {
     const userId = req.user._id;
     const user = await User.findById(userId); // Найти пользователя по _id
