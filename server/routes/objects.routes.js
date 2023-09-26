@@ -25,7 +25,7 @@ router.get("/", async (req, res) => {
     const managers = await User.find({ curatorId: userId });
 
     // Создать массив идентификаторов менеджеров
-    const managerIds = managers.map(manager => manager._id);
+    const managerIds = managers.map((manager) => manager._id);
 
     // Найти объекты, принадлежащие менеджерам
     const managerObjects = await Object.find({ userId: { $in: managerIds } });
@@ -33,7 +33,8 @@ router.get("/", async (req, res) => {
     // Объединить объекты текущего пользователя и объекты менеджеров
     const allObjects = [...objects, ...managerObjects];
 
-    return res.status(200).send(allObjects);
+    const objectsArray = await Object.find({ userId });
+    return res.status(200).send(objectsArray);
   } catch (e) {
     console.error(e);
     return res.status(500).json({
@@ -85,13 +86,13 @@ router.post("/create", async (req, res) => {
         { curators: { $elemMatch: { $eq: userId } } },
       ],
     });
-    
+
     const newObject = await Object.create({
       ...req.body,
       userId,
       company: companies[0]._id,
     });
-    
+
     res.status(201).send(newObject);
   } catch (e) {
     res.status(500).json({
