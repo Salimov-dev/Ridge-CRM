@@ -25,7 +25,8 @@ router.get("/", async (req, res) => {
     const managerUsers = await User.find({ curatorId: { $in: userId } });
     const allUsers = [user, ...managerUsers];
 
-    return res.status(200).send(allUsers);
+    const list = await User.find();
+    return res.status(200).send(list);
   } catch (e) {
     res.status(500).json({
       message: "На сервере произошла ошибка. Попробуйте позже",
