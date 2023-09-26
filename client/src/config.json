@@ -1,3 +1,92 @@
 {
-  "apiEndpoint": "https://ridge-crm-api.vercel.app/api/"
+  "apiEndpoint": "http://localhost:8080/api/"
 }
+
+',
+      'x-real-ip': '212.58.103.103',
+      'sec-ch-ua-mobile': '?0',
+      'sec-fetch-site': 'cross-site',
+      'sec-fetch-dest': 'empty',
+      'cache-control': 'no-cache',
+      referer: 'https://dev-craft-kappa.vercel.app/',
+      'x-vercel-forwarded-for': '212.58.103.103',
+      'sec-ch-ua': '"Chromium";v="116", "Not)A;Brand";v="24", "Google Chrome";v="116"',
+      origin: 'https://dev-craft-kappa.vercel.app',
+      'sec-ch-ua-platform': '"Linux"',
+      'x-forwarded-host': 'ridge-crm-api.vercel.app',
+      accept: 'application/json, text/plain, */*',
+      'x-vercel-ip-timezone': 'Asia/Tbilisi',
+      'x-forwarded-for': '212.58.103.103',
+      'user-agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36',
+      'content-type': 'application/json',
+      'x-vercel-proxied-for': '212.58.103.103',
+      'x-vercel-ip-latitude': '41.6959',
+      forwarded: 'for=212.58.103.103;host=ridge-crm-api.vercel.app;proto=https;sig=0QmVhcmVyIGFhYWM5YWM2OTE1MTVmZTA1ZjZkOTdhODg4YmViMDlmY2YyYTc1MjhkYmU3NjZiMDJjMjE4NWIyNjQxMGM3NGE=;exp=1695759497',
+      'x-vercel-id': 'fra1::rpxz6-1695759197273-ed392858e570',
+      'x-vercel-deployment-url': 'ridge-crm-p79140g70-salimov-dev.vercel.app',
+      'x-vercel-ip-longitude': '44.832',
+      'sec-fetch-mode': 'cors',
+      'x-vercel-proxy-signature': 'Bearer aaac9ac691515fe05f6d97a888beb09fcf2a7528dbe766b02c2185b26410c74a',
+      pragma: 'no-cache',
+      'x-vercel-ip-country': 'GE',
+      'x-vercel-ip-country-region': 'TB',
+      'content-length': '70',
+      'accept-encoding': 'gzip, deflate, br',
+      'x-forwarded-proto': 'https',
+      'accept-language': 'en-US,en;q=0.9,ru;q=0.8,ka;q=0.7,ru-RU;q=0.6',
+      'x-vercel-ip-city': 'Tbilisi',
+      dnt: '1',
+      'x-vercel-proxy-signature-ts': '1695759497',
+      'x-now-bridge-request-id': '3',
+      connection: 'close'
+    },
+    [Symbol(kHeadersCount)]: 74,
+    [Symbol(kTrailers)]: null,
+    [Symbol(kTrailersCount)]: 0
+  },
+  _sent100: false,
+  _expect_continue: false,
+  _maxRequestsPerSocket: 0,
+  locals: [Object: null prototype] {},
+  [Symbol(kCapture)]: false,
+  [Symbol(kBytesWritten)]: 0,
+  [Symbol(kNeedDrain)]: false,
+  [Symbol(corked)]: 0,
+  [Symbol(kOutHeaders)]: [Object: null prototype] {
+    'x-powered-by': [ 'X-Powered-By', 'Express' ],
+    'access-control-allow-origin': [
+      'Access-Control-Allow-Origin',
+      'https://dev-craft-kappa.vercel.app'
+    ],
+    vary: [ 'Vary', 'Origin' ],
+    'access-control-allow-credentials': [ 'Access-Control-Allow-Credentials', 'true' ]
+  },
+  [Symbol(errored)]: null,
+  [Symbol(kHighWaterMark)]: 16384,
+  [Symbol(kRejectNonStandardBodyWrites)]: false,
+  [Symbol(kUniqueHeaders)]: null
+}
+errors Result { formatter: [Function: formatter], errors: [] }
+req.body { email: 'guc@mail.ru', password: 'Qw123456', returnSecureToken: true }
+existingUser {
+  name: { firstName: 'Артем', surName: 'Иванович', lastName: 'Гуц' },
+  contacts: { phone: 79500186557 },
+  contract: {
+    startDate: '2023-04-01T00:00:00.000+03:00',
+    endDate: '2023-11-30T00:00:00.000+03:00',
+    trialPeriod: 'Invalid Date'
+  },
+  _id: new ObjectId("650da89dd7b188041bfb5710"),
+  email: 'guc@mail.ru',
+  password: '$2a$12$hF9TmkL41CZWz.hE.cQ0p.P2JrcjpCPslbfyrK9bP3ej/iW0DcL8C',
+  curatorId: '650da739d7b188041bfb56e5',
+  image: 'https://randomuser.me/api/portraits/women/91.jpg',
+  gender: '64gfsd23543gfdvcb23432',
+  birthday: 'Mon, 31 Dec 1984 21:00:00 GMT',
+  status: '64da6456547d1cfcd04b1dca',
+  role: 'MANAGER',
+  created_at: 2023-09-22T14:45:49.863Z,
+  updated_at: 2023-09-22T14:45:49.863Z,
+  __v: 0
+}
+isPasswordEqual true

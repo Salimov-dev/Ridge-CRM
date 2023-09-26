@@ -59,8 +59,8 @@ router.post("/signInWithPassword", [
   check("email", "Email некорректный").normalizeEmail().isEmail(),
   check("password", "Пароль не может быть пустым").exists(),
   async (req, res) => {
-    console.log("req", req);
-    console.log("res", res);
+    // console.log("req", req);
+    // console.log("res", res);
     try {
       const errors = validationResult(req);
       console.log("errors", errors);
@@ -75,10 +75,10 @@ router.post("/signInWithPassword", [
       }
 
       const { email, password } = req.body;
-      console.log("req.body", req.body);
+      // console.log("req.body", req.body);
 
       const existingUser = await User.findOne({ email });
-      console.log("existingUser", existingUser);
+      // console.log("existingUser", existingUser);
 
       if (!existingUser) {
         return res.status(400).send({
@@ -96,6 +96,7 @@ router.post("/signInWithPassword", [
       console.log("isPasswordEqual", isPasswordEqual);
 
       if (!isPasswordEqual) {
+        console.log("if !isPasswordEqual");
         return res.status(400).send({
           error: {
             message: "INVALID_PASSWORD",
@@ -104,6 +105,8 @@ router.post("/signInWithPassword", [
         });
       }
 
+      console.log("else !isPasswordEqual");
+
       const tokens = tokenService.generate({ _id: existingUser._id });
       console.log("tokens", tokens);
 
@@ -111,6 +114,8 @@ router.post("/signInWithPassword", [
 
       res.status(200).send({ ...tokens, userId: existingUser._id });
     } catch (e) {
+      console.log("error catch", e);
+      console.log("error catch", e.message);
       res.status(500).json({
         message: "На сервере произошла ошибка. Попробуйте позже",
       });
