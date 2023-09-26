@@ -6,7 +6,7 @@ import User from "../models/User.js";
 
 const router = express.Router({ mergeParams: true });
 
-router.get("/", auth, async (req, res) => {
+router.get("/", async (req, res) => {
   try {
     const userId = req.user._id;
     const user = await User.findOne({ _id: userId });
@@ -41,7 +41,7 @@ router.get("/", auth, async (req, res) => {
   }
 });
 
-router.get("/:objectId?", auth, async (req, res) => {
+router.get("/:objectId?", async (req, res) => {
   try {
     const { objectId } = req.params;
     const editedObject = await RidgeObject.findById(objectId);
@@ -64,7 +64,7 @@ router.patch("/:objectId?/edit", auth, async (req, res) => {
   }
 });
 
-router.delete("/:objectId?", auth, async (req, res) => {
+router.delete("/:objectId?", async (req, res) => {
   try {
     const { objectId } = req.params;
     await RidgeObject.findByIdAndRemove(objectId);
@@ -75,7 +75,7 @@ router.delete("/:objectId?", auth, async (req, res) => {
   }
 });
 
-router.post("/create", auth, async (req, res) => {
+router.post("/create", async (req, res) => {
   try {
     const userId = req.user._id;
     const company = await Company.findOne({

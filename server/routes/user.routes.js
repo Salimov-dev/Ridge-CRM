@@ -4,7 +4,7 @@ import auth from "../middleware/auth.middleware.js";
 
 const router = express.Router({ mergeParams: true });
 
-router.get("/", auth, async (req, res) => {
+router.get("/", async (req, res) => {
   try {
     const userId = req.user._id;
     const user = await User.findById(userId); // Найти пользователя по _id
@@ -29,7 +29,7 @@ router.get("/", auth, async (req, res) => {
   }
 });
 
-router.patch("/:userId/edit-manager", auth, async (req, res) => {
+router.patch("/:userId/edit-manager", async (req, res) => {
   try {
     const userId = req.body._id;
     const updatedUser = await User.findByIdAndUpdate(userId, req.body, {

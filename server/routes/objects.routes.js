@@ -6,7 +6,7 @@ import auth from "../middleware/auth.middleware.js";
 
 const router = express.Router({ mergeParams: true });
 
-router.get("/", auth, async (req, res) => {
+router.get("/", async (req, res) => {
   try {
     const userId = req.user._id;
     const user = await User.findOne({ _id: userId });
@@ -42,7 +42,7 @@ router.get("/", auth, async (req, res) => {
   }
 });
 
-router.get("/:objectId?", auth, async (req, res) => {
+router.get("/:objectId?", async (req, res) => {
   try {
     const { objectId } = req.params;
     const editedObject = await Object.findById(objectId);
@@ -54,7 +54,7 @@ router.get("/:objectId?", auth, async (req, res) => {
   }
 });
 
-router.patch("/:objectId?/edit", auth, async (req, res) => {
+router.patch("/:objectId?/edit", async (req, res) => {
   try {
     const { objectId } = req.params;
     await Object.findByIdAndUpdate(objectId, req.body);
@@ -65,7 +65,7 @@ router.patch("/:objectId?/edit", auth, async (req, res) => {
   }
 });
 
-router.delete("/:objectId?", auth, async (req, res) => {
+router.delete("/:objectId?", async (req, res) => {
   try {
     const { objectId } = req.params;
     await Object.findByIdAndRemove(objectId);
@@ -76,7 +76,7 @@ router.delete("/:objectId?", auth, async (req, res) => {
   }
 });
 
-router.post("/create", auth, async (req, res) => {
+router.post("/create", async (req, res) => {
   try {
     const userId = req.user._id;
     const companies = await Company.find({

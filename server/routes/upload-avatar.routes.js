@@ -31,7 +31,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-router.post("/", auth, upload.single("avatar"), async (req, res) => {
+router.post("/", upload.single("avatar"), async (req, res) => {
   try {
     const userId = req.user._id;
     const company = await Company.findOne({
