@@ -31,7 +31,8 @@ class TokenService {
 
   validateRefresh(refreshToken) {
     try {
-      return jwt.verify(refreshToken, config.get("refreshSecret"));
+      // return jwt.verify(refreshToken, config.get("refreshSecret"));
+      return jwt.verify(refreshToken, "super puper refresh key");
     } catch (e) {
       return null;
     }
@@ -39,7 +40,8 @@ class TokenService {
 
   validateAccess(accessToken) {
     try {
-      return jwt.verify(accessToken, config.get("accessSecret"));
+      // return jwt.verify(accessToken, config.get("accessSecret"));
+      return jwt.verify(accessToken, "the best secure key");
     } catch (e) {
       return null;
     }
