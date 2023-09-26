@@ -5,6 +5,10 @@ import { useSelector } from "react-redux";
 import { getIsLoggedIn } from "../../store/user/users.store";
 
 const RequireAuth = ({ children }) => {
+  const location = useLocation();
+
+  const isLoggedIn = useSelector(getIsLoggedIn());
+
   return children;
 };
 
