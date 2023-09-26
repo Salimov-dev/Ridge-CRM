@@ -33,8 +33,7 @@ router.get("/", async (req, res) => {
     // Объединить объекты текущего пользователя и объекты менеджеров
     const allObjects = [...objects, ...managerObjects];
 
-    const objectsArray = await Object.find({ userId });
-    return res.status(200).send(objectsArray);
+    return res.status(200).send(allObjects);
   } catch (e) {
     console.error(e);
     return res.status(500).json({

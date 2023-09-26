@@ -7,7 +7,11 @@ const router = express.Router({ mergeParams: true });
 router.get("/", async (req, res) => {
   try {
     const userId = req.user._id;
+    console.log("req", req);
+    console.log("req.user._id", req.user._id);
+    console.log("userId", userId);
     const user = await User.findById(userId); // Найти пользователя по _id
+    console.log("user", user);
 
     if (!user) {
       return res.status(404).json({ message: "Пользователь не найден" });
