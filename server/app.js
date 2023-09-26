@@ -10,7 +10,7 @@ const PORT = 8080;
 
 const corsOptions = {
   origin: [
-    "https://dev-craft-kappa.vercel.app/",
+    "https://dev-craft-kappa.vercel.app",
     "https://www.ridge-crm.ru",
     "http://localhost:5173",
   ],
@@ -34,7 +34,9 @@ app.use("/api/uploads", express.static("uploads"));
 const server = http.createServer(app);
 
 mongoose
-  .connect("mongodb://ruspb1987:rtkNpn2w1Jc8poKQ@ac-1hnuvn3-shard-00-00.ejnptrn.mongodb.net:27017,ac-1hnuvn3-shard-00-01.ejnptrn.mongodb.net:27017,ac-1hnuvn3-shard-00-02.ejnptrn.mongodb.net:27017/?ssl=true&replicaSet=atlas-ty0rfj-shard-0&authSource=admin&retryWrites=true&w=majority")
+  .connect(
+    "mongodb://ruspb1987:rtkNpn2w1Jc8poKQ@ac-1hnuvn3-shard-00-00.ejnptrn.mongodb.net:27017,ac-1hnuvn3-shard-00-01.ejnptrn.mongodb.net:27017,ac-1hnuvn3-shard-00-02.ejnptrn.mongodb.net:27017/?ssl=true&replicaSet=atlas-ty0rfj-shard-0&authSource=admin&retryWrites=true&w=majority"
+  )
   .then(() => {
     console.log(chalk.green("MongoDB connected"));
 
