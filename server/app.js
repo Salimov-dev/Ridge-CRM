@@ -1,13 +1,12 @@
 import routes from "./routes/index.js";
 import mongoose from "mongoose";
 import express from "express";
-import config from "config";
 import chalk from "chalk";
 import cors from "cors";
 import http from "http";
 
 const app = express();
-const PORT = process.env.PORT || 8080;
+const PORT = 8080;
 
 const corsOptions = {
   origin: [
