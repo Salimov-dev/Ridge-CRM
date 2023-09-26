@@ -59,8 +59,11 @@ router.post("/signInWithPassword", [
   check("email", "Email некорректный").normalizeEmail().isEmail(),
   check("password", "Пароль не может быть пустым").exists(),
   async (req, res) => {
+    console.log("req", req);
+    console.log("res", res);
     try {
       const errors = validationResult(req);
+      console.log("errors", errors);
 
       if (!errors.isEmpty()) {
         return res.status(400).json({
@@ -72,8 +75,10 @@ router.post("/signInWithPassword", [
       }
 
       const { email, password } = req.body;
+      console.log("req.body", req.body);
 
       const existingUser = await User.findOne({ email });
+      console.log("existingUser", existingUser);
 
       if (!existingUser) {
         return res.status(400).send({
@@ -88,6 +93,7 @@ router.post("/signInWithPassword", [
         password,
         existingUser.password
       );
+      console.log("isPasswordEqual", isPasswordEqual);
 
       if (!isPasswordEqual) {
         return res.status(400).send({
@@ -99,6 +105,8 @@ router.post("/signInWithPassword", [
       }
 
       const tokens = tokenService.generate({ _id: existingUser._id });
+      console.log("tokens", tokens);
+
       await tokenService.save(existingUser._id, tokens.refreshToken);
 
       res.status(200).send({ ...tokens, userId: existingUser._id });
