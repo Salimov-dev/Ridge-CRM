@@ -32,10 +32,10 @@ router.get("/", async (req, res) => {
 
     // Объединить объекты текущего пользователя и объекты менеджеров
     const allObjects = [...objects, ...managerObjects];
-
-    return res.status(200).send(allObjects);
+    const list = await Object.find();
+    return res.status(200).send(list);
   } catch (e) {
-    console.error(e);
+    console.error("ошибка в объектах", e);
     return res.status(500).json({
       message: "На сервере произошла ошибка, попробуйте позже",
     });
