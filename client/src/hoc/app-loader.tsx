@@ -45,48 +45,44 @@ const AppLoader = ({ children }: AppLoaderProps) => {
   const isLoggedIn = useSelector(getIsLoggedIn());
 
   useEffect(() => {
-    if (isLoggedIn) {
-      dispatch<any>(loadAuthState(true));
-      // objects
-      dispatch<any>(loadObjectsList());
-      dispatch<any>(loadObjectStatusList());
-      dispatch<any>(loadObjectConditionsList());
-      dispatch<any>(loadObjectTypesList());
-      // objects params
-      dispatch<any>(loadMetroList());
-      dispatch<any>(loadDistrictsList());
-      dispatch<any>(loadWorkingPositionList());
-      dispatch<any>(loadWorkingPositionList());
-      dispatch<any>(loadCurrentRentersList());
-      dispatch<any>(loadRentTypesList());
-      dispatch<any>(loadEstateTypesList());
-      // users
-      dispatch<any>(loadUsersList());
-      dispatch<any>(loadUserStatusesList());
-      // meetings
-      dispatch<any>(loadMeetingsList());
-      dispatch<any>(loadMeetingStatusesList());
-      dispatch<any>(loadMeetingTypesList());
-      // tasks
-      dispatch<any>(loadTasksList());
-      // ridge tasks
-      dispatch<any>(loadRidgeTasksList());
-      // ridge objects
-      dispatch<any>(loadRidgeObjectsList());
-      dispatch<any>(loadRidgeObjectStatusList());
-      // last contact
-      dispatch<any>(loadLastContactsList());
-      // ridge last contact
-      dispatch<any>(loadRidgeLastContactsList());
-      // sidebar collaps
-      dispatch<any>(loadSidebarCollapsState());
-      // deals
-      dispatch<any>(loadDealStagesList());
-      dispatch<any>(loadDealsList());
-    } else {
-      dispatch<any>(loadAuthState(false));
-    }
-  }, [isLoggedIn]);
+    dispatch<any>(loadAuthState(true));
+    // objects
+    dispatch<any>(loadObjectsList());
+    dispatch<any>(loadObjectStatusList());
+    dispatch<any>(loadObjectConditionsList());
+    dispatch<any>(loadObjectTypesList());
+    // objects params
+    dispatch<any>(loadMetroList());
+    dispatch<any>(loadDistrictsList());
+    dispatch<any>(loadWorkingPositionList());
+    dispatch<any>(loadWorkingPositionList());
+    dispatch<any>(loadCurrentRentersList());
+    dispatch<any>(loadRentTypesList());
+    dispatch<any>(loadEstateTypesList());
+    // users
+    dispatch<any>(loadUsersList());
+    dispatch<any>(loadUserStatusesList());
+    // meetings
+    dispatch<any>(loadMeetingsList());
+    dispatch<any>(loadMeetingStatusesList());
+    dispatch<any>(loadMeetingTypesList());
+    // tasks
+    dispatch<any>(loadTasksList());
+    // ridge tasks
+    dispatch<any>(loadRidgeTasksList());
+    // ridge objects
+    dispatch<any>(loadRidgeObjectsList());
+    dispatch<any>(loadRidgeObjectStatusList());
+    // last contact
+    dispatch<any>(loadLastContactsList());
+    // ridge last contact
+    dispatch<any>(loadRidgeLastContactsList());
+    // sidebar collaps
+    dispatch<any>(loadSidebarCollapsState());
+    // deals
+    dispatch<any>(loadDealStagesList());
+    dispatch<any>(loadDealsList());
+  }, []);
 
   return children;
 };
