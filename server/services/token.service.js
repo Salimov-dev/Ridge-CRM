@@ -1,14 +1,14 @@
-import jwt from "jsonwebtoken"
-import config from "config"
-import Token from "../models/Tokens.js"
+import jwt from "jsonwebtoken";
+import config from "config";
+import Token from "../models/Tokens.js";
 
 class TokenService {
   generate(payload) {
-    const accessToken = jwt.sign(payload, process.env.accessSecret, {
+    const accessToken = jwt.sign(payload, "the best secure key", {
       expiresIn: "1h",
     });
 
-    const refreshToken = jwt.sign(payload, process.env.refreshSecret);
+    const refreshToken = jwt.sign(payload, "super puper refresh key");
 
     return { accessToken, refreshToken, expiresIn: 3600 };
   }
