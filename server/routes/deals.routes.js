@@ -6,7 +6,7 @@ import User from "../models/User.js";
 
 const router = express.Router({ mergeParams: true });
 
-router.get("/", async (req, res) => {
+router.get("/", auth, async (req, res) => {
   try {
     const userId = req.user._id;
     const user = await User.findOne({ _id: userId });
@@ -25,7 +25,7 @@ router.get("/", async (req, res) => {
     const managers = await User.find({ curatorId: userId });
 
     // Создать массив идентификаторов менеджеров
-    const managerIds = managers.map(manager => manager._id);
+    const managerIds = managers.map((manager) => manager._id);
 
     // Найти объекты, принадлежащие менеджерам
     const managersDeals = await Deal.find({ userId: { $in: managerIds } });
@@ -41,7 +41,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.post("/create", async (req, res) => {
+router.post("/create", auth, async (req, res) => {
   try {
     const userId = req.user._id;
     const company = await Company.findOne({
@@ -61,7 +61,7 @@ router.post("/create", async (req, res) => {
   }
 });
 
-router.patch("/:dealId?/edit", async (req, res) => {
+router.patch("/:dealId?/edit", auth, async (req, res) => {
   try {
     const { dealId } = req.params;
     await Deal.findByIdAndUpdate(dealId, req.body);
@@ -72,7 +72,7 @@ router.patch("/:dealId?/edit", async (req, res) => {
   }
 });
 
-router.delete("/:dealId?", async (req, res) => {
+router.delete("/:dealId?", auth, async (req, res) => {
   try {
     const { dealId } = req.params;
     await Deal.findByIdAndRemove(dealId);

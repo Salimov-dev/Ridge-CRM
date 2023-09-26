@@ -16,7 +16,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.post("/create", async (req, res) => {
+router.post("/create", auth, async (req, res) => {
   try {
     const userId = req.user._id;
     const company = await Company.findOne({
@@ -36,7 +36,7 @@ router.post("/create", async (req, res) => {
   }
 });
 
-router.patch("/:ridgeLastContactId?/edit", async (req, res) => {
+router.patch("/:ridgeLastContactId?/edit", auth, async (req, res) => {
   try {
     const  lastContactId  = req.body._id;
     await RidgeLastContact.findByIdAndUpdate(lastContactId, req.body);
@@ -47,7 +47,7 @@ router.patch("/:ridgeLastContactId?/edit", async (req, res) => {
   }
 });
 
-router.delete("/:lastContactId?", async (req, res) => {
+router.delete("/:lastContactId?", auth, async (req, res) => {
   try {
     const { lastContactId } = req.params;
     await RidgeLastContact.findByIdAndRemove(lastContactId);

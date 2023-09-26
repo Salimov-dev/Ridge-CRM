@@ -1,5 +1,4 @@
 import express from "express";
-import Meeting from "../models/Meeting.js";
 import Company from "../models/Company.js";
 import auth from "../middleware/auth.middleware.js";
 import RidgeTask from "../models/Ridge-Task.js";
@@ -7,7 +6,7 @@ import User from "../models/User.js";
 
 const router = express.Router({ mergeParams: true });
 
-router.get("/", async (req, res) => {
+router.get("/", auth, async (req, res) => {
   try {
     const userId = req.user._id;
     const userRole = req.user.role; // Получить роль пользователя
@@ -41,7 +40,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.post("/create", async (req, res) => {
+router.post("/create", auth, async (req, res) => {
   try {
     const userId = req.user._id;
     const company = await Company.findOne({
@@ -61,7 +60,7 @@ router.post("/create", async (req, res) => {
   }
 });
 
-router.patch("/:taskId?/edit", async (req, res) => {
+router.patch("/:taskId?/edit", auth, async (req, res) => {
   try {
     const { taskId } = req.params;
     await RidgeTask.findByIdAndUpdate(taskId, req.body);
@@ -72,7 +71,7 @@ router.patch("/:taskId?/edit", async (req, res) => {
   }
 });
 
-router.delete("/:taskId?", async (req, res) => {
+router.delete("/:taskId?", auth, async (req, res) => {
   try {
     const { taskId } = req.params;
     await RidgeTask.findByIdAndRemove(taskId);

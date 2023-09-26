@@ -1,6 +1,6 @@
-import express from "express"
-import Company from "../models/Company.js"
-import auth from "../middleware/auth.middleware.js"
+import express from "express";
+import Company from "../models/Company.js";
+import auth from "../middleware/auth.middleware.js";
 
 const router = express.Router({ mergeParams: true });
 

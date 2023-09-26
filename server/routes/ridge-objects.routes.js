@@ -6,7 +6,7 @@ import User from "../models/User.js";
 
 const router = express.Router({ mergeParams: true });
 
-router.get("/", async (req, res) => {
+router.get("/", auth, async (req, res) => {
   try {
     const userId = req.user._id;
     const user = await User.findOne({ _id: userId });
@@ -25,10 +25,12 @@ router.get("/", async (req, res) => {
     const managers = await User.find({ curatorId: userId });
 
     // Создать массив идентификаторов менеджеров
-    const managerIds = managers.map(manager => manager._id);
+    const managerIds = managers.map((manager) => manager._id);
 
     // Найти объекты, принадлежащие менеджерам
-    const managerObjects = await RidgeObject.find({ userId: { $in: managerIds } });
+    const managerObjects = await RidgeObject.find({
+      userId: { $in: managerIds },
+    });
 
     // Объединить объекты текущего пользователя и объекты менеджеров
     const allObjects = [...objects, ...managerObjects];
@@ -41,7 +43,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.get("/:objectId?", async (req, res) => {
+router.get("/:objectId?", auth, async (req, res) => {
   try {
     const { objectId } = req.params;
     const editedObject = await RidgeObject.findById(objectId);
@@ -64,7 +66,7 @@ router.patch("/:objectId?/edit", auth, async (req, res) => {
   }
 });
 
-router.delete("/:objectId?", async (req, res) => {
+router.delete("/:objectId?", auth, async (req, res) => {
   try {
     const { objectId } = req.params;
     await RidgeObject.findByIdAndRemove(objectId);
@@ -75,7 +77,7 @@ router.delete("/:objectId?", async (req, res) => {
   }
 });
 
-router.post("/create", async (req, res) => {
+router.post("/create", auth, async (req, res) => {
   try {
     const userId = req.user._id;
     const company = await Company.findOne({

@@ -2,13 +2,13 @@ import express from "express";
 import multer from "multer";
 import Company from "../models/Company.js";
 import auth from "../middleware/auth.middleware.js";
-import fs from "fs"; 
+import fs from "fs";
 
 const router = express.Router({ mergeParams: true });
 
 const storage = multer.diskStorage({
   destination: async (req, __, cb) => {
-    const userId = req.user._id
+    const userId = req.user._id;
     const company = await Company.findOne({
       $or: [{ managers: userId }, { curators: userId }],
     });
@@ -31,7 +31,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-router.post("/", upload.single("avatar"), async (req, res) => {
+router.post("/", auth, upload.single("avatar"), async (req, res) => {
   try {
     const userId = req.user._id;
     const company = await Company.findOne({
@@ -51,7 +51,6 @@ router.post("/", upload.single("avatar"), async (req, res) => {
         .split(".")
         .pop()}`,
     });
-    
   } catch (e) {
     res.status(500).json({
       message: "На сервере произошла ошибка, попробуйте позже",

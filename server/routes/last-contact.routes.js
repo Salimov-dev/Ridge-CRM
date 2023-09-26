@@ -5,7 +5,7 @@ import LastContact from "../models/Last-contact.js";
 
 const router = express.Router({ mergeParams: true });
 
-router.get("/", async (req, res) => {
+router.get("/", auth, async (req, res) => {
   try {
     const list = await LastContact.find();
     res.status(200).send(list);
