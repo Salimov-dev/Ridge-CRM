@@ -52,13 +52,15 @@ const UpdateDeal = ({ title, objects, onClose, stages }) => {
   const isEditMode = dealId ? true : false;
 
   const handleUpdateDeal = () => {
-    dispatch(updateDeal(data, dealId))
-      .then(onClose())
-      .then(toast.success("Сделка успешно изменена!"));
+    setTimeout(() => {
+      dispatch<any>(updateDeal(data))
+        .then(onClose())
+        .then(toast.success("Сделка успешно изменена!"));
+    }, 0);
   };
 
   const handleRemoveDeal = (dealId) => {
-    dispatch(removeDeal(dealId))
+    dispatch<any>(removeDeal(dealId))
       .then(onClose())
       .then(toast.success("Сделка успешно удалена!"));
   };
