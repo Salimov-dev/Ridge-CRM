@@ -11,7 +11,6 @@ const PORT = 8080;
 const corsOptions = {
   origin: [
     "https://dev-craft-kappa.vercel.app",
-    "https://ridge-crm-client.vercel.app",
     "https://www.ridge-crm.ru",
     "http://localhost:5173",
   ],
