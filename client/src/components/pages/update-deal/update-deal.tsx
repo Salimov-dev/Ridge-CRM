@@ -52,11 +52,9 @@ const UpdateDeal = ({ title, objects, onClose, stages }) => {
   const isEditMode = dealId ? true : false;
 
   const handleUpdateDeal = () => {
-    setTimeout(() => {
-      dispatch<any>(updateDeal(data))
-        .then(onClose())
-        .then(toast.success("Сделка успешно изменена!"));
-    }, 0);
+    dispatch<any>(updateDeal(data))
+      .then(onClose())
+      .then(toast.success("Сделка успешно изменена!"));
   };
 
   const handleRemoveDeal = (dealId) => {
