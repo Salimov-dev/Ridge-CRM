@@ -6,11 +6,5 @@
       "use": "@vercel/node"
     }
   ],
-  "routes": [
-    {
-      "src": "/[^.]+",
-      "dest": "app.js",
-      "status": 200
-    }
-  ]
+  "rewrites": [{ "source": "/(.*)", "destination": "/", "status": 200 }]
 }
