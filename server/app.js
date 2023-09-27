@@ -58,6 +58,7 @@ app.get("/profile/*", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
+// mongo
 mongoose
   .connect(
     "mongodb://ruspb1987:rtkNpn2w1Jc8poKQ@ac-1hnuvn3-shard-00-00.ejnptrn.mongodb.net:27017,ac-1hnuvn3-shard-00-01.ejnptrn.mongodb.net:27017,ac-1hnuvn3-shard-00-02.ejnptrn.mongodb.net:27017/?ssl=true&replicaSet=atlas-ty0rfj-shard-0&authSource=admin&retryWrites=true&w=majority"
