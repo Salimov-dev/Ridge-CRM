@@ -7,10 +7,11 @@
     }
   ],
   "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "/",
-      "status": 200
-    }
+    { "src": "/", "dest": "/" },
+    { "src": "/objects", "dest": "/" },
+    { "src": "/deals", "dest": "/" },
+    { "src": "/meetings", "dest": "/" },
+    { "src": "/calendar", "dest": "/" },
+    { "src": "/ridge", "dest": "/" }
   ]
 }

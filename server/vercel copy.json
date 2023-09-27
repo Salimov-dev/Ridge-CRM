@@ -1,13 +1,13 @@
 
 // новый проба
 {
-  "rewrites": [
+  "routes": [
     { "source": "/(.*)", "destination": "/" },
-    { "source": "/objects/(.*)", "destination": "/objects/$1" },
-    { "source": "/deals/(.*)", "destination": "/deals/$1" },
-    { "source": "/meetings/(.*)", "destination": "/meetings/$1" },
-    { "source": "/calendar/(.*)", "destination": "/calendar/$1" },
-    { "source": "/ridge/(.*)", "destination": "/ridge/$1" }
+    { "source": "/objects/(.*)", "destination": "/objects" },
+    { "source": "/deals/(.*)", "destination": "/deals" },
+    { "source": "/meetings/(.*)", "destination": "/meetings" },
+    { "source": "/calendar/(.*)", "destination": "/calendar" },
+    { "source": "/ridge/(.*)", "destination": "/ridge" }
   ]
 }
 
