@@ -14,7 +14,7 @@ const corsOptions = {
     "https://www.ridge-crm.ru",
     "http://localhost:5173",
   ],
-  methods: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE"],
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   allowedHeaders: [
     "Access-Control-Allow-Origin",
     "Access-Control-Allow-Credentials",
@@ -33,11 +33,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use("/api", routes);
 app.use("/api/uploads", express.static("uploads"));
 
+// mongoose
 mongoose
-  .connect(
-    "mongodb://ruspb1987:rtkNpn2w1Jc8poKQ@ac-1hnuvn3-shard-00-00.ejnptrn.mongodb.net:27017,ac-1hnuvn3-shard-00-01.ejnptrn.mongodb.net:27017,ac-1hnuvn3-shard-00-02.ejnptrn.mongodb.net:27017/?ssl=true&replicaSet=atlas-ty0rfj-shard-0&authSource=admin&retryWrites=true&w=majority"
-  )
-  // .connect(process.env.MONGODB_URI)
+  .connect(process.env.MONGODB_URI)
   .then(() => {
     console.log(chalk.green("MongoDB connected"));
 
