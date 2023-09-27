@@ -8,52 +8,40 @@
   ],
   "routes": [
     {
-      "src": "/(.*)",
-      "dest": "./app.js",
-      "methods": ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
-      "headers": {
-        "Access-Control-Allow-Origin": "*"
-      }
+      "src": "/",
+      "dest": "app.js"
     },
     {
       "src": "/objects",
-      "dest": "./app.js",
-      "methods": ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
-      "headers": {
-        "Access-Control-Allow-Origin": "*"
-      }
-    },
-    {
-      "src": "/deals",
-      "dest": "./app.js",
-      "methods": ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
-      "headers": {
-        "Access-Control-Allow-Origin": "*"
-      }
+      "dest": "app.js"
     },
     {
       "src": "/meetings",
-      "dest": "./app.js",
-      "methods": ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
-      "headers": {
-        "Access-Control-Allow-Origin": "*"
-      }
+      "dest": "app.js"
     },
     {
       "src": "/calendar",
-      "dest": "./app.js",
-      "methods": ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
-      "headers": {
-        "Access-Control-Allow-Origin": "*"
-      }
+      "dest": "app.js"
     },
     {
       "src": "/ridge",
-      "dest": "./app.js",
-      "methods": ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
-      "headers": {
-        "Access-Control-Allow-Origin": "*"
-      }
+      "dest": "app.js"
+    },
+    {
+      "src": "/deals",
+      "dest": "app.js"
+    },
+    {
+      "src": "/presentations",
+      "dest": "app.js"
+    },
+    {
+      "src": "/users",
+      "dest": "app.js"
+    },
+    {
+      "src": "/profile",
+      "dest": "app.js"
     }
   ]
 }
