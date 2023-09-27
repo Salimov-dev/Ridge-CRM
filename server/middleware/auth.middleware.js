@@ -15,6 +15,7 @@ export default (req, res, next) => {
     console.log("!token");
 
     const data = tokenService.validateAccess(token);
+    console.log("data", data);
 
     req.user = data;
 
