@@ -14,7 +14,7 @@ const corsOptions = {
     "https://www.ridge-crm.ru",
     "http://localhost:5173",
   ],
-  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  methods: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE"],
   allowedHeaders: [
     "Access-Control-Allow-Origin",
     "Access-Control-Allow-Credentials",
@@ -33,7 +33,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use("/api", routes);
 app.use("/api/uploads", express.static("uploads"));
 
-// mongoose
 mongoose
   .connect(process.env.MONGODB_URI)
   .then(() => {
