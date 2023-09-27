@@ -32,30 +32,30 @@ app.use(express.urlencoded({ extended: false }));
 app.use("/api", routes);
 app.use("/api/uploads", express.static("uploads"));
 
-app.use(express.static(path.join(__dirname, "public"))); // Если есть статические файлы
+app.use(express.static(path.join(__dirname, "client")));
 app.get("/objects/*", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "index.html"));
+  res.sendFile(path.join(__dirname, "client", "index.html"));
 });
 app.get("/meetings/*", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "index.html"));
+  res.sendFile(path.join(__dirname, "client", "index.html"));
 });
 app.get("/calendar/*", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 app.get("/ridge/*", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "index.html"));
+  res.sendFile(path.join(__dirname, "client", "index.html"));
 });
 app.get("/deals/*", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "index.html"));
+  res.sendFile(path.join(__dirname, "client", "index.html"));
 });
 app.get("/presentations/*", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "index.html"));
+  res.sendFile(path.join(__dirname, "client", "index.html"));
 });
 app.get("/users/*", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "index.html"));
+  res.sendFile(path.join(__dirname, "client", "index.html"));
 });
 app.get("/profile/*", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "index.html"));
+  res.sendFile(path.join(__dirname, "client", "index.html"));
 });
 
 // mongo
