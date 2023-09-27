@@ -32,6 +32,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use("/api", routes);
 app.use("/api/uploads", express.static("uploads"));
 
+app.get('/objects', (req, res) => {
+  res.sendFile(path.join(__dirname, "client", "index.html"))
+});
 // app.get("/objects/*", (req, res) => {
 //   res.sendFile(path.join(__dirname, "client", "index.html"));
 // });
