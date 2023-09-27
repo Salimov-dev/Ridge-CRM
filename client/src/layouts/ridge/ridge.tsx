@@ -35,9 +35,11 @@ import {
   getRidgeObjectsLoadingStatus,
 } from "../../store/ridge-object/ridge-objects.store";
 import { getCurrentUserId, getIsUserCurator } from "../../store/user/users.store";
-import { AlignCenter } from "../../components/common/columns/styled";
-import { FormatManagerName } from "../../components/common/table/helpers/helpers";
+// columns
 import { ridgeObjectsColumnsCurator } from "../../columns/ridge-columns/ridge-objects-columns-curator";
+// icons
+import target from "../../assets/map/target_ridge.png";
+import targetCluster from "../../assets/map/target_ridge-cluster.png";
 
 const initialState = {
   address: "",
@@ -87,7 +89,7 @@ const Ridge = () => {
       : null,
   };
 
-  const { register, watch, reset, setValue } = useForm({
+  const { register, watch, setValue } = useForm({
     defaultValues: Boolean(localStorageState) ? formatedState : initialState,
     mode: "onBlur",
   });
@@ -144,6 +146,8 @@ const Ridge = () => {
         onClick={setSelectedBaloon}
         baloon={<RidgeObjectBaloon object={selectedObject} />}
         isLoading={isLoading}
+        target={target}
+        targetCluster={targetCluster}
       />
       <RidgeObjectsFiltersPanel
         data={data}

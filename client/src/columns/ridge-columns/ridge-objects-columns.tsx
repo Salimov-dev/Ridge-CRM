@@ -11,7 +11,6 @@ import MultiColorContainedButton from "../../components/common/buttons/multi-col
 import Flags from "../../components/common/columns/flags";
 import {
   FormatDistrict,
-  FormatManagerName,
   FormatMetro,
   FormatPhone,
 } from "../../components/common/table/helpers/helpers";
@@ -25,7 +24,6 @@ import {
   setUpdateRidgeObjectId,
   setUpdateRidgeObjectOpenState,
 } from "../../store/ridge-object/update-ridge-object.store";
-import { getIsUserCurator } from "../../store/user/users.store";
 
 export const ridgeObjectsColumns = [
   {
@@ -140,14 +138,14 @@ export const ridgeObjectsColumns = [
             <AlignCenter>
               <Tooltip title="Открыть облако" placement="top-start" arrow>
                 <Button onClick={handleOpenCloud}>
-                  <CloudDoneIcon />
+                  <CloudDoneIcon sx={{color: "white"}}/>
                 </Button>
               </Tooltip>
             </AlignCenter>
           ) : (
             <AlignCenter>
               <Tooltip title="Облако отсутствует" placement="top-start" arrow>
-                <CloudOffIcon />
+                <CloudOffIcon sx={{color: "white"}}/>
               </Tooltip>
             </AlignCenter>
           );

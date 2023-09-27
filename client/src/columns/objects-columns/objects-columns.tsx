@@ -215,14 +215,14 @@ export const objectsColumns = [
             <AlignCenter>
               <Tooltip title="Открыть облако" placement="top-start" arrow>
                 <Button onClick={handleOpenCloud}>
-                  <CloudDoneIcon />
+                  <CloudDoneIcon sx={{color: "white"}}/>
                 </Button>
               </Tooltip>
             </AlignCenter>
           ) : (
             <AlignCenter>
               <Tooltip title="Облако отсутствует" placement="top-start" arrow>
-                <CloudOffIcon />
+                <CloudOffIcon sx={{color: "white"}}/>
               </Tooltip>
             </AlignCenter>
           );
