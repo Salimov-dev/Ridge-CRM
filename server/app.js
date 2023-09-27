@@ -33,6 +33,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use("/api", routes);
 app.use("/api/uploads", express.static("uploads"));
 
+// mongoose
 mongoose
   .connect(process.env.MONGODB_URI)
   .then(() => {
