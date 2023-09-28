@@ -1,29 +1,20 @@
 import routes from "./routes/index.js";
 import mongoose from "mongoose";
 import express from "express";
+import config from "config";
 import chalk from "chalk";
 import cors from "cors";
-import http from "http";
 import path from "path";
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
 
 const app = express();
-const PORT = 8080;
+const PORT = config.get("port") ?? 8080;
 
 const corsOptions = {
-  origin: [
-    "https://dev-craft-kappa.vercel.app",
-    "https://www.ridge-crm.ru",
-    "http://localhost:5173",
-  ],
-  methods: ["GET", "POST", "HEAD", "PUT", "DELETE", "PATCH", "OPTIONS"],
-  allowedHeaders: [
-    "Origin",
-    "X-Requested-With",
-    "Content-Type",
-    "Accept",
-    "Authorization",
-  ],
+  origin: ["http://localhost:5173", "http://localhost:3000"],
   credentials: true,
+  optionSuccessStatus: 200,
 };
 
 app.use(cors(corsOptions));
@@ -32,11 +23,21 @@ app.use(express.urlencoded({ extended: false }));
 app.use("/api", routes);
 app.use("/api/uploads", express.static("uploads"));
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+if (process.env.NODE_ENV === "production") {
+  app.use("/", express.static(path.join(__dirname, "client")));
+
+  const indexPath = path.join(__dirname, "client", "index.html");
+
+  app.get("*", (req, res) => {
+    res.sendFile(indexPath);
+  });
+}
+
 mongoose
-  .connect(
-    "mongodb://ruspb1987:rtkNpn2w1Jc8poKQ@ac-1hnuvn3-shard-00-00.ejnptrn.mongodb.net:27017,ac-1hnuvn3-shard-00-01.ejnptrn.mongodb.net:27017,ac-1hnuvn3-shard-00-02.ejnptrn.mongodb.net:27017/?ssl=true&replicaSet=atlas-ty0rfj-shard-0&authSource=admin&retryWrites=true&w=majority"
-  )
-  // .connect(process.env.MONGODB_URI)
+  .connect(config.get("mongoUri"))
   .then(() => {
     console.log(chalk.green("MongoDB connected"));
 

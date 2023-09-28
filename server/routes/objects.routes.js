@@ -9,7 +9,7 @@ const router = express.Router({ mergeParams: true });
 router.get("/", auth, async (req, res) => {
   try {
     const userId = req.user._id;
-    console.log("userId", userId);
+
     const user = await User.findOne({ _id: userId });
     const userRole = user.role;
 

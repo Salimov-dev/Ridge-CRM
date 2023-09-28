@@ -7,7 +7,7 @@ const router = express.Router({ mergeParams: true });
 router.get("/", auth, async (req, res) => {
   try {
     const userId = req.user._id;
-    console.log("userId", userId);
+
     const user = await User.findById(userId); // Найти пользователя по _id
 
     if (!user) {
@@ -24,7 +24,7 @@ router.get("/", auth, async (req, res) => {
 
     return res.status(200).send(allUsers);
   } catch (e) {
-    console.log("e", e);
+
     res.status(500).json({
       message: "На сервере произошла ошибка. Попробуйте позже",
     });

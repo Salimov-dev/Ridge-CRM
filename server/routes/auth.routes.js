@@ -61,7 +61,6 @@ router.post("/signInWithPassword", [
   async (req, res) => {
     try {
       const errors = validationResult(req);
-      console.log("errors", errors);
 
       if (!errors.isEmpty()) {
         return res.status(400).json({
@@ -89,7 +88,6 @@ router.post("/signInWithPassword", [
         password,
         existingUser.password
       );
-      console.log("isPasswordEqual", isPasswordEqual);
 
       if (!isPasswordEqual) {
         return res.status(400).send({
@@ -100,14 +98,11 @@ router.post("/signInWithPassword", [
         });
       }
       const tokens = tokenService.generate({ _id: existingUser._id });
-      console.log("tokens", tokens);
 
       await tokenService.save(existingUser._id, tokens.refreshToken);
 
       res.status(200).send({ ...tokens, userId: existingUser._id });
     } catch (e) {
-      console.log("error catch", e);
-      console.log("error catch", e.message);
       res.status(500).json({
         message: "На сервере произошла ошибка. Попробуйте позже",
       });
