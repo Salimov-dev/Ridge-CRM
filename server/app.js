@@ -5,14 +5,18 @@ import config from "config";
 import chalk from "chalk";
 import cors from "cors";
 import path from "path";
-import { fileURLToPath } from 'url';
-import { dirname } from 'path';
+import { fileURLToPath } from "url";
+import { dirname } from "path";
 
 const app = express();
-const PORT = config.get("port") ?? 8080;
+const PORT = config.get("port") ?? 8081;
 
 const corsOptions = {
-  origin: ["http://localhost:5173", "http://localhost:3000"],
+  origin: [
+    "http://localhost:5173",
+    "http://localhost:3000",
+    "http://31.129.108.151",
+  ],
   credentials: true,
   optionSuccessStatus: 200,
 };
