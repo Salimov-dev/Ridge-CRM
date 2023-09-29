@@ -20,6 +20,10 @@ RUN npm install
 
 COPY server /app
 
+FROM nginx
+
+COPY client/nginx.conf /etc/nginx/nginx.conf
+
 COPY --from=client /app/client/dist /app/client
 
 EXPOSE 8080
