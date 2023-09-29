@@ -9,7 +9,7 @@ import { fileURLToPath } from "url";
 import { dirname } from "path";
 
 const app = express();
-const PORT = config.get("port") ?? 8081;
+const PORT = config.get("port") ?? 8080;
 
 const corsOptions = {
   origin: [
