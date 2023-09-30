@@ -58,13 +58,6 @@ const MeetingBaloon = ({ meeting }) => {
 
   return (
     <BaloonContainer>
-      <MultiColorOutlinedButton
-        text="Править встречу"
-        fontColor="black"
-        borderColor="royalBlue"
-        backgroundHover="cornflowerBlue"
-        onClick={handleOpenUpdateMeeting}
-      />
       <Attribute title="Дата встречи:" subTitle={date} />
       <Attribute title="Время встречи:" subTitle={time} />
       <Typography>
@@ -84,25 +77,32 @@ const MeetingBaloon = ({ meeting }) => {
       <Attribute title="Повод:" subTitle={meetingType} />
       <Attribute title="Менеджер:" subTitle={manager} />
 
-      {objectId ? 
-      <>
-      <DividerStyled />
-      <Typography>
-        <b>Объект встречи:</b>
-      </Typography>
-      <Attribute title="" subTitle={objectAddress} gap="0" />
-      <Divider />
-
-      <MultiColorOutlinedButton
-        text="Открыть страницу объекта"
-        fontColor="black"
-        borderColor="SlateGrey"
-        backgroundHover="ForestGreen"
-        onClick={handleOpenObjectPage}
-        /> 
-      
+      {objectId ? (
+        <>
+          <DividerStyled />
+          <Typography>
+            <b>Объект встречи:</b>
+          </Typography>
+          <Attribute title="" subTitle={objectAddress} gap="0" />
+          <Divider />
+          <Box sx={{width: "100%",display: 'flex', gap: '4px'}}>
+            <MultiColorOutlinedButton
+              text="Править встречу"
+              fontColor="black"
+              borderColor="royalBlue"
+              backgroundHover="cornflowerBlue"
+              onClick={handleOpenUpdateMeeting}
+            />
+            <MultiColorOutlinedButton
+              text="Страница объекта"
+              fontColor="black"
+              borderColor="SlateGrey"
+              backgroundHover="ForestGreen"
+              onClick={handleOpenObjectPage}
+            />
+          </Box>
         </>
-      : null}
+      ) : null}
     </BaloonContainer>
   );
 };

@@ -63,19 +63,10 @@ const ObjectBaloon = ({ object }) => {
   };
   return (
     <BaloonContainer>
-      <MultiColorOutlinedButton
-        text="Открыть страницу объекта"
-        fontColor="black"
-        borderColor="SlateGrey"
-        backgroundHover="ForestGreen"
-        onClick={handleOpenObjectPage}
-      />
-      <DividerStyled />
-      <Attribute title="Дата создания:" subTitle={createdAt} />
-      <Attribute title="Менеджер:" subTitle={manager} />
       <Attribute title="Город:" subTitle={city} />
       <Attribute title="Район:" subTitle={district} />
       <Attribute title="Адрес:" subTitle={address} />
+      <Attribute title="Менеджер:" subTitle={manager} />
 
       <DividerStyled />
       <Attribute title="Тип объекта:" subTitle={objectType} />
@@ -110,7 +101,6 @@ const ObjectBaloon = ({ object }) => {
       />
       <Attribute title="Email:" subTitle={email ? email : "-"} />
 
-      <DividerStyled />
       <MultiColorOutlinedButton
         text="Открыть страницу объекта"
         fontColor="black"

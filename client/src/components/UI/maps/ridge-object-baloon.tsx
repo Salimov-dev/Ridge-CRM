@@ -42,15 +42,6 @@ const RidgeObjectBaloon = ({ object }) => {
 
   return (
     <BaloonContainer>
-      <MultiColorOutlinedButton
-        text="Открыть страницу объекта"
-        fontColor="black"
-        borderColor="SlateGrey"
-        backgroundHover="ForestGreen"
-        onClick={handleOpenObjectPage}
-      />
-      <DividerStyled />
-      <Attribute title="Дата создания:" subTitle={createdAt} />
       <Attribute title="Менеджер:" subTitle={manager} />
       <Attribute title="Город:" subTitle={city} />
       <Attribute title="Район:" subTitle={district} />
@@ -62,7 +53,7 @@ const RidgeObjectBaloon = ({ object }) => {
         </Typography>
         <Attribute subTitle={comment} />
       </Box>
-      <DividerStyled />
+
       <MultiColorOutlinedButton
         text="Открыть страницу объекта"
         fontColor="black"
