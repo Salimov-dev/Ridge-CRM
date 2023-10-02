@@ -38,8 +38,8 @@ const ObjectPage = ({ onClose }) => {
   const center = [latitude, longitude];
 
   const handleOpenEditObject = () => {
-    dispatch(setUpdateObjectId(objectId));
-    dispatch(setUpdateObjectOpenState(true));
+    dispatch<any>(setUpdateObjectId(objectId));
+    dispatch<any>(setUpdateObjectOpenState(true));
   };
 
   return (

@@ -1,34 +1,21 @@
 import { Box } from "@mui/material";
 import { useEffect, useState } from "react";
-import { orderBy } from "lodash";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 // components
 import Stages from "./components/stages/stages";
 import LayoutTitle from "../../components/common/page-titles/layout-title";
-import CreateDealDialog from "../../components/UI/dialogs/deals/create-deal-dialog";
-import UpdateDealDialog from "../../components/UI/dialogs/deals/update-deal-dialog";
 import ObjectPageDialog from "../../components/UI/dialogs/object-page-dialog/object-page-dialog";
+import ObjectUpdatePageDialog from "../../components/UI/dialogs/objects/object-update-page-dialog";
 // store
-import { getDealsList } from "../../store/deal/deal.store";
 import { getObjectsList } from "../../store/object/objects.store";
 import { getDealStagesList } from "../../store/deal/deal-stages.store";
 import { getSidebarCollapsState } from "../../store/sidebar-collaps-state.store";
-import {
-  setCreateDealOpenState,
-  setCreateDealStageId,
-} from "../../store/deal/add-object-to-deal.store";
-import {
-  getCurrentUserId,
-  getUserNameById,
-} from "../../store/user/users.store";
+import { getCurrentUserId } from "../../store/user/users.store";
 
 const Deals = () => {
-  const dispatch = useDispatch();
-  const deals = useSelector(getDealsList());
-  const dealStages = useSelector(getDealStagesList());
   const objects = useSelector(getObjectsList());
+  const dealStages = useSelector(getDealStagesList());
   const currentUserId = useSelector(getCurrentUserId());
-  const userName = useSelector(getUserNameById(currentUserId));
   const currentUserObjects = objects?.filter(
     (obj) => obj?.userId === currentUserId
   );
@@ -39,7 +26,6 @@ const Deals = () => {
   const fullWidth = screenWidth - 262;
   const collapseWidth = screenWidth - 122;
 
-  const sortedDeals = orderBy(deals, ["created_at"], ["desc"]);
   let transformObjects = [];
   currentUserObjects?.forEach((obj) => {
     transformObjects?.push({ _id: obj._id, name: obj.location.address });
@@ -51,11 +37,6 @@ const Deals = () => {
     return address;
   };
 
-  const handleCreateDeal = (id) => {
-    dispatch<any>(setCreateDealOpenState(true));
-    dispatch<any>(setCreateDealStageId(id));
-  };
-
   useEffect(() => {
     setWidth(isCollapsedSidebar ? collapseWidth : fullWidth);
   }, [isCollapsedSidebar]);
@@ -63,26 +44,15 @@ const Deals = () => {
   return (
     <Box
       sx={{
-        height: "580px",
+        height: "100%",
         width: width,
       }}
     >
       <LayoutTitle title="Сделки" />
-      <Stages
-        deals={sortedDeals}
-        stages={dealStages}
-        userName={userName}
-        onOpen={handleCreateDeal}
-        getObjectAddress={getObjectAddress}
-      />
-
-      <CreateDealDialog
-        objects={transformObjects}
-        deals={deals}
-        stages={dealStages}
-      />
-      <UpdateDealDialog objects={transformObjects} stages={dealStages} />
+      <Stages stages={dealStages} getObjectAddress={getObjectAddress} />
+      
       <ObjectPageDialog />
+      <ObjectUpdatePageDialog />
     </Box>
   );
 };

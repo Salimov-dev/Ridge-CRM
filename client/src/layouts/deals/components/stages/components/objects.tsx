@@ -1,19 +1,18 @@
-import { Box, Paper, Typography, styled } from "@mui/material";
-import DividerStyled from "../../../../../components/common/divider/divider-styled";
-import { FormatDate } from "../../../../../utils/date/format-date";
+import { toast } from "react-toastify";
+import { useDispatch, useSelector } from "react-redux";
+import { Box, Paper, styled } from "@mui/material";
+// components
+import ObjectAddress from "./components/object-address";
+// store
+import { getDealStagesList } from "../../../../../store/deal/deal-stages.store";
+import {
+  getObjectsList,
+  updateObject,
+} from "../../../../../store/object/objects.store";
 import {
   setOpenObjectPageId,
   setOpenObjectPageOpenState,
 } from "../../../../../store/object/open-object-page.store";
-import { toast } from "react-toastify";
-import { useDispatch } from "react-redux";
-import Footer from "./components/footer";
-import ObjectAddress from "./components/object-address";
-import { updateDeal } from "../../../../../store/deal/deal.store";
-import {
-  setUpdateDealId,
-  setUpdateDealOpenState,
-} from "../../../../../store/deal/update-deal.store";
 
 const ObjectsContainer = styled(Box)`
   width: 265px;
@@ -39,60 +38,58 @@ const ObjectContainer = styled(Paper)`
 `;
 
 const Objects = ({
-  deals,
   stage,
   getObjectAddress,
-  userName,
   draggableStageId,
   setDraggableStageId,
 }) => {
   const dispatch = useDispatch();
 
-  const handleUpdateDeal = (dealId) => {
-    dispatch(setUpdateDealId(dealId));
-    dispatch(setUpdateDealOpenState(true));
-  };
-
   const handleOpenObjectPage = (objectId) => {
-    dispatch(setOpenObjectPageId(objectId));
-    dispatch(setOpenObjectPageOpenState(true));
+    dispatch<any>(setOpenObjectPageId(objectId));
+    dispatch<any>(setOpenObjectPageOpenState(true));
+  };
+  const dealStageList = useSelector(getDealStagesList());
+
+  const getNewDealStage = (stageId) => {
+    const stage = dealStageList.find((deal) => deal?._id === stageId);
+    const newObjectStatus = stage?.objectStatusId;
+    return newObjectStatus;
   };
 
-  const handleDragEnd = (e, deal, stage) => {
+  const handleDragEnd = (obj, stage) => {
     if (stage?._id !== draggableStageId) {
-      const dealId = deal?._id;
-      const newDeal = { ...deal, stageId: draggableStageId };
+      const updatedObject = {
+        ...obj,
+        status: getNewDealStage(draggableStageId),
+      };
 
-      dispatch(updateDeal(newDeal, dealId)).then(
-        toast.success("Сделка успешно перемещена!")
+      dispatch<any>(updateObject(updatedObject)).then(
+        toast.success("Статус объекта успешно изменен!")
       );
+
       setDraggableStageId(null);
     } else {
       setDraggableStageId(null);
     }
   };
 
+  const objects = useSelector(getObjectsList());
   return (
     <ObjectsContainer>
-      {deals?.map((deal) => {
-        const isDeal = deal?.stageId === stage?._id;
+      {objects?.map((obj) => {
+        const isDeal = obj?.status === stage?.objectStatusId;
 
         return isDeal ? (
           <ObjectContainer
-            key={deal?._id}
+            key={obj?._id}
             draggable={true}
-            onDragEnd={(e) => handleDragEnd(e, deal, stage)}
+            onDragEnd={(e) => handleDragEnd(obj, stage)}
           >
             <ObjectAddress
-              deal={deal}
-              onClick={() => handleOpenObjectPage(deal?.objectId)}
+              obj={obj}
+              onClick={() => handleOpenObjectPage(obj?._id)}
               getObjectAddress={getObjectAddress}
-            />
-            <DividerStyled />
-            <Footer
-              deal={deal}
-              userName={userName}
-              onClick={() => handleUpdateDeal(deal?._id)}
             />
           </ObjectContainer>
         ) : null;

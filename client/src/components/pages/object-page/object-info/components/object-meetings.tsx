@@ -24,9 +24,10 @@ const ObjectMeetings = ({ meetings, object, isAuthorEntity = true }) => {
       <DividerStyled />
       <Title>
         <Typography variant="h3">Встречи по объекту: {address}</Typography>
-        {isAuthorEntity && !isCalendarPath && !isMeetingsPath ? (
+        <CreateMeetingButton />
+        {/* {isAuthorEntity && !isCalendarPath && !isMeetingsPath ? (
           <CreateMeetingButton />
-        ) : null}
+        ) : null} */}
       </Title>
       {meetings?.length ? (
         <BasicTable

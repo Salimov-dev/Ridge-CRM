@@ -51,4 +51,13 @@ export const getDealStageNameById = (id) => (state) => {
   return result;
 };
 
+export const getDealStageById = (id) => (state) => {
+  const dealStage = state?.dealStages?.entities?.find(
+    (type) => type?._id === id
+  );
+  const result = dealStage;
+
+  return result;
+};
+
 export default dealStagesReducer;

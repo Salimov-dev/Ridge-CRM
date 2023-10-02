@@ -33,14 +33,19 @@ const ItemOnMap = ({ hintContent, center, mapZoom, isLoading }) => {
             "control.ZoomControl",
             "control.SearchControl",
           ]}
+          options={{
+            suppressMapOpenBlock: true,
+          }}
         >
           <Placemark
             modules={["geoObject.addon.hint"]}
+      
             options={{
               iconLayout: "default#image",
               iconImageHref: target,
               iconImageSize: [40, 40],
               iconImageOffset: [-20, -40],
+  
             }}
             geometry={center}
             properties={{

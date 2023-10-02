@@ -6,10 +6,10 @@ const Container = styled(Box)`
   gap: 4px;
 `;
 
-const ObjectAddress = ({ deal, onClick, getObjectAddress }) => {
+const ObjectAddress = ({ obj, onClick, getObjectAddress }) => {
   return (
     <Container>
-      <Typography variant="h6">{getObjectAddress(deal?.objectId)}</Typography>
+      <Typography variant="h6">{getObjectAddress(obj?._id)}</Typography>
       <OpenPageObjectIconButton onClick={onClick} />
     </Container>
   );
