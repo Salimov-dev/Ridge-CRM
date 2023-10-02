@@ -38,12 +38,12 @@ const Footer = () => {
         <Divider orientation="vertical" flexItem />
         <Item title="Встречи" path="/meetings" />
         <Divider orientation="vertical" flexItem />
-        <Item title="Грядка" path="/ridge" />
-        <Divider orientation="vertical" flexItem />
         <Item title="Календарь" path="/calendar" />
 
         {isCurator ? (
           <>
+            <Divider orientation="vertical" flexItem />
+            <Item title="Грядка" path="/ridge" />
             <Divider orientation="vertical" flexItem />
             <Item title="Менеджеры" path="/users" />
             <Divider orientation="vertical" flexItem />

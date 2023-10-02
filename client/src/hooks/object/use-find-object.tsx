@@ -14,6 +14,7 @@ const useFindObject = () => {
       },
       {
         searchControlProvider: "yandex#search",
+        suppressMapOpenBlock: true,
       }
     );
 

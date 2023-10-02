@@ -75,11 +75,18 @@ export const objectsColumns = [
         accessorFn: (row) => row,
         header: "Адрес",
         cell: (info) => {
+          const dispatch = useDispatch();
           const object = info.getValue();
           const objectId = object?._id;
           const meetings = useSelector(getObjectMeetingsList(objectId));
           const tasks = useSelector(getTasksByObjectId(objectId));
           const lastContacts = useSelector(getLastContactsByObjectId(objectId));
+
+          const handleClick = () => {
+            dispatch<any>(setOpenObjectPageId(objectId));
+            dispatch<any>(setOpenObjectPageOpenState(true));
+          };
+
           if (objectId) {
             return (
               <Box
@@ -95,6 +102,7 @@ export const objectsColumns = [
                   meetings={meetings}
                   tasks={tasks}
                   lastContacts={lastContacts}
+                  onClick={handleClick}
                 />
               </Box>
             );
@@ -237,8 +245,8 @@ export const objectsColumns = [
           const dispatch = useDispatch();
 
           const handleClick = () => {
-            dispatch(setOpenObjectPageId(objectId));
-            dispatch(setOpenObjectPageOpenState(true));
+            dispatch<any>(setOpenObjectPageId(objectId));
+            dispatch<any>(setOpenObjectPageOpenState(true));
           };
 
           return (

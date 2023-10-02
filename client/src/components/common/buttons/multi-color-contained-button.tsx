@@ -9,7 +9,6 @@ const MultiColorContainedButton = ({
   onClick = () => {},
   width = "100%",
   disabled = false,
-  children,
 }) => {
   return (
     <Button

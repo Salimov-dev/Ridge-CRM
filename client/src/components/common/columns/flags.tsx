@@ -5,6 +5,7 @@ const Flags = ({
   tasks = [],
   lastContacts = [],
   taskBackgroundColor = "orange",
+  onClick,
 }) => {
   return (
     <Box
@@ -19,6 +20,7 @@ const Flags = ({
       {lastContacts?.length ? (
         <Tooltip title="Есть последний контакт" placement="top-start" arrow>
           <Box
+            onClick={onClick}
             sx={{
               width: "10px",
               height: "10px",
@@ -32,6 +34,7 @@ const Flags = ({
       {meetings?.length ? (
         <Tooltip title="Есть встречи" placement="top-start" arrow>
           <Box
+            onClick={onClick}
             sx={{
               width: "10px",
               height: "10px",
@@ -45,6 +48,7 @@ const Flags = ({
       {tasks?.length ? (
         <Tooltip title="Есть задачи" placement="top-start" arrow>
           <Box
+            onClick={onClick}
             sx={{
               width: "10px",
               height: "10px",

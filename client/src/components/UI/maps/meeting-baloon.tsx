@@ -60,6 +60,7 @@ const MeetingBaloon = ({ meeting }) => {
     <BaloonContainer>
       <Attribute title="Дата встречи:" subTitle={date} />
       <Attribute title="Время встречи:" subTitle={time} />
+      <Attribute title="Повод:" subTitle={meetingType} />
       <Typography>
         <b>Адрес:</b>
       </Typography>
@@ -74,7 +75,6 @@ const MeetingBaloon = ({ meeting }) => {
 
       <DividerStyled />
       <Attribute title="Статус:" subTitle={status} />
-      <Attribute title="Повод:" subTitle={meetingType} />
       <Attribute title="Менеджер:" subTitle={manager} />
 
       {objectId ? (

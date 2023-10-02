@@ -111,6 +111,7 @@ const ItemsOnMap = ({
             //   // setActivePortal(false);
             // }}
             options={{
+              suppressMapOpenBlock: true,
               clusterIcons: [
                 {
                   href: targetCluster,

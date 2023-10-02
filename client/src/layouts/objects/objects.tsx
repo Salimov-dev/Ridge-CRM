@@ -4,10 +4,9 @@ import { orderBy } from "lodash";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-// MUI
-import { Box } from "@mui/material";
 // columns
 import { objectsColumns } from "../../columns/objects-columns/objects-columns";
+import { objectsColumnsCurator } from "../../columns/objects-columns/objects-columns-curator";
 // components
 import ObjectBaloon from "../../components/UI/maps/object-baloon";
 import ObjectsFiltersPanel from "../../components/UI/filters-panels/obects-filters-panel";
@@ -22,21 +21,18 @@ import CreateObjectButton from "../../components/UI/dialogs/buttons/create-objec
 // hooks
 import useSearchObject from "../../hooks/object/use-search-object";
 // store
+import { getIsUserCurator } from "../../store/user/users.store";
 import {
   getObjectById,
   getObjectsList,
   getObjectsLoadingStatus,
 } from "../../store/object/objects.store";
-import {
-  getCurrentUserId,
-  getIsUserCurator,
-} from "../../store/user/users.store";
-import { objectsColumnsCurator } from "../../columns/objects-columns/objects-columns-curator";
 
 const initialState = {
   address: "",
   phone: "",
   name: "",
+  cadastralNumber: "",
   objectActivity: "",
   startDate: null,
   endDate: null,
@@ -124,6 +120,7 @@ const Objects = () => {
         objects={objects}
         register={register}
         setValue={setValue}
+        isCurator={isCurator}
         isLoading={isLoading}
       />
 

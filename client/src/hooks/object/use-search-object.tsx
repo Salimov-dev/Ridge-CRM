@@ -47,19 +47,28 @@ const useSearchObject = (objects, data) => {
         String(obj.contact.phone).includes(data?.phone)
       );
     }
+
     if (data?.name?.length) {
       array = array?.filter((obj) =>
         obj?.contact.name.toLowerCase().includes(data?.name.toLowerCase())
       );
     }
 
-    // object params
     if (data?.address?.length) {
       array = array?.filter((obj) =>
-        obj.location.address.toLowerCase().includes(data.address.toLowerCase())
+      obj.location.address.toLowerCase().includes(data.address.toLowerCase())
       );
     }
 
+    if (data?.cadastralNumber?.length) {
+      console.log(data.cadastralNumber);
+      
+      array = array?.filter((obj) =>
+      obj.estateOptions.cadastralNumber.includes(data.cadastralNumber)
+      );
+    }
+    
+    // object params
     if (data.selectedStatuses?.length) {
       array = array?.filter((obj) =>
         data.selectedStatuses.includes(obj.status)

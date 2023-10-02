@@ -14,6 +14,7 @@ const ObjectsFiltersPanel = ({
   objects,
   data,
   register,
+  isCurator,
   isLoading,
 }) => {
   const {
@@ -54,24 +55,25 @@ const ObjectsFiltersPanel = ({
           inputProps={{ maxLength: 30 }}
           disabled={isLoading ? true : false}
         />
-        <MultiSelectField
-          name="status"
-          labelId="status-label"
-          label="Выбор по статусу"
-          itemsList={getActualStatusesList()}
-          selectedItems={data.selectedStatuses}
-          onChange={(e) => setValue("selectedStatuses", e.target.value)}
+        <SearchField
+          register={register}
+          label="Найти по кадастровому №"
+          name="cadastralNumber"
+          value={data.cadastralNumber}
+          inputProps={{ maxLength: 30 }}
           disabled={isLoading ? true : false}
         />
-        <MultiSelectField
-          name="users"
-          labelId="users-label"
-          label="Выбор по менеджеру"
-          itemsList={getActualUsersList()}
-          selectedItems={data.selectedUsers}
-          onChange={(e) => setValue("selectedUsers", e.target.value)}
-          disabled={isLoading ? true : false}
-        />
+        {isCurator ? (
+          <MultiSelectField
+            name="users"
+            labelId="users-label"
+            label="Выбор по менеджеру"
+            itemsList={getActualUsersList()}
+            selectedItems={data.selectedUsers}
+            onChange={(e) => setValue("selectedUsers", e.target.value)}
+            disabled={isLoading ? true : false}
+          />
+        ) : null}
       </FieldsContainer>
 
       <FieldsContainer>
@@ -100,6 +102,15 @@ const ObjectsFiltersPanel = ({
           itemsList={getActualCitiesList()}
           selectedItems={data.selectedCities}
           onChange={(e) => setValue("selectedCities", e.target.value)}
+          disabled={isLoading ? true : false}
+        />
+        <MultiSelectField
+          name="status"
+          labelId="status-label"
+          label="Выбор по статусу"
+          itemsList={getActualStatusesList()}
+          selectedItems={data.selectedStatuses}
+          onChange={(e) => setValue("selectedStatuses", e.target.value)}
           disabled={isLoading ? true : false}
         />
         <SearchSelectField
