@@ -63,8 +63,7 @@ const Ridge = () => {
   const [dateCreate, setDateCreate] = useState(null);
   const [selectedBaloon, setSelectedBaloon] = useState(null);
   const monthIndex = useSelector(getMonthIndexState());
-  const currentUserId = useSelector(getCurrentUserId())
-  const isCurator = useSelector(getIsUserCurator(currentUserId))
+  const isCurator = useSelector(getIsUserCurator())
 
   const tasksColumn = ridgeTasksColumns;
   const tasksList = useSelector(getRidgeTasksList());

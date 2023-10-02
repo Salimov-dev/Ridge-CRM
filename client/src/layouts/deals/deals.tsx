@@ -52,8 +52,8 @@ const Deals = () => {
   };
 
   const handleCreateDeal = (id) => {
-    dispatch(setCreateDealOpenState(true));
-    dispatch(setCreateDealStageId(id));
+    dispatch<any>(setCreateDealOpenState(true));
+    dispatch<any>(setCreateDealStageId(id));
   };
 
   useEffect(() => {

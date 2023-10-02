@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { Box, styled } from "@mui/material";
 // components
 import DayContent from "./components/day-content/day-content";
@@ -6,7 +7,6 @@ import Date from "./components/date/date";
 // utils
 import { chechIsCurrentDay } from "../../../../../../../../utils/date/check-is-current-day";
 import { chechIsFutureDay } from "../../../../../../../../utils/date/check-is-future-day";
-import { useEffect, useState } from "react";
 
 const OneDayContainer = styled(Box)`
   display: flex;

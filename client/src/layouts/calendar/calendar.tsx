@@ -37,7 +37,7 @@ const Calendar = () => {
   const [dateCreate, setDateCreate] = useState(null);
 
   const currentUserId = useSelector(getCurrentUserId())
-  const isCurator = useSelector(getIsUserCurator(currentUserId))
+  const isCurator = useSelector(getIsUserCurator())
 
   const tasksColumn = tasksColumns;
   const monthIndex = useSelector(getMonthIndexState());

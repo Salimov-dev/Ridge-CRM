@@ -129,7 +129,7 @@ export const addNewManager = (payload) => async (dispatch) => {
 export const logOut = () => (dispatch) => {
   localStorageService.removeAuthData();
   dispatch(userLoggedOut());
-  localStorage.setItem("isAuth", false)
+  localStorage.setItem("isAuth", "false")
 };
 
 export const loadUsersList = () => async (dispatch) => {
@@ -186,8 +186,9 @@ export const getIsUserManager = (userId) => (state) => {
   return isManager;
 };
 
-export const getIsUserCurator = (userId) => (state) => {
-  const user = state.users.entities?.find((user) => user?._id === userId);
+export const getIsUserCurator = () => (state) => {
+  const currentUserId = state?.users?.auth?.userId
+  const user = state.users.entities?.find((user) => user?._id === currentUserId);
   const isCurator = user?.role === "CURATOR";
   return isCurator;
 };

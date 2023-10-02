@@ -25,7 +25,11 @@ import { loadUpdateRidgeObjectOpenState } from "../../../store/ridge-object/upda
 import { tokens } from "../../../theme";
 
 const Component = styled(Box)`
-  margin-bottom: 20px;
+// height: calc(100vh - 60px); 
+// overflow-y: auto;
+// min-height: 1000px; 
+  // overflow-y: auto
+  // margin-bottom: 20px;
 `;
 
 const BasicTable = ({ items, itemsColumns, isLoading, isPaginate = true }) => {
@@ -52,7 +56,7 @@ const BasicTable = ({ items, itemsColumns, isLoading, isPaginate = true }) => {
   });
 
   return (
-    <Component>
+    <Component >
       <table>
         <Thead table={table} colors={colors} isDialogMode={isDialogMode} />
         {!isLoading && <Tbody table={table} />}

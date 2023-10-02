@@ -18,8 +18,7 @@ const ActionsIcons = ({
   isFutureDay,
   isRidgePage,
 }) => {
-  const currentUserId = useSelector(getCurrentUserId())
-  const isCurator = useSelector(getIsUserCurator(currentUserId))
+  const isCurator = useSelector(getIsUserCurator())
 
   return (
     <ActionsContainer>

@@ -2,6 +2,10 @@ import { Box, Divider, styled } from "@mui/material";
 import Item from "./components/item";
 import { useSelector } from "react-redux";
 import { getAuthState } from "../../../store/user/auth.store";
+import {
+  getCurrentUserId,
+  getIsUserCurator,
+} from "../../../store/user/users.store";
 
 const Component = styled(Box)`
   height: 200px;
@@ -20,9 +24,11 @@ const Menu = styled(Box)`
 `;
 
 const Footer = () => {
-  const isAuth = useSelector(getAuthState())
-  return (
-    isAuth ? <Component>
+  const isAuth = useSelector(getAuthState());
+  const isCurator = useSelector(getIsUserCurator());
+
+  return isAuth ? (
+    <Component>
       <Menu>
         <Item title="Главная" path="/" />
         <Divider orientation="vertical" flexItem />
@@ -35,13 +41,18 @@ const Footer = () => {
         <Item title="Грядка" path="/ridge" />
         <Divider orientation="vertical" flexItem />
         <Item title="Календарь" path="/calendar" />
-        <Divider orientation="vertical" flexItem />
-        <Item title="Менеджеры" path="/users" />
-        <Divider orientation="vertical" flexItem />
-        <Item title="Презентации" path="/" />
-      </Menu> 
-    </Component>: null
-  );
+
+        {isCurator ? (
+          <>
+            <Divider orientation="vertical" flexItem />
+            <Item title="Менеджеры" path="/users" />
+            <Divider orientation="vertical" flexItem />
+            <Item title="Презентации" path="/" />
+          </>
+        ) : null}
+      </Menu>
+    </Component>
+  ) : null;
 };
 
 export default Footer;

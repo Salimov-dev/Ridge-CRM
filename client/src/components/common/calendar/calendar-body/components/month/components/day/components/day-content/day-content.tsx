@@ -28,7 +28,7 @@ const DayContent = ({ meetings, tasks, isRidgePage }) => {
   const isMeetingsLoading = useSelector(getMeetingLoadingStatus());
 
   const currentUserId = useSelector(getCurrentUserId());
-  const isCurator = useSelector(getIsUserCurator(currentUserId));
+  const isCurator = useSelector(getIsUserCurator());
 
   const isLoading =
     !isTasksLoading && !isMeetingsLoading && !isRidgeTasksLoading;

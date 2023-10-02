@@ -10,7 +10,6 @@ import BusinessCenterOutlinedIcon from "@mui/icons-material/BusinessCenterOutlin
 import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined";
 import BusinessOutlinedIcon from "@mui/icons-material/BusinessOutlined";
 import AssignmentOutlinedIcon from "@mui/icons-material/AssignmentOutlined";
-import AppsOutlinedIcon from "@mui/icons-material/AppsOutlined";
 
 const ItemsList = ({
   selected,
@@ -81,7 +80,7 @@ const ItemsList = ({
         selected={selected}
         setSelected={setSelected}
       />
-      <Item
+      {/* <Item
         title="Грядка"
         to="/ridge"
         icon={
@@ -91,7 +90,7 @@ const ItemsList = ({
         }
         selected={selected}
         setSelected={setSelected}
-      />
+      /> */}
       {isCurator ? (
         <>
           <ItemsTitle

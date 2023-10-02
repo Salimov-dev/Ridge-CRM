@@ -21,8 +21,7 @@ const Sidebar = () => {
   const [currentPath, setCurrentPath] = useState("");
   const [selected, setSelected] = useState(setSelectedMenuItem());
   const [isCollapsed, setIsCollapsed] = useState(true);
-  const currentUserId = useSelector(getCurrentUserId())
-  const isCurator = useSelector(getIsUserCurator(currentUserId))
+  const isCurator = useSelector(getIsUserCurator())
 
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);

@@ -8,7 +8,6 @@ const ItemsTitle = ({ colors, isCollapsed, title }) => {
       sx={{
         display: "flex",
         justifyContent: !isCollapsed ? "start" : "center",
-        paddingRight: "7px",
         margin: !isCollapsed ? "15px 0 5px 20px" : "15px 0 5px 0px",
         fontSize: !isCollapsed ? "inherit" : "12px",
       }}

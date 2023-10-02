@@ -1,5 +1,5 @@
 // libraries
-import { CssBaseline, ThemeProvider } from "@mui/material";
+import { Box, CssBaseline, ThemeProvider } from "@mui/material";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 // layouts
@@ -43,67 +43,141 @@ function App() {
           <AppStyled>
             <Sidebar />
             <RightSide>
-              <TopBar />
-              
-              <Routes>
-                <Route index path="/" element={<RequireAuth><Main /></RequireAuth>} />
-                <Route index path="*" element={<RequireAuth><NoMatchRoute /></RequireAuth>} />
-
-                <Route path="auth" element={<Login />}>
-                  <Route index element={<Navigate to="/auth/login" />} />
-                  <Route path="login" element={<Login />} />
-                  <Route path="*" element={<Navigate to="/" />} />
-                </Route>
-
-                <Route path="auth" element={<Signup />}>
-                  <Route index element={<Navigate to="/auth/SignUp" />} />
-                  <Route path="signup" element={<Signup />} />
-                  <Route path="*" element={<Navigate to="/" />} />
-                </Route>
-
-                <Route path="users">
-                  <Route index element={<RequireAuth><Users /></RequireAuth>} />
-                  <Route path="*" element={<Navigate to="/users" />} />
-                </Route>
-
-                <Route path="profile" element={<Profile />}>
-                  <Route index element={<Navigate to="/profile" />} />
-                  <Route path=":userId?/profileUpdate" element={<RequireAuth><UpdateProfile /></RequireAuth>}
+              <Box>
+                <TopBar />
+                <Routes>
+                  <Route
+                    index
+                    path="/"
+                    element={
+                      <RequireAuth>
+                        <Main />
+                      </RequireAuth>
+                    }
                   />
-                  <Route path="*" element={<Navigate to="/profile" />} />
-                </Route>
+                  <Route
+                    index
+                    path="*"
+                    element={
+                      <RequireAuth>
+                        <NoMatchRoute />
+                      </RequireAuth>
+                    }
+                  />
 
-                <Route path="objects">
-                  <Route index element={<RequireAuth><Objects /></RequireAuth>} />
-                  <Route path="*" element={<Navigate to="/objects" />}/>
-                </Route>
+                  <Route path="auth" element={<Login />}>
+                    <Route index element={<Navigate to="/auth/login" />} />
+                    <Route path="login" element={<Login />} />
+                    <Route path="*" element={<Navigate to="/" />} />
+                  </Route>
 
-                <Route path="meetings">
-                  <Route index element={<RequireAuth><Meetings /></RequireAuth>} />
-                  <Route path="*" element={<Navigate to="/meetings" />} />
-                </Route>
+                  <Route path="auth" element={<Signup />}>
+                    <Route index element={<Navigate to="/auth/SignUp" />} />
+                    <Route path="signup" element={<Signup />} />
+                    <Route path="*" element={<Navigate to="/" />} />
+                  </Route>
 
-                <Route path="calendar">
-                  <Route index element={<RequireAuth><Calendar /></RequireAuth>} />
-                  <Route path="*" element={<Navigate to="/calendar" />} />
-                </Route>
+                  <Route path="users">
+                    <Route
+                      index
+                      element={
+                        <RequireAuth>
+                          <Users />
+                        </RequireAuth>
+                      }
+                    />
+                    <Route path="*" element={<Navigate to="/users" />} />
+                  </Route>
 
-                <Route path="ridge">
-                  <Route index element={<RequireAuth><Ridge /></RequireAuth>} />
-                  <Route path="*" element={<Navigate to="/ridge" />} />
-                </Route>
+                  <Route path="profile" element={<Profile />}>
+                    <Route index element={<Navigate to="/profile" />} />
+                    <Route
+                      path=":userId?/profileUpdate"
+                      element={
+                        <RequireAuth>
+                          <UpdateProfile />
+                        </RequireAuth>
+                      }
+                    />
+                    <Route path="*" element={<Navigate to="/profile" />} />
+                  </Route>
 
-                <Route path="deals">
-                  <Route index element={<RequireAuth><Deals /></RequireAuth>} />
-                  <Route path="*" element={<Navigate to="/deals" />} />
-                </Route>
+                  <Route path="objects">
+                    <Route
+                      index
+                      element={
+                        <RequireAuth>
+                          <Objects />
+                        </RequireAuth>
+                      }
+                    />
+                    <Route path="*" element={<Navigate to="/objects" />} />
+                  </Route>
 
-                <Route path="presentations">
-                  <Route index element={<RequireAuth><Presentations /></RequireAuth>} />
-                  <Route path="*" element={<Navigate to="/presentations" />} />
-                </Route>
-              </Routes>
+                  <Route path="meetings">
+                    <Route
+                      index
+                      element={
+                        <RequireAuth>
+                          <Meetings />
+                        </RequireAuth>
+                      }
+                    />
+                    <Route path="*" element={<Navigate to="/meetings" />} />
+                  </Route>
 
+                  <Route path="calendar">
+                    <Route
+                      index
+                      element={
+                        <RequireAuth>
+                          <Calendar />
+                        </RequireAuth>
+                      }
+                    />
+                    <Route path="*" element={<Navigate to="/calendar" />} />
+                  </Route>
+
+                  {/* <Route path="ridge">
+                    <Route
+                      index
+                      element={
+                        <RequireAuth>
+                          <Ridge />
+                        </RequireAuth>
+                      }
+                    />
+                    <Route path="*" element={<Navigate to="/ridge" />} />
+                  </Route> */}
+
+                  <Route path="deals">
+                    <Route
+                      index
+                      element={
+                        <RequireAuth>
+                          <Deals />
+                        </RequireAuth>
+                      }
+                    />
+                    <Route path="*" element={<Navigate to="/deals" />} />
+                  </Route>
+
+                  <Route path="presentations">
+                    <Route
+                      index
+                      element={
+                        <RequireAuth>
+                          <Presentations />
+                        </RequireAuth>
+                      }
+                    />
+                    <Route
+                      path="*"
+                      element={<Navigate to="/presentations" />}
+                    />
+                  </Route>
+                </Routes>
+              </Box>
               <Footer />
             </RightSide>
           </AppStyled>

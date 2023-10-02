@@ -1,5 +1,5 @@
 import { Box, Tooltip, styled } from "@mui/material";
-import AddAlarmOutlinedIcon from "@mui/icons-material/AddAlarmOutlined";
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import { useDispatch } from "react-redux";
 import { setCreateMeetingOpenState } from "../../../../../../../../../../../../../store/meeting/create-meeting.store";
 
@@ -17,7 +17,7 @@ const CreateMeetingIcon = ({
   const dispatch = useDispatch();
 
   const handleOpenCreateMeeting = () => {
-    dispatch(setCreateMeetingOpenState(true));
+    dispatch<any>(setCreateMeetingOpenState(true));
     setDateCreate(day);
   };
 
@@ -25,7 +25,7 @@ const CreateMeetingIcon = ({
     <Component onClick={handleOpenCreateMeeting}>
       {isCurrentDay || isFutureDay ? (
         <Tooltip title="Добавить встречу" placement="top-start" arrow>
-          <AddAlarmOutlinedIcon
+          <AccessTimeIcon
             sx={{
               width: "25px",
               height: "25px",

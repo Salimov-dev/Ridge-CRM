@@ -47,7 +47,7 @@ const ObjectInfo = ({ object, isLoading, isAuthorEntity = true }) => {
   const users = useSelector(getUsersList());
   const currentUserId = useSelector(getCurrentUserId());
 
-  const isCurator = useSelector(getIsUserCurator(currentUserId));
+  const isCurator = useSelector(getIsUserCurator());
   const usersWithoutCurrentUser = users.filter(
     (user) => user?._id !== currentUserId
   );
