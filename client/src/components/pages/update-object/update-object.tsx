@@ -24,10 +24,7 @@ const UpdateObject = ({ onClose }) => {
   const dispatch = useDispatch();
   const objectId = useSelector(getUpdateObjectId());
   const object = useSelector(getObjectById(objectId));
-
-  const isObjectHasAddress =
-    object?.location?.city && object?.location?.address;
-
+  
   const {
     register,
     watch,
@@ -38,6 +35,10 @@ const UpdateObject = ({ onClose }) => {
     mode: "onBlur",
     resolver: yupResolver(objectSchema),
   });
+
+  const isObjectHasAddress =
+    object?.location?.city && object?.location?.address;
+
   const isValidAndHasAdress = isObjectHasAddress && isValid;
   const data = watch();
 

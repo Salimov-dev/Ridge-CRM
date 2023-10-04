@@ -18,7 +18,7 @@ const CreateManagerTaskIcon = ({
   const dispatch = useDispatch();
 
   const handleOpenCreateTask = () => {
-    dispatch(setCreateManagerTaskOpenState(true));
+    dispatch<any>(setCreateManagerTaskOpenState(true));
     setDateCreate(day);
   };
 

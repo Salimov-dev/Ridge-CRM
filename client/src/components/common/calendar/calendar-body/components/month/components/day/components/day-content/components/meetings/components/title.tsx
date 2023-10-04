@@ -32,17 +32,17 @@ const Title = ({ meet, currentUserId }) => {
 
   const handleDoneMeeting = (meet) => {
     const newMeeting = { ...meet, isDone: true };
-    dispatch(setIsDoneMeeting(newMeeting));
+    dispatch<any>(setIsDoneMeeting(newMeeting));
   };
 
   const handleNotDoneMeeting = (meet) => {
     const newMeeting = { ...meet, isDone: false };
-    dispatch(setIsNotDoneMeeting(newMeeting));
+    dispatch<any>(setIsNotDoneMeeting(newMeeting));
   };
 
   const handleUpdateMeeting = () => {
-    dispatch(setUpdateMeetingId(meetingId));
-    dispatch(setUpdateMeetingOpenState(true));
+    dispatch<any>(setUpdateMeetingId(meetingId));
+    dispatch<any>(setUpdateMeetingOpenState(true));
   };
   return (
     <Component>

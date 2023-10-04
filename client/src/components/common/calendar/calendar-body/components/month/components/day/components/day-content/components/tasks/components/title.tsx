@@ -8,7 +8,6 @@ import UpdateElement from "../../../../../../../../../../../buttons/icons button
 import { FormatTime } from "../../../../../../../../../../../../../utils/date/format-time";
 // store
 import { setIsDoneTaskStatus } from "../../../../../../../../../../../../../store/task/tasks.store";
-import { setIsDoneRidgeTaskStatus } from "../../../../../../../../../../../../../store/ridge-task/ridge-tasks.store";
 import {
   setUpdateMyTaskId,
   setUpdateMyTaskOpenState,
@@ -17,10 +16,6 @@ import {
   setUpdateManagerTaskId,
   setUpdateManagerTaskOpenState,
 } from "../../../../../../../../../../../../../store/task/update-manager-task.store";
-import {
-  setUpdateRidgeTaskId,
-  setUpdateRidgeTaskOpenState,
-} from "../../../../../../../../../../../../../store/ridge-task/update-ridge-task.store";
 
 const Component = styled(Box)`
   display: flex;
@@ -31,7 +26,7 @@ const ButtonsContainer = styled(Box)`
   display: flex;
 `;
 
-const Title = ({ task, isRidgePage }) => {
+const Title = ({ task }) => {
   const taskId = task?._id;
   const isTaskDone = task?.isDone;
 
@@ -40,37 +35,22 @@ const Title = ({ task, isRidgePage }) => {
 
   const handleDoneTask = (task) => {
     const newTask = { ...task, isDone: true };
-    dispatch(setIsDoneTaskStatus(newTask));
+    dispatch<any>(setIsDoneTaskStatus(newTask));
   };
 
   const handleNotDoneTask = (task) => {
     const newTask = { ...task, isDone: false };
-    dispatch(setIsDoneTaskStatus(newTask));
+    dispatch<any>(setIsDoneTaskStatus(newTask));
   };
 
   const handleUpdateTask = () => {
     if (isCuratorTask) {
-      dispatch(setUpdateManagerTaskOpenState(true));
-      dispatch(setUpdateManagerTaskId(taskId));
+      dispatch<any>(setUpdateManagerTaskOpenState(true));
+      dispatch<any>(setUpdateManagerTaskId(taskId));
     } else {
-      dispatch(setUpdateMyTaskId(taskId));
-      dispatch(setUpdateMyTaskOpenState(true));
+      dispatch<any>(setUpdateMyTaskId(taskId));
+      dispatch<any>(setUpdateMyTaskOpenState(true));
     }
-  };
-
-  const handleDoneRidgeTask = (task) => {
-    const newTask = { ...task, isDone: true };
-    dispatch(setIsDoneRidgeTaskStatus(newTask));
-  };
-
-  const handleNotDoneRidgeTask = (task) => {
-    const newTask = { ...task, isDone: false };
-    dispatch(setIsDoneRidgeTaskStatus(newTask));
-  };
-
-  const handleUpdateRidgeTask = () => {
-    dispatch(setUpdateRidgeTaskId(taskId));
-    dispatch(setUpdateRidgeTaskOpenState(true));
   };
 
   return (
@@ -81,14 +61,14 @@ const Title = ({ task, isRidgePage }) => {
       <ButtonsContainer>
 
         <UpdateElement
-          onClick={isRidgePage ? handleUpdateRidgeTask : handleUpdateTask}
+          onClick={handleUpdateTask}
           isDone={isTaskDone}
         />
         <DoneIconToggler
           item={task}
-          onDoneItem={isRidgePage ? handleDoneRidgeTask : handleDoneTask}
+          onDoneItem={handleDoneTask}
           onNotDoneItem={
-            isRidgePage ? handleNotDoneRidgeTask : handleNotDoneTask
+            handleNotDoneTask
           }
         />
       </ButtonsContainer>

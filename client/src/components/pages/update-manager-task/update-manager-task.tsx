@@ -23,25 +23,11 @@ import FooterButtons from "../../common/forms/footer-buttons/footer-buttons";
 import ConfirmRemoveDialog from "../../common/dialog/confirm-remove-dialog";
 
 const UpdateManagerTask = ({ title, onClose, objects, users }) => {
-  const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
-
   const taskId = useSelector(getUpdateManagerTaskId());
   const task = useSelector(getTaskById(taskId));
   const isTasksLoading = useSelector(getTaskLoadingStatus());
-
-  const objectId = task?.objectId;
-  const currentUserId = useSelector(getCurrentUserId());
-  
-  const isCurator = useSelector(getIsUserCurator());
-  const currentUserObjects = objects?.filter(
-    (obj) => obj?.userId === currentUserId
-  );
-
-  let transformObjects = [];
-  currentUserObjects?.forEach((obj) => {
-    transformObjects?.push({ _id: obj._id, name: obj.location.address });
-  });
+  const dispatch = useDispatch();
 
   const formatedTask = {
     ...task,
@@ -65,22 +51,33 @@ const UpdateManagerTask = ({ title, onClose, objects, users }) => {
   const watchDate = watch("date", null);
   const watchTime = watch("time", null);
   const isFullValid = isValid && watchDate && watchTime 
-
-
   const isEditMode = taskId ? true : false;
+
+  const objectId = task?.objectId;
+  const currentUserId = useSelector(getCurrentUserId());
+  
+  const isCurator = useSelector(getIsUserCurator());
+  const currentUserObjects = objects?.filter(
+    (obj) => obj?.userId === currentUserId
+  );
+
+  let transformObjects = [];
+  currentUserObjects?.forEach((obj) => {
+    transformObjects?.push({ _id: obj._id, name: obj.location.address });
+  });
 
   const onSubmit = (data) => {
     const transformedDate = dayjs(data.date).format("YYYY-MM-DDTHH:mm:ss.SSSZ");
     const transformedTime = dayjs(data.time).format("YYYY-MM-DDTHH:mm:ss.SSSZ");
     const newData = { ...data, date: transformedDate, time: transformedTime };
 
-    dispatch(updateMyTask(newData, taskId))
+    dispatch<any>(updateMyTask(newData))
       .then(onClose())
       .then(toast.success("Задача менеджеру успешно изменена!"));
   };
 
   const handleRemoveTask = (taskId) => {
-    dispatch(removeTask(taskId))
+    dispatch<any>(removeTask(taskId))
       .then(onClose())
       .then(toast.success("Задача себе успешно удалена!"));
   };

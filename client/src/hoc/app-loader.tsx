@@ -21,15 +21,8 @@ import { getIsLoggedIn, loadUsersList } from "../store/user/users.store";
 import { loadUserStatusesList } from "../store/user/user-statuses.store";
 // tasks
 import { loadTasksList } from "../store/task/tasks.store";
-// ridge tasks
-import { loadRidgeTasksList } from "../store/ridge-task/ridge-tasks.store";
-// ridge objects
-import { loadRidgeObjectsList } from "../store/ridge-object/ridge-objects.store";
-import { loadRidgeObjectStatusList } from "../store/ridge-object/ridge-object-status.store";
 // last contact
 import { loadLastContactsList } from "../store/last-contact/last-contact.store";
-// ridge last contact
-import { loadRidgeLastContactsList } from "../store/ridge-last-contact/last-ridge-contact.store";
 // sidebar collaps
 import { loadSidebarCollapsState } from "../store/sidebar-collaps-state.store";
 import { loadDealsList } from "../store/deal/deal.store";
@@ -69,15 +62,8 @@ const AppLoader = ({ children }: AppLoaderProps) => {
       dispatch<any>(loadMeetingTypesList());
       // tasks
       dispatch<any>(loadTasksList());
-      // ridge tasks
-      dispatch<any>(loadRidgeTasksList());
-      // ridge objects
-      dispatch<any>(loadRidgeObjectsList());
-      dispatch<any>(loadRidgeObjectStatusList());
       // last contact
       dispatch<any>(loadLastContactsList());
-      // ridge last contact
-      dispatch<any>(loadRidgeLastContactsList());
       // sidebar collaps
       dispatch<any>(loadSidebarCollapsState());
       // deals

@@ -32,7 +32,6 @@ const BaloonContainer = styled(Box)`
 
 const ObjectBaloon = ({ object }) => {
   const objectId = object?._id;
-  const createdAt = FormatDate(object.created_at);
   const manager = useSelector(getUserNameById(object?.userId));
   const city = object?.location?.city;
   const district = useSelector(getDistrictById(object?.location?.district));

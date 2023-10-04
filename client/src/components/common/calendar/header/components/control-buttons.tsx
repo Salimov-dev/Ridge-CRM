@@ -14,13 +14,13 @@ const ControlButtons = ({isLoading}) => {
   const dispatch = useDispatch();
 
   const handleTogglePrevMonth = () => {
-    dispatch(setMonthIndex(monthIndex - 1));
+    dispatch<any>(setMonthIndex(monthIndex - 1));
   };
   const handleToggleTodayMonth = () => {
-    dispatch(setMonthIndex(dayjs().month()));
+    dispatch<any>(setMonthIndex(dayjs().month()));
   };
   const handleToggleNextMonth = () => {
-    dispatch(setMonthIndex(monthIndex + 1));
+    dispatch<any>(setMonthIndex(monthIndex + 1));
   };
   return (
     <Box sx={{ display: "flex", gap: "4px" }}>

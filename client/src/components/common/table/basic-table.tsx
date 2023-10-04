@@ -2,7 +2,7 @@
 import { useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 // MUI
-import { Box, useTheme, styled } from "@mui/material";
+import { useTheme } from "@mui/material";
 // styles
 import "./styles/styles.css";
 // components
@@ -20,17 +20,8 @@ import {
 } from "@tanstack/react-table";
 // store
 import { loadOpenObjectPageOpenState } from "../../../store/object/open-object-page.store";
-import { loadUpdateRidgeObjectOpenState } from "../../../store/ridge-object/update-ridge-object.store";
 // theme
 import { tokens } from "../../../theme";
-
-const Component = styled(Box)`
-// height: calc(100vh - 60px); 
-// overflow-y: auto;
-// min-height: 1000px; 
-  // overflow-y: auto
-  // margin-bottom: 20px;
-`;
 
 const BasicTable = ({ items, itemsColumns, isLoading, isPaginate = true }) => {
   const [sorting, setSorting] = useState<SortingState>([]);
@@ -40,8 +31,7 @@ const BasicTable = ({ items, itemsColumns, isLoading, isPaginate = true }) => {
   const columns = useMemo(() => itemsColumns || [], [items]);
 
   const isObjectPageOpen = useSelector(loadOpenObjectPageOpenState());
-  const isRidgeObjectPageOpen = useSelector(loadUpdateRidgeObjectOpenState());
-  const isDialogMode = isObjectPageOpen || isRidgeObjectPageOpen;
+  const isDialogMode = isObjectPageOpen 
 
   const table = useReactTable({
     data,
@@ -56,7 +46,7 @@ const BasicTable = ({ items, itemsColumns, isLoading, isPaginate = true }) => {
   });
 
   return (
-    <Component >
+    <>
       <table>
         <Thead table={table} colors={colors} isDialogMode={isDialogMode} />
         {!isLoading && <Tbody table={table} />}
@@ -66,7 +56,7 @@ const BasicTable = ({ items, itemsColumns, isLoading, isPaginate = true }) => {
       {isPaginate && (
         <Pagination table={table} colors={colors} quantity={items?.length} />
       )}
-    </Component>
+    </>
   );
 };
 

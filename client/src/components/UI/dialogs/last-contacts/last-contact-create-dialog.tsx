@@ -11,7 +11,7 @@ const LastContactCreateDialog = () => {
   const isOpenCreateMeeting = useSelector(getCreateLastContactOpenState());
 
   const handleCloseCreateLastContact = () => {
-    dispatch(setCreateLastContactOpenState(false));
+    dispatch<any>(setCreateLastContactOpenState(false));
   };
 
   return (

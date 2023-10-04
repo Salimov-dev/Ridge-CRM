@@ -2,7 +2,6 @@ import { useDispatch } from "react-redux";
 import { Box, Tooltip, styled } from "@mui/material";
 import ControlPointOutlinedIcon from "@mui/icons-material/ControlPointOutlined";
 import { setCreateMyTaskOpenState } from "../../../../../../../../../../../../../store/task/create-my-task.store";
-import { setCreateRidgeTaskOpenState } from "../../../../../../../../../../../../../store/ridge-task/create-ridge-task.store";
 
 const Component = styled(Box)`
   display: flex;
@@ -15,23 +14,18 @@ const CreateMyTaskIcon = ({
   isFutureDay,
   setDateCreate,
   hoverColor,
-  isRidgePage,
 }) => {
   const dispatch = useDispatch();
 
   const handleOpenCreateMyTask = () => {
-    dispatch(setCreateMyTaskOpenState(true));
+    dispatch<any>(setCreateMyTaskOpenState(true));
     setDateCreate(day);
   };
 
-  const handleOpenCreateRidgeTask = () => {
-    dispatch(setCreateRidgeTaskOpenState(true));
-    setDateCreate(day);
-  };
 
   return (
     <Component
-      onClick={isRidgePage ? handleOpenCreateRidgeTask : handleOpenCreateMyTask}
+      onClick={handleOpenCreateMyTask}
     >
       {isCurrentDay || isFutureDay ? (
         <Tooltip title="Добавить себе задачу" placement="top-start" arrow>

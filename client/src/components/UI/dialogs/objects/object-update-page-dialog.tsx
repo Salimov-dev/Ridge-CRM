@@ -11,7 +11,7 @@ const ObjectUpdatePageDialog = () => {
   const isOpenUpdateObject = useSelector(loadUpdateObjectOpenState());
 
   const handleCloseEditObject = () => {
-    dispatch(setUpdateObjectOpenState(false));
+    dispatch<any>(setUpdateObjectOpenState(false));
   };
 
   return (

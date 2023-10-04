@@ -9,7 +9,6 @@ import TimePickerStyled from "../../inputs/time-picker";
 import { FieldsContainer, Form } from "../styled/styled";
 import SimpleSwitch from "../../inputs/simple-switch";
 import AutocompleteStyled from "../../inputs/autocomplete-styled";
-import ControlledAutocomplete from "../../inputs/autocomplete-control";
 
 const MeetingForm = ({
   data,
@@ -23,7 +22,6 @@ const MeetingForm = ({
   isEditMode = false,
   isMeetingsLoading = false,
   isObjectPage = false,
-  control,
 }) => {
   const watchStatus = watch("status", "");
   const watchObjectId = watch("objectId", "");
@@ -73,7 +71,7 @@ const MeetingForm = ({
             register={register}
             name="objectId"
             options={objects}
-            value={data?.objectId || null} // Control the value from the form data
+            value={data?.objectId || null}
             setValue={setValue}
             watchItemId={watchObjectId}
           />

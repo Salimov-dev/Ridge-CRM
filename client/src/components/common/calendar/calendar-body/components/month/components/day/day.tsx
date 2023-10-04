@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Box, styled } from "@mui/material";
 // components
 import DayContent from "./components/day-content/day-content";
@@ -17,15 +17,9 @@ const OneDayContainer = styled(Box)`
 `;
 
 const Day = ({ day, tasks, meetings, isWeekendColumn, setDateCreate }) => {
-  const [currentPath, setCurrentPath] = useState("");
-
-  const isRidgePage = currentPath === "/ridge";
   const isCurrentDay = chechIsCurrentDay(day);
   const isFutureDay = chechIsFutureDay(day);
 
-  useEffect(() => {
-    setCurrentPath(window.location.pathname);
-  }, []);
   return (
     <OneDayContainer
       sx={{
@@ -56,13 +50,12 @@ const Day = ({ day, tasks, meetings, isWeekendColumn, setDateCreate }) => {
         isFutureDay={isFutureDay}
         isWeekendColumn={isWeekendColumn}
       />
-      <DayContent meetings={meetings} tasks={tasks} isRidgePage={isRidgePage} />
+      <DayContent meetings={meetings} tasks={tasks} />
       <ActionsIcons
         day={day}
         setDateCreate={setDateCreate}
         isCurrentDay={isCurrentDay}
         isFutureDay={isFutureDay}
-        isRidgePage={isRidgePage}
       />
     </OneDayContainer>
   );

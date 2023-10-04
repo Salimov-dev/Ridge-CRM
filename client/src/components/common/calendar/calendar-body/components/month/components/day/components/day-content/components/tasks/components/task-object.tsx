@@ -1,17 +1,13 @@
 import { useDispatch } from "react-redux";
+import { Box, Typography } from "@mui/material";
 import DividerStyled from "../../../../../../../../../../../divider/divider-styled";
+import OpenPageObjectIconButton from "../../../../../../../../../../../buttons/icons buttons/open-page-object-icon";
 import {
   setOpenObjectPageId,
   setOpenObjectPageOpenState,
 } from "../../../../../../../../../../../../../store/object/open-object-page.store";
-import {
-  setUpdateRidgeObjectId,
-  setUpdateRidgeObjectOpenState,
-} from "../../../../../../../../../../../../../store/ridge-object/update-ridge-object.store";
-import OpenPageObjectIconButton from "../../../../../../../../../../../buttons/icons buttons/open-page-object-icon";
-import { Box, Typography } from "@mui/material";
 
-const TaksObject = ({ task, objects, isRidgePage }) => {
+const TaksObject = ({ task, objects }) => {
   const dispatch = useDispatch();
   const taskObjectId = task?.objectId;
 
@@ -23,14 +19,10 @@ const TaksObject = ({ task, objects, isRidgePage }) => {
   };
 
   const handleOpenObjectPage = (objectId) => {
-    dispatch(setOpenObjectPageId(objectId));
-    dispatch(setOpenObjectPageOpenState(true));
+    dispatch<any>(setOpenObjectPageId(objectId));
+    dispatch<any>(setOpenObjectPageOpenState(true));
   };
 
-  const handleOpenRidgeObjectPage = (objectId) => {
-    dispatch(setUpdateRidgeObjectId(objectId));
-    dispatch(setUpdateRidgeObjectOpenState(true));
-  };
 
   return taskObjectId ? (
     <>
@@ -38,11 +30,7 @@ const TaksObject = ({ task, objects, isRidgePage }) => {
       <Box sx={{ display: "flex", gap: "4px" }}>
         <Typography variant="h6">{getObjectAddress(taskObjectId)}</Typography>
         <OpenPageObjectIconButton
-          onClick={() =>
-            isRidgePage
-              ? handleOpenRidgeObjectPage(taskObjectId)
-              : handleOpenObjectPage(taskObjectId)
-          }
+          onClick={() => handleOpenObjectPage(taskObjectId)}
           address={getObjectAddress(taskObjectId)}
         />
       </Box>

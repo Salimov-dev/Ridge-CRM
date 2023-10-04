@@ -11,8 +11,8 @@ import { getMeetingStatusNameById } from "../../../store/meeting/meeting-status.
 // components
 import Attribute from "../../common/map/baloon/attribute";
 import DividerStyled from "../../common/divider/divider-styled";
-
 import MultiColorOutlinedButton from "../../common/buttons/multi-color-outlined-button";
+// store
 import {
   setOpenObjectPageId,
   setOpenObjectPageOpenState,

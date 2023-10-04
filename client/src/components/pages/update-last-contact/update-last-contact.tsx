@@ -25,9 +25,9 @@ import { lastContactSchema } from "../../../schemas/last-contact-schema";
 
 const UpdateLastContact = ({ onClose }) => {
   const [open, setOpen] = useState(false);
-  const dispatch = useDispatch();
   const lastContactId = useSelector(getUpdateLastContactId());
   const lastContact = useSelector(getLastContactsById(lastContactId));
+  const dispatch = useDispatch();
 
   const formatedLastContact = {
     ...lastContact,
@@ -55,13 +55,13 @@ const UpdateLastContact = ({ onClose }) => {
     const transformedDate = dayjs(data.date).format("YYYY-MM-DDTHH:mm:ss.SSSZ");
     const newData = { ...data, date: transformedDate };
 
-    dispatch(updateLastContact(newData, lastContactId))
+    dispatch<any>(updateLastContact(newData))
       .then(onClose())
       .then(toast.success("Последний контакт успешно изменен!"));
   };
 
   const handleRemoveLastContact = (lastContactId) => {
-    dispatch(removeLastContact(lastContactId))
+    dispatch<any>(removeLastContact(lastContactId))
       .then(onClose())
       .then(toast.success("Последний контакт успешно удален!"));
   };
@@ -82,7 +82,6 @@ const UpdateLastContact = ({ onClose }) => {
         register={register}
         errors={errors}
         setValue={setValue}
-        isEditMode={isEditMode}
       />
       <FooterButtons
         onUpdate={handleSubmit(onSubmit)}

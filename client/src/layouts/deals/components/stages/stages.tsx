@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Box, Paper, styled } from "@mui/material";
 import Title from "./components/title";
 import Objects from "./components/objects";
-import CreateDealButton from "./components/create-deal-button";
 import DividerStyled from "../../../../components/common/divider/divider-styled";
 
 const DealsContainer = styled(Box)`

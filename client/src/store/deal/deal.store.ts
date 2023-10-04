@@ -74,8 +74,8 @@ const {
 } = actions;
 
 export const loadDealsList = () => async (dispatch, getState) => {
-  const { lastFetch } = getState().deals;
-  if (isOutDated(lastFetch)) {
+  // const { lastFetch } = getState().deals;
+  // if (isOutDated(lastFetch)) {
     dispatch(dealsRequested());
     try {
       const { content } = await dealsService.get();
@@ -83,7 +83,7 @@ export const loadDealsList = () => async (dispatch, getState) => {
     } catch (error) {
       dealsFailed(error.message);
     }
-  }
+  // }
 };
 
 export function createDeal(payload) {

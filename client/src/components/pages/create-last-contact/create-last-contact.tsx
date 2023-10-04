@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 // components
 import TitleWithCloseButton from "../../common/page-titles/title-with-close-button";
 import LastContactForm from "../../common/forms/last-contact-form/last-contact-form";
+import FooterButtons from "../../common/forms/footer-buttons/footer-buttons";
 // MUI
 import { Box, styled } from "@mui/material";
 // store
@@ -17,7 +18,6 @@ import { createLastContact } from "../../../store/last-contact/last-contact.stor
 import { lastContactSchema } from "../../../schemas/last-contact-schema";
 // utils
 import { capitalizeFirstLetter } from "../../../utils/data/capitalize-first-letter";
-import FooterButtons from "../../common/forms/footer-buttons/footer-buttons";
 
 const initialState = {
   date: dayjs(),
@@ -45,7 +45,7 @@ const CreateLastContact = ({ onClose }) => {
   });
 
   const data = watch();
-  const watchDate = watch("date", null);
+  const watchDate = watch<any>("date", null);
 
   const isFullValid = isValid && watchDate;
 
@@ -55,14 +55,14 @@ const CreateLastContact = ({ onClose }) => {
       result: capitalizeFirstLetter(data.result),
     };
 
-    dispatch(createLastContact(newData))
+    dispatch<any>(createLastContact(newData))
       .then(onClose())
       .then(toast.success("Последний контакт успешно создан!"));
   };
 
   useEffect(() => {
     if (objectPageId) {
-      setValue("objectId", objectPageId);
+      setValue<any>("objectId", objectPageId);
     }
   }, [objectPageId]);
 

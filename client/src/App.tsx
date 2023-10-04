@@ -13,7 +13,6 @@ import Calendar from "./layouts/calendar/calendar";
 import Meetings from "./layouts/meetings/meetings";
 import Presentations from "./layouts/presentations/presentations";
 // components
-import Ridge from "./layouts/ridge/ridge";
 import Deals from "./layouts/deals/deals";
 import TopBar from "./components/UI/topbar/topbar";
 import Sidebar from "./components/UI/sidebar/sidebar";
@@ -137,18 +136,6 @@ function App() {
                     />
                     <Route path="*" element={<Navigate to="/calendar" />} />
                   </Route>
-
-                  {/* <Route path="ridge">
-                    <Route
-                      index
-                      element={
-                        <RequireAuth>
-                          <Ridge />
-                        </RequireAuth>
-                      }
-                    />
-                    <Route path="*" element={<Navigate to="/ridge" />} />
-                  </Route> */}
 
                   <Route path="deals">
                     <Route

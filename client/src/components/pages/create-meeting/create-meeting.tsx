@@ -70,7 +70,6 @@ const CreateMeeting = ({
     watch,
     handleSubmit,
     setValue,
-    control,
     formState: { errors, isValid },
   } = useForm({
     defaultValues: initialState,
@@ -146,7 +145,6 @@ const CreateMeeting = ({
       <FindObjectOnMap />
 
       <MeetingForm
-        control={control}
         data={data}
         objects={transformObjects}
         statuses={statuses}

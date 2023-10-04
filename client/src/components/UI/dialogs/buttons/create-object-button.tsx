@@ -1,4 +1,4 @@
-import { Button, Typography } from "@mui/material";
+import { Button } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { getObjectsLoadingStatus } from "../../../../store/object/objects.store";
 import { setCreateObjectOpenState } from "../../../../store/object/create-object.store";

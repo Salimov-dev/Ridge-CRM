@@ -21,10 +21,13 @@ import getMonth from "../../utils/calendar/get-month";
 import { getTasksList } from "../../store/task/tasks.store";
 import { getMonthIndexState } from "../../store/month-index.store";
 import { getMeetingsList } from "../../store/meeting/meetings.store";
+import {
+  getCurrentUserId,
+  getIsUserCurator,
+} from "../../store/user/users.store";
 // hooks
 import useCalendar from "../../hooks/calendar/use-calendar";
 import useSearchTask from "../../hooks/task/use-search-task";
-import { getCurrentUserId, getIsUserCurator } from "../../store/user/users.store";
 
 const initialState = {
   task: "",
@@ -35,15 +38,6 @@ const initialState = {
 const Calendar = () => {
   const [currentMonth, setCurrentMonth] = useState(getMonth());
   const [dateCreate, setDateCreate] = useState(null);
-
-  const currentUserId = useSelector(getCurrentUserId())
-  const isCurator = useSelector(getIsUserCurator())
-
-  const tasksColumn = tasksColumns;
-  const monthIndex = useSelector(getMonthIndexState());
-
-  const { sortedCurrentWeeklyMeetings, transformUsers, transformObjects } =
-    useCalendar();
 
   const localStorageState = JSON.parse(
     localStorage.getItem("search-tasks-data")
@@ -57,11 +51,21 @@ const Calendar = () => {
   });
 
   const data = watch();
+  const currentUserId = useSelector(getCurrentUserId());
+  const isCurator = useSelector(getIsUserCurator());
   const meetings = useSelector(getMeetingsList());
 
+  const tasksColumn = tasksColumns;
+  const monthIndex = useSelector(getMonthIndexState());
+
+  const { sortedCurrentWeeklyMeetings, transformUsers, transformObjects } =
+    useCalendar();
+
   let tasks = useSelector(getTasksList());
-  const currentUserTasks = tasks?.filter(task => task?.userId === currentUserId)
-  const actualTasks = isCurator ? currentUserTasks : tasks
+  const currentUserTasks = tasks?.filter(
+    (task) => task?.userId === currentUserId
+  );
+  const actualTasks = isCurator ? currentUserTasks : tasks;
   const searchedTasks = useSearchTask(actualTasks, data);
   const sortedTasks = orderBy(searchedTasks, ["date"], ["desc"]);
 
@@ -108,10 +112,10 @@ const Calendar = () => {
       <LayoutTitle title="Календарь" />
       <Header buttons={<CreateTasksButtons />} />
       <CalendarBody
+        tasks={getTask}
         currentMonth={currentMonth}
         setDateCreate={setDateCreate}
         meetings={getMeeting}
-        tasks={getTask}
         background="darkOrange"
       />
       <TasksTable

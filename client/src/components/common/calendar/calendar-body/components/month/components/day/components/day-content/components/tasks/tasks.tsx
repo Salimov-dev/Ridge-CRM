@@ -9,13 +9,11 @@ import Result from "./components/result";
 import { ItemContainer, ItemsContainer } from "../styled/styled";
 // store
 import { getObjectsList } from "../../../../../../../../../../../../store/object/objects.store";
-import { getRidgeObjectsList } from "../../../../../../../../../../../../store/ridge-object/ridge-objects.store";
 import { getUsersList } from "../../../../../../../../../../../../store/user/users.store";
 import { Typography } from "@mui/material";
 
-const Tasks = ({ tasks, isRidgePage, isCurator }) => {
+const Tasks = ({ tasks, isCurator }) => {
   const objects = useSelector(getObjectsList());
-  const ridgeObjects = useSelector(getRidgeObjectsList());
   const users = useSelector(getUsersList());
 
   const getManagerName = (id) => {
@@ -33,26 +31,23 @@ const Tasks = ({ tasks, isRidgePage, isCurator }) => {
           <ItemContainer
             key={task._id}
             sx={{
-              border: isRidgePage
-                ? "3px solid darkGreen"
-                : task.managerId
+              border: task.managerId
                 ? "3px solid red"
                 : "3px solid darkOrange",
               color: !taskIsDone
-                ? task.managerId || isRidgePage
+                ? task.managerId
                   ? "white"
                   : "black"
                 : "white",
               background: !taskIsDone
                 ? task.managerId
                   ? "Crimson"
-                  : isRidgePage
-                  ? "darkGreen"
+                 
                   : "orange"
                 : "gray",
             }}
           >
-            <Title task={task} isRidgePage={isRidgePage} />
+            <Title task={task}  />
             <TaskComment comment={task?.comment} />
             {isCurator && task?.managerId?.length ? (
               <Typography>
@@ -61,8 +56,7 @@ const Tasks = ({ tasks, isRidgePage, isCurator }) => {
             ) : null}
             <TaksObject
               task={task}
-              objects={isRidgePage ? ridgeObjects : objects}
-              isRidgePage={isRidgePage}
+              objects={objects}
             />
             <Result task={task} />
           </ItemContainer>

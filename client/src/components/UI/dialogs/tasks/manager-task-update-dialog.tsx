@@ -10,7 +10,7 @@ import {
   getUsersList,
 } from "../../../../store/user/users.store";
 
-const ManagerTaskUpdateDialog = ({ objects }) => {
+const ManagerTaskUpdateDialog = ({ objects=[] }) => {
   const users = useSelector(getUsersList());
   const currentUserId = useSelector(getCurrentUserId());
   const isOpenUpdateManagerTask = useSelector(loadUpdateManagerTaskOpenState());

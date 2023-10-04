@@ -2,9 +2,9 @@
 import SearchField from "../../common/inputs/search-field";
 import MultiSelectField from "../../common/inputs/multi-select-field";
 import { FieldsContainer, Form } from "../../common/forms/styled/styled";
+import SearchSelectField from "../../common/inputs/search-select-field";
 // mock
 import { gendersArray } from "../../../mock/genders";
-import SearchSelectField from "../../common/inputs/search-select-field";
 
 const UsersFiltersPanel = ({
   register,

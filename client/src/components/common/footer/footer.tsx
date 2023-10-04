@@ -43,8 +43,6 @@ const Footer = () => {
         {isCurator ? (
           <>
             <Divider orientation="vertical" flexItem />
-            <Item title="Грядка" path="/ridge" />
-            <Divider orientation="vertical" flexItem />
             <Item title="Менеджеры" path="/users" />
             <Divider orientation="vertical" flexItem />
             <Item title="Презентации" path="/" />

@@ -23,16 +23,10 @@ import meetingStatus from "./meeting-status.routes.js";
 import meetingType from "./meeting-type.routes.js";
 // tasks
 import tasksRoutes from "./tasks.routes.js";
-import ridgeTasksRoutes from "./ridge-tasks.routes.js";
-// ridge
-import ridgeObjectsRoutes from "./ridge-objects.routes.js";
-import ridgeObjectStatusRoutes from "./ridge-object-status.routes.js";
 // uploads
 import uploadRoutes from "./upload-avatar.routes.js";
 // last contact
 import lastContactRoutes from "./last-contact.routes.js";
-// ridge last contact
-import ridgeLastContactRoutes from "./ridge-last-contact.routes.js";
 // deals
 import dealsRoutes from "./deals.routes.js";
 import dealStagesRoutes from "./deal-stages.routes.js";
@@ -63,17 +57,10 @@ router.use("/meetingStatus", meetingStatus);
 router.use("/meetingType", meetingType);
 // tasks
 router.use("/tasks", tasksRoutes);
-// ridge tasks
-router.use("/ridgeTasks", ridgeTasksRoutes);
-// ridge objects
-router.use("/ridge", ridgeObjectsRoutes);
-router.use("/ridgeObjectStatus", ridgeObjectStatusRoutes);
 // uploads
 router.use("/upload", uploadRoutes);
 // last contact
 router.use("/lastContact", lastContactRoutes);
-// ridge last contact
-router.use("/ridgeLastContact", ridgeLastContactRoutes);
 // deal
 router.use("/deals", dealsRoutes);
 router.use("/dealStages", dealStagesRoutes);

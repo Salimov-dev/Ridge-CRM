@@ -1,13 +1,13 @@
 // libraries
 import { toast } from "react-toastify";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 // MUI
 import { Box, Typography, styled } from "@mui/material";
 // store
-import { getCurrentUserId, login } from "../../store/user/users.store";
+import { login } from "../../store/user/users.store";
 // components
 import LoginForm from "./components/login-form";
 import PositiveOutlinedButton from "../../components/common/buttons/positive-outlined-button";
@@ -56,9 +56,6 @@ const initialState = {
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const location = useLocation()
-
-  const redirectPath = location.state?.path || "/"
 
   const {
     register,
@@ -72,10 +69,12 @@ const Login = () => {
   });
 
   const data = watch();
+  const location = useLocation();
+  const redirectPath = location.state?.path || "/";
   const isFormValid = !Object.keys(errors).length;
 
   const onSubmit = () => {
-    dispatch(login({ payload: data }))
+    dispatch<any>(login({ payload: data }))
       .then(() => navigate(redirectPath, { replace: true }))
       .then(() => toast.success("Добро пожаловать!"));
   };

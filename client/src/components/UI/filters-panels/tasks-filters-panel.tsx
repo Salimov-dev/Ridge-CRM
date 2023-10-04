@@ -1,16 +1,16 @@
+// components
 import SearchField from "../../common/inputs/search-field";
 import SearchSwitch from "../../common/inputs/search-switch";
 import { FieldsContainer, Form } from "../../common/forms/styled/styled";
+import SearchSelectField from "../../common/inputs/search-select-field";
 // mock
 import { taskDoneTypes } from "../../../mock/task-done-status";
-import SearchSelectField from "../../common/inputs/search-select-field";
 
 const TasksFiltersPanel = ({
   data,
   register,
   setValue,
   isLoading,
-  isRidgeObject,
 }) => {
   return (
     <Form>
@@ -40,7 +40,7 @@ const TasksFiltersPanel = ({
           value={data.selectedTaskTypes}
           disabled={isLoading ? true : false}
         />
-        {!isRidgeObject ?<SearchSwitch
+      <SearchSwitch
           title="Задачи куратора"
           isLoading={isLoading}
           isChecked={data?.onlyMyTasks}
@@ -49,7 +49,7 @@ const TasksFiltersPanel = ({
           onChange={(e) => {
             setValue("onlyMyTasks", e.target.checked);
           }}
-        /> : null}
+        /> 
       </FieldsContainer>
     </Form>
   );

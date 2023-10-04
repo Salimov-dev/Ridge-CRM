@@ -8,9 +8,9 @@ import Header from "./components/header";
 import ItemsList from "./components/items-list";
 // store
 import { setSidebarCollapsState } from "../../../store/sidebar-collaps-state.store";
-// other
+import { getIsUserCurator } from "../../../store/user/users.store";
+// theme
 import { tokens } from "../../../theme";
-import { getCurrentUserId, getIsUserCurator } from "../../../store/user/users.store";
 
 const Component = styled(Box)`
   height: 100vh;
@@ -42,9 +42,6 @@ const Sidebar = () => {
     }
     if (currentPath === "/calendar") {
       return "Календарь";
-    }
-    if (currentPath === "/ridge") {
-      return "Грядка";
     }
     if (currentPath === "/deals") {
       return "Сделки";

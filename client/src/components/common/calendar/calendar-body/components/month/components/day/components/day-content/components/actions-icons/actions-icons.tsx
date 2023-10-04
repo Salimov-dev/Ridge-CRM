@@ -2,7 +2,9 @@ import { Box, styled } from "@mui/material";
 import CreateMeetingIcon from "./components/create-meeting-icon";
 import CreateMyTaskIcon from "./components/create-my-task-icon";
 import CreateManagerTaskIcon from "./components/create-manager-task-icon";
-import { getCurrentUserId, getIsUserCurator } from "../../../../../../../../../../../../store/user/users.store";
+import {
+  getIsUserCurator,
+} from "../../../../../../../../../../../../store/user/users.store";
 import { useSelector } from "react-redux";
 
 const ActionsContainer = styled(Box)`
@@ -11,41 +13,34 @@ const ActionsContainer = styled(Box)`
   justify-content: end;
 `;
 
-const ActionsIcons = ({
-  day,
-  setDateCreate,
-  isCurrentDay,
-  isFutureDay,
-  isRidgePage,
-}) => {
-  const isCurator = useSelector(getIsUserCurator())
+const ActionsIcons = ({ day, setDateCreate, isCurrentDay, isFutureDay }) => {
+  const isCurator = useSelector(getIsUserCurator());
 
   return (
     <ActionsContainer>
-      {!isRidgePage ? (
-        <>
-          {isCurator ? <CreateManagerTaskIcon
+      <>
+        {isCurator ? (
+          <CreateManagerTaskIcon
             day={day}
             isCurrentDay={isCurrentDay}
             isFutureDay={isFutureDay}
             setDateCreate={setDateCreate}
             hoverColor="FireBrick"
-          /> : null}
-          <CreateMeetingIcon
-            day={day}
-            isCurrentDay={isCurrentDay}
-            isFutureDay={isFutureDay}
-            setDateCreate={setDateCreate}
           />
-        </>
-      ) : null}
+        ) : null}
+        <CreateMeetingIcon
+          day={day}
+          isCurrentDay={isCurrentDay}
+          isFutureDay={isFutureDay}
+          setDateCreate={setDateCreate}
+        />
+      </>
       <CreateMyTaskIcon
         day={day}
         isCurrentDay={isCurrentDay}
         isFutureDay={isFutureDay}
         setDateCreate={setDateCreate}
         hoverColor="orange"
-        isRidgePage={isRidgePage}
       />
     </ActionsContainer>
   );

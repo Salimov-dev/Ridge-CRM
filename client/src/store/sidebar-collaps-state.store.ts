@@ -22,7 +22,7 @@ export const loadSidebarCollapsState = () => (dispatch) => {
   if (localStorageValue) {
     return dispatch(sidebarCollapsStateSetted(localStorageValue));
   } else {
-    localStorage.setItem("sidebar-collaps-state", true);
+    localStorage.setItem("sidebar-collaps-state", "true");
   }
 };
 

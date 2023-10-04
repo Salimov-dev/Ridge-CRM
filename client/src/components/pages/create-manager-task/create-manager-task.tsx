@@ -50,8 +50,8 @@ const CreateManagerTask = ({
     resolver: yupResolver(taskManagerSchema),
   });
   const data = watch();
-  const watchDate = watch("date", null);
-  const watchTime = watch("time", null);
+  const watchDate = watch<any>("date", null);
+  const watchTime = watch<any>("time", null);
   const watchManagerId = watch("managerId", null);
   const isFullValid = isValid && watchDate && watchTime && watchManagerId;
 
@@ -60,22 +60,22 @@ const CreateManagerTask = ({
       ...data,
       comment: capitalizeFirstLetter(data.comment),
     };
-    dispatch(createTask(newData))
+    dispatch<any>(createTask(newData))
       .then(() => onClose())
       .then(() => toast.success("Задача успешно создана!"));
   };
 
   useEffect(() => {
     if (isObjectPage) {
-      setValue("objectId", objectPageId);
+      setValue<any>("objectId", objectPageId);
     }
   }, [objectPageId]);
 
   useEffect(() => {
     if (dateCreate !== null) {
-      setValue("date", dateCreate);
+      setValue<any>("date", dateCreate);
     } else {
-      setValue("date", dayjs());
+      setValue<any>("date", dayjs());
     }
   }, [dateCreate]);
 

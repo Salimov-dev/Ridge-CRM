@@ -31,31 +31,17 @@ import updateMyTaskReducer from "./task/update-my-task.store";
 import createManagerTaskReducer from "./task/create-manager-task.store";
 import createObjectReducer from "./object/create-object.store";
 import createMyTaskReducer from "./task/create-my-task.store";
-// ridge tasks
-import ridgeTasksReducer from "./ridge-task/ridge-tasks.store";
-import createRidgeTaskReducer from "./ridge-task/create-ridge-task.store";
-import updateRidgeTaskReducer from "./ridge-task/update-ridge-task.store";
-// ridge object
-import ridgeObjectsReducer from "./ridge-object/ridge-objects.store";
-import ridgeObjectStatusReducer from "./ridge-object/ridge-object-status.store";
-import createRidgeObjectReducer from "./ridge-object/create-ridge-object.store";
-import updateRidgeObjectReducer from "./ridge-object/update-ridge-object.store";
-import createObjectFromRidgeReducer from "./ridge-object/create-object-from-ridge.store";
 // last contact
 import lastContactReducer from "./last-contact/last-contact.store";
 import createLastContactReducer from "./last-contact/create-last-contact.store";
 import updateLastContactReducer from "./last-contact/update-last-contact.store";
-// ridge last contact
-import ridgeLastContactReducer from "./ridge-last-contact/last-ridge-contact.store";
-import createRidgeLastContactReducer from "./ridge-last-contact/create-ridge-last-contact.store";
-import updateRidgeLastContactReducer from "./ridge-last-contact/update-ridge-last-contact.store";
 // deal
-import dealsReducer from "./deal/deal.store";
 import dealStagesReducer from "./deal/deal-stages.store";
-import updateDealReducer from "./deal/update-deal.store";
+// import dealsReducer from "./deal/deal.store";
+// import updateDealReducer from "./deal/update-deal.store";
+// import CreateDealReducer from "./deal/add-object-to-deal.store";
 // sidebar
 import sidebarCollapsStateReducer from "./sidebar-collaps-state.store";
-import CreateDealReducer from "./deal/add-object-to-deal.store";
 // other
 import monthIndexReducer from "./month-index.store";
 import authStateReducer from "./user/auth.store";
@@ -95,33 +81,19 @@ const rootReducer = combineReducers({
   updateMyTask: updateMyTaskReducer,
   createManagerTask: createManagerTaskReducer,
   updateManagerTask: updateManagerTaskReducer,
-  // ridge tasks
-  ridgeTasks: ridgeTasksReducer,
-  createRidgeTask: createRidgeTaskReducer,
-  updateRidgeTask: updateRidgeTaskReducer,
   // calendar
   monthIndex: monthIndexReducer,
-  // ridge object
-  ridgeObjects: ridgeObjectsReducer,
-  ridgeObjectStatus: ridgeObjectStatusReducer,
-  createRidgeObject: createRidgeObjectReducer,
-  createObjectFromRidge: createObjectFromRidgeReducer,
-  updateRidgeObject: updateRidgeObjectReducer,
   // last contact
   lastContact: lastContactReducer,
   createLastContact: createLastContactReducer,
   updateLastContact: updateLastContactReducer,
-  // ridge last contact
-  ridgeLastContact: ridgeLastContactReducer,
-  createRidgeLastContact: createRidgeLastContactReducer,
-  updateRidgeLastContact: updateRidgeLastContactReducer,
   // sidebar collaps state
   sidebarCollapsState: sidebarCollapsStateReducer,
   // deals
-  deals: dealsReducer,
-  CreateDeal: CreateDealReducer,
-  updateDeal: updateDealReducer,
   dealStages: dealStagesReducer,
+  // deals: dealsReducer,
+  // CreateDeal: CreateDealReducer,
+  // updateDeal: updateDealReducer,
 });
 
 export function createStore() {

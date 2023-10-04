@@ -48,15 +48,6 @@ const initialState = {
 
 const Objects = () => {
   const [selectedBaloon, setSelectedBaloon] = useState(null);
-  const objects = useSelector(getObjectsList());
-  const selectedObject = useSelector(getObjectById(selectedBaloon));
-  const isLoading = useSelector(getObjectsLoadingStatus());
-  const isCurator = useSelector(getIsUserCurator());
-
-  const columns = isCurator ? objectsColumnsCurator : objectsColumns;
-
-  const center = [59.930320630519155, 30.32906024941998];
-  const mapZoom = 11;
 
   const localStorageState = JSON.parse(
     localStorage.getItem("search-objects-data")
@@ -76,6 +67,15 @@ const Objects = () => {
     defaultValues: Boolean(localStorageState) ? formatedState : initialState,
     mode: "onBlur",
   });
+
+  const objects = useSelector(getObjectsList());
+  const selectedObject = useSelector(getObjectById(selectedBaloon));
+  const isLoading = useSelector(getObjectsLoadingStatus());
+  const isCurator = useSelector(getIsUserCurator());
+  const columns = isCurator ? objectsColumnsCurator : objectsColumns;
+
+  const center = [59.930320630519155, 30.32906024941998];
+  const mapZoom = 11;
 
   const data = watch();
   const searchedObjects = useSearchObject(objects, data);
@@ -114,7 +114,6 @@ const Objects = () => {
         baloon={<ObjectBaloon object={selectedObject} />}
         isLoading={isLoading}
       />
-
       <ObjectsFiltersPanel
         data={data}
         objects={objects}
@@ -123,13 +122,12 @@ const Objects = () => {
         isCurator={isCurator}
         isLoading={isLoading}
       />
-
       <BasicTable
         items={sortedObjects}
         itemsColumns={columns}
         isLoading={isLoading}
       />
-
+      
       <ObjectCreatePageDialog />
       <ObjectPageDialog />
       <ObjectUpdatePageDialog />

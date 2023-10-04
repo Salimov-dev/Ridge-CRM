@@ -4,14 +4,14 @@ const updateManagerSlice = createSlice({
   name: "updateManager",
   initialState: {
     entities: false,
-    ManagerId: "",
+    managerId: "",
   },
   reducers: {
     updateManagerOpenSetted: (state, action) => {
       state.entities = action.payload;
     },
     updateManagerId: (state, action) => {
-      state.ManagerId = action.payload;
+      state.managerId = action.payload;
     },
   },
 });
@@ -37,7 +37,7 @@ export const setUpdateManagerId = (payload) => (dispatch) => {
 };
 
 export const getUpdateManagerId = () => (state) => {
-  return state.updateManager.ManagerId;
+  return state.updateManager.managerId;
 };
 
 export default updateManagerReducer;

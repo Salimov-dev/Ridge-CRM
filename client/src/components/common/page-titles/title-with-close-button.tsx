@@ -8,7 +8,12 @@ const Component = styled(Box)`
   justify-content: space-between;
 `;
 
-const TitleWithCloseButton = ({ title, onClose, background, color }) => {
+const TitleWithCloseButton = ({
+  title = "",
+  onClose,
+  background = "inherit",
+  color = "inherit",
+}) => {
   return (
     <Component>
       <LayoutTitle title={title} background={background} color={color} />

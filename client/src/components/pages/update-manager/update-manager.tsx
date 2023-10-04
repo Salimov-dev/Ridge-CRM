@@ -18,11 +18,10 @@ import { getUpdateManagerId } from "../../../store/user/update-user.store";
 import { managerSchema } from "../../../schemas/manager-schema";
 
 const UpdateManager = ({ onClose }) => {
-  const dispatch = useDispatch();
   const userId = useSelector(getUpdateManagerId());
   const user = useSelector(getUserDataById(userId));
   const userStatuses = useSelector(getUserStatusesList());
-  const isEditMode = userId ? true : false;
+  const dispatch = useDispatch();
 
   const formatedUser = {
     ...user,
@@ -52,6 +51,8 @@ const UpdateManager = ({ onClose }) => {
 
   const data = watch();
 
+  const isEditMode = userId ? true : false;
+
   const isFullValid =
     data.contract.startDate !== null &&
     data.contract.endDate !== null &&
@@ -59,7 +60,7 @@ const UpdateManager = ({ onClose }) => {
     isValid;
 
   const onSubmit = (data) => {
-    dispatch(updateUser(data))
+    dispatch<any>(updateUser(data))
       .then(onClose())
       .then(toast.success("Менеджер успешно изменен!"));
   };

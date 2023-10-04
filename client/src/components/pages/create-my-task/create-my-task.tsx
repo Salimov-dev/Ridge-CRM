@@ -50,8 +50,8 @@ const CreateMyTask = ({
     resolver: yupResolver(taskSchema),
   });
   const data = watch();
-  const watchDate = watch("date", null);
-  const watchTime = watch("time", null);
+  const watchDate = watch<any>("date", null);
+  const watchTime = watch<any>("time", null);
   const isFullValid = isValid && watchDate && watchTime;
 
   const onSubmit = () => {
@@ -62,22 +62,22 @@ const CreateMyTask = ({
       managerId: null,
     };
 
-    dispatch(createTask(newData))
+    dispatch<any>(createTask(newData))
       .then(() => onClose())
       .then(() => toast.success("Задача успешно создана!"));
   };
 
   useEffect(() => {
     if (isObjectPage) {
-      setValue("objectId", objectPageId);
+      setValue<any>("objectId", objectPageId);
     }
   }, [objectPageId]);
 
   useEffect(() => {
     if (dateCreate !== null) {
-      setValue("date", dateCreate);
+      setValue<any>("date", dateCreate);
     } else {
-      setValue("date", dayjs());
+      setValue<any>("date", dayjs());
     }
   }, [dateCreate]);
 

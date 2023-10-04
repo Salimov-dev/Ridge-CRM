@@ -82,8 +82,8 @@ const CreateObject = ({ onClose }) => {
     findedObject,
   } = useFindObject();
 
-  const watchAddress = watch("location.address", "");
-  const watchCity = watch("location.city", "");
+  const watchAddress = watch<any>("location.address", "");
+  const watchCity = watch<any>("location.city", "");
 
   const isFindedObject = Boolean(Object.keys(findedObject)?.length);
   const isObjectHasAddress = Boolean(watchCity) && Boolean(watchAddress);
@@ -120,10 +120,10 @@ const CreateObject = ({ onClose }) => {
   };
 
   useEffect(() => {
-    setValue("location.city", getCity());
-    setValue("location.address", getAddress());
-    setValue("location.latitude", getLatitudeCoordinates());
-    setValue("location.longitude", getLongitudeCoordinates());
+    setValue<any>("location.city", getCity());
+    setValue<any>("location.address", getAddress());
+    setValue<any>("location.latitude", getLatitudeCoordinates());
+    setValue<any>("location.longitude", getLongitudeCoordinates());
   }, [findedObject]);
 
   return (

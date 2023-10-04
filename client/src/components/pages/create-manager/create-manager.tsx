@@ -75,7 +75,7 @@ const CreateManager = ({ onClose }) => {
       curatorId: currentUserId,
     };
 
-    dispatch(addNewManager(newData))
+    dispatch<any>(addNewManager(newData))
       .then(onClose())
       .then(toast.success("Менеджер успешно добавлен!"));
   };

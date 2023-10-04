@@ -16,8 +16,8 @@ const ObjectMeetings = ({ meetings, object, isAuthorEntity = true }) => {
   const isMeetingsLoading = useSelector(getMeetingLoadingStatus());
   const address = `${object?.location?.city}, ${object?.location?.address}`;
   const path = window.location.pathname;
-  const isCalendarPath = path === "/calendar";
-  const isMeetingsPath = path === "/meetings";
+  // const isCalendarPath = path === "/calendar";
+  // const isMeetingsPath = path === "/meetings";
 
   return (
     <>

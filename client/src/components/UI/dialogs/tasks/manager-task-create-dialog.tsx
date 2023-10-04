@@ -10,8 +10,8 @@ import { getOpenObjectPageId, loadOpenObjectPageOpenState } from "../../../../st
 const ManagerTaskCreateDialog = ({
   objects,
   users,
-  setDateCreate,
-  dateCreate,
+  setDateCreate=()=>{},
+  dateCreate=null,
 }) => {
   const dispatch = useDispatch();
   const isOpenCreateTask = useSelector(getCreateManagerTaskOpenState());

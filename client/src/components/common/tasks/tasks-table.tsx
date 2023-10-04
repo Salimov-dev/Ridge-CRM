@@ -6,7 +6,6 @@ import TasksFiltersPanel from "../../UI/filters-panels/tasks-filters-panel";
 import AddAndClearFiltersButton from "../buttons/add-and-clear-filters-button";
 // layouts
 import CreateTasksButtons from "../../../layouts/calendar/components/create-tasks-buttons/create-tasks-buttons";
-import CreateRidgeTasksButtons from "../../../layouts/ridge/components/create-ridge-tasks-buttons/create-ridge-tasks-buttons";
 // store
 import { getTaskLoadingStatus } from "../../../store/task/tasks.store";
 
@@ -23,7 +22,6 @@ const TasksTable = ({
   tasks,
   columns,
   setValue,
-  isRidgeObject = false,
   isInputEmpty = false,
   reset = () => {},
   initialState = "",
@@ -34,24 +32,19 @@ const TasksTable = ({
     <>
       <Header>
         <Typography variant="h3">Задачи:</Typography>
-        {isRidgeObject ? (
-          <AddAndClearFiltersButton
-            isInputEmpty={isInputEmpty}
-            reset={reset}
-            initialState={initialState}
-            reverse={true}
-            button={<CreateRidgeTasksButtons />}
-          />
-        ) : (
-          <CreateTasksButtons />
-        )}
+        <AddAndClearFiltersButton
+          isInputEmpty={isInputEmpty}
+          reset={reset}
+          initialState={initialState}
+          reverse={true}
+          button={<CreateTasksButtons />}
+        />
       </Header>
       <TasksFiltersPanel
         data={data}
         register={register}
         setValue={setValue}
         isLoading={isTasksLoading}
-        isRidgeObject={isRidgeObject}
       />
       <BasicTable
         items={tasks}

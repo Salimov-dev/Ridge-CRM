@@ -17,7 +17,6 @@ const CreateManagerButton = () => {
       backgroudHover="sienna"
       width={null}
       onClick={handleOpenCreateManager}
-      children
     />
   );
 };

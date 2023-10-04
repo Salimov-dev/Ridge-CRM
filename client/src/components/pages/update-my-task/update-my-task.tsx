@@ -28,20 +28,7 @@ const UpdateMyTask = ({ title, onClose }) => {
   const taskId = useSelector(getUpdateMyTaskId());
   const task = useSelector(getTaskById(taskId));
   const isTasksLoading = useSelector(getTaskLoadingStatus());
-
-  const objects = useSelector(getObjectsList());
-  const objectId = task?.objectId;
   const dispatch = useDispatch();
-
-  const currentUserId = useSelector(getCurrentUserId());
-  const currentUserObjects = objects?.filter(
-    (obj) => obj?.userId === currentUserId
-  );
-
-  let transformObjects = [];
-  currentUserObjects?.forEach((obj) => {
-    transformObjects?.push({ _id: obj._id, name: obj.location.address });
-  });
 
   const formatedTask = {
     ...task,
@@ -66,6 +53,18 @@ const UpdateMyTask = ({ title, onClose }) => {
   const watchTime = watch("time", null);
   const isFullValid = isValid && watchDate && watchTime;
   const isEditMode = taskId ? true : false;
+  const objects = useSelector(getObjectsList());
+  const objectId = task?.objectId;
+
+  const currentUserId = useSelector(getCurrentUserId());
+  const currentUserObjects = objects?.filter(
+    (obj) => obj?.userId === currentUserId
+  );
+
+  let transformObjects = [];
+  currentUserObjects?.forEach((obj) => {
+    transformObjects?.push({ _id: obj._id, name: obj.location.address });
+  });
 
   const onSubmit = (data) => {
     const transformedDate = dayjs(data.date).format("YYYY-MM-DDTHH:mm:ss.SSSZ");
