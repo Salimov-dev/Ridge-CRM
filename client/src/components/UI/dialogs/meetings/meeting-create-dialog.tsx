@@ -6,13 +6,14 @@ import {
   getCreateMeetingOpenState,
   setCreateMeetingOpenState,
 } from "../../../../store/meeting/create-meeting.store";
-import { getOpenObjectPageId, loadOpenObjectPageOpenState } from "../../../../store/object/open-object-page.store";
 
-const MeetingCreateDialog = ({ dateCreate = getDateToday() }) => {
+const MeetingCreateDialog = ({
+  dateCreate = getDateToday(),
+  objectPageId,
+  isObjectPage,
+}) => {
   const dispatch = useDispatch();
   const isOpenCreateMeeting = useSelector(getCreateMeetingOpenState());
-  const objectPageId = useSelector(getOpenObjectPageId());
-  const isObjectPage = useSelector(loadOpenObjectPageOpenState())
 
   const handleCloseCreateMeeting = () => {
     dispatch<any>(setCreateMeetingOpenState(false));
@@ -22,9 +23,9 @@ const MeetingCreateDialog = ({ dateCreate = getDateToday() }) => {
     <DialogStyled
       component={
         <CreateMeeting
-          objectPageId={objectPageId}
           dateCreate={dateCreate}
           onClose={handleCloseCreateMeeting}
+          objectPageId={objectPageId}
           isObjectPage={isObjectPage}
         />
       }

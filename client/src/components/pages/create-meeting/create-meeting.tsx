@@ -31,7 +31,7 @@ const initialState = {
   date: dayjs(),
   time: null,
   comment: "",
-  objectId: "",
+  objectId: null,
   result: "",
   location: {
     city: "",
@@ -96,14 +96,11 @@ const CreateMeeting = ({
       ...data,
       comment: capitalizeFirstLetter(data.comment),
       result: capitalizeFirstLetter(data.result),
-      objectId: data.objectId._id,
       location: {
         ...data.location,
         zoom: 16,
       },
     };
-    console.log("data", data);
-    console.log("newData", newData);
 
     dispatch<any>(createMeeting(newData))
       .then(onClose())
@@ -146,6 +143,7 @@ const CreateMeeting = ({
 
       <MeetingForm
         data={data}
+        objectPageId={objectPageId}
         objects={transformObjects}
         statuses={statuses}
         meetingTypes={meetingTypes}

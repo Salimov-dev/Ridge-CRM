@@ -95,8 +95,8 @@ export const meetingsColumns = [
       const dispatch = useDispatch();
 
       const handleClick = () => {
-        dispatch(setOpenObjectPageId(objectId));
-        dispatch(setOpenObjectPageOpenState(true));
+        dispatch<any>(setOpenObjectPageId(objectId));
+        dispatch<any>(setOpenObjectPageOpenState(true));
       };
 
       return objectId ? (

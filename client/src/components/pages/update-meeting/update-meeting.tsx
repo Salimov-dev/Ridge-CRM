@@ -54,11 +54,12 @@ const UpdateMeeting = ({ onClose }) => {
   });
 
   const data = watch();
+  console.log("data", data);
   const watchDate = watch("date", null);
   const watchTime = watch("time", null);
   const isFullValid = isValid && watchDate && watchTime;
   const isEditMode = meetingId ? true : false;
-
+  
   const objects = useSelector(getObjectsList());
   const currentUserId = useSelector(getCurrentUserId());
   const currentUserObjects = objects?.filter(

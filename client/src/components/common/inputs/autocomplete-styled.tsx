@@ -7,21 +7,31 @@ const AutocompleteStyled = ({
   options,
   watchItemId,
   setValue,
+  disabled = false,
 }) => {
-  const handleChange = (event, newValue) => {
-    setValue(name, newValue);
-  };
   return (
     <Autocomplete
       {...register(name)}
       disablePortal
-      value={value || null}
-      onChange={handleChange}
+      id={name}
       options={options}
+      value={
+        value
+          ? options.find((option) => {
+              return value === option._id;
+            }) ?? null
+          : null
+      }
+      onChange={(event, newValue) =>
+        setValue(name, newValue ? newValue._id : null)
+      }
+      renderInput={(params) => <TextField {...params} label="Объект" />}
+      getOptionLabel={(option) => option.name}
       isOptionEqualToValue={(option, value) => option._id === value?._id}
+      ListboxProps={{ style: { background: "#2f2f2f", maxHeight: "10rem" } }}
+      disabled={disabled}
       sx={{
         width: "100%",
-
         "& .MuiOutlinedInput-notchedOutline": {
           borderColor: watchItemId ? "green" : "gray",
         },
@@ -33,6 +43,7 @@ const AutocompleteStyled = ({
             borderColor: "green !important",
           },
           "& .MuiInputLabel-root": {
+            background: "inherit",
             color: "white",
           },
         },
@@ -50,9 +61,6 @@ const AutocompleteStyled = ({
           zIndex: 999999999999,
         },
       }}
-      renderInput={(params) => <TextField {...params} label="Объект встречи" />}
-      getOptionLabel={(option) => option.name}
-      renderOption={(props, option) => <li {...props}>{option.name}</li>}
     />
   );
 };

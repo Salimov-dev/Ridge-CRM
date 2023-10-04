@@ -5,25 +5,21 @@ import {
   getCreateMyTaskOpenState,
   setCreateMyTaskOpenState,
 } from "../../../../store/task/create-my-task.store";
-import {
-  getOpenObjectPageId,
-  loadOpenObjectPageOpenState,
-} from "../../../../store/object/open-object-page.store";
 
 const MyTaskCreateDialog = ({
   objects,
   dateCreate = null,
   setDateCreate = () => {},
+  objectPageId,
+  isObjectPage
 }) => {
   const dispatch = useDispatch();
   const isOpenCreateTask = useSelector(getCreateMyTaskOpenState());
-  const objectPageId = useSelector(getOpenObjectPageId());
-  const isObjectPage = useSelector(loadOpenObjectPageOpenState());
 
   const handleCloseCreateMyTask = () => {
     dispatch<any>(setCreateMyTaskOpenState(false));
     if (setDateCreate !== undefined) {
-      setDateCreate(null);
+      setDateCreate();
     }
   };
 

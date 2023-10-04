@@ -12,7 +12,8 @@ import AutocompleteStyled from "../../inputs/autocomplete-styled";
 
 const MeetingForm = ({
   data,
-  objects = [],
+  objects,
+  objectPageId,
   statuses,
   meetingTypes,
   watch,
@@ -71,9 +72,10 @@ const MeetingForm = ({
             register={register}
             name="objectId"
             options={objects}
-            value={data?.objectId || null}
+            value={data.objectId}
             setValue={setValue}
             watchItemId={watchObjectId}
+            disabled={isObjectPage}
           />
 
           <TextFieldStyled

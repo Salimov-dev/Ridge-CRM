@@ -22,6 +22,10 @@ import { getObjectsList } from "../../../store/object/objects.store";
 import { getCurrentUserId } from "../../../store/user/users.store";
 // schema
 import { taskSchema } from "../../../schemas/task-shema";
+import {
+  getOpenObjectPageId,
+  loadOpenObjectPageOpenState,
+} from "../../../store/object/open-object-page.store";
 
 const UpdateMyTask = ({ title, onClose }) => {
   const [open, setOpen] = useState(false);
@@ -56,6 +60,9 @@ const UpdateMyTask = ({ title, onClose }) => {
   const objects = useSelector(getObjectsList());
   const objectId = task?.objectId;
 
+  const isObjectPage = useSelector(loadOpenObjectPageOpenState());
+  const objectPageId = useSelector(getOpenObjectPageId());
+  
   const currentUserId = useSelector(getCurrentUserId());
   const currentUserObjects = objects?.filter(
     (obj) => obj?.userId === currentUserId
@@ -69,7 +76,11 @@ const UpdateMyTask = ({ title, onClose }) => {
   const onSubmit = (data) => {
     const transformedDate = dayjs(data.date).format("YYYY-MM-DDTHH:mm:ss.SSSZ");
     const transformedTime = dayjs(data.time).format("YYYY-MM-DDTHH:mm:ss.SSSZ");
-    const newData = { ...data, date: transformedDate, time: transformedTime };
+    const newData = {
+      ...data,
+      date: transformedDate,
+      time: transformedTime,
+    };
 
     dispatch<any>(updateMyTask(newData))
       .then(onClose())
@@ -113,12 +124,12 @@ const UpdateMyTask = ({ title, onClose }) => {
         setValue={setValue}
         isEditMode={isEditMode}
         isTasksLoading={isTasksLoading}
+        isObjectPage={isObjectPage}
       />
       <FooterButtons
         onUpdate={handleSubmit(onSubmit)}
         onClose={onClose}
         onRemove={handleClickOpen}
-        removeId={taskId}
         isEditMode={isEditMode}
         isValid={isFullValid}
       />

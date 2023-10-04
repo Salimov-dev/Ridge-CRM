@@ -1,6 +1,6 @@
 // libraries
 import dayjs from "dayjs";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
@@ -61,7 +61,6 @@ const CreateMyTask = ({
       result: capitalizeFirstLetter(data.result),
       managerId: null,
     };
-
     dispatch<any>(createTask(newData))
       .then(() => onClose())
       .then(() => toast.success("Задача успешно создана!"));
