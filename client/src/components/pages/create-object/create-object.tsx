@@ -74,6 +74,7 @@ const CreateObject = ({ onClose }) => {
     resolver: yupResolver(objectSchema),
   });
 
+
   const {
     getCity,
     getAddress,
@@ -87,7 +88,8 @@ const CreateObject = ({ onClose }) => {
 
   const isFindedObject = Boolean(Object.keys(findedObject)?.length);
   const isObjectHasAddress = Boolean(watchCity) && Boolean(watchAddress);
-  const isValidAndHasAdress = isFindedObject && isObjectHasAddress && isValid;
+  // const isValidAndHasAdress = isFindedObject && isObjectHasAddress && isValid;
+  const isValidAndHasAdress = true;
 
   const onSubmit = (data) => {
     const newData = {
@@ -147,6 +149,7 @@ const CreateObject = ({ onClose }) => {
         watch={watch}
         isValid={isValidAndHasAdress}
         onClose={onClose}
+        setValue={setValue}
       />
     </>
   );

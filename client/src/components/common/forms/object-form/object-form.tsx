@@ -26,6 +26,7 @@ import { getWorkingPositionsList } from "../../../../store/user/working-position
 import { getObjectConditionsList } from "../../../../store/object/object-conditions.store";
 // styled
 import { FieldsContainer, Form } from "../styled/styled";
+import AutocompleteStyled from "../../inputs/autocomplete-styled";
 
 const ObjectForm = ({
   data = "",
@@ -36,6 +37,7 @@ const ObjectForm = ({
   onSubmit,
   onClose,
   watch,
+  setValue,
   isValid,
 }) => {
   const districts = useSelector(getDistrictsList());
@@ -64,61 +66,67 @@ const ObjectForm = ({
     <>
       <Form onSubmit={handleSubmit(onSubmit)} noValidate>
         <Title title="Объект" />
-        <FieldsContainer>
-          <SimpleSelectField
+        <FieldsContainer sx={{gap: '2px'}}>
+          <AutocompleteStyled
+            label="Район"
             register={register}
             name="location.district"
-            labelId="district"
-            label="Район*"
-            itemsList={districts}
+            options={districts}
             value={watchDistrict || ""}
+            setValue={setValue}
+            watchItemId={watchDistrict}
             errors={errors?.location?.district}
           />
-          <SimpleSelectField
+          <AutocompleteStyled
+            label="Метро"
             register={register}
             name="location.metro"
-            labelId="metro"
-            label="Метро"
-            itemsList={metros}
+            options={metros}
             value={watchMetro || ""}
+            setValue={setValue}
+            watchItemId={watchMetro}
             disabled={!watchDistrict && true}
           />
-          <SimpleSelectField
+          <AutocompleteStyled
+            label="Статус объекта"
             register={register}
             name="status"
-            labelId="status"
-            label="Статус объекта*"
-            itemsList={objectStatuses}
+            options={objectStatuses}
             value={watchStatus || ""}
+            setValue={setValue}
+            watchItemId={watchStatus}
             errors={errors?.status}
           />
         </FieldsContainer>
-        <FieldsContainer>
-          <SimpleSelectField
+        <FieldsContainer sx={{gap: '2px'}}>
+          <AutocompleteStyled
+            label="Тип объекта"
             register={register}
             name="estateOptions.objectTypes"
-            labelId="objectTypes "
-            label="Тип объекта*"
-            itemsList={objectTypes}
+            options={objectTypes}
             value={watchObjectTypes || ""}
+            setValue={setValue}
+            watchItemId={watchObjectTypes}
             errors={errors?.estateOptions?.objectTypes}
           />
-          <SimpleSelectField
+          <AutocompleteStyled
+            label="Тип недвижимости"
             register={register}
             name="estateOptions.estateTypes"
-            labelId="estateTypes "
-            label="Тип недвижимости*"
-            itemsList={estateTypes}
+            options={estateTypes}
             value={watchEstateTypes || ""}
+            setValue={setValue}
+            watchItemId={watchEstateTypes}
             errors={errors?.estateOptions?.estateTypes}
           />
-          <SimpleSelectField
+          <AutocompleteStyled
+            label="Текущий арендатор"
             register={register}
             name="estateOptions.currentRenters"
-            labelId="currentRenters"
-            label="Текущий арендатор*"
-            itemsList={currentRenters}
+            options={currentRenters}
             value={watchCurrentRenters || ""}
+            setValue={setValue}
+            watchItemId={watchCurrentRenters}
             errors={errors?.estateOptions?.currentRenters}
           />
         </FieldsContainer>
@@ -140,13 +148,14 @@ const ObjectForm = ({
               ),
             }}
           />
-          <SimpleSelectField
+           <AutocompleteStyled
+            label="Позиция"
             register={register}
             name="contact.position"
-            labelId="position"
-            label="Позиция"
-            itemsList={workingPositions}
-            value={watchWorkingPosition}
+            options={workingPositions}
+            value={watchWorkingPosition || ""}
+            setValue={setValue}
+            watchItemId={watchWorkingPosition}
           />
           <TextFieldStyled
             register={register}

@@ -1,5 +1,5 @@
 // MUI
-import { Autocomplete, InputAdornment, TextField } from "@mui/material";
+import { InputAdornment } from "@mui/material";
 import CreateIcon from "@mui/icons-material/Create";
 // components
 import TextFieldStyled from "../../inputs/text-field-styled";
@@ -13,7 +13,6 @@ import AutocompleteStyled from "../../inputs/autocomplete-styled";
 const MeetingForm = ({
   data,
   objects,
-  objectPageId,
   statuses,
   meetingTypes,
   watch,
@@ -69,6 +68,7 @@ const MeetingForm = ({
 
         <FieldsContainer>
           <AutocompleteStyled
+            label="Объект"
             register={register}
             name="objectId"
             options={objects}

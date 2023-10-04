@@ -1,4 +1,4 @@
-import { Autocomplete, TextField } from "@mui/material";
+import { Autocomplete, FormHelperText, TextField } from "@mui/material";
 
 const AutocompleteStyled = ({
   register,
@@ -8,8 +8,11 @@ const AutocompleteStyled = ({
   watchItemId,
   setValue,
   disabled = false,
+  label,
+  errors = null,
 }) => {
   return (
+    <>
     <Autocomplete
       {...register(name)}
       disablePortal
@@ -25,7 +28,7 @@ const AutocompleteStyled = ({
       onChange={(event, newValue) =>
         setValue(name, newValue ? newValue._id : null)
       }
-      renderInput={(params) => <TextField {...params} label="Объект" />}
+      renderInput={(params) => <TextField {...params} label={label} />}
       getOptionLabel={(option) => option.name}
       isOptionEqualToValue={(option, value) => option._id === value?._id}
       ListboxProps={{ style: { background: "#2f2f2f", maxHeight: "10rem" } }}
@@ -62,6 +65,10 @@ const AutocompleteStyled = ({
         },
       }}
     />
+    <FormHelperText sx={{ color: "Crimson" }}>
+        {errors?.message}
+      </FormHelperText>
+      </>
   );
 };
 

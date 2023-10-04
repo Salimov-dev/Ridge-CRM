@@ -7,6 +7,7 @@ import TimePickerStyled from "../../inputs/time-picker";
 import { FieldsContainer, Form } from "../styled/styled";
 // utils
 import SimpleSwitch from "../../inputs/simple-switch";
+import AutocompleteStyled from "../../inputs/autocomplete-styled";
 
 const MyTaskForm = ({
   data,
@@ -21,8 +22,6 @@ const MyTaskForm = ({
 }) => {
   const watchObjectId = watch("objectId", "");
   const watchIsDone = watch("isDone", false);
-
-  const isHasObjectId = watchObjectId?.legth
 
   return (
     <Form noValidate>
@@ -43,13 +42,23 @@ const MyTaskForm = ({
         />
       </FieldsContainer>
 
-      <SimpleSelectField
+      {/* <SimpleSelectField
         register={register}
         name="objectId"
         labelId="objectId"
         label="Объект задачи"
         itemsList={objects}
         value={watchObjectId}
+        disabled={isObjectPage}
+      /> */}
+      <AutocompleteStyled
+        label="Объект"
+        register={register}
+        name="objectId"
+        options={objects}
+        value={data.objectId}
+        setValue={setValue}
+        watchItemId={watchObjectId}
         disabled={isObjectPage}
       />
       <TextFieldStyled
