@@ -1,5 +1,5 @@
 // MUI
-import { InputAdornment } from "@mui/material";
+import { Autocomplete, InputAdornment, TextField } from "@mui/material";
 import CreateIcon from "@mui/icons-material/Create";
 // components
 import TextFieldStyled from "../../inputs/text-field-styled";
@@ -8,19 +8,22 @@ import DatePickerStyled from "../../inputs/date-picker";
 import TimePickerStyled from "../../inputs/time-picker";
 import { FieldsContainer, Form } from "../styled/styled";
 import SimpleSwitch from "../../inputs/simple-switch";
+import AutocompleteStyled from "../../inputs/autocomplete-styled";
+import ControlledAutocomplete from "../../inputs/autocomplete-control";
 
 const MeetingForm = ({
   data,
-  objects,
+  objects = [],
   statuses,
   meetingTypes,
-  register,
   watch,
+  register,
   errors,
   setValue,
   isEditMode = false,
-  isMeetingsLoading,
-  isObjectPage=false
+  isMeetingsLoading = false,
+  isObjectPage = false,
+  control,
 }) => {
   const watchStatus = watch("status", "");
   const watchObjectId = watch("objectId", "");
@@ -66,16 +69,15 @@ const MeetingForm = ({
         </FieldsContainer>
 
         <FieldsContainer>
-          <SimpleSelectField
+          <AutocompleteStyled
             register={register}
             name="objectId"
-            labelId="objectId"
-            label="Объект встречи"
-            itemsList={objects}
-            value={watchObjectId}
-            errors={errors?.objectId}
-            disabled={isObjectPage}
+            options={objects}
+            value={data?.objectId || null} // Control the value from the form data
+            setValue={setValue}
+            watchItemId={watchObjectId}
           />
+
           <TextFieldStyled
             register={register}
             label="Комментарий"

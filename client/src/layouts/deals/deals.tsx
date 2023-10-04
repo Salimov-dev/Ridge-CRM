@@ -24,7 +24,7 @@ const Deals = () => {
   const [width, setWidth] = useState(0);
   const screenWidth = window?.innerWidth;
   const fullWidth = screenWidth - 262;
-  const collapseWidth = screenWidth - 122;
+  const collapseWidth = screenWidth - 132;
 
   let transformObjects = [];
   currentUserObjects?.forEach((obj) => {
@@ -50,7 +50,7 @@ const Deals = () => {
     >
       <LayoutTitle title="Сделки" />
       <Stages stages={dealStages} getObjectAddress={getObjectAddress} />
-      
+
       <ObjectPageDialog />
       <ObjectUpdatePageDialog />
     </Box>

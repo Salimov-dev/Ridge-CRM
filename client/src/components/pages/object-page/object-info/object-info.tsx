@@ -2,7 +2,6 @@
 import { Box, styled } from "@mui/material";
 import { useSelector } from "react-redux";
 import { orderBy } from "lodash";
-
 // components
 import Dialogs from "./components/dialogs";
 import ObjectsParams from "./components/object-params";
@@ -22,6 +21,7 @@ import {
   getUsersList,
 } from "../../../../store/user/users.store";
 import { getLastContactsByObjectId } from "../../../../store/last-contact/last-contact.store";
+// columns
 import { tasksColumnsDialog } from "../../../../columns/tasks-columns/tasks-columns-dialog";
 
 const Component = styled(Box)`

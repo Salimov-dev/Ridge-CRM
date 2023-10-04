@@ -54,7 +54,7 @@ const ObjectsParams = ({ object, isLoading }) => {
       />
 
       <Title title="Описание" />
-      <Box sx={{ marginBottom: "20px" }}>
+      <Box sx={{ marginBottom: "20px", whiteSpace: "pre-line" }}>
         {description ? description : "Нет описания"}
       </Box>
     </>

@@ -28,6 +28,11 @@ const Pagination = ({ table, colors, quantity }) => {
             variant="outlined"
             onClick={() => table.setPageIndex(0)}
             disabled={!table.getCanPreviousPage()}
+            sx={{
+              "&:hover": {
+                borderColor: "yellow",
+              },
+            }}
           >
             <FirstPageOutlinedIcon
               sx={{
@@ -41,6 +46,11 @@ const Pagination = ({ table, colors, quantity }) => {
             variant="outlined"
             onClick={() => table.previousPage()}
             disabled={!table.getCanPreviousPage()}
+            sx={{
+              "&:hover": {
+                borderColor: "yellow",
+              },
+            }}
           >
             <ChevronLeftOutlinedIcon
               sx={{
@@ -54,6 +64,11 @@ const Pagination = ({ table, colors, quantity }) => {
             variant="outlined"
             onClick={() => table.nextPage()}
             disabled={!table.getCanNextPage()}
+            sx={{
+              "&:hover": {
+                borderColor: "yellow",
+              },
+            }}
           >
             <ChevronRightOutlinedIcon
               sx={{
@@ -65,6 +80,11 @@ const Pagination = ({ table, colors, quantity }) => {
             variant="outlined"
             onClick={() => table.setPageIndex(table.getPageCount() - 1)}
             disabled={!table.getCanNextPage()}
+            sx={{
+              "&:hover": {
+                borderColor: "yellow",
+              },
+            }}
           >
             <LastPageOutlinedIcon
               sx={{

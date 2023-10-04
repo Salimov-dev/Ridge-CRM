@@ -101,15 +101,6 @@ const ItemsOnMap = ({
           <FullscreenControl />
           <Clusterer
             instanceRef={(ref) => (clustererInstanceRef.current = ref)}
-            // onBalloonOpen={(e) => {
-            //   console.log(e?.get("cluster")?.properties?.get("geoObjects"));
-            // }}
-            // onMouseEnter={(e) => {
-            //   console.log("click");
-
-            //   // e.get("target").options.set("balloonLayout", ObjectBaloon);
-            //   // setActivePortal(false);
-            // }}
             options={{
               suppressMapOpenBlock: true,
               clusterIcons: [

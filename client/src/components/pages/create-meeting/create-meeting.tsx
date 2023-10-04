@@ -70,6 +70,7 @@ const CreateMeeting = ({
     watch,
     handleSubmit,
     setValue,
+    control,
     formState: { errors, isValid },
   } = useForm({
     defaultValues: initialState,
@@ -86,8 +87,8 @@ const CreateMeeting = ({
   } = useFindObject();
 
   const data = watch();
-  const watchDate = watch("date", null);
-  const watchTime = watch("time", null);
+  const watchDate = watch<any>("date", null);
+  const watchTime = watch<any>("time", null);
   const isEmptyFindedObject = Boolean(Object.keys(findedObject)?.length);
   const isFullValid = isValid && watchDate && watchTime && isEmptyFindedObject;
 
@@ -96,34 +97,38 @@ const CreateMeeting = ({
       ...data,
       comment: capitalizeFirstLetter(data.comment),
       result: capitalizeFirstLetter(data.result),
+      objectId: data.objectId._id,
       location: {
         ...data.location,
         zoom: 16,
       },
     };
-    dispatch(createMeeting(newData))
+    console.log("data", data);
+    console.log("newData", newData);
+
+    dispatch<any>(createMeeting(newData))
       .then(onClose())
       .then(toast.success("Встреча успешно создана!"));
   };
 
   useEffect(() => {
-    setValue("location.city", getCity());
-    setValue("location.address", getAddress());
-    setValue("location.latitude", getLatitudeCoordinates());
-    setValue("location.longitude", getLongitudeCoordinates());
+    setValue<any>("location.city", getCity());
+    setValue<any>("location.address", getAddress());
+    setValue<any>("location.latitude", getLatitudeCoordinates());
+    setValue<any>("location.longitude", getLongitudeCoordinates());
   }, [findedObject]);
 
   useEffect(() => {
     if (isObjectPage) {
-      setValue("objectId", objectPageId);
+      setValue<any>("objectId", objectPageId);
     }
   }, [objectPageId]);
 
   useEffect(() => {
     if (dateCreate !== null) {
-      setValue("date", dateCreate);
+      setValue<any>("date", dateCreate);
     } else {
-      setValue("date", dayjs());
+      setValue<any>("date", dayjs());
     }
   }, [dateCreate]);
 
@@ -141,15 +146,14 @@ const CreateMeeting = ({
       <FindObjectOnMap />
 
       <MeetingForm
-        register={register}
+        control={control}
         data={data}
         objects={transformObjects}
         statuses={statuses}
         meetingTypes={meetingTypes}
-        onSubmit={onSubmit}
-        handleSubmit={handleSubmit}
         watch={watch}
         errors={errors}
+        register={register}
         setValue={setValue}
         isObjectPage={isObjectPage}
       />
