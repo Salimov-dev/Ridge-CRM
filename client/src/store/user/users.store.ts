@@ -129,7 +129,7 @@ export const addNewManager = (payload) => async (dispatch) => {
 export const logOut = () => (dispatch) => {
   localStorageService.removeAuthData();
   dispatch(userLoggedOut());
-  localStorage.setItem("isAuth", false)
+  localStorage.setItem("isAuth", "false")
 };
 
 export const loadUsersList = () => async (dispatch) => {

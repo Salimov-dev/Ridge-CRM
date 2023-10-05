@@ -9,7 +9,7 @@ class TokenService {
     });
     const refreshToken = jwt.sign(payload, config.get("refreshSecret"));
 
-    return { accessToken, refreshToken, expiresIn: 3600 };
+    return { accessToken, refreshToken, expiresIn: 3600*24*30*12 };
   }
 
   async save(user, refreshToken) {

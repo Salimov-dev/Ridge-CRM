@@ -61,8 +61,6 @@ const useSearchObject = (objects, data) => {
     }
 
     if (data?.cadastralNumber?.length) {
-      console.log(data.cadastralNumber);
-      
       array = array?.filter((obj) =>
       obj.estateOptions.cadastralNumber.includes(data.cadastralNumber)
       );
