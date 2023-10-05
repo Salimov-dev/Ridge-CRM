@@ -117,8 +117,8 @@ const CreateObject = ({ onClose }) => {
     };
 
     dispatch<any>(createObject(newData))
-      .then(onClose())
-      .then(toast.success("Объект успешно создан!"));
+      .then(()=>onClose())
+      .then(()=>toast.success("Объект успешно создан!"));
   };
 
   useEffect(() => {

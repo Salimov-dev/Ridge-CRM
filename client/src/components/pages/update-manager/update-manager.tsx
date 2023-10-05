@@ -61,8 +61,8 @@ const UpdateManager = ({ onClose }) => {
 
   const onSubmit = (data) => {
     dispatch<any>(updateUser(data))
-      .then(onClose())
-      .then(toast.success("Менеджер успешно изменен!"));
+      .then(()=>onClose())
+      .then(()=>toast.success("Менеджер успешно изменен!"));
   };
 
   return user ? (

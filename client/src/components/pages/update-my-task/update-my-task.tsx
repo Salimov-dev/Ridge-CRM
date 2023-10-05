@@ -83,14 +83,14 @@ const UpdateMyTask = ({ title, onClose }) => {
     };
 
     dispatch<any>(updateMyTask(newData))
-      .then(onClose())
-      .then(toast.success("Задача себе успешно изменена!"));
+      .then(()=>onClose())
+      .then(()=>toast.success("Задача себе успешно изменена!"));
   };
 
   const handleRemoveTask = (taskId: number) => {
     dispatch<any>(removeTask(taskId))
-      .then(onClose())
-      .then(toast.success("Задача себе успешно удалена!"));
+      .then(()=>onClose())
+      .then(()=>toast.success("Задача себе успешно удалена!"));
   };
 
   const handleClickOpen = () => {

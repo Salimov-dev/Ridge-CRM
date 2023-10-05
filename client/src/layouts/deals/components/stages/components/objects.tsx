@@ -64,7 +64,7 @@ const Objects = ({
         status: getNewDealStage(draggableStageId),
       };
 
-      dispatch<any>(updateObject(updatedObject)).then(
+      dispatch<any>(updateObject(updatedObject)).then(() =>
         toast.success("Статус объекта успешно изменен!")
       );
 

@@ -72,14 +72,14 @@ const UpdateManagerTask = ({ title, onClose, objects, users }) => {
     const newData = { ...data, date: transformedDate, time: transformedTime };
 
     dispatch<any>(updateMyTask(newData))
-      .then(onClose())
-      .then(toast.success("Задача менеджеру успешно изменена!"));
+      .then(()=>onClose())
+      .then(()=>toast.success("Задача менеджеру успешно изменена!"));
   };
 
   const handleRemoveTask = (taskId) => {
     dispatch<any>(removeTask(taskId))
-      .then(onClose())
-      .then(toast.success("Задача себе успешно удалена!"));
+      .then(()=>onClose())
+      .then(()=>toast.success("Задача себе успешно удалена!"));
   };
 
   const handleClickOpen = () => {

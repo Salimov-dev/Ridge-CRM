@@ -76,8 +76,8 @@ const CreateManager = ({ onClose }) => {
     };
 
     dispatch<any>(addNewManager(newData))
-      .then(onClose())
-      .then(toast.success("Менеджер успешно добавлен!"));
+      .then(()=>onClose())
+      .then(()=>toast.success("Менеджер успешно добавлен!"));
   };
 
   return (

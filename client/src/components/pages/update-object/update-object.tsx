@@ -24,7 +24,7 @@ const UpdateObject = ({ onClose }) => {
   const dispatch = useDispatch();
   const objectId = useSelector(getUpdateObjectId());
   const object = useSelector(getObjectById(objectId));
-  
+
   const {
     register,
     watch,
@@ -68,8 +68,8 @@ const UpdateObject = ({ onClose }) => {
       },
     };
     dispatch<any>(updateObject(newData))
-      .then(onClose())
-      .then(toast.success("Объект успешно изменен!"));
+      .then(() => onClose())
+      .then(() => toast.success("Объект успешно изменен!"));
   };
 
   return object ? (

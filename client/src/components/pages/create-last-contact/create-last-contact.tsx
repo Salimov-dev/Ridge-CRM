@@ -56,8 +56,8 @@ const CreateLastContact = ({ onClose }) => {
     };
 
     dispatch<any>(createLastContact(newData))
-      .then(onClose())
-      .then(toast.success("Последний контакт успешно создан!"));
+      .then(()=>onClose())
+      .then(()=>toast.success("Последний контакт успешно создан!"));
   };
 
   useEffect(() => {
