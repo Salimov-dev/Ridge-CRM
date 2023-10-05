@@ -288,18 +288,18 @@ export const commercialTermsColumns = [
       );
     },
   },
-  {
-    accessorKey: "commercialTerms.agentComission",
-    header: "Комиссия",
-    cell: (info) => {
-      const agentComission = info.getValue();
-      return agentComission ? (
-        <AlignCenter>{`${makeDigitSeparator(agentComission)}%`}</AlignCenter>
-      ) : (
-        <EmptyTd />
-      );
-    },
-  },
+  // {
+  //   accessorKey: "commercialTerms.agentComission",
+  //   header: "Комиссия",
+  //   cell: (info) => {
+  //     const agentComission = info.getValue();
+  //     return agentComission ? (
+  //       <AlignCenter>{`${makeDigitSeparator(agentComission)}%`}</AlignCenter>
+  //     ) : (
+  //       <EmptyTd />
+  //     );
+  //   },
+  // },
   {
     accessorKey: "commercialTerms.rentTypes",
     header: "Договор",

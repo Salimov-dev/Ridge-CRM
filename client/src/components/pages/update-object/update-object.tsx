@@ -28,6 +28,7 @@ const UpdateObject = ({ onClose }) => {
   const {
     register,
     watch,
+    setValue,
     handleSubmit,
     formState: { errors, isValid },
   } = useForm({
@@ -82,6 +83,7 @@ const UpdateObject = ({ onClose }) => {
         onSubmit={onSubmit}
         onClose={onClose}
         watch={watch}
+        setValue={setValue}
         isValid={isValidAndHasAdress}
       />
     </Box>

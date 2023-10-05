@@ -9,8 +9,8 @@ import {
 
 const MeetingCreateDialog = ({
   dateCreate = getDateToday(),
-  objectPageId,
-  isObjectPage,
+  objectPageId="",
+  isObjectPage=false,
 }) => {
   const dispatch = useDispatch();
   const isOpenCreateMeeting = useSelector(getCreateMeetingOpenState());

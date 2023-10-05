@@ -1,7 +1,6 @@
 import { Box, TextField, styled, FormHelperText } from "@mui/material";
-import debounce from "debounce";
 
-const StyledTextField = styled(TextField)(({ theme }) => ({
+const StyledTextField = styled(TextField)(() => ({
   minWidth: "30px",
   width: "100%",
   "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
@@ -44,7 +43,7 @@ const TextFieldStyled = ({
       e.target.value = e.target.value.slice(0, maxLength);
     }
   };
-  
+
   return (
     <Box sx={{ width: "100%" }}>
       <StyledTextField

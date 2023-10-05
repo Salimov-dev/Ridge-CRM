@@ -72,7 +72,7 @@ const ObjectForm = ({
             register={register}
             name="location.district"
             options={districts}
-            value={watchDistrict || ""}
+            value={watchDistrict}
             setValue={setValue}
             watchItemId={watchDistrict}
             errors={errors?.location?.district}
@@ -82,7 +82,7 @@ const ObjectForm = ({
             register={register}
             name="location.metro"
             options={metros}
-            value={watchMetro || ""}
+            value={watchMetro}
             setValue={setValue}
             watchItemId={watchMetro}
             disabled={!watchDistrict && true}
@@ -265,16 +265,15 @@ const ObjectForm = ({
             <TextFieldStyled
               register={register}
               label="Обеспечительный платёж"
-              type="number"
+              type="text"
               name="commercialTerms.securityDeposit"
-              valueAsNumber={true}
-              onInputQuantities={8}
+              onInputQuantities={38}
               value={data?.commercialTerms?.securityDeposit}
               InputProps={{
                 endAdornment: <InputAdornment position="end">₽</InputAdornment>,
               }}
             />
-            <TextFieldStyled
+            {/* <TextFieldStyled
               register={register}
               label="Комиссия агента"
               type="number"
@@ -285,7 +284,7 @@ const ObjectForm = ({
               InputProps={{
                 endAdornment: <InputAdornment position="end">%</InputAdornment>,
               }}
-            />
+            /> */}
             <SimpleSelectField
               register={register}
               name="commercialTerms.rentTypes"

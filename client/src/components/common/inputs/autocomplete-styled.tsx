@@ -28,6 +28,7 @@ const AutocompleteStyled = ({
       onChange={(event, newValue) =>
         setValue(name, newValue ? newValue._id : null)
       }
+      
       renderInput={(params) => <TextField {...params} label={label} />}
       getOptionLabel={(option) => option.name}
       isOptionEqualToValue={(option, value) => option._id === value?._id}
@@ -35,9 +36,6 @@ const AutocompleteStyled = ({
       disabled={disabled}
       sx={{
         width: "100%",
-        "& .MuiOutlinedInput-notchedOutline": {
-          borderColor: watchItemId ? "green" : "gray",
-        },
         "& .MuiInputLabel-root": {
           color: watchItemId ? "white" : "gray",
         },
