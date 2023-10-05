@@ -80,14 +80,14 @@ const UpdateMeeting = ({ onClose }) => {
     const newData = { ...data, date: transformedDate, time: transformedTime };
 
     dispatch<any>(updateMeeting(newData))
-      .then(()=>onClose())
-      .then(()=>toast.success("Встреча успешно изменена!"));
+      .then(onClose())
+      .then(toast.success("Встреча успешно изменена!"));
   };
 
   const handleRemoveMeeting = (meetingId) => {
     dispatch<any>(removeMeeting(meetingId))
-      .then(()=>onClose())
-      .then(()=>toast.success("Встреча успешно удалена!"));
+      .then(onClose())
+      .then(toast.success("Встреча успешно удалена!"));
   };
 
   const handleClickOpen = () => {

@@ -62,8 +62,8 @@ const CreateMyTask = ({
       managerId: null,
     };
     dispatch<any>(createTask(newData))
-      .then(() => onClose())
-      .then(() => toast.success("Задача успешно создана!"));
+      .then(onClose())
+      .then(toast.success("Задача успешно создана!"));
   };
 
   useEffect(() => {

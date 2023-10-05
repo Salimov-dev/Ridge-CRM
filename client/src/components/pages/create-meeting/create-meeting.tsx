@@ -103,8 +103,8 @@ const CreateMeeting = ({
     };
 
     dispatch<any>(createMeeting(newData))
-      .then(()=>onClose())
-      .then(()=>toast.success("Встреча успешно создана!"));
+      .then(onClose())
+      .then(toast.success("Встреча успешно создана!"));
   };
 
   useEffect(() => {

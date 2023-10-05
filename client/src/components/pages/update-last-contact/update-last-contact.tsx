@@ -56,14 +56,14 @@ const UpdateLastContact = ({ onClose }) => {
     const newData = { ...data, date: transformedDate };
 
     dispatch<any>(updateLastContact(newData))
-      .then(()=>onClose())
-      .then(()=>toast.success("Последний контакт успешно изменен!"));
+      .then(onClose())
+      .then(toast.success("Последний контакт успешно изменен!"));
   };
 
   const handleRemoveLastContact = (lastContactId) => {
     dispatch<any>(removeLastContact(lastContactId))
-      .then(()=>onClose())
-      .then(()=>toast.success("Последний контакт успешно удален!"));
+      .then(onClose())
+      .then(toast.success("Последний контакт успешно удален!"));
   };
 
   const handleClickOpen = () => {
