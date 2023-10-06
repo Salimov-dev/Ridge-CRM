@@ -52,7 +52,7 @@ const Calendar = () => {
 
   const data = watch();
   const currentUserId = useSelector(getCurrentUserId());
-  const isCurator = useSelector(getIsUserCurator());
+  const isCurator = useSelector(getIsUserCurator(currentUserId));
   const meetings = useSelector(getMeetingsList());
 
   const tasksColumn = tasksColumns;

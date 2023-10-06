@@ -18,7 +18,7 @@ const useCalendar = () => {
   dayjs.extend(isBetween)
   const objects = useSelector(getObjectsList());
   const currentUserId = useSelector(getCurrentUserId());
-  const isCurator = useSelector(getIsUserCurator());
+  const isCurator = useSelector(getIsUserCurator(currentUserId));
   const users = useSelector(getUsersList());
   const meetings = useSelector(getMeetingsList());
   const startOfWeek = getStartWeekDate();

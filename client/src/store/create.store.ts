@@ -35,11 +35,6 @@ import createMyTaskReducer from "./task/create-my-task.store";
 import lastContactReducer from "./last-contact/last-contact.store";
 import createLastContactReducer from "./last-contact/create-last-contact.store";
 import updateLastContactReducer from "./last-contact/update-last-contact.store";
-// deal
-import dealStagesReducer from "./deal/deal-stages.store";
-// import dealsReducer from "./deal/deal.store";
-// import updateDealReducer from "./deal/update-deal.store";
-// import CreateDealReducer from "./deal/add-object-to-deal.store";
 // sidebar
 import sidebarCollapsStateReducer from "./sidebar-collaps-state.store";
 // other
@@ -89,11 +84,6 @@ const rootReducer = combineReducers({
   updateLastContact: updateLastContactReducer,
   // sidebar collaps state
   sidebarCollapsState: sidebarCollapsStateReducer,
-  // deals
-  dealStages: dealStagesReducer,
-  // deals: dealsReducer,
-  // CreateDeal: CreateDealReducer,
-  // updateDeal: updateDealReducer,
 });
 
 export function createStore() {

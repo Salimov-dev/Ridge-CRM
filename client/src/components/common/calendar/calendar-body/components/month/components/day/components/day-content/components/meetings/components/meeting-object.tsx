@@ -1,11 +1,11 @@
 import { useDispatch } from "react-redux";
+import { Box, Typography } from "@mui/material";
 import DividerStyled from "../../../../../../../../../../../../../components/common/divider/divider-styled";
 import {
   setOpenObjectPageId,
   setOpenObjectPageOpenState,
 } from "../../../../../../../../../../../../../store/object/open-object-page.store";
 import OpenPageObjectIconButton from "../../../../../../../../../../../buttons/icons buttons/open-page-object-icon";
-import { Box, Typography } from "@mui/material";
 
 const MeetingObject = ({ objects, meet }) => {
   const meetingObjectId = meet?.objectId;
@@ -14,8 +14,8 @@ const MeetingObject = ({ objects, meet }) => {
   const dispatch = useDispatch();
 
   const handleOpenObjectPage = (objectId) => {
-    dispatch(setOpenObjectPageId(objectId));
-    dispatch(setOpenObjectPageOpenState(true));
+    dispatch<any>(setOpenObjectPageId(objectId));
+    dispatch<any>(setOpenObjectPageOpenState(true));
   };
 
   const getObjectAddress = (id) => {
@@ -28,9 +28,7 @@ const MeetingObject = ({ objects, meet }) => {
     <>
       <DividerStyled color={isMeetingDone ? "darkGray" : "gray"} />
       <Box sx={{ display: "flex", gap: "4px" }}>
-        <Typography variant="h6">
-          {getObjectAddress(meetingObjectId)}
-        </Typography>
+        <Typography>{getObjectAddress(meetingObjectId)}</Typography>
         <OpenPageObjectIconButton
           onClick={() => handleOpenObjectPage(meetingObjectId)}
         />

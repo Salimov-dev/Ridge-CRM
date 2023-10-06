@@ -15,16 +15,16 @@ const Main = () => {
   return (
     <>
       <LayoutTitle title="Главная" />
-      {/* <Box sx={{ height: "300px" }}>
+      <Box sx={{ height: "300px" }}>
         <Typography>
           Скоро здесь будут отбражаться результаты Вашей работы
         </Typography>
-      </Box> */}
+      </Box> 
       {/* <BasicTable
         items={objects}
         itemsColumns={columns}
         isLoading={isObjectsLoading}
-      /> */}
+      />  */}
     </>
   );
 };

@@ -20,7 +20,9 @@ import {
   getIsUserCurator,
   getUsersList,
 } from "../../../../store/user/users.store";
-import { getLastContactsByObjectId } from "../../../../store/last-contact/last-contact.store";
+import {
+  getLastContactsList,
+} from "../../../../store/last-contact/last-contact.store";
 // columns
 import { tasksColumnsDialog } from "../../../../columns/tasks-columns/tasks-columns-dialog";
 
@@ -33,7 +35,8 @@ const Component = styled(Box)`
 
 const ObjectInfo = ({ object, isLoading, isAuthorEntity = true }) => {
   const objects = useSelector(getObjectsList());
-  const meetings = useSelector(getObjectMeetingsList(object?._id));
+  const objectId = object?._id;
+  const meetings = useSelector(getObjectMeetingsList(objectId));
   const sortedMeetings = orderBy(meetings, ["date"], ["desc"]);
 
   const tasksColumns = tasksColumnsDialog;
@@ -41,13 +44,17 @@ const ObjectInfo = ({ object, isLoading, isAuthorEntity = true }) => {
   const tasks = useSelector(getObjectTasksList(object?._id));
   const sortedTasks = orderBy(tasks, ["date"], ["desc"]);
 
-  const lastContacts = useSelector(getLastContactsByObjectId(object?._id));
+  const lastContactsList = useSelector(getLastContactsList());
+  const lastContacts = lastContactsList.filter(
+    (contact) => contact.objectId === objectId
+  );
+
   const sortedLastContacts = orderBy(lastContacts, ["date"], ["desc"]);
 
   const users = useSelector(getUsersList());
   const currentUserId = useSelector(getCurrentUserId());
 
-  const isCurator = useSelector(getIsUserCurator());
+  const isCurator = useSelector(getIsUserCurator(currentUserId));
   const usersWithoutCurrentUser = users.filter(
     (user) => user?._id !== currentUserId
   );

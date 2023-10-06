@@ -3,6 +3,7 @@ import CreateMeetingIcon from "./components/create-meeting-icon";
 import CreateMyTaskIcon from "./components/create-my-task-icon";
 import CreateManagerTaskIcon from "./components/create-manager-task-icon";
 import {
+  getCurrentUserId,
   getIsUserCurator,
 } from "../../../../../../../../../../../../store/user/users.store";
 import { useSelector } from "react-redux";
@@ -14,7 +15,8 @@ const ActionsContainer = styled(Box)`
 `;
 
 const ActionsIcons = ({ day, setDateCreate, isCurrentDay, isFutureDay }) => {
-  const isCurator = useSelector(getIsUserCurator());
+  const currentUserId = useSelector(getCurrentUserId());
+  const isCurator = useSelector(getIsUserCurator(currentUserId));
 
   return (
     <ActionsContainer>

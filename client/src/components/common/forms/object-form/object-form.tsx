@@ -66,7 +66,7 @@ const ObjectForm = ({
     <>
       <Form onSubmit={handleSubmit(onSubmit)} noValidate>
         <Title title="Объект" />
-        <FieldsContainer sx={{gap: '2px'}}>
+        <FieldsContainer sx={{ gap: "2px" }}>
           <AutocompleteStyled
             label="Район"
             register={register}
@@ -92,19 +92,19 @@ const ObjectForm = ({
             register={register}
             name="status"
             options={objectStatuses}
-            value={watchStatus || ""}
+            value={watchStatus ?? ""}
             setValue={setValue}
             watchItemId={watchStatus}
             errors={errors?.status}
           />
         </FieldsContainer>
-        <FieldsContainer sx={{gap: '2px'}}>
+        <FieldsContainer sx={{ gap: "2px" }}>
           <AutocompleteStyled
             label="Тип объекта"
             register={register}
             name="estateOptions.objectTypes"
             options={objectTypes}
-            value={watchObjectTypes || ""}
+            value={watchObjectTypes ?? ""}
             setValue={setValue}
             watchItemId={watchObjectTypes}
             errors={errors?.estateOptions?.objectTypes}
@@ -114,7 +114,7 @@ const ObjectForm = ({
             register={register}
             name="estateOptions.estateTypes"
             options={estateTypes}
-            value={watchEstateTypes || ""}
+            value={watchEstateTypes ?? ""}
             setValue={setValue}
             watchItemId={watchEstateTypes}
             errors={errors?.estateOptions?.estateTypes}
@@ -124,7 +124,7 @@ const ObjectForm = ({
             register={register}
             name="estateOptions.currentRenters"
             options={currentRenters}
-            value={watchCurrentRenters || ""}
+            value={watchCurrentRenters ?? ""}
             setValue={setValue}
             watchItemId={watchCurrentRenters}
             errors={errors?.estateOptions?.currentRenters}
@@ -138,7 +138,7 @@ const ObjectForm = ({
             label="Контакт"
             name="contact.name"
             errors={errors?.contact?.name}
-            value={data?.contact?.name}
+            value={data?.contact?.name ?? ""}
             onInputQuantities={50}
             InputProps={{
               endAdornment: (
@@ -148,12 +148,12 @@ const ObjectForm = ({
               ),
             }}
           />
-           <AutocompleteStyled
+          <AutocompleteStyled
             label="Позиция"
             register={register}
             name="contact.position"
             options={workingPositions}
-            value={watchWorkingPosition || ""}
+            value={watchWorkingPosition ?? ""}
             setValue={setValue}
             watchItemId={watchWorkingPosition}
           />
@@ -163,7 +163,7 @@ const ObjectForm = ({
             type="number"
             name="contact.phone"
             valueAsNumber={true}
-            value={data?.contact?.phone}
+            value={data?.contact?.phone ?? ""}
             errors={errors?.contact?.phone}
             onInputQuantities={12}
             isHelperText={true}
@@ -182,7 +182,7 @@ const ObjectForm = ({
             name="contact.email"
             errors={errors?.contact?.email}
             onInputQuantities={100}
-            value={data?.contact?.email}
+            value={data?.contact?.email ?? ""}
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
@@ -203,7 +203,7 @@ const ObjectForm = ({
               name="commercialTerms.totalSquare"
               valueAsNumber={true}
               onInputQuantities={5}
-              value={data?.commercialTerms?.totalSquare}
+              value={data?.commercialTerms?.totalSquare ?? ""}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">м²</InputAdornment>
@@ -217,7 +217,7 @@ const ObjectForm = ({
               name="commercialTerms.rentSquare"
               valueAsNumber={true}
               onInputQuantities={5}
-              value={data?.commercialTerms?.rentSquare}
+              value={data?.commercialTerms?.rentSquare ?? ""}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">м²</InputAdornment>
@@ -231,7 +231,7 @@ const ObjectForm = ({
               name="commercialTerms.rentPrice"
               valueAsNumber={true}
               onInputQuantities={8}
-              value={data?.commercialTerms?.rentPrice}
+              value={data?.commercialTerms?.rentPrice ?? ""}
               InputProps={{
                 endAdornment: <InputAdornment position="end">₽</InputAdornment>,
               }}
@@ -243,7 +243,7 @@ const ObjectForm = ({
               name="commercialTerms.indexingAnnual"
               valueAsNumber={true}
               onInputQuantities={3}
-              value={data?.commercialTerms?.indexingAnnual}
+              value={data?.commercialTerms?.indexingAnnual ?? ""}
               InputProps={{
                 endAdornment: <InputAdornment position="end">%</InputAdornment>,
               }}
@@ -255,7 +255,7 @@ const ObjectForm = ({
               label="Каникулы"
               name="commercialTerms.rentalHolidays"
               onInputQuantities={30}
-              value={data?.commercialTerms?.rentalHolidays}
+              value={data?.commercialTerms?.rentalHolidays ?? ""}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">дней</InputAdornment>
@@ -268,7 +268,7 @@ const ObjectForm = ({
               type="text"
               name="commercialTerms.securityDeposit"
               onInputQuantities={38}
-              value={data?.commercialTerms?.securityDeposit}
+              value={data?.commercialTerms?.securityDeposit ?? ""}
               InputProps={{
                 endAdornment: <InputAdornment position="end">₽</InputAdornment>,
               }}
@@ -291,7 +291,7 @@ const ObjectForm = ({
               labelId="rentTypes"
               label="Тип договора"
               itemsList={rentTypes}
-              value={watchRentTypes || ""}
+              value={watchRentTypes ?? ""}
             />
           </FieldsContainer>
         </FieldsContainer>
@@ -305,7 +305,7 @@ const ObjectForm = ({
               labelId="objectConditions "
               label="Состояние помещения"
               itemsList={objectConditions}
-              value={watchobjectConditions || ""}
+              value={watchobjectConditions}
             />
             <TextFieldStyled
               register={register}
@@ -313,7 +313,7 @@ const ObjectForm = ({
               type="text"
               name="estateOptions.cadastralNumber"
               onInputQuantities={24}
-              value={data?.estateOptions?.cadastralNumber}
+              value={data?.estateOptions?.cadastralNumber ?? ""}
               InputProps={{
                 endAdornment: <InputAdornment position="end">№</InputAdornment>,
               }}
@@ -325,7 +325,7 @@ const ObjectForm = ({
               name="estateOptions.electricityKw"
               valueAsNumber={true}
               onInputQuantities={4}
-              value={data?.estateOptions?.electricityKw}
+              value={data?.estateOptions?.electricityKw ?? ""}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
@@ -339,7 +339,7 @@ const ObjectForm = ({
               label="Состояние полов"
               name="estateOptions.premisesFloor"
               onInputQuantities={100}
-              value={data?.estateOptions?.premisesFloor}
+              value={data?.estateOptions?.premisesFloor ?? ""}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
@@ -356,7 +356,7 @@ const ObjectForm = ({
               type="text"
               name="estateOptions.waterSuply"
               onInputQuantities={20}
-              value={data?.estateOptions?.waterSuply}
+              value={data?.estateOptions?.waterSuply ?? ""}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
@@ -372,7 +372,7 @@ const ObjectForm = ({
               name="estateOptions.premisesHeight"
               valueAsNumber={true}
               onInputQuantities={3}
-              value={data?.estateOptions?.premisesHeight}
+              value={data?.estateOptions?.premisesHeight ?? ""}
               InputProps={{
                 endAdornment: <InputAdornment position="end">м</InputAdornment>,
               }}
@@ -384,7 +384,7 @@ const ObjectForm = ({
               name="estateOptions.parkingQuantity"
               valueAsNumber={true}
               onInputQuantities={4}
-              value={data?.estateOptions?.parkingQuantity}
+              value={data?.estateOptions?.parkingQuantity ?? ""}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
@@ -399,7 +399,7 @@ const ObjectForm = ({
               type="text"
               name="estateOptions.loadingArea"
               onInputQuantities={60}
-              value={data?.estateOptions?.loadingArea}
+              value={data?.estateOptions?.loadingArea ?? ""}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
@@ -416,7 +416,7 @@ const ObjectForm = ({
           register={register}
           label="Опишите объект"
           name="description.fullDescription"
-          value={data?.description?.fullDescription}
+          value={data?.description?.fullDescription ?? ""}
           rows="6"
           multiline={true}
           errors={errors?.description?.fullDescription}
@@ -427,7 +427,7 @@ const ObjectForm = ({
             register={register}
             label="Ссылка на папку в облако"
             name="cloudLink"
-            value={watchCloudLink}
+            value={watchCloudLink ?? ""}
             onInputQuantities={200}
           />
         </FieldsContainer>

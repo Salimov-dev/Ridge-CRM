@@ -25,8 +25,6 @@ import { loadTasksList } from "../store/task/tasks.store";
 import { loadLastContactsList } from "../store/last-contact/last-contact.store";
 // sidebar collaps
 import { loadSidebarCollapsState } from "../store/sidebar-collaps-state.store";
-import { loadDealsList } from "../store/deal/deal.store";
-import { loadDealStagesList } from "../store/deal/deal-stages.store";
 import { loadAuthState } from "../store/user/auth.store";
 
 interface AppLoaderProps {
@@ -66,9 +64,6 @@ const AppLoader = ({ children }: AppLoaderProps) => {
       dispatch<any>(loadLastContactsList());
       // sidebar collaps
       dispatch<any>(loadSidebarCollapsState());
-      // deals
-      dispatch<any>(loadDealStagesList());
-      dispatch<any>(loadDealsList());
     } else {
       dispatch<any>(loadAuthState(false));
     }

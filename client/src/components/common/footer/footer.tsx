@@ -25,7 +25,8 @@ const Menu = styled(Box)`
 
 const Footer = () => {
   const isAuth = useSelector(getAuthState());
-  const isCurator = useSelector(getIsUserCurator());
+  const currentUserId = useSelector(getCurrentUserId());
+  const isCurator = useSelector(getIsUserCurator(currentUserId));
 
   return isAuth ? (
     <Component>

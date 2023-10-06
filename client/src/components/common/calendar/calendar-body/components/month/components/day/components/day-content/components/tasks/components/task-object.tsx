@@ -28,10 +28,9 @@ const TaksObject = ({ task, objects }) => {
     <>
       <DividerStyled color={task?.isDone ? "darkGray" : "gray"} />
       <Box sx={{ display: "flex", gap: "4px" }}>
-        <Typography variant="h6">{getObjectAddress(taskObjectId)}</Typography>
+        <Typography>{getObjectAddress(taskObjectId)}</Typography>
         <OpenPageObjectIconButton
           onClick={() => handleOpenObjectPage(taskObjectId)}
-          address={getObjectAddress(taskObjectId)}
         />
       </Box>
     </>

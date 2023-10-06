@@ -4,7 +4,6 @@ import { Box, Paper, styled } from "@mui/material";
 // components
 import ObjectAddress from "./components/object-address";
 // store
-import { getDealStagesList } from "../../../../../store/deal/deal-stages.store";
 import {
   getObjectsList,
   updateObject,
@@ -13,6 +12,7 @@ import {
   setOpenObjectPageId,
   setOpenObjectPageOpenState,
 } from "../../../../../store/object/open-object-page.store";
+import { dealStagesArray } from "../../../../../mock/deals-stages";
 
 const ObjectsContainer = styled(Box)`
   width: 265px;
@@ -49,7 +49,7 @@ const Objects = ({
     dispatch<any>(setOpenObjectPageId(objectId));
     dispatch<any>(setOpenObjectPageOpenState(true));
   };
-  const dealStageList = useSelector(getDealStagesList());
+  const dealStageList = dealStagesArray;
 
   const getNewDealStage = (stageId) => {
     const stage = dealStageList.find((deal) => deal?._id === stageId);

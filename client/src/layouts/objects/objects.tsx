@@ -21,7 +21,7 @@ import CreateObjectButton from "../../components/UI/dialogs/buttons/create-objec
 // hooks
 import useSearchObject from "../../hooks/object/use-search-object";
 // store
-import { getIsUserCurator } from "../../store/user/users.store";
+import { getCurrentUserId, getIsUserCurator } from "../../store/user/users.store";
 import {
   getObjectById,
   getObjectsList,
@@ -71,7 +71,8 @@ const Objects = () => {
   const objects = useSelector(getObjectsList());
   const selectedObject = useSelector(getObjectById(selectedBaloon));
   const isLoading = useSelector(getObjectsLoadingStatus());
-  const isCurator = useSelector(getIsUserCurator());
+  const currentUserId = useSelector(getCurrentUserId());
+  const isCurator = useSelector(getIsUserCurator(currentUserId));
   const columns = isCurator ? objectsColumnsCurator : objectsColumns;
 
   const center = [59.930320630519155, 30.32906024941998];

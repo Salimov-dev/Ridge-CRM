@@ -26,7 +26,7 @@ const DayContent = ({ meetings, tasks }) => {
   const isMeetingsLoading = useSelector(getMeetingLoadingStatus());
 
   const currentUserId = useSelector(getCurrentUserId());
-  const isCurator = useSelector(getIsUserCurator());
+  const isCurator = useSelector(getIsUserCurator(currentUserId));
 
   const isLoading =
     !isTasksLoading && !isMeetingsLoading;

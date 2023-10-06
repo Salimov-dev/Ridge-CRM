@@ -56,7 +56,7 @@ const UpdateManagerTask = ({ title, onClose, objects, users }) => {
   const objectId = task?.objectId;
   const currentUserId = useSelector(getCurrentUserId());
   
-  const isCurator = useSelector(getIsUserCurator());
+  const isCurator = useSelector(getIsUserCurator(currentUserId));
   const currentUserObjects = objects?.filter(
     (obj) => obj?.userId === currentUserId
   );

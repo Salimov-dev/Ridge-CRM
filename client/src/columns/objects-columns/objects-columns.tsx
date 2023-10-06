@@ -13,20 +13,19 @@ import EmptyTd from "../../components/common/columns/empty-td";
 import MultiColorContainedButton from "../../components/common/buttons/multi-color-contained-button";
 import {
   FormatDistrict,
-  FormatManagerName,
   FormatMetro,
   FormatObjectStatus,
   FormatPhone,
 } from "../../components/common/table/helpers/helpers";
 // store
-import { getLastContactsByObjectId } from "../../store/last-contact/last-contact.store";
-import { getTasksByObjectId } from "../../store/task/tasks.store";
+import { getLastContactsList } from "../../store/last-contact/last-contact.store";
+import { getTasksList } from "../../store/task/tasks.store";
 import {
   setOpenObjectPageId,
   setOpenObjectPageOpenState,
 } from "../../store/object/open-object-page.store";
 import {
-  getMeetingsByObjectId,
+  getMeetingsList,
   getObjectMeetingsList,
 } from "../../store/meeting/meetings.store";
 
@@ -79,8 +78,12 @@ export const objectsColumns = [
           const object = info.getValue();
           const objectId = object?._id;
           const meetings = useSelector(getObjectMeetingsList(objectId));
-          const tasks = useSelector(getTasksByObjectId(objectId));
-          const lastContacts = useSelector(getLastContactsByObjectId(objectId));
+          const tasksList = useSelector(getTasksList());
+          const tasks = tasksList?.filter((task) => task.objectId === objectId);
+          const lastContactsList = useSelector(getLastContactsList());
+          const lastContacts = lastContactsList?.filter(
+            (contact) => contact.objectId === objectId
+          );
 
           const handleClick = () => {
             dispatch<any>(setOpenObjectPageId(objectId));
@@ -149,7 +152,10 @@ export const objectsColumns = [
         cell: (info) => {
           const object = info.getValue();
           const objectId = object?._id;
-          const objectMeetings = useSelector(getMeetingsByObjectId(objectId));
+          const meetingsList = useSelector(getMeetingsList());
+          const objectMeetings = meetingsList?.filter(
+            (meet) => meet.objectId === objectId
+          );
           const isObjectMeetings = Boolean(objectMeetings?.length);
           const sortedObjectMeetings = orderBy(
             objectMeetings,
@@ -173,7 +179,10 @@ export const objectsColumns = [
         cell: (info) => {
           const object = info.getValue();
           const objectId = object?._id;
-          const lastContacts = useSelector(getLastContactsByObjectId(objectId));
+          const lastContactsList = useSelector(getLastContactsList());
+          const lastContacts = lastContactsList?.filter(
+            (contact) => contact.objectId === objectId
+          );
           const sortedLastContacts = orderBy(lastContacts, "date", ["desc"]);
           const isSortedLastContacts = Boolean(sortedLastContacts?.length);
 
@@ -223,14 +232,14 @@ export const objectsColumns = [
             <AlignCenter>
               <Tooltip title="Открыть облако" placement="top-start" arrow>
                 <Button onClick={handleOpenCloud}>
-                  <CloudDoneIcon sx={{color: "white"}}/>
+                  <CloudDoneIcon sx={{ color: "white" }} />
                 </Button>
               </Tooltip>
             </AlignCenter>
           ) : (
             <AlignCenter>
               <Tooltip title="Облако отсутствует" placement="top-start" arrow>
-                <CloudOffIcon sx={{color: "white"}}/>
+                <CloudOffIcon sx={{ color: "white" }} />
               </Tooltip>
             </AlignCenter>
           );

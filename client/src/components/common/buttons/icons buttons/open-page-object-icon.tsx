@@ -1,4 +1,4 @@
-import { Box, Tooltip, Typography, styled } from "@mui/material";
+import { Box, Tooltip, styled } from "@mui/material";
 import OpenInNewOutlinedIcon from "@mui/icons-material/OpenInNewOutlined";
 
 const Components = styled(Box)`

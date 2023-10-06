@@ -8,7 +8,7 @@ import Header from "./components/header";
 import ItemsList from "./components/items-list";
 // store
 import { setSidebarCollapsState } from "../../../store/sidebar-collaps-state.store";
-import { getIsUserCurator } from "../../../store/user/users.store";
+import { getCurrentUserId, getIsUserCurator } from "../../../store/user/users.store";
 // theme
 import { tokens } from "../../../theme";
 
@@ -21,7 +21,9 @@ const Sidebar = () => {
   const [currentPath, setCurrentPath] = useState("");
   const [selected, setSelected] = useState(setSelectedMenuItem());
   const [isCollapsed, setIsCollapsed] = useState(true);
-  const isCurator = useSelector(getIsUserCurator())
+  const currentUserId = useSelector(getCurrentUserId());
+  
+  const isCurator = useSelector(getIsUserCurator(currentUserId));
 
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
