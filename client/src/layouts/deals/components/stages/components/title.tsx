@@ -1,4 +1,6 @@
 import { Box, Typography, styled } from "@mui/material";
+import { getObjectsList } from "../../../../../store/object/objects.store";
+import { useSelector } from "react-redux";
 
 const DealTitleContainer = styled(Box)`
   display: flex;
@@ -7,6 +9,14 @@ const DealTitleContainer = styled(Box)`
 `;
 
 const Title = ({ item }) => {
+  const objects = useSelector(getObjectsList());
+
+  const stageObjects = objects?.filter(
+    (obj) => obj?.status === item?.objectStatusId
+  );
+
+  const stageObjectsQuantity = stageObjects?.length;
+
   return (
     <DealTitleContainer
       sx={{
@@ -17,7 +27,8 @@ const Title = ({ item }) => {
     >
       <Box sx={{ display: "flex", gap: "4px" }}>
         <Typography variant="h5">
-          <b>{item?.name}</b>
+          <b>{item?.name}</b>{" "}
+          {stageObjectsQuantity ? `[${stageObjectsQuantity}]` : null}
         </Typography>
       </Box>
     </DealTitleContainer>

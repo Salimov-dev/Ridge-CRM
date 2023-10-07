@@ -143,7 +143,6 @@ const CreateMeeting = ({
 
       <MeetingForm
         data={data}
-        objectPageId={objectPageId}
         objects={transformObjects}
         statuses={statuses}
         meetingTypes={meetingTypes}
