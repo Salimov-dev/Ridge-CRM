@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import objectStatusService from "../../services/object/object-status.service.ts";
+import { objectStatusesArray } from "../../mock/object/object-status.ts";
 
 const objectStatusSlice = createSlice({
   name: "objectStatus",
@@ -28,14 +29,8 @@ const { reducer: objectStatusReducer, actions } = objectStatusSlice;
 const { objectStatusRequested, objectStatusReceived, objectStatusFailed } =
   actions;
 
-export const loadObjectStatusList = () => async (dispatch) => {
-  dispatch(objectStatusRequested());
-  try {
-    const { content } = await objectStatusService.get();
-    dispatch(objectStatusReceived(content));
-  } catch (error) {
-    objectStatusFailed(error.message);
-  }
+export const loadObjectStatusList = () => (dispatch) => {
+  dispatch(objectStatusReceived(objectStatusesArray));
 };
 
 export const getObjectsStatusList = () => (state) =>

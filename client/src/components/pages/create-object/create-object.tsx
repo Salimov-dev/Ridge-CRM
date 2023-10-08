@@ -74,7 +74,6 @@ const CreateObject = ({ onClose }) => {
     resolver: yupResolver(objectSchema),
   });
 
-
   const {
     getCity,
     getAddress,
@@ -82,7 +81,7 @@ const CreateObject = ({ onClose }) => {
     getLongitudeCoordinates,
     findedObject,
   } = useFindObject();
-  
+
   const data = watch();
   const watchAddress = watch<any>("location.address", "");
   const watchCity = watch<any>("location.city", "");
@@ -143,7 +142,7 @@ const CreateObject = ({ onClose }) => {
       <FindObjectOnMap />
 
       <ObjectForm
-      data={data}
+        data={data}
         register={register}
         onSubmit={onSubmit}
         handleSubmit={handleSubmit}
