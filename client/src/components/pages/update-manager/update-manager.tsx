@@ -1,6 +1,5 @@
 // libraries
 import dayjs from "dayjs";
-import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useDispatch, useSelector } from "react-redux";
@@ -62,7 +61,6 @@ const UpdateManager = ({ onClose }) => {
   const onSubmit = (data) => {
     dispatch<any>(updateUser(data))
       .then(onClose())
-      .then(toast.success("Менеджер успешно изменен!"));
   };
 
   return user ? (

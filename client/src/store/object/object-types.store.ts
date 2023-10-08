@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import objectTypesService from "../../services/object/object-type.service";
+import { objectTypesArray } from "../../mock/object/object-types";
 
 const objectTypesSlice = createSlice({
   name: "objectTypes",
@@ -24,17 +24,11 @@ const objectTypesSlice = createSlice({
 });
 
 const { reducer: objectTypesReducer, actions } = objectTypesSlice;
-const { objectTypesRequested, objectTypesReceived, objectTypesFailed } =
+const { objectTypesReceived } =
   actions;
 
 export const loadObjectTypesList = () => async (dispatch) => {
-  dispatch(objectTypesRequested());
-  try {
-    const { content } = await objectTypesService.get();
-    dispatch(objectTypesReceived(content));
-  } catch (error) {
-    objectTypesFailed(error.message);
-  }
+    dispatch(objectTypesReceived(objectTypesArray));
 };
 
 export const getObjectTypesList = () => (state) => state.objectTypes.entities;

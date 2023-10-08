@@ -1,6 +1,5 @@
 // libraries
 import { useEffect } from "react";
-import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -30,14 +29,14 @@ const initialState = {
     address: "",
     district: "",
     metro: "",
+    identifier: "",
   },
   commercialTerms: {
     rentPrice: "",
     securityDeposit: "",
-    totalSquare: "",
+    advanseDeposit: "",
     rentSquare: "",
     rentalHolidays: "",
-    agentComission: "",
     indexingAnnual: "",
     rentTypes: "",
   },
@@ -53,6 +52,7 @@ const initialState = {
     waterSuply: "",
     cadastralNumber: "",
     loadingArea: "",
+    objectProperties: "",
   },
   description: {
     fullDescription: "",
@@ -118,7 +118,6 @@ const CreateObject = ({ onClose }) => {
 
     dispatch<any>(createObject(newData))
       .then(onClose())
-      .then(toast.success("Объект успешно создан!"));
   };
 
   useEffect(() => {

@@ -1,7 +1,6 @@
 // libraries
 import { useState } from "react";
 import dayjs from "dayjs";
-import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -81,13 +80,11 @@ const UpdateMeeting = ({ onClose }) => {
 
     dispatch<any>(updateMeeting(newData))
       .then(onClose())
-      .then(toast.success("Встреча успешно изменена!"));
   };
 
   const handleRemoveMeeting = (meetingId) => {
     dispatch<any>(removeMeeting(meetingId))
       .then(onClose())
-      .then(toast.success("Встреча успешно удалена!"));
   };
 
   const handleClickOpen = () => {

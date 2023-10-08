@@ -1,5 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+// auth
+import { loadAuthState } from "../store/user/auth.store";
 // objects
 import { loadObjectsList } from "../store/object/objects.store";
 import { loadObjectStatusList } from "../store/object/object-status.store";
@@ -12,6 +14,7 @@ import { loadCurrentRentersList } from "../store/object/current-renter.store";
 import { loadObjectConditionsList } from "../store/object/object-conditions.store";
 import { loadRentTypesList } from "../store/object/rent-types.store";
 import { loadEstateTypesList } from "../store/object/estate-types.store";
+import { loadObjectPropertiesList } from "../store/object/object-properties";
 // meetings
 import { loadMeetingsList } from "../store/meeting/meetings.store";
 import { loadMeetingStatusesList } from "../store/meeting/meeting-status.store";
@@ -25,7 +28,6 @@ import { loadTasksList } from "../store/task/tasks.store";
 import { loadLastContactsList } from "../store/last-contact/last-contact.store";
 // sidebar collaps
 import { loadSidebarCollapsState } from "../store/sidebar-collaps-state.store";
-import { loadAuthState } from "../store/user/auth.store";
 
 interface AppLoaderProps {
   children: React.ReactNode;
@@ -51,6 +53,7 @@ const AppLoader = ({ children }: AppLoaderProps) => {
       dispatch<any>(loadCurrentRentersList());
       dispatch<any>(loadRentTypesList());
       dispatch<any>(loadEstateTypesList());
+      dispatch<any>(loadObjectPropertiesList());
       // users
       dispatch<any>(loadUsersList());
       dispatch<any>(loadUserStatusesList());

@@ -1,7 +1,6 @@
 // libraries
 import dayjs from "dayjs";
-import { useEffect, useState } from "react";
-import { toast } from "react-toastify";
+import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -63,7 +62,6 @@ const CreateMyTask = ({
     };
     dispatch<any>(createTask(newData))
       .then(onClose())
-      .then(toast.success("Задача успешно создана!"));
   };
 
   useEffect(() => {

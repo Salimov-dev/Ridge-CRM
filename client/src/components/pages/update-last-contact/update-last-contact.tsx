@@ -1,7 +1,6 @@
 // libraries
 import dayjs from "dayjs";
 import { useState } from "react";
-import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -57,13 +56,11 @@ const UpdateLastContact = ({ onClose }) => {
 
     dispatch<any>(updateLastContact(newData))
       .then(onClose())
-      .then(toast.success("Последний контакт успешно изменен!"));
   };
 
   const handleRemoveLastContact = (lastContactId) => {
     dispatch<any>(removeLastContact(lastContactId))
       .then(onClose())
-      .then(toast.success("Последний контакт успешно удален!"));
   };
 
   const handleClickOpen = () => {

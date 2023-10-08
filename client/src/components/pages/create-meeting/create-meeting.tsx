@@ -1,7 +1,6 @@
 // libraries
 import dayjs from "dayjs";
 import { useEffect } from "react";
-import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useDispatch, useSelector } from "react-redux";
@@ -104,7 +103,6 @@ const CreateMeeting = ({
 
     dispatch<any>(createMeeting(newData))
       .then(onClose())
-      .then(toast.success("Встреча успешно создана!"));
   };
 
   useEffect(() => {

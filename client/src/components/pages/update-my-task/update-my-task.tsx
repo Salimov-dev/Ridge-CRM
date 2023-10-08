@@ -1,7 +1,6 @@
 // liraries
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
-import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useDispatch, useSelector } from "react-redux";
@@ -61,7 +60,6 @@ const UpdateMyTask = ({ title, onClose }) => {
   const objectId = task?.objectId;
 
   const isObjectPage = useSelector(loadOpenObjectPageOpenState());
-  const objectPageId = useSelector(getOpenObjectPageId());
   
   const currentUserId = useSelector(getCurrentUserId());
   const currentUserObjects = objects?.filter(
@@ -84,13 +82,11 @@ const UpdateMyTask = ({ title, onClose }) => {
 
     dispatch<any>(updateMyTask(newData))
       .then(onClose())
-      .then(toast.success("Задача себе успешно изменена!"));
   };
 
   const handleRemoveTask = (taskId: number) => {
     dispatch<any>(removeTask(taskId))
       .then(onClose())
-      .then(toast.success("Задача себе успешно удалена!"));
   };
 
   const handleClickOpen = () => {

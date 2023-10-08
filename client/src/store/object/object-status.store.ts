@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import objectStatusService from "../../services/object/object-status.service.ts";
 import { objectStatusesArray } from "../../mock/object/object-status.ts";
 
 const objectStatusSlice = createSlice({
@@ -26,7 +25,7 @@ const objectStatusSlice = createSlice({
 });
 
 const { reducer: objectStatusReducer, actions } = objectStatusSlice;
-const { objectStatusRequested, objectStatusReceived, objectStatusFailed } =
+const { objectStatusReceived } =
   actions;
 
 export const loadObjectStatusList = () => (dispatch) => {
@@ -41,10 +40,10 @@ export const getObjectStatusLoading = () => (state) =>
 
 export const getObjectStatusNameById = (id) => (state) => {
   if (state?.objectStatus.entities) {
-    const obj = state.objectStatus.entities.filter(
+    const obj = state.objectStatus.entities.find(
       (status) => status?._id === id
     );
-    const result = obj[0]?.name;
+    const result = obj?.name;
     return result;
   }
 };

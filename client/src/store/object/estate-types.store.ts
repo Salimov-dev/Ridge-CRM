@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import estateTypesService from "../../services/object/estate-type.service";
+import { estateTypesArray } from "../../mock/object/estate-types";
 
 const estateTypesSlice = createSlice({
   name: "estateTypes",
@@ -24,17 +24,11 @@ const estateTypesSlice = createSlice({
 });
 
 const { reducer: estateTypesReducer, actions } = estateTypesSlice;
-const { estateTypesRequested, estateTypesReceived, estateTypesFailed } =
+const { estateTypesReceived } =
   actions;
 
 export const loadEstateTypesList = () => async (dispatch) => {
-  dispatch(estateTypesRequested());
-  try {
-    const { content } = await estateTypesService.get();
-    dispatch(estateTypesReceived(content));
-  } catch (error) {
-    estateTypesFailed(error.message);
-  }
+    dispatch(estateTypesReceived(estateTypesArray));
 };
 
 export const getEstateTypesList = () => (state) => state.estateTypes.entities;

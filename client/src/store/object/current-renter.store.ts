@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import currentRentersService from "../../services/object/current-renter.service";
+import { currentRentersArray } from "../../mock/object/current-renters";
 
 const currentRentersSlice = createSlice({
   name: "currentRenters",
@@ -24,20 +24,10 @@ const currentRentersSlice = createSlice({
 });
 
 const { reducer: currentRentersReducer, actions } = currentRentersSlice;
-const {
-  currentRentersRequested,
-  currentRentersReceived,
-  currentRentersFailed,
-} = actions;
+const { currentRentersReceived } = actions;
 
 export const loadCurrentRentersList = () => async (dispatch) => {
-  dispatch(currentRentersRequested());
-  try {
-    const { content } = await currentRentersService.get();
-    dispatch(currentRentersReceived(content));
-  } catch (error) {
-    dispatch(currentRentersFailed(error.message));
-  }
+  dispatch(currentRentersReceived(currentRentersArray));
 };
 
 export const getCurrentRentersList = () => (state) =>

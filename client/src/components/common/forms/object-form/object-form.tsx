@@ -9,6 +9,7 @@ import WaterIcon from "@mui/icons-material/Water";
 import ElectricBoltIcon from "@mui/icons-material/ElectricBolt";
 import VerticalAlignBottomOutlinedIcon from "@mui/icons-material/VerticalAlignBottomOutlined";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
+import FingerprintIcon from "@mui/icons-material/Fingerprint";
 // components
 import Title from "../title/title";
 import FooterButtons from "../footer-buttons/footer-buttons";
@@ -27,6 +28,7 @@ import { getObjectConditionsList } from "../../../../store/object/object-conditi
 // styled
 import { FieldsContainer, Form } from "../styled/styled";
 import AutocompleteStyled from "../../inputs/autocomplete-styled";
+import { getObjectPropertiesList } from "../../../../store/object/object-properties";
 
 const ObjectForm = ({
   data,
@@ -44,17 +46,19 @@ const ObjectForm = ({
   const workingPositions = useSelector(getWorkingPositionsList());
   const objectStatuses = useSelector(getObjectsStatusList());
   const currentRenters = useSelector(getCurrentRentersList());
+  const objectProperties = useSelector(getObjectPropertiesList());
   const objectConditions = useSelector(getObjectConditionsList());
 
   const watchStatus = watch("status", "");
+  const watchWorkingPosition = watch("contact.position", "");
   const watchDistrict = watch("location.district", "");
   const watchMetro = watch("location.metro", "");
-  const watchCurrentRenters = watch("estateOptions.currentRenters", "");
-  const watchobjectConditions = watch("estateOptions.objectConditions", "");
   const watchRentTypes = watch("commercialTerms.rentTypes", "");
   const watchObjectTypes = watch("estateOptions.objectTypes", "");
   const watchEstateTypes = watch("estateOptions.estateTypes", "");
-  const watchWorkingPosition = watch("contact.position", "");
+  const watchCurrentRenters = watch("estateOptions.currentRenters", "");
+  const watchobjectConditions = watch("estateOptions.objectConditions", "");
+  const watchObjectProperties = watch("estateOptions.objectProperties", "");
 
   const metros = useSelector(getMetroList());
   const rentTypes = useSelector(getRentTypesList());
@@ -97,6 +101,21 @@ const ObjectForm = ({
             watchItemId={watchStatus}
             errors={errors?.status}
           />
+          <TextFieldStyled
+            register={register}
+            label="Идентификатор объекта"
+            name="location.identifier"
+            errors={errors?.location?.identifier}
+            onInputQuantities={60}
+            value={data?.location?.identifier || ""}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <FingerprintIcon />
+                </InputAdornment>
+              ),
+            }}
+          />
         </FieldsContainer>
         <FieldsContainer sx={{ gap: "2px" }}>
           <AutocompleteStyled
@@ -120,6 +139,16 @@ const ObjectForm = ({
             errors={errors?.estateOptions?.estateTypes}
           />
           <AutocompleteStyled
+            label="Расположение объекта"
+            register={register}
+            name="estateOptions.objectProperties"
+            options={objectProperties}
+            value={watchObjectProperties ?? ""}
+            setValue={setValue}
+            watchItemId={watchObjectProperties}
+            errors={errors?.estateOptions?.objectProperties}
+          />
+          <AutocompleteStyled
             label="Текущий арендатор"
             register={register}
             name="estateOptions.currentRenters"
@@ -135,7 +164,7 @@ const ObjectForm = ({
         <FieldsContainer>
           <TextFieldStyled
             register={register}
-            label="Контакт"
+            label="Контактное лицо"
             name="contact.name"
             errors={errors?.contact?.name}
             value={data?.contact?.name ?? ""}
@@ -198,20 +227,6 @@ const ObjectForm = ({
           <FieldsContainer>
             <TextFieldStyled
               register={register}
-              label="Общая площадь"
-              type="number"
-              name="commercialTerms.totalSquare"
-              valueAsNumber={true}
-              onInputQuantities={5}
-              value={data?.commercialTerms?.totalSquare || ""}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">м²</InputAdornment>
-                ),
-              }}
-            />
-            <TextFieldStyled
-              register={register}
               label="Площадь аренды"
               type="number"
               name="commercialTerms.rentSquare"
@@ -272,18 +287,17 @@ const ObjectForm = ({
                 endAdornment: <InputAdornment position="end">₽</InputAdornment>,
               }}
             />
-            {/* <TextFieldStyled
+            <TextFieldStyled
               register={register}
-              label="Комиссия агента"
-              type="number"
-              name="commercialTerms.agentComission"
-              valueAsNumber={true}
-              onInputQuantities={3}
-              value={data?.commercialTerms?.agentComission}
+              label="Авансовый платёж"
+              type="text"
+              name="commercialTerms.advanseDeposit"
+              onInputQuantities={38}
+              value={data?.commercialTerms?.advanseDeposit || ""}
               InputProps={{
-                endAdornment: <InputAdornment position="end">%</InputAdornment>,
+                endAdornment: <InputAdornment position="end">₽</InputAdornment>,
               }}
-            /> */}
+            />
             <SimpleSelectField
               register={register}
               name="commercialTerms.rentTypes"

@@ -2,7 +2,6 @@
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { toast } from "react-toastify";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useDispatch, useSelector } from "react-redux";
 // components
@@ -73,13 +72,11 @@ const UpdateManagerTask = ({ title, onClose, objects, users }) => {
 
     dispatch<any>(updateMyTask(newData))
       .then(onClose())
-      .then(toast.success("Задача менеджеру успешно изменена!"));
   };
 
   const handleRemoveTask = (taskId) => {
     dispatch<any>(removeTask(taskId))
       .then(onClose())
-      .then(toast.success("Задача себе успешно удалена!"));
   };
 
   const handleClickOpen = () => {

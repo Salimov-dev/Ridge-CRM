@@ -3,7 +3,6 @@ import dayjs from "dayjs";
 import { Box } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
-import { toast } from "react-toastify";
 import { useEffect } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 // components
@@ -62,7 +61,6 @@ const CreateManagerTask = ({
     };
     dispatch<any>(createTask(newData))
       .then(onClose())
-      .then(toast.success("Задача успешно создана!"));
   };
 
   useEffect(() => {

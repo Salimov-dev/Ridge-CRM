@@ -2,7 +2,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { toast } from "react-toastify";
 // MUI
 import { Box } from "@mui/material";
 // components
@@ -69,7 +68,6 @@ const UpdateObject = ({ onClose }) => {
     };
     dispatch<any>(updateObject(newData))
       .then(onClose())
-      .then(toast.success("Объект успешно изменен!"));
   };
 
   return object ? (

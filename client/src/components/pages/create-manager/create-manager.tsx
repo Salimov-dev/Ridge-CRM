@@ -1,6 +1,5 @@
 // libraries
 import { Box } from "@mui/material";
-import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -77,7 +76,6 @@ const CreateManager = ({ onClose }) => {
 
     dispatch<any>(addNewManager(newData))
       .then(onClose())
-      .then(toast.success("Менеджер успешно добавлен!"));
   };
 
   return (

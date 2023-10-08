@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import objectConditionsService from "../../services/object/estate-conditions.service";
+import { objectConditionsArray } from "../../mock/object/object-conditions";
 
 const objectConditionsSlice = createSlice({
   name: "objectConditions",
@@ -25,19 +25,11 @@ const objectConditionsSlice = createSlice({
 
 const { reducer: objectConditionsReducer, actions } = objectConditionsSlice;
 const {
-  objectConditionsRequested,
   objectConditionsReceived,
-  objectConditionsFailed,
 } = actions;
 
-export const loadObjectConditionsList = () => async (dispatch) => {
-  dispatch(objectConditionsRequested());
-  try {
-    const { content } = await objectConditionsService.get();
-    dispatch(objectConditionsReceived(content));
-  } catch (error) {
-    objectConditionsFailed(error.message);
-  }
+export const loadObjectConditionsList = () =>  (dispatch) => {
+    dispatch(objectConditionsReceived(objectConditionsArray));
 };
 
 export const getObjectConditionsList = () => (state) =>

@@ -40,6 +40,7 @@ import sidebarCollapsStateReducer from "./sidebar-collaps-state.store";
 // other
 import monthIndexReducer from "./month-index.store";
 import authStateReducer from "./user/auth.store";
+import objectPropertiesReducer from "./object/object-properties";
 
 const rootReducer = combineReducers({
   // auth state
@@ -59,6 +60,7 @@ const rootReducer = combineReducers({
   currentRenters: currentRenterReducer,
   rentTypes: rentTypesReducer,
   estateTypes: estateTypesReducer,
+  objectProperties: objectPropertiesReducer,
   // users
   users: usersListReducer,
   userStatuses: userStatusesReducer,

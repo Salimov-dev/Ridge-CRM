@@ -1,5 +1,4 @@
 // libraries
-import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useForm } from "react-hook-form";
@@ -76,7 +75,6 @@ const Login = () => {
   const onSubmit = () => {
     dispatch<any>(login({ payload: data }))
       .then(() => navigate(redirectPath, { replace: true }))
-      .then(() => toast.success("Добро пожаловать!"));
   };
 
   return (

@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import rentTypesService from "../../services/object/rent-type.service";
+import { rentTypesArray } from "../../mock/object/rent-types";
 
 const rentTypesSlice = createSlice({
   name: "rentTypes",
@@ -24,16 +24,10 @@ const rentTypesSlice = createSlice({
 });
 
 const { reducer: rentTypesReducer, actions } = rentTypesSlice;
-const { rentTypesRequested, rentTypesReceived, rentTypesFailed } = actions;
+const { rentTypesReceived } = actions;
 
 export const loadRentTypesList = () => async (dispatch) => {
-  dispatch(rentTypesRequested());
-  try {
-    const { content } = await rentTypesService.get();
-    dispatch(rentTypesReceived(content));
-  } catch (error) {
-    rentTypesFailed(error.message);
-  }
+  dispatch(rentTypesReceived(rentTypesArray));
 };
 
 export const getRentTypesList = () => (state) => state.rentTypes.entities;
