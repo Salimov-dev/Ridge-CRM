@@ -49,6 +49,7 @@ const CreateMyTask = ({
     resolver: yupResolver(taskSchema),
   });
   const data = watch();
+
   const watchDate = watch<any>("date", null);
   const watchTime = watch<any>("time", null);
   const isFullValid = isValid && watchDate && watchTime;

@@ -39,7 +39,6 @@ const ObjectBaloon = ({ object }) => {
   const name = object?.contact?.name;
   const phone = object?.contact?.phone;
   const email = object?.contact?.email;
-  const totalSquare = object?.commercialTerms?.totalSquare;
   const rentSquare = object?.commercialTerms?.rentSquare;
   const rentPrice = object?.commercialTerms?.rentPrice;
   const rentTypes = object?.commercialTerms?.rentTypes;
@@ -74,10 +73,6 @@ const ObjectBaloon = ({ object }) => {
 
       <DividerStyled />
       <Attribute
-        title="Площадь общая:"
-        subTitle={totalSquare ? `${makeDigitSeparator(totalSquare)}м²` : "-"}
-      />
-      <Attribute
         title="Площадь АП:"
         subTitle={rentSquare ? `${makeDigitSeparator(rentSquare)}м²` : "-"}
       />
@@ -96,7 +91,7 @@ const ObjectBaloon = ({ object }) => {
       <Attribute title="Контакт:" subTitle={name ? `${name}` : "-"} />
       <Attribute
         title="Телефон:"
-        subTitle={phone ? <Typography>{FormatPhone(phone)}</Typography> : "-"}
+        subTitle={phone ? FormatPhone(phone) : "-"}
       />
       <Attribute title="Email:" subTitle={email ? email : "-"} />
 

@@ -203,18 +203,7 @@ export const estateOptionsColumns = [
 ];
 
 export const commercialTermsColumns = [
-  {
-    accessorKey: "commercialTerms.totalSquare",
-    header: "Общая S",
-    cell: (info) => {
-      const square = info.getValue();
-      return square ? (
-        <AlignCenter>{`${makeDigitSeparator(square)}м²`}</AlignCenter>
-      ) : (
-        <EmptyTd />
-      );
-    },
-  },
+ 
   {
     accessorKey: "commercialTerms.rentSquare",
     header: "S аренды",

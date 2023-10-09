@@ -3,6 +3,7 @@ import OpenPageObjectIconButton from "../../../../../../components/common/button
 
 const Container = styled(Box)`
   display: flex;
+  justify-content: space-between;
   gap: 4px;
 `;
 

@@ -35,13 +35,13 @@ const MeetingForm = ({
           <DatePickerStyled
             register={register}
             name="date"
-            label="Дата встречи"
+            label="Дата встречи *"
             value={data?.date}
             onChange={(value) => setValue("date", value)}
           />
           <TimePickerStyled
             register={register}
-            label="Время встречи"
+            label="Время встречи *"
             name="time"
             value={data?.time}
             setValue={setValue}
@@ -50,7 +50,7 @@ const MeetingForm = ({
             register={register}
             name="meetingType"
             labelId="meetingType"
-            label="Тип встречи"
+            label="Тип встречи *"
             itemsList={meetingTypes}
             value={watchTypeMeeting}
             errors={errors?.meetingType}
@@ -59,7 +59,7 @@ const MeetingForm = ({
             register={register}
             name="status"
             labelId="status"
-            label="Статус"
+            label="Статус *"
             itemsList={statuses}
             value={watchStatus}
             errors={errors?.status}
@@ -80,7 +80,7 @@ const MeetingForm = ({
 
           <TextFieldStyled
             register={register}
-            label="Комментарий"
+            label="Комментарий *"
             name="comment"
             errors={errors?.comment}
             value={data?.comment}
@@ -97,7 +97,7 @@ const MeetingForm = ({
         {isEditMode ? (
           <TextFieldStyled
             register={register}
-            label="Результат"
+            label="Результат *"
             name="result"
             value={data?.result}
             rows="2"

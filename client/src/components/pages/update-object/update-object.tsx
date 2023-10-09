@@ -23,7 +23,7 @@ const UpdateObject = ({ onClose }) => {
   const dispatch = useDispatch();
   const objectId = useSelector(getUpdateObjectId());
   const object = useSelector(getObjectById(objectId));
-  
+
   const {
     register,
     watch,
@@ -36,11 +36,23 @@ const UpdateObject = ({ onClose }) => {
     resolver: yupResolver(objectSchema),
   });
 
-  const isObjectHasAddress =
-    object?.location?.city && object?.location?.address;
-
-  const isValidAndHasAdress = isObjectHasAddress && isValid;
   const data = watch();
+  const watchDistrict = watch("location.district", "");
+  const watchObjectTypes = watch("estateOptions.objectTypes", "");
+  const watchEstateTypes = watch("estateOptions.estateTypes", "");
+  const watchCurrentRenters = watch("estateOptions.currentRenters", "");
+  const watchStatus = watch("status", "");
+  const watchObjectProperties = watch("estateOptions.objectProperties", "");
+
+  const isWatchValid =
+    Boolean(watchDistrict) &&
+    Boolean(watchObjectTypes) &&
+    Boolean(watchEstateTypes) &&
+    Boolean(watchCurrentRenters) &&
+    Boolean(watchStatus) &&
+    Boolean(watchObjectProperties);
+
+  const isFullValid = isValid && isWatchValid;
 
   const onSubmit = (data) => {
     const newData = {
@@ -66,8 +78,7 @@ const UpdateObject = ({ onClose }) => {
         address: capitalizeFirstLetter(data.location.address),
       },
     };
-    dispatch<any>(updateObject(newData))
-      .then(onClose())
+    dispatch<any>(updateObject(newData)).then(onClose());
   };
 
   return object ? (
@@ -82,7 +93,7 @@ const UpdateObject = ({ onClose }) => {
         onClose={onClose}
         watch={watch}
         setValue={setValue}
-        isValid={isValidAndHasAdress}
+        isValid={isFullValid}
       />
     </Box>
   ) : (

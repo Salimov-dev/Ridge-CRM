@@ -8,8 +8,8 @@ import ObjectPageDialog from "../../components/UI/dialogs/object-page-dialog/obj
 import ObjectUpdatePageDialog from "../../components/UI/dialogs/objects/object-update-page-dialog";
 // store
 import { getObjectsList } from "../../store/object/objects.store";
-import { getSidebarCollapsState } from "../../store/sidebar-collaps-state.store";
 import { getCurrentUserId } from "../../store/user/users.store";
+// mock
 import { dealStagesArray } from "../../mock/deals-stages";
 
 const Deals = () => {
@@ -20,12 +20,6 @@ const Deals = () => {
   const currentUserObjects = objects?.filter(
     (obj) => obj?.userId === currentUserId
   );
-
-  const isCollapsedSidebar = useSelector(getSidebarCollapsState());
-  const [width, setWidth] = useState(0);
-  const screenWidth = window?.innerWidth;
-  const fullWidth = screenWidth - 262;
-  const collapseWidth = screenWidth - 132;
 
   let transformObjects = [];
   currentUserObjects?.forEach((obj) => {
@@ -38,16 +32,9 @@ const Deals = () => {
     return address;
   };
 
-  useEffect(() => {
-    setWidth(isCollapsedSidebar ? collapseWidth : fullWidth);
-  }, [isCollapsedSidebar]);
-
   return (
     <Box
-      sx={{
-        height: "100%",
-        width: width,
-      }}
+ 
     >
       <LayoutTitle title="Сделки" />
       <Stages stages={dealStages} getObjectAddress={getObjectAddress} />

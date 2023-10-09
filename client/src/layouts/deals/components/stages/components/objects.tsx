@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { Box, Paper, styled } from "@mui/material";
 // components
 import ObjectAddress from "./components/object-address";
+// mock
+import { dealStagesArray } from "../../../../../mock/deals-stages";
 // store
 import {
   getObjectsList,
@@ -12,10 +14,9 @@ import {
   setOpenObjectPageId,
   setOpenObjectPageOpenState,
 } from "../../../../../store/object/open-object-page.store";
-import { dealStagesArray } from "../../../../../mock/deals-stages";
 
 const ObjectsContainer = styled(Box)`
-  width: 265px;
+  width: 100%;
   color: white;
   display: flex;
   flex-direction: column;

@@ -18,7 +18,8 @@ const TimePickerStyled = ({
   value,
   setValue,
   errors = null,
-  disabled=false
+  disabled=false,
+  isHelperText = false,
 }) => {
   return (
     <FieldsContainer>
@@ -35,8 +36,9 @@ const TimePickerStyled = ({
               label={label}
               ampm={false}
               onChange={(value) => setValue(name, value)}
-              errors={errors?.time}
+              error={!!errors}
               value={value}
+              helperText={errors?.message}
               disabled={disabled}
               sx={{
                 width: "100%",
@@ -55,9 +57,7 @@ const TimePickerStyled = ({
               }}
             />
           </DemoContainer>
-          <FormHelperText sx={{ color: "Crimson" }}>
-            {errors?.message}
-          </FormHelperText>
+          {isHelperText ? <FormHelperText>{helperText}</FormHelperText> : null}
         </LocalizationProvider>
       </Box>
     </FieldsContainer>

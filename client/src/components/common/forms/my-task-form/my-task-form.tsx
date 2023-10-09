@@ -35,22 +35,13 @@ const MyTaskForm = ({
         />
         <TimePickerStyled
           register={register}
-          label="Время"
+          label="Время *"
           name="time"
           value={data?.time}
           setValue={setValue}
+          errors={errors?.time}
         />
       </FieldsContainer>
-
-      {/* <SimpleSelectField
-        register={register}
-        name="objectId"
-        labelId="objectId"
-        label="Объект задачи"
-        itemsList={objects}
-        value={watchObjectId}
-        disabled={isObjectPage}
-      /> */}
       <AutocompleteStyled
         label="Объект"
         register={register}
@@ -63,7 +54,7 @@ const MyTaskForm = ({
       />
       <TextFieldStyled
         register={register}
-        label="Комментарий"
+        label="Комментарий *"
         name="comment"
         value={data?.comment}
         rows="3"

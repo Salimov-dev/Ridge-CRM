@@ -49,16 +49,16 @@ const ObjectForm = ({
   const objectProperties = useSelector(getObjectPropertiesList());
   const objectConditions = useSelector(getObjectConditionsList());
 
-  const watchStatus = watch("status", "");
-  const watchWorkingPosition = watch("contact.position", "");
-  const watchDistrict = watch("location.district", "");
-  const watchMetro = watch("location.metro", "");
-  const watchRentTypes = watch("commercialTerms.rentTypes", "");
-  const watchObjectTypes = watch("estateOptions.objectTypes", "");
-  const watchEstateTypes = watch("estateOptions.estateTypes", "");
-  const watchCurrentRenters = watch("estateOptions.currentRenters", "");
-  const watchobjectConditions = watch("estateOptions.objectConditions", "");
-  const watchObjectProperties = watch("estateOptions.objectProperties", "");
+  const watchStatus = watch("status");
+  const watchWorkingPosition = watch("contact.position");
+  const watchDistrict = watch("location.district");
+  const watchMetro = watch("location.metro");
+  const watchRentTypes = watch("commercialTerms.rentTypes");
+  const watchObjectTypes = watch("estateOptions.objectTypes");
+  const watchEstateTypes = watch("estateOptions.estateTypes");
+  const watchCurrentRenters = watch("estateOptions.currentRenters");
+  const watchobjectConditions = watch("estateOptions.objectConditions");
+  const watchObjectProperties = watch("estateOptions.objectProperties");
 
   const metros = useSelector(getMetroList());
   const rentTypes = useSelector(getRentTypesList());
@@ -72,7 +72,7 @@ const ObjectForm = ({
         <Title title="Объект" />
         <FieldsContainer sx={{ gap: "2px" }}>
           <AutocompleteStyled
-            label="Район"
+            label="Район *"
             register={register}
             name="location.district"
             options={districts}
@@ -92,7 +92,7 @@ const ObjectForm = ({
             disabled={!watchDistrict && true}
           />
           <AutocompleteStyled
-            label="Статус объекта"
+            label="Статус объекта *"
             register={register}
             name="status"
             options={objectStatuses}
@@ -119,7 +119,7 @@ const ObjectForm = ({
         </FieldsContainer>
         <FieldsContainer sx={{ gap: "2px" }}>
           <AutocompleteStyled
-            label="Тип объекта"
+            label="Тип объекта *"
             register={register}
             name="estateOptions.objectTypes"
             options={objectTypes}
@@ -129,7 +129,7 @@ const ObjectForm = ({
             errors={errors?.estateOptions?.objectTypes}
           />
           <AutocompleteStyled
-            label="Тип недвижимости"
+            label="Тип недвижимости *"
             register={register}
             name="estateOptions.estateTypes"
             options={estateTypes}
@@ -139,7 +139,7 @@ const ObjectForm = ({
             errors={errors?.estateOptions?.estateTypes}
           />
           <AutocompleteStyled
-            label="Расположение объекта"
+            label="Расположение объекта *"
             register={register}
             name="estateOptions.objectProperties"
             options={objectProperties}
@@ -149,7 +149,7 @@ const ObjectForm = ({
             errors={errors?.estateOptions?.objectProperties}
           />
           <AutocompleteStyled
-            label="Текущий арендатор"
+            label="Текущий арендатор *"
             register={register}
             name="estateOptions.currentRenters"
             options={currentRenters}
