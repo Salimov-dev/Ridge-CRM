@@ -2,6 +2,7 @@ import localStorageService from "../../services/user/local.storage-service";
 import { createAction, createSlice } from "@reduxjs/toolkit";
 import objectService from "../../services/object/object.service";
 import isOutDated from "../../utils/auth/is-out-date";
+import dayjs from "dayjs";
 
 const initialState = localStorageService.getAccessToken()
   ? {
@@ -131,6 +132,37 @@ export const removeObject = (objectId) => async (dispatch) => {
   } catch (error) {
     dispatch(objectRemoveFailed(error.message));
   }
+};
+
+export const getObjectsWeeklyList = () => (state) => {
+  const currentDate = dayjs();
+  const objects = state.objects.entities;
+
+  const weeklyObjects = objects?.filter((object) => {
+    const createdAt = dayjs(object.created_at);
+    const startOfWeek = currentDate.startOf('week');
+    const endOfWeek = currentDate.endOf('week');
+    return createdAt.isBetween(startOfWeek, endOfWeek);
+  });
+
+  return weeklyObjects;
+};
+
+export const getObjectsWeeklyWithPhoneList = () => (state) => {
+  const currentDate = dayjs();
+  const objects = state.objects.entities;
+
+  const weeklyObjectsWithPhone = objects?.filter((object) => {
+    const createdAt = dayjs(object.created_at);
+    const startOfWeek = currentDate.startOf('week');
+    const endOfWeek = currentDate.endOf('week');
+    const isWithinCurrentWeek = createdAt.isBetween(startOfWeek, endOfWeek);
+    const hasPhone = object.contact && object.contact.phone;
+
+    return isWithinCurrentWeek && hasPhone;
+  });
+
+  return weeklyObjectsWithPhone;
 };
 
 export const getObjectsList = () => (state) => state.objects.entities;

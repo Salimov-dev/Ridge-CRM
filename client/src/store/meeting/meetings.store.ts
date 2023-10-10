@@ -3,6 +3,7 @@ import isOutDated from "../../utils/auth/is-out-date";
 import localStorageService from "../../services/user/local.storage-service";
 import meetingsService from "../../services/meeting/meetings.service";
 import { createSelector } from "reselect";
+import dayjs from "dayjs";
 
 const initialState = localStorageService.getAccessToken()
   ? {
@@ -174,6 +175,20 @@ export const getMeetingsByObjectId = (objectId) => (state) => {
   if (state.meetings.entities) {
     return state.meetings.entities.filter((meet) => meet.objectId === objectId);
   }
+};
+
+export const getMeetingsWeeklyList = () => (state) => {
+  const currentDate = dayjs();
+  const meetings = state.meetings.entities;
+
+  const weeklyMeetings = meetings?.filter((meet) => {
+    const createdAt = dayjs(meet?.date);
+    const startOfWeek = currentDate.startOf('week');
+    const endOfWeek = currentDate.endOf('week');
+    return createdAt.isBetween(startOfWeek, endOfWeek)  && meet.isDone !== true;
+  });
+
+  return weeklyMeetings;
 };
 
 export default meetingsReducer;
