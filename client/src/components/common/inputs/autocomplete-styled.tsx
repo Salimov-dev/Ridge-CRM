@@ -33,6 +33,7 @@ const AutocompleteStyled = ({
         isOptionEqualToValue={(option, value) => option._id === value?._id}
         ListboxProps={{ style: { background: "#2f2f2f", maxHeight: "10rem" } }}
         disabled={disabled}
+        noOptionsText="Нет совпадений"
         sx={{
           width: "100%",
           "& .MuiOutlinedInput-notchedOutline": {

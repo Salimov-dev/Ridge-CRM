@@ -1,7 +1,6 @@
 // libraries
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
 // MUI
 import { Box } from "@mui/material";
 // components
@@ -14,8 +13,6 @@ import {
   getObjectById,
   updateObject,
 } from "../../../store/object/objects.store";
-// schema
-import { objectSchema } from "../../../schemas/object-schema";
 // utils
 import { capitalizeFirstLetter } from "../../../utils/data/capitalize-first-letter";
 
@@ -29,20 +26,19 @@ const UpdateObject = ({ onClose }) => {
     watch,
     setValue,
     handleSubmit,
-    formState: { errors, isValid },
+    formState: { errors },
   } = useForm({
     defaultValues: object,
     mode: "onBlur",
-    resolver: yupResolver(objectSchema),
   });
 
   const data = watch();
-  const watchDistrict = watch("location.district", "");
-  const watchObjectTypes = watch("estateOptions.objectTypes", "");
-  const watchEstateTypes = watch("estateOptions.estateTypes", "");
-  const watchCurrentRenters = watch("estateOptions.currentRenters", "");
-  const watchStatus = watch("status", "");
-  const watchObjectProperties = watch("estateOptions.objectProperties", "");
+  const watchDistrict = watch("location.district");
+  const watchObjectTypes = watch("estateOptions.objectTypes");
+  const watchEstateTypes = watch("estateOptions.estateTypes");
+  const watchCurrentRenters = watch("estateOptions.currentRenters");
+  const watchStatus = watch("status");
+  const watchObjectProperties = watch("estateOptions.objectProperties");
 
   const isWatchValid =
     Boolean(watchDistrict) &&
@@ -52,8 +48,8 @@ const UpdateObject = ({ onClose }) => {
     Boolean(watchStatus) &&
     Boolean(watchObjectProperties);
 
-  const isFullValid = isValid && isWatchValid;
-
+  const isFullValid = isWatchValid;
+  
   const onSubmit = (data) => {
     const newData = {
       ...data,

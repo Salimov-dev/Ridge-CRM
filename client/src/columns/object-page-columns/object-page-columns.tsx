@@ -6,6 +6,7 @@ import {
   FormatDistrict,
   FormatManagerName,
   FormatMetro,
+  FormatObjectProperties,
   FormatObjectStatus,
   FormatPhone,
   FormatTypeEstate,
@@ -101,6 +102,16 @@ export const estateTypeColumns = [
     cell: (info) => {
       const type = info.getValue();
       return <AlignCenter>{FormatTypeObject(type)}</AlignCenter>;
+    },
+  },
+  {
+    accessorKey: "estateOptions.objectProperties",
+    header: "Тип недвижимости",
+    cell: (info) => {
+      const objectProperties = info.getValue();
+      return (
+        <AlignCenter>{FormatObjectProperties(objectProperties)}</AlignCenter>
+      );
     },
   },
   {
@@ -203,7 +214,6 @@ export const estateOptionsColumns = [
 ];
 
 export const commercialTermsColumns = [
- 
   {
     accessorKey: "commercialTerms.rentSquare",
     header: "S аренды",
@@ -229,11 +239,11 @@ export const commercialTermsColumns = [
     },
   },
   {
-    accessorKey: "_id",
+    accessorKey: "commercialTerms.priceForMetr",
     header: "Стоимость 1м²",
     cell: (info) => {
-      const objectId = info.getValue();
-      const result = makeDigitSeparator(priceForMetr(objectId));
+      const priceForMetr = info.getValue();
+      const result = makeDigitSeparator(priceForMetr);
       return result ? (
         <AlignCenter>{`${result}₽/м²`}</AlignCenter>
       ) : (

@@ -45,7 +45,7 @@ const ObjectInfo = ({ object, isLoading, isAuthorEntity = true }) => {
   const sortedTasks = orderBy(tasks, ["date"], ["desc"]);
 
   const lastContactsList = useSelector(getLastContactsList());
-  const lastContacts = lastContactsList.filter(
+  const lastContacts = lastContactsList?.filter(
     (contact) => contact.objectId === objectId
   );
 
@@ -55,7 +55,7 @@ const ObjectInfo = ({ object, isLoading, isAuthorEntity = true }) => {
   const currentUserId = useSelector(getCurrentUserId());
 
   const isCurator = useSelector(getIsUserCurator(currentUserId));
-  const usersWithoutCurrentUser = users.filter(
+  const usersWithoutCurrentUser = users?.filter(
     (user) => user?._id !== currentUserId
   );
   const currentUserObjects = objects?.filter(

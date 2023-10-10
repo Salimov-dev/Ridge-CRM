@@ -4,6 +4,14 @@ const objectStatusesArray = [
     name: "Найти контакты",
   },
   {
+    _id: "64bpaj234gjw329jgv2gf346",
+    name: "Дозвониться",
+  },
+  {
+    _id: "64pbl32lvfdj234lsdf23455",
+    name: "Заехать, найти контакт",
+  },
+  {
     _id: "64de0dc4063bb018afc97f0f",
     name: "Отслеживать",
   },
@@ -42,6 +50,10 @@ const objectStatusesArray = [
   {
     _id: "64c140880fdgbav12d7v88009",
     name: "Наш отказ",
+  },
+  {
+    _id: "64gsdu32ifgkbcawe1259gf10",
+    name: "Не арендовать",
   },
 ];
 

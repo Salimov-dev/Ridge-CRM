@@ -34,7 +34,7 @@ export const getObjectPropertiesList = () => (state) => state.objectProperties.e
 
 export const getObjectPropertiesStatus = () => (state) => state.objectProperties.isLoading;
 
-export const getRentTypeNameById = (id) => (state) => {
+export const getObjectPropertiesNameById = (id) => (state) => {
   const rentType = state?.objectProperties?.entities?.find((type) => type?._id === id);
   const result = rentType?.name;
 

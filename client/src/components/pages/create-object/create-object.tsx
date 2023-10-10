@@ -33,6 +33,7 @@ const initialState = {
   },
   commercialTerms: {
     rentPrice: "",
+    priceForMetr: "",
     securityDeposit: "",
     advanseDeposit: "",
     rentSquare: "",

@@ -70,7 +70,7 @@ const ObjectForm = ({
     <>
       <Form onSubmit={handleSubmit(onSubmit)} noValidate>
         <Title title="Объект" />
-        <FieldsContainer sx={{ gap: "2px" }}>
+        <FieldsContainer sx={{ gap: "3px" }}>
           <AutocompleteStyled
             label="Район *"
             register={register}
@@ -117,7 +117,7 @@ const ObjectForm = ({
             }}
           />
         </FieldsContainer>
-        <FieldsContainer sx={{ gap: "2px" }}>
+        <FieldsContainer sx={{ gap: "3px" }}>
           <AutocompleteStyled
             label="Тип объекта *"
             register={register}
@@ -246,6 +246,17 @@ const ObjectForm = ({
               name="commercialTerms.rentPrice"
               onInputQuantities={60}
               value={data?.commercialTerms?.rentPrice || ""}
+              InputProps={{
+                endAdornment: <InputAdornment position="end">₽</InputAdornment>,
+              }}
+            />
+            <TextFieldStyled
+              register={register}
+              label="Введите стоимость 1м2"
+              type="text"
+              name="commercialTerms.priceForMetr"
+              onInputQuantities={60}
+              value={data?.commercialTerms?.priceForMetr || ""}
               InputProps={{
                 endAdornment: <InputAdornment position="end">₽</InputAdornment>,
               }}

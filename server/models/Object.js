@@ -2,11 +2,7 @@ import { Schema, model } from "mongoose";
 
 const schema = new Schema(
   {
-    status: {
-      type: Schema.Types.ObjectId,
-      ref: "ObjectStatus",
-      required: true,
-    },
+    status: String,
     company: { type: Schema.Types.ObjectId, ref: "Company", required: true },
     userId: { type: Schema.Types.ObjectId, ref: "User", required: true },
     contact: {
@@ -20,6 +16,7 @@ const schema = new Schema(
     },
     commercialTerms: {
       rentPrice: String,
+      priceForMetr: String,
       securityDeposit: String,
       advanseDeposit: String,
       rentSquare: Number,
