@@ -8,6 +8,7 @@ const Map = styled(Box)`
 `;
 
 const FindObjectOnMap = () => {
+
   return (
     <Map>
       <Box sx={{ width: "100%", height: "100%", marginBottom: '12px'}} id="findObject"></Box>

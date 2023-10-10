@@ -11,7 +11,7 @@ const MyTaskCreateDialog = ({
   dateCreate = null,
   setDateCreate = () => {},
   objectPageId,
-  isObjectPage
+  isObjectPage=false
 }) => {
   const dispatch = useDispatch();
   const isOpenCreateTask = useSelector(getCreateMyTaskOpenState());

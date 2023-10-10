@@ -110,7 +110,9 @@ export const estateTypeColumns = [
     cell: (info) => {
       const objectProperties = info.getValue();
       return (
-        <AlignCenter>{FormatObjectProperties(objectProperties)}</AlignCenter>
+        <AlignCenter>
+          {objectProperties ? FormatObjectProperties(objectProperties) : null}
+        </AlignCenter>
       );
     },
   },
@@ -239,16 +241,16 @@ export const commercialTermsColumns = [
     },
   },
   {
-    accessorKey: "commercialTerms.priceForMetr",
+    accessorFn: (row) => row,
     header: "Стоимость 1м²",
     cell: (info) => {
-      const priceForMetr = info.getValue();
+      const object = info.getValue();
+      const priceForMetr = object?.commercialTerms.priceForMetr;
+
       const result = makeDigitSeparator(priceForMetr);
-      return result ? (
-        <AlignCenter>{`${result}₽/м²`}</AlignCenter>
-      ) : (
-        <EmptyTd />
-      );
+      if (priceForMetr) {
+        return <AlignCenter>{`${result}₽/м²`}</AlignCenter>;
+      } else return <EmptyTd />;
     },
   },
   {

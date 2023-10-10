@@ -7,8 +7,20 @@ import MeetingCreateDialog from "../../../../components/UI/dialogs/meetings/meet
 import MyTaskCreateDialog from "../../../../components/UI/dialogs/tasks/my-task-create-dialog";
 import ManagerTaskCreateDialog from "../../../../components/UI/dialogs/tasks/manager-task-create-dialog";
 import getDateToday from "../../../../utils/date/get-date-today";
+import { useSelector } from "react-redux";
+import {
+  getOpenObjectPageId,
+  loadOpenObjectPageOpenState,
+} from "../../../../store/object/open-object-page.store";
 
-const Dialogs = ({ objects, users, dateCreate=getDateToday(), setDateCreate }) => {
+const Dialogs = ({
+  objects,
+  users,
+  dateCreate = getDateToday(),
+  setDateCreate,
+}) => {
+  const objectPageId = useSelector(getOpenObjectPageId());
+  const isObjectPage = useSelector(loadOpenObjectPageOpenState());
   return (
     <>
       <ObjectUpdatePageDialog />
@@ -20,16 +32,20 @@ const Dialogs = ({ objects, users, dateCreate=getDateToday(), setDateCreate }) =
         dateCreate={dateCreate}
         setDateCreate={setDateCreate}
       />
-      <ManagerTaskUpdateDialog objects={objects}/>
+      <ManagerTaskUpdateDialog objects={objects} />
 
       <MyTaskCreateDialog
         objects={objects}
         dateCreate={dateCreate}
         setDateCreate={setDateCreate}
+        objectPageId={objectPageId}
+        isObjectPage={isObjectPage}
       />
       <MyTaskUpdateDialog />
 
       <MeetingCreateDialog
+        objectPageId={objectPageId}
+        isObjectPage={isObjectPage}
         dateCreate={dateCreate}
       />
       <MeetingUpdateDialog />

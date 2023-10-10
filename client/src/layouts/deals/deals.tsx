@@ -15,7 +15,6 @@ import { dealStagesArray } from "../../mock/deals-stages";
 const Deals = () => {
   const objects = useSelector(getObjectsList());
   const dealStages = dealStagesArray;
-  
   const currentUserId = useSelector(getCurrentUserId());
   const currentUserObjects = objects?.filter(
     (obj) => obj?.userId === currentUserId
@@ -33,12 +32,9 @@ const Deals = () => {
   };
 
   return (
-    <Box
- 
-    >
+    <Box>
       <LayoutTitle title="Сделки" />
       <Stages stages={dealStages} getObjectAddress={getObjectAddress} />
-
       <ObjectPageDialog />
       <ObjectUpdatePageDialog />
     </Box>

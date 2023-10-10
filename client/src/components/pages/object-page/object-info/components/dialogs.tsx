@@ -12,7 +12,7 @@ import { getOpenObjectPageId, loadOpenObjectPageOpenState } from "../../../../..
 const Dialogs = ({ objects, users }) => {
   const objectPageId = useSelector(getOpenObjectPageId());
   const isObjectPage = useSelector(loadOpenObjectPageOpenState());
-
+  
   return (
     <>
       <ManagerTaskCreateDialog objects={objects} users={users} />
