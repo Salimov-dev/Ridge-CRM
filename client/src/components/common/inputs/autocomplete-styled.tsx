@@ -10,6 +10,7 @@ const AutocompleteStyled = ({
   disabled = false,
   label,
   errors = null,
+  width="100%"
 }) => {
   return (
     <>
@@ -34,8 +35,10 @@ const AutocompleteStyled = ({
         ListboxProps={{ style: { background: "#2f2f2f", maxHeight: "10rem" } }}
         disabled={disabled}
         noOptionsText="Нет совпадений"
+        clearOnBlur={false}
+        clearIcon={null}
         sx={{
-          width: "100%",
+          width: width,
           "& .MuiOutlinedInput-notchedOutline": {
             borderColor: watchItemId ? "green" : "gray",
           },

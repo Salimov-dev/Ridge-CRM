@@ -80,17 +80,17 @@ const ItemsList = ({
         selected={selected}
         setSelected={setSelected}
       />
-            <Item
-              title="Презентации"
-              to="/presentations"
-              icon={
-                <Tooltip title="Презентации" placement="top-start" arrow>
-                  <AssignmentOutlinedIcon />
-                </Tooltip>
-              }
-              selected={selected}
-              setSelected={setSelected}
-            />
+      {/* <Item
+        title="Презентации"
+        to="/presentations"
+        icon={
+          <Tooltip title="Презентации" placement="top-start" arrow>
+            <AssignmentOutlinedIcon />
+          </Tooltip>
+        }
+        selected={selected}
+        setSelected={setSelected}
+      /> */}
       {isCurator ? (
         <>
           <ItemsTitle

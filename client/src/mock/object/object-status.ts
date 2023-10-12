@@ -4,6 +4,10 @@ const objectStatusesArray = [
     name: "Найти контакты",
   },
   {
+    _id: "64bvcpas34kszc21d2344876",
+    name: "Связаться",
+  },
+  {
     _id: "64bpaj234gjw329jgv2gf346",
     name: "Дозвониться",
   },

@@ -11,6 +11,7 @@ import { setSidebarCollapsState } from "../../../store/sidebar-collaps-state.sto
 import { getCurrentUserId, getIsUserCurator } from "../../../store/user/users.store";
 // theme
 import { tokens } from "../../../theme";
+import { getCurrrentPathState, setCurrrentPathState } from "../../../store/current-path.store";
 
 const Component = styled(Box)`
   height: 100vh;
@@ -18,8 +19,11 @@ const Component = styled(Box)`
 `;
 
 const Sidebar = () => {
-  const [currentPath, setCurrentPath] = useState("");
+  const dispatch = useDispatch();
+
+  const currentPath = useSelector(getCurrrentPathState())
   const [selected, setSelected] = useState(setSelectedMenuItem());
+
   const [isCollapsed, setIsCollapsed] = useState(true);
   const currentUserId = useSelector(getCurrentUserId());
   
@@ -27,7 +31,6 @@ const Sidebar = () => {
 
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  const dispatch = useDispatch();
 
   function setSelectedMenuItem() {
     if (currentPath === "/") {
@@ -61,8 +64,8 @@ const Sidebar = () => {
   }, [setSelectedMenuItem()]);
 
   useEffect(() => {
-    setCurrentPath(window.location.pathname);
-  }, []);
+    dispatch<any>(setCurrrentPathState(window.location.pathname));
+  }, [selected]);
 
   return (
     <Component

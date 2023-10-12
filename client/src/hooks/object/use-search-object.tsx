@@ -65,6 +65,13 @@ const useSearchObject = (objects, data) => {
       obj.estateOptions.cadastralNumber.includes(data.cadastralNumber)
       );
     }
+
+    if (data?.fullDescription?.length) {
+      const searchTerm = data.fullDescription.toLowerCase()
+      array = array?.filter((obj) =>
+      obj.description.fullDescription.toLowerCase().includes(searchTerm)
+    );
+    }
     
     // object params
     if (data.selectedStatuses?.length) {

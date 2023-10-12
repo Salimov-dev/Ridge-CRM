@@ -1,5 +1,4 @@
 import { Box } from "@mui/material";
-import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 // components
 import Stages from "./components/stages/stages";

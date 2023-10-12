@@ -1,8 +1,11 @@
 import { Button } from "@mui/material";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { setCurrrentPathState } from "../../../../store/current-path.store";
 
 const Item = ({ path, title }) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   return (
     <Button
@@ -13,7 +16,10 @@ const Item = ({ path, title }) => {
           color: "white",
         },
       }}
-      onClick={() => navigate(path)}
+      onClick={() => {
+        navigate(path);
+        dispatch<any>(setCurrrentPathState(window.location.pathname));
+      }}
     >
       {title}
     </Button>

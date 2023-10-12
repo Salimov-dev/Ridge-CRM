@@ -6,11 +6,11 @@ import ObjectInfo from "./object-info/object-info";
 import FooterButtons from "./footer-buttons/footer-buttons";
 import ItemOnMap from "../../common/map/item-on-map/item-on-map";
 // store
+import { getOpenObjectPageId } from "../../../store/object/open-object-page.store";
 import {
   getObjectById,
   getObjectsLoadingStatus,
 } from "../../../store/object/objects.store";
-import { getOpenObjectPageId } from "../../../store/object/open-object-page.store";
 import {
   setUpdateObjectId,
   setUpdateObjectOpenState,

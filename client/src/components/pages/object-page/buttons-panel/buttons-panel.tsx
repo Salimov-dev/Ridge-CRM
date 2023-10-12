@@ -17,6 +17,7 @@ const ButtonsPanel = ({
   negativeTitle = "отмена",
   isAuthorEntity = true,
 }) => {
+
   return (
     <Component>
       <Box sx={{ display: "flex", gap: "4px" }}>

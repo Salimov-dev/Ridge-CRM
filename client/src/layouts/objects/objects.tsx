@@ -21,7 +21,10 @@ import CreateObjectButton from "../../components/UI/dialogs/buttons/create-objec
 // hooks
 import useSearchObject from "../../hooks/object/use-search-object";
 // store
-import { getCurrentUserId, getIsUserCurator } from "../../store/user/users.store";
+import {
+  getCurrentUserId,
+  getIsUserCurator,
+} from "../../store/user/users.store";
 import {
   getObjectById,
   getObjectsList,
@@ -33,6 +36,7 @@ const initialState = {
   phone: "",
   name: "",
   cadastralNumber: "",
+  fullDescription: "",
   objectActivity: "",
   startDate: null,
   endDate: null,
@@ -128,7 +132,7 @@ const Objects = () => {
         itemsColumns={columns}
         isLoading={isLoading}
       />
-      
+
       <ObjectCreatePageDialog />
       <ObjectPageDialog />
       <ObjectUpdatePageDialog />

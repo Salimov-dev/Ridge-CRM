@@ -57,6 +57,14 @@ const ObjectsFiltersPanel = ({
         />
         <SearchField
           register={register}
+          label="Найти по описанию"
+          name="fullDescription"
+          value={data.fullDescription}
+          inputProps={{ maxLength: 30 }}
+          disabled={isLoading ? true : false}
+        />
+        <SearchField
+          register={register}
           label="Найти по кадастровому №"
           name="cadastralNumber"
           value={data.cadastralNumber}

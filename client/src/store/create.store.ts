@@ -41,6 +41,7 @@ import sidebarCollapsStateReducer from "./sidebar-collaps-state.store";
 import monthIndexReducer from "./month-index.store";
 import authStateReducer from "./user/auth.store";
 import objectPropertiesReducer from "./object/object-properties";
+import currrentPathReducer from "./current-path.store";
 
 const rootReducer = combineReducers({
   // auth state
@@ -86,6 +87,8 @@ const rootReducer = combineReducers({
   updateLastContact: updateLastContactReducer,
   // sidebar collaps state
   sidebarCollapsState: sidebarCollapsStateReducer,
+  // currrentPath
+  currrentPath: currrentPathReducer,
 });
 
 export function createStore() {

@@ -2,15 +2,12 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
 // components
 import ObjectForm from "../../common/forms/object-form/object-form";
 import FindObjectOnMap from "../../common/find-object-on-map/find-object-on-map";
 import TitleWithAddress from "../../common/page-titles/title-with-address";
 // store
 import { createObject } from "../../../store/object/objects.store";
-// schemas
-import { objectSchema } from "../../../schemas/object-schema";
 // hooks
 import useFindObject from "../../../hooks/object/use-find-object";
 // utils
@@ -68,11 +65,10 @@ const CreateObject = ({ onClose }) => {
     watch,
     handleSubmit,
     setValue,
-    formState: { errors, isValid },
+    formState: { errors },
   } = useForm({
     defaultValues: initialState,
     mode: "onBlur",
-    resolver: yupResolver(objectSchema),
   });
 
   const {
@@ -102,7 +98,7 @@ const CreateObject = ({ onClose }) => {
 
   const isFindedObject = Boolean(Object.keys(findedObject)?.length);
   const isObjectHasAddress = Boolean(watchCity) && Boolean(watchAddress);
-  const isValidAndHasAdress = !isValid && isFindedObject && isObjectHasAddress && isWatchValid;
+  const isValidAndHasAdress = isFindedObject && isObjectHasAddress && isWatchValid;
 
   const onSubmit = (data) => {
     const newData = {
