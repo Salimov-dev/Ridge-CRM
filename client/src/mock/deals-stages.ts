@@ -41,13 +41,6 @@ const dealStagesArray = [
     txtColor: "white",
     objectStatusId: "651af52f687b71e04dde43d0",
   },
-  {
-    _id: "6501ff3a19d68f22d1ea6ccc",
-    name: "Завоз товара",
-    bkgColor: "Teal",
-    txtColor: "white",
-    objectStatusId: "64ecfa454284e591a86bec31",
-  },
 ];
 
 export { dealStagesArray };

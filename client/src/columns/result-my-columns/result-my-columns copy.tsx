@@ -1,16 +1,23 @@
 import dayjs from "dayjs";
 import "dayjs/locale/ru";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import "dayjs/locale/ru";
+// mui
+import { Box, Typography, styled } from "@mui/material";
 // components
-import TableCell from "./components/table-cell";
-import { useTableHeader } from "./hooks/use-table-header";
-// utils
+import { getObjectsList } from "../../store/object/objects.store";
 import { GetWeeklyObjects } from "../../utils/objects/get-weekly-objects";
 import { GetWeeklyObjectsWithPhone } from "../../utils/objects/get-weekly-objects-with-phone";
-// store
-import { getObjectsList } from "../../store/object/objects.store";
+import TableCell from "./components/table-cell";
+
+const Container = styled(Box)`
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+`;
 
 dayjs.extend(customParseFormat);
 dayjs.locale("ru");
@@ -57,25 +64,30 @@ export const resultMyColumns = [
     columns: generateMonthHeaders(),
   },
   {
-    header: "ПОСЛЕДНИЕ 4 НЕДЕЛИ", // Заголовок текущего месяца
+    header: dayjs().locale("ru").format("MMMM").toUpperCase(), // Заголовок текущего месяца
     columns: [
       {
-        // 4 неделя
         accessorFn: (row) => row,
         header: (() => {
-          return useTableHeader(3);
+          const currentDate = dayjs();
+          const startOfNextWeek = currentDate.add(1, "week").startOf("week");
+          const endOfNextWeek = startOfNextWeek.add(6, "day");
+
+          const formattedStartDate = startOfNextWeek.format("DD.MM");
+          const formattedEndDate = endOfNextWeek.format("DD.MM");
+
+          const dateRange = `${formattedStartDate} - ${formattedEndDate}`;
+          return dateRange;
         })(),
         enableSorting: false,
         size: 30,
-        cell: () => {
+        cell: (info) => {
           const currentDate = dayjs();
-          const endOPreviousWeek = currentDate
-            .subtract(3, "week")
-            .endOf("week");
-          const startOPreviousWeek = endOPreviousWeek.subtract(6, "day");
+          const startOfNextWeek = currentDate.add(1, "week").startOf("week");
+          const endOfNextWeek = startOfNextWeek.add(6, "day");
 
-          const formattedStartDate = startOPreviousWeek.format("YYYY-MM-DD");
-          const formattedEndDate = endOPreviousWeek.format("YYYY-MM-DD");
+          const formattedStartDate = startOfNextWeek.format("YYYY-MM-DD");
+          const formattedEndDate = endOfNextWeek.format("YYYY-MM-DD");
 
           const weeklyObjects = GetWeeklyObjects(
             formattedStartDate,
@@ -95,23 +107,28 @@ export const resultMyColumns = [
         },
       },
       {
-        // 3 неделя
         accessorFn: (row) => row,
         header: (() => {
-          return useTableHeader(2);
+          const currentDate = dayjs();
+          const startOfNextWeek = currentDate.add(2, "week").startOf("week");
+          const endOfNextWeek = startOfNextWeek.add(6, "day");
+
+          const formattedStartDate = startOfNextWeek.format("DD.MM");
+          const formattedEndDate = endOfNextWeek.format("DD.MM");
+
+          const dateRange = `${formattedStartDate} - ${formattedEndDate}`;
+          return dateRange;
         })(),
         enableSorting: false,
         size: 30,
-        cell: () => {
+        cell: (info) => {
           const currentDate = dayjs();
 
-          const endOPreviousWeek = currentDate
-            .subtract(2, "week")
-            .endOf("week");
-          const startOPreviousWeek = endOPreviousWeek.subtract(6, "day");
+          const startOfNextWeek = currentDate.add(3, "week").startOf("week");
+          const endOfNextWeek = startOfNextWeek.add(6, "day");
 
-          const formattedStartDate = startOPreviousWeek.format("YYYY-MM-DD");
-          const formattedEndDate = endOPreviousWeek.format("YYYY-MM-DD");
+          const formattedStartDate = startOfNextWeek.format("YYYY-MM-DD");
+          const formattedEndDate = endOfNextWeek.format("YYYY-MM-DD");
 
           const weeklyObjects = GetWeeklyObjects(
             formattedStartDate,
@@ -134,7 +151,16 @@ export const resultMyColumns = [
         // предыдущая неделя
         accessorFn: (row) => row,
         header: (() => {
-          return useTableHeader(1);
+          const currentDate = dayjs();
+
+          const endOfPreviousWeek = currentDate.subtract(1, "week").endOf("week");
+          const startOfPreviousWeek = endOfPreviousWeek.subtract(6, "day");
+
+          const formattedStartDate = startOfPreviousWeek.format("DD.MM");
+          const formattedEndDate = endOfPreviousWeek.format("DD.MM");
+
+          const dateRange = `${formattedStartDate} - ${formattedEndDate}`;
+          return dateRange;
         })(),
         enableSorting: false,
         size: 30,
