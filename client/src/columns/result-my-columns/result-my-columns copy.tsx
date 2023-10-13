@@ -1,23 +1,12 @@
 import dayjs from "dayjs";
 import "dayjs/locale/ru";
-import { useDispatch, useSelector } from "react-redux";
-import customParseFormat from "dayjs/plugin/customParseFormat";
 import "dayjs/locale/ru";
-// mui
-import { Box, Typography, styled } from "@mui/material";
-// components
+import { useSelector } from "react-redux";
+import customParseFormat from "dayjs/plugin/customParseFormat";
+import TableCell from "./components/table-cell";
 import { getObjectsList } from "../../store/object/objects.store";
 import { GetWeeklyObjects } from "../../utils/objects/get-weekly-objects";
 import { GetWeeklyObjectsWithPhone } from "../../utils/objects/get-weekly-objects-with-phone";
-import TableCell from "./components/table-cell";
-
-const Container = styled(Box)`
-  height: 30px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: white;
-`;
 
 dayjs.extend(customParseFormat);
 dayjs.locale("ru");
@@ -81,7 +70,7 @@ export const resultMyColumns = [
         })(),
         enableSorting: false,
         size: 30,
-        cell: (info) => {
+        cell: () => {
           const currentDate = dayjs();
           const startOfNextWeek = currentDate.add(1, "week").startOf("week");
           const endOfNextWeek = startOfNextWeek.add(6, "day");
@@ -121,7 +110,7 @@ export const resultMyColumns = [
         })(),
         enableSorting: false,
         size: 30,
-        cell: (info) => {
+        cell: () => {
           const currentDate = dayjs();
 
           const startOfNextWeek = currentDate.add(3, "week").startOf("week");
@@ -153,7 +142,9 @@ export const resultMyColumns = [
         header: (() => {
           const currentDate = dayjs();
 
-          const endOfPreviousWeek = currentDate.subtract(1, "week").endOf("week");
+          const endOfPreviousWeek = currentDate
+            .subtract(1, "week")
+            .endOf("week");
           const startOfPreviousWeek = endOfPreviousWeek.subtract(6, "day");
 
           const formattedStartDate = startOfPreviousWeek.format("DD.MM");
