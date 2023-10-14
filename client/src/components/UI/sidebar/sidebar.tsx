@@ -3,15 +3,21 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Box, styled, useTheme } from "@mui/material";
 import { Sidebar as ProSidebar, Menu } from "react-pro-sidebar";
+// theme
+import { tokens } from "../../../theme";
 // components
 import Header from "./components/header";
 import ItemsList from "./components/items-list";
 // store
 import { setSidebarCollapsState } from "../../../store/sidebar-collaps-state.store";
-import { getCurrentUserId, getIsUserCurator } from "../../../store/user/users.store";
-// theme
-import { tokens } from "../../../theme";
-import { getCurrrentPathState, setCurrrentPathState } from "../../../store/current-path.store";
+import {
+  getCurrentUserId,
+  getIsUserCurator,
+} from "../../../store/user/users.store";
+import {
+  getCurrrentPathState,
+  setCurrrentPathState,
+} from "../../../store/current-path.store";
 
 const Component = styled(Box)`
   height: 100vh;
@@ -21,12 +27,12 @@ const Component = styled(Box)`
 const Sidebar = () => {
   const dispatch = useDispatch();
 
-  const currentPath = useSelector(getCurrrentPathState())
+  const currentPath = useSelector(getCurrrentPathState());
   const [selected, setSelected] = useState(setSelectedMenuItem());
 
   const [isCollapsed, setIsCollapsed] = useState(true);
   const currentUserId = useSelector(getCurrentUserId());
-  
+
   const isCurator = useSelector(getIsUserCurator(currentUserId));
 
   const theme = useTheme();
@@ -106,6 +112,7 @@ const Sidebar = () => {
             isCollapsed={isCollapsed}
             setIsCollapsed={handleSetCollapsed}
             colors={colors}
+            setSelected={setSelected}
           />
           <ItemsList
             selected={selected}

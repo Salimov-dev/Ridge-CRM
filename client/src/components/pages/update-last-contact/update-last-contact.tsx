@@ -21,6 +21,8 @@ import {
 } from "../../../store/last-contact/last-contact.store";
 // schema
 import { lastContactSchema } from "../../../schemas/last-contact-schema";
+import { capitalizeFirstLetter } from "../../../utils/data/capitalize-first-letter";
+import { createTask } from "../../../store/task/tasks.store";
 
 const UpdateLastContact = ({ onClose }) => {
   const [open, setOpen] = useState(false);
@@ -31,6 +33,9 @@ const UpdateLastContact = ({ onClose }) => {
   const formatedLastContact = {
     ...lastContact,
     date: lastContact?.date ? dayjs(lastContact?.date) : null,
+    dateMyTask: null,
+    timeMyTaks: null,
+    commentMyTask: "",
   };
 
   const {
@@ -53,14 +58,40 @@ const UpdateLastContact = ({ onClose }) => {
   const onSubmit = (data) => {
     const transformedDate = dayjs(data.date).format("YYYY-MM-DDTHH:mm:ss.SSSZ");
     const newData = { ...data, date: transformedDate };
+    dispatch<any>(updateLastContact(newData)).then(onClose());
 
-    dispatch<any>(updateLastContact(newData))
-      .then(onClose())
+    // ниже код для обновления контакта и добавления задачи
+    // пока не работает из ответа 504 от сервера и не получается создать
+    
+    // const lastContactData = {
+    //   date: transformedDate,
+    //   result: capitalizeFirstLetter(data.result),
+    //   company: data.company,
+    //   created_at: data.created_at,
+    //   updated_at: data.updated_at,
+    //   objectId: data.objectId,
+    //   userId: data.userId,
+    //   _id: data._id,
+    // };
+
+    // dispatch<any>(updateLastContact(lastContactData)).then(() => {
+    //   if (data.dateMyTask && data.timeMyTaks && data.commentMyTask) {
+    //     const myTaskData = {
+    //       date: data.dateMyTask,
+    //       time: data.timeMyTaks,
+    //       objectId: data.objectId,
+    //       comment: data.commentMyTask,
+    //       isDone: false,
+    //     };
+    //     dispatch<any>(createTask(myTaskData)).then(() => onClose());
+    //   } else {
+    //     onClose();
+    //   }
+    // });
   };
 
   const handleRemoveLastContact = (lastContactId) => {
-    dispatch<any>(removeLastContact(lastContactId))
-      .then(onClose())
+    dispatch<any>(removeLastContact(lastContactId)).then(onClose());
   };
 
   const handleClickOpen = () => {
@@ -79,12 +110,12 @@ const UpdateLastContact = ({ onClose }) => {
         register={register}
         errors={errors}
         setValue={setValue}
+        isUpdate={true}
       />
       <FooterButtons
         onUpdate={handleSubmit(onSubmit)}
         onClose={onClose}
         onRemove={handleClickOpen}
-        removeId={lastContactId}
         isEditMode={isEditMode}
         isValid={isFullValid}
       />

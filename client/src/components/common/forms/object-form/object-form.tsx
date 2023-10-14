@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 // MUI
-import { InputAdornment } from "@mui/material";
+import { Box, InputAdornment, Typography } from "@mui/material";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import PhoneIphoneOutlinedIcon from "@mui/icons-material/PhoneIphoneOutlined";
 import AlternateEmailOutlinedIcon from "@mui/icons-material/AlternateEmailOutlined";
@@ -15,20 +15,22 @@ import Title from "../title/title";
 import FooterButtons from "../footer-buttons/footer-buttons";
 import TextFieldStyled from "../../inputs/text-field-styled";
 import SimpleSelectField from "../../inputs/simple-select-field";
+import AutocompleteStyled from "../../inputs/autocomplete-styled";
 // store
 import { getMetroList } from "../../../../store/object/metro.store";
-import { getDistrictsList } from "../../../../store/object/districts.store";
 import { getRentTypesList } from "../../../../store/object/rent-types.store";
 import { getObjectTypesList } from "../../../../store/object/object-types.store";
 import { getEstateTypesList } from "../../../../store/object/estate-types.store";
 import { getObjectsStatusList } from "../../../../store/object/object-status.store";
+import { getObjectPropertiesList } from "../../../../store/object/object-properties";
 import { getCurrentRentersList } from "../../../../store/object/current-renter.store";
 import { getWorkingPositionsList } from "../../../../store/user/working-position.store";
 import { getObjectConditionsList } from "../../../../store/object/object-conditions.store";
 // styled
 import { FieldsContainer, Form } from "../styled/styled";
-import AutocompleteStyled from "../../inputs/autocomplete-styled";
-import { getObjectPropertiesList } from "../../../../store/object/object-properties";
+// districts
+import { districtsMSK } from "../../../../mock/districts/districts-msk";
+import { districtsSPB } from "../../../../mock/districts/districts-spb";
 
 const ObjectForm = ({
   data,
@@ -42,7 +44,6 @@ const ObjectForm = ({
   setValue,
   isValid,
 }) => {
-  const districts = useSelector(getDistrictsList());
   const workingPositions = useSelector(getWorkingPositionsList());
   const objectStatuses = useSelector(getObjectsStatusList());
   const currentRenters = useSelector(getCurrentRentersList());
@@ -51,7 +52,9 @@ const ObjectForm = ({
 
   const watchStatus = watch("status");
   const watchWorkingPosition = watch("contact.position");
+
   const watchDistrict = watch("location.district");
+  const watchAddress = watch("location.address");
   const watchMetro = watch("location.metro");
   const watchRentTypes = watch("commercialTerms.rentTypes");
   const watchObjectTypes = watch("estateOptions.objectTypes");
@@ -66,21 +69,70 @@ const ObjectForm = ({
   const estateTypes = useSelector(getEstateTypesList());
   const watchCloudLink = watch("cloudLink");
 
+  const hasDistrict =
+    watchDistrict?.includes("Санкт-Петербург") || watchDistrict?.includes("Москва");
+
+  function getDistrictName(districtId, districts) {
+    const district = districts.find((item) => item._id === districtId);
+    return district ? district.name : "";
+  }
+
+  const getDistName = () => {
+    if (watchDistrict?.startsWith("77")) {
+      return getDistrictName(watchDistrict, districtsMSK);
+    } else if (watchDistrict?.startsWith("78")) {
+      return getDistrictName(watchDistrict, districtsSPB);
+    } else {
+      return watchDistrict;
+    }
+  };
+
   return (
     <>
       <Form onSubmit={handleSubmit(onSubmit)} noValidate>
         <Title title="Объект" />
         <FieldsContainer sx={{ gap: "3px" }}>
-          <AutocompleteStyled
-            label="Район *"
-            register={register}
-            name="location.district"
-            options={districts}
-            value={watchDistrict}
-            setValue={setValue}
-            watchItemId={watchDistrict}
-            errors={errors?.location?.district}
-          />
+          {!hasDistrict ? (
+            <Box
+              sx={{
+                width: "100%",
+                display: "flex",
+                gap: "4px",
+                alignItems: "center",
+              }}
+            >
+              Район:{" "}
+              {watchAddress ? (
+                getDistName()
+              ) : (
+                <Typography>Выберите адрес</Typography>
+              )}
+            </Box>
+          ) : null}
+          {watchDistrict?.includes("Санкт-Петербург") && (
+            <AutocompleteStyled
+              label="Район *"
+              register={register}
+              name="location.district"
+              options={districtsSPB}
+              value={watchDistrict}
+              setValue={setValue}
+              watchItemId={watchDistrict}
+              errors={errors?.location?.district}
+            />
+          )}
+          {watchDistrict?.includes("Москва") && (
+            <AutocompleteStyled
+              label="Район *"
+              register={register}
+              name="location.district"
+              options={districtsMSK}
+              value={watchDistrict}
+              setValue={setValue}
+              watchItemId={watchDistrict}
+              errors={errors?.location?.district}
+            />
+          )}
           <AutocompleteStyled
             label="Метро"
             register={register}

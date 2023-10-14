@@ -12,7 +12,7 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
       style={{
         color: colors.grey[100],
       }}
-      onClick={() => setSelected(title)}
+      onClick={() => setSelected("/")}
       icon={icon}
       component={<Link to={to} />}
     >

@@ -19,7 +19,7 @@ const LastContactCreateDialog = () => {
       component={<CreateLastContact onClose={handleCloseCreateLastContact} />}
       onClose={handleCloseCreateLastContact}
       open={isOpenCreateMeeting}
-      maxWidth="sm"
+      fullWidth={false}
     />
   );
 };

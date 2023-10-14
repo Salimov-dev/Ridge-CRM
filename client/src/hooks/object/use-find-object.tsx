@@ -66,6 +66,9 @@ const useFindObject = () => {
           balloonContent: firstGeoObject.getAddressLine(),
         });
         setFindedObject(firstGeoObject.properties.getAll());
+
+        // Вызываем функцию для обратного геокодирования
+        reverseGeocode(firstGeoObject.geometry.getCoordinates());
       });
     };
   };
@@ -98,6 +101,15 @@ const useFindObject = () => {
     return null;
   };
 
+  const getDistrict = () => {
+    const city = findedObject?.description
+
+    const district = findedObject.metaDataProperty?.GeocoderMetaData?.AddressDetails
+    ?.Country?.AdministrativeArea?.SubAdministrativeArea
+    ?.SubAdministrativeAreaName;
+    return district ? district : city
+  };
+  
   const getAddress = () => {
     if (isEmptyFindedObject) {
       return null;
@@ -123,6 +135,7 @@ const useFindObject = () => {
 
   return {
     getCity,
+    getDistrict,
     getAddress,
     getLatitudeCoordinates,
     getLongitudeCoordinates,

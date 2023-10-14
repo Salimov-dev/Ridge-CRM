@@ -1,17 +1,25 @@
-import { MenuItem } from "react-pro-sidebar";
 import { Box, IconButton, Typography } from "@mui/material";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
+import { useNavigate } from "react-router-dom";
 
-const Header = ({ isCollapsed, setIsCollapsed, colors }) => {
+const Header = ({ isCollapsed, setIsCollapsed, colors, setSelected }) => {
+  const navigate = useNavigate();
   return (
-    <MenuItem
-      onClick={() => setIsCollapsed(!isCollapsed)}
-      icon={isCollapsed ? <MenuOutlinedIcon /> : undefined}
-      style={{
-        margin: "10px 0 10px 0",
+    <Box
+      onClick={() => {
+        navigate("/");
+        setSelected("Главная");
+      }}
+      sx={{
+        margin: "14px 0 20px 16px",
         color: colors.grey[100],
+        cursor: "pointer",
+        "&:hover": {
+          color: "yellow",
+        },
       }}
     >
+      <Typography sx={{}}>Грядка</Typography>
       {!isCollapsed && (
         <Box
           display="flex"
@@ -27,7 +35,7 @@ const Header = ({ isCollapsed, setIsCollapsed, colors }) => {
           </IconButton>
         </Box>
       )}
-    </MenuItem>
+    </Box>
   );
 };
 

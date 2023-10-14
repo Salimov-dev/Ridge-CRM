@@ -12,6 +12,8 @@ import { createObject } from "../../../store/object/objects.store";
 import useFindObject from "../../../hooks/object/use-find-object";
 // utils
 import { capitalizeFirstLetter } from "../../../utils/data/capitalize-first-letter";
+import { districtsSPB } from "../../../mock/districts/districts-spb";
+import { districtsMSK } from "../../../mock/districts/districts-msk";
 
 const initialState = {
   status: "",
@@ -73,13 +75,19 @@ const CreateObject = ({ onClose }) => {
 
   const {
     getCity,
+    getDistrict,
     getAddress,
     getLatitudeCoordinates,
     getLongitudeCoordinates,
     findedObject,
   } = useFindObject();
 
+  const districtsSPBArray = districtsSPB
+  const districtsMSKArray = districtsMSK
+
   const data = watch();
+  // console.log("data", data);
+  
   const watchAddress = watch<any>("location.address", "");
   const watchCity = watch<any>("location.city", "");
   const watchDistrict = watch("location.district", "");
@@ -124,13 +132,15 @@ const CreateObject = ({ onClose }) => {
         ),
       },
     };
-
-    dispatch<any>(createObject(newData)).then(onClose());
+    console.log("newData", newData);
+    
+    // dispatch<any>(createObject(newData)).then(onClose());
   };
 
   useEffect(() => {
     setValue<any>("location.city", getCity());
     setValue<any>("location.address", getAddress());
+    setValue<any>("location.district", getDistrict());
     setValue<any>("location.latitude", getLatitudeCoordinates());
     setValue<any>("location.longitude", getLongitudeCoordinates());
   }, [findedObject]);

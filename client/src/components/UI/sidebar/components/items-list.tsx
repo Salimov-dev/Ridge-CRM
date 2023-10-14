@@ -80,7 +80,7 @@ const ItemsList = ({
         selected={selected}
         setSelected={setSelected}
       />
-      {/* <Item
+      <Item
         title="Презентации"
         to="/presentations"
         icon={
@@ -90,7 +90,7 @@ const ItemsList = ({
         }
         selected={selected}
         setSelected={setSelected}
-      /> */}
+      />
       {isCurator ? (
         <>
           <ItemsTitle
