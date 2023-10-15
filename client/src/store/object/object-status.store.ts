@@ -5,38 +5,24 @@ const objectStatusSlice = createSlice({
   name: "objectStatus",
   initialState: {
     entities: null,
-    isLoading: true,
-    error: null,
-    lastFetch: null,
   },
   reducers: {
-    objectStatusRequested: (state) => {
-      state.isLoading = true;
-    },
-    objectStatusReceived: (state, action) => {
+    objectStatusLoaded: (state, action) => {
       state.entities = action.payload;
-      state.isLoading = false;
-    },
-    objectStatusFailed: (state, action) => {
-      state.error = action.payload;
-      state.isLoading = false;
     },
   },
 });
 
 const { reducer: objectStatusReducer, actions } = objectStatusSlice;
-const { objectStatusReceived } =
+const { objectStatusLoaded } =
   actions;
 
 export const loadObjectStatusList = () => (dispatch) => {
-  dispatch(objectStatusReceived(objectStatusesArray));
+  dispatch(objectStatusLoaded(objectStatusesArray));
 };
 
 export const getObjectsStatusList = () => (state) =>
   state.objectStatus.entities;
-
-export const getObjectStatusLoading = () => (state) =>
-  state.objectStatus.isLoading;
 
 export const getObjectStatusNameById = (id) => (state) => {
   if (state?.objectStatus.entities) {

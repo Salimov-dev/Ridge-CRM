@@ -1,39 +1,24 @@
 import { createSlice } from "@reduxjs/toolkit";
-import metroService from "../../services/object/metro.service";
+import { metroListArraySPB } from "../../mock/metro/metro-spb";
 
 const metroSlice = createSlice({
   name: "metro",
   initialState: {
     entities: [],
-    isLoading: false,
-    error: null,
   },
   reducers: {
-    metroRequested: (state) => {
-      state.isLoading = true;
-    },
-    metroReceived: (state, action) => {
+    metroListLoaded: (state, action) => {
       state.entities = action.payload;
-      state.isLoading = false;
-    },
-    metroFailed: (state, action) => {
-      state.error = action.payload;
-      state.isLoading = false;
     },
   },
 });
 
 const { reducer: metroReducer, actions } = metroSlice;
-const { metroRequested, metroReceived, metroFailed } = actions;
+const { metroListLoaded } = actions;
 
 export const loadMetroList = () => async (dispatch) => {
-  dispatch(metroRequested());
-  try {
-    const { content } = await metroService.get();
-    dispatch(metroReceived(content));
-  } catch (error) {
-    metroFailed(error.message);
-  }
+    dispatch(metroListLoaded(metroListArraySPB));
+
 };
 
 export const getMetroList = () => (state) => state.metro.entities;

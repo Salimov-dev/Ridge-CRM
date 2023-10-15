@@ -12,7 +12,7 @@ const schema = new Schema(
       email: String,
     },
     description: {
-      fullDescription: { type: String },
+      fullDescription: String,
     },
     commercialTerms: {
       rentPrice: String,

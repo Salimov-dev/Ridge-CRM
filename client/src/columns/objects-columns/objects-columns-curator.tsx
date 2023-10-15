@@ -29,6 +29,7 @@ import {
   getMeetingsByObjectId,
   getObjectMeetingsList,
 } from "../../store/meeting/meetings.store";
+import { getDistrictName } from "../../store/object/districts.store";
 
 export const objectsColumnsCurator = [
   {
@@ -56,7 +57,9 @@ export const objectsColumnsCurator = [
         header: "Район",
         cell: (info) => {
           const district = info.getValue();
-          return <AlignCenter>{FormatDistrict(district)}</AlignCenter>;
+          return (
+            <AlignCenter>{useSelector(getDistrictName(district))}</AlignCenter>
+          );
         },
       },
       {
@@ -223,14 +226,14 @@ export const objectsColumnsCurator = [
             <AlignCenter>
               <Tooltip title="Открыть облако" placement="top-start" arrow>
                 <Button onClick={handleOpenCloud}>
-                  <CloudDoneIcon sx={{color: "white"}}/>
+                  <CloudDoneIcon sx={{ color: "white" }} />
                 </Button>
               </Tooltip>
             </AlignCenter>
           ) : (
             <AlignCenter>
               <Tooltip title="Облако отсутствует" placement="top-start" arrow>
-                <CloudOffIcon sx={{color: "white"}}/>
+                <CloudOffIcon sx={{ color: "white" }} />
               </Tooltip>
             </AlignCenter>
           );

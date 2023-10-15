@@ -5,36 +5,23 @@ const objectTypesSlice = createSlice({
   name: "objectTypes",
   initialState: {
     entities: null,
-    isLoading: true,
-    error: null,
   },
   reducers: {
-    objectTypesRequested: (state) => {
-      state.isLoading = true;
-    },
-    objectTypesReceived: (state, action) => {
+    objectTypesLoaded: (state, action) => {
       state.entities = action.payload;
-      state.isLoading = false;
-    },
-    objectTypesFailed: (state, action) => {
-      state.error = action.payload;
-      state.isLoading = false;
     },
   },
 });
 
 const { reducer: objectTypesReducer, actions } = objectTypesSlice;
-const { objectTypesReceived } =
+const { objectTypesLoaded } =
   actions;
 
 export const loadObjectTypesList = () => async (dispatch) => {
-    dispatch(objectTypesReceived(objectTypesArray));
+    dispatch(objectTypesLoaded(objectTypesArray));
 };
 
 export const getObjectTypesList = () => (state) => state.objectTypes.entities;
-
-export const getObjectTypesStatus = () => (state) =>
-  state.objectTypes.isLoading;
 
 export const getObjectTypeNameById = (id) => (state) => {
   const objectType = state?.objectTypes?.entities?.find(

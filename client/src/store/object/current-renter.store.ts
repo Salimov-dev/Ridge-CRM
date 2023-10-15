@@ -5,36 +5,23 @@ const currentRentersSlice = createSlice({
   name: "currentRenters",
   initialState: {
     entities: [],
-    isLoading: true,
-    error: null,
   },
   reducers: {
-    currentRentersRequested: (state) => {
-      state.isLoading = true;
-    },
-    currentRentersReceived: (state, action) => {
+    currentRentersLoaded: (state, action) => {
       state.entities = action.payload;
-      state.isLoading = false;
-    },
-    currentRentersFailed: (state, action) => {
-      state.error = action.payload;
-      state.isLoading = false;
     },
   },
 });
 
 const { reducer: currentRentersReducer, actions } = currentRentersSlice;
-const { currentRentersReceived } = actions;
+const { currentRentersLoaded } = actions;
 
 export const loadCurrentRentersList = () => async (dispatch) => {
-  dispatch(currentRentersReceived(currentRentersArray));
+  dispatch(currentRentersLoaded(currentRentersArray));
 };
 
 export const getCurrentRentersList = () => (state) =>
   state.currentRenters.entities;
-
-export const getCurrentRentersStatus = () => (state) =>
-  state.currentRenters.isLoading;
 
 export const getCurrentRenterNameById = (id) => (state) => {
   const currentRenters = state?.currentRenters?.entities?.find(

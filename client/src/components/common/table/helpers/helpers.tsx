@@ -8,7 +8,7 @@ import { getPriceForRentMetr } from "../../../../utils/data/get-price-rent-for-m
 import { getMetroName } from "../../../../store/object/metro.store";
 import { getObjectById } from "../../../../store/object/objects.store";
 import { getUserNameById } from "../../../../store/user/users.store";
-import { getDistrictById } from "../../../../store/object/districts.store";
+import { getDistrictName } from "../../../../store/object/districts.store";
 import { getRentTypeNameById } from "../../../../store/object/rent-types.store";
 import { getObjectTypeNameById } from "../../../../store/object/object-types.store";
 import { getEstateTypeNameById } from "../../../../store/object/estate-types.store";
@@ -31,7 +31,7 @@ export const FormatPhone = (num) => {
 };
 
 export const FormatDistrict = (id) => {
-  return useSelector(getDistrictById(id));
+  return useSelector(getDistrictName(id));
 };
 
 export const FormatObjectStatus = (id) => {

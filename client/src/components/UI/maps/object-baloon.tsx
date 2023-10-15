@@ -6,12 +6,10 @@ import DividerStyled from "../../common/divider/divider-styled";
 import MultiColorOutlinedButton from "../../common/buttons/multi-color-outlined-button";
 import Attribute from "../../common/map/baloon/attribute";
 // utils
-import { FormatDate } from "../../../utils/date/format-date";
 import { makeDigitSeparator } from "../../../utils/data/make-digit-separator";
 // store
 import { getUserNameById } from "../../../store/user/users.store";
 import {
-  getDistrictById,
   getDistrictName,
 } from "../../../store/object/districts.store";
 import { getRentTypeNameById } from "../../../store/object/rent-types.store";

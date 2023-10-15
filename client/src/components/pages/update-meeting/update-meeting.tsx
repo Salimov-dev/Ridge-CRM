@@ -18,11 +18,11 @@ import { getCurrentUserId } from "../../../store/user/users.store";
 import { getMeetingTypesList } from "../../../store/meeting/meeting-types.store";
 import {
   getMeetingStatusesList,
-  getMeetingStatusesLoadingStatus,
 } from "../../../store/meeting/meeting-status.store";
 import { getUpdateMeetingId } from "../../../store/meeting/update-meeting.store";
 import {
   getMeetingById,
+  getMeetingLoadingStatus,
   removeMeeting,
   updateMeeting,
 } from "../../../store/meeting/meetings.store";
@@ -63,7 +63,7 @@ const UpdateMeeting = ({ onClose }) => {
   const currentUserObjects = objects?.filter(
     (obj) => obj?.userId === currentUserId
   );
-  const isMeetingsLoading = useSelector(getMeetingStatusesLoadingStatus());
+  const isMeetingsLoading = useSelector(getMeetingLoadingStatus());
   const meetingTypes = useSelector(getMeetingTypesList());
   const statuses = useSelector(getMeetingStatusesList());
   const dispatch = useDispatch();

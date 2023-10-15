@@ -49,7 +49,6 @@ const AppLoader = ({ children }: AppLoaderProps) => {
       dispatch<any>(loadMetroList());
       dispatch<any>(loadDistrictsList());
       dispatch<any>(loadWorkingPositionList());
-      dispatch<any>(loadWorkingPositionList());
       dispatch<any>(loadCurrentRentersList());
       dispatch<any>(loadRentTypesList());
       dispatch<any>(loadEstateTypesList());

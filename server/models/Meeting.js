@@ -4,8 +4,8 @@ const schema = new Schema(
   {
     isDone: Boolean,
     userId: { type: Schema.Types.ObjectId, ref: "User" },
-    status: { type: Schema.Types.ObjectId, ref: "MeetingStatus" },
-    meetingType: { type: Schema.Types.ObjectId, ref: "MeetingType" },
+    status: String,
+    meetingType: String,
     date: String,
     time: String,
     comment: String,

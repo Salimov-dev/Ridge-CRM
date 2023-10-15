@@ -3,7 +3,6 @@ import { makeDigitSeparator } from "../../utils/data/make-digit-separator";
 import {
   FormatCurrentRenter,
   FormatDate,
-  FormatDistrict,
   FormatManagerName,
   FormatMetro,
   FormatObjectProperties,
@@ -13,7 +12,6 @@ import {
   FormatTypeObject,
   FormatTypeRent,
   FormatWorkingPosition,
-  priceForMetr,
 } from "../../components/common/table/helpers/helpers";
 import EmptyTd from "../../components/common/columns/empty-td";
 import { useSelector } from "react-redux";
