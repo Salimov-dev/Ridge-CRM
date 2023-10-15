@@ -72,6 +72,10 @@ const Objects = () => {
     mode: "onBlur",
   });
 
+  const data = watch();
+  console.log("data", data);
+  
+
   const objects = useSelector(getObjectsList());
   const selectedObject = useSelector(getObjectById(selectedBaloon));
   const isLoading = useSelector(getObjectsLoadingStatus());
@@ -82,7 +86,6 @@ const Objects = () => {
   const center = [59.930320630519155, 30.32906024941998];
   const mapZoom = 11;
 
-  const data = watch();
   const searchedObjects = useSearchObject(objects, data);
   const sortedObjects = orderBy(searchedObjects, ["created_at"], ["desc"]);
   const isInputEmpty = JSON.stringify(initialState) !== JSON.stringify(data);

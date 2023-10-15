@@ -1,5 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import districtsService from "../../services/object/districts.service";
+import { districtsSPB } from "../../mock/districts/districts-spb";
+import { districtsMSK } from "../../mock/districts/districts-msk";
 
 const districtsSlice = createSlice({
   name: "districts",
@@ -27,13 +29,8 @@ const { reducer: districtsReducer, actions } = districtsSlice;
 const { districtsRequested, districtsReceived, districtsFailed } = actions;
 
 export const loadDistrictsList = () => async (dispatch) => {
-  dispatch(districtsRequested());
-  try {
-    const { content } = await districtsService.get();
-    dispatch(districtsReceived(content));
-  } catch (error) {
-    districtsFailed(error.message);
-  }
+  const districtsFullArray = [...districtsSPB, ...districtsMSK];
+  dispatch(districtsReceived(districtsFullArray));
 };
 
 export const getDistrictsList = () => (state) => state.districts.entities;

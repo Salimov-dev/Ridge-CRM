@@ -55,7 +55,12 @@ export const objectsColumns = [
         header: "Район",
         cell: (info) => {
           const district = info.getValue();
-          return <AlignCenter>{FormatDistrict(district)}</AlignCenter>;
+          const idRegex = /^[0-9a-fA-F]+$/;
+          if (idRegex.test(district)) {
+            return <AlignCenter>{FormatDistrict(district)}</AlignCenter>;
+          } else {
+            return <AlignCenter>{district}</AlignCenter>;
+          }
         },
       },
       {

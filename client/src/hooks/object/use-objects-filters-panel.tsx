@@ -7,6 +7,7 @@ import { getMetroList } from "../../store/object/metro.store";
 import { getCurrentRentersList } from "../../store/object/current-renter.store";
 import { getEstateTypesList } from "../../store/object/estate-types.store";
 import { getObjectsStatusList } from "../../store/object/object-status.store";
+import { nanoid } from "@reduxjs/toolkit";
 
 const useObjectsFiltersPanel = (objects) => {
   const users = useSelector(getUsersList());
@@ -39,21 +40,40 @@ const useObjectsFiltersPanel = (objects) => {
 
     return sortedStatuses;
   };
+
   const getActualDistrictsList = () => {
     const filteredDistricts = objects?.map((dist) => dist.location.district);
     const uniqueDistricts = [...new Set(filteredDistricts)];
 
     const actualDistrictsArray = uniqueDistricts?.map((id) => {
-      const foundObject = districts?.find((obj) => obj._id === id);
-      return foundObject
-        ? { _id: foundObject._id, name: foundObject.name }
-        : null;
+      const idRegex = /^[0-9a-fA-F]+$/;
+      if (!idRegex.test(id)) {
+        return { _id: id, name: id };
+      } else {
+        const foundObject = districts?.find((obj) => obj._id === id);
+        return foundObject
+          ? { _id: foundObject?._id, name: foundObject?.name }
+          : null;
+      }
     });
 
-    const sortedDistricts = orderBy(actualDistrictsArray, ["name"], ["asc"]);
+    // Отсортируем полученные районы, учитывая строки и объекты
+    actualDistrictsArray.sort((a, b) => {
+      if (typeof a === "string" && typeof b === "string") {
+        return a.localeCompare(b);
+      } else if (typeof a === "string") {
+        return -1;
+      } else if (typeof b === "string") {
+        return 1;
+      } else {
+        return a?.name?.localeCompare(b?.name);
+      }
+    });
+    console.log("actualDistrictsArray", actualDistrictsArray);
 
-    return sortedDistricts;
+    return actualDistrictsArray;
   };
+
   const getActualMetroList = () => {
     const filteredMetro = objects?.map((dist) => dist?.location?.metro);
     const formatedMetroArray = filteredMetro?.filter((m) => m !== "");
@@ -71,6 +91,7 @@ const useObjectsFiltersPanel = (objects) => {
 
     return sortedMetros;
   };
+
   const getActualCurrentRentersList = () => {
     const filteredRenters = objects?.map(
       (renter) => renter?.estateOptions?.currentRenters
