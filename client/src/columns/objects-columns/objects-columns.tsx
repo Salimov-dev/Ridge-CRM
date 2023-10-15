@@ -28,6 +28,7 @@ import {
   getMeetingsList,
   getObjectMeetingsList,
 } from "../../store/meeting/meetings.store";
+import { getDistrictName } from "../../store/object/districts.store";
 
 export const objectsColumns = [
   {
@@ -55,12 +56,9 @@ export const objectsColumns = [
         header: "Район",
         cell: (info) => {
           const district = info.getValue();
-          const idRegex = /^[0-9a-fA-F]+$/;
-          if (idRegex.test(district)) {
-            return <AlignCenter>{FormatDistrict(district)}</AlignCenter>;
-          } else {
-            return <AlignCenter>{district}</AlignCenter>;
-          }
+          const distName = useSelector(getDistrictName(district));
+
+          return <AlignCenter>{distName}</AlignCenter>;
         },
       },
       {

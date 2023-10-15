@@ -60,7 +60,7 @@ const MeetingsFiltersPanel = ({ data, register, setValue, isLoading }) => {
           onChange={(value) => setValue("endDate", value)}
           disabled={isLoading ? true : false}
         />
-        <MultiSelectField
+        {/* <MultiSelectField
           name="users"
           labelId="users-label"
           label="Выбор по менеджеру"
@@ -68,8 +68,8 @@ const MeetingsFiltersPanel = ({ data, register, setValue, isLoading }) => {
           selectedItems={data.selectedUsers}
           onChange={(e) => setValue("selectedUsers", e.target.value)}
           disabled={isLoading ? true : false}
-        />
-                <SearchSelectField
+        /> */}
+        <SearchSelectField
           register={register}
           name="meetingsActivity"
           labelId="meetingsActivity"

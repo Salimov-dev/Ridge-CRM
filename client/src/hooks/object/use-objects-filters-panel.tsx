@@ -7,7 +7,6 @@ import { getMetroList } from "../../store/object/metro.store";
 import { getCurrentRentersList } from "../../store/object/current-renter.store";
 import { getEstateTypesList } from "../../store/object/estate-types.store";
 import { getObjectsStatusList } from "../../store/object/object-status.store";
-import { nanoid } from "@reduxjs/toolkit";
 
 const useObjectsFiltersPanel = (objects) => {
   const users = useSelector(getUsersList());
@@ -69,7 +68,6 @@ const useObjectsFiltersPanel = (objects) => {
         return a?.name?.localeCompare(b?.name);
       }
     });
-    console.log("actualDistrictsArray", actualDistrictsArray);
 
     return actualDistrictsArray;
   };

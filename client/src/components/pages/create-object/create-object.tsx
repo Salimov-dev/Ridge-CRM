@@ -81,7 +81,6 @@ const CreateObject = ({ onClose }) => {
   } = useFindObject();
 
   const data = watch();
-  // console.log("data", data);
 
   const watchAddress = watch<any>("location.address", "");
   const watchCity = watch<any>("location.city", "");

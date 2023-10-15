@@ -44,4 +44,17 @@ export const getDistrictById = (id) => (state) => {
   return result;
 };
 
+export const getDistrictName = (district) => (state) => {
+  const idRegex = /^[0-9a-fA-F]+$/;
+
+  if (idRegex.test(district)) {
+    const currentDistrict = state?.districts?.entities?.find(
+      (dist) => dist?._id === district
+    );
+    return currentDistrict?.name;
+  } else {
+    return district;
+  }
+};
+
 export default districtsReducer;

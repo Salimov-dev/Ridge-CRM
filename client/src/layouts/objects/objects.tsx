@@ -73,8 +73,6 @@ const Objects = () => {
   });
 
   const data = watch();
-  console.log("data", data);
-  
 
   const objects = useSelector(getObjectsList());
   const selectedObject = useSelector(getObjectById(selectedBaloon));

@@ -10,7 +10,10 @@ import { FormatDate } from "../../../utils/date/format-date";
 import { makeDigitSeparator } from "../../../utils/data/make-digit-separator";
 // store
 import { getUserNameById } from "../../../store/user/users.store";
-import { getDistrictById } from "../../../store/object/districts.store";
+import {
+  getDistrictById,
+  getDistrictName,
+} from "../../../store/object/districts.store";
 import { getRentTypeNameById } from "../../../store/object/rent-types.store";
 import { getEstateTypeNameById } from "../../../store/object/estate-types.store";
 import { getObjectTypeNameById } from "../../../store/object/object-types.store";
@@ -34,7 +37,8 @@ const ObjectBaloon = ({ object }) => {
   const objectId = object?._id;
   const manager = useSelector(getUserNameById(object?.userId));
   const city = object?.location?.city;
-  const district = useSelector(getDistrictById(object?.location?.district));
+
+  const district = useSelector(getDistrictName(object?.location?.district));
   const address = object?.location?.address;
   const name = object?.contact?.name;
   const phone = object?.contact?.phone;
@@ -89,10 +93,7 @@ const ObjectBaloon = ({ object }) => {
 
       <DividerStyled />
       <Attribute title="Контакт:" subTitle={name ? `${name}` : "-"} />
-      <Attribute
-        title="Телефон:"
-        subTitle={phone ? FormatPhone(phone) : "-"}
-      />
+      <Attribute title="Телефон:" subTitle={phone ? FormatPhone(phone) : "-"} />
       <Attribute title="Email:" subTitle={email ? email : "-"} />
 
       <MultiColorOutlinedButton

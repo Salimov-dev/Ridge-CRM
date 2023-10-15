@@ -18,6 +18,7 @@ import {
 import EmptyTd from "../../components/common/columns/empty-td";
 import { useSelector } from "react-redux";
 import { getEstateConditionNameById } from "../../store/object/object-conditions.store";
+import { getDistrictName } from "../../store/object/districts.store";
 
 const AlignCenter = styled(Box)`
   display: flex;
@@ -46,7 +47,8 @@ export const locationColumns = [
     header: "Район",
     cell: (info) => {
       const district = info.getValue();
-      return <AlignCenter>{FormatDistrict(district)}</AlignCenter>;
+      const distName = useSelector(getDistrictName(district));
+      return <AlignCenter>{distName}</AlignCenter>;
     },
   },
   {

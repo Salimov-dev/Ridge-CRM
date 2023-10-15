@@ -8,11 +8,11 @@ const districtsSPB = [
     name: "Василеостровский",
   },
   {
-    _id: "64c6ad2cf12eada13e315891",
+    _id: "78c6ad2cf12eada13e315891",
     name: "Выборгский",
   },
   {
-    _id: "64f38b5b9707a3e2381cf0e7",
+    _id: "78f38b5b9707a3e2381cf0e7",
     name: "Калининский",
   },
   {
@@ -20,7 +20,7 @@ const districtsSPB = [
     name: "Кировский",
   },
   {
-    _id: "64c6ad2cf12eada13e315892",
+    _id: "78c6ad2cf12eada13e315892",
     name: "Колпинский",
   },
   {
@@ -28,7 +28,7 @@ const districtsSPB = [
     name: "Красногвардейский",
   },
   {
-    _id: "64c6ad2cf12eada13e3158a7",
+    _id: "78c6ad2cf12eada13e3158a7",
     name: "Красносельский",
   },
   {
@@ -40,15 +40,15 @@ const districtsSPB = [
     name: "Петродворцовый",
   },
   {
-    _id: "64c6ad2cf12eada13e315899",
+    _id: "78c6ad2cf12eada13e315899",
     name: "Приморский",
   },
   {
-    _id: "64c6ad2cf12eada13e31589a",
+    _id: "78c6ad2cf12eada13e31589a",
     name: "Пушкинский",
   },
   {
-    _id: "64c6ad2cf12eada13e3158a9",
+    _id: "78c6ad2cf12eada13e3158a9",
     name: "Ломоносовский",
   },
   {
@@ -56,11 +56,11 @@ const districtsSPB = [
     name: "Московский",
   },
   {
-    _id: "64c6ad2cf12eada13e315895",
+    _id: "78c6ad2cf12eada13e315895",
     name: "Невский ",
   },
   {
-    _id: "64c6ad2cf12eada13e31589b",
+    _id: "78c6ad2cf12eada13e31589b",
     name: "Фрунзенский",
   },
   {
