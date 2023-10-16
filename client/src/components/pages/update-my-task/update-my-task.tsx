@@ -21,10 +21,7 @@ import { getObjectsList } from "../../../store/object/objects.store";
 import { getCurrentUserId } from "../../../store/user/users.store";
 // schema
 import { taskSchema } from "../../../schemas/task-shema";
-import {
-  getOpenObjectPageId,
-  loadOpenObjectPageOpenState,
-} from "../../../store/object/open-object-page.store";
+import { loadOpenObjectPageOpenState } from "../../../store/object/open-object-page.store";
 
 const UpdateMyTask = ({ title, onClose }) => {
   const [open, setOpen] = useState(false);
@@ -60,7 +57,7 @@ const UpdateMyTask = ({ title, onClose }) => {
   const objectId = task?.objectId;
 
   const isObjectPage = useSelector(loadOpenObjectPageOpenState());
-  
+
   const currentUserId = useSelector(getCurrentUserId());
   const currentUserObjects = objects?.filter(
     (obj) => obj?.userId === currentUserId
@@ -80,13 +77,11 @@ const UpdateMyTask = ({ title, onClose }) => {
       time: transformedTime,
     };
 
-    dispatch<any>(updateMyTask(newData))
-      .then(onClose())
+    dispatch<any>(updateMyTask(newData)).then(onClose());
   };
 
   const handleRemoveTask = (taskId: number) => {
-    dispatch<any>(removeTask(taskId))
-      .then(onClose())
+    dispatch<any>(removeTask(taskId)).then(onClose());
   };
 
   const handleClickOpen = () => {

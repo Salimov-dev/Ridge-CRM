@@ -19,7 +19,7 @@ const corsOptions = {
     "http://31.129.108.151",
     "https://ridge-crm.ru",
   ],
-  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS",
   allowedHeaders: [
     "Origin",
     "X-Requested-With",

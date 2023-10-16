@@ -111,8 +111,9 @@ export function createTask(payload) {
 export const updateMyTask = (payload) => async (dispatch) => {
   dispatch(taskUpdateRequested());
   try {
-    dispatch(taskUpdateSuccessed(payload));
-    await tasksService.update(payload);
+    const { content } = await tasksService.update(payload)
+
+    dispatch(taskUpdateSuccessed(content));
   } catch (error) {
     dispatch(taskUpdateFailed(error.message));
   }

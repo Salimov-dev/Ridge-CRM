@@ -20,6 +20,8 @@ const tasksService = {
       tasksEndpoint + "/" + payload._id + "/edit",
       payload
     );
+    console.log("data", data);
+    
     return data;
   },
 };

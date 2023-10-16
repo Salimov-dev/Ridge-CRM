@@ -54,7 +54,8 @@ router.post("/create", auth, async (req, res) => {
 router.patch("/:meetingId?/edit", auth, async (req, res) => {
   try {
     const { meetingId } = req.params;
-    await Meeting.findByIdAndUpdate(meetingId, req.body);
+    const updatedMeeting =  await Meeting.findByIdAndUpdate(meetingId, req.body);
+    res.send(updatedMeeting);
   } catch (e) {
     res.status(500).json({
       message: "На сервере произошла ошибка, попробуйте позже",
@@ -66,6 +67,8 @@ router.delete("/:meetingId?", auth, async (req, res) => {
   try {
     const { meetingId } = req.params;
     await Meeting.findByIdAndRemove(meetingId);
+    
+    return res.send(null);
   } catch (e) {
     res.status(500).json({
       message: "На сервере произошла ошибка, попробуйте позже",

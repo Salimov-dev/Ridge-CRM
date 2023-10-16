@@ -58,7 +58,8 @@ router.get("/:objectId?", auth, async (req, res) => {
 router.patch("/:objectId?/edit", auth, async (req, res) => {
   try {
     const { objectId } = req.params;
-    await Object.findByIdAndUpdate(objectId, req.body);
+    const updatedObject = await Object.findByIdAndUpdate(objectId, req.body);
+    res.send(updatedObject);
   } catch (e) {
     res.status(500).json({
       message: "На сервере произошла ошибка, попробуйте позже",
@@ -70,6 +71,7 @@ router.delete("/:objectId?", auth, async (req, res) => {
   try {
     const { objectId } = req.params;
     await Object.findByIdAndRemove(objectId);
+    return res.send(null);
   } catch (e) {
     res.status(500).json({
       message: "На сервере произошла ошибка, попробуйте позже",

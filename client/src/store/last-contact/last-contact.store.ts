@@ -132,8 +132,8 @@ export function createLastContact(payload) {
 export const updateLastContact = (payload) => async (dispatch) => {
   dispatch(lastContactUpdateRequested());
   try {
-    dispatch(lastContactUpdateSuccessed(payload));
-    await lastContactService.update(payload);
+    const { content } = await lastContactService.update(payload);
+    dispatch(lastContactUpdateSuccessed(content));
   } catch (error) {
     dispatch(lastContactUpdateFailed(error.message));
   }
@@ -141,7 +141,6 @@ export const updateLastContact = (payload) => async (dispatch) => {
 
 export const removeLastContact = (lastContactId) => async (dispatch) => {
   dispatch(removeLastContactRequested());
-
   try {
     dispatch(lastContactRemoved(lastContactId));
     await lastContactService.remove(lastContactId);

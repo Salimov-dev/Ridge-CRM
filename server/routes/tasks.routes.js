@@ -1,9 +1,7 @@
 import express from "express";
-import Meeting from "../models/Meeting.js";
 import Company from "../models/Company.js";
 import auth from "../middleware/auth.middleware.js";
 import Task from "../models/Task.js";
-import User from "../models/User.js";
 
 const router = express.Router({ mergeParams: true });
 
@@ -45,7 +43,8 @@ router.post("/create", auth, async (req, res) => {
 router.patch("/:taskId?/edit", auth, async (req, res) => {
   try {
     const { taskId } = req.params;
-    await Task.findByIdAndUpdate(taskId, req.body);
+    const updatedTask = await Task.findByIdAndUpdate(taskId, req.body);
+    res.send(updatedTask);
   } catch (e) {
     res.status(500).json({
       message: "На сервере произошла ошибка, попробуйте позже",
@@ -57,6 +56,7 @@ router.delete("/:taskId?", auth, async (req, res) => {
   try {
     const { taskId } = req.params;
     await Task.findByIdAndRemove(taskId);
+    return res.send(null);
   } catch (e) {
     res.status(500).json({
       message: "На сервере произошла ошибка, попробуйте позже",

@@ -39,8 +39,11 @@ router.post("/create", auth, async (req, res) => {
 router.patch("/:lastContactId?/edit", auth, async (req, res) => {
   try {
     const { lastContactId } = req.params;
-
-    await LastContact.findByIdAndUpdate(lastContactId, req.body);
+    const updatedLastContact = await LastContact.findByIdAndUpdate(
+      lastContactId,
+      req.body
+    );
+    res.send(updatedLastContact);
   } catch (e) {
     res.status(500).json({
       message: "На сервере произошла ошибка, попробуйте позже",
@@ -52,6 +55,8 @@ router.delete("/:lastContactId?", auth, async (req, res) => {
   try {
     const { lastContactId } = req.params;
     await LastContact.findByIdAndRemove(lastContactId);
+
+    return res.send(null);
   } catch (e) {
     res.status(500).json({
       message: "На сервере произошла ошибка, попробуйте позже",

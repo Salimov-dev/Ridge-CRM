@@ -46,7 +46,6 @@ http.interceptors.response.use(
 
     if (!expectedErrors) {
       console.log(error);
-      // toast.error("Something was wrong. Try it later");
     }
     return Promise.reject(error);
   }
