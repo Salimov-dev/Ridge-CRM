@@ -42,6 +42,8 @@ import monthIndexReducer from "./month-index.store";
 import authStateReducer from "./user/auth.store";
 import objectPropertiesReducer from "./object/object-properties";
 import currrentPathReducer from "./current-path.store";
+import createPresentationReducer from "./presentation/create-presentation.store";
+import presentationsReducer from "./presentation/presentations.store";
 
 const rootReducer = combineReducers({
   // auth state
@@ -89,6 +91,9 @@ const rootReducer = combineReducers({
   sidebarCollapsState: sidebarCollapsStateReducer,
   // currrentPath
   currrentPath: currrentPathReducer,
+  // presentations
+  presentations: presentationsReducer,
+  createPresentation: createPresentationReducer,
 });
 
 export function createStore() {

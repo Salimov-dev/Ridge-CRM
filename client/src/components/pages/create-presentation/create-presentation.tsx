@@ -11,29 +11,56 @@ import FooterButtons from "../../common/forms/footer-buttons/footer-buttons";
 // MUI
 import { Box, styled } from "@mui/material";
 // store
+import { createTask } from "../../../store/task/tasks.store";
 import { getOpenObjectPageId } from "../../../store/object/open-object-page.store";
 import { createLastContact } from "../../../store/last-contact/last-contact.store";
 // schema
-import { createTask } from "../../../store/task/tasks.store";
 import { lastContactSchema } from "../../../schemas/last-contact-schema";
 // utils
 import { capitalizeFirstLetter } from "../../../utils/data/capitalize-first-letter";
+import AddPresentationForm from "../../common/forms/presentation/add-presentation-form";
+import { getObjectsList } from "../../../store/object/objects.store";
+import {
+  getCurrentUserId,
+  getIsUserCurator,
+} from "../../../store/user/users.store";
+import { presentationSchema } from "../../../schemas/presentation-schema";
+import {
+  createPresentation,
+  getPresentationsList,
+} from "../../../store/presentation/presentations.store";
 
 const initialState = {
-  date: dayjs(),
-  result: "",
   objectId: "",
-  dateMyTask: null,
-  timeMyTaks: null,
-  commentMyTask: "",
+  result: "",
+  status: "",
+  cloudLink: "",
+  curatorComment: "",
 };
+
 const Component = styled(Box)`
   width: 100%;
 `;
 
-const CreateLastContact = ({ onClose }) => {
+const CreatePresentation = ({ onClose }) => {
   const dispatch = useDispatch();
   const objectPageId = useSelector(getOpenObjectPageId());
+
+  const objects = useSelector(getObjectsList());
+  const presList = useSelector(getPresentationsList());
+  // console.log("presList", presList);
+
+  const currentUserId = useSelector(getCurrentUserId());
+  const isCurator = useSelector(getIsUserCurator(currentUserId));
+  const currentUserObjects = objects?.filter(
+    (obj) => obj?.userId === currentUserId
+  );
+
+  let transformObjects = [];
+  const actualObjects = isCurator ? objects : currentUserObjects;
+  actualObjects?.forEach((obj) => {
+    transformObjects?.push({ _id: obj._id, name: obj.location.address });
+  });
 
   const {
     register,
@@ -44,37 +71,26 @@ const CreateLastContact = ({ onClose }) => {
   } = useForm({
     defaultValues: initialState,
     mode: "onBlur",
-    resolver: yupResolver(lastContactSchema),
+    resolver: yupResolver(presentationSchema),
   });
 
   const data = watch();
-  const watchDate = watch<any>("date", null);
+  const watchObjectId = watch("objectId");
 
-  const isFullValid = isValid && watchDate;
+  const isFullValid = isValid && Boolean(watchObjectId?.length);
 
   const onSubmit = (data) => {
-    const lastContactData = {
-      date: data.date,
+    const presentationNewData = {
+      cloudLink: data.cloudLink,
       objectId: data.objectId,
-      result: capitalizeFirstLetter(data.result),
     };
+    console.log("data", data);
+    
 
-    dispatch<any>(createLastContact(lastContactData)).then(() => onClose());
-
-    // .then(() => {
-    //   if (data.dateMyTask && data.timeMyTaks && data.commentMyTask) {
-    //     const myTaskData = {
-    //       date: data.dateMyTask,
-    //       time: data.timeMyTaks,
-    //       objectId: objectPageId,
-    //       comment: data.commentMyTask,
-    //       isDone: false,
-    //     };
-    //     dispatch<any>(createTask(myTaskData)).then(() => onClose());
-    //   } else {
-    //     onClose();
-    //   }
-    // });
+    dispatch<any>(createPresentation(data))
+    // .then(() =>
+    //   onClose()
+    // );
   };
 
   useEffect(() => {
@@ -86,15 +102,17 @@ const CreateLastContact = ({ onClose }) => {
   return (
     <Component>
       <TitleWithCloseButton
-        title="Добавить последний контакт"
+        title="Добавить презентацию"
         onClose={onClose}
-        background="SaddleBrown"
+        background="Fuchsia"
         color="white"
       />
-      <LastContactForm
+      <AddPresentationForm
         data={data}
+        objects={transformObjects}
         register={register}
         errors={errors}
+        watch={watch}
         setValue={setValue}
       />
       <FooterButtons
@@ -106,4 +124,4 @@ const CreateLastContact = ({ onClose }) => {
   );
 };
 
-export default CreateLastContact;
+export default CreatePresentation;

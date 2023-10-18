@@ -132,12 +132,21 @@ export function createLastContact(payload) {
 export const updateLastContact = (payload) => async (dispatch) => {
   dispatch(lastContactUpdateRequested());
   try {
-    const { content } = await lastContactService.update(payload);
-    dispatch(lastContactUpdateSuccessed(content));
+    dispatch(lastContactUpdateSuccessed(payload));
+    await lastContactService.update(payload);
   } catch (error) {
     dispatch(lastContactUpdateFailed(error.message));
   }
 };
+// export const updateLastContact = (payload) => async (dispatch) => {
+//   dispatch(lastContactUpdateRequested());
+//   try {
+//     const { content } = await lastContactService.update(payload);
+//     dispatch(lastContactUpdateSuccessed(content));
+//   } catch (error) {
+//     dispatch(lastContactUpdateFailed(error.message));
+//   }
+// };
 
 export const removeLastContact = (lastContactId) => async (dispatch) => {
   dispatch(removeLastContactRequested());

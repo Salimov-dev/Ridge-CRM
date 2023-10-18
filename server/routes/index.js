@@ -14,6 +14,8 @@ import tasksRoutes from "./tasks.routes.js";
 import uploadRoutes from "./upload-avatar.routes.js";
 // last contact
 import lastContactRoutes from "./last-contact.routes.js";
+// presentations
+import presentationsRoutes from "./presentations.routes.js";
 
 const router = express.Router({ mergeParams: true });
 
@@ -32,5 +34,7 @@ router.use("/tasks", tasksRoutes);
 router.use("/upload", uploadRoutes);
 // last contact
 router.use("/lastContact", lastContactRoutes);
+// presentations
+router.use("/presentations", presentationsRoutes);
 
 export default router;

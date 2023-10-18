@@ -10,7 +10,7 @@ const AutocompleteStyled = ({
   disabled = false,
   label,
   errors = null,
-  width="100%"
+  width = "100%",
 }) => {
   return (
     <>
