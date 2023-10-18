@@ -18,7 +18,7 @@ const DealContainer = styled(Paper)`
   padding: 10px;
 `;
 
-const Stages = ({ stages, getObjectAddress }) => {
+const Stages = ({ objects, stages, getObjectAddress }) => {
   const [draggableStageId, setDraggableStageId] = useState(null);
 
   const handleDragOver = (e, stageId) => {
@@ -44,6 +44,7 @@ const Stages = ({ stages, getObjectAddress }) => {
             />
             <Objects
               stage={stage}
+              objects={objects}
               draggableStageId={draggableStageId}
               getObjectAddress={getObjectAddress}
               setDraggableStageId={setDraggableStageId}

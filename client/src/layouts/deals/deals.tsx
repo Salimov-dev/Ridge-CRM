@@ -33,7 +33,7 @@ const Deals = () => {
   return (
     <Box>
       <LayoutTitle title="Сделки" />
-      <Stages stages={dealStages} getObjectAddress={getObjectAddress} />
+      <Stages objects={objects} stages={dealStages} getObjectAddress={getObjectAddress} />
       <ObjectPageDialog />
       <ObjectUpdatePageDialog />
     </Box>

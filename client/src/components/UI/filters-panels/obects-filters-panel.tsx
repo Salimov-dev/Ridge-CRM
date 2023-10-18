@@ -94,15 +94,15 @@ const ObjectsFiltersPanel = ({
           onChange={(e) => setValue("selectedMetro", e.target.value)}
           disabled={isLoading ? true : false}
         />
-   <MultiSelectField
-        name="districts"
-        labelId="districts-label"
-        label="Выбор по району"
-        itemsList={getActualDistrictsList()}
-        selectedItems={data.selectedDistricts}
-        onChange={(e) => setValue("selectedDistricts", e.target.value)}
-        disabled={isLoading ? true : false}
-      />
+        <MultiSelectField
+          name="districts"
+          labelId="districts-label"
+          label="Выбор по району"
+          itemsList={getActualDistrictsList()}
+          selectedItems={data.selectedDistricts}
+          onChange={(e) => setValue("selectedDistricts", e.target.value)}
+          disabled={isLoading ? true : false}
+        />
         <MultiSelectField
           name="cities"
           labelId="cities-label"

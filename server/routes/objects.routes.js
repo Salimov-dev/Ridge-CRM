@@ -59,6 +59,7 @@ router.patch("/:objectId?/edit", auth, async (req, res) => {
   try {
     const { objectId } = req.params;
     const updatedObject = await Object.findByIdAndUpdate(objectId, req.body);
+
     res.send(updatedObject);
   } catch (e) {
     res.status(500).json({

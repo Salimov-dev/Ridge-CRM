@@ -115,13 +115,22 @@ export function createMeeting(payload) {
 export const updateMeeting = (payload) => async (dispatch) => {
   dispatch(meetingUpdateRequested());
   try {
-    const { content } = await meetingsService.update(payload);
-    
-    dispatch(meetingUpdateSuccessed(content));
+    dispatch(meetingUpdateSuccessed(payload));
+    await meetingsService.update(payload);
   } catch (error) {
     dispatch(meetingUpdateFailed(error.message));
   }
 };
+// export const updateMeeting = (payload) => async (dispatch) => {
+//   dispatch(meetingUpdateRequested());
+//   try {
+//     const { content } = await meetingsService.update(payload);
+    
+//     dispatch(meetingUpdateSuccessed(content));
+//   } catch (error) {
+//     dispatch(meetingUpdateFailed(error.message));
+//   }
+// };
 
 export const removeMeeting = (meetingId) => async (dispatch) => {
   dispatch(removeMeetingRequested());

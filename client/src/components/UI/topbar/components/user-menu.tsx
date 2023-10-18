@@ -79,7 +79,7 @@ const UserMenu = ({ currentUser }) => {
           "aria-labelledby": "basic-button",
         }}
       >
-        <MenuItem onClick={handleOpenProfile}>Профиль</MenuItem>
+        {/* <MenuItem onClick={handleOpenProfile}>Профиль</MenuItem> */}
         <MenuItem onClick={handleLogOut}>Выйти</MenuItem>
       </Menu>
     </Component>

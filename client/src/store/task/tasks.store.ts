@@ -111,13 +111,22 @@ export function createTask(payload) {
 export const updateMyTask = (payload) => async (dispatch) => {
   dispatch(taskUpdateRequested());
   try {
-    const { content } = await tasksService.update(payload)
-
-    dispatch(taskUpdateSuccessed(content));
+    dispatch(taskUpdateSuccessed(payload));
+    await tasksService.update(payload);
   } catch (error) {
     dispatch(taskUpdateFailed(error.message));
   }
 };
+// export const updateMyTask = (payload) => async (dispatch) => {
+//   dispatch(taskUpdateRequested());
+//   try {
+//     const { content } = await tasksService.update(payload)
+
+//     dispatch(taskUpdateSuccessed(content));
+//   } catch (error) {
+//     dispatch(taskUpdateFailed(error.message));
+//   }
+// };
 
 export const removeTask = (taskId) => async (dispatch) => {
   dispatch(removeTaskRequested());

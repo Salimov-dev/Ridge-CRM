@@ -39,6 +39,7 @@ const ObjectContainer = styled(Paper)`
 `;
 
 const Objects = ({
+  objects,
   stage,
   getObjectAddress,
   draggableStageId,
@@ -60,11 +61,7 @@ const Objects = ({
 
   const handleDragEnd = (obj, stage) => {
     if (stage?._id !== draggableStageId) {
-      const updatedObject = {
-        ...obj,
-        status: getNewDealStage(draggableStageId),
-      };
-
+      const updatedObject = { ...obj,  status: getNewDealStage(draggableStageId)};
       dispatch<any>(updateObject(updatedObject));
 
       setDraggableStageId(null);
@@ -73,7 +70,7 @@ const Objects = ({
     }
   };
 
-  const objects = useSelector(getObjectsList());
+
   return (
     <ObjectsContainer>
       {objects?.map((obj) => {

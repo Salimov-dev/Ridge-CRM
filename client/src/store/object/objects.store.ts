@@ -101,12 +101,22 @@ export const createObject = (payload) => async (dispatch) => {
 export const updateObject = (payload) => async (dispatch) => {
   dispatch(objectUpdateRequested());
   try {
-    const { content } = await objectService.update(payload);
-    dispatch(objectUpdateSuccessed(content));
+    dispatch(objectUpdateSuccessed(payload));
+    await objectService.update(payload);
   } catch (error) {
     dispatch(objectUpdateFailed(error.message));
   }
 };
+
+// export const updateObject = (payload) => async (dispatch) => {
+//   dispatch(objectUpdateRequested());
+//   try {
+//     const { content } = await objectService.update(payload);
+//     dispatch(objectUpdateSuccessed(content));
+//   } catch (error) {
+//     dispatch(objectUpdateFailed(error.message));
+//   }
+// };
 
 export const getObjectById = (objectId) => (state) => {
   if (state?.objects?.entities) {

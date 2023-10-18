@@ -16,7 +16,7 @@ const districtsSPB = [
     name: "Калининский",
   },
   {
-    _id: "78bv923fvsaz4gs834jgn355",
+    _id: "78c6ad2cf12eada13e308246",
     name: "Кировский",
   },
   {
@@ -52,7 +52,7 @@ const districtsSPB = [
     name: "Ломоносовский",
   },
   {
-    _id: "78a234hgf32435443gdf3245",
+    _id: "78c6ad2cf12eada13e357677",
     name: "Московский",
   },
   {

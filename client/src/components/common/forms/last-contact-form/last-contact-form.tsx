@@ -35,7 +35,7 @@ const LastContactForm = ({
           onInputQuantities={200}
         />
       </FieldsContainer>
-      {!isUpdate ? (
+      {/* {!isUpdate ? (
         <>
           <Typography variant="h5">
             Поставить задачу по этому объекту:
@@ -74,7 +74,7 @@ const LastContactForm = ({
             </Typography>
           </FieldsContainer>
         </>
-      ) : null}
+      ) : null} */}
     </Form>
   );
 };
