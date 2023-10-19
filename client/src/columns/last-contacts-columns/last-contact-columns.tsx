@@ -60,8 +60,8 @@ export const lastContactColumns = [
       );
 
       const handleClick = () => {
-        dispatch(setUpdateLastContactId(lastContactId));
-        dispatch(setUpdateLastContactOpenState(true));
+        dispatch<any>(setUpdateLastContactId(lastContactId));
+        dispatch<any>(setUpdateLastContactOpenState(true));
       };
 
       return (

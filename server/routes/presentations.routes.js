@@ -1,5 +1,6 @@
 import express from "express";
 import Company from "../models/Company.js";
+import User from "../models/User.js";
 import auth from "../middleware/auth.middleware.js";
 import Presentation from "../models/Presentation.js";
 
@@ -7,9 +8,22 @@ const router = express.Router({ mergeParams: true });
 
 router.get("/", auth, async (req, res) => {
   try {
-    const list = await Presentation.find();
+    const userId = req.user._id;
+    const user = await User.findOne({ _id: userId });
+    const userRole = user.role;
 
-    res.status(200).send(list);
+    if (userRole === "MANAGER") {
+      const presentations = await Presentation.find({ userId });
+      return res.status(200).send(presentations);
+    }
+
+    const presentations = await Presentation.find({ userId });
+    const managers = await User.find({ curatorId: userId });
+    const managerIds = managers.map((manager) => manager._id);
+    const managerPresentations = await Presentation.find({ userId: { $in: managerIds } });
+    const allPresentations = [...presentations, ...managerPresentations];
+
+    return res.status(200).send(allPresentations);
   } catch (e) {
     res.status(500).json({
       message: "На сервере произошла ошибка, попробуйте позже",

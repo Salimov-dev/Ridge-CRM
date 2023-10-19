@@ -176,8 +176,8 @@ export const meetingsColumns = [
       );
 
       const handleClick = () => {
-        dispatch(setUpdateMeetingId(meetingId));
-        dispatch(setUpdateMeetingOpenState(true));
+        dispatch<any>(setUpdateMeetingId(meetingId));
+        dispatch<any>(setUpdateMeetingOpenState(true));
       };
 
       return (

@@ -18,8 +18,8 @@ const CreatePresentationButton = () => {
       disabled={isLoading}
       sx={{
         color: "white",
-        background: "Fuchsia",
-        "&:hover": { background: "Purple" },
+        background: "SaddleBrown",
+        "&:hover": { background: "Chocolate" },
       }}
     >
       Добавить презентацию

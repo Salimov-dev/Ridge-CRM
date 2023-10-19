@@ -88,9 +88,9 @@ const CreatePresentation = ({ onClose }) => {
     
 
     dispatch<any>(createPresentation(data))
-    // .then(() =>
-    //   onClose()
-    // );
+    .then(() =>
+      onClose()
+    );
   };
 
   useEffect(() => {

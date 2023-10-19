@@ -1,5 +1,12 @@
 const dealStagesArray = [
   {
+    _id: "652044b09oaspqw2324g3434",
+    name: "В работе",
+    bkgColor: "Purple",
+    txtColor: "white",
+    objectStatusId: "64c140880e87d7e4532f79d5",
+  },
+  {
     _id: "652044b9056cc64aced20a99",
     name: "Презентация",
     bkgColor: "Gold",
