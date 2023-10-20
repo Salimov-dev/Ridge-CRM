@@ -4,7 +4,7 @@ import SearchSwitch from "../../common/inputs/search-switch";
 import { FieldsContainer, Form } from "../../common/forms/styled/styled";
 import SearchSelectField from "../../common/inputs/search-select-field";
 // mock
-import { taskDoneTypes } from "../../../mock/task-done-status";
+import { taskDoneTypes } from "../../../mock/tasks/task-done-status";
 
 const TasksFiltersPanel = ({
   data,

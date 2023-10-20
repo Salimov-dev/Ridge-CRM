@@ -22,6 +22,7 @@ import {
   setUpdateMeetingOpenState,
 } from "../../../store/meeting/update-meeting.store";
 import { getPresentationById } from "../../../store/presentation/presentations.store";
+import { getPresentationStatusNameById } from "../../../store/presentation/presentation-status.store";
 
 const BaloonContainer = styled(Box)`
   width: 100%;
@@ -35,15 +36,16 @@ const BaloonContainer = styled(Box)`
 
 const PresentationBaloon = ({ presentationId }) => {
   const dispatch = useDispatch();
-  const presentation = useSelector(getPresentationById(presentationId))
+  const presentation = useSelector(getPresentationById(presentationId));
   const object = useSelector(getObjectById(presentation?.objectId));
   const objectId = presentation?.objectId;
-  
+
   const objectAddress = `${object?.location.city}, ${object?.location.address}`;
 
-  const status = useSelector(getMeetingStatusNameById(presentation?.status));
+  const status = useSelector(
+    getPresentationStatusNameById(presentation?.status)
+  );
   const manager = useSelector(getUserNameById(presentation?.userId));
-
 
   const handleOpenObjectPage = () => {
     dispatch<any>(setOpenObjectPageId(objectId));
@@ -58,34 +60,29 @@ const PresentationBaloon = ({ presentationId }) => {
   return (
     <BaloonContainer>
       <Typography>
-            <b>Дата добавления:</b> {FormatDate(presentation?.created_at)}
-          </Typography>
-      <Typography>
-        <b>Адрес:</b>
+        <b>Объект презентации:</b>
       </Typography>
       <Attribute
         gap="0"
         subTitle={`${object?.location?.city}, ${object?.location?.address}`}
       />
+      <Attribute title="Статус:" subTitle={status} />
+
+      <DividerStyled />
+      <Typography>
+        <b>Дата добавления:</b> {FormatDate(presentation?.created_at)}
+      </Typography>
+      <Attribute title="Менеджер:" subTitle={manager} />
       <Typography>
         <b>Комментарий Куратора:</b>
       </Typography>
       <Attribute subTitle={presentation?.curatorComment} gap="0" />
 
-      <DividerStyled />
-      <Attribute title="Статус:" subTitle={status} />
-      <Attribute title="Менеджер:" subTitle={manager} />
-
       {objectId ? (
         <>
-          <DividerStyled />
-          
-          <Typography>
-            <b>Объект презентации:</b>
-          </Typography>
-          <Attribute title="" subTitle={objectAddress} gap="0" />
+
           <Divider />
-          <Box sx={{width: "100%",display: 'flex', gap: '4px'}}>
+          <Box sx={{ width: "100%", display: "flex", gap: "4px" }}>
             <MultiColorOutlinedButton
               text="Править презентацию"
               fontColor="black"

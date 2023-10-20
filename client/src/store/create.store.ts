@@ -1,4 +1,6 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
+// auth
+import authStateReducer from "./user/auth.store";
 // objects
 import objectsReducer from "./object/objects.store";
 import updateObjectReducer from "./object/update-object.store";
@@ -18,6 +20,7 @@ import meetingsReducer from "./meeting/meetings.store";
 import meetingTypesReducer from "./meeting/meeting-types.store";
 import meetingStatusesReducer from "./meeting/meeting-status.store";
 import createMeetingReducer from "./meeting/create-meeting.store";
+import objectPropertiesReducer from "./object/object-properties";
 import updateMeetingReducer from "./meeting/update-meeting.store";
 // users
 import createUserReducer from "./user/create-user.store";
@@ -37,13 +40,13 @@ import createLastContactReducer from "./last-contact/create-last-contact.store";
 import updateLastContactReducer from "./last-contact/update-last-contact.store";
 // sidebar
 import sidebarCollapsStateReducer from "./sidebar-collaps-state.store";
-// other
-import monthIndexReducer from "./month-index.store";
-import authStateReducer from "./user/auth.store";
-import objectPropertiesReducer from "./object/object-properties";
-import currrentPathReducer from "./current-path.store";
+// presentations
 import createPresentationReducer from "./presentation/create-presentation.store";
 import presentationsReducer from "./presentation/presentations.store";
+import presentationStatusReducer from "./presentation/presentation-status.store";
+// other
+import monthIndexReducer from "./month-index.store";
+import currrentPathReducer from "./current-path.store";
 
 const rootReducer = combineReducers({
   // auth state
@@ -93,6 +96,7 @@ const rootReducer = combineReducers({
   currrentPath: currrentPathReducer,
   // presentations
   presentations: presentationsReducer,
+  presentationStatus: presentationStatusReducer,
   createPresentation: createPresentationReducer,
 });
 

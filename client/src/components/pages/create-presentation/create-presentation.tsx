@@ -1,34 +1,23 @@
 // libraries
-import dayjs from "dayjs";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { Box, styled } from "@mui/material";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useDispatch, useSelector } from "react-redux";
 // components
 import TitleWithCloseButton from "../../common/page-titles/title-with-close-button";
-import LastContactForm from "../../common/forms/last-contact-form/last-contact-form";
-import FooterButtons from "../../common/forms/footer-buttons/footer-buttons";
-// MUI
-import { Box, styled } from "@mui/material";
-// store
-import { createTask } from "../../../store/task/tasks.store";
-import { getOpenObjectPageId } from "../../../store/object/open-object-page.store";
-import { createLastContact } from "../../../store/last-contact/last-contact.store";
-// schema
-import { lastContactSchema } from "../../../schemas/last-contact-schema";
-// utils
-import { capitalizeFirstLetter } from "../../../utils/data/capitalize-first-letter";
 import AddPresentationForm from "../../common/forms/presentation/add-presentation-form";
+import FooterButtons from "../../common/forms/footer-buttons/footer-buttons";
+// schema
+import { presentationSchema } from "../../../schemas/presentation-schema";
+// store
 import { getObjectsList } from "../../../store/object/objects.store";
+import { getOpenObjectPageId } from "../../../store/object/open-object-page.store";
+import { createPresentation } from "../../../store/presentation/presentations.store";
 import {
   getCurrentUserId,
   getIsUserCurator,
 } from "../../../store/user/users.store";
-import { presentationSchema } from "../../../schemas/presentation-schema";
-import {
-  createPresentation,
-  getPresentationsList,
-} from "../../../store/presentation/presentations.store";
 
 const initialState = {
   objectId: "",
@@ -42,13 +31,11 @@ const Component = styled(Box)`
   width: 100%;
 `;
 
-const CreatePresentation = ({ onClose }) => {
+const CreatePresentation = ({ onClose, setConfettiActive }) => {
   const dispatch = useDispatch();
-  const objectPageId = useSelector(getOpenObjectPageId());
 
+  const objectPageId = useSelector(getOpenObjectPageId());
   const objects = useSelector(getObjectsList());
-  const presList = useSelector(getPresentationsList());
-  // console.log("presList", presList);
 
   const currentUserId = useSelector(getCurrentUserId());
   const isCurator = useSelector(getIsUserCurator(currentUserId));
@@ -83,14 +70,13 @@ const CreatePresentation = ({ onClose }) => {
     const presentationNewData = {
       cloudLink: data.cloudLink,
       objectId: data.objectId,
+      status: "654wqeg3469y9dfsd82dd334",
     };
     console.log("data", data);
-    
 
-    dispatch<any>(createPresentation(data))
-    .then(() =>
-      onClose()
-    );
+    dispatch<any>(createPresentation(presentationNewData))
+      .then(() => onClose())
+      .then(() => setConfettiActive(true));
   };
 
   useEffect(() => {

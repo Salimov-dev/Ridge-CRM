@@ -6,7 +6,7 @@ import {
 } from "../../../../store/presentation/create-presentation.store";
 import CreatePresentation from "../../../pages/create-presentation/create-presentation";
 
-const PresentationCreatePageDialog = () => {
+const PresentationCreatePageDialog = ({setConfettiActive}) => {
   const dispatch = useDispatch();
 
   const isOpenCreatePresentation = useSelector(
@@ -18,7 +18,7 @@ const PresentationCreatePageDialog = () => {
 
   return (
     <DialogStyled
-      component={<CreatePresentation onClose={handleCloseCreatePresentation} />}
+      component={<CreatePresentation onClose={handleCloseCreatePresentation} setConfettiActive={setConfettiActive}/>}
       onClose={handleCloseCreatePresentation}
       open={isOpenCreatePresentation}
       maxWidth="sm"

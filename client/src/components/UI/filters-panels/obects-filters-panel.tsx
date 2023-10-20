@@ -7,7 +7,7 @@ import SearchSelectField from "../../common/inputs/search-select-field";
 // hooks
 import useObjectsFiltersPanel from "../../../hooks/object/use-objects-filters-panel";
 // mock
-import { objectActivityVariants } from "../../../mock/object-activity-variants";
+import { objectActivityVariants } from "../../../mock/object/object-activity-variants";
 
 const ObjectsFiltersPanel = ({
   setValue,

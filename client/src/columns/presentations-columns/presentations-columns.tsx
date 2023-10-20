@@ -9,7 +9,11 @@ import {
 // mock
 import { gendersArray } from "../../mock/genders";
 // store
-import { getCurrentUserId, getIsUserAuthorThisEntity, getUserNameById } from "../../store/user/users.store";
+import {
+  getCurrentUserId,
+  getIsUserAuthorThisEntity,
+  getUserNameById,
+} from "../../store/user/users.store";
 import { getUserStatusNameById } from "../../store/user/user-statuses.store";
 // utils
 import { FormatDate } from "../../utils/date/format-date";
@@ -20,11 +24,16 @@ import {
 import { AlignCenter } from "../../components/common/columns/styled";
 import Loader from "../../components/common/loader/loader";
 import RedirectButton from "../../components/common/buttons/redirect-button";
-import { loadOpenObjectPageOpenState, setOpenObjectPageId, setOpenObjectPageOpenState } from "../../store/object/open-object-page.store";
+import {
+  loadOpenObjectPageOpenState,
+  setOpenObjectPageId,
+  setOpenObjectPageOpenState,
+} from "../../store/object/open-object-page.store";
 import { getObjectById } from "../../store/object/objects.store";
-import { Box, Button, Tooltip } from "@mui/material";
+import { Box, Button, Tooltip, Typography } from "@mui/material";
 import CloudDoneIcon from "@mui/icons-material/CloudDone";
 import CloudOffIcon from "@mui/icons-material/CloudOff";
+import { getPresentationStatusNameById } from "../../store/presentation/presentation-status.store";
 
 export const presentationsColumns = [
   {
@@ -32,12 +41,12 @@ export const presentationsColumns = [
     header: "Дата",
     cell: (info) => {
       const date = info.getValue();
-      return <AlignCenter>{FormatDate(date)}</AlignCenter> ;
+      return <AlignCenter>{FormatDate(date)}</AlignCenter>;
     },
   },
   {
     accessorKey: "objectId",
-    header: "Объект встречи",
+    header: "Объект презентации",
     cell: (info) => {
       const objectId = info.getValue();
       const object = useSelector(getObjectById(objectId));
@@ -74,12 +83,11 @@ export const presentationsColumns = [
   },
   {
     accessorKey: "status",
-    header: "Статус",
+    header: "Статус рассмотрения",
     cell: (info) => {
       const status = info.getValue();
-      // const name = useSelector(getMeetingStatusNameById(status));
-      // return <AlignCenter>{name}</AlignCenter>;
-      return <AlignCenter>Статус</AlignCenter>;
+      const name = useSelector(getPresentationStatusNameById(status));
+      return <AlignCenter>{name}</AlignCenter>;
     },
   },
   {
@@ -87,9 +95,13 @@ export const presentationsColumns = [
     header: "Комментарий Куратора",
     cell: (info) => {
       const curatorComment = info.getValue();
-      // const name = useSelector(getMeetingStatusNameById(status));
-      // return <AlignCenter>{name}</AlignCenter>;
-      return curatorComment
+      return curatorComment ? (
+        curatorComment
+      ) : (
+        <Typography sx={{ fontStyle: "italic" }}>
+          Дождитесь итогов согласования
+        </Typography>
+      );
     },
   },
   {
@@ -143,21 +155,12 @@ export const presentationsColumns = [
         <MultiColorContainedButton
           text="Править"
           fontColor="white"
-          background="royalBlue"
-          backgroudHover="cornflowerBlue"
+          background="SaddleBrown"
+          backgroudHover="Chocolate"
           onClick={handleClick}
           // disabled={!isAuthorEntity}
         />
       );
     },
   },
-
-      // {
-      //   accessorKey: "name.firstName",
-      //   header: "Имя",
-      //   cell: (info) => {
-      //     const firstName = info.getValue();
-      //     return <AlignCenter>{firstName}</AlignCenter>;
-      //   },
-
 ];

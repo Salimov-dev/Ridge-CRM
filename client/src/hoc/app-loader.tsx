@@ -30,6 +30,7 @@ import { loadLastContactsList } from "../store/last-contact/last-contact.store";
 import { loadSidebarCollapsState } from "../store/sidebar-collaps-state.store";
 // presentation
 import { loadPresentationsList } from "../store/presentation/presentations.store";
+import { loadPresentationStatusList } from "../store/presentation/presentation-status.store";
 
 interface AppLoaderProps {
   children: React.ReactNode;
@@ -70,6 +71,7 @@ const AppLoader = ({ children }: AppLoaderProps) => {
       dispatch<any>(loadSidebarCollapsState());
       // presentations
       dispatch<any>(loadPresentationsList());
+      dispatch<any>(loadPresentationStatusList());
     } else {
       dispatch<any>(loadAuthState(false));
     }

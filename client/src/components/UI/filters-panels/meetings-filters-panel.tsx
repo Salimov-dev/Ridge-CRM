@@ -7,7 +7,7 @@ import SearchSelectField from "../../common/inputs/search-select-field";
 // hooks
 import useMeetingFiltersPanel from "../../../hooks/meeting/use-meeting-filters-panel";
 // mock
-import { meetingDoneTypes } from "../../../mock/meeting-done-status";
+import { meetingDoneTypes } from "../../../mock/meetings/meeting-done-status";
 
 const MeetingsFiltersPanel = ({ data, register, setValue, isLoading }) => {
   const { getActualUsersList, getActualStatusesList, getActuaTypesList } =

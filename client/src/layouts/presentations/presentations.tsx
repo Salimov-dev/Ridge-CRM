@@ -1,30 +1,33 @@
-import { Typography, Tooltip, Box, Button } from "@mui/material";
+import Confetti from "react-confetti";
+import dayjs from "dayjs";
+import { useForm } from "react-hook-form";
+import { useEffect, useState } from "react";
+import { Box } from "@mui/material";
 import { orderBy } from "lodash";
+import { useSelector } from "react-redux";
+import { useWindowSize } from "@react-hook/window-size";
+// components
+import BasicTable from "../../components/common/table/basic-table";
 import LayoutTitle from "../../components/common/page-titles/layout-title";
 import CreatePresentationButton from "../../components/UI/dialogs/buttons/create-presentation-button";
 import PresentationCreatePageDialog from "../../components/UI/dialogs/presentations/presentation-create-page-dialog";
-import { useSelector } from "react-redux";
+import ObjectUpdatePageDialog from "../../components/UI/dialogs/objects/object-update-page-dialog";
+import ObjectPageDialog from "../../components/UI/dialogs/object-page-dialog/object-page-dialog";
+import PresentationsFiltersPanel from "../../components/UI/filters-panels/presentations-filters-panel";
+import AddAndClearFiltersButton from "../../components/common/buttons/add-and-clear-filters-button";
+import ItemsOnMap from "../../components/common/map/items-on-map/items-on-map";
+import PresentationBaloon from "../../components/UI/maps/presentation-baloon";
+// columns
+import { presentationsColumns } from "../../columns/presentations-columns/presentations-columns";
+// map images
+import target from "../../assets/map/target-presentation.png";
+import targetCluster from "../../assets/map/target-presentation-cluster.png";
+// store
+import { getObjectsList } from "../../store/object/objects.store";
 import {
   getPresentationsList,
   getPresentationsLoadingStatus,
 } from "../../store/presentation/presentations.store";
-import BasicTable from "../../components/common/table/basic-table";
-import { presentationsColumns } from "../../columns/presentations-columns/presentations-columns";
-import ObjectUpdatePageDialog from "../../components/UI/dialogs/objects/object-update-page-dialog";
-import ObjectPageDialog from "../../components/UI/dialogs/object-page-dialog/object-page-dialog";
-import PresentationsFiltersPanel from "../../components/UI/filters-panels/presentations-filters-panel";
-import dayjs from "dayjs";
-import { useForm } from "react-hook-form";
-import { useEffect, useState } from "react";
-import AddAndClearFiltersButton from "../../components/common/buttons/add-and-clear-filters-button";
-import useSearchMeeting from "../../hooks/meeting/use-search-meeting";
-import ItemsOnMap from "../../components/common/map/items-on-map/items-on-map";
-import MeetingBaloon from "../../components/UI/maps/meeting-baloon";
-import target from "../../assets/map/target-presentation.png";
-import targetCluster from "../../assets/map/targeMeeting_cluster.png";
-import { getMeetingsList } from "../../store/meeting/meetings.store";
-import { getObjectsList } from "../../store/object/objects.store";
-import PresentationBaloon from "../../components/UI/maps/presentation-baloon";
 
 const initialState = {
   objectAddress: "",
@@ -36,6 +39,8 @@ const initialState = {
 };
 
 const Presentations = () => {
+  const { width, height } = useWindowSize();
+  const [confettiActive, setConfettiActive] = useState(false);
   const [selectedPresentationBaloon, setSelectedPresentationBaloon] =
     useState(null);
   const [presentationsWithLocation, setPresentationsWithLocation] = useState(
@@ -69,7 +74,6 @@ const Presentations = () => {
   const mapZoom = 11;
 
   const data = watch();
-  // const searchedPresentations = useSearchMeeting(meetings, data);
   const searchedPresentations = presentationsList;
   const sortedPresentations = orderBy(
     searchedPresentations,
@@ -121,6 +125,12 @@ const Presentations = () => {
     }
   }, [presentationsList, objects]);
 
+  useEffect(() => {
+    setTimeout(() => {
+      setConfettiActive(false);
+    }, 4000);
+  }, [confettiActive]);
+
   return (
     <Box>
       <LayoutTitle title="Презентации" />
@@ -160,7 +170,9 @@ const Presentations = () => {
         isLoading={isLoading}
       />
 
-      <PresentationCreatePageDialog />
+      {confettiActive && <Confetti width={width} height={height} />}
+
+      <PresentationCreatePageDialog setConfettiActive={setConfettiActive} />
       <ObjectPageDialog />
       <ObjectUpdatePageDialog />
     </Box>
