@@ -34,6 +34,8 @@ import { Box, Button, Tooltip, Typography } from "@mui/material";
 import CloudDoneIcon from "@mui/icons-material/CloudDone";
 import CloudOffIcon from "@mui/icons-material/CloudOff";
 import { getPresentationStatusNameById } from "../../store/presentation/presentation-status.store";
+import { getPresentationById } from "../../store/presentation/presentations.store";
+import { setUpdatePresentationId, setUpdatePresentationOpenState } from "../../store/presentation/update-presentation.store";
 
 export const presentationsColumns = [
   {
@@ -138,17 +140,17 @@ export const presentationsColumns = [
     accessorKey: "_id",
     header: "",
     cell: (info) => {
-      // const meetingId = info.getValue();
-      // const meeting = useSelector(getMeetingById(meetingId))
-      // const dispatch = useDispatch();
-      // const currentUserId = useSelector(getCurrentUserId())
-      // const isAuthorEntity = useSelector(
-      //   getIsUserAuthorThisEntity(currentUserId, meeting)
-      // );
+      const dispatch = useDispatch();
+      const presentationId = info.getValue();
+      const presentation = useSelector(getPresentationById(presentationId))
+      const currentUserId = useSelector(getCurrentUserId())
+      const isAuthorEntity = useSelector(
+        getIsUserAuthorThisEntity(currentUserId, presentation)
+      );
 
       const handleClick = () => {
-        // dispatch<any>(setUpdateMeetingId(meetingId));
-        // dispatch<any>(setUpdateMeetingOpenState(true));
+        dispatch<any>(setUpdatePresentationId(presentationId));
+        dispatch<any>(setUpdatePresentationOpenState(true));
       };
 
       return (
@@ -158,7 +160,7 @@ export const presentationsColumns = [
           background="SaddleBrown"
           backgroudHover="Chocolate"
           onClick={handleClick}
-          // disabled={!isAuthorEntity}
+          disabled={!isAuthorEntity}
         />
       );
     },

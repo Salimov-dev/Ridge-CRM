@@ -20,7 +20,7 @@ export const loadPresentationStatusList = () => (dispatch) => {
   dispatch(presentationStatusLoaded(presentationStatusesArrray));
 };
 
-export const getObjectsStatusList = () => (state) =>
+export const getPresentationStatusList = () => (state) =>
   state.presentationStatus.entities;
 
 export const getPresentationStatusById = (id) => (state) => {

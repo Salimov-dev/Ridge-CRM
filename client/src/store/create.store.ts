@@ -47,6 +47,7 @@ import presentationStatusReducer from "./presentation/presentation-status.store"
 // other
 import monthIndexReducer from "./month-index.store";
 import currrentPathReducer from "./current-path.store";
+import updatePresentationReducer from "./presentation/update-presentation.store";
 
 const rootReducer = combineReducers({
   // auth state
@@ -98,6 +99,7 @@ const rootReducer = combineReducers({
   presentations: presentationsReducer,
   presentationStatus: presentationStatusReducer,
   createPresentation: createPresentationReducer,
+  updatePresentation: updatePresentationReducer,
 });
 
 export function createStore() {

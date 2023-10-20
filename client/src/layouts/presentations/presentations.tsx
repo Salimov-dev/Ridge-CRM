@@ -28,6 +28,7 @@ import {
   getPresentationsList,
   getPresentationsLoadingStatus,
 } from "../../store/presentation/presentations.store";
+import PresentationUpdateDialog from "../../components/UI/dialogs/presentations/presentation-update-dialog";
 
 const initialState = {
   objectAddress: "",
@@ -173,6 +174,7 @@ const Presentations = () => {
       {confettiActive && <Confetti width={width} height={height} />}
 
       <PresentationCreatePageDialog setConfettiActive={setConfettiActive} />
+      <PresentationUpdateDialog/>
       <ObjectPageDialog />
       <ObjectUpdatePageDialog />
     </Box>

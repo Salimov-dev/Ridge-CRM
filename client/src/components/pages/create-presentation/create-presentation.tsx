@@ -90,7 +90,7 @@ const CreatePresentation = ({ onClose, setConfettiActive }) => {
       <TitleWithCloseButton
         title="Добавить презентацию"
         onClose={onClose}
-        background="Fuchsia"
+        background="SaddleBrown"
         color="white"
       />
       <AddPresentationForm

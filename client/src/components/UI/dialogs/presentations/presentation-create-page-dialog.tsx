@@ -1,12 +1,12 @@
 import { useDispatch, useSelector } from "react-redux";
 import DialogStyled from "../../../common/dialog/dialog-styled";
+import CreatePresentation from "../../../pages/create-presentation/create-presentation";
 import {
   getCreatePresentationOpenState,
   setCreatePresentationOpenState,
 } from "../../../../store/presentation/create-presentation.store";
-import CreatePresentation from "../../../pages/create-presentation/create-presentation";
 
-const PresentationCreatePageDialog = ({setConfettiActive}) => {
+const PresentationCreatePageDialog = ({ setConfettiActive }) => {
   const dispatch = useDispatch();
 
   const isOpenCreatePresentation = useSelector(
@@ -18,7 +18,12 @@ const PresentationCreatePageDialog = ({setConfettiActive}) => {
 
   return (
     <DialogStyled
-      component={<CreatePresentation onClose={handleCloseCreatePresentation} setConfettiActive={setConfettiActive}/>}
+      component={
+        <CreatePresentation
+          onClose={handleCloseCreatePresentation}
+          setConfettiActive={setConfettiActive}
+        />
+      }
       onClose={handleCloseCreatePresentation}
       open={isOpenCreatePresentation}
       maxWidth="sm"
