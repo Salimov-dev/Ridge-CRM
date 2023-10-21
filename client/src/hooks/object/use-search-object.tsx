@@ -1,10 +1,12 @@
 import "dayjs/locale/ru";
 import dayjs from "dayjs";
-import { useMemo} from "react";
+import { useMemo } from "react";
 import { useSelector } from "react-redux";
 import { getMeetingsList } from "../../store/meeting/meetings.store";
 import { getTasksList } from "../../store/task/tasks.store";
 import { getLastContactsList } from "../../store/last-contact/last-contact.store";
+import { FormatDate } from "../../utils/date/format-date";
+import { orderBy } from "lodash";
 
 const useSearchObject = (objects, data) => {
   const meetings = useSelector(getMeetingsList());
@@ -56,23 +58,23 @@ const useSearchObject = (objects, data) => {
 
     if (data?.address?.length) {
       array = array?.filter((obj) =>
-      obj.location.address.toLowerCase().includes(data.address.toLowerCase())
+        obj.location.address.toLowerCase().includes(data.address.toLowerCase())
       );
     }
 
     if (data?.cadastralNumber?.length) {
       array = array?.filter((obj) =>
-      obj.estateOptions.cadastralNumber.includes(data.cadastralNumber)
+        obj.estateOptions.cadastralNumber.includes(data.cadastralNumber)
       );
     }
 
     if (data?.fullDescription?.length) {
-      const searchTerm = data.fullDescription.toLowerCase()
+      const searchTerm = data.fullDescription.toLowerCase();
       array = array?.filter((obj) =>
-      obj.description.fullDescription.toLowerCase().includes(searchTerm)
-    );
+        obj.description.fullDescription.toLowerCase().includes(searchTerm)
+      );
     }
-    
+
     // object params
     if (data.selectedStatuses?.length) {
       array = array?.filter((obj) =>
@@ -192,6 +194,78 @@ const useSearchObject = (objects, data) => {
         (obj) => !hasMeetings(obj._id) && !hasTasks(obj._id)
       );
     }
+
+    // Фильтр для "Звонок от 1 до 2 месяцев"
+    if (data.objectActivity === "hgfd23560ogpa213jfdj3432") {
+      const currentDate = dayjs();
+      array = array?.filter((obj) => {
+        const objectId = obj?._id;
+        const lastContactsList = lastContacts?.filter(
+          (contact) => contact.objectId === objectId
+        );
+        const sortedLastContacts = orderBy(lastContactsList, "date", ["desc"]);
+        const lastContact = sortedLastContacts[0]?.date;
+    
+        if (!lastContact) {
+          return false; // Если нет информации о последнем звонке, объект не попадает в фильтр
+        }
+  
+        const lastContactDate = dayjs(lastContact);
+
+        return lastContactDate.isBetween(
+          currentDate.subtract(2, 'months'),
+          currentDate.subtract(1, 'months')
+        );
+      });
+    }
+
+    // Фильтр для "Звонок от 2 до 3 месяцев"
+    if (data.objectActivity === "hgfd23560ogpa213jfdj3511") {
+      const currentDate = dayjs();
+      array = array?.filter((obj) => {
+        const objectId = obj?._id;
+        const lastContactsList = lastContacts?.filter(
+          (contact) => contact.objectId === objectId
+        );
+        const sortedLastContacts = orderBy(lastContactsList, "date", ["desc"]);
+        const lastContact = sortedLastContacts[0]?.date;
+    
+        if (!lastContact) {
+          return false; // Если нет информации о последнем звонке, объект не попадает в фильтр
+        }
+  
+        const lastContactDate = dayjs(lastContact);
+
+        return lastContactDate.isBetween(
+          currentDate.subtract(3, 'months'),
+          currentDate.subtract(2, 'months')
+        );
+      });
+    }
+
+// Фильтр для "Звонок от 3 месяцев"
+if (data.objectActivity === "hgfd23560ogpa213jfdj0934") {
+  const currentDate = dayjs();
+  array = array?.filter((obj) => {
+    const objectId = obj?._id;
+    const lastContactsList = lastContacts?.filter(
+      (contact) => contact.objectId === objectId
+    );
+    const sortedLastContacts = orderBy(lastContactsList, "date", ["desc"]);
+    const lastContact = sortedLastContacts[0]?.date;
+
+    if (!lastContact) {
+      return false; // Если нет информации о последнем звонке, объект не попадает в фильтр
+    }
+
+    const lastContactDate = dayjs(lastContact);
+
+    // Проверяем, что разница между текущей датой и датой последнего контакта
+    // составляет более 3 месяцев
+    return lastContactDate.isBefore(currentDate.subtract(3, 'months'));
+  });
+}
+
 
     return array;
   }, [data, objects]);

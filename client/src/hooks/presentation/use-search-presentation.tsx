@@ -5,9 +5,10 @@ import { getObjectsList } from "../../store/object/objects.store";
 import { useSelector } from "react-redux";
 
 const useSearchPresentation = (presentations, data) => {
+  const objects = useSelector(getObjectsList());
+
   const searchedPresentations = useMemo(() => {
     let array = presentations;
-    const objects = useSelector(getObjectsList());
 
     const searchObjectsByAddress = (objects, searchTerm) => {
       return objects.filter((obj) => {

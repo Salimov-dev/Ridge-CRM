@@ -35,6 +35,19 @@ const objectActivityVariants = [
     _id: "hgfd235654hjf324543qre",
     name: "Без активности",
   },
+
+  {
+    _id: "hgfd23560ogpa213jfdj3432",
+    name: "Звонок от 1 до 2 месяцев",
+  },
+  {
+    _id: "hgfd23560ogpa213jfdj3511",
+    name: "Звонок от 2 до 3 месяцев",
+  },
+  {
+    _id: "hgfd23560ogpa213jfdj0934",
+    name: "Звонок от 3 месяцев",
+  },
 ];
 
 export { objectActivityVariants };

@@ -178,7 +178,7 @@ export const setIsNotDoneLastContact = (payload) => async (dispatch) => {
   }
 };
 
-export const getLastContactsList = () => (state) => state.lastContact.entities;
+export const getLastContactsList = () => (state) => state?.lastContact?.entities;
 
 export const getObjectLastContactsList = (objectId) =>
   createSelector(
