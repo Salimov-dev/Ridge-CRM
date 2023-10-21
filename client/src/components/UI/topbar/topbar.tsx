@@ -21,9 +21,8 @@ import { capitalizeFirstLetter } from "../../../utils/data/capitalize-first-lett
 import { getMeetingsWeeklyList } from "../../../store/meeting/meetings.store";
 import { getTasksWeeklyList } from "../../../store/task/tasks.store";
 import { useNavigate } from "react-router-dom";
-import {
-  setCurrrentPathState,
-} from "../../../store/current-path.store";
+import { setCurrrentPathState } from "../../../store/current-path.store";
+import { getPresentationsWeeklyList } from "../../../store/presentation/presentations.store";
 
 const Component = styled(Box)`
   display: flex;
@@ -78,6 +77,7 @@ const TopBar = () => {
     currentDate.format("dddd, D MMM")
   ).replace(/\.$/, "");
 
+  const presentations = useSelector(getPresentationsWeeklyList());
   const objects = useSelector(getObjectsWeeklyList());
   const objectsWithPhone = useSelector(getObjectsWeeklyWithPhoneList());
   const meetings = useSelector(getMeetingsWeeklyList());
@@ -115,6 +115,18 @@ const TopBar = () => {
                 <Typography variant="h5">
                   {objectsWithPhone?.length}шт
                 </Typography>
+              </ResultContainer>
+            </DataContainer>
+            <DataContainer>
+              <Typography variant="h5">Презентаций:</Typography>
+              <ResultContainer
+                sx={{ background: "SaddleBrown" }}
+                onClick={() => {
+                  navigate("/presentations");
+                  dispatch<any>(setCurrrentPathState(window.location.pathname));
+                }}
+              >
+                <Typography variant="h5">{presentations?.length}шт</Typography>
               </ResultContainer>
             </DataContainer>
             <DataContainer>

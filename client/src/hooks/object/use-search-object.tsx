@@ -204,16 +204,16 @@ const useSearchObject = (objects, data) => {
         );
         const sortedLastContacts = orderBy(lastContactsList, "date", ["desc"]);
         const lastContact = sortedLastContacts[0]?.date;
-    
+
         if (!lastContact) {
           return false; // Если нет информации о последнем звонке, объект не попадает в фильтр
         }
-  
+
         const lastContactDate = dayjs(lastContact);
 
         return lastContactDate.isBetween(
-          currentDate.subtract(2, 'months'),
-          currentDate.subtract(1, 'months')
+          currentDate.subtract(2, "months"),
+          currentDate.subtract(1, "months")
         );
       });
     }
@@ -228,43 +228,42 @@ const useSearchObject = (objects, data) => {
         );
         const sortedLastContacts = orderBy(lastContactsList, "date", ["desc"]);
         const lastContact = sortedLastContacts[0]?.date;
-    
+
         if (!lastContact) {
           return false; // Если нет информации о последнем звонке, объект не попадает в фильтр
         }
-  
+
         const lastContactDate = dayjs(lastContact);
 
         return lastContactDate.isBetween(
-          currentDate.subtract(3, 'months'),
-          currentDate.subtract(2, 'months')
+          currentDate.subtract(3, "months"),
+          currentDate.subtract(2, "months")
         );
       });
     }
 
-// Фильтр для "Звонок от 3 месяцев"
-if (data.objectActivity === "hgfd23560ogpa213jfdj0934") {
-  const currentDate = dayjs();
-  array = array?.filter((obj) => {
-    const objectId = obj?._id;
-    const lastContactsList = lastContacts?.filter(
-      (contact) => contact.objectId === objectId
-    );
-    const sortedLastContacts = orderBy(lastContactsList, "date", ["desc"]);
-    const lastContact = sortedLastContacts[0]?.date;
+    // Фильтр для "Звонок от 3 месяцев"
+    if (data.objectActivity === "hgfd23560ogpa213jfdj0934") {
+      const currentDate = dayjs();
+      array = array?.filter((obj) => {
+        const objectId = obj?._id;
+        const lastContactsList = lastContacts?.filter(
+          (contact) => contact.objectId === objectId
+        );
+        const sortedLastContacts = orderBy(lastContactsList, "date", ["desc"]);
+        const lastContact = sortedLastContacts[0]?.date;
 
-    if (!lastContact) {
-      return false; // Если нет информации о последнем звонке, объект не попадает в фильтр
+        if (!lastContact) {
+          return false; // Если нет информации о последнем звонке, объект не попадает в фильтр
+        }
+
+        const lastContactDate = dayjs(lastContact);
+
+        // Проверяем, что разница между текущей датой и датой последнего контакта
+        // составляет более 3 месяцев
+        return lastContactDate.isBefore(currentDate.subtract(3, "months"));
+      });
     }
-
-    const lastContactDate = dayjs(lastContact);
-
-    // Проверяем, что разница между текущей датой и датой последнего контакта
-    // составляет более 3 месяцев
-    return lastContactDate.isBefore(currentDate.subtract(3, 'months'));
-  });
-}
-
 
     return array;
   }, [data, objects]);

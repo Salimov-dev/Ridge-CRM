@@ -3,6 +3,7 @@ import { Box } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { yupResolver } from "@hookform/resolvers/yup";
+import dayjs from "dayjs";
 // components
 import ManagerForm from "../../common/forms/manager-form/manager-form";
 import TitleWithCloseButton from "../../common/page-titles/title-with-close-button";
@@ -16,7 +17,8 @@ import {
 import { managerSchema } from "../../../schemas/manager-schema";
 // utils
 import getRandomInt from "../../../utils/other/get-random-int";
-import dayjs from "dayjs";
+// assets
+import basicAva from "../../../assets/basic-ava.jpg"
 
 const initialState = {
   email: "",
@@ -70,7 +72,8 @@ const CreateManager = ({ onClose }) => {
         endDate: transformedEndDate,
         trialPeriod: transformedTrialPeriod,
       },
-      image: `https://randomuser.me/api/portraits/women/${getRandomInt()}.jpg`,
+      // image: `https://randomuser.me/api/portraits/women/${getRandomInt()}.jpg`,
+      image: basicAva,
       curatorId: currentUserId,
     };
 

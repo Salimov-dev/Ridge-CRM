@@ -2,6 +2,7 @@ import { createAction, createSlice } from "@reduxjs/toolkit";
 import localStorageService from "../../services/user/local.storage-service";
 import presentationsService from "../../services/presentation/presentations.service";
 import isOutDated from "../../utils/auth/is-out-date";
+import dayjs from "dayjs";
 
 const initialState = localStorageService.getAccessToken()
   ? {
@@ -149,6 +150,20 @@ export const getPresentationsByObjectId = (objectId) => (state) => {
       (contact) => contact.objectId === objectId
     );
   }
+};
+
+export const getPresentationsWeeklyList = () => (state) => {
+  const currentDate = dayjs();
+  const presentations = state.presentations.entities;
+
+  const weeklyPresentations = presentations?.filter((pres) => {
+    const createdAt = dayjs(pres.created_at);
+    const startOfWeek = currentDate.startOf('week');
+    const endOfWeek = currentDate.endOf('week');
+    return createdAt.isBetween(startOfWeek, endOfWeek);
+  });
+
+  return weeklyPresentations;
 };
 
 export default presentationsReducer;

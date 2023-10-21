@@ -19,6 +19,7 @@ import {
 } from "../../store/user/update-user.store";
 import { AlignCenter } from "../../components/common/columns/styled";
 import Loader from "../../components/common/loader/loader";
+import basicAva from "../../assets/basic-ava.jpg"
 
 export const usersColumns = [
   {
@@ -37,7 +38,7 @@ export const usersColumns = [
         header: "Аватар",
         cell: (info) => {
           const ava = info.getValue();
-          return ava ? <UserAvatar path={ava} /> : <Loader/>;
+          return <UserAvatar path={ava ? ava : basicAva} />;
         },
       },
       {

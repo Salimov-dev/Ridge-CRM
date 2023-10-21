@@ -35,6 +35,10 @@ const currentRentersArray = [
     _id: "64d9f2f8a979ac6e61fa9e2d",
     name: "Пусто",
   },
+  {
+    _id: "64d9f2f8a012ofdp432hfs32",
+    name: "Другое",
+  },
 ];
 
 export { currentRentersArray };

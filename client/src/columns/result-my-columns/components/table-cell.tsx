@@ -8,7 +8,7 @@ const Container = styled(Box)`
   color: white;
 `;
 
-const TableCell = ({ objects, objectsWithPhone }) => {
+const TableCell = ({ objects, objectsWithPhone, presentations }) => {
   return (
     <Box
       sx={{
@@ -38,7 +38,7 @@ const TableCell = ({ objects, objectsWithPhone }) => {
           background: "RoyalBlue",
         }}
       >
-        Презентаций: {0}шт
+        Презентаций: {presentations?.length}шт
       </Container>
     </Box>
   );

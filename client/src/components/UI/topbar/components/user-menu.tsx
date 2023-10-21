@@ -6,6 +6,8 @@ import { useNavigate } from "react-router-dom";
 import { Box, Button, Menu, MenuItem, Typography, styled } from "@mui/material";
 // store
 import { logOut } from "../../../../store/user/users.store";
+// assets
+import basicAva from "../../../../assets/basic-ava.jpg"
 
 const Component = styled(Box)`
   display: flex;
@@ -28,6 +30,7 @@ const UserMenu = ({ currentUser }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const open = Boolean(anchorEl);
+  const managerAva = currentUser?.image
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -48,6 +51,7 @@ const UserMenu = ({ currentUser }) => {
     navigate("/");
   };
 
+
   return (
     <Component>
       <Button
@@ -61,7 +65,7 @@ const UserMenu = ({ currentUser }) => {
           },
         }}
       >
-        <Avatar src={currentUser?.image} />
+        <Avatar src={managerAva ? managerAva : basicAva} />
         <UserName
           sx={{
             color: open ? "white !important" : "gray",

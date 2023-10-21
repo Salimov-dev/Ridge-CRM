@@ -43,6 +43,10 @@ const workingPositionsArray = [
     _id: "6500c7065b4362d9d53cc60a",
     name: "Юрист",
   },
+  {
+    _id: "6500c7065b40f9asqw213945",
+    name: "Инженер",
+  },
 ];
 
 export { workingPositionsArray };

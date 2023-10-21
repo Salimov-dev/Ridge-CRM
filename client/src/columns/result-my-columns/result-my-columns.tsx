@@ -1,16 +1,18 @@
-import dayjs from "dayjs";
 import "dayjs/locale/ru";
+import "dayjs/locale/ru";
+import dayjs from "dayjs";
 import { useSelector } from "react-redux";
 import customParseFormat from "dayjs/plugin/customParseFormat";
-import "dayjs/locale/ru";
 // components
 import TableCell from "./components/table-cell";
 import { useTableHeader } from "./hooks/use-table-header";
 // utils
-import { GetWeeklyObjects } from "../../utils/objects/get-weekly-objects";
-import { GetWeeklyObjectsWithPhone } from "../../utils/objects/get-weekly-objects-with-phone";
+import { getWeeklyObjects } from "../../utils/objects/get-weekly-objects";
+import { getWeeklyPresentations } from "../../utils/objects/get-weekly-presentations";
+import { getWeeklyObjectsWithPhone } from "../../utils/objects/get-weekly-objects-with-phone";
 // store
 import { getObjectsList } from "../../store/object/objects.store";
+import { getPresentationsList } from "../../store/presentation/presentations.store";
 
 dayjs.extend(customParseFormat);
 dayjs.locale("ru");
@@ -27,10 +29,19 @@ const generateMonthHeaders = () => {
       header: monthHeader,
       cell: () => {
         const objects = useSelector(getObjectsList());
+        const presentations = useSelector(getPresentationsList());
+
         const currentMonthObjects = objects.filter((object) => {
           return dayjs(object.created_at).month() === month.month();
         });
         const objectQuantity = currentMonthObjects;
+
+        const currentMonthPresentations = presentations?.filter(
+          (presentation) => {
+            return dayjs(presentation.created_at).month() === month.month();
+          }
+        );
+        const presentationsQuantity = currentMonthPresentations;
 
         const objectsWithPhone = currentMonthObjects?.filter((obj) => {
           const phoneNumber = obj?.contact?.phone;
@@ -42,6 +53,7 @@ const generateMonthHeaders = () => {
           <TableCell
             objects={objectQuantity}
             objectsWithPhone={objectsWithPhoneQuantity}
+            presentations={presentationsQuantity}
           />
         );
       },
@@ -77,11 +89,15 @@ export const resultMyColumns = [
           const formattedStartDate = startOPreviousWeek.format("YYYY-MM-DD");
           const formattedEndDate = endOPreviousWeek.format("YYYY-MM-DD");
 
-          const weeklyObjects = GetWeeklyObjects(
+          const weeklyPresentations = getWeeklyPresentations(
             formattedStartDate,
             formattedEndDate
           );
-          const weeklyObjectsWithPhone = GetWeeklyObjectsWithPhone(
+          const weeklyObjects = getWeeklyObjects(
+            formattedStartDate,
+            formattedEndDate
+          );
+          const weeklyObjectsWithPhone = getWeeklyObjectsWithPhone(
             formattedStartDate,
             formattedEndDate
           );
@@ -90,6 +106,7 @@ export const resultMyColumns = [
             <TableCell
               objects={weeklyObjects}
               objectsWithPhone={weeklyObjectsWithPhone}
+              presentations={weeklyPresentations}
             />
           );
         },
@@ -113,11 +130,15 @@ export const resultMyColumns = [
           const formattedStartDate = startOPreviousWeek.format("YYYY-MM-DD");
           const formattedEndDate = endOPreviousWeek.format("YYYY-MM-DD");
 
-          const weeklyObjects = GetWeeklyObjects(
+          const weeklyPresentations = getWeeklyPresentations(
             formattedStartDate,
             formattedEndDate
           );
-          const weeklyObjectsWithPhone = GetWeeklyObjectsWithPhone(
+          const weeklyObjects = getWeeklyObjects(
+            formattedStartDate,
+            formattedEndDate
+          );
+          const weeklyObjectsWithPhone = getWeeklyObjectsWithPhone(
             formattedStartDate,
             formattedEndDate
           );
@@ -126,6 +147,7 @@ export const resultMyColumns = [
             <TableCell
               objects={weeklyObjects}
               objectsWithPhone={weeklyObjectsWithPhone}
+              presentations={weeklyPresentations}
             />
           );
         },
@@ -149,11 +171,15 @@ export const resultMyColumns = [
           const formattedStartDate = startOPreviousWeek.format("YYYY-MM-DD");
           const formattedEndDate = endOPreviousWeek.format("YYYY-MM-DD");
 
-          const weeklyObjects = GetWeeklyObjects(
+          const weeklyPresentations = getWeeklyPresentations(
             formattedStartDate,
             formattedEndDate
           );
-          const weeklyObjectsWithPhone = GetWeeklyObjectsWithPhone(
+          const weeklyObjects = getWeeklyObjects(
+            formattedStartDate,
+            formattedEndDate
+          );
+          const weeklyObjectsWithPhone = getWeeklyObjectsWithPhone(
             formattedStartDate,
             formattedEndDate
           );
@@ -162,6 +188,7 @@ export const resultMyColumns = [
             <TableCell
               objects={weeklyObjects}
               objectsWithPhone={weeklyObjectsWithPhone}
+              presentations={weeklyPresentations}
             />
           );
         },
@@ -185,8 +212,12 @@ export const resultMyColumns = [
           const startOfWeek = currentDate.startOf("week");
           const endOfWeek = currentDate.endOf("week").day(0);
 
-          const weeklyObjects = GetWeeklyObjects(startOfWeek, endOfWeek);
-          const weeklyObjectsWithPhone = GetWeeklyObjectsWithPhone(
+          const weeklyPresentations = getWeeklyPresentations(
+            startOfWeek,
+            endOfWeek
+          );
+          const weeklyObjects = getWeeklyObjects(startOfWeek, endOfWeek);
+          const weeklyObjectsWithPhone = getWeeklyObjectsWithPhone(
             startOfWeek,
             endOfWeek
           );
@@ -195,6 +226,7 @@ export const resultMyColumns = [
             <TableCell
               objects={weeklyObjects}
               objectsWithPhone={weeklyObjectsWithPhone}
+              presentations={weeklyPresentations}
             />
           );
         },

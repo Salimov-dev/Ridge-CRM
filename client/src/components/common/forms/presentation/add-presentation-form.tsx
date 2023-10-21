@@ -1,8 +1,5 @@
-import { Typography } from "@mui/material";
 // components
-import TimePickerStyled from "../../inputs/time-picker";
 import TextFieldStyled from "../../inputs/text-field-styled";
-import DatePickerStyled from "../../inputs/date-picker";
 // styled
 import { FieldsContainer, Form } from "../styled/styled";
 import AutocompleteStyled from "../../inputs/autocomplete-styled";

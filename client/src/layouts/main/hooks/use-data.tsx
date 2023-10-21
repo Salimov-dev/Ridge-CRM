@@ -1,14 +1,17 @@
 import { useSelector } from "react-redux";
 import useTableHeader from "../../../columns/result-my-columns/hooks/use-table-header";
 import { objectStatusesArray } from "../../../mock/object/object-status";
-import { GetWeeklyObjects } from "../../../utils/objects/get-weekly-objects";
-import { GetWeeklyObjectsWithPhone } from "../../../utils/objects/get-weekly-objects-with-phone";
+import { getWeeklyObjects } from "../../../utils/objects/get-weekly-objects";
+import { getWeeklyObjectsWithPhone } from "../../../utils/objects/get-weekly-objects-with-phone";
 import { getObjectsList } from "../../../store/object/objects.store";
 import dayjs from "dayjs";
+import { orderBy } from "lodash";
+import { getLastContactsList } from "../../../store/last-contact/last-contact.store";
 
 const useData = () => {
   const currentDate = dayjs();
   const objects = useSelector(getObjectsList());
+  const lastContacts = useSelector(getLastContactsList());
 
   // текущая неделя месяца
   const startOfCurrentWeek = currentDate.startOf("week");
@@ -17,8 +20,8 @@ const useData = () => {
     "DD.MM"
   )} - ${endOfCurrentWeek.format("DD.MM")}`;
 
-  const weeklyObjects = GetWeeklyObjects(startOfCurrentWeek, endOfCurrentWeek);
-  const weeklyObjectsWithPhone = GetWeeklyObjectsWithPhone(
+  const weeklyObjects = getWeeklyObjects(startOfCurrentWeek, endOfCurrentWeek);
+  const weeklyObjectsWithPhone = getWeeklyObjectsWithPhone(
     startOfCurrentWeek,
     endOfCurrentWeek
   );
@@ -30,11 +33,11 @@ const useData = () => {
 
   const formattedStartPrevWeekDate = endOfPrevWeek.format("YYYY-MM-DD");
   const formattedEndPrevWeekDate = startOfPrevWeek.format("YYYY-MM-DD");
-  const previousWeekObjects = GetWeeklyObjects(
+  const previousWeekObjects = getWeeklyObjects(
     formattedStartPrevWeekDate,
     formattedEndPrevWeekDate
   );
-  const previousWeekObjectsWithPhone = GetWeeklyObjectsWithPhone(
+  const previousWeekObjectsWithPhone = getWeeklyObjectsWithPhone(
     formattedStartPrevWeekDate,
     formattedEndPrevWeekDate
   );
@@ -46,11 +49,11 @@ const useData = () => {
 
   const formattedStartNexDate = startOfThirdWeek.format("YYYY-MM-DD");
   const formattedEndNexDate = endOfThirdWeek.format("YYYY-MM-DD");
-  const thirdWeekObjects = GetWeeklyObjects(
+  const thirdWeekObjects = getWeeklyObjects(
     formattedStartNexDate,
     formattedEndNexDate
   );
-  const thirdWeekObjectsWithPhone = GetWeeklyObjectsWithPhone(
+  const thirdWeekObjectsWithPhone = getWeeklyObjectsWithPhone(
     formattedStartNexDate,
     formattedEndNexDate
   );
@@ -62,11 +65,11 @@ const useData = () => {
 
   const formattedStarFourthDate = startOFourthWeek.format("YYYY-MM-DD");
   const formattedEnFourthDate = endOFourthWeek.format("YYYY-MM-DD");
-  const fourthWeekObjects = GetWeeklyObjects(
+  const fourthWeekObjects = getWeeklyObjects(
     formattedStarFourthDate,
     formattedEnFourthDate
   );
-  const fourthWeekObjectsWithPhone = GetWeeklyObjectsWithPhone(
+  const fourthWeekObjectsWithPhone = getWeeklyObjectsWithPhone(
     formattedStarFourthDate,
     formattedEnFourthDate
   );
@@ -137,11 +140,11 @@ const useData = () => {
     }
   });
 
-  const filteredObjectStatuses = objectStatusesArray.filter(
+  const filteredObjectStatuses = objectStatusesArray?.filter(
     (status) => usedStatuses[status._id]
   );
 
-  const pieData = filteredObjectStatuses.map((status) => {
+  const pieData = filteredObjectStatuses?.map((status) => {
     return {
       id: status.name,
       label: status.name,
@@ -149,7 +152,107 @@ const useData = () => {
       color: `hsl(${Math.random() * 360}, 70%, 50%)`,
     };
   });
-  return { chartData, pieData };
+
+  const hasLastContact = (objectId) => {
+    const objectsWithLastContact = lastContacts?.filter(
+      (contact) => contact?.objectId === objectId
+    );
+    const hasLastContact = objectsWithLastContact?.length > 0;
+
+    return hasLastContact;
+  };
+
+  const objectsWithoutLastContacts = objects?.filter(
+    (obj) => !hasLastContact(obj._id)
+  );
+
+  const objectsOneToTwoMonth = objects?.filter((obj) => {
+    const objectId = obj?._id;
+    const lastContactsList = lastContacts?.filter(
+      (contact) => contact.objectId === objectId
+    );
+    const sortedLastContacts = orderBy(lastContactsList, "date", ["desc"]);
+    const lastContact = sortedLastContacts[0]?.date;
+
+    if (!lastContact) {
+      return false; // Если нет информации о последнем звонке, объект не попадает в фильтр
+    }
+
+    const lastContactDate = dayjs(lastContact);
+
+    return lastContactDate.isBetween(
+      currentDate.subtract(2, "months"),
+      currentDate.subtract(1, "months")
+    );
+  });
+
+  const objectsTwoToThreeMonth = objects?.filter((obj) => {
+    const objectId = obj?._id;
+    const lastContactsList = lastContacts?.filter(
+      (contact) => contact.objectId === objectId
+    );
+    const sortedLastContacts = orderBy(lastContactsList, "date", ["desc"]);
+    const lastContact = sortedLastContacts[0]?.date;
+
+    if (!lastContact) {
+      return false; // Если нет информации о последнем звонке, объект не попадает в фильтр
+    }
+
+    const lastContactDate = dayjs(lastContact);
+
+    return lastContactDate.isBetween(
+      currentDate.subtract(3, "months"),
+      currentDate.subtract(2, "months")
+    );
+  });
+
+  const objectsThreeAndMoreMonth = objects?.filter((obj) => {
+    const objectId = obj?._id;
+    const lastContactsList = lastContacts?.filter(
+      (contact) => contact.objectId === objectId
+    );
+    const sortedLastContacts = orderBy(lastContactsList, "date", ["desc"]);
+    const lastContact = sortedLastContacts[0]?.date;
+
+    if (!lastContact) {
+      return false; // Если нет информации о последнем звонке, объект не попадает в фильтр
+    }
+
+    const lastContactDate = dayjs(lastContact);
+
+    // Проверяем, что разница между текущей датой и датой последнего контакта
+    // составляет более 3 месяцев
+    return lastContactDate.isBefore(currentDate.subtract(3, "months"));
+  });
+
+  const pieDataWithContacts = [
+    {
+      id: "Без звонков",
+      label: "Объектов без звонков", // Замените на соответствующее поле объекта
+      value: objectsWithoutLastContacts?.length, // Замените на поле, содержащее количество контактов
+      color: `hsl(${Math.random() * 360}, 70%, 50%)`,
+    },
+    {
+      id: "От 1 до 2 мес",
+      label: "Звонили от 1 до 2 мес назад", // Замените на соответствующее поле объекта
+      value: objectsOneToTwoMonth?.length, // Замените на поле, содержащее количество контактов
+      color: `hsl(${Math.random() * 360}, 70%, 50%)`,
+    },
+    {
+      id: "От 2 до 3 мес",
+      label: "Звонили от 2 до 3 мес назад", // Замените на соответствующее поле объекта
+      value: objectsTwoToThreeMonth?.length, // Замените на поле, содержащее количество контактов
+      color: `hsl(${Math.random() * 360}, 70%, 50%)`,
+    },
+    {
+      id: "От 3 мес и более",
+      label: "Звонили от 3 мес и более назад", // Замените на соответствующее поле объекта
+      value: objectsThreeAndMoreMonth?.length, // Замените на поле, содержащее количество контактов
+      color: `hsl(${Math.random() * 360}, 70%, 50%)`,
+    },
+  ];
+
+  return { chartData, pieData, pieDataWithContacts };
 };
 
 export default useData;

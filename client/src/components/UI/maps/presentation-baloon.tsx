@@ -23,6 +23,10 @@ import {
 } from "../../../store/meeting/update-meeting.store";
 import { getPresentationById } from "../../../store/presentation/presentations.store";
 import { getPresentationStatusNameById } from "../../../store/presentation/presentation-status.store";
+import {
+  setUpdatePresentationId,
+  setUpdatePresentationOpenState,
+} from "../../../store/presentation/update-presentation.store";
 
 const BaloonContainer = styled(Box)`
   width: 100%;
@@ -52,9 +56,9 @@ const PresentationBaloon = ({ presentationId }) => {
     dispatch<any>(setOpenObjectPageOpenState(true));
   };
 
-  const handleOpenUpdateMeeting = () => {
-    // dispatch<any>(setUpdateMeetingId(meetingId));
-    // dispatch<any>(setUpdateMeetingOpenState(true));
+  const handleOpenUpdatePresentation = () => {
+    dispatch<any>(setUpdatePresentationId(presentationId));
+    dispatch<any>(setUpdatePresentationOpenState(true));
   };
 
   return (
@@ -73,14 +77,17 @@ const PresentationBaloon = ({ presentationId }) => {
         <b>Дата добавления:</b> {FormatDate(presentation?.created_at)}
       </Typography>
       <Attribute title="Менеджер:" subTitle={manager} />
-      <Typography>
-        <b>Комментарий Куратора:</b>
-      </Typography>
-      <Attribute subTitle={presentation?.curatorComment} gap="0" />
+      {presentation?.curatorComment && (
+        <>
+          <Typography>
+            <b>Комментарий Куратора:</b>
+          </Typography>
+          <Attribute subTitle={presentation?.curatorComment} gap="0" />
+        </>
+      )}
 
       {objectId ? (
         <>
-
           <Divider />
           <Box sx={{ width: "100%", display: "flex", gap: "4px" }}>
             <MultiColorOutlinedButton
@@ -88,7 +95,7 @@ const PresentationBaloon = ({ presentationId }) => {
               fontColor="black"
               borderColor="SaddleBrown"
               backgroundHover="Chocolate"
-              onClick={handleOpenUpdateMeeting}
+              onClick={handleOpenUpdatePresentation}
             />
             <MultiColorOutlinedButton
               text="Страница объекта"
