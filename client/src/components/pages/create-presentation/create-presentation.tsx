@@ -72,7 +72,6 @@ const CreatePresentation = ({ onClose, setConfettiActive }) => {
       objectId: data.objectId,
       status: "654wqeg3469y9dfsd82dd334",
     };
-    console.log("data", data);
 
     dispatch<any>(createPresentation(presentationNewData))
       .then(() => onClose())

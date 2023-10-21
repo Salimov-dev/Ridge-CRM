@@ -3,25 +3,54 @@ import SearchField from "../../common/inputs/search-field";
 import { FieldsContainer, Form } from "../../common/forms/styled/styled";
 import MultiSelectField from "../../common/inputs/multi-select-field";
 import SearchDatePicker from "../../common/inputs/search-date-picker";
-import SearchSelectField from "../../common/inputs/search-select-field";
 // hooks
-import useMeetingFiltersPanel from "../../../hooks/meeting/use-meeting-filters-panel";
-// mock
-import { meetingDoneTypes } from "../../../mock/meetings/meeting-done-status";
+import usePresentationFiltersPanel from "../../../hooks/presentation/use-presentation-filters-panel";
 
-const PresentationsFiltersPanel = ({ data, register, setValue, isLoading }) => {
-  const { getActualUsersList, getActualStatusesList, getActuaTypesList } =
-    useMeetingFiltersPanel();
+const PresentationsFiltersPanel = ({
+  presentations,
+  data,
+  register,
+  setValue,
+  isLoading,
+}) => {
+  const { getActualStatusesList, getActualUsersList } =
+    usePresentationFiltersPanel(presentations);
 
   return (
     <Form>
       <FieldsContainer>
         <SearchField
           register={register}
-          label="Найти по результату"
-          name="result"
-          value={data.result}
+          label="Найти по адресу"
+          name="objectAddress"
+          value={data.objectAddress}
           inputProps={{ maxLength: 30 }}
+          disabled={isLoading ? true : false}
+        />
+        <SearchField
+          register={register}
+          label="Найти по комментарию Куратора"
+          name="curatorComment"
+          value={data.curatorComment}
+          inputProps={{ maxLength: 30 }}
+          disabled={isLoading ? true : false}
+        />
+      </FieldsContainer>
+      <FieldsContainer>
+        <SearchDatePicker
+          register={register}
+          name="startDate"
+          label="Добавлены от"
+          value={data.startDate}
+          onChange={(value) => setValue("startDate", value)}
+          disabled={isLoading ? true : false}
+        />
+        <SearchDatePicker
+          register={register}
+          name="endDate"
+          label="Добавлены до"
+          value={data.endDate}
+          onChange={(value) => setValue("endDate", value)}
           disabled={isLoading ? true : false}
         />
         <MultiSelectField
@@ -33,33 +62,6 @@ const PresentationsFiltersPanel = ({ data, register, setValue, isLoading }) => {
           onChange={(e) => setValue("selectedStatuses", e.target.value)}
           disabled={isLoading ? true : false}
         />
-        <MultiSelectField
-          name="selectedTypes"
-          labelId="selectedTypes-label"
-          label="Выбор по типу"
-          itemsList={getActuaTypesList()}
-          selectedItems={data.selectedTypes}
-          onChange={(e) => setValue("selectedTypes", e.target.value)}
-          disabled={isLoading ? true : false}
-        />
-      </FieldsContainer>
-      <FieldsContainer>
-        <SearchDatePicker
-          register={register}
-          name="startDate"
-          label="Назначены от"
-          value={data.startDate}
-          onChange={(value) => setValue("startDate", value)}
-          disabled={isLoading ? true : false}
-        />
-        <SearchDatePicker
-          register={register}
-          name="endDate"
-          label="Назначены до"
-          value={data.endDate}
-          onChange={(value) => setValue("endDate", value)}
-          disabled={isLoading ? true : false}
-        />
         {/* <MultiSelectField
           name="users"
           labelId="users-label"
@@ -69,16 +71,6 @@ const PresentationsFiltersPanel = ({ data, register, setValue, isLoading }) => {
           onChange={(e) => setValue("selectedUsers", e.target.value)}
           disabled={isLoading ? true : false}
         /> */}
-        <SearchSelectField
-          register={register}
-          name="meetingsActivity"
-          labelId="meetingsActivity"
-          label="Выбор по активности"
-          itemsList={meetingDoneTypes}
-          value={data.meetingsActivity}
-          disabled={isLoading ? true : false}
-          isSelect={Boolean(data?.meetingsActivity?.length)}
-        />
       </FieldsContainer>
     </Form>
   );

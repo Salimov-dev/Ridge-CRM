@@ -14,6 +14,7 @@ import PresentationCreatePageDialog from "../../components/UI/dialogs/presentati
 import ObjectUpdatePageDialog from "../../components/UI/dialogs/objects/object-update-page-dialog";
 import ObjectPageDialog from "../../components/UI/dialogs/object-page-dialog/object-page-dialog";
 import PresentationsFiltersPanel from "../../components/UI/filters-panels/presentations-filters-panel";
+import PresentationUpdateDialog from "../../components/UI/dialogs/presentations/presentation-update-dialog";
 import AddAndClearFiltersButton from "../../components/common/buttons/add-and-clear-filters-button";
 import ItemsOnMap from "../../components/common/map/items-on-map/items-on-map";
 import PresentationBaloon from "../../components/UI/maps/presentation-baloon";
@@ -22,17 +23,18 @@ import { presentationsColumns } from "../../columns/presentations-columns/presen
 // map images
 import target from "../../assets/map/target-presentation.png";
 import targetCluster from "../../assets/map/target-presentation-cluster.png";
+// hooks
+import useSearchPresentation from "../../hooks/presentation/use-search-presentation";
 // store
 import { getObjectsList } from "../../store/object/objects.store";
 import {
   getPresentationsList,
   getPresentationsLoadingStatus,
 } from "../../store/presentation/presentations.store";
-import PresentationUpdateDialog from "../../components/UI/dialogs/presentations/presentation-update-dialog";
 
 const initialState = {
   objectAddress: "",
-  result: "",
+  curatorComment: "",
   selectedStatuses: [],
   selectedUsers: [],
   startDate: null,
@@ -75,7 +77,8 @@ const Presentations = () => {
   const mapZoom = 11;
 
   const data = watch();
-  const searchedPresentations = presentationsList;
+
+  const searchedPresentations = useSearchPresentation(presentationsList, data);
   const sortedPresentations = orderBy(
     searchedPresentations,
     ["created_at"],
@@ -84,7 +87,7 @@ const Presentations = () => {
   const isInputEmpty = JSON.stringify(initialState) !== JSON.stringify(data);
 
   useEffect(() => {
-    localStorage.setItem("search-meetings-data", JSON.stringify(data));
+    localStorage.setItem("search-presentations-data", JSON.stringify(data));
   }, [data]);
 
   useEffect(() => {
@@ -160,6 +163,7 @@ const Presentations = () => {
 
       <PresentationsFiltersPanel
         data={data}
+        presentations={presentationsList}
         register={register}
         setValue={setValue}
         isLoading={isLoading}
@@ -174,7 +178,7 @@ const Presentations = () => {
       {confettiActive && <Confetti width={width} height={height} />}
 
       <PresentationCreatePageDialog setConfettiActive={setConfettiActive} />
-      <PresentationUpdateDialog/>
+      <PresentationUpdateDialog />
       <ObjectPageDialog />
       <ObjectUpdatePageDialog />
     </Box>
