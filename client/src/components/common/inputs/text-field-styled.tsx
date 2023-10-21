@@ -44,6 +44,7 @@ const TextFieldStyled = ({
     }
   };
 
+
   return (
     <Box sx={{ width: "100%" }}>
       <StyledTextField
@@ -63,6 +64,7 @@ const TextFieldStyled = ({
         helperText={errors?.message}
         disabled={disabled}
         onInput={(e) => handleInput(e)}
+        onWheel={(e) => e.target.blur()}
       />
       {isHelperText ? <FormHelperText>{helperText}</FormHelperText> : null}
     </Box>

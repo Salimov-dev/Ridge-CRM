@@ -5,7 +5,6 @@ import { useSelector } from "react-redux";
 import { getMeetingsList } from "../../store/meeting/meetings.store";
 import { getTasksList } from "../../store/task/tasks.store";
 import { getLastContactsList } from "../../store/last-contact/last-contact.store";
-import { FormatDate } from "../../utils/date/format-date";
 import { orderBy } from "lodash";
 
 const useSearchObject = (objects, data) => {

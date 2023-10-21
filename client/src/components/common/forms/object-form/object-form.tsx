@@ -241,7 +241,7 @@ const ObjectForm = ({
           <TextFieldStyled
             register={register}
             label="Телефон"
-            type="text"
+            type="number"
             name="contact.phone"
             valueAsNumber={true}
             value={data?.contact?.phone || ""}
