@@ -68,6 +68,7 @@ const CreatePresentation = ({ onClose, setConfettiActive }) => {
 
   const onSubmit = (data) => {
     const presentationNewData = {
+      ...data,
       cloudLink: data.cloudLink,
       objectId: data.objectId,
       status: "654wqeg3469y9dfsd82dd334",

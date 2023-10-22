@@ -76,7 +76,7 @@ const PresentationBaloon = ({ presentationId }) => {
       <Typography>
         <b>Дата добавления:</b> {FormatDate(presentation?.created_at)}
       </Typography>
-      <Attribute title="Менеджер:" subTitle={manager} />
+      // <Attribute title="Менеджер:" subTitle={manager} />
       {presentation?.curatorComment && (
         <>
           <Typography>
