@@ -1,6 +1,6 @@
 import { Typography } from "@mui/material";
 import { useSelector } from "react-redux";
-import { getUsersList } from "../../../../../../../../../../../../../store/user/users.store";
+import { getCurrentUserId, getIsUserCurator, getUsersList } from "../../../../../../../../../../../../../store/user/users.store";
 import { getMeetingTypesList } from "../../../../../../../../../../../../../store/meeting/meeting-types.store";
 import { getMeetingStatusesList } from "../../../../../../../../../../../../../store/meeting/meeting-status.store";
 import DividerStyled from "../../../../../../../../../../../divider/divider-styled";
@@ -10,6 +10,9 @@ const MeetingInfo = ({ meet }) => {
   const meetingTypes = useSelector(getMeetingTypesList());
   const meetingStatuses = useSelector(getMeetingStatusesList());
   const isMeetingDone = meet?.isDone;
+
+  const currentUserId = useSelector(getCurrentUserId());
+  const isCurator = useSelector(getIsUserCurator(currentUserId));
 
   const getManagerName = (id) => {
     const user = users?.find((user) => user._id === id);
@@ -43,9 +46,9 @@ const MeetingInfo = ({ meet }) => {
       <Typography>
         <b>Комментарий:</b> {meet?.comment}
       </Typography>
-      <Typography>
+      {isCurator ? <Typography>
         <b>Менеджер:</b> {getManagerName(meet?.userId)}
-      </Typography>
+      </Typography> : null}
     </>
   );
 };

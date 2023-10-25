@@ -92,7 +92,7 @@ const CreateMeeting = ({
   const isFullValid = isValid && watchDate && watchTime && isEmptyFindedObject;
 
   const onSubmit = (data) => {
-    // setIsLoading(true);
+    setIsLoading(true);
 
     const newData = {
       ...data,
