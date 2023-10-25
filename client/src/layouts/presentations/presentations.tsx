@@ -20,6 +20,7 @@ import ItemsOnMap from "../../components/common/map/items-on-map/items-on-map";
 import PresentationBaloon from "../../components/UI/maps/presentation-baloon";
 // columns
 import { presentationsColumns } from "../../columns/presentations-columns/presentations-columns";
+import { presentationsCuratorColumns } from "../../columns/presentations-columns/presentations-columns-curator";
 // map images
 import target from "../../assets/map/target-presentation.png";
 import targetCluster from "../../assets/map/target-presentation-cluster.png";
@@ -31,6 +32,10 @@ import {
   getPresentationsList,
   getPresentationsLoadingStatus,
 } from "../../store/presentation/presentations.store";
+import {
+  getCurrentUserId,
+  getIsUserCurator,
+} from "../../store/user/users.store";
 
 const initialState = {
   objectAddress: "",
@@ -49,6 +54,12 @@ const Presentations = () => {
   const [presentationsWithLocation, setPresentationsWithLocation] = useState(
     []
   );
+
+  const currentUserId = useSelector(getCurrentUserId());
+  const isCurator = useSelector(getIsUserCurator(currentUserId));
+  const columns = isCurator
+    ? presentationsCuratorColumns
+    : presentationsColumns;
 
   const localStorageState = JSON.parse(
     localStorage.getItem("search-presentations-data")
@@ -91,11 +102,13 @@ const Presentations = () => {
   }, [data]);
 
   useEffect(() => {
-    const hasLocalStorageData = localStorage.getItem("search-meetings-data");
+    const hasLocalStorageData = localStorage.getItem(
+      "search-presentations-data"
+    );
 
     if (hasLocalStorageData?.length) {
       localStorage.setItem(
-        "search-meetings-data",
+        "search-presentations-data",
         JSON.stringify(initialState)
       );
     }
@@ -166,12 +179,13 @@ const Presentations = () => {
         presentations={presentationsList}
         register={register}
         setValue={setValue}
+        isCurator={isCurator}
         isLoading={isLoading}
       />
 
       <BasicTable
         items={sortedPresentations}
-        itemsColumns={presentationsColumns}
+        itemsColumns={columns}
         isLoading={isLoading}
       />
 

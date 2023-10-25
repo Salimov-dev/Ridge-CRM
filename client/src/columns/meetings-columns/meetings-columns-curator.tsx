@@ -6,10 +6,13 @@ import { Box, Typography } from "@mui/material";
 import RedirectButton from "../../components/common/buttons/redirect-button";
 import MultiColorContainedButton from "../../components/common/buttons/multi-color-contained-button";
 import DoneStatusIcon from "../../components/common/columns/done-status-icon";
+import UserNameWithAvatar from "../../components/common/table/helpers/user-name-with-avatar";
 // store
 import { getObjectById } from "../../store/object/objects.store";
 import { getMeetingStatusNameById } from "../../store/meeting/meeting-status.store";
 import { getMeetingTypeNameById } from "../../store/meeting/meeting-types.store";
+// styled
+import { AlignCenter } from "../../components/common/columns/styled";
 // utils
 import { FormatDate } from "../../utils/date/format-date";
 import { FormatTime } from "../../utils/date/format-time";
@@ -25,12 +28,11 @@ import {
 import {
   getCurrentUserId,
   getIsUserAuthorThisEntity,
+  getUserDataById,
 } from "../../store/user/users.store";
 import { getMeetingById } from "../../store/meeting/meetings.store";
-// styled
-import { AlignCenter } from "../../components/common/columns/styled";
 
-export const meetingsColumns = [
+export const meetingsCuratorColumns = [
   {
     accessorKey: "isDone",
     header: "",
@@ -130,6 +132,16 @@ export const meetingsColumns = [
       const status = info.getValue();
       const name = useSelector(getMeetingStatusNameById(status));
       return <AlignCenter>{name}</AlignCenter>;
+    },
+  },
+
+  {
+    accessorKey: "userId",
+    header: "Менеджер",
+    cell: (info) => {
+      const userId = info.getValue();
+      const user = useSelector(getUserDataById(userId));
+      return <UserNameWithAvatar user={user} />;
     },
   },
   {

@@ -2,34 +2,40 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Box, Button, Tooltip, Typography } from "@mui/material";
 // components
-import MultiColorContainedButton from "../../components/common/buttons/multi-color-contained-button";
+import {
+  FormatManagerName,
+  UserAvatar,
+} from "../../components/common/table/helpers/helpers";
 import { AlignCenter } from "../../components/common/columns/styled";
 import RedirectButton from "../../components/common/buttons/redirect-button";
-// mock
+import MultiColorContainedButton from "../../components/common/buttons/multi-color-contained-button";
+// utils
+import { FormatDate } from "../../utils/date/format-date";
 // icons
 import CloudDoneIcon from "@mui/icons-material/CloudDone";
 import CloudOffIcon from "@mui/icons-material/CloudOff";
-// utils
-import { FormatDate } from "../../utils/date/format-date";
+import basicAva from "../../assets/basic-ava.jpg";
 // store
-import { getObjectById } from "../../store/object/objects.store";
 import {
   getCurrentUserId,
   getIsUserAuthorThisEntity,
+  getUserDataById,
 } from "../../store/user/users.store";
 import {
   loadOpenObjectPageOpenState,
   setOpenObjectPageId,
   setOpenObjectPageOpenState,
 } from "../../store/object/open-object-page.store";
+import { getObjectById } from "../../store/object/objects.store";
 import { getPresentationStatusNameById } from "../../store/presentation/presentation-status.store";
 import { getPresentationById } from "../../store/presentation/presentations.store";
 import {
   setUpdatePresentationId,
   setUpdatePresentationOpenState,
 } from "../../store/presentation/update-presentation.store";
+import UserNameWithAvatar from "../../components/common/table/helpers/user-name-with-avatar";
 
-export const presentationsColumns = [
+export const presentationsCuratorColumns = [
   {
     accessorKey: "created_at",
     header: "Дата",
@@ -96,6 +102,15 @@ export const presentationsColumns = [
           Дождитесь итогов согласования
         </Typography>
       );
+    },
+  },
+  {
+    accessorKey: "userId",
+    header: "Менеджер",
+    cell: (info) => {
+      const userId = info.getValue();
+      const user = useSelector(getUserDataById(userId));
+      return <UserNameWithAvatar user={user} />;
     },
   },
   {

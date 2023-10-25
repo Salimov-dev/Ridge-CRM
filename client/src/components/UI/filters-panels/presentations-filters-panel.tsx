@@ -11,6 +11,7 @@ const PresentationsFiltersPanel = ({
   data,
   register,
   setValue,
+  isCurator,
   isLoading,
 }) => {
   const { getActualStatusesList, getActualUsersList } =
@@ -35,6 +36,17 @@ const PresentationsFiltersPanel = ({
           inputProps={{ maxLength: 30 }}
           disabled={isLoading ? true : false}
         />
+             {isCurator ? (
+          <MultiSelectField
+            name="users"
+            labelId="users-label"
+            label="Выбор по менеджеру"
+            itemsList={getActualUsersList()}
+            selectedItems={data.selectedUsers}
+            onChange={(e) => setValue("selectedUsers", e.target.value)}
+            disabled={isLoading ? true : false}
+          />
+        ) : null}
       </FieldsContainer>
       <FieldsContainer>
         <SearchDatePicker

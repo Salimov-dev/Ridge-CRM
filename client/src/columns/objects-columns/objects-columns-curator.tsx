@@ -12,24 +12,27 @@ import { AlignCenter } from "../../components/common/columns/styled";
 import EmptyTd from "../../components/common/columns/empty-td";
 import MultiColorContainedButton from "../../components/common/buttons/multi-color-contained-button";
 import {
-  FormatDistrict,
   FormatManagerName,
   FormatMetro,
   FormatObjectStatus,
   FormatPhone,
+  UserAvatar,
 } from "../../components/common/table/helpers/helpers";
 // store
-import { getLastContactsByObjectId } from "../../store/last-contact/last-contact.store";
-import { getTasksByObjectId } from "../../store/task/tasks.store";
+import { getLastContactsList } from "../../store/last-contact/last-contact.store";
+import { getTasksList } from "../../store/task/tasks.store";
 import {
   setOpenObjectPageId,
   setOpenObjectPageOpenState,
 } from "../../store/object/open-object-page.store";
 import {
-  getMeetingsByObjectId,
+  getMeetingsList,
   getObjectMeetingsList,
 } from "../../store/meeting/meetings.store";
 import { getDistrictName } from "../../store/object/districts.store";
+import basicAva from "../../assets/basic-ava.jpg";
+import { getUserDataById } from "../../store/user/users.store";
+import UserNameWithAvatar from "../../components/common/table/helpers/user-name-with-avatar";
 
 export const objectsColumnsCurator = [
   {
@@ -57,9 +60,9 @@ export const objectsColumnsCurator = [
         header: "Район",
         cell: (info) => {
           const district = info.getValue();
-          return (
-            <AlignCenter>{useSelector(getDistrictName(district))}</AlignCenter>
-          );
+          const distName = useSelector(getDistrictName(district));
+
+          return <AlignCenter>{distName}</AlignCenter>;
         },
       },
       {
@@ -78,11 +81,22 @@ export const objectsColumnsCurator = [
         accessorFn: (row) => row,
         header: "Адрес",
         cell: (info) => {
+          const dispatch = useDispatch();
           const object = info.getValue();
           const objectId = object?._id;
           const meetings = useSelector(getObjectMeetingsList(objectId));
-          const tasks = useSelector(getTasksByObjectId(objectId));
-          const lastContacts = useSelector(getLastContactsByObjectId(objectId));
+          const tasksList = useSelector(getTasksList());
+          const tasks = tasksList?.filter((task) => task.objectId === objectId);
+          const lastContactsList = useSelector(getLastContactsList());
+          const lastContacts = lastContactsList?.filter(
+            (contact) => contact.objectId === objectId
+          );
+
+          const handleClick = () => {
+            dispatch<any>(setOpenObjectPageId(objectId));
+            dispatch<any>(setOpenObjectPageOpenState(true));
+          };
+
           if (objectId) {
             return (
               <Box
@@ -98,6 +112,7 @@ export const objectsColumnsCurator = [
                   meetings={meetings}
                   tasks={tasks}
                   lastContacts={lastContacts}
+                  onClick={handleClick}
                 />
               </Box>
             );
@@ -144,7 +159,10 @@ export const objectsColumnsCurator = [
         cell: (info) => {
           const object = info.getValue();
           const objectId = object?._id;
-          const objectMeetings = useSelector(getMeetingsByObjectId(objectId));
+          const meetingsList = useSelector(getMeetingsList());
+          const objectMeetings = meetingsList?.filter(
+            (meet) => meet.objectId === objectId
+          );
           const isObjectMeetings = Boolean(objectMeetings?.length);
           const sortedObjectMeetings = orderBy(
             objectMeetings,
@@ -168,7 +186,10 @@ export const objectsColumnsCurator = [
         cell: (info) => {
           const object = info.getValue();
           const objectId = object?._id;
-          const lastContacts = useSelector(getLastContactsByObjectId(objectId));
+          const lastContactsList = useSelector(getLastContactsList());
+          const lastContacts = lastContactsList?.filter(
+            (contact) => contact.objectId === objectId
+          );
           const sortedLastContacts = orderBy(lastContacts, "date", ["desc"]);
           const isSortedLastContacts = Boolean(sortedLastContacts?.length);
 
@@ -198,7 +219,8 @@ export const objectsColumnsCurator = [
         header: "Менеджер",
         cell: (info) => {
           const userId = info.getValue();
-          return <AlignCenter>{FormatManagerName(userId)}</AlignCenter>;
+          const user = useSelector(getUserDataById(userId));
+          return <UserNameWithAvatar user={user} />;
         },
       },
       {
@@ -248,8 +270,8 @@ export const objectsColumnsCurator = [
           const dispatch = useDispatch();
 
           const handleClick = () => {
-            dispatch(setOpenObjectPageId(objectId));
-            dispatch(setOpenObjectPageOpenState(true));
+            dispatch<any>(setOpenObjectPageId(objectId));
+            dispatch<any>(setOpenObjectPageOpenState(true));
           };
 
           return (

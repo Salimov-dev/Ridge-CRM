@@ -29,6 +29,11 @@ import {
   getMeetingLoadingStatus,
   getMeetingsList,
 } from "../../store/meeting/meetings.store";
+import {
+  getCurrentUserId,
+  getIsUserCurator,
+} from "../../store/user/users.store";
+import { meetingsCuratorColumns } from "../../columns/meetings-columns/meetings-columns-curator";
 
 const initialState = {
   meetingsActivity: "",
@@ -61,7 +66,10 @@ const Meetings = () => {
     mode: "onBlur",
   });
 
-  const columns = meetingsColumns;
+  const currentUserId = useSelector(getCurrentUserId());
+  const isCurator = useSelector(getIsUserCurator(currentUserId));
+
+  const columns = isCurator ? meetingsCuratorColumns : meetingsColumns;
   const meetings = useSelector(getMeetingsList());
   const selectedMeeting = useSelector(getMeetingById(selectedMeetingBaloon));
   const isLoading = useSelector(getMeetingLoadingStatus());
@@ -115,6 +123,7 @@ const Meetings = () => {
         data={data}
         register={register}
         setValue={setValue}
+        isCurator={isCurator}
         isLoading={isLoading}
       />
       <BasicTable
@@ -122,7 +131,7 @@ const Meetings = () => {
         itemsColumns={columns}
         isLoading={isLoading}
       />
-      
+
       <MeetingCreateDialog />
       <MeetingUpdateDialog />
       <ObjectPageDialog />

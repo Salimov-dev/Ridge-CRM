@@ -5,7 +5,7 @@ const Flags = ({
   tasks = [],
   lastContacts = [],
   taskBackgroundColor = "orange",
-  onClick,
+  onClick=()=>{},
 }) => {
   return (
     <Box

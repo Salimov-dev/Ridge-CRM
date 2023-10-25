@@ -1,16 +1,16 @@
 // libraries
 import dayjs from "dayjs";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useDispatch, useSelector } from "react-redux";
+import { Box, styled } from "@mui/material";
 // components
 import MeetingForm from "../../common/forms/meeting-form/meeting-form";
+import IsLoadingDialog from "../../common/dialog/is-loading-dialog";
 import TitleWithAddress from "../../common/page-titles/title-with-address";
 import FindObjectOnMap from "../../common/find-object-on-map/find-object-on-map";
 import FooterButtons from "../../common/forms/footer-buttons/footer-buttons";
-// MUI
-import { Box, styled } from "@mui/material";
 // store
 import { getCurrentUserId } from "../../../store/user/users.store";
 import { createMeeting } from "../../../store/meeting/meetings.store";
@@ -51,6 +51,7 @@ const CreateMeeting = ({
   isObjectPage = false,
 }) => {
   const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = useState(false);
   const statuses = useSelector(getMeetingStatusesList());
   const meetingTypes = useSelector(getMeetingTypesList());
   const currentUserId = useSelector(getCurrentUserId());
@@ -91,6 +92,8 @@ const CreateMeeting = ({
   const isFullValid = isValid && watchDate && watchTime && isEmptyFindedObject;
 
   const onSubmit = (data) => {
+    // setIsLoading(true);
+
     const newData = {
       ...data,
       comment: capitalizeFirstLetter(data.comment),
@@ -102,7 +105,13 @@ const CreateMeeting = ({
     };
 
     dispatch<any>(createMeeting(newData))
-      .then(onClose())
+      .then(() => {
+        setIsLoading(false);
+        onClose();
+      })
+      .catch((error) => {
+        setIsLoading(false);
+      });
   };
 
   useEffect(() => {
@@ -128,34 +137,43 @@ const CreateMeeting = ({
 
   return (
     <Component>
-      <TitleWithAddress
-        isFindedObject={isEmptyFindedObject}
-        city={getCity()}
-        address={getAddress()}
-        title="Добавить встречу:"
-        subtitle="Выберите место встречи на карте"
-        onClose={onClose}
-      />
+      {isLoading ? (
+        <IsLoadingDialog
+          text="Немного подождите, создаем `Встречу`"
+          isLoading={isLoading}
+        />
+      ) : (
+        <>
+          <TitleWithAddress
+            isFindedObject={isEmptyFindedObject}
+            city={getCity()}
+            address={getAddress()}
+            title="Добавить встречу:"
+            subtitle="Выберите место встречи на карте"
+            onClose={onClose}
+          />
 
-      <FindObjectOnMap />
+          <FindObjectOnMap />
 
-      <MeetingForm
-        data={data}
-        objects={transformObjects}
-        statuses={statuses}
-        meetingTypes={meetingTypes}
-        watch={watch}
-        errors={errors}
-        register={register}
-        setValue={setValue}
-        isObjectPage={isObjectPage}
-      />
+          <MeetingForm
+            data={data}
+            objects={transformObjects}
+            statuses={statuses}
+            meetingTypes={meetingTypes}
+            watch={watch}
+            errors={errors}
+            register={register}
+            setValue={setValue}
+            isObjectPage={isObjectPage}
+          />
 
-      <FooterButtons
-        isValid={isFullValid}
-        onClose={onClose}
-        onCreate={handleSubmit(onSubmit)}
-      />
+          <FooterButtons
+            onClose={onClose}
+            onCreate={handleSubmit(onSubmit)}
+            isValid={isFullValid}
+          />
+        </>
+      )}
     </Component>
   );
 };

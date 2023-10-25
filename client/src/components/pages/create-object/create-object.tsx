@@ -1,5 +1,5 @@
 // libraries
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 // components
@@ -12,6 +12,7 @@ import { createObject } from "../../../store/object/objects.store";
 import useFindObject from "../../../hooks/object/use-find-object";
 // utils
 import { capitalizeFirstLetter } from "../../../utils/data/capitalize-first-letter";
+import IsLoadingDialog from "../../common/dialog/is-loading-dialog";
 
 const initialState = {
   status: "",
@@ -60,6 +61,8 @@ const initialState = {
 
 const CreateObject = ({ onClose }) => {
   const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = useState(false);
+
   const {
     register,
     watch,
@@ -104,6 +107,8 @@ const CreateObject = ({ onClose }) => {
     isFindedObject && isObjectHasAddress && isWatchValid;
 
   const onSubmit = (data) => {
+    setIsLoading(true);
+
     const newData = {
       ...data,
       contact: {
@@ -127,7 +132,14 @@ const CreateObject = ({ onClose }) => {
         ),
       },
     };
-    dispatch<any>(createObject(newData)).then(onClose());
+    dispatch<any>(createObject(newData))
+      .then(() => {
+        setIsLoading(false);
+        onClose();
+      })
+      .catch((error) => {
+        setIsLoading(false);
+      });
   };
 
   useEffect(() => {
@@ -140,28 +152,37 @@ const CreateObject = ({ onClose }) => {
 
   return (
     <>
-      <TitleWithAddress
-        isFindedObject={isFindedObject}
-        city={getCity()}
-        address={getAddress()}
-        title="Создать объект:"
-        subtitle="Выберите объект на карте"
-        onClose={onClose}
-      />
+      {isLoading ? (
+        <IsLoadingDialog
+          text="Немного подождите, создаем `Новый объект`"
+          isLoading={isLoading}
+        />
+      ) : (
+        <>
+          <TitleWithAddress
+            isFindedObject={isFindedObject}
+            city={getCity()}
+            address={getAddress()}
+            title="Создать объект:"
+            subtitle="Выберите объект на карте"
+            onClose={onClose}
+          />
 
-      <FindObjectOnMap />
+          <FindObjectOnMap />
 
-      <ObjectForm
-        data={data}
-        register={register}
-        onSubmit={onSubmit}
-        handleSubmit={handleSubmit}
-        errors={errors}
-        watch={watch}
-        isValid={isValidAndHasAdress}
-        onClose={onClose}
-        setValue={setValue}
-      />
+          <ObjectForm
+            data={data}
+            register={register}
+            onSubmit={onSubmit}
+            handleSubmit={handleSubmit}
+            errors={errors}
+            watch={watch}
+            isValid={isValidAndHasAdress}
+            onClose={onClose}
+            setValue={setValue}
+          />
+        </>
+      )}
     </>
   );
 };

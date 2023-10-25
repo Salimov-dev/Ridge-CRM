@@ -15,19 +15,13 @@ const Title = styled(Box)`
 const ObjectMeetings = ({ meetings, object, isAuthorEntity = true }) => {
   const isMeetingsLoading = useSelector(getMeetingLoadingStatus());
   const address = `${object?.location?.city}, ${object?.location?.address}`;
-  const path = window.location.pathname;
-  // const isCalendarPath = path === "/calendar";
-  // const isMeetingsPath = path === "/meetings";
 
   return (
     <>
       <DividerStyled />
       <Title>
         <Typography variant="h3">Встречи по объекту: {address}</Typography>
-        <CreateMeetingButton />
-        {/* {isAuthorEntity && !isCalendarPath && !isMeetingsPath ? (
-          <CreateMeetingButton />
-        ) : null} */}
+        {isAuthorEntity ? <CreateMeetingButton /> : null}
       </Title>
       {meetings?.length ? (
         <BasicTable

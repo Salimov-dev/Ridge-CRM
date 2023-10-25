@@ -3,6 +3,8 @@ import { createAction, createSlice } from "@reduxjs/toolkit";
 import objectService from "../../services/object/object.service";
 import isOutDated from "../../utils/auth/is-out-date";
 import dayjs from "dayjs";
+import { useSelector } from "react-redux";
+import { getCurrentUserId } from "../user/users.store";
 
 const initialState = localStorageService.getAccessToken()
   ? {
@@ -150,8 +152,8 @@ export const getObjectsWeeklyList = () => (state) => {
 
   const weeklyObjects = objects?.filter((object) => {
     const createdAt = dayjs(object.created_at);
-    const startOfWeek = currentDate.startOf('week');
-    const endOfWeek = currentDate.endOf('week');
+    const startOfWeek = currentDate.startOf("week");
+    const endOfWeek = currentDate.endOf("week");
     return createdAt.isBetween(startOfWeek, endOfWeek);
   });
 
@@ -164,8 +166,8 @@ export const getObjectsWeeklyWithPhoneList = () => (state) => {
 
   const weeklyObjectsWithPhone = objects?.filter((object) => {
     const createdAt = dayjs(object.created_at);
-    const startOfWeek = currentDate.startOf('week');
-    const endOfWeek = currentDate.endOf('week');
+    const startOfWeek = currentDate.startOf("week");
+    const endOfWeek = currentDate.endOf("week");
     const isWithinCurrentWeek = createdAt.isBetween(startOfWeek, endOfWeek);
     const hasPhone = object.contact && object.contact.phone;
 

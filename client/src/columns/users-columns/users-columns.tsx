@@ -6,19 +6,19 @@ import {
   FormatPhone,
   UserAvatar,
 } from "../../components/common/table/helpers/helpers";
+import { AlignCenter } from "../../components/common/columns/styled";
 // mock
 import { gendersArray } from "../../mock/genders";
 // store
 import { getUserNameById } from "../../store/user/users.store";
 import { getUserStatusNameById } from "../../store/user/user-statuses.store";
-// utils
-import { FormatDate } from "../../utils/date/format-date";
 import {
   setUpdateManagerId,
   setUpdateManagerOpenState,
 } from "../../store/user/update-user.store";
-import { AlignCenter } from "../../components/common/columns/styled";
-import Loader from "../../components/common/loader/loader";
+// utils
+import { FormatDate } from "../../utils/date/format-date";
+// icons
 import basicAva from "../../assets/basic-ava.jpg"
 
 export const usersColumns = [
@@ -159,6 +159,7 @@ export const usersColumns = [
         header: "ИС",
         cell: (info) => {
           const trialPeriod = info?.getValue();
+
           return (
             <AlignCenter>
               {trialPeriod ? FormatDate(trialPeriod) : ""}
@@ -177,8 +178,8 @@ export const usersColumns = [
       const userId = info.getValue();
 
       const handleClick = () => {
-        dispatch(setUpdateManagerId(userId));
-        dispatch(setUpdateManagerOpenState(true));
+        dispatch<any>(setUpdateManagerId(userId));
+        dispatch<any>(setUpdateManagerOpenState(true));
       };
 
       return (

@@ -9,7 +9,13 @@ import useMeetingFiltersPanel from "../../../hooks/meeting/use-meeting-filters-p
 // mock
 import { meetingDoneTypes } from "../../../mock/meetings/meeting-done-status";
 
-const MeetingsFiltersPanel = ({ data, register, setValue, isLoading }) => {
+const MeetingsFiltersPanel = ({
+  data,
+  register,
+  setValue,
+  isCurator,
+  isLoading,
+}) => {
   const { getActualUsersList, getActualStatusesList, getActuaTypesList } =
     useMeetingFiltersPanel();
 
@@ -42,6 +48,17 @@ const MeetingsFiltersPanel = ({ data, register, setValue, isLoading }) => {
           onChange={(e) => setValue("selectedTypes", e.target.value)}
           disabled={isLoading ? true : false}
         />
+        {isCurator ? (
+          <MultiSelectField
+            name="users"
+            labelId="users-label"
+            label="Выбор по менеджеру"
+            itemsList={getActualUsersList()}
+            selectedItems={data.selectedUsers}
+            onChange={(e) => setValue("selectedUsers", e.target.value)}
+            disabled={isLoading ? true : false}
+          />
+        ) : null}
       </FieldsContainer>
       <FieldsContainer>
         <SearchDatePicker
@@ -60,15 +77,6 @@ const MeetingsFiltersPanel = ({ data, register, setValue, isLoading }) => {
           onChange={(value) => setValue("endDate", value)}
           disabled={isLoading ? true : false}
         />
-        {/* <MultiSelectField
-          name="users"
-          labelId="users-label"
-          label="Выбор по менеджеру"
-          itemsList={getActualUsersList()}
-          selectedItems={data.selectedUsers}
-          onChange={(e) => setValue("selectedUsers", e.target.value)}
-          disabled={isLoading ? true : false}
-        /> */}
         <SearchSelectField
           register={register}
           name="meetingsActivity"

@@ -1,21 +1,21 @@
 // libraries
 import dayjs from "dayjs";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-// mui
 import { Box } from "@mui/material";
 // components
 import MyTaskForm from "../../common/forms/my-task-form/my-task-form";
 import TitleWithCloseButton from "../../common/page-titles/title-with-close-button";
+import FooterButtons from "../../common/forms/footer-buttons/footer-buttons";
+import IsLoadingDialog from "../../common/dialog/is-loading-dialog";
 // store
 import { createTask } from "../../../store/task/tasks.store";
 // schema
 import { taskSchema } from "../../../schemas/task-shema";
 // utils
 import { capitalizeFirstLetter } from "../../../utils/data/capitalize-first-letter";
-import FooterButtons from "../../common/forms/footer-buttons/footer-buttons";
 
 const initialState = {
   date: null,
@@ -30,12 +30,13 @@ const initialState = {
 const CreateMyTask = ({
   title,
   dateCreate,
-  objects,
   onClose,
+  objects,
   objectPageId = "",
   isObjectPage = false,
 }) => {
   const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = useState(false);
 
   const {
     register,
@@ -55,6 +56,8 @@ const CreateMyTask = ({
   const isFullValid = isValid && watchDate && watchTime;
 
   const onSubmit = () => {
+    setIsLoading(true);
+
     const newData = {
       ...data,
       comment: capitalizeFirstLetter(data.comment),
@@ -62,7 +65,13 @@ const CreateMyTask = ({
       managerId: null,
     };
     dispatch<any>(createTask(newData))
-      .then(onClose())
+      .then(() => {
+        setIsLoading(false);
+        onClose();
+      })
+      .catch((error) => {
+        setIsLoading(false);
+      });
   };
 
   useEffect(() => {
@@ -81,26 +90,35 @@ const CreateMyTask = ({
 
   return (
     <Box>
-      <TitleWithCloseButton
-        title={title}
-        background="orange"
-        color="white"
-        onClose={onClose}
-      />
-      <MyTaskForm
-        data={data}
-        objects={objects}
-        register={register}
-        watch={watch}
-        errors={errors}
-        setValue={setValue}
-        isObjectPage={isObjectPage}
-      />
-      <FooterButtons
-        onCreate={handleSubmit(onSubmit)}
-        onClose={onClose}
-        isValid={isFullValid}
-      />
+      {isLoading ? (
+        <IsLoadingDialog
+          text="Немного подождите, создаем `Новую задачу себе`"
+          isLoading={isLoading}
+        />
+      ) : (
+        <>
+          <TitleWithCloseButton
+            title={title}
+            background="orange"
+            color="white"
+            onClose={onClose}
+          />
+          <MyTaskForm
+            data={data}
+            objects={objects}
+            register={register}
+            watch={watch}
+            errors={errors}
+            setValue={setValue}
+            isObjectPage={isObjectPage}
+          />
+          <FooterButtons
+            onCreate={handleSubmit(onSubmit)}
+            onClose={onClose}
+            isValid={isFullValid}
+          />
+        </>
+      )}
     </Box>
   );
 };

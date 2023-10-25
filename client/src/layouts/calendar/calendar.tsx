@@ -83,7 +83,7 @@ const Calendar = () => {
 
   const getMeeting = (day) => {
     const meeting = meetings?.filter(
-      (meet) => dayjs(meet?.date).format() === dayjs(day)?.format()
+      (meet) => dayjs(meet?.date).format("YYYY-MM-DD") === dayjs(day)?.format("YYYY-MM-DD")
     );
     const sortedMeetings = orderBy(meeting, ["date"], ["desc"]);
     return sortedMeetings;

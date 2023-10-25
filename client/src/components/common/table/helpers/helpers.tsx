@@ -75,10 +75,10 @@ export const priceForMetr = (id) => {
   return getPriceForRentMetr(object);
 };
 
-export const UserAvatar = ({ path }) => {
+export const UserAvatar = ({ path, width= "30px" }) => {
   return (
     <Box sx={{ display: "flex", justifyContent: "center" }}>
-      <img src={path} alt="" style={{ width: "40px", borderRadius: "50%" }} />
+      <img src={path} alt="" style={{ width: width, borderRadius: "50%" }} />
     </Box>
   );
 };

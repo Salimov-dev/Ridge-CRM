@@ -29,6 +29,7 @@ const MeetingCreateDialog = ({
           isObjectPage={isObjectPage}
         />
       }
+      maxWidth="lg"
       onClose={handleCloseCreateMeeting}
       open={isOpenCreateMeeting}
     />

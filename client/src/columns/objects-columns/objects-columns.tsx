@@ -12,7 +12,6 @@ import { AlignCenter } from "../../components/common/columns/styled";
 import EmptyTd from "../../components/common/columns/empty-td";
 import MultiColorContainedButton from "../../components/common/buttons/multi-color-contained-button";
 import {
-  FormatDistrict,
   FormatMetro,
   FormatObjectStatus,
   FormatPhone,

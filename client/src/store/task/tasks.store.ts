@@ -88,6 +88,7 @@ export const loadTasksList = () => async (dispatch, getState) => {
     dispatch(tasksRequested());
     try {
       const { content } = await tasksService.get();
+
       dispatch(tasksReceived(content));
     } catch (error) {
       tasksFailed(error.message);

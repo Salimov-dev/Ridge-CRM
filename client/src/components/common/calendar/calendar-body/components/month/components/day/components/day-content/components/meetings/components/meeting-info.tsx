@@ -31,7 +31,7 @@ const MeetingInfo = ({ meet }) => {
   return (
     <>
       <Typography>
-        <b>Адрес:</b> {meet.location.city}, {meet.location.address}
+        <b>Адрес:</b> {meet.location?.city}, {meet.location?.address}
       </Typography>
       <DividerStyled color={isMeetingDone ? "darkGray" : "gray"} />
       <Typography>
@@ -39,6 +39,9 @@ const MeetingInfo = ({ meet }) => {
       </Typography>
       <Typography>
         <b>Повод:</b> {getMeetingTypeName(meet?.meetingType)}
+      </Typography>
+      <Typography>
+        <b>Комментарий:</b> {meet?.comment}
       </Typography>
       <Typography>
         <b>Менеджер:</b> {getManagerName(meet?.userId)}

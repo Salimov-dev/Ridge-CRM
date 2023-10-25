@@ -48,7 +48,7 @@ const useCalendar = () => {
   });
 
   let transformObjects = [];
-  const actualObjects = isCurator ? objects : currentUserObjects;
+  const actualObjects = isCurator ? currentUserObjects : objects ;
   actualObjects?.forEach((obj) => {
     transformObjects?.push({ _id: obj._id, name: obj.location.address });
   });

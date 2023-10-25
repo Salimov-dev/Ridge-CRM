@@ -15,10 +15,8 @@ import {
 } from "../../../store/user/users.store";
 // schema
 import { managerSchema } from "../../../schemas/manager-schema";
-// utils
-import getRandomInt from "../../../utils/other/get-random-int";
 // assets
-import basicAva from "../../../assets/basic-ava.jpg"
+import basicAva from "../../../assets/basic-ava.jpg";
 
 const initialState = {
   email: "",
@@ -60,9 +58,15 @@ const CreateManager = ({ onClose }) => {
   const currentUserId = useSelector(getCurrentUserId());
   const dispatch = useDispatch();
 
-  const transformedStartDate = dayjs(data?.contract?.startDate).format("YYYY-MM-DDTHH:mm:ss.SSSZ");
-  const transformedEndDate = dayjs(data?.contract?.endDate).format("YYYY-MM-DDTHH:mm:ss.SSSZ");
-  const transformedTrialPeriod = dayjs(data?.contract?.trialPeriod).format("YYYY-MM-DDTHH:mm:ss.SSSZ");
+  const transformedStartDate = dayjs(data?.contract?.startDate).format(
+    "YYYY-MM-DDTHH:mm:ss.SSSZ"
+  );
+  const transformedEndDate = dayjs(data?.contract?.endDate).format(
+    "YYYY-MM-DDTHH:mm:ss.SSSZ"
+  );
+  const transformedTrialPeriod = data?.contract?.trialPeriod
+    ? dayjs(data?.contract?.trialPeriod).format("YYYY-MM-DDTHH:mm:ss.SSSZ")
+    : "";
 
   const onSubmit = (data) => {
     const newData = {
@@ -72,13 +76,11 @@ const CreateManager = ({ onClose }) => {
         endDate: transformedEndDate,
         trialPeriod: transformedTrialPeriod,
       },
-      // image: `https://randomuser.me/api/portraits/women/${getRandomInt()}.jpg`,
       image: basicAva,
       curatorId: currentUserId,
     };
 
-    dispatch<any>(addNewManager(newData))
-      .then(onClose())
+    dispatch<any>(addNewManager(newData)).then(onClose());
   };
 
   return (

@@ -70,6 +70,14 @@ export const locationColumns = [
     },
   },
   {
+    accessorKey: "location.identifier",
+    header: "Идентификатор",
+    cell: (info) => {
+      const identifier = info.getValue();
+      return identifier ? <AlignCenter>{identifier}</AlignCenter> : <EmptyTd />;
+    },
+  },
+  {
     accessorKey: "userId",
     header: "Менеджер",
     cell: (info) => {

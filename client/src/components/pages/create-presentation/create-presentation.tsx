@@ -1,5 +1,5 @@
 // libraries
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Box, styled } from "@mui/material";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import TitleWithCloseButton from "../../common/page-titles/title-with-close-button";
 import AddPresentationForm from "../../common/forms/presentation/add-presentation-form";
 import FooterButtons from "../../common/forms/footer-buttons/footer-buttons";
+import IsLoadingDialog from "../../common/dialog/is-loading-dialog";
 // schema
 import { presentationSchema } from "../../../schemas/presentation-schema";
 // store
@@ -33,6 +34,7 @@ const Component = styled(Box)`
 
 const CreatePresentation = ({ onClose, setConfettiActive }) => {
   const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = useState(false);
 
   const objectPageId = useSelector(getOpenObjectPageId());
   const objects = useSelector(getObjectsList());
@@ -44,7 +46,7 @@ const CreatePresentation = ({ onClose, setConfettiActive }) => {
   );
 
   let transformObjects = [];
-  const actualObjects = isCurator ? objects : currentUserObjects;
+  const actualObjects = isCurator ? currentUserObjects : objects;
   actualObjects?.forEach((obj) => {
     transformObjects?.push({ _id: obj._id, name: obj.location.address });
   });
@@ -66,17 +68,27 @@ const CreatePresentation = ({ onClose, setConfettiActive }) => {
 
   const isFullValid = isValid && Boolean(watchObjectId?.length);
 
+  const statusToBeAgreedId = "654wqeg3469y9dfsd82dd334"; // статус "На согласовании"
+
   const onSubmit = (data) => {
+    setIsLoading(true);
+
     const presentationNewData = {
       ...data,
       cloudLink: data.cloudLink,
       objectId: data.objectId,
-      status: "654wqeg3469y9dfsd82dd334",
+      status: statusToBeAgreedId,
     };
 
     dispatch<any>(createPresentation(presentationNewData))
-      .then(() => onClose())
-      .then(() => setConfettiActive(true));
+      .then(() => {
+        setIsLoading(false);
+        onClose();
+        setConfettiActive(true);
+      })
+      .catch((error) => {
+        setIsLoading(false);
+      });
   };
 
   useEffect(() => {
@@ -87,25 +99,34 @@ const CreatePresentation = ({ onClose, setConfettiActive }) => {
 
   return (
     <Component>
-      <TitleWithCloseButton
-        title="Добавить презентацию"
-        onClose={onClose}
-        background="SaddleBrown"
-        color="white"
-      />
-      <AddPresentationForm
-        data={data}
-        objects={transformObjects}
-        register={register}
-        errors={errors}
-        watch={watch}
-        setValue={setValue}
-      />
-      <FooterButtons
-        onCreate={handleSubmit(onSubmit)}
-        onClose={onClose}
-        isValid={isFullValid}
-      />
+      {isLoading ? (
+        <IsLoadingDialog
+          text="Немного подождите, создаем `Презентацию`"
+          isLoading={isLoading}
+        />
+      ) : (
+        <>
+          <TitleWithCloseButton
+            title="Добавить презентацию"
+            onClose={onClose}
+            background="SaddleBrown"
+            color="white"
+          />
+          <AddPresentationForm
+            data={data}
+            objects={transformObjects}
+            register={register}
+            errors={errors}
+            watch={watch}
+            setValue={setValue}
+          />
+          <FooterButtons
+            onCreate={handleSubmit(onSubmit)}
+            onClose={onClose}
+            isValid={isFullValid}
+          />
+        </>
+      )}
     </Component>
   );
 };
