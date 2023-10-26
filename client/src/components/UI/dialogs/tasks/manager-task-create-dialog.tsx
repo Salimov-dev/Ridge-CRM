@@ -8,7 +8,6 @@ import {
 import { getOpenObjectPageId, loadOpenObjectPageOpenState } from "../../../../store/object/open-object-page.store";
 
 const ManagerTaskCreateDialog = ({
-  objects,
   users,
   setDateCreate=()=>{},
   dateCreate=null,
@@ -34,7 +33,6 @@ const ManagerTaskCreateDialog = ({
       component={
         <CreateManagerTask
           title="Поставить менеджеру задачу"
-          objects={objects}
           objectPageId={objectPageId}
           users={users}
           dateCreate={dateCreate}

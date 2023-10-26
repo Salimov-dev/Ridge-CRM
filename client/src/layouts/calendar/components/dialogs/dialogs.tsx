@@ -27,7 +27,6 @@ const Dialogs = ({
       <ObjectPageDialog />
 
       <ManagerTaskCreateDialog
-        objects={objects}
         users={users}
         dateCreate={dateCreate}
         setDateCreate={setDateCreate}

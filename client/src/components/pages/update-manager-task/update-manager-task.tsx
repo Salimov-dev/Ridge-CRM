@@ -8,7 +8,10 @@ import { useDispatch, useSelector } from "react-redux";
 import TitleWithCloseButton from "../../common/page-titles/title-with-close-button";
 import ManagerTaskForm from "../../common/forms/manager-task-form/manager-task-form";
 // store
-import { getCurrentUserId, getIsUserCurator } from "../../../store/user/users.store";
+import {
+  getCurrentUserId,
+  getIsUserCurator,
+} from "../../../store/user/users.store";
 import { getUpdateManagerTaskId } from "../../../store/task/update-manager-task.store";
 import {
   getTaskById,
@@ -20,8 +23,9 @@ import {
 import { taskSchema } from "../../../schemas/task-shema";
 import FooterButtons from "../../common/forms/footer-buttons/footer-buttons";
 import ConfirmRemoveDialog from "../../common/dialog/confirm-remove-dialog";
+import { getObjectsList } from "../../../store/object/objects.store";
 
-const UpdateManagerTask = ({ title, onClose, objects, users }) => {
+const UpdateManagerTask = ({ title, onClose, users }) => {
   const [open, setOpen] = useState(false);
   const taskId = useSelector(getUpdateManagerTaskId());
   const task = useSelector(getTaskById(taskId));
@@ -49,20 +53,37 @@ const UpdateManagerTask = ({ title, onClose, objects, users }) => {
   const data = watch();
   const watchDate = watch("date", null);
   const watchTime = watch("time", null);
-  const isFullValid = isValid && watchDate && watchTime 
+  const watchManagerId = watch("managerId", null);
+  const isFullValid = isValid && watchDate && watchTime;
   const isEditMode = taskId ? true : false;
 
   const objectId = task?.objectId;
   const currentUserId = useSelector(getCurrentUserId());
-  
+
   const isCurator = useSelector(getIsUserCurator(currentUserId));
-  const currentUserObjects = objects?.filter(
-    (obj) => obj?.userId === currentUserId
+
+  const objects = useSelector(getObjectsList());
+  let addressCounts = {}; // Создаем объект для отслеживания количества объектов с одинаковыми адресами
+  let transformObjects = [];
+  const selectedManagerObjects = objects?.filter(
+    (obj) => obj?.userId === watchManagerId
   );
 
-  let transformObjects = [];
-  currentUserObjects?.forEach((obj) => {
-    transformObjects?.push({ _id: obj._id, name: obj.location.address });
+  selectedManagerObjects.forEach((obj) => {
+    const address = obj.location.address;
+
+    // Если это адрес уже встречался, увеличиваем счетчик и добавляем индекс
+    if (addressCounts[address]) {
+      addressCounts[address]++;
+      transformObjects.push({
+        _id: obj._id,
+        name: `${address} (${addressCounts[address]})`,
+      });
+    } else {
+      // Иначе, просто добавляем адрес и устанавливаем счетчик в 1
+      addressCounts[address] = 1;
+      transformObjects.push({ _id: obj._id, name: address });
+    }
   });
 
   const onSubmit = (data) => {
@@ -70,13 +91,11 @@ const UpdateManagerTask = ({ title, onClose, objects, users }) => {
     const transformedTime = dayjs(data.time).format("YYYY-MM-DDTHH:mm:ss.SSSZ");
     const newData = { ...data, date: transformedDate, time: transformedTime };
 
-    dispatch<any>(updateMyTask(newData))
-      .then(onClose())
+    dispatch<any>(updateMyTask(newData)).then(onClose());
   };
 
   const handleRemoveTask = (taskId) => {
-    dispatch<any>(removeTask(taskId))
-      .then(onClose())
+    dispatch<any>(removeTask(taskId)).then(onClose());
   };
 
   const handleClickOpen = () => {
@@ -103,7 +122,7 @@ const UpdateManagerTask = ({ title, onClose, objects, users }) => {
       />
       <ManagerTaskForm
         data={data}
-        objects={objects}
+        objects={transformObjects}
         users={users}
         register={register}
         watch={watch}
@@ -117,7 +136,6 @@ const UpdateManagerTask = ({ title, onClose, objects, users }) => {
         onUpdate={handleSubmit(onSubmit)}
         onClose={onClose}
         onRemove={handleClickOpen}
-        removeId={taskId}
         isEditMode={isEditMode}
         isValid={isFullValid}
       />

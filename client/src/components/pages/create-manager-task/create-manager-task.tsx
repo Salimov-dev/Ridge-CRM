@@ -1,7 +1,7 @@
 // libraries
 import dayjs from "dayjs";
 import { Box } from "@mui/material";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { useEffect } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -15,6 +15,7 @@ import { createTask } from "../../../store/task/tasks.store";
 import { capitalizeFirstLetter } from "../../../utils/data/capitalize-first-letter";
 // schema
 import { taskManagerSchema } from "../../../schemas/task-manager-shema";
+import { getObjectsList } from "../../../store/object/objects.store";
 
 const initialState = {
   comment: "",
@@ -27,7 +28,6 @@ const initialState = {
 };
 
 const CreateManagerTask = ({
-  objects,
   users,
   title,
   dateCreate,
@@ -52,15 +52,43 @@ const CreateManagerTask = ({
   const watchDate = watch<any>("date", null);
   const watchTime = watch<any>("time", null);
   const watchManagerId = watch("managerId", null);
-  const isFullValid = isValid && watchDate && watchTime && watchManagerId;
+  const isFullValid =
+    isValid &&
+    Boolean(watchDate) &&
+    Boolean(watchTime) &&
+    Boolean(watchManagerId);
+  // const isFullValid = isValid && Boolean(watchDate) && Boolean(watchTime);
+
+  const objects = useSelector(getObjectsList());
+  let addressCounts = {}; // Создаем объект для отслеживания количества объектов с одинаковыми адресами
+  let transformObjects = [];
+  const selectedManagerObjects = objects?.filter(
+    (obj) => obj?.userId === watchManagerId
+  );
+
+  selectedManagerObjects.forEach((obj) => {
+    const address = obj.location.address;
+
+    // Если это адрес уже встречался, увеличиваем счетчик и добавляем индекс
+    if (addressCounts[address]) {
+      addressCounts[address]++;
+      transformObjects.push({
+        _id: obj._id,
+        name: `${address} (${addressCounts[address]})`,
+      });
+    } else {
+      // Иначе, просто добавляем адрес и устанавливаем счетчик в 1
+      addressCounts[address] = 1;
+      transformObjects.push({ _id: obj._id, name: address });
+    }
+  });
 
   const onSubmit = () => {
     const newData = {
       ...data,
       comment: capitalizeFirstLetter(data.comment),
     };
-    dispatch<any>(createTask(newData))
-      .then(onClose())
+    dispatch<any>(createTask(newData)).then(onClose());
   };
 
   useEffect(() => {
@@ -87,7 +115,7 @@ const CreateManagerTask = ({
       />
       <ManagerTaskForm
         data={data}
-        objects={objects}
+        objects={transformObjects}
         users={users}
         register={register}
         errors={errors}
