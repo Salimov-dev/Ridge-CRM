@@ -6,13 +6,13 @@ import { useForm } from "react-hook-form";
 import ObjectForm from "../../common/forms/object-form/object-form";
 import FindObjectOnMap from "../../common/find-object-on-map/find-object-on-map";
 import TitleWithAddress from "../../common/page-titles/title-with-address";
+import IsLoadingDialog from "../../common/dialog/is-loading-dialog";
 // store
 import { createObject } from "../../../store/object/objects.store";
 // hooks
 import useFindObject from "../../../hooks/object/use-find-object";
 // utils
 import { capitalizeFirstLetter } from "../../../utils/data/capitalize-first-letter";
-import IsLoadingDialog from "../../common/dialog/is-loading-dialog";
 
 const initialState = {
   status: "",
@@ -152,36 +152,34 @@ const CreateObject = ({ onClose }) => {
 
   return (
     <>
-      {isLoading ? (
+      <TitleWithAddress
+        isFindedObject={isFindedObject}
+        city={getCity()}
+        address={getAddress()}
+        title="Создать объект:"
+        subtitle="Выберите объект на карте"
+        onClose={onClose}
+      />
+
+      <FindObjectOnMap />
+
+      <ObjectForm
+        data={data}
+        register={register}
+        onSubmit={onSubmit}
+        handleSubmit={handleSubmit}
+        errors={errors}
+        watch={watch}
+        isValid={isValidAndHasAdress}
+        onClose={onClose}
+        setValue={setValue}
+      />
+
+      {isLoading && (
         <IsLoadingDialog
-          text="Немного подождите, создаем `Новый объект`"
+          text="Немного подождите, создаем новый `Объект`"
           isLoading={isLoading}
         />
-      ) : (
-        <>
-          <TitleWithAddress
-            isFindedObject={isFindedObject}
-            city={getCity()}
-            address={getAddress()}
-            title="Создать объект:"
-            subtitle="Выберите объект на карте"
-            onClose={onClose}
-          />
-
-          <FindObjectOnMap />
-
-          <ObjectForm
-            data={data}
-            register={register}
-            onSubmit={onSubmit}
-            handleSubmit={handleSubmit}
-            errors={errors}
-            watch={watch}
-            isValid={isValidAndHasAdress}
-            onClose={onClose}
-            setValue={setValue}
-          />
-        </>
       )}
     </>
   );

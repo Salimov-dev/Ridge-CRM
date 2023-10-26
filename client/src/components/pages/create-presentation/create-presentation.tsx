@@ -6,7 +6,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useDispatch, useSelector } from "react-redux";
 // components
 import TitleWithCloseButton from "../../common/page-titles/title-with-close-button";
-import AddPresentationForm from "../../common/forms/presentation/add-presentation-form";
+import ManagerPresentationForm from "../../common/forms/presentation/manager-presentation-form";
 import FooterButtons from "../../common/forms/footer-buttons/footer-buttons";
 import IsLoadingDialog from "../../common/dialog/is-loading-dialog";
 // schema
@@ -22,7 +22,6 @@ import {
 
 const initialState = {
   objectId: "",
-  result: "",
   status: "",
   cloudLink: "",
   curatorComment: "",
@@ -65,9 +64,7 @@ const CreatePresentation = ({ onClose, setConfettiActive }) => {
 
   const data = watch();
   const watchObjectId = watch("objectId");
-
   const isFullValid = isValid && Boolean(watchObjectId?.length);
-
   const statusToBeAgreedId = "654wqeg3469y9dfsd82dd334"; // статус "На согласовании"
 
   const onSubmit = (data) => {
@@ -112,7 +109,7 @@ const CreatePresentation = ({ onClose, setConfettiActive }) => {
             background="SaddleBrown"
             color="white"
           />
-          <AddPresentationForm
+          <ManagerPresentationForm
             data={data}
             objects={transformObjects}
             register={register}

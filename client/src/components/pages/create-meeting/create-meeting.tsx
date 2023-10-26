@@ -40,9 +40,6 @@ const initialState = {
     zoom: null,
   },
 };
-const Component = styled(Box)`
-  width: 100%;
-`;
 
 const CreateMeeting = ({
   objectPageId = "",
@@ -136,45 +133,43 @@ const CreateMeeting = ({
   }, [dateCreate]);
 
   return (
-    <Component>
-      {isLoading ? (
+    <>
+      <TitleWithAddress
+        isFindedObject={isEmptyFindedObject}
+        city={getCity()}
+        address={getAddress()}
+        title="Добавить встречу:"
+        subtitle="Выберите место встречи на карте"
+        onClose={onClose}
+      />
+
+      <FindObjectOnMap />
+
+      <MeetingForm
+        data={data}
+        objects={transformObjects}
+        statuses={statuses}
+        meetingTypes={meetingTypes}
+        watch={watch}
+        errors={errors}
+        register={register}
+        setValue={setValue}
+        isObjectPage={isObjectPage}
+      />
+
+      <FooterButtons
+        onClose={onClose}
+        onCreate={handleSubmit(onSubmit)}
+        isValid={isFullValid}
+      />
+
+      {isLoading && (
         <IsLoadingDialog
-          text="Немного подождите, создаем `Встречу`"
+          text="Немного подождите, создаем новую `Встречу`"
           isLoading={isLoading}
         />
-      ) : (
-        <>
-          <TitleWithAddress
-            isFindedObject={isEmptyFindedObject}
-            city={getCity()}
-            address={getAddress()}
-            title="Добавить встречу:"
-            subtitle="Выберите место встречи на карте"
-            onClose={onClose}
-          />
-
-          <FindObjectOnMap />
-
-          <MeetingForm
-            data={data}
-            objects={transformObjects}
-            statuses={statuses}
-            meetingTypes={meetingTypes}
-            watch={watch}
-            errors={errors}
-            register={register}
-            setValue={setValue}
-            isObjectPage={isObjectPage}
-          />
-
-          <FooterButtons
-            onClose={onClose}
-            onCreate={handleSubmit(onSubmit)}
-            isValid={isFullValid}
-          />
-        </>
       )}
-    </Component>
+    </>
   );
 };
 

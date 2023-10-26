@@ -57,6 +57,9 @@ const Sidebar = () => {
     if (currentPath === "/deals") {
       return "Сделки";
     }
+    if (currentPath === "/presentations") {
+      return "Презентации";
+    }
     return "";
   }
 

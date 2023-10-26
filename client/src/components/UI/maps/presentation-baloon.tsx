@@ -2,12 +2,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { Box, Divider, Typography, styled } from "@mui/material";
 // utils
 import { FormatDate } from "../../../utils/date/format-date";
-import { FormatTime } from "../../../utils/date/format-time";
 // store
-import { getUserNameById } from "../../../store/user/users.store";
+import {
+  getCurrentUserId,
+  getIsUserCurator,
+  getUserNameById,
+} from "../../../store/user/users.store";
 import { getObjectById } from "../../../store/object/objects.store";
-import { getMeetingTypeNameById } from "../../../store/meeting/meeting-types.store";
-import { getMeetingStatusNameById } from "../../../store/meeting/meeting-status.store";
 // components
 import Attribute from "../../common/map/baloon/attribute";
 import DividerStyled from "../../common/divider/divider-styled";
@@ -17,10 +18,6 @@ import {
   setOpenObjectPageId,
   setOpenObjectPageOpenState,
 } from "../../../store/object/open-object-page.store";
-import {
-  setUpdateMeetingId,
-  setUpdateMeetingOpenState,
-} from "../../../store/meeting/update-meeting.store";
 import { getPresentationById } from "../../../store/presentation/presentations.store";
 import { getPresentationStatusNameById } from "../../../store/presentation/presentation-status.store";
 import {
@@ -41,15 +38,18 @@ const BaloonContainer = styled(Box)`
 const PresentationBaloon = ({ presentationId }) => {
   const dispatch = useDispatch();
   const presentation = useSelector(getPresentationById(presentationId));
+
   const object = useSelector(getObjectById(presentation?.objectId));
   const objectId = presentation?.objectId;
-
   const objectAddress = `${object?.location.city}, ${object?.location.address}`;
+
+  const currentUserId = useSelector(getCurrentUserId());
+  const isCurator = useSelector(getIsUserCurator(currentUserId));
+  const manager = useSelector(getUserNameById(presentation?.userId));
 
   const status = useSelector(
     getPresentationStatusNameById(presentation?.status)
   );
-  const manager = useSelector(getUserNameById(presentation?.userId));
 
   const handleOpenObjectPage = () => {
     dispatch<any>(setOpenObjectPageId(objectId));
@@ -66,17 +66,14 @@ const PresentationBaloon = ({ presentationId }) => {
       <Typography>
         <b>Объект презентации:</b>
       </Typography>
-      <Attribute
-        gap="0"
-        subTitle={`${object?.location?.city}, ${object?.location?.address}`}
-      />
+      <Attribute gap="0" subTitle={objectAddress} />
       <Attribute title="Статус:" subTitle={status} />
 
       <DividerStyled />
       <Typography>
         <b>Дата добавления:</b> {FormatDate(presentation?.created_at)}
       </Typography>
-      // <Attribute title="Менеджер:" subTitle={manager} />
+      {isCurator && <Attribute title="Менеджер:" subTitle={manager} />}
       {presentation?.curatorComment && (
         <>
           <Typography>

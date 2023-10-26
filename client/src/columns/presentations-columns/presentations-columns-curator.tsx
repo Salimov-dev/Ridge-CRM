@@ -160,14 +160,21 @@ export const presentationsCuratorColumns = [
         dispatch<any>(setUpdatePresentationOpenState(true));
       };
 
-      return (
+      return isAuthorEntity ? (
         <MultiColorContainedButton
           text="Править"
           fontColor="white"
           background="SaddleBrown"
           backgroudHover="Chocolate"
           onClick={handleClick}
-          disabled={!isAuthorEntity}
+        />
+      ) : (
+        <MultiColorContainedButton
+          text="Согласовать"
+          fontColor="white"
+          background="Brown"
+          backgroudHover="Maroon"
+          onClick={handleClick}
         />
       );
     },

@@ -28,7 +28,7 @@ import { getWorkingPositionsList } from "../../../../store/user/working-position
 import { getObjectConditionsList } from "../../../../store/object/object-conditions.store";
 // styled
 import { FieldsContainer, Form } from "../styled/styled";
-// districts
+// mock
 import { districtsMSK } from "../../../../mock/districts/districts-msk";
 import { districtsSPB } from "../../../../mock/districts/districts-spb";
 
@@ -70,7 +70,8 @@ const ObjectForm = ({
   const watchCloudLink = watch("cloudLink");
 
   const hasDistrict =
-    watchDistrict?.includes("Санкт-Петербург") || watchDistrict?.includes("Москва");
+    watchDistrict?.includes("Санкт-Петербург") ||
+    watchDistrict?.includes("Москва");
 
   function getDistrictName(districtId, districts) {
     const district = districts.find((item) => item._id === districtId);

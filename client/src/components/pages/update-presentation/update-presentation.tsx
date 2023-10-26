@@ -10,18 +10,23 @@ import Header from "./components/header";
 import Loader from "../../common/loader/loader";
 import FooterButtons from "../../common/forms/footer-buttons/footer-buttons";
 import ConfirmRemoveDialog from "../../common/dialog/confirm-remove-dialog";
-import AddPresentationForm from "../../common/forms/presentation/add-presentation-form";
+import ManagerPresentationForm from "../../common/forms/presentation/manager-presentation-form";
 // schema
 import { presentationSchema } from "../../../schemas/presentation-schema";
 // store
 import { getObjectsList } from "../../../store/object/objects.store";
-import { getCurrentUserId } from "../../../store/user/users.store";
+import {
+  getCurrentUserId,
+  getIsUserAuthorThisEntity,
+  getIsUserCurator,
+} from "../../../store/user/users.store";
 import { getUpdatePresentationId } from "../../../store/presentation/update-presentation.store";
 import {
   getPresentationById,
   removePresentation,
   updatePresentation,
 } from "../../../store/presentation/presentations.store";
+import CuratorPresentationForm from "../../common/forms/presentation/curator-presentation-form";
 
 const UpdatePresentation = ({ onClose }) => {
   const dispatch = useDispatch();
@@ -47,6 +52,12 @@ const UpdatePresentation = ({ onClose }) => {
 
   const objects = useSelector(getObjectsList());
   const currentUserId = useSelector(getCurrentUserId());
+  const isCurator = useSelector(getIsUserCurator(currentUserId));
+
+  const isAuthorEntity = useSelector(
+    getIsUserAuthorThisEntity(currentUserId, presentation)
+  );
+
   const currentUserObjects = objects?.filter(
     (obj) => obj?.userId === currentUserId
   );
@@ -75,14 +86,26 @@ const UpdatePresentation = ({ onClose }) => {
   return presentation ? (
     <Box>
       <Header onClose={onClose} />
-      <AddPresentationForm
-        data={data}
-        objects={transformObjects}
-        register={register}
-        errors={errors}
-        watch={watch}
-        setValue={setValue}
-      />
+      {isAuthorEntity ? (
+        <ManagerPresentationForm
+          data={data}
+          objects={transformObjects}
+          register={register}
+          errors={errors}
+          watch={watch}
+          setValue={setValue}
+          isCurator={isCurator}
+        />
+      ) : (
+        <CuratorPresentationForm
+          data={data}
+          objects={transformObjects}
+          register={register}
+          errors={errors}
+          watch={watch}
+          setValue={setValue}
+        />
+      )}
       <FooterButtons
         onClose={onClose}
         onUpdate={handleSubmit(onSubmit)}
