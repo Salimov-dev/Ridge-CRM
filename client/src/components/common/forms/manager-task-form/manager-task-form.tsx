@@ -4,11 +4,11 @@ import SimpleSelectField from "../../inputs/simple-select-field";
 import DatePickerStyled from "../../inputs/date-picker";
 import TimePickerStyled from "../../inputs/time-picker";
 import SimpleSwitch from "../../inputs/simple-switch";
+import AutocompleteStyled from "../../inputs/autocomplete-styled";
 // styled
 import { FieldsContainer, Form } from "../styled/styled";
 // utils
 import getDateToday from "../../../../utils/date/get-date-today";
-import AutocompleteStyled from "../../inputs/autocomplete-styled";
 
 const ManagerTaskForm = ({
   data,
@@ -20,9 +20,11 @@ const ManagerTaskForm = ({
   setValue,
   isObjectPage = false,
   isTasksLoading = false,
+  isAuthorEntity=false,
   isEditMode = false,
   isCurator = false,
 }) => {
+
   const watchObjectId = watch("objectId", "");
   const watchManagerId = watch("managerId", "");
   const watchIsDone = watch("isDone", false);
@@ -38,7 +40,7 @@ const ManagerTaskForm = ({
           onChange={(value) => setValue("date", value)}
           errors={errors?.date}
           minDate={getDateToday()}
-          disabled={isCurator}
+          disabled={isEditMode && !isAuthorEntity}
         />
         <TimePickerStyled
           register={register}
@@ -47,36 +49,28 @@ const ManagerTaskForm = ({
           value={data.time}
           setValue={setValue}
           errors={errors?.time}
-          disabled={isCurator}
+          disabled={isEditMode && !isAuthorEntity}
         />
       </FieldsContainer>
-      <SimpleSelectField
+      {isCurator && <SimpleSelectField
         register={register}
         name="managerId"
         labelId="managerId"
         label="Менеджер"
         itemsList={users}
         value={watchManagerId}
-      />
+        disabled={isObjectPage}
+      />}
       <AutocompleteStyled
-        label="Объект задачи"
+        label={watchObjectId && !isCurator ? "Объект задачи" : "Задача без объекта"}
         register={register}
         name="objectId"
         options={objects}
-        value={data.objectId}
+        value={watchObjectId}
         setValue={setValue}
         watchItemId={watchObjectId}
-        disabled={!watchManagerId}
+        disabled={isObjectPage || !watchManagerId || !isCurator}
       />
-      {/* <SimpleSelectField
-          register={register}
-          name="objectId"
-          labelId="objectId"
-          label="Объект задачи"
-          itemsList={objects}
-          value={watchObjectId}
-          disabled={isObjectPage || isCurator}
-        /> */}
       <TextFieldStyled
         register={register}
         label="Комментарий"
@@ -86,7 +80,7 @@ const ManagerTaskForm = ({
         multiline={true}
         errors={errors?.comment}
         onInputQuantities={200}
-        disabled={isCurator}
+        disabled={isEditMode && !isAuthorEntity}
       />
       {isEditMode ? (
         <TextFieldStyled

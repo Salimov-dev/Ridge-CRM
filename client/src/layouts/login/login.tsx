@@ -12,6 +12,8 @@ import LoginForm from "./components/login-form";
 import PositiveOutlinedButton from "../../components/common/buttons/positive-outlined-button";
 // schema
 import { loginSchema } from "../../schemas/login-schema";
+import { useState } from "react";
+import IsLoadingDialog from "../../components/common/dialog/is-loading-dialog";
 
 const Component = styled(Box)`
   height: 100%;
@@ -55,6 +57,7 @@ const initialState = {
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = useState(false);
 
   const {
     register,
@@ -73,8 +76,16 @@ const Login = () => {
   const isFormValid = !Object.keys(errors).length;
 
   const onSubmit = () => {
+    setIsLoading(true);
+
     dispatch<any>(login({ payload: data }))
-      .then(() => navigate(redirectPath, { replace: true }))
+      .then(() => {
+        setIsLoading(false);
+        navigate(redirectPath, { replace: true });
+      })
+      .catch((error) => {
+        setIsLoading(false);
+      });
   };
 
   return (
@@ -89,6 +100,12 @@ const Login = () => {
           НАША СИСТЕМА АВТОМАТИЗАЦИИ ДЛЯ ОТДЕЛОВ РАЗВИТИЯ
         </Typography>
       </Logo>
+      {isLoading ? (
+        <IsLoadingDialog
+          text="Немного подождите, авторизуемся в системе"
+          isLoading={isLoading}
+        />
+      ) : (
       <AuthForm>
         <Title>
           <Typography sx={{ fontSize: "16px" }}>
@@ -102,6 +119,7 @@ const Login = () => {
           onClick={handleSubmit(onSubmit)}
         />
       </AuthForm>
+          )}
     </Component>
   );
 };

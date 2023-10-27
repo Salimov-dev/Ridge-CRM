@@ -3,7 +3,7 @@ import dayjs from "dayjs";
 import { Box } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 // components
 import TitleWithCloseButton from "../../common/page-titles/title-with-close-button";
@@ -15,7 +15,19 @@ import { createTask } from "../../../store/task/tasks.store";
 import { capitalizeFirstLetter } from "../../../utils/data/capitalize-first-letter";
 // schema
 import { taskManagerSchema } from "../../../schemas/task-manager-shema";
-import { getObjectsList } from "../../../store/object/objects.store";
+import {
+  getObjectById,
+  getObjectsList,
+} from "../../../store/object/objects.store";
+import {
+  getCurrentUserId,
+  getIsUserCurator,
+} from "../../../store/user/users.store";
+import {
+  getOpenObjectPageId,
+  loadOpenObjectPageOpenState,
+} from "../../../store/object/open-object-page.store";
+import IsLoadingDialog from "../../common/dialog/is-loading-dialog";
 
 const initialState = {
   comment: "",
@@ -27,15 +39,9 @@ const initialState = {
   isDone: false,
 };
 
-const CreateManagerTask = ({
-  users,
-  title,
-  dateCreate,
-  onClose,
-  objectPageId = "",
-  isObjectPage = false,
-}) => {
+const CreateManagerTask = ({ users, title, dateCreate, onClose }) => {
   const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = useState(false);
 
   const {
     register,
@@ -57,9 +63,16 @@ const CreateManagerTask = ({
     Boolean(watchDate) &&
     Boolean(watchTime) &&
     Boolean(watchManagerId);
-  // const isFullValid = isValid && Boolean(watchDate) && Boolean(watchTime);
+
+  const currentUserId = useSelector(getCurrentUserId());
+  const isCurator = useSelector(getIsUserCurator(currentUserId));
 
   const objects = useSelector(getObjectsList());
+  const isObjectPage = useSelector(loadOpenObjectPageOpenState());
+  const objectPageId = useSelector(getOpenObjectPageId());
+  const currentObject = useSelector(getObjectById(objectPageId));
+  const managerId = currentObject?.userId;
+
   let addressCounts = {}; // Создаем объект для отслеживания количества объектов с одинаковыми адресами
   let transformObjects = [];
   const selectedManagerObjects = objects?.filter(
@@ -84,16 +97,26 @@ const CreateManagerTask = ({
   });
 
   const onSubmit = () => {
+    setIsLoading(true);
+
     const newData = {
       ...data,
       comment: capitalizeFirstLetter(data.comment),
     };
-    dispatch<any>(createTask(newData)).then(onClose());
+    dispatch<any>(createTask(newData))
+      .then(() => {
+        setIsLoading(false);
+        onClose();
+      })
+      .catch((error) => {
+        setIsLoading(false);
+      });
   };
 
   useEffect(() => {
     if (isObjectPage) {
       setValue<any>("objectId", objectPageId);
+      setValue<any>("managerId", managerId);
     }
   }, [objectPageId]);
 
@@ -107,6 +130,13 @@ const CreateManagerTask = ({
 
   return (
     <Box>
+         {isLoading ? (
+        <IsLoadingDialog
+          text="Немного подождите, создаем `Новую задачу менеджеру`"
+          isLoading={isLoading}
+        />
+      ) : (
+      <>
       <TitleWithCloseButton
         title={title}
         background="Crimson"
@@ -121,6 +151,7 @@ const CreateManagerTask = ({
         errors={errors}
         watch={watch}
         setValue={setValue}
+        isCurator={isCurator}
         isObjectPage={isObjectPage}
       />
       <FooterButtons
@@ -128,6 +159,8 @@ const CreateManagerTask = ({
         onClose={onClose}
         isValid={isFullValid}
       />
+      </>
+         )}
     </Box>
   );
 };

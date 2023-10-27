@@ -70,11 +70,16 @@ export const locationColumns = [
     },
   },
   {
-    accessorKey: "location.identifier",
+    accessorFn: (row) => row,
     header: "Идентификатор",
     cell: (info) => {
-      const identifier = info.getValue();
-      return identifier ? <AlignCenter>{identifier}</AlignCenter> : <EmptyTd />;
+      const object = info.getValue()
+      const location = object?.location.identifier;
+      if (location && location.identifier) {
+        return <AlignCenter>{location.identifier}</AlignCenter>;
+      } else {
+        return <EmptyTd />;
+      }
     },
   },
   {
@@ -113,15 +118,20 @@ export const estateTypeColumns = [
     },
   },
   {
-    accessorKey: "estateOptions.objectProperties",
+    accessorFn: (row) => row,
     header: "Тип недвижимости",
     cell: (info) => {
-      const objectProperties = info.getValue();
-      return (
-        <AlignCenter>
-          {objectProperties ? FormatObjectProperties(objectProperties) : null}
-        </AlignCenter>
-      );
+      const object = info.getValue()
+      const estateOptions = object?.estateOptions.objectProperties;
+      if (estateOptions && estateOptions.objectProperties) {
+        return (
+          <AlignCenter>
+            {FormatObjectProperties(estateOptions.objectProperties)}
+          </AlignCenter>
+        );
+      } else {
+        return <EmptyTd />;
+      }
     },
   },
   {

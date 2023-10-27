@@ -113,22 +113,21 @@ export const tasksColumnsDialog = [
       const task = useSelector(getTaskById(taskId));
       const currentUserId = useSelector(getCurrentUserId());
       const isCuratorTask = Boolean(task?.managerId);
-      const isCurrentUserIsCuratorTask = currentUserId !== task?.userId;
 
       const isAuthorEntity = useSelector(
         getIsUserAuthorThisEntity(currentUserId, task)
       );
-      const disable =
-        (isCuratorTask && isCurrentUserIsCuratorTask) || !isAuthorEntity;
+
+      const disable = !isCuratorTask && !isAuthorEntity
 
 
       const handleClick = () => {
         if (isCuratorTask) {
-          dispatch(setUpdateManagerTaskOpenState(true));
-          dispatch(setUpdateManagerTaskId(taskId));
+          dispatch<any>(setUpdateManagerTaskOpenState(true));
+          dispatch<any>(setUpdateManagerTaskId(taskId));
         } else {
-          dispatch(setUpdateMyTaskId(taskId));
-          dispatch(setUpdateMyTaskOpenState(true));
+          dispatch<any>(setUpdateMyTaskId(taskId));
+          dispatch<any>(setUpdateMyTaskOpenState(true));
         }
       };
 

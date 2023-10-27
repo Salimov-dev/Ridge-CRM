@@ -14,17 +14,25 @@ router.get("/", auth, async (req, res) => {
       return res.status(404).json({ message: "Пользователь не найден" });
     }
 
-    const userRole = req.user.role; // Получить роль пользователя
+    const userRole = user.role; // Получить роль пользователя
 
     if (userRole === "MANAGER") {
-      return res.status(200).send([]);
+      const managerId = user.curatorId;
+
+      const manager = await User.findById(managerId); // Найти пользователя, создавшего текущего пользователя
+      if (!manager) {
+        console.log("Manager not found");
+        return res.status(404).json({ message: "Менеджер не найден" });
+      }
+
+      return res.status(200).send([user, manager]);
     }
+
     const managerUsers = await User.find({ curatorId: { $in: userId } });
     const allUsers = [user, ...managerUsers];
 
     return res.status(200).send(allUsers);
   } catch (e) {
-
     res.status(500).json({
       message: "На сервере произошла ошибка. Попробуйте позже",
     });

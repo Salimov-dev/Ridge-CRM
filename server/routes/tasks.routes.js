@@ -11,9 +11,14 @@ router.get("/", auth, async (req, res) => {
     const userId = req.user._id;
     const user = await User.findOne({ _id: userId });
     const userRole = user.role;
-
+    
     if (userRole === "MANAGER") {
-      const tasks = await Task.find({ userId });
+      const tasks = await Task.find({
+        $or: [
+          { userId: userId }, // Задачи, где userId равен текущему пользователю
+          { managerId: userId }, // Задачи, где managerId равен id текущего пользователя
+        ]
+      });
       return res.status(200).send(tasks);
     }
 

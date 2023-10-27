@@ -9,8 +9,8 @@ import Result from "./components/result";
 import { ItemContainer, ItemsContainer } from "../styled/styled";
 // store
 import { getObjectsList } from "../../../../../../../../../../../../store/object/objects.store";
-import { getUsersList } from "../../../../../../../../../../../../store/user/users.store";
-import { Typography } from "@mui/material";
+import { getCurrentUserId, getIsUserAuthorThisEntity, getUsersList } from "../../../../../../../../../../../../store/user/users.store";
+import { Box, Typography } from "@mui/material";
 
 const Tasks = ({ tasks, isCurator }) => {
   const objects = useSelector(getObjectsList());
@@ -22,6 +22,8 @@ const Tasks = ({ tasks, isCurator }) => {
     return result;
   };
 
+  const currentUserId = useSelector(getCurrentUserId());
+
   return tasks ? (
     <ItemsContainer>
       {tasks?.map((task) => {
@@ -31,9 +33,7 @@ const Tasks = ({ tasks, isCurator }) => {
           <ItemContainer
             key={task._id}
             sx={{
-              border: task.managerId
-                ? "3px solid red"
-                : "3px solid darkOrange",
+              border: task.managerId ? "3px solid red" : "3px solid darkOrange",
               color: !taskIsDone
                 ? task.managerId
                   ? "white"
@@ -42,22 +42,24 @@ const Tasks = ({ tasks, isCurator }) => {
               background: !taskIsDone
                 ? task.managerId
                   ? "Crimson"
-                 
                   : "orange"
                 : "gray",
             }}
           >
-            <Title task={task}  />
+            <Title task={task} />
             <TaskComment comment={task?.comment} />
+            {task?.managerId === currentUserId ? <Box>
+              <Typography>
+                <b>Задачу поставил:</b>
+              </Typography>
+              <Typography>{getManagerName(task?.userId)}</Typography>
+            </Box> : null}
             {isCurator && task?.managerId?.length ? (
               <Typography>
                 <b>Менеджер:</b> {getManagerName(task?.managerId)}
               </Typography>
             ) : null}
-            <TaksObject
-              task={task}
-              objects={objects}
-            />
+            <TaksObject task={task} objects={objects} />
             <Result task={task} />
           </ItemContainer>
         );

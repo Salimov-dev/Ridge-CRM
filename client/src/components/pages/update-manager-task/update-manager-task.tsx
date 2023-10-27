@@ -10,6 +10,7 @@ import ManagerTaskForm from "../../common/forms/manager-task-form/manager-task-f
 // store
 import {
   getCurrentUserId,
+  getIsUserAuthorThisEntity,
   getIsUserCurator,
 } from "../../../store/user/users.store";
 import { getUpdateManagerTaskId } from "../../../store/task/update-manager-task.store";
@@ -24,6 +25,7 @@ import { taskSchema } from "../../../schemas/task-shema";
 import FooterButtons from "../../common/forms/footer-buttons/footer-buttons";
 import ConfirmRemoveDialog from "../../common/dialog/confirm-remove-dialog";
 import { getObjectsList } from "../../../store/object/objects.store";
+import { loadOpenObjectPageOpenState } from "../../../store/object/open-object-page.store";
 
 const UpdateManagerTask = ({ title, onClose, users }) => {
   const [open, setOpen] = useState(false);
@@ -59,6 +61,11 @@ const UpdateManagerTask = ({ title, onClose, users }) => {
 
   const objectId = task?.objectId;
   const currentUserId = useSelector(getCurrentUserId());
+  const isAuthorEntity = useSelector(
+    getIsUserAuthorThisEntity(currentUserId, task)
+  );
+
+  const isObjectPage = useSelector(loadOpenObjectPageOpenState());
 
   const isCurator = useSelector(getIsUserCurator(currentUserId));
 
@@ -129,8 +136,10 @@ const UpdateManagerTask = ({ title, onClose, users }) => {
         errors={errors}
         setValue={setValue}
         isCurator={isCurator}
+        isAuthorEntity={isAuthorEntity}
         isEditMode={isEditMode}
         isTasksLoading={isTasksLoading}
+        isObjectPage={isObjectPage}
       />
       <FooterButtons
         onUpdate={handleSubmit(onSubmit)}
