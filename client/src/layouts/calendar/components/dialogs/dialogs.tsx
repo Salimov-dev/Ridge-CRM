@@ -15,6 +15,8 @@ import {
 import OpenSelectedDayDialog from "../../../../components/UI/dialogs/calendar/open-selected-day-dialog";
 
 const Dialogs = ({
+  tasks,
+  meetings,
   objects,
   users,
   dateCreate = getDateToday(),
@@ -50,7 +52,11 @@ const Dialogs = ({
       />
       <MeetingUpdateDialog />
 
-      <OpenSelectedDayDialog dateCreate={dateCreate} setDateCreate={setDateCreate}/>
+      <OpenSelectedDayDialog
+        dateCreate={dateCreate}
+        tasks={tasks}
+        meetings={meetings}
+      />
     </>
   );
 };

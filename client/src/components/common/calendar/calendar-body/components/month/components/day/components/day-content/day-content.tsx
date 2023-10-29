@@ -21,7 +21,8 @@ const Components = styled(Box)`
   gap: 4px;
 `;
 
-const DayContent = ({ meetings, tasks }) => {
+const DayContent = ({ meetings, tasks, isSelectedDayDialog }) => {
+  
   const isTasksLoading = useSelector(getTaskLoadingStatus());
   const isMeetingsLoading = useSelector(getMeetingLoadingStatus());
 
@@ -30,16 +31,16 @@ const DayContent = ({ meetings, tasks }) => {
 
   const isLoading =
     !isTasksLoading && !isMeetingsLoading;
-  const isTasks = tasks.length;
+  const isTasks = tasks?.length;
   const isMeetings = meetings?.length;
 
   return isLoading ? (
     <Components>
       {isTasks ? (
-        <Tasks tasks={tasks} isCurator={isCurator} />
+        <Tasks tasks={tasks} isCurator={isCurator} isSelectedDayDialog={isSelectedDayDialog} />
       ) : null}
       {isMeetings ? (
-        <Meetings meetings={meetings} currentUserId={currentUserId} />
+        <Meetings meetings={meetings} currentUserId={currentUserId} isSelectedDayDialog={isSelectedDayDialog}/>
       ) : null}
     </Components>
   ) : (

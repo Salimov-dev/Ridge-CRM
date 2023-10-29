@@ -11,6 +11,7 @@ const Component = styled(Box)`
 `;
 
 const Month = ({ meetings, tasks, month, setDateCreate }) => {
+  
   return (
     <Component>
       {month?.map((row, i) => (

@@ -155,7 +155,7 @@ const Presentations = () => {
         reset={reset}
         isInputEmpty={isInputEmpty}
         initialState={initialState}
-        button={<CreatePresentationButton />}
+        button={!isCurator ? <CreatePresentationButton /> : null}
       />
 
       <ItemsOnMap

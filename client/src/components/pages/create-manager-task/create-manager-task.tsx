@@ -28,6 +28,7 @@ import {
   loadOpenObjectPageOpenState,
 } from "../../../store/object/open-object-page.store";
 import IsLoadingDialog from "../../common/dialog/is-loading-dialog";
+import { toast } from "react-toastify";
 
 const initialState = {
   comment: "",
@@ -107,9 +108,11 @@ const CreateManagerTask = ({ users, title, dateCreate, onClose }) => {
       .then(() => {
         setIsLoading(false);
         onClose();
+        toast.success("Задача менеджеру успешно создана!");
       })
       .catch((error) => {
         setIsLoading(false);
+        toast.success(error);
       });
   };
 
@@ -128,15 +131,13 @@ const CreateManagerTask = ({ users, title, dateCreate, onClose }) => {
     }
   }, [dateCreate]);
 
-  return (
-    <Box>
-         {isLoading ? (
-        <IsLoadingDialog
-          text="Немного подождите, создаем `Новую задачу менеджеру`"
-          isLoading={isLoading}
-        />
-      ) : (
-      <>
+  return isLoading ? (
+    <IsLoadingDialog
+      text="Немного подождите, создаем `Новую задачу менеджеру`"
+      isLoading={isLoading}
+    />
+  ) : (
+    <>
       <TitleWithCloseButton
         title={title}
         background="Crimson"
@@ -159,9 +160,7 @@ const CreateManagerTask = ({ users, title, dateCreate, onClose }) => {
         onClose={onClose}
         isValid={isFullValid}
       />
-      </>
-         )}
-    </Box>
+    </>
   );
 };
 

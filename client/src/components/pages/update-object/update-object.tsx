@@ -15,9 +15,15 @@ import {
 } from "../../../store/object/objects.store";
 // utils
 import { capitalizeFirstLetter } from "../../../utils/data/capitalize-first-letter";
+import { useState } from "react";
+import { toast } from "react-toastify";
+import IsLoadingDialog from "../../common/dialog/is-loading-dialog";
 
 const UpdateObject = ({ onClose }) => {
   const dispatch = useDispatch();
+
+  const [isLoading, setIsLoading] = useState(false);
+
   const objectId = useSelector(getUpdateObjectId());
   const object = useSelector(getObjectById(objectId));
 
@@ -51,6 +57,8 @@ const UpdateObject = ({ onClose }) => {
   const isFullValid = isWatchValid;
   
   const onSubmit = (data) => {
+    setIsLoading(true);
+
     const newData = {
       ...data,
       contact: {
@@ -74,10 +82,23 @@ const UpdateObject = ({ onClose }) => {
         address: capitalizeFirstLetter(data.location.address),
       },
     };
-    dispatch<any>(updateObject(newData)).then(onClose());
+    dispatch<any>(updateObject(newData)).then(() => {
+        setIsLoading(false);
+        onClose();
+        toast.success("Объект успешно изменен!");
+      })
+      .catch((error) => {
+        setIsLoading(false);
+        toast.success(error);
+      });
   };
 
-  return object ? (
+  return isLoading ? (
+    <IsLoadingDialog
+      text="Немного подождите, изменяем `Объект`"
+      isLoading={isLoading}
+    />
+  ) : (
     <Box>
       <Header object={object} onClose={onClose} />
       <ObjectForm
@@ -92,8 +113,6 @@ const UpdateObject = ({ onClose }) => {
         isValid={isFullValid}
       />
     </Box>
-  ) : (
-    <Loader />
   );
 };
 

@@ -16,6 +16,7 @@ import { createTask } from "../../../store/task/tasks.store";
 import { taskSchema } from "../../../schemas/task-shema";
 // utils
 import { capitalizeFirstLetter } from "../../../utils/data/capitalize-first-letter";
+import { toast } from "react-toastify";
 
 const initialState = {
   date: null,
@@ -68,9 +69,11 @@ const CreateMyTask = ({
       .then(() => {
         setIsLoading(false);
         onClose();
+        toast.success("Задача себе успешно создана!");
       })
       .catch((error) => {
         setIsLoading(false);
+        toast.success(error);
       });
   };
 
@@ -88,38 +91,34 @@ const CreateMyTask = ({
     }
   }, [dateCreate]);
 
-  return (
-    <Box>
-      {isLoading ? (
-        <IsLoadingDialog
-          text="Немного подождите, создаем `Новую задачу себе`"
-          isLoading={isLoading}
-        />
-      ) : (
-        <>
-          <TitleWithCloseButton
-            title={title}
-            background="orange"
-            color="white"
-            onClose={onClose}
-          />
-          <MyTaskForm
-            data={data}
-            objects={objects}
-            register={register}
-            watch={watch}
-            errors={errors}
-            setValue={setValue}
-            isObjectPage={isObjectPage}
-          />
-          <FooterButtons
-            onCreate={handleSubmit(onSubmit)}
-            onClose={onClose}
-            isValid={isFullValid}
-          />
-        </>
-      )}
-    </Box>
+  return isLoading ? (
+    <IsLoadingDialog
+      text="Немного подождите, создаем `Новую задачу себе`"
+      isLoading={isLoading}
+    />
+  ) : (
+    <>
+      <TitleWithCloseButton
+        title={title}
+        background="orange"
+        color="white"
+        onClose={onClose}
+      />
+      <MyTaskForm
+        data={data}
+        objects={objects}
+        register={register}
+        watch={watch}
+        errors={errors}
+        setValue={setValue}
+        isObjectPage={isObjectPage}
+      />
+      <FooterButtons
+        onCreate={handleSubmit(onSubmit)}
+        onClose={onClose}
+        isValid={isFullValid}
+      />
+    </>
   );
 };
 

@@ -17,6 +17,7 @@ import { createLastContact } from "../../../store/last-contact/last-contact.stor
 import { lastContactSchema } from "../../../schemas/last-contact-schema";
 // utils
 import { capitalizeFirstLetter } from "../../../utils/data/capitalize-first-letter";
+import { toast } from "react-toastify";
 
 const initialState = {
   date: dayjs(),
@@ -26,9 +27,6 @@ const initialState = {
   timeMyTaks: null,
   commentMyTask: "",
 };
-const Component = styled(Box)`
-  width: 100%;
-`;
 
 const CreateLastContact = ({ onClose }) => {
   const dispatch = useDispatch();
@@ -64,9 +62,11 @@ const CreateLastContact = ({ onClose }) => {
       .then(() => {
         setIsLoading(false);
         onClose();
+        toast.success("Последний контакт успешно создан!");
       })
       .catch((error) => {
         setIsLoading(false);
+        toast.success(error);
       });
   };
 
@@ -76,35 +76,31 @@ const CreateLastContact = ({ onClose }) => {
     }
   }, [objectPageId]);
 
-  return (
-    <Component>
-      {isLoading ? (
-        <IsLoadingDialog
-          text="Немного подождите, создаем `Последний контакт`"
-          isLoading={isLoading}
-        />
-      ) : (
-        <>
-          <TitleWithCloseButton
-            title="Добавить последний контакт"
-            onClose={onClose}
-            background="SaddleBrown"
-            color="white"
-          />
-          <LastContactForm
-            data={data}
-            register={register}
-            errors={errors}
-            setValue={setValue}
-          />
-          <FooterButtons
-            onCreate={handleSubmit(onSubmit)}
-            onClose={onClose}
-            isValid={isFullValid}
-          />
-        </>
-      )}
-    </Component>
+  return isLoading ? (
+    <IsLoadingDialog
+      text="Немного подождите, создаем `Последний контакт`"
+      isLoading={isLoading}
+    />
+  ) : (
+    <>
+      <TitleWithCloseButton
+        title="Добавить последний контакт"
+        onClose={onClose}
+        background="SaddleBrown"
+        color="white"
+      />
+      <LastContactForm
+        data={data}
+        register={register}
+        errors={errors}
+        setValue={setValue}
+      />
+      <FooterButtons
+        onCreate={handleSubmit(onSubmit)}
+        onClose={onClose}
+        isValid={isFullValid}
+      />
+    </>
   );
 };
 

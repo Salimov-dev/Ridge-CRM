@@ -1,7 +1,8 @@
+import { Box, Typography } from "@mui/material";
 import { useSelector } from "react-redux";
 // components
 import Title from "./components/title";
-import TaksObject from "./components/task-object";
+import TaskObject from "./components/task-object";
 import TaskComment from "./components/task-comment";
 import Loader from "../../../../../../../../../../loader/loader";
 import Result from "./components/result";
@@ -9,10 +10,12 @@ import Result from "./components/result";
 import { ItemContainer, ItemsContainer } from "../styled/styled";
 // store
 import { getObjectsList } from "../../../../../../../../../../../../store/object/objects.store";
-import { getCurrentUserId, getIsUserAuthorThisEntity, getUsersList } from "../../../../../../../../../../../../store/user/users.store";
-import { Box, Typography } from "@mui/material";
+import {
+  getCurrentUserId,
+  getUsersList,
+} from "../../../../../../../../../../../../store/user/users.store";
 
-const Tasks = ({ tasks, isCurator }) => {
+const Tasks = ({ tasks, isCurator, isSelectedDayDialog }) => {
   const objects = useSelector(getObjectsList());
   const users = useSelector(getUsersList());
 
@@ -47,20 +50,22 @@ const Tasks = ({ tasks, isCurator }) => {
             }}
           >
             <Title task={task} />
-            <TaskComment comment={task?.comment} />
-            {task?.managerId === currentUserId ? <Box>
-              <Typography>
-                <b>Задачу поставил:</b>
-              </Typography>
-              <Typography>{getManagerName(task?.userId)}</Typography>
-            </Box> : null}
+            {isSelectedDayDialog ? <TaskComment comment={task?.comment} /> : null}
+            {task?.managerId === currentUserId ? (
+              <Box>
+                <Typography>
+                  <b>Задачу поставил:</b>
+                </Typography>
+                <Typography>{getManagerName(task?.userId)}</Typography>
+              </Box>
+            ) : null}
             {isCurator && task?.managerId?.length ? (
               <Typography>
                 <b>Менеджер:</b> {getManagerName(task?.managerId)}
               </Typography>
             ) : null}
-            <TaksObject task={task} objects={objects} />
-            <Result task={task} />
+            <TaskObject task={task} objects={objects} />
+            {isSelectedDayDialog ? <Result task={task} /> : null}
           </ItemContainer>
         );
       })}

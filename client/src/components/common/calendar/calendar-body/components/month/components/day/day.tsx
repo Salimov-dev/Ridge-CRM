@@ -24,14 +24,13 @@ const Day = ({ day, tasks, meetings, isWeekendColumn, setDateCreate }) => {
   const isFutureDay = chechIsFutureDay(day);
 
   const handleOpenSelectedDay = () => {
-    console.log("day", day);
     dispatch<any>(setOpenSelectedDayOpenState(true));
     setDateCreate(day)
   };
 
   return (
     <OneDayContainer
-      onClick={()=>handleOpenSelectedDay()}
+      // onClick={()=>handleOpenSelectedDay()}
       sx={{
         height: "100%",
         backgroundColor: isWeekendColumn ? "#171e32" : "inherit",
@@ -56,6 +55,7 @@ const Day = ({ day, tasks, meetings, isWeekendColumn, setDateCreate }) => {
     >
       <Date
         day={day}
+        setDateCreate={setDateCreate}
         isCurrentDay={isCurrentDay}
         isFutureDay={isFutureDay}
         isWeekendColumn={isWeekendColumn}

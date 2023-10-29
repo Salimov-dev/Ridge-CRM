@@ -7,7 +7,7 @@ import {
   setOpenObjectPageOpenState,
 } from "../../../../../../../../../../../../../store/object/open-object-page.store";
 
-const TaksObject = ({ task, objects }) => {
+const TaskObject = ({ task, objects }) => {
   const dispatch = useDispatch();
   const taskObjectId = task?.objectId;
 
@@ -37,4 +37,4 @@ const TaksObject = ({ task, objects }) => {
   ) : null;
 };
 
-export default TaksObject;
+export default TaskObject;

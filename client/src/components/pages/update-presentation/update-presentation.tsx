@@ -27,10 +27,15 @@ import {
   updatePresentation,
 } from "../../../store/presentation/presentations.store";
 import CuratorPresentationForm from "../../common/forms/presentation/curator-presentation-form";
+import { toast } from "react-toastify";
+import IsLoadingDialog from "../../common/dialog/is-loading-dialog";
 
 const UpdatePresentation = ({ onClose }) => {
   const dispatch = useDispatch();
+
   const [open, setOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
   const presentationId = useSelector(getUpdatePresentationId());
   const presentation = useSelector(getPresentationById(presentationId));
 
@@ -68,7 +73,18 @@ const UpdatePresentation = ({ onClose }) => {
   });
 
   const onSubmit = (data) => {
-    dispatch<any>(updatePresentation(data)).then(onClose());
+    setIsLoading(true);
+
+    dispatch<any>(updatePresentation(data))
+      .then(() => {
+        setIsLoading(false);
+        onClose();
+        toast.success("Презентация успешно изменена!");
+      })
+      .catch((error) => {
+        setIsLoading(false);
+        toast.success(error);
+      });
   };
 
   const handleRemovePresentation = (presentationId) => {
@@ -83,7 +99,12 @@ const UpdatePresentation = ({ onClose }) => {
     setOpen(false);
   };
 
-  return presentation ? (
+  return isLoading ? (
+    <IsLoadingDialog
+      text="Немного подождите, изменяем `Задачу себе`"
+      isLoading={isLoading}
+    />
+  ) : (
     <Box>
       <Header onClose={onClose} />
       {isAuthorEntity ? (
@@ -120,8 +141,6 @@ const UpdatePresentation = ({ onClose }) => {
         onRemove={handleRemovePresentation}
       />
     </Box>
-  ) : (
-    <Loader />
   );
 };
 

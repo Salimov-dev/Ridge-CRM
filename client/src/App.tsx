@@ -170,7 +170,7 @@ function App() {
           </AppStyled>
         </AppLoader>
       </ThemeProvider>
-      <ToastContainer position="bottom-left" />
+      <ToastContainer position="bottom-left" className="toast-container" />
     </ColorModeContext.Provider>
   );
 }

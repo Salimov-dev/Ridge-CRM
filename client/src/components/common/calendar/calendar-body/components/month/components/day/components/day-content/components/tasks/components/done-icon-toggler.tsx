@@ -6,7 +6,7 @@ const DoneIconToggler = ({ item, onDoneItem, onNotDoneItem }) => {
   const itemIsDone = item?.isDone
 
   return !itemIsDone ? (
-    <Box onClick={() => onDoneItem(item)}>
+    <Box onClick={() => onDoneItem(item)} sx={{cursor: "pointer"}}>
       {
         <CheckIcon
           sx={{
@@ -17,7 +17,7 @@ const DoneIconToggler = ({ item, onDoneItem, onNotDoneItem }) => {
       }
     </Box>
   ) : (
-    <Box onClick={() => onNotDoneItem(item)}>
+    <Box  sx={{cursor: "pointer"}} onClick={() => onNotDoneItem(item)}>
       {
         <DoDisturbAltOutlinedIcon
           sx={{

@@ -28,6 +28,7 @@ import {
 // hooks
 import useCalendar from "../../hooks/calendar/use-calendar";
 import useSearchTask from "../../hooks/task/use-search-task";
+import { Alert } from "@mui/material";
 
 const initialState = {
   task: "",
@@ -83,7 +84,9 @@ const Calendar = () => {
 
   const getMeeting = (day) => {
     const meeting = meetings?.filter(
-      (meet) => dayjs(meet?.date).format("YYYY-MM-DD") === dayjs(day)?.format("YYYY-MM-DD")
+      (meet) =>
+        dayjs(meet?.date).format("YYYY-MM-DD") ===
+        dayjs(day)?.format("YYYY-MM-DD")
     );
     const sortedMeetings = orderBy(meeting, ["date"], ["desc"]);
     return sortedMeetings;
@@ -113,9 +116,9 @@ const Calendar = () => {
       <Header buttons={<CreateTasksButtons />} />
       <CalendarBody
         tasks={getTask}
+        meetings={getMeeting}
         currentMonth={currentMonth}
         setDateCreate={setDateCreate}
-        meetings={getMeeting}
         background="darkOrange"
       />
       <TasksTable
@@ -130,6 +133,8 @@ const Calendar = () => {
         columns={meetingsColumns}
       />
       <Dialogs
+        tasks={getTask}
+        meetings={getMeeting}
         users={transformUsers}
         objects={transformObjects}
         dateCreate={dateCreate}

@@ -26,13 +26,18 @@ import FooterButtons from "../../common/forms/footer-buttons/footer-buttons";
 import ConfirmRemoveDialog from "../../common/dialog/confirm-remove-dialog";
 import { getObjectsList } from "../../../store/object/objects.store";
 import { loadOpenObjectPageOpenState } from "../../../store/object/open-object-page.store";
+import { toast } from "react-toastify";
+import IsLoadingDialog from "../../common/dialog/is-loading-dialog";
 
 const UpdateManagerTask = ({ title, onClose, users }) => {
+  const dispatch = useDispatch();
+
   const [open, setOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
   const taskId = useSelector(getUpdateManagerTaskId());
   const task = useSelector(getTaskById(taskId));
   const isTasksLoading = useSelector(getTaskLoadingStatus());
-  const dispatch = useDispatch();
 
   const formatedTask = {
     ...task,
@@ -94,11 +99,22 @@ const UpdateManagerTask = ({ title, onClose, users }) => {
   });
 
   const onSubmit = (data) => {
+    setIsLoading(true);
+
     const transformedDate = dayjs(data.date).format("YYYY-MM-DDTHH:mm:ss.SSSZ");
     const transformedTime = dayjs(data.time).format("YYYY-MM-DDTHH:mm:ss.SSSZ");
     const newData = { ...data, date: transformedDate, time: transformedTime };
 
-    dispatch<any>(updateMyTask(newData)).then(onClose());
+    dispatch<any>(updateMyTask(newData))
+      .then(() => {
+        setIsLoading(false);
+        onClose();
+        toast.success("Задача менеджеру успешно изменена!");
+      })
+      .catch((error) => {
+        setIsLoading(false);
+        toast.success(error);
+      });
   };
 
   const handleRemoveTask = (taskId) => {
@@ -119,7 +135,12 @@ const UpdateManagerTask = ({ title, onClose, users }) => {
     }
   }, [objectId]);
 
-  return (
+  return isLoading ? (
+    <IsLoadingDialog
+      text="Немного подождите, изменяем `Задачу задачу менеджеру`"
+      isLoading={isLoading}
+    />
+  ) : (
     <>
       <TitleWithCloseButton
         title={title}

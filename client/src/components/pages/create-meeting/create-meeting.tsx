@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useDispatch, useSelector } from "react-redux";
-import { Box, styled } from "@mui/material";
 // components
 import MeetingForm from "../../common/forms/meeting-form/meeting-form";
 import IsLoadingDialog from "../../common/dialog/is-loading-dialog";
@@ -23,6 +22,7 @@ import { meetingSchema } from "../../../schemas/meeting-schema";
 import useFindObject from "../../../hooks/object/use-find-object";
 // utils
 import { capitalizeFirstLetter } from "../../../utils/data/capitalize-first-letter";
+import { toast } from "react-toastify";
 
 const initialState = {
   status: "",
@@ -105,9 +105,11 @@ const CreateMeeting = ({
       .then(() => {
         setIsLoading(false);
         onClose();
+        toast.success("Встреча успешно создана!");
       })
       .catch((error) => {
         setIsLoading(false);
+        toast.success(error)
       });
   };
 

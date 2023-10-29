@@ -21,14 +21,17 @@ import {
 } from "../../../store/last-contact/last-contact.store";
 // schema
 import { lastContactSchema } from "../../../schemas/last-contact-schema";
-import { capitalizeFirstLetter } from "../../../utils/data/capitalize-first-letter";
-import { createTask } from "../../../store/task/tasks.store";
+import { toast } from "react-toastify";
+import IsLoadingDialog from "../../common/dialog/is-loading-dialog";
 
 const UpdateLastContact = ({ onClose }) => {
+  const dispatch = useDispatch();
+
   const [open, setOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
   const lastContactId = useSelector(getUpdateLastContactId());
   const lastContact = useSelector(getLastContactsById(lastContactId));
-  const dispatch = useDispatch();
 
   const formatedLastContact = {
     ...lastContact,
@@ -56,38 +59,21 @@ const UpdateLastContact = ({ onClose }) => {
   const isEditMode = lastContactId ? true : false;
 
   const onSubmit = (data) => {
+    setIsLoading(true);
+
     const transformedDate = dayjs(data.date).format("YYYY-MM-DDTHH:mm:ss.SSSZ");
     const newData = { ...data, date: transformedDate };
-    dispatch<any>(updateLastContact(newData)).then(onClose());
 
-    // ниже код для обновления контакта и добавления задачи
-    // пока не работает из ответа 504 от сервера и не получается создать
-    
-    // const lastContactData = {
-    //   date: transformedDate,
-    //   result: capitalizeFirstLetter(data.result),
-    //   company: data.company,
-    //   created_at: data.created_at,
-    //   updated_at: data.updated_at,
-    //   objectId: data.objectId,
-    //   userId: data.userId,
-    //   _id: data._id,
-    // };
-
-    // dispatch<any>(updateLastContact(lastContactData)).then(() => {
-    //   if (data.dateMyTask && data.timeMyTaks && data.commentMyTask) {
-    //     const myTaskData = {
-    //       date: data.dateMyTask,
-    //       time: data.timeMyTaks,
-    //       objectId: data.objectId,
-    //       comment: data.commentMyTask,
-    //       isDone: false,
-    //     };
-    //     dispatch<any>(createTask(myTaskData)).then(() => onClose());
-    //   } else {
-    //     onClose();
-    //   }
-    // });
+    dispatch<any>(updateLastContact(newData))
+      .then(() => {
+        setIsLoading(false);
+        onClose();
+        toast.success("Последний контакт успешно изменен!");
+      })
+      .catch((error) => {
+        setIsLoading(false);
+        toast.success(error);
+      });
   };
 
   const handleRemoveLastContact = (lastContactId) => {
@@ -104,27 +90,36 @@ const UpdateLastContact = ({ onClose }) => {
 
   return lastContact ? (
     <Box>
-      <Header lastContact={lastContact} onClose={onClose} />
-      <LastContactForm
-        data={data}
-        register={register}
-        errors={errors}
-        setValue={setValue}
-        isUpdate={true}
-      />
-      <FooterButtons
-        onUpdate={handleSubmit(onSubmit)}
-        onClose={onClose}
-        onRemove={handleClickOpen}
-        isEditMode={isEditMode}
-        isValid={isFullValid}
-      />
-      <ConfirmRemoveDialog
-        removeId={lastContactId}
-        open={open}
-        onClose={handleClose}
-        onRemove={handleRemoveLastContact}
-      />
+      {isLoading ? (
+        <IsLoadingDialog
+          text="Немного подождите, изменяем `Задачу последний контакт`"
+          isLoading={isLoading}
+        />
+      ) : (
+        <>
+          <Header lastContact={lastContact} onClose={onClose} />
+          <LastContactForm
+            data={data}
+            register={register}
+            errors={errors}
+            setValue={setValue}
+            isUpdate={true}
+          />
+          <FooterButtons
+            onUpdate={handleSubmit(onSubmit)}
+            onClose={onClose}
+            onRemove={handleClickOpen}
+            isEditMode={isEditMode}
+            isValid={isFullValid}
+          />
+          <ConfirmRemoveDialog
+            removeId={lastContactId}
+            open={open}
+            onClose={handleClose}
+            onRemove={handleRemoveLastContact}
+          />
+        </>
+      )}
     </Box>
   ) : (
     <Loader />

@@ -4,7 +4,7 @@ import { ItemContainer, ItemsContainer } from "../styled/styled";
 import Loader from "../../../../../../../../../../loader/loader";
 import Result from "./components/result";
 
-const Meetings = ({ meetings, currentUserId }) => {
+const Meetings = ({ meetings, currentUserId, isSelectedDayDialog }) => {
 
   return meetings ? (
     <ItemsContainer>
@@ -18,8 +18,8 @@ const Meetings = ({ meetings, currentUserId }) => {
           }}
         >
           <Title meet={meet} currentUserId={currentUserId}/>
-          <Body meet={meet}/>
-          <Result meet={meet} />
+          <Body meet={meet} isSelectedDayDialog={isSelectedDayDialog}/>
+          {isSelectedDayDialog ? <Result meet={meet} /> : null}
         </ItemContainer>
       ))}
     </ItemsContainer>

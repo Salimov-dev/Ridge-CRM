@@ -25,8 +25,8 @@ const Header = ({ onClose, dateCreate }) => {
   return (
     <Component>
       <Title>
-        <Box sx={{ display: "flex", background: 'SaddleBrown' }}>
-          <Typography variant="h2">Задачи на день: {selectedDate}</Typography>
+        <Box sx={{ display: "flex", background: 'OrangeRed', padding: '0 4px' }}>
+          <Typography variant="h2">Список дел на день: {selectedDate}</Typography>
         </Box>
       </Title>
 

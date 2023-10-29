@@ -1,5 +1,6 @@
 // liraries
 import dayjs from "dayjs";
+import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -9,6 +10,7 @@ import MyTaskForm from "../../common/forms/my-task-form/my-task-form";
 import FooterButtons from "../../common/forms/footer-buttons/footer-buttons";
 import ConfirmRemoveDialog from "../../common/dialog/confirm-remove-dialog";
 import TitleWithCloseButton from "../../common/page-titles/title-with-close-button";
+import IsLoadingDialog from "../../common/dialog/is-loading-dialog";
 // store
 import { getUpdateMyTaskId } from "../../../store/task/update-my-task.store";
 import {
@@ -19,16 +21,19 @@ import {
 } from "../../../store/task/tasks.store";
 import { getObjectsList } from "../../../store/object/objects.store";
 import { getCurrentUserId } from "../../../store/user/users.store";
+import { loadOpenObjectPageOpenState } from "../../../store/object/open-object-page.store";
 // schema
 import { taskSchema } from "../../../schemas/task-shema";
-import { loadOpenObjectPageOpenState } from "../../../store/object/open-object-page.store";
 
 const UpdateMyTask = ({ title, onClose }) => {
+  const dispatch = useDispatch();
+
   const [open, setOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
   const taskId = useSelector(getUpdateMyTaskId());
   const task = useSelector(getTaskById(taskId));
   const isTasksLoading = useSelector(getTaskLoadingStatus());
-  const dispatch = useDispatch();
 
   const formatedTask = {
     ...task,
@@ -69,6 +74,8 @@ const UpdateMyTask = ({ title, onClose }) => {
   });
 
   const onSubmit = (data) => {
+    setIsLoading(true);
+
     const transformedDate = dayjs(data.date).format("YYYY-MM-DDTHH:mm:ss.SSSZ");
     const transformedTime = dayjs(data.time).format("YYYY-MM-DDTHH:mm:ss.SSSZ");
     const newData = {
@@ -77,7 +84,16 @@ const UpdateMyTask = ({ title, onClose }) => {
       time: transformedTime,
     };
 
-    dispatch<any>(updateMyTask(newData)).then(onClose());
+    dispatch<any>(updateMyTask(newData))
+      .then(() => {
+        setIsLoading(false);
+        onClose();
+        toast.success("Задача себе успешно изменена!");
+      })
+      .catch((error) => {
+        setIsLoading(false);
+        toast.success(error);
+      });
   };
 
   const handleRemoveTask = (taskId: number) => {
@@ -98,7 +114,12 @@ const UpdateMyTask = ({ title, onClose }) => {
     }
   }, [objectId]);
 
-  return (
+  return isLoading ? (
+    <IsLoadingDialog
+      text="Немного подождите, изменяем `Задачу себе`"
+      isLoading={isLoading}
+    />
+  ) : (
     <>
       <TitleWithCloseButton
         title={title}

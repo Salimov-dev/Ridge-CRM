@@ -3,12 +3,12 @@ import { getObjectsList } from "../../../../../../../../../../../../../store/obj
 import MeetingObject from "./meeting-object";
 import MeetingInfo from "./meeting-info";
 
-const Body = ({ meet }) => {
+const Body = ({ meet, isSelectedDayDialog }) => {
   const objects = useSelector(getObjectsList());
 
   return (
     <>
-      <MeetingInfo meet={meet} />
+      {isSelectedDayDialog ? <MeetingInfo meet={meet} /> : null}
       <MeetingObject objects={objects} meet={meet} />
     </>
   );

@@ -13,6 +13,7 @@ import { createObject } from "../../../store/object/objects.store";
 import useFindObject from "../../../hooks/object/use-find-object";
 // utils
 import { capitalizeFirstLetter } from "../../../utils/data/capitalize-first-letter";
+import { toast } from "react-toastify";
 
 const initialState = {
   status: "",
@@ -136,9 +137,11 @@ const CreateObject = ({ onClose }) => {
       .then(() => {
         setIsLoading(false);
         onClose();
+        toast.success("Объект успешно создан!");
       })
       .catch((error) => {
         setIsLoading(false);
+        toast.success(error)
       });
   };
 

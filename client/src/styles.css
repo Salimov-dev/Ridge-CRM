@@ -36,3 +36,7 @@
 .css-13qp4b7-MuiButtonBase-root-MuiButton-root {
   color: white !important;
 }
+
+.toast-container {
+  z-index: 9999999999 !important;
+}

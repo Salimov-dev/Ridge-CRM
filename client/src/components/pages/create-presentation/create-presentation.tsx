@@ -19,6 +19,7 @@ import {
   getCurrentUserId,
   getIsUserCurator,
 } from "../../../store/user/users.store";
+import { toast } from "react-toastify";
 
 const initialState = {
   objectId: "",
@@ -26,10 +27,6 @@ const initialState = {
   cloudLink: "",
   curatorComment: "",
 };
-
-const Component = styled(Box)`
-  width: 100%;
-`;
 
 const CreatePresentation = ({ onClose, setConfettiActive }) => {
   const dispatch = useDispatch();
@@ -82,9 +79,11 @@ const CreatePresentation = ({ onClose, setConfettiActive }) => {
         setIsLoading(false);
         onClose();
         setConfettiActive(true);
+        toast.success("Презентация успешно создана!");
       })
       .catch((error) => {
         setIsLoading(false);
+        toast.success(error);
       });
   };
 
@@ -94,37 +93,33 @@ const CreatePresentation = ({ onClose, setConfettiActive }) => {
     }
   }, [objectPageId]);
 
-  return (
-    <Component>
-      {isLoading ? (
-        <IsLoadingDialog
-          text="Немного подождите, создаем `Презентацию`"
-          isLoading={isLoading}
-        />
-      ) : (
-        <>
-          <TitleWithCloseButton
-            title="Добавить презентацию"
-            onClose={onClose}
-            background="SaddleBrown"
-            color="white"
-          />
-          <ManagerPresentationForm
-            data={data}
-            objects={transformObjects}
-            register={register}
-            errors={errors}
-            watch={watch}
-            setValue={setValue}
-          />
-          <FooterButtons
-            onCreate={handleSubmit(onSubmit)}
-            onClose={onClose}
-            isValid={isFullValid}
-          />
-        </>
-      )}
-    </Component>
+  return isLoading ? (
+    <IsLoadingDialog
+      text="Немного подождите, создаем `Презентацию`"
+      isLoading={isLoading}
+    />
+  ) : (
+    <>
+      <TitleWithCloseButton
+        title="Добавить презентацию"
+        onClose={onClose}
+        background="SaddleBrown"
+        color="white"
+      />
+      <ManagerPresentationForm
+        data={data}
+        objects={transformObjects}
+        register={register}
+        errors={errors}
+        watch={watch}
+        setValue={setValue}
+      />
+      <FooterButtons
+        onCreate={handleSubmit(onSubmit)}
+        onClose={onClose}
+        isValid={isFullValid}
+      />
+    </>
   );
 };
 

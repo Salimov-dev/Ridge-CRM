@@ -28,9 +28,14 @@ import {
 } from "../../../store/meeting/meetings.store";
 // schema
 import { meetingSchema } from "../../../schemas/meeting-schema";
+import { toast } from "react-toastify";
 
 const UpdateMeeting = ({ onClose }) => {
+  const dispatch = useDispatch();
+
   const [open, setOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
   const meetingId = useSelector(getUpdateMeetingId());
   const meeting = useSelector(getMeetingById(meetingId));
 
@@ -66,7 +71,6 @@ const UpdateMeeting = ({ onClose }) => {
   const isMeetingsLoading = useSelector(getMeetingLoadingStatus());
   const meetingTypes = useSelector(getMeetingTypesList());
   const statuses = useSelector(getMeetingStatusesList());
-  const dispatch = useDispatch();
 
   let transformObjects = [];
   currentUserObjects?.forEach((obj) => {
@@ -74,12 +78,22 @@ const UpdateMeeting = ({ onClose }) => {
   });
 
   const onSubmit = (data) => {
+    setIsLoading(true);
+
     const transformedDate = dayjs(data.date).format("YYYY-MM-DDTHH:mm:ss.SSSZ");
     const transformedTime = dayjs(data.time).format("YYYY-MM-DDTHH:mm:ss.SSSZ");
     const newData = { ...data, date: transformedDate, time: transformedTime };
 
     dispatch<any>(updateMeeting(newData))
-      .then(onClose())
+      .then(() => {
+        setIsLoading(false);
+        onClose();
+        toast.success("Встреча успешно изменена!");
+      })
+      .catch((error) => {
+        setIsLoading(false);
+        toast.success(error);
+      });
   };
 
   const handleRemoveMeeting = (meetingId) => {
