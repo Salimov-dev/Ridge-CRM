@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { Box, styled } from "@mui/material";
 // components
 import DayContent from "./components/day-content/day-content";
@@ -7,6 +6,8 @@ import Date from "./components/date/date";
 // utils
 import { chechIsCurrentDay } from "../../../../../../../../utils/date/check-is-current-day";
 import { chechIsFutureDay } from "../../../../../../../../utils/date/check-is-future-day";
+import { useDispatch } from "react-redux";
+import { setOpenSelectedDayOpenState } from "../../../../../../../../store/calendar/open-selected-day.store";
 
 const OneDayContainer = styled(Box)`
   display: flex;
@@ -17,11 +18,20 @@ const OneDayContainer = styled(Box)`
 `;
 
 const Day = ({ day, tasks, meetings, isWeekendColumn, setDateCreate }) => {
+  const dispatch = useDispatch();
+
   const isCurrentDay = chechIsCurrentDay(day);
   const isFutureDay = chechIsFutureDay(day);
 
+  const handleOpenSelectedDay = () => {
+    console.log("day", day);
+    dispatch<any>(setOpenSelectedDayOpenState(true));
+    setDateCreate(day)
+  };
+
   return (
     <OneDayContainer
+      onClick={()=>handleOpenSelectedDay()}
       sx={{
         height: "100%",
         backgroundColor: isWeekendColumn ? "#171e32" : "inherit",

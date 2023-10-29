@@ -163,15 +163,14 @@ export const tasksColumns = [
       const taskId = info.getValue();
       const task = useSelector(getTaskById(taskId));
       const currentUserId = useSelector(getCurrentUserId());
-
       const isCuratorTask = Boolean(task?.managerId);
-      const isCurrentUserIsCuratorTask = currentUserId !== task?.userId;
 
       const isAuthorEntity = useSelector(
         getIsUserAuthorThisEntity(currentUserId, task)
       );
-      const disable =
-        (isCuratorTask && isCurrentUserIsCuratorTask) || !isAuthorEntity;
+
+      const disable = !isCuratorTask && !isAuthorEntity
+
 
       const handleClick = () => {
         if (isCuratorTask) {

@@ -12,6 +12,7 @@ import {
   getOpenObjectPageId,
   loadOpenObjectPageOpenState,
 } from "../../../../store/object/open-object-page.store";
+import OpenSelectedDayDialog from "../../../../components/UI/dialogs/calendar/open-selected-day-dialog";
 
 const Dialogs = ({
   objects,
@@ -48,6 +49,8 @@ const Dialogs = ({
         dateCreate={dateCreate}
       />
       <MeetingUpdateDialog />
+
+      <OpenSelectedDayDialog dateCreate={dateCreate} setDateCreate={setDateCreate}/>
     </>
   );
 };

@@ -48,6 +48,7 @@ import presentationStatusReducer from "./presentation/presentation-status.store"
 import monthIndexReducer from "./month-index.store";
 import currrentPathReducer from "./current-path.store";
 import updatePresentationReducer from "./presentation/update-presentation.store";
+import openSelectedDayReducer from "./calendar/open-selected-day.store";
 
 const rootReducer = combineReducers({
   // auth state
@@ -87,6 +88,7 @@ const rootReducer = combineReducers({
   updateManagerTask: updateManagerTaskReducer,
   // calendar
   monthIndex: monthIndexReducer,
+  openSelectedDay: openSelectedDayReducer,
   // last contact
   lastContact: lastContactReducer,
   createLastContact: createLastContactReducer,
