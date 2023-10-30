@@ -15,8 +15,8 @@ const Component = styled(Box)`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0px 0 0 0;
-  margin-bottom: 6px;
+  padding: 0 0 0 0;
+  margin-bottom: 16px;
 `;
 
 const TopBar = () => {

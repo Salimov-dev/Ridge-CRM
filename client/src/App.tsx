@@ -30,6 +30,7 @@ import AppLoader from "./hoc/app-loader";
 import ScrollToTop from "./utils/other/scroll-to-top";
 // theme
 import { ColorModeContext, useMode } from "./theme";
+import ObjectsDatabase from "./layouts/meetings copy/objects-database";
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -161,6 +162,21 @@ function App() {
                     <Route
                       path="*"
                       element={<Navigate to="/presentations" />}
+                    />
+                  </Route>
+
+                  <Route path="objectsdatabase">
+                    <Route
+                      index
+                      element={
+                        <RequireAuth>
+                          <ObjectsDatabase />
+                        </RequireAuth>
+                      }
+                    />
+                    <Route
+                      path="*"
+                      element={<Navigate to="/objectsdatabase" />}
                     />
                   </Route>
                 </Routes>

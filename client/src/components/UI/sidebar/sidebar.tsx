@@ -60,6 +60,9 @@ const Sidebar = () => {
     if (currentPath === "/presentations") {
       return "Презентации";
     }
+    if (currentPath === "/objectsdatabase") {
+      return "Проработка базы объектов";
+    }
     return "";
   }
 
