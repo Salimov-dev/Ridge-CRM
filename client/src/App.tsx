@@ -18,6 +18,8 @@ import TopBar from "./components/UI/topbar/topbar";
 import Sidebar from "./components/UI/sidebar/sidebar";
 import Footer from "./components/common/footer/footer";
 import UpdateProfile from "./components/pages/update-profile/update-profile";
+import NoMatchRoute from "./components/common/rout/no-match";
+import RequireAuth from "./layouts/users/require-auth";
 // styled
 import "./styles.css";
 import { AppStyled, RightSide } from "./styled";
@@ -28,8 +30,6 @@ import AppLoader from "./hoc/app-loader";
 import ScrollToTop from "./utils/other/scroll-to-top";
 // theme
 import { ColorModeContext, useMode } from "./theme";
-import NoMatchRoute from "./components/common/rout/no-match";
-import RequireAuth from "./layouts/users/require-auth";
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -170,7 +170,7 @@ function App() {
           </AppStyled>
         </AppLoader>
       </ThemeProvider>
-      <ToastContainer position="bottom-left" className="toast-container" />
+      <ToastContainer position="top-center" className="toast-container" autoClose={1500}/>
     </ColorModeContext.Provider>
   );
 }

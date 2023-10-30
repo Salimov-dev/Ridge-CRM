@@ -113,7 +113,7 @@ const UpdateManagerTask = ({ title, onClose, users }) => {
       })
       .catch((error) => {
         setIsLoading(false);
-        toast.success(error);
+        toast.error(error);
       });
   };
 

@@ -5,14 +5,26 @@ import Loader from "../../common/loader/loader";
 import DayContent from "../../common/calendar/calendar-body/components/month/components/day/components/day-content/day-content";
 
 const OpenSelectedDay = ({ onClose, dateCreate, tasks, meetings }) => {
+  const meetingsArray = meetings ? meetings(dateCreate) : [];
+  const tasksArray = tasks ? tasks(dateCreate) : [];
+  const selectedDateIsEmptyDeals =
+    !meetingsArray?.length && !tasksArray?.length;
+
   return true ? (
     <Box>
-      <Header onClose={onClose} dateCreate={dateCreate} />
+      <Header
+        onClose={onClose}
+        dateCreate={dateCreate}
+        marginBottom={selectedDateIsEmptyDeals ? "0px" : "40px"}
+      />
       <DayContent
-        meetings={meetings ? meetings(dateCreate) : []}
-        tasks={tasks ? tasks(dateCreate) : []}
+        meetings={meetingsArray}
+        tasks={tasksArray}
         isSelectedDayDialog={true}
       />
+      <Box sx={{ display: "flex", justifyContent: "center" }}>
+        {selectedDateIsEmptyDeals ? "Список дел на выбранную дату пуст" : null}
+      </Box>
     </Box>
   ) : (
     <Loader />

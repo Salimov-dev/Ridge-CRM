@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { setOpenSelectedDayOpenState } from "../../../../../../../../../../store/calendar/open-selected-day.store";
 
 const Component = styled(Box)`
-height: 28px;
+height: 30px;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -42,8 +42,8 @@ const Date = ({
         onClick={() => handleOpenSelectedDay()}
         sx={{
           ":hover": {
-            color: 'yellow',
-            border: '1px solid yellow'
+            color: isCurrentDay ? "blue" : 'yellow',
+            border: isCurrentDay ? '1px solid blue' : '1px solid yellow'
           },
           backgroundColor: isCurrentDay ? "yellow" : "inherit",
           color: isWeekendColumn

@@ -6,8 +6,6 @@ import Date from "./components/date/date";
 // utils
 import { chechIsCurrentDay } from "../../../../../../../../utils/date/check-is-current-day";
 import { chechIsFutureDay } from "../../../../../../../../utils/date/check-is-future-day";
-import { useDispatch } from "react-redux";
-import { setOpenSelectedDayOpenState } from "../../../../../../../../store/calendar/open-selected-day.store";
 
 const OneDayContainer = styled(Box)`
   display: flex;
@@ -18,19 +16,12 @@ const OneDayContainer = styled(Box)`
 `;
 
 const Day = ({ day, tasks, meetings, isWeekendColumn, setDateCreate }) => {
-  const dispatch = useDispatch();
 
   const isCurrentDay = chechIsCurrentDay(day);
   const isFutureDay = chechIsFutureDay(day);
 
-  const handleOpenSelectedDay = () => {
-    dispatch<any>(setOpenSelectedDayOpenState(true));
-    setDateCreate(day)
-  };
-
   return (
     <OneDayContainer
-      // onClick={()=>handleOpenSelectedDay()}
       sx={{
         height: "100%",
         backgroundColor: isWeekendColumn ? "#171e32" : "inherit",
@@ -60,7 +51,7 @@ const Day = ({ day, tasks, meetings, isWeekendColumn, setDateCreate }) => {
         isFutureDay={isFutureDay}
         isWeekendColumn={isWeekendColumn}
       />
-      <DayContent meetings={meetings} tasks={tasks} />
+      <DayContent meetings={meetings} tasks={tasks} isSelectedDayDialog={false}/>
       <ActionsIcons
         day={day}
         setDateCreate={setDateCreate}

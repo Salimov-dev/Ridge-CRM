@@ -50,7 +50,7 @@ const Tasks = ({ tasks, isCurator, isSelectedDayDialog }) => {
             }}
           >
             <Title task={task} />
-            {isSelectedDayDialog ? <TaskComment comment={task?.comment} /> : null}
+            <TaskComment comment={task?.comment} />
             {task?.managerId === currentUserId ? (
               <Box>
                 <Typography>

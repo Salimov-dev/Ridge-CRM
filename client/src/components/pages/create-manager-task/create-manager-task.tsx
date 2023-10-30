@@ -112,7 +112,7 @@ const CreateManagerTask = ({ users, title, dateCreate, onClose }) => {
       })
       .catch((error) => {
         setIsLoading(false);
-        toast.success(error);
+        toast.error(error);
       });
   };
 

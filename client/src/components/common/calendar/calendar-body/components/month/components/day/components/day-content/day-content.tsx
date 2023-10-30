@@ -22,25 +22,31 @@ const Components = styled(Box)`
 `;
 
 const DayContent = ({ meetings, tasks, isSelectedDayDialog }) => {
-  
   const isTasksLoading = useSelector(getTaskLoadingStatus());
   const isMeetingsLoading = useSelector(getMeetingLoadingStatus());
 
   const currentUserId = useSelector(getCurrentUserId());
   const isCurator = useSelector(getIsUserCurator(currentUserId));
 
-  const isLoading =
-    !isTasksLoading && !isMeetingsLoading;
+  const isLoading = !isTasksLoading && !isMeetingsLoading;
   const isTasks = tasks?.length;
   const isMeetings = meetings?.length;
 
   return isLoading ? (
     <Components>
       {isTasks ? (
-        <Tasks tasks={tasks} isCurator={isCurator} isSelectedDayDialog={isSelectedDayDialog} />
+        <Tasks
+          tasks={tasks}
+          isCurator={isCurator}
+          isSelectedDayDialog={isSelectedDayDialog}
+        />
       ) : null}
       {isMeetings ? (
-        <Meetings meetings={meetings} currentUserId={currentUserId} isSelectedDayDialog={isSelectedDayDialog}/>
+        <Meetings
+          meetings={meetings}
+          currentUserId={currentUserId}
+          isSelectedDayDialog={isSelectedDayDialog}
+        />
       ) : null}
     </Components>
   ) : (

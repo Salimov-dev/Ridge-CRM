@@ -8,7 +8,6 @@ const Component = styled(Box)`
   justify-content: space-between;
   align-items: start;
   gap: 8px;
-  margin-bottom: 40px;
 `;
 
 const Title = styled(Box)`
@@ -19,11 +18,11 @@ const Title = styled(Box)`
   gap: 8px;
 `;
 
-const Header = ({ onClose, dateCreate }) => {
+const Header = ({ onClose, dateCreate, marginBottom="40px" }) => {
   const selectedDate = FormatDate(dateCreate)
   
   return (
-    <Component>
+    <Component sx={{marginBottom: marginBottom}}>
       <Title>
         <Box sx={{ display: "flex", background: 'OrangeRed', padding: '0 4px' }}>
           <Typography variant="h2">Список дел на день: {selectedDate}</Typography>

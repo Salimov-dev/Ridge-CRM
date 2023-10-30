@@ -89,7 +89,7 @@ const UpdateObject = ({ onClose }) => {
       })
       .catch((error) => {
         setIsLoading(false);
-        toast.success(error);
+        toast.error(error);
       });
   };
 
