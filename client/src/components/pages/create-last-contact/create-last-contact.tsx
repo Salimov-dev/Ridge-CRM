@@ -55,7 +55,7 @@ const CreateLastContact = ({ onClose }) => {
     const lastContactData = {
       date: data.date,
       objectId: data.objectId,
-      result: capitalizeFirstLetter(data.result),
+      result: capitalizeFirstLetter(data.result).trim(),
     };
 
     dispatch<any>(createLastContact(lastContactData))
