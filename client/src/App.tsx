@@ -47,27 +47,11 @@ function App() {
               <Box>
                 <TopBar />
                 <Routes>
-                  <Route
-                    index
-                    path="/"
-                    element={
-                      <RequireAuth>
-                        <Main />
-                      </RequireAuth>
-                    }
-                  />
-                  <Route
-                    index
-                    path="*"
-                    element={
-                      <RequireAuth>
-                        <NoMatchRoute />
-                      </RequireAuth>
-                    }
-                  />
+                  <Route index path="/" element={<Main />} />
+                  <Route index path="*" element={<NoMatchRoute />} />
 
                   <Route path="auth" element={<Login />}>
-                    <Route index element={<Navigate to="/auth/login" />} />
+                    <Route index element={<Navigate to="/" />} />
                     <Route path="login" element={<Login />} />
                     <Route path="*" element={<Navigate to="/" />} />
                   </Route>
@@ -76,31 +60,6 @@ function App() {
                     <Route index element={<Navigate to="/auth/SignUp" />} />
                     <Route path="signup" element={<Signup />} />
                     <Route path="*" element={<Navigate to="/" />} />
-                  </Route>
-
-                  <Route path="users">
-                    <Route
-                      index
-                      element={
-                        <RequireAuth>
-                          <Users />
-                        </RequireAuth>
-                      }
-                    />
-                    <Route path="*" element={<Navigate to="/users" />} />
-                  </Route>
-
-                  <Route path="profile" element={<Profile />}>
-                    <Route index element={<Navigate to="/profile" />} />
-                    <Route
-                      path=":userId?/profileUpdate"
-                      element={
-                        <RequireAuth>
-                          <UpdateProfile />
-                        </RequireAuth>
-                      }
-                    />
-                    <Route path="*" element={<Navigate to="/profile" />} />
                   </Route>
 
                   <Route path="objects">
@@ -113,6 +72,21 @@ function App() {
                       }
                     />
                     <Route path="*" element={<Navigate to="/objects" />} />
+                  </Route>
+
+                  <Route path="objectsdatabase">
+                    <Route
+                      index
+                      element={
+                        <RequireAuth>
+                          <ObjectsDatabase />
+                        </RequireAuth>
+                      }
+                    />
+                    <Route
+                      path="*"
+                      element={<Navigate to="/objectsdatabase" />}
+                    />
                   </Route>
 
                   <Route path="statictics">
@@ -178,19 +152,29 @@ function App() {
                     />
                   </Route>
 
-                  <Route path="objectsdatabase">
+                  <Route path="users">
                     <Route
                       index
                       element={
                         <RequireAuth>
-                          <ObjectsDatabase />
+                          <Users />
                         </RequireAuth>
                       }
                     />
+                    <Route path="*" element={<Navigate to="/users" />} />
+                  </Route>
+
+                  <Route path="profile" element={<Profile />}>
+                    <Route index element={<Navigate to="/profile" />} />
                     <Route
-                      path="*"
-                      element={<Navigate to="/objectsdatabase" />}
+                      path=":userId?/profileUpdate"
+                      element={
+                        <RequireAuth>
+                          <UpdateProfile />
+                        </RequireAuth>
+                      }
                     />
+                    <Route path="*" element={<Navigate to="/profile" />} />
                   </Route>
                 </Routes>
               </Box>
@@ -199,7 +183,11 @@ function App() {
           </AppStyled>
         </AppLoader>
       </ThemeProvider>
-      <ToastContainer position="top-center" className="toast-container" autoClose={1500}/>
+      <ToastContainer
+        position="top-center"
+        className="toast-container"
+        autoClose={1500}
+      />
     </ColorModeContext.Provider>
   );
 }

@@ -10,7 +10,8 @@ import BusinessCenterOutlinedIcon from "@mui/icons-material/BusinessCenterOutlin
 import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined";
 import BusinessOutlinedIcon from "@mui/icons-material/BusinessOutlined";
 import AssignmentOutlinedIcon from "@mui/icons-material/AssignmentOutlined";
-import CrisisAlertOutlinedIcon from '@mui/icons-material/CrisisAlertOutlined';
+import CrisisAlertOutlinedIcon from "@mui/icons-material/CrisisAlertOutlined";
+import DonutSmallOutlinedIcon from "@mui/icons-material/DonutSmallOutlined";
 
 const ItemsList = ({
   selected,
@@ -38,11 +39,33 @@ const ItemsList = ({
         isCollapsed={isCollapsed}
       />
       <Item
+        title="Статистика"
+        to="/statictics"
+        icon={
+          <Tooltip title="Статистика" placement="top-start" arrow>
+            <DonutSmallOutlinedIcon />
+          </Tooltip>
+        }
+        selected={selected}
+        setSelected={setSelected}
+      />
+      <Item
         title="Объекты"
         to="/objects"
         icon={
           <Tooltip title="Объекты" placement="top-start" arrow>
             <BusinessOutlinedIcon />
+          </Tooltip>
+        }
+        selected={selected}
+        setSelected={setSelected}
+      />
+      <Item
+        title="Проработка базы объектов"
+        to="/objectsdatabase"
+        icon={
+          <Tooltip title="Проработка базы объектов" placement="top-start" arrow>
+            <CrisisAlertOutlinedIcon />
           </Tooltip>
         }
         selected={selected}
@@ -92,17 +115,7 @@ const ItemsList = ({
         selected={selected}
         setSelected={setSelected}
       />
-      <Item
-        title="Проработка базы объектов"
-        to="/objectsdatabase"
-        icon={
-          <Tooltip title="Проработка базы объектов" placement="top-start" arrow>
-            <CrisisAlertOutlinedIcon />
-          </Tooltip>
-        }
-        selected={selected}
-        setSelected={setSelected}
-      />
+
       {isCurator ? (
         <>
           <ItemsTitle

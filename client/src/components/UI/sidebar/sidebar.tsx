@@ -42,6 +42,9 @@ const Sidebar = () => {
     if (currentPath === "/") {
       return "Главная";
     }
+    if (currentPath === "/statictics") {
+      return "Статистика";
+    }
     if (currentPath === "/objects") {
       return "Объекты";
     }

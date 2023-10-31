@@ -49,6 +49,7 @@ import monthIndexReducer from "./month-index.store";
 import currrentPathReducer from "./current-path.store";
 import updatePresentationReducer from "./presentation/update-presentation.store";
 import openSelectedDayReducer from "./calendar/open-selected-day.store";
+import loginReducer from "./user/login.store";
 
 const rootReducer = combineReducers({
   // auth state
@@ -70,6 +71,7 @@ const rootReducer = combineReducers({
   estateTypes: estateTypesReducer,
   objectProperties: objectPropertiesReducer,
   // users
+  login: loginReducer,
   users: usersListReducer,
   userStatuses: userStatusesReducer,
   updateManager: updateManagerReducer,

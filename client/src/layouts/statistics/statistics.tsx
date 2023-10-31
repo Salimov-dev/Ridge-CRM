@@ -81,7 +81,7 @@ const Statictics = () => {
 
   return (
     <>
-      <LayoutTitle title="Главная" />
+      <LayoutTitle title="Статистика" />
       <ChartsContainer>
         <Charts>
           <ResponsiveLine
