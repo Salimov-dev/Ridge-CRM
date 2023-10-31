@@ -33,7 +33,11 @@ const Footer = () => {
       <Menu>
         <Item title="Главная" path="/" />
         <Divider orientation="vertical" flexItem />
+        <Item title="Статистика" path="/statictics" />
+        <Divider orientation="vertical" flexItem />
         <Item title="Объекты" path="/objects" />
+        <Divider orientation="vertical" flexItem />
+        <Item title="Проработка базы" path="/objectsdatabase" />
         <Divider orientation="vertical" flexItem />
         <Item title="Сделки" path="/deals" />
         <Divider orientation="vertical" flexItem />

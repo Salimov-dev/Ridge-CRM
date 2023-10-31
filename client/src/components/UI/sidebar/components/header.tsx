@@ -19,7 +19,7 @@ const Header = ({ isCollapsed, setIsCollapsed, colors, setSelected }) => {
         },
       }}
     >
-      <Typography sx={{}}>Грядка</Typography>
+      {/* <Typography sx={{}}>Грядка</Typography> */}
       {!isCollapsed && (
         <Box
           display="flex"

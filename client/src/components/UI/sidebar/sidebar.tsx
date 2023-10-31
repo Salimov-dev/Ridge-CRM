@@ -1,7 +1,7 @@
 // libraries
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Box, styled, useTheme } from "@mui/material";
+import { Box, Typography, styled, useTheme } from "@mui/material";
 import { Sidebar as ProSidebar, Menu } from "react-pro-sidebar";
 // theme
 import { tokens } from "../../../theme";
@@ -131,6 +131,18 @@ const Sidebar = () => {
             isCollapsed={isCollapsed}
           />
         </Menu>
+        <Typography
+          sx={{
+            fontSize: "32px",
+            transform: "rotate(-90deg)",
+            position: "absolute",
+            left: "-45px",
+            bottom: "100px",
+            whiteSpace: "nowrap"
+          }}
+        >
+          Г Р Я Д К А
+        </Typography>
       </ProSidebar>
     </Component>
   );
