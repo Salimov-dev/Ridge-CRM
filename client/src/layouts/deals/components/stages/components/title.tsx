@@ -1,6 +1,4 @@
 import { Box, Typography, styled } from "@mui/material";
-import { getObjectsList } from "../../../../../store/object/objects.store";
-import { useSelector } from "react-redux";
 
 const DealTitleContainer = styled(Box)`
   display: flex;
@@ -8,9 +6,7 @@ const DealTitleContainer = styled(Box)`
   width: 100%;
 `;
 
-const Title = ({ item }) => {
-  const objects = useSelector(getObjectsList());
-
+const Title = ({ item, objects }) => {
   const stageObjects = objects?.filter(
     (obj) => obj?.status === item?.objectStatusId
   );

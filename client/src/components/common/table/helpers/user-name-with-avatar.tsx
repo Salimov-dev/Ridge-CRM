@@ -1,23 +1,23 @@
-import { Box } from "@mui/material";
+import { Box, Typography, styled } from "@mui/material";
 import basicAva from "../../../../assets/basic-ava.jpg";
 import { FormatManagerName, UserAvatar } from "./helpers";
 
-const UserNameWithAvatar = ({ user }) => {
+const Component = styled(Box)`
+  width: 100%;
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  justify-content: start;
+`;
+
+const UserNameWithAvatar = ({ user, fontStyle = 'normal' }) => {
   const userId = user?._id;
   const ava = user?.image;
   return (
-    <Box
-      sx={{
-        width: "100%",
-        display: "flex",
-        gap: "6px",
-        alignItems: "center",
-        justifyContent: "start",
-      }}
-    >
+    <Component>
       <UserAvatar width="24px" path={ava ? ava : basicAva} />
-      {FormatManagerName(userId)}
-    </Box>
+      <Typography sx={{fontStyle: fontStyle}}>{FormatManagerName(userId)}</Typography>
+    </Component>
   );
 };
 

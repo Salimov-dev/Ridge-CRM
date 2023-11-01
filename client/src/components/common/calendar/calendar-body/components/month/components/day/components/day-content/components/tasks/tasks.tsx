@@ -10,20 +10,11 @@ import Result from "./components/result";
 import { ItemContainer, ItemsContainer } from "../styled/styled";
 // store
 import { getObjectsList } from "../../../../../../../../../../../../store/object/objects.store";
-import {
-  getCurrentUserId,
-  getUsersList,
-} from "../../../../../../../../../../../../store/user/users.store";
+import { getCurrentUserId } from "../../../../../../../../../../../../store/user/users.store";
+import { getUserName } from "../../../../../../../../../../../../utils/user/get-user-name";
 
 const Tasks = ({ tasks, isCurator, isSelectedDayDialog }) => {
   const objects = useSelector(getObjectsList());
-  const users = useSelector(getUsersList());
-
-  const getManagerName = (id) => {
-    const user = users?.find((user) => user._id === id);
-    const result = `${user?.name.lastName} ${user?.name.firstName}`;
-    return result;
-  };
 
   const currentUserId = useSelector(getCurrentUserId());
 
@@ -56,12 +47,12 @@ const Tasks = ({ tasks, isCurator, isSelectedDayDialog }) => {
                 <Typography>
                   <b>Задачу поставил:</b>
                 </Typography>
-                <Typography>{getManagerName(task?.userId)}</Typography>
+                <Typography>{getUserName(task?.userId)}</Typography>
               </Box>
             ) : null}
             {isCurator && task?.managerId?.length ? (
               <Typography>
-                <b>Менеджер:</b> {getManagerName(task?.managerId)}
+                <b>Менеджер:</b> {getUserName(task?.managerId)}
               </Typography>
             ) : null}
             <TaskObject task={task} objects={objects} />

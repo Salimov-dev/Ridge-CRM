@@ -1,9 +1,10 @@
 // libraries
 import dayjs from "dayjs";
-import { useState } from "react";
-import { useSelector } from "react-redux";
-import { Box, Typography, styled } from "@mui/material";
 import { orderBy } from "lodash";
+import { useForm } from "react-hook-form";
+import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
+import { Box, styled } from "@mui/material";
 // components
 import LayoutTitle from "../../components/common/page-titles/layout-title";
 import BasicTable from "../../components/common/table/basic-table";
@@ -11,220 +12,96 @@ import ObjectCreatePageDialog from "../../components/UI/dialogs/objects/object-c
 import ObjectPageDialog from "../../components/UI/dialogs/object-page-dialog/object-page-dialog";
 import ObjectUpdatePageDialog from "../../components/UI/dialogs/objects/object-update-page-dialog";
 import ChangePeriodButton from "./components/change-period-button";
+import ObjectsDatabaseFiltersPanel from "../../components/UI/filters-panels/objectsdatabase-filters-panel";
 // columns
 import { objectsColumns } from "../../columns/objects-columns/objects-columns";
+// hooks
+import useSearchObjectDatabase from "../../hooks/objects-database/use-search-object-database";
 // store
 import {
   getObjectsList,
   getObjectsLoadingStatus,
 } from "../../store/object/objects.store";
-import { getLastContactsList } from "../../store/last-contact/last-contact.store";
+import {
+  getCurrentUserId,
+  getIsUserCurator,
+} from "../../store/user/users.store";
+import { objectsColumnsCurator } from "../../columns/objects-columns/objects-columns-curator";
 
 const ChangePeriodsContainer = styled(Box)`
   width: 100%;
   margin-bottom: 10px;
   display: flex;
   gap: 6px;
+  align-items: top;
   justify-content: space-between;
 `;
 
+const initialState = {
+  selectedUsers: [],
+};
+
 const ObjectsDatabase = () => {
+  const localStorageState = JSON.parse(
+    localStorage.getItem("search-objectsdatabase-data")
+  );
+
+  const { register, watch, setValue } = useForm({
+    defaultValues: Boolean(localStorageState)
+      ? localStorageState
+      : initialState,
+    mode: "onBlur",
+  });
+
+  const data = watch();
   const [period, setPeriod] = useState("fromOneMonthToTwo");
-  const isLoading = useSelector(getObjectsLoadingStatus());
   const objects = useSelector(getObjectsList());
-  const columns = objectsColumns;
-  const lastContacts = useSelector(getLastContactsList());
-  const currentDate = dayjs();
+  const isLoading = useSelector(getObjectsLoadingStatus());
 
-  let array = objects;
+  const currentUserId = useSelector(getCurrentUserId());
+  const isCurator = useSelector(getIsUserCurator(currentUserId));
+  const columns = isCurator ? objectsColumnsCurator : objectsColumns;
 
-  // Фильтр для "Звонок от 1 до 2 месяцев"
-  if (period === "fromOneMonthToTwo") {
-    array = array?.filter((obj) => {
-      const objectId = obj?._id;
-      const lastContactsList = lastContacts?.filter(
-        (contact) => contact.objectId === objectId
-      );
-      const sortedLastContacts = orderBy(lastContactsList, "date", ["desc"]);
-      const lastContact = sortedLastContacts[0]?.date;
+  const searchedObjects = useSearchObjectDatabase(objects, data, period);
+  const sortedObjects = orderBy(searchedObjects, ["created_at"], ["desc"]);
 
-      if (!lastContact) {
-        return false; // Если нет информации о последнем звонке, объект не попадает в фильтр
-      }
-
-      const lastContactDate = dayjs(lastContact);
-
-      return lastContactDate.isBetween(
-        currentDate.subtract(2, "months"),
-        currentDate.subtract(1, "months")
-      );
-    });
-  }
-
-  // Фильтр для "Звонок от 2 до 3 месяцев"
-  if (period === "fromTwoMonthToThree") {
-    array = array?.filter((obj) => {
-      const objectId = obj?._id;
-      const lastContactsList = lastContacts?.filter(
-        (contact) => contact.objectId === objectId
-      );
-      const sortedLastContacts = orderBy(lastContactsList, "date", ["desc"]);
-      const lastContact = sortedLastContacts[0]?.date;
-
-      if (!lastContact) {
-        return false; // Если нет информации о последнем звонке, объект не попадает в фильтр
-      }
-
-      const lastContactDate = dayjs(lastContact);
-
-      return lastContactDate.isBetween(
-        currentDate.subtract(3, "months"),
-        currentDate.subtract(2, "months")
-      );
-    });
-  }
-
-  // Фильтр для "Звонок от 3 месяцев"
-  if (period === "fromThreeMonthAndMore") {
-    array = array?.filter((obj) => {
-      const objectId = obj?._id;
-      const lastContactsList = lastContacts?.filter(
-        (contact) => contact.objectId === objectId
-      );
-      const sortedLastContacts = orderBy(lastContactsList, "date", ["desc"]);
-      const lastContact = sortedLastContacts[0]?.date;
-
-      if (!lastContact) {
-        return false; // Если нет информации о последнем звонке, объект не попадает в фильтр
-      }
-
-      const lastContactDate = dayjs(lastContact);
-
-      // Проверяем, что разница между текущей датой и датой последнего контакта
-      // составляет более 3 месяцев
-      return lastContactDate.isBefore(currentDate.subtract(3, "months"));
-    });
-  }
-
-  const fromOneMonthToTwoCount = objects?.filter((obj) => {
-    const objectId = obj?._id;
-    const lastContactsList = lastContacts?.filter(
-      (contact) => contact.objectId === objectId
-    );
-    const sortedLastContacts = orderBy(lastContactsList, "date", ["desc"]);
-    const lastContact = sortedLastContacts[0]?.date;
-
-    if (!lastContact) {
-      return false; // Если нет информации о последнем звонке, объект не попадает в фильтр
-    }
-
-    const lastContactDate = dayjs(lastContact);
-
-    return lastContactDate.isBetween(
-      currentDate.subtract(2, "months"),
-      currentDate.subtract(1, "months")
-    );
-  });
-
-  const fromTwoMonthToThreeCount = objects?.filter((obj) => {
-    const objectId = obj?._id;
-    const lastContactsList = lastContacts?.filter(
-      (contact) => contact.objectId === objectId
-    );
-    const sortedLastContacts = orderBy(lastContactsList, "date", ["desc"]);
-    const lastContact = sortedLastContacts[0]?.date;
-
-    if (!lastContact) {
-      return false; // Если нет информации о последнем звонке, объект не попадает в фильтр
-    }
-
-    const lastContactDate = dayjs(lastContact);
-
-    return lastContactDate.isBetween(
-      currentDate.subtract(3, "months"),
-      currentDate.subtract(2, "months")
-    );
-  });
-
-  const fromThreeMonthAndMoreCount = objects?.filter((obj) => {
-    const objectId = obj?._id;
-    const lastContactsList = lastContacts?.filter(
-      (contact) => contact.objectId === objectId
-    );
-    const sortedLastContacts = orderBy(lastContactsList, "date", ["desc"]);
-    const lastContact = sortedLastContacts[0]?.date;
-
-    if (!lastContact) {
-      return false; // Если нет информации о последнем звонке, объект не попадает в фильтр
-    }
-
-    const lastContactDate = dayjs(lastContact);
-
-    // Проверяем, что разница между текущей датой и датой последнего контакта
-    // составляет более 3 месяцев
-    return lastContactDate.isBefore(currentDate.subtract(3, "months"));
-  });
-
-  const sortedObjects = orderBy(array, ["created_at"], ["desc"]);
-
-  const handleChangePeriod = (period) => {
-    setPeriod(period);
+  const handleChangePeriod = (newPeriod) => {
+    setPeriod(newPeriod);
   };
 
   return (
     <Box>
       <LayoutTitle title="Проработка базы объектов" />
       <ChangePeriodsContainer>
-        {/* <ChangePeriodButton
-          width="100%"
-          text={`${currentWeek} (${weeklyObjects?.length}шт)`}
-          background="DarkGreen"
-          backgroundHover="ForestGreen"
-        />
-        <ChangePeriodButton
-          width="100%"
-          text="06.11 - 12.11 (18шт)"
-          background="DarkGreen"
-          backgroundHover="ForestGreen"
-        />
-        <ChangePeriodButton
-          width="100%"
-          text="13.11 - 19.11 (6шт)"
-          background="DarkGreen"
-          backgroundHover="ForestGreen"
-        />
-        <ChangePeriodButton
-          width="100%"
-          text="20.11 - 26.11 (5шт)"
-          background="DarkGreen"
-          backgroundHover="ForestGreen"
-        /> */}
+        {isCurator && <ObjectsDatabaseFiltersPanel
+          data={data}
+          objects={objects}
+          register={register}
+          setValue={setValue}
+          isCurator={isCurator}
+          isLoading={isLoading}
+        />}
 
         <ChangePeriodButton
-          periodName="fromOneMonthToTwo"
-          minWidth="320px"DarkGreen
-          text={`Не звонили от 1мес до 2мес (${fromOneMonthToTwoCount?.length}шт)`}
+          minWidth="320px"
+          text="Не звонили от 1мес до 2мес"
           background="DarkGreen"
           backgroundHover="ForestGreen"
-          count={fromOneMonthToTwoCount?.length}
-          onClick={handleChangePeriod}
+          onClick={() => handleChangePeriod("fromOneMonthToTwo")}
         />
         <ChangePeriodButton
-          periodName="fromTwoMonthToThree"
           minWidth="320px"
-          text={`Не звонили от 2мес до 3мес (${fromTwoMonthToThreeCount?.length}шт)`}
+          text="Не звонили от 2мес до 3мес"
           background="DarkOrange"
           backgroundHover="Tomato"
-          onClick={handleChangePeriod}
+          onClick={() => handleChangePeriod("fromTwoMonthToThree")}
         />
         <ChangePeriodButton
-          periodName="fromThreeMonthAndMore"
           minWidth="320px"
-          text="Не звонили более 3мес (12шт)"
+          text="Не звонили более 3мес"
           background="FireBrick"
           backgroundHover="Crimson"
-          text={`Не звонили более 3мес (${fromThreeMonthAndMoreCount?.length}шт)`}
-          onClick={handleChangePeriod}
+          onClick={() => handleChangePeriod("fromThreeMonthAndMore")}
         />
       </ChangePeriodsContainer>
 

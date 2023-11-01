@@ -11,12 +11,11 @@ import Flags from "../../components/common/columns/flags";
 import { AlignCenter } from "../../components/common/columns/styled";
 import EmptyTd from "../../components/common/columns/empty-td";
 import MultiColorContainedButton from "../../components/common/buttons/multi-color-contained-button";
+import UserNameWithAvatar from "../../components/common/table/helpers/user-name-with-avatar";
 import {
-  FormatManagerName,
   FormatMetro,
   FormatObjectStatus,
   FormatPhone,
-  UserAvatar,
 } from "../../components/common/table/helpers/helpers";
 // store
 import { getLastContactsList } from "../../store/last-contact/last-contact.store";
@@ -30,9 +29,7 @@ import {
   getObjectMeetingsList,
 } from "../../store/meeting/meetings.store";
 import { getDistrictName } from "../../store/object/districts.store";
-import basicAva from "../../assets/basic-ava.jpg";
 import { getUserDataById } from "../../store/user/users.store";
-import UserNameWithAvatar from "../../components/common/table/helpers/user-name-with-avatar";
 
 export const objectsColumnsCurator = [
   {

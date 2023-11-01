@@ -1,7 +1,6 @@
-import { Box, Button, Typography } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 
 const ChangePeriodButton = ({
-  periodName,
   width = "100%",
   minWidth = "inherit",
   text,
@@ -15,6 +14,7 @@ const ChangePeriodButton = ({
       variant="outlined"
       color="success"
       sx={{
+        height: '53px',
         width: width,
         minWidth: minWidth,
         color: color,
@@ -22,7 +22,7 @@ const ChangePeriodButton = ({
         borderColor: "inherit",
         "&:hover": { background: backgroundHover },
       }}
-      onClick={()=>onClick(periodName)}
+      onClick={onClick}
     >
       <Typography>{text}</Typography>
     </Button>

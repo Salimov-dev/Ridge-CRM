@@ -18,7 +18,7 @@ const DealContainer = styled(Paper)`
   padding: 10px;
 `;
 
-const Stages = ({ objects, stages, getObjectAddress }) => {
+const Stages = ({ objects, stages, getObjectAddress, isCurator }) => {
   const [draggableStageId, setDraggableStageId] = useState(null);
 
   const handleDragOver = (e, stageId) => {
@@ -37,7 +37,7 @@ const Stages = ({ objects, stages, getObjectAddress }) => {
                 draggableStageId === stage?._id ? `1px dashed yellow` : null,
             }}
           >
-            <Title item={stage} />
+            <Title item={stage} objects={objects} />
             <DividerStyled
               margin="10px 0 20px 0"
               color={draggableStageId === stage?._id ? "yellow" : "inherit"}
@@ -48,6 +48,7 @@ const Stages = ({ objects, stages, getObjectAddress }) => {
               draggableStageId={draggableStageId}
               getObjectAddress={getObjectAddress}
               setDraggableStageId={setDraggableStageId}
+              isCurator={isCurator}
             />
           </DealContainer>
         </Grid>

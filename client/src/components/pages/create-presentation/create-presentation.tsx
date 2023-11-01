@@ -87,12 +87,6 @@ const CreatePresentation = ({ onClose, setConfettiActive }) => {
       });
   };
 
-  useEffect(() => {
-    if (objectPageId) {
-      setValue<any>("objectId", objectPageId);
-    }
-  }, [objectPageId]);
-
   return isLoading ? (
     <IsLoadingDialog
       text="Немного подождите, создаем `Презентацию`"

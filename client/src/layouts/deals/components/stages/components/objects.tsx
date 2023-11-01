@@ -1,19 +1,17 @@
-
 import { useDispatch, useSelector } from "react-redux";
 import { Box, Paper, styled } from "@mui/material";
 // components
 import ObjectAddress from "./components/object-address";
+import UserNameWithAvatar from "../../../../../components/common/table/helpers/user-name-with-avatar";
 // mock
 import { dealStagesArray } from "../../../../../mock/deals-stages";
 // store
-import {
-  getObjectsList,
-  updateObject,
-} from "../../../../../store/object/objects.store";
+import { updateObject } from "../../../../../store/object/objects.store";
 import {
   setOpenObjectPageId,
   setOpenObjectPageOpenState,
 } from "../../../../../store/object/open-object-page.store";
+import { getUsersList } from "../../../../../store/user/users.store";
 
 const ObjectsContainer = styled(Box)`
   width: 100%;
@@ -44,8 +42,10 @@ const Objects = ({
   getObjectAddress,
   draggableStageId,
   setDraggableStageId,
+  isCurator
 }) => {
   const dispatch = useDispatch();
+  const users = useSelector(getUsersList());
 
   const handleOpenObjectPage = (objectId) => {
     dispatch<any>(setOpenObjectPageId(objectId));
@@ -61,7 +61,10 @@ const Objects = ({
 
   const handleDragEnd = (obj, stage) => {
     if (stage?._id !== draggableStageId) {
-      const updatedObject = { ...obj,  status: getNewDealStage(draggableStageId)};
+      const updatedObject = {
+        ...obj,
+        status: getNewDealStage(draggableStageId),
+      };
       dispatch<any>(updateObject(updatedObject));
 
       setDraggableStageId(null);
@@ -70,11 +73,11 @@ const Objects = ({
     }
   };
 
-
   return (
     <ObjectsContainer>
       {objects?.map((obj) => {
         const isDeal = obj?.status === stage?.objectStatusId;
+        const user = users?.find((user) => user?._id === obj?.userId);
 
         return isDeal ? (
           <ObjectContainer
@@ -87,6 +90,7 @@ const Objects = ({
               onClick={() => handleOpenObjectPage(obj?._id)}
               getObjectAddress={getObjectAddress}
             />
+            {isCurator && <UserNameWithAvatar user={user} fontStyle="italic" />}
           </ObjectContainer>
         ) : null;
       })}

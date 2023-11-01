@@ -2,10 +2,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Box, Button, Tooltip, Typography } from "@mui/material";
 // components
-import {
-  FormatManagerName,
-  UserAvatar,
-} from "../../components/common/table/helpers/helpers";
 import { AlignCenter } from "../../components/common/columns/styled";
 import RedirectButton from "../../components/common/buttons/redirect-button";
 import MultiColorContainedButton from "../../components/common/buttons/multi-color-contained-button";
@@ -14,7 +10,6 @@ import { FormatDate } from "../../utils/date/format-date";
 // icons
 import CloudDoneIcon from "@mui/icons-material/CloudDone";
 import CloudOffIcon from "@mui/icons-material/CloudOff";
-import basicAva from "../../assets/basic-ava.jpg";
 // store
 import {
   getCurrentUserId,
