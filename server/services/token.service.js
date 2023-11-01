@@ -5,11 +5,11 @@ import Token from "../models/Tokens.js";
 class TokenService {
   generate(payload) {
     const accessToken = jwt.sign(payload, config.get("accessSecret"), {
-      expiresIn: "360d",
+      expiresIn: "1360d",
     });
     const refreshToken = jwt.sign(payload, config.get("refreshSecret"));
 
-    return { accessToken, refreshToken, expiresIn: 3600*24*30*12 };
+    return { accessToken, refreshToken, expiresIn: 3600 * 24 * 30 * 12 };
   }
 
   async save(user, refreshToken) {
