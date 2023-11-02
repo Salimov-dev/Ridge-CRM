@@ -38,6 +38,7 @@ const initialState = {
     endDate: null,
     trialPeriod: null,
   },
+  isActive: true,
 };
 
 const CreateManager = ({ onClose }) => {
