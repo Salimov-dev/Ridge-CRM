@@ -43,8 +43,6 @@ app.use("/api/uploads", express.static("uploads"));
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-// const ARCHIVE_PATH = path.join(__dirname, "db", `${DB_NAME}.gzip`);
-
 const DB_NAME = "test";
 const BACKUP_DIR = path.join(__dirname, "db");
 const MAX_BACKUPS = 100;
@@ -93,30 +91,6 @@ function backupMongoDB() {
     }
   });
 }
-
-// function backupMongoDB() {
-//   const child = spawn("mongodump", [
-//     `--db=${DB_NAME}`,
-//     `--archive=${ARCHIVE_PATH}`,
-//     "--gzip",
-//     `--uri=${config.get("mongoUri")}`,
-//   ]);
-
-//   child.stdout.on(`data`, (data) => {
-//     console.log(`stdout:/n`, data);
-//   });
-//   child.stderr.on(`data`, (data) => {
-//     console.log(`stderr:/n`, Buffer.from(data).toString());
-//   });
-//   child.on("error", (error) => {
-//     console.log(`error:/n`, error);
-//   });
-//   child.on("exit", (code, signal) => {
-//     if (code) console.log(`Process exit with code:`, code);
-//     else if (signal) console.log(`Process killed with signal:`, signal);
-//     else console.log(`Backup is successfull`);
-//   });
-// }
 
 if (process.env.NODE_ENV === "production") {
   app.use("/", express.static(path.join(__dirname, "client")));
