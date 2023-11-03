@@ -28,7 +28,6 @@ const schema = new Schema(
       trialPeriod: String,
     },
     company: { type: Schema.Types.ObjectId, ref: "Company" },
-    isActive: Boolean,
   },
   {
     timestamps: { createdAt: "created_at", updatedAt: "updated_at" },

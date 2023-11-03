@@ -31,6 +31,7 @@ const TopBarWeeklyResults = () => {
   const currentUserId = useSelector(getCurrentUserId());
   const isCurator = useSelector(getIsUserCurator(currentUserId));
 
+  // 34-39 ворнинги 
   const presentations = useSelector(getPresentationsWeeklyList());
   const objects = useSelector(getObjectsWeeklyList());
   const objectsWithPhone = useSelector(getObjectsWeeklyWithPhoneList());

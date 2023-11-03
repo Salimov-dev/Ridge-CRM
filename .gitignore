@@ -9,6 +9,7 @@ lerna-debug.log*
 
 server/config/default.json
 server/config/production.json
+server/db
 vercel.json
 default.json
 node_modules

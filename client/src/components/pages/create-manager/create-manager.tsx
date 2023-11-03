@@ -38,7 +38,6 @@ const initialState = {
     endDate: null,
     trialPeriod: null,
   },
-  isActive: true,
 };
 
 const CreateManager = ({ onClose }) => {
@@ -77,7 +76,7 @@ const CreateManager = ({ onClose }) => {
         endDate: transformedEndDate,
         trialPeriod: transformedTrialPeriod,
       },
-      image: basicAva,
+      image: "",
       curatorId: currentUserId,
     };
 

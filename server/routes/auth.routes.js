@@ -56,7 +56,7 @@ router.post("/signUp", [
 ]);
 
 router.post("/signInWithPassword", [
-  check("email", "Email некорректный").normalizeEmail().isEmail(),
+  check("email", "Email некорректный").isEmail(),
   check("password", "Пароль не может быть пустым").exists(),
   async (req, res) => {
     try {
@@ -72,6 +72,7 @@ router.post("/signInWithPassword", [
       }
 
       const { email, password } = req.body;
+      console.log("req.body", req.body);
 
       const existingUser = await User.findOne({ email });
 
