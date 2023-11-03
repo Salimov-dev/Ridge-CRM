@@ -8,7 +8,7 @@ import TableCell from "./components/table-cell";
 import { useTableHeader } from "./hooks/use-table-header";
 // utils
 import { getWeeklyObjects } from "../../utils/objects/get-weekly-objects";
-import { getWeeklyPresentations } from "../../utils/objects/get-weekly-presentations";
+import { getWeeklyPresentations } from "../../utils/presentations/get-weekly-presentations";
 import { getWeeklyObjectsWithPhone } from "../../utils/objects/get-weekly-objects-with-phone";
 // store
 import { getObjectsList } from "../../store/object/objects.store";

@@ -3,17 +3,16 @@ import { useSelector } from "react-redux";
 // components
 import TopBarDataContainter from "./topbar-data-container";
 // store
-import { getPresentationsWeeklyList } from "../../../../store/presentation/presentations.store";
-import {
-  getObjectsWeeklyList,
-  getObjectsWeeklyWithPhoneList,
-} from "../../../../store/object/objects.store";
-import { getMeetingsWeeklyList } from "../../../../store/meeting/meetings.store";
-import { getTasksWeeklyList } from "../../../../store/task/tasks.store";
+import { getObjectsWeeklyWithPhoneList } from "../../../../store/object/objects.store";
 import {
   getCurrentUserId,
   getIsUserCurator,
 } from "../../../../store/user/users.store";
+// utils
+import { getCurrentWeekObjects } from "../../../../utils/objects/get-current-week-objects";
+import { getCurrentWeekPresentations } from "../../../../utils/presentations/get-current-week-presentations";
+import { getCurrentWeekMeetings } from "../../../../utils/meetings/get-current-week-meetings";
+import { getCurrentWeekTasks } from "../../../../utils/tasks/get-current-week-tasks";
 
 const ResultComponent = styled(Box)`
   display: flex;
@@ -31,12 +30,12 @@ const TopBarWeeklyResults = () => {
   const currentUserId = useSelector(getCurrentUserId());
   const isCurator = useSelector(getIsUserCurator(currentUserId));
 
-  // 34-39 ворнинги 
-  const presentations = useSelector(getPresentationsWeeklyList());
-  const objects = useSelector(getObjectsWeeklyList());
+  const presentations = getCurrentWeekPresentations();
+  const objects = getCurrentWeekObjects();
+  const meetings = getCurrentWeekMeetings();
+  const tasks = getCurrentWeekTasks();
+
   const objectsWithPhone = useSelector(getObjectsWeeklyWithPhoneList());
-  const meetings = useSelector(getMeetingsWeeklyList());
-  const tasks = useSelector(getTasksWeeklyList());
 
   const currentUserTasks = tasks?.filter(
     (task) => task.userId === currentUserId
