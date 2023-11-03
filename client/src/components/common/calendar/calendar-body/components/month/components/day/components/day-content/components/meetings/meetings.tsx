@@ -5,7 +5,7 @@ import Loader from "../../../../../../../../../../loader/loader";
 import Result from "./components/result";
 
 const Meetings = ({ meetings, currentUserId, isSelectedDayDialog }) => {
-
+  
   return meetings ? (
     <ItemsContainer>
       {meetings?.map((meet) => (
@@ -17,8 +17,8 @@ const Meetings = ({ meetings, currentUserId, isSelectedDayDialog }) => {
             background: !meet?.isDone ? "RoyalBlue" : "gray",
           }}
         >
-          <Title meet={meet} currentUserId={currentUserId}/>
-          <Body meet={meet} isSelectedDayDialog={isSelectedDayDialog}/>
+          <Title meet={meet} currentUserId={currentUserId} />
+          <Body meet={meet} isSelectedDayDialog={isSelectedDayDialog} />
           {isSelectedDayDialog ? <Result meet={meet} /> : null}
         </ItemContainer>
       ))}

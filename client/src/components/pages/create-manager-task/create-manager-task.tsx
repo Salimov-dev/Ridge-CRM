@@ -1,6 +1,6 @@
 // libraries
 import dayjs from "dayjs";
-import { Box } from "@mui/material";
+import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
@@ -8,13 +8,14 @@ import { yupResolver } from "@hookform/resolvers/yup";
 // components
 import TitleWithCloseButton from "../../common/page-titles/title-with-close-button";
 import ManagerTaskForm from "../../common/forms/manager-task-form/manager-task-form";
+import IsLoadingDialog from "../../common/dialog/is-loading-dialog";
 import FooterButtons from "../../common/forms/footer-buttons/footer-buttons";
-// store
-import { createTask } from "../../../store/task/tasks.store";
-// utils
-import { capitalizeFirstLetter } from "../../../utils/data/capitalize-first-letter";
 // schema
 import { taskManagerSchema } from "../../../schemas/task-manager-shema";
+// utils
+import { capitalizeFirstLetter } from "../../../utils/data/capitalize-first-letter";
+// store
+import { createTask } from "../../../store/task/tasks.store";
 import {
   getObjectById,
   getObjectsList,
@@ -27,8 +28,6 @@ import {
   getOpenObjectPageId,
   loadOpenObjectPageOpenState,
 } from "../../../store/object/open-object-page.store";
-import IsLoadingDialog from "../../common/dialog/is-loading-dialog";
-import { toast } from "react-toastify";
 
 const initialState = {
   comment: "",
@@ -58,7 +57,7 @@ const CreateManagerTask = ({ users, title, dateCreate, onClose }) => {
   const data = watch();
   const watchDate = watch<any>("date", null);
   const watchTime = watch<any>("time", null);
-  const watchManagerId = watch("managerId", null);
+  const watchManagerId = watch<any>("managerId", null);
   const isFullValid =
     isValid &&
     Boolean(watchDate) &&

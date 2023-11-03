@@ -1,23 +1,22 @@
 // libraries
+import { useState } from "react";
+import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 // MUI
 import { Box } from "@mui/material";
 // components
 import Header from "./components/header";
-import Loader from "../../common/loader/loader";
+import IsLoadingDialog from "../../common/dialog/is-loading-dialog";
 import ObjectForm from "../../common/forms/object-form/object-form";
+// utils
+import { capitalizeFirstLetter } from "../../../utils/data/capitalize-first-letter";
 // store
 import { getUpdateObjectId } from "../../../store/object/update-object.store";
 import {
   getObjectById,
   updateObject,
 } from "../../../store/object/objects.store";
-// utils
-import { capitalizeFirstLetter } from "../../../utils/data/capitalize-first-letter";
-import { useState } from "react";
-import { toast } from "react-toastify";
-import IsLoadingDialog from "../../common/dialog/is-loading-dialog";
 
 const UpdateObject = ({ onClose }) => {
   const dispatch = useDispatch();

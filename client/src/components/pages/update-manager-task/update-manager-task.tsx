@@ -1,5 +1,6 @@
 // liraries
 import dayjs from "dayjs";
+import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -7,6 +8,11 @@ import { useDispatch, useSelector } from "react-redux";
 // components
 import TitleWithCloseButton from "../../common/page-titles/title-with-close-button";
 import ManagerTaskForm from "../../common/forms/manager-task-form/manager-task-form";
+import FooterButtons from "../../common/forms/footer-buttons/footer-buttons";
+import ConfirmRemoveDialog from "../../common/dialog/confirm-remove-dialog";
+import IsLoadingDialog from "../../common/dialog/is-loading-dialog";
+// schema
+import { taskSchema } from "../../../schemas/task-shema";
 // store
 import {
   getCurrentUserId,
@@ -20,14 +26,8 @@ import {
   removeTask,
   updateMyTask,
 } from "../../../store/task/tasks.store";
-// schema
-import { taskSchema } from "../../../schemas/task-shema";
-import FooterButtons from "../../common/forms/footer-buttons/footer-buttons";
-import ConfirmRemoveDialog from "../../common/dialog/confirm-remove-dialog";
 import { getObjectsList } from "../../../store/object/objects.store";
 import { loadOpenObjectPageOpenState } from "../../../store/object/open-object-page.store";
-import { toast } from "react-toastify";
-import IsLoadingDialog from "../../common/dialog/is-loading-dialog";
 
 const UpdateManagerTask = ({ title, onClose, users }) => {
   const dispatch = useDispatch();

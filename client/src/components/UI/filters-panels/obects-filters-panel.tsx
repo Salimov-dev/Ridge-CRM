@@ -8,25 +8,29 @@ import SearchSelectField from "../../common/inputs/search-select-field";
 import useObjectsFiltersPanel from "../../../hooks/object/use-objects-filters-panel";
 // mock
 import { objectActivityVariants } from "../../../mock/object/object-activity-variants";
+import { getActualUsersList } from "../../../utils/actual-items/get-actual-users-list";
+import { getActualStatusesList } from "../../../utils/actual-items/get-actual-statuses-list";
 
 const ObjectsFiltersPanel = ({
   setValue,
   objects,
+  statuses,
   data,
   register,
   isCurator,
   isLoading,
 }) => {
   const {
-    getActualStatusesList,
     getActualCitiesList,
     getActualDistrictsList,
     getActualMetroList,
     getActualCurrentRentersList,
     getActualEstateTypesList,
     getActualObjectTypesList,
-    getActualUsersList,
   } = useObjectsFiltersPanel(objects);
+
+  const usersList = getActualUsersList(objects)
+const statusesList = getActualStatusesList(objects, statuses)
 
   return (
     <Form>
@@ -76,7 +80,7 @@ const ObjectsFiltersPanel = ({
             name="users"
             labelId="users-label"
             label="Выбор по менеджеру"
-            itemsList={getActualUsersList()}
+            itemsList={usersList}
             selectedItems={data.selectedUsers}
             onChange={(e) => setValue("selectedUsers", e.target.value)}
             disabled={isLoading ? true : false}
@@ -116,7 +120,7 @@ const ObjectsFiltersPanel = ({
           name="status"
           labelId="status-label"
           label="Выбор по статусу"
-          itemsList={getActualStatusesList()}
+          itemsList={statusesList}
           selectedItems={data.selectedStatuses}
           onChange={(e) => setValue("selectedStatuses", e.target.value)}
           disabled={isLoading ? true : false}

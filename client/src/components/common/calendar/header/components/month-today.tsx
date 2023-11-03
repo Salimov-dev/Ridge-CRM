@@ -1,6 +1,6 @@
+import dayjs from "dayjs";
 import { Typography } from "@mui/material";
 import { capitalizeFirstLetter } from "../../../../../utils/data/capitalize-first-letter";
-import dayjs from "dayjs";
 
 const MonthToday = ({ monthIndex }) => {
   return (

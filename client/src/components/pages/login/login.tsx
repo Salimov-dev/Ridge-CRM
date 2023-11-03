@@ -1,18 +1,20 @@
 // liraries
+import { useState } from "react";
 import { useDispatch } from "react-redux";
+import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { Box, Typography, styled } from "@mui/material";
+import { useLocation, useNavigate } from "react-router-dom";
 // components
 import IsLoadingDialog from "../../common/dialog/is-loading-dialog";
-import { Box, Typography, styled } from "@mui/material";
 import LoginForm from "../../../layouts/login/components/login-form";
-import { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import { login } from "../../../store/user/users.store";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { loginSchema } from "../../../schemas/login-schema";
 import PositiveOutlinedButton from "../../common/buttons/positive-outlined-button";
 import LoginHeader from "./components/login-header";
-import { toast } from "react-toastify";
+// schema
+import { loginSchema } from "../../../schemas/login-schema";
+// store
+import { login } from "../../../store/user/users.store";
 
 const Component = styled(Box)`
   height: 100%;

@@ -16,7 +16,7 @@ const Container = styled(Box)`
 `;
 
 const FooterButtons = ({
-  object="",
+  object = "",
   onCreate = () => {},
   onUpdate = () => {},
   onClose = () => {},
@@ -24,29 +24,25 @@ const FooterButtons = ({
   isValid = "false",
   isEditMode = false,
   withoutRemoveButton = false,
-  isAuthorEntity=true
+  isAuthorEntity = true,
 }) => {
   return (
     <Component>
       <Container>
-        {isAuthorEntity ? <PositiveOutlinedButton
-          title={isEditMode ? "Сохранить" : "Создать"}
-          isValid={!isValid}
-          type="text"
-          onClick={() => (isEditMode ? onUpdate() : onCreate())}
-        /> : null}
-
-
-        {isEditMode ? (
-          <OpenObjectCloudButton object={object} />
+        {isAuthorEntity ? (
+          <PositiveOutlinedButton
+            title={isEditMode ? "Сохранить" : "Создать"}
+            isValid={!isValid}
+            type="text"
+            onClick={() => (isEditMode ? onUpdate() : onCreate())}
+          />
         ) : null}
+
+        {isEditMode ? <OpenObjectCloudButton object={object} /> : null}
       </Container>
       <Container>
         {isEditMode && !withoutRemoveButton && isAuthorEntity ? (
-          <NegativeOutlinedButton
-            title="Удалить"
-            onClick={() => onRemove()}
-          />
+          <NegativeOutlinedButton title="Удалить" onClick={() => onRemove()} />
         ) : null}
         <NegativeOutlinedButton title="Отмена" onClick={onClose} />
       </Container>

@@ -7,6 +7,7 @@ const TopBarCurrentDate = () => {
   const formattedDate = capitalizeFirstLetter(
     currentDate.format("dddd, D MMM")
   ).replace(/\.$/, "");
+  
   return (
     <Typography variant="h5" sx={{ marginRight: "50px", color: "gray" }}>
       {formattedDate}

@@ -138,15 +138,6 @@ export const updateLastContact = (payload) => async (dispatch) => {
     dispatch(lastContactUpdateFailed(error.message));
   }
 };
-// export const updateLastContact = (payload) => async (dispatch) => {
-//   dispatch(lastContactUpdateRequested());
-//   try {
-//     const { content } = await lastContactService.update(payload);
-//     dispatch(lastContactUpdateSuccessed(content));
-//   } catch (error) {
-//     dispatch(lastContactUpdateFailed(error.message));
-//   }
-// };
 
 export const removeLastContact = (lastContactId) => async (dispatch) => {
   dispatch(removeLastContactRequested());
@@ -178,20 +169,12 @@ export const setIsNotDoneLastContact = (payload) => async (dispatch) => {
   }
 };
 
-export const getLastContactsList = () => (state) => state?.lastContact?.entities;
-
 export const getObjectLastContactsList = (objectId) =>
   createSelector(
     (state) => state?.lastContact?.entities,
     (lastContact) =>
       lastContact?.filter((contact) => contact?.objectId === objectId)
   );
-
-export const getLastContactsLoadingStatus = () => (state) =>
-  state.lastContact.isLoading;
-
-export const getDataLastContactsStatus = () => (state) =>
-  state.lastContact.dataLoaded;
 
 export const getLastContactsById = (id) => (state) => {
   if (state.lastContact.entities) {
@@ -206,5 +189,14 @@ export const getLastContactsByObjectId = (objectId) => (state) => {
     );
   }
 };
+
+export const getLastContactsList = () => (state) =>
+  state?.lastContact?.entities;
+
+export const getLastContactsLoadingStatus = () => (state) =>
+  state.lastContact.isLoading;
+
+export const getDataLastContactsStatus = () => (state) =>
+  state.lastContact.dataLoaded;
 
 export default lastContactReducer;

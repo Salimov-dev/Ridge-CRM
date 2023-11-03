@@ -28,7 +28,6 @@ import {
 // hooks
 import useCalendar from "../../hooks/calendar/use-calendar";
 import useSearchTask from "../../hooks/task/use-search-task";
-import { Alert } from "@mui/material";
 
 const initialState = {
   task: "",
@@ -52,35 +51,22 @@ const Calendar = () => {
   });
 
   const data = watch();
+  
+  const monthIndex = useSelector(getMonthIndexState());
   const currentUserId = useSelector(getCurrentUserId());
   const isCurator = useSelector(getIsUserCurator(currentUserId));
   const meetings = useSelector(getMeetingsList());
-
-  const tasksColumn = tasksColumns;
-  const monthIndex = useSelector(getMonthIndexState());
+  const tasks = useSelector(getTasksList());
 
   const { sortedCurrentWeeklyMeetings, transformUsers, transformObjects } =
     useCalendar();
 
-  let tasks = useSelector(getTasksList());
   const currentUserTasks = tasks?.filter(
     (task) => task?.userId === currentUserId
   );
   const actualTasks = isCurator ? currentUserTasks : tasks;
   const searchedTasks = useSearchTask(actualTasks, data);
   const sortedTasks = orderBy(searchedTasks, ["date"], ["desc"]);
-
-  useEffect(() => {
-    setCurrentMonth(getMonth(monthIndex));
-  }, [monthIndex]);
-
-  useEffect(() => {
-    localStorage.setItem("search-tasks-data", JSON.stringify(data));
-  }, [data]);
-
-  useEffect(() => {
-    localStorage.setItem("search-tasks-data", JSON.stringify(initialState));
-  }, []);
 
   const getMeeting = (day) => {
     const meeting = meetings?.filter(
@@ -110,6 +96,18 @@ const Calendar = () => {
     return sortedTasks;
   };
 
+  useEffect(() => {
+    setCurrentMonth(getMonth(monthIndex));
+  }, [monthIndex]);
+
+  useEffect(() => {
+    localStorage.setItem("search-tasks-data", JSON.stringify(data));
+  }, [data]);
+
+  useEffect(() => {
+    localStorage.setItem("search-tasks-data", JSON.stringify(initialState));
+  }, []);
+
   return (
     <>
       <LayoutTitle title="Календарь" />
@@ -125,13 +123,14 @@ const Calendar = () => {
         register={register}
         data={data}
         tasks={sortedTasks}
-        columns={tasksColumn}
+        columns={tasksColumns}
         setValue={setValue}
       />
       <CurrentWeeklyMeetings
         meetings={sortedCurrentWeeklyMeetings}
         columns={meetingsColumns}
       />
+
       <Dialogs
         tasks={getTask}
         meetings={getMeeting}

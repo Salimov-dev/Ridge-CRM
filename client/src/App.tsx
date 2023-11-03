@@ -1,14 +1,14 @@
 // libraries
 import { Box, CssBaseline, ThemeProvider } from "@mui/material";
 import { ToastContainer } from "react-toastify";
+// styled
+import "./styles.css";
+import { AppStyled, RightSide } from "./styled";
+import "react-toastify/dist/ReactToastify.css";
 // components
 import TopBar from "./components/UI/topbar/topbar";
 import Sidebar from "./components/UI/sidebar/sidebar";
 import Footer from "./components/common/footer/footer";
-// styled
-import { AppStyled, RightSide } from "./styled";
-import "react-toastify/dist/ReactToastify.css";
-import "./styles.css";
 // hoc
 import AppLoader from "./hoc/app-loader";
 // utils

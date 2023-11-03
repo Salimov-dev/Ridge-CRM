@@ -4,20 +4,28 @@ import { FieldsContainer, Form } from "../../common/forms/styled/styled";
 import MultiSelectField from "../../common/inputs/multi-select-field";
 import SearchDatePicker from "../../common/inputs/search-date-picker";
 import SearchSelectField from "../../common/inputs/search-select-field";
-// hooks
-import useMeetingFiltersPanel from "../../../hooks/meeting/use-meeting-filters-panel";
 // mock
 import { meetingDoneTypes } from "../../../mock/meetings/meeting-done-status";
+// utils
+import { getActualUsersList } from "../../../utils/actual-items/get-actual-users-list";
+import { getActualStatusesList } from "../../../utils/actual-items/get-actual-statuses-list";
+import { getActualTypesList } from "../../../utils/actual-items/get-actual-types-list";
+
 
 const MeetingsFiltersPanel = ({
   data,
+  meetings,
+  statuses,
+  types,
   register,
   setValue,
   isCurator,
   isLoading,
 }) => {
-  const { getActualUsersList, getActualStatusesList, getActuaTypesList } =
-    useMeetingFiltersPanel();
+
+const usersList = getActualUsersList(meetings)
+const statusesList = getActualStatusesList(meetings, statuses)
+const typesList = getActualTypesList(meetings, types)
 
   return (
     <Form>
@@ -34,7 +42,7 @@ const MeetingsFiltersPanel = ({
           name="selectedStatuses"
           labelId="selectedStatuses-label"
           label="Выбор по статусу"
-          itemsList={getActualStatusesList()}
+          itemsList={statusesList}
           selectedItems={data.selectedStatuses}
           onChange={(e) => setValue("selectedStatuses", e.target.value)}
           disabled={isLoading ? true : false}
@@ -43,7 +51,7 @@ const MeetingsFiltersPanel = ({
           name="selectedTypes"
           labelId="selectedTypes-label"
           label="Выбор по типу"
-          itemsList={getActuaTypesList()}
+          itemsList={typesList}
           selectedItems={data.selectedTypes}
           onChange={(e) => setValue("selectedTypes", e.target.value)}
           disabled={isLoading ? true : false}
@@ -53,7 +61,7 @@ const MeetingsFiltersPanel = ({
             name="users"
             labelId="users-label"
             label="Выбор по менеджеру"
-            itemsList={getActualUsersList()}
+            itemsList={usersList}
             selectedItems={data.selectedUsers}
             onChange={(e) => setValue("selectedUsers", e.target.value)}
             disabled={isLoading ? true : false}

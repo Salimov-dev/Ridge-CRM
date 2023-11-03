@@ -2,7 +2,6 @@ import { createAction, createSelector, createSlice } from "@reduxjs/toolkit";
 import isOutDated from "../../utils/auth/is-out-date";
 import localStorageService from "../../services/user/local.storage-service";
 import tasksService from "../../services/tasks/tasks.service";
-import dayjs from "dayjs";
 
 const initialState = localStorageService.getAccessToken()
   ? {
@@ -118,16 +117,6 @@ export const updateMyTask = (payload) => async (dispatch) => {
     dispatch(taskUpdateFailed(error.message));
   }
 };
-// export const updateMyTask = (payload) => async (dispatch) => {
-//   dispatch(taskUpdateRequested());
-//   try {
-//     const { content } = await tasksService.update(payload)
-
-//     dispatch(taskUpdateSuccessed(content));
-//   } catch (error) {
-//     dispatch(taskUpdateFailed(error.message));
-//   }
-// };
 
 export const removeTask = (taskId) => async (dispatch) => {
   dispatch(removeTaskRequested());
@@ -149,8 +138,6 @@ export const setIsDoneTaskStatus = (payload) => async (dispatch) => {
   }
 };
 
-export const getTasksList = () => (state) => state?.tasks?.entities;
-
 export const getObjectTasksList = (objectId) =>
   createSelector(
     (state) => state?.tasks?.entities,
@@ -163,28 +150,14 @@ export const getTasksByObjectId = (objectId) => (state) => {
   return objectTasks;
 };
 
-export const getTaskLoadingStatus = () => (state) => state.tasks.isLoading;
-
-export const getDataTasksStatus = () => (state) => state.tasks.dataLoaded;
-
 export const getTaskById = (id) => (state) => {
   if (state.tasks.entities) {
     return state.tasks.entities.find((task) => task._id === id);
   }
 };
 
-export const getTasksWeeklyList = () => (state) => {
-  const currentDate = dayjs();
-  const tasks = state.tasks.entities;
-
-  const weeklyTasks = tasks?.filter((task) => {
-    const createdAt = dayjs(task?.date);
-    const startOfWeek = currentDate.startOf("week");
-    const endOfWeek = currentDate.endOf("week");
-    return createdAt.isBetween(startOfWeek, endOfWeek) && task.isDone !== true;
-  });
-
-  return weeklyTasks;
-};
+export const getTasksList = () => (state) => state?.tasks?.entities;
+export const getTaskLoadingStatus = () => (state) => state.tasks.isLoading;
+export const getDataTasksStatus = () => (state) => state.tasks.dataLoaded;
 
 export default tasksReducer;

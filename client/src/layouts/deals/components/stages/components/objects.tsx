@@ -1,10 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Box, Paper, styled } from "@mui/material";
 // components
-import ObjectAddress from "./components/object-address";
+import ObjectAddress from "./object-address";
 import UserNameWithAvatar from "../../../../../components/common/table/helpers/user-name-with-avatar";
 // mock
-import { dealStagesArray } from "../../../../../mock/deals-stages";
+import { dealStagesArray } from "../../../../../mock/deals/deals-stages";
 // store
 import { updateObject } from "../../../../../store/object/objects.store";
 import {
@@ -13,7 +13,7 @@ import {
 } from "../../../../../store/object/open-object-page.store";
 import { getUsersList } from "../../../../../store/user/users.store";
 
-const ObjectsContainer = styled(Box)`
+const Component = styled(Box)`
   width: 100%;
   color: white;
   display: flex;
@@ -39,10 +39,9 @@ const ObjectContainer = styled(Paper)`
 const Objects = ({
   objects,
   stage,
-  getObjectAddress,
   draggableStageId,
   setDraggableStageId,
-  isCurator
+  isCurator,
 }) => {
   const dispatch = useDispatch();
   const users = useSelector(getUsersList());
@@ -51,10 +50,9 @@ const Objects = ({
     dispatch<any>(setOpenObjectPageId(objectId));
     dispatch<any>(setOpenObjectPageOpenState(true));
   };
-  const dealStageList = dealStagesArray;
 
   const getNewDealStage = (stageId) => {
-    const stage = dealStageList.find((deal) => deal?._id === stageId);
+    const stage = dealStagesArray.find((deal) => deal?._id === stageId);
     const newObjectStatus = stage?.objectStatusId;
     return newObjectStatus;
   };
@@ -74,7 +72,7 @@ const Objects = ({
   };
 
   return (
-    <ObjectsContainer>
+    <Component>
       {objects?.map((obj) => {
         const isDeal = obj?.status === stage?.objectStatusId;
         const user = users?.find((user) => user?._id === obj?.userId);
@@ -88,13 +86,12 @@ const Objects = ({
             <ObjectAddress
               obj={obj}
               onClick={() => handleOpenObjectPage(obj?._id)}
-              getObjectAddress={getObjectAddress}
             />
             {isCurator && <UserNameWithAvatar user={user} fontStyle="italic" />}
           </ObjectContainer>
         ) : null;
       })}
-    </ObjectsContainer>
+    </Component>
   );
 };
 

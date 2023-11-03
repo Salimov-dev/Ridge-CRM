@@ -1,4 +1,5 @@
 // libraries
+import { toast } from "react-toastify";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -22,7 +23,6 @@ import { meetingSchema } from "../../../schemas/meeting-schema";
 import useFindObject from "../../../hooks/object/use-find-object";
 // utils
 import { capitalizeFirstLetter } from "../../../utils/data/capitalize-first-letter";
-import { toast } from "react-toastify";
 
 const initialState = {
   status: "",

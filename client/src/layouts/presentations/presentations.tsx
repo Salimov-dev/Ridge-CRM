@@ -36,6 +36,7 @@ import {
   getCurrentUserId,
   getIsUserCurator,
 } from "../../store/user/users.store";
+import { getPresentationStatusList } from "../../store/presentation/presentation-status.store";
 
 const initialState = {
   objectAddress: "",
@@ -54,12 +55,6 @@ const Presentations = () => {
   const [presentationsWithLocation, setPresentationsWithLocation] = useState(
     []
   );
-
-  const currentUserId = useSelector(getCurrentUserId());
-  const isCurator = useSelector(getIsUserCurator(currentUserId));
-  const columns = isCurator
-    ? presentationsCuratorColumns
-    : presentationsColumns;
 
   const localStorageState = JSON.parse(
     localStorage.getItem("search-presentations-data")
@@ -80,14 +75,17 @@ const Presentations = () => {
     mode: "onBlur",
   });
 
-  const objects = useSelector(getObjectsList());
-  const presentationsList = useSelector(getPresentationsList());
-  const isLoading = useSelector(getPresentationsLoadingStatus());
-
-  const center = [59.930320630519155, 30.32906024941998];
-  const mapZoom = 11;
-
   const data = watch();
+  const objects = useSelector(getObjectsList());
+  const currentUserId = useSelector(getCurrentUserId());
+  const isCurator = useSelector(getIsUserCurator(currentUserId));
+  const columns = isCurator
+    ? presentationsCuratorColumns
+    : presentationsColumns;
+
+  const presentationsList = useSelector(getPresentationsList());
+  const presentationsStatuses = useSelector(getPresentationStatusList());
+  const isLoading = useSelector(getPresentationsLoadingStatus());
 
   const searchedPresentations = useSearchPresentation(presentationsList, data);
   const sortedPresentations = orderBy(
@@ -160,11 +158,6 @@ const Presentations = () => {
 
       <ItemsOnMap
         items={presentationsWithLocation}
-        mapZoom={mapZoom}
-        hintContent={(item) =>
-          `${item?.location?.city}, ${item?.location?.address}`
-        }
-        center={center}
         onClick={setSelectedPresentationBaloon}
         baloon={
           <PresentationBaloon presentationId={selectedPresentationBaloon} />
@@ -177,6 +170,7 @@ const Presentations = () => {
       <PresentationsFiltersPanel
         data={data}
         presentations={presentationsList}
+        statuses={presentationsStatuses}
         register={register}
         setValue={setValue}
         isCurator={isCurator}

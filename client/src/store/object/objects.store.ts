@@ -1,10 +1,8 @@
-import localStorageService from "../../services/user/local.storage-service";
-import { createAction, createSlice } from "@reduxjs/toolkit";
-import objectService from "../../services/object/object.service";
-import isOutDated from "../../utils/auth/is-out-date";
 import dayjs from "dayjs";
-import { useSelector } from "react-redux";
-import { getCurrentUserId } from "../user/users.store";
+import { createAction, createSlice } from "@reduxjs/toolkit";
+import isOutDated from "../../utils/auth/is-out-date";
+import objectService from "../../services/object/object.service";
+import localStorageService from "../../services/user/local.storage-service";
 
 const initialState = localStorageService.getAccessToken()
   ? {
@@ -110,16 +108,6 @@ export const updateObject = (payload) => async (dispatch) => {
   }
 };
 
-// export const updateObject = (payload) => async (dispatch) => {
-//   dispatch(objectUpdateRequested());
-//   try {
-//     const { content } = await objectService.update(payload);
-//     dispatch(objectUpdateSuccessed(content));
-//   } catch (error) {
-//     dispatch(objectUpdateFailed(error.message));
-//   }
-// };
-
 export const getObjectById = (objectId) => (state) => {
   if (state?.objects?.entities) {
     return state?.objects?.entities?.find((obj) => obj?._id === objectId);
@@ -158,23 +146,6 @@ export const getObjectsWeeklyList = () => (state) => {
   });
 
   return weeklyObjects;
-};
-
-export const getObjectsWeeklyWithPhoneList = () => (state) => {
-  const currentDate = dayjs();
-  const objects = state.objects.entities;
-
-  const weeklyObjectsWithPhone = objects?.filter((object) => {
-    const createdAt = dayjs(object.created_at);
-    const startOfWeek = currentDate.startOf("week");
-    const endOfWeek = currentDate.endOf("week");
-    const isWithinCurrentWeek = createdAt.isBetween(startOfWeek, endOfWeek);
-    const hasPhone = object.contact && object.contact.phone;
-
-    return isWithinCurrentWeek && hasPhone;
-  });
-
-  return weeklyObjectsWithPhone;
 };
 
 export const getObjectsList = () => (state) => state.objects.entities;

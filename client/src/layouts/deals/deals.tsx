@@ -18,7 +18,11 @@ import {
   getIsUserCurator,
 } from "../../store/user/users.store";
 // mock
-import { dealStagesArray } from "../../mock/deals-stages";
+import {
+  allowedStatuses,
+  dealStagesArray,
+} from "../../mock/deals/deals-stages";
+// hooks
 import useSearchDeals from "../../hooks/deals/use-search-deals";
 
 const initialState = {
@@ -38,45 +42,27 @@ const Deals = () => {
   });
 
   const data = watch();
-
-  const allowedStatuses = [
-    "64c140880e87d7e4532f79d5",
-    "64ecf9f34284e591a86bec2f",
-    "651af4fb687b71e04dde43ce",
-    "64de0da4063bb018afc97f0e",
-    "651af512687b71e04dde43cf",
-    "64c140880e87d7e4532f79d6",
-    "651af52f687b71e04dde43d0",
-  ];
-
+  const currentUserId = useSelector(getCurrentUserId());
+  const isCurator = useSelector(getIsUserCurator(currentUserId));
   const objects = useSelector(getObjectsList());
+  const isLoading = useSelector(getObjectsLoadingStatus());
+
   const objectsInDeals = objects?.filter((obj) => {
     if (obj && allowedStatuses.includes(obj.status)) {
       return obj;
     }
   });
 
-  const searchedDeals = useSearchDeals(objectsInDeals, data);
-
-  const isLoading = useSelector(getObjectsLoadingStatus());
-  const dealStages = dealStagesArray;
-
-  const currentUserId = useSelector(getCurrentUserId());
-  const isCurator = useSelector(getIsUserCurator(currentUserId));
   const currentUserObjects = objects?.filter(
     (obj) => obj?.userId === currentUserId
   );
+
+  const searchedDeals = useSearchDeals(objectsInDeals, data);
 
   let transformObjects = [];
   currentUserObjects?.forEach((obj) => {
     transformObjects?.push({ _id: obj._id, name: obj.location.address });
   });
-
-  const getObjectAddress = (id) => {
-    const object = objects?.find((obj) => obj?._id === id);
-    const address = `${object?.location?.city}, ${object?.location?.address}`;
-    return address;
-  };
 
   useEffect(() => {
     localStorage.setItem("search-deals-data", JSON.stringify(data));
@@ -103,9 +89,8 @@ const Deals = () => {
       />
       <Stages
         objects={searchedDeals}
-        stages={dealStages}
+        stages={dealStagesArray}
         isCurator={isCurator}
-        getObjectAddress={getObjectAddress}
       />
 
       <ObjectPageDialog />

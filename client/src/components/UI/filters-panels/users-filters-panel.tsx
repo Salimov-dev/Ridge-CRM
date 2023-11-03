@@ -9,8 +9,8 @@ import { gendersArray } from "../../../mock/genders";
 const UsersFiltersPanel = ({
   register,
   data,
-  usersList,
-  statusesList,
+  users,
+  statuses,
   setValue,
   isLoading,
 }) => {
@@ -45,7 +45,7 @@ const UsersFiltersPanel = ({
           name="users"
           labelId="users-label"
           label="Выбор по менеджеру"
-          itemsList={usersList}
+          itemsList={users}
           selectedItems={data.selectedUsers}
           onChange={(e) => setValue("selectedUsers", e.target.value)}
           disabled={isLoading ? true : false}
@@ -54,7 +54,7 @@ const UsersFiltersPanel = ({
           name="selectedStatuses"
           labelId="selectedStatuses-label"
           label="Выбор по статусу"
-          itemsList={statusesList}
+          itemsList={statuses}
           selectedItems={data.selectedStatuses}
           onChange={(e) => setValue("selectedStatuses", e.target.value)}
           disabled={isLoading ? true : false}

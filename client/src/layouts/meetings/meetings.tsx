@@ -8,7 +8,6 @@ import { useEffect, useState } from "react";
 // components
 import MeetingBaloon from "../../components/UI/maps/meeting-baloon";
 import MeetingsFiltersPanel from "../../components/UI/filters-panels/meetings-filters-panel";
-import { meetingsColumns } from "../../columns/meetings-columns/meetings-columns";
 import BasicTable from "../../components/common/table/basic-table";
 import LayoutTitle from "../../components/common/page-titles/layout-title";
 import ItemsOnMap from "../../components/common/map/items-on-map/items-on-map";
@@ -23,6 +22,9 @@ import useSearchMeeting from "../../hooks/meeting/use-search-meeting";
 // icons
 import target from "../../assets/map/target_meeting.png";
 import targetCluster from "../../assets/map/targeMeeting_cluster.png";
+// columns
+import { meetingsColumns } from "../../columns/meetings-columns/meetings-columns";
+import { meetingsCuratorColumns } from "../../columns/meetings-columns/meetings-columns-curator";
 // store
 import {
   getMeetingById,
@@ -33,7 +35,8 @@ import {
   getCurrentUserId,
   getIsUserCurator,
 } from "../../store/user/users.store";
-import { meetingsCuratorColumns } from "../../columns/meetings-columns/meetings-columns-curator";
+import { getMeetingStatusesList } from "../../store/meeting/meeting-status.store";
+import { getMeetingTypesList } from "../../store/meeting/meeting-types.store";
 
 const initialState = {
   meetingsActivity: "",
@@ -47,6 +50,7 @@ const initialState = {
 
 const Meetings = () => {
   const [selectedMeetingBaloon, setSelectedMeetingBaloon] = useState(null);
+
   const localStorageState = JSON.parse(
     localStorage.getItem("search-meetings-data")
   );
@@ -66,20 +70,19 @@ const Meetings = () => {
     mode: "onBlur",
   });
 
+  const data = watch();
   const currentUserId = useSelector(getCurrentUserId());
   const isCurator = useSelector(getIsUserCurator(currentUserId));
 
   const columns = isCurator ? meetingsCuratorColumns : meetingsColumns;
   const meetings = useSelector(getMeetingsList());
+  const meetingStatuses = useSelector(getMeetingStatusesList());
+  const meetingsTypes = useSelector(getMeetingTypesList());
   const selectedMeeting = useSelector(getMeetingById(selectedMeetingBaloon));
-  const isLoading = useSelector(getMeetingLoadingStatus());
-
-  const center = [59.930320630519155, 30.32906024941998];
-  const mapZoom = 11;
-
-  const data = watch();
   const searchedMeetings = useSearchMeeting(meetings, data);
   const sortedMeetings = orderBy(searchedMeetings, ["date"], ["asc"]);
+
+  const isLoading = useSelector(getMeetingLoadingStatus());
   const isInputEmpty = JSON.stringify(initialState) !== JSON.stringify(data);
 
   useEffect(() => {
@@ -108,11 +111,6 @@ const Meetings = () => {
       />
       <ItemsOnMap
         items={searchedMeetings}
-        mapZoom={mapZoom}
-        hintContent={(item) =>
-          `${item?.location?.city}, ${item?.location?.address}`
-        }
-        center={center}
         onClick={setSelectedMeetingBaloon}
         baloon={<MeetingBaloon meeting={selectedMeeting} />}
         isLoading={isLoading}
@@ -121,6 +119,9 @@ const Meetings = () => {
       />
       <MeetingsFiltersPanel
         data={data}
+        meetings={meetings}
+        statuses={meetingStatuses}
+        types={meetingsTypes}
         register={register}
         setValue={setValue}
         isCurator={isCurator}

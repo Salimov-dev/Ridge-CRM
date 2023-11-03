@@ -15,8 +15,6 @@ import {
 } from "../../../store/user/users.store";
 // schema
 import { managerSchema } from "../../../schemas/manager-schema";
-// assets
-import basicAva from "../../../assets/basic-ava.jpg";
 
 const initialState = {
   email: "",

@@ -17,7 +17,9 @@ const TopBarRightSide = () => {
   return (
     <Component>
       {!isLoading ? (
-        <>{currentUser ? <UserMenu currentUser={currentUser} /> : null}</>
+        currentUser ? (
+          <UserMenu currentUser={currentUser} />
+        ) : null
       ) : (
         <Loader />
       )}

@@ -125,7 +125,7 @@ export const updateMeeting = (payload) => async (dispatch) => {
 //   dispatch(meetingUpdateRequested());
 //   try {
 //     const { content } = await meetingsService.update(payload);
-    
+
 //     dispatch(meetingUpdateSuccessed(content));
 //   } catch (error) {
 //     dispatch(meetingUpdateFailed(error.message));
@@ -162,18 +162,11 @@ export const setIsNotDoneMeeting = (payload) => async (dispatch) => {
   }
 };
 
-export const getMeetingsList = () => (state) => state.meetings.entities;
-
 export const getObjectMeetingsList = (objectId) =>
   createSelector(
     (state) => state?.meetings?.entities,
     (meetings) => meetings?.filter((meet) => meet?.objectId === objectId)
   );
-
-export const getMeetingLoadingStatus = () => (state) =>
-  state.meetings.isLoading;
-
-export const getDataMeetingsStatus = () => (state) => state.meetings.dataLoaded;
 
 export const getMeetingById = (id) => (state) => {
   if (state.meetings.entities) {
@@ -187,18 +180,11 @@ export const getMeetingsByObjectId = (objectId) => (state) => {
   }
 };
 
-export const getMeetingsWeeklyList = () => (state) => {
-  const currentDate = dayjs();
-  const meetings = state.meetings.entities;
+export const getMeetingsList = () => (state) => state.meetings.entities;
 
-  const weeklyMeetings = meetings?.filter((meet) => {
-    const createdAt = dayjs(meet?.date);
-    const startOfWeek = currentDate.startOf('week');
-    const endOfWeek = currentDate.endOf('week');
-    return createdAt.isBetween(startOfWeek, endOfWeek)  && meet.isDone !== true;
-  });
+export const getMeetingLoadingStatus = () => (state) =>
+  state.meetings.isLoading;
 
-  return weeklyMeetings;
-};
+export const getDataMeetingsStatus = () => (state) => state.meetings.dataLoaded;
 
 export default meetingsReducer;

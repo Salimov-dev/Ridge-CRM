@@ -1,9 +1,8 @@
 // components
 import { FieldsContainer, Form } from "../../common/forms/styled/styled";
 import MultiSelectField from "../../common/inputs/multi-select-field";
-// hooks
-import useDealsFiltersPanel from "../../../hooks/deals/use-deals-filters-panel";
-import useObjectsDatabaseFiltersPanel from "../../../hooks/objects-database/use-object-database-filters-panel";
+// utils
+import { getActualUsersList } from "../../../utils/actual-items/get-actual-users-list";
 
 const ObjectsDatabaseFiltersPanel = ({
   data,
@@ -13,7 +12,7 @@ const ObjectsDatabaseFiltersPanel = ({
   isCurator,
   isLoading,
 }) => {
-  const { getActualUsersList } = useObjectsDatabaseFiltersPanel(objects);
+  const usersList = getActualUsersList(objects);
 
   return (
     <Form>
@@ -23,7 +22,7 @@ const ObjectsDatabaseFiltersPanel = ({
             name="users"
             labelId="users-label"
             label="Выбор по менеджеру"
-            itemsList={getActualUsersList()}
+            itemsList={usersList}
             selectedItems={data.selectedUsers}
             onChange={(e) => setValue("selectedUsers", e.target.value)}
             disabled={isLoading ? true : false}

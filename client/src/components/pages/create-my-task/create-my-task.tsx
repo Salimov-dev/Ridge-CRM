@@ -1,10 +1,10 @@
 // libraries
 import dayjs from "dayjs";
+import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Box } from "@mui/material";
 // components
 import MyTaskForm from "../../common/forms/my-task-form/my-task-form";
 import TitleWithCloseButton from "../../common/page-titles/title-with-close-button";
@@ -16,7 +16,6 @@ import { createTask } from "../../../store/task/tasks.store";
 import { taskSchema } from "../../../schemas/task-shema";
 // utils
 import { capitalizeFirstLetter } from "../../../utils/data/capitalize-first-letter";
-import { toast } from "react-toastify";
 
 const initialState = {
   date: null,

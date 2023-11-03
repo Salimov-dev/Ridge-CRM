@@ -12,6 +12,7 @@ const TasksFiltersPanel = ({
   setValue,
   isLoading,
 }) => {
+  
   return (
     <Form>
       <FieldsContainer>

@@ -30,6 +30,7 @@ import {
   getObjectsList,
   getObjectsLoadingStatus,
 } from "../../store/object/objects.store";
+import { getObjectsStatusList } from "../../store/object-params/object-status.store";
 
 const initialState = {
   address: "",
@@ -75,14 +76,13 @@ const Objects = () => {
   const data = watch();
 
   const objects = useSelector(getObjectsList());
-  const selectedObject = useSelector(getObjectById(selectedBaloon));
+  const objectsSatuses = useSelector(getObjectsStatusList())
   const isLoading = useSelector(getObjectsLoadingStatus());
+  const selectedObject = useSelector(getObjectById(selectedBaloon));
+  
   const currentUserId = useSelector(getCurrentUserId());
   const isCurator = useSelector(getIsUserCurator(currentUserId));
   const columns = isCurator ? objectsColumnsCurator : objectsColumns;
-
-  const center = [59.930320630519155, 30.32906024941998];
-  const mapZoom = 11;
 
   const searchedObjects = useSearchObject(objects, data);
   const sortedObjects = orderBy(searchedObjects, ["created_at"], ["desc"]);
@@ -111,11 +111,6 @@ const Objects = () => {
       />
       <ItemsOnMap
         items={searchedObjects}
-        mapZoom={mapZoom}
-        hintContent={(item) =>
-          `${item?.location?.city}, ${item?.location?.address}`
-        }
-        center={center}
         onClick={setSelectedBaloon}
         baloon={<ObjectBaloon object={selectedObject} />}
         isLoading={isLoading}
@@ -123,6 +118,7 @@ const Objects = () => {
       <ObjectsFiltersPanel
         data={data}
         objects={objects}
+        statuses={objectsSatuses}
         register={register}
         setValue={setValue}
         isCurator={isCurator}

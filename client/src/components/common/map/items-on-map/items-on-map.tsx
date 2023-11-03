@@ -32,18 +32,18 @@ const MapContainer = styled(Box)`
 const ItemsOnMap = ({
   items,
   baloon,
-  hintContent,
-  center,
-  mapZoom,
   isLoading,
   onClick,
   target = targetDefault,
   targetCluster = target_cluster,
 }) => {
   const [activePortal, setActivePortal] = useState(false);
+  const [width, setWidth] = useState(null);
   const isCollapsedSidebar = useSelector(getSidebarCollapsState());
 
-  const [width, setWidth] = useState(null);
+  const center = [59.930320630519155, 30.32906024941998];
+  const mapZoom = 11;
+
   const screenWidth = window?.innerWidth;
   const fullWidth = screenWidth - 262;
   const collapseWidth = screenWidth - 126;
@@ -130,7 +130,7 @@ const ItemsOnMap = ({
                     : null
                 }
                 properties={{
-                  hintContent: hintContent(item),
+                  hintContent: `${item?.location?.city}, ${item?.location?.address}`,
                   balloonContentBody: '<div id="baloon" class="baloon"></div>',
                   clusterCaption: dayjs(item?.created_at).format("DD.MM.YY"),
                 }}

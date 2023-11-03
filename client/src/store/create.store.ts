@@ -6,21 +6,21 @@ import objectsReducer from "./object/objects.store";
 import updateObjectReducer from "./object/update-object.store";
 import openObjectPageReducer from "./object/open-object-page.store";
 // objects params
-import objectTypesReducer from "./object/object-types.store";
-import objectStatusReducer from "./object/object-status.store";
-import objectConditionsReducer from "./object/object-conditions.store";
-import metroReducer from "./object/metro.store";
-import districtsReducer from "./object/districts.store";
-import rentTypesReducer from "./object/rent-types.store";
-import estateTypesReducer from "./object/estate-types.store";
-import currentRenterReducer from "./object/current-renter.store";
+import objectTypesReducer from "./object-params/object-types.store";
+import objectStatusReducer from "./object-params/object-status.store";
+import objectConditionsReducer from "./object-params/object-conditions.store";
+import metroReducer from "./object-params/metro.store";
+import districtsReducer from "./object-params/districts.store";
+import rentTypesReducer from "./object-params/rent-types.store";
+import estateTypesReducer from "./object-params/estate-types.store";
+import currentRenterReducer from "./object-params/current-renter.store";
 import workingPositionReducer from "./user/working-position.store";
 // meetings
 import meetingsReducer from "./meeting/meetings.store";
 import meetingTypesReducer from "./meeting/meeting-types.store";
 import meetingStatusesReducer from "./meeting/meeting-status.store";
 import createMeetingReducer from "./meeting/create-meeting.store";
-import objectPropertiesReducer from "./object/object-properties";
+import objectPropertiesReducer from "./object-params/object-properties";
 import updateMeetingReducer from "./meeting/update-meeting.store";
 // users
 import createUserReducer from "./user/create-user.store";

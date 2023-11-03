@@ -1,13 +1,9 @@
 import Truncate from "react-truncate";
-import { useSelector } from "react-redux";
-import { getObjectsList } from "../../../../../../../../../../../../../store/object/objects.store";
+import { Box, Typography } from "@mui/material";
 import MeetingObject from "./meeting-object";
 import MeetingInfo from "./meeting-info";
-import { Box, Typography } from "@mui/material";
 
 const Body = ({ meet, isSelectedDayDialog }) => {
-  const objects = useSelector(getObjectsList());
-
   return (
     <Box
       sx={{
@@ -24,7 +20,7 @@ const Body = ({ meet, isSelectedDayDialog }) => {
           </Typography>
         </Truncate>
       ) : null}
-      <MeetingObject objects={objects} meet={meet} />
+      <MeetingObject meet={meet} />
     </Box>
   );
 };

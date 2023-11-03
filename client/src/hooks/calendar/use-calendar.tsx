@@ -13,20 +13,24 @@ import {
 // utils
 import getStartWeekDate from "../../utils/date/get-start-week-date";
 import getEndWeekDate from "../../utils/date/get-end-week-date";
+import { getCurrentWeekMeetings } from "../../utils/meetings/get-current-week-meetings";
 
 const useCalendar = () => {
   dayjs.extend(isBetween)
   const objects = useSelector(getObjectsList());
+  const meetings = useSelector(getMeetingsList());
+  const users = useSelector(getUsersList());
+
   const currentUserId = useSelector(getCurrentUserId());
   const isCurator = useSelector(getIsUserCurator(currentUserId));
-  const users = useSelector(getUsersList());
-  const meetings = useSelector(getMeetingsList());
+
   const startOfWeek = getStartWeekDate();
   const endOfWeek = getEndWeekDate();
 
   const currentWeeklyMeetings = meetings?.filter((meet) =>
     dayjs(meet.date).isBetween(startOfWeek, endOfWeek, null, "[]")
   );
+
   const usersWithoutCurrentUser = users?.filter(
     (user) => user?._id !== currentUserId
   );

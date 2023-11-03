@@ -18,7 +18,7 @@ const DealContainer = styled(Paper)`
   padding: 10px;
 `;
 
-const Stages = ({ objects, stages, getObjectAddress, isCurator }) => {
+const Stages = ({ objects, stages, isCurator }) => {
   const [draggableStageId, setDraggableStageId] = useState(null);
 
   const handleDragOver = (e, stageId) => {
@@ -46,7 +46,6 @@ const Stages = ({ objects, stages, getObjectAddress, isCurator }) => {
               stage={stage}
               objects={objects}
               draggableStageId={draggableStageId}
-              getObjectAddress={getObjectAddress}
               setDraggableStageId={setDraggableStageId}
               isCurator={isCurator}
             />

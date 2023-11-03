@@ -3,19 +3,21 @@ import SearchField from "../../common/inputs/search-field";
 import { FieldsContainer, Form } from "../../common/forms/styled/styled";
 import MultiSelectField from "../../common/inputs/multi-select-field";
 import SearchDatePicker from "../../common/inputs/search-date-picker";
-// hooks
-import usePresentationFiltersPanel from "../../../hooks/presentation/use-presentation-filters-panel";
+// utils
+import { getActualUsersList } from "../../../utils/actual-items/get-actual-users-list";
+import { getActualStatusesList } from "../../../utils/actual-items/get-actual-statuses-list";
 
 const PresentationsFiltersPanel = ({
   presentations,
+  statuses,
   data,
   register,
   setValue,
   isCurator,
   isLoading,
 }) => {
-  const { getActualStatusesList, getActualUsersList } =
-    usePresentationFiltersPanel(presentations);
+  const usersList = getActualUsersList(presentations);
+  const statusesList = getActualStatusesList(presentations, statuses);
 
   return (
     <Form>
@@ -36,12 +38,12 @@ const PresentationsFiltersPanel = ({
           inputProps={{ maxLength: 30 }}
           disabled={isLoading ? true : false}
         />
-             {isCurator ? (
+        {isCurator ? (
           <MultiSelectField
             name="users"
             labelId="users-label"
             label="Выбор по менеджеру"
-            itemsList={getActualUsersList()}
+            itemsList={usersList}
             selectedItems={data.selectedUsers}
             onChange={(e) => setValue("selectedUsers", e.target.value)}
             disabled={isLoading ? true : false}
@@ -69,7 +71,7 @@ const PresentationsFiltersPanel = ({
           name="selectedStatuses"
           labelId="selectedStatuses-label"
           label="Выбор по статусу"
-          itemsList={getActualStatusesList()}
+          itemsList={statusesList}
           selectedItems={data.selectedStatuses}
           onChange={(e) => setValue("selectedStatuses", e.target.value)}
           disabled={isLoading ? true : false}

@@ -1,6 +1,5 @@
 // components
 import TextFieldStyled from "../../inputs/text-field-styled";
-import SimpleSelectField from "../../inputs/simple-select-field";
 import DatePickerStyled from "../../inputs/date-picker";
 import TimePickerStyled from "../../inputs/time-picker";
 // styled

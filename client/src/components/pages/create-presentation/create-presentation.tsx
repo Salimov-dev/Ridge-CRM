@@ -1,7 +1,7 @@
 // libraries
-import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { Box, styled } from "@mui/material";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useDispatch, useSelector } from "react-redux";
 // components
@@ -19,7 +19,6 @@ import {
   getCurrentUserId,
   getIsUserCurator,
 } from "../../../store/user/users.store";
-import { toast } from "react-toastify";
 
 const initialState = {
   objectId: "",
@@ -32,9 +31,7 @@ const CreatePresentation = ({ onClose, setConfettiActive }) => {
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
 
-  const objectPageId = useSelector(getOpenObjectPageId());
   const objects = useSelector(getObjectsList());
-
   const currentUserId = useSelector(getCurrentUserId());
   const isCurator = useSelector(getIsUserCurator(currentUserId));
   const currentUserObjects = objects?.filter(

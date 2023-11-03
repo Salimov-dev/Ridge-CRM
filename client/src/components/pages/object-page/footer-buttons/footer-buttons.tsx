@@ -5,8 +5,11 @@ import { useDispatch, useSelector } from "react-redux";
 import Loader from "../../../common/loader/loader";
 import ButtonsPanel from "../buttons-panel/buttons-panel";
 import AutocompleteStyled from "../../../common/inputs/autocomplete-styled";
-import { getObjectsStatusList } from "../../../../store/object/object-status.store";
-import { updateObject, updateObjectStatus } from "../../../../store/object/objects.store";
+import { getObjectsStatusList } from "../../../../store/object-params/object-status.store";
+import {
+  updateObject,
+  updateObjectStatus,
+} from "../../../../store/object/objects.store";
 
 const Component = styled(Box)`
   display: flex;
@@ -38,7 +41,7 @@ const FooterButtons = ({
   const watchStatus = watch("status");
   const objectStatus = object?.status;
 
-  const [statusChanged, setStatusChanged] = useState(false)
+  const [statusChanged, setStatusChanged] = useState(false);
 
   useEffect(() => {
     // Проверьте, изменился ли статус объекта
@@ -51,7 +54,7 @@ const FooterButtons = ({
 
   useEffect(() => {
     if (statusChanged) {
-      dispatch<any>(updateObject({...object, status: watchStatus}));
+      dispatch<any>(updateObject({ ...object, status: watchStatus }));
     }
   }, [watchStatus, statusChanged]);
 

@@ -9,10 +9,16 @@ const Component = styled(Box)`
   margin-bottom: 12px;
 `;
 
-const Title = styled(Box)`
+const Container = styled(Box)`
   display: flex;
   align-items: center;
   gap: 8px;
+`;
+
+const Title = styled(Typography)`
+  background: yellow;
+  color: black;
+  padding: 4px;
 `;
 
 const TitleWithAddress = ({
@@ -25,15 +31,12 @@ const TitleWithAddress = ({
 }) => {
   return (
     <Component>
-      <Title>
+      <Container>
         <Typography variant="h2">{title}</Typography>
         {isFindedObject ? (
-          <Typography
-            variant="h2"
-            sx={{ background: "yellow", color: "black", padding: "4px" }}
-          >
+          <Title variant="h2">
             {city}, {address}
-          </Typography>
+          </Title>
         ) : (
           <Typography
             variant="h2"
@@ -46,7 +49,7 @@ const TitleWithAddress = ({
             {subtitle}
           </Typography>
         )}
-      </Title>
+      </Container>
       <CloseButtonIconButton onClose={onClose} />
     </Component>
   );

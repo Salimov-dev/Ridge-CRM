@@ -1,10 +1,10 @@
 // libraries
 import dayjs from "dayjs";
+import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useDispatch, useSelector } from "react-redux";
-import { Box, styled } from "@mui/material";
 // components
 import TitleWithCloseButton from "../../common/page-titles/title-with-close-button";
 import LastContactForm from "../../common/forms/last-contact-form/last-contact-form";
@@ -17,7 +17,6 @@ import { createLastContact } from "../../../store/last-contact/last-contact.stor
 import { lastContactSchema } from "../../../schemas/last-contact-schema";
 // utils
 import { capitalizeFirstLetter } from "../../../utils/data/capitalize-first-letter";
-import { toast } from "react-toastify";
 
 const initialState = {
   date: dayjs(),

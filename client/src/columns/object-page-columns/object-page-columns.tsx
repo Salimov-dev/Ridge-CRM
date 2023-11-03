@@ -15,8 +15,8 @@ import {
 } from "../../components/common/table/helpers/helpers";
 import EmptyTd from "../../components/common/columns/empty-td";
 import { useSelector } from "react-redux";
-import { getEstateConditionNameById } from "../../store/object/object-conditions.store";
-import { getDistrictName } from "../../store/object/districts.store";
+import { getEstateConditionNameById } from "../../store/object-params/object-conditions.store";
+import { getDistrictName } from "../../store/object-params/districts.store";
 
 const AlignCenter = styled(Box)`
   display: flex;
@@ -73,7 +73,7 @@ export const locationColumns = [
     accessorFn: (row) => row,
     header: "Идентификатор",
     cell: (info) => {
-      const object = info.getValue()
+      const object = info.getValue();
       const location = object?.location.identifier;
       if (location && location.identifier) {
         return <AlignCenter>{location.identifier}</AlignCenter>;
@@ -121,7 +121,7 @@ export const estateTypeColumns = [
     accessorFn: (row) => row,
     header: "Тип недвижимости",
     cell: (info) => {
-      const object = info.getValue()
+      const object = info.getValue();
       const estateOptions = object?.estateOptions.objectProperties;
       if (estateOptions && estateOptions.objectProperties) {
         return (

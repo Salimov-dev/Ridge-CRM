@@ -2,7 +2,6 @@ import { createAction, createSlice } from "@reduxjs/toolkit";
 import localStorageService from "../../services/user/local.storage-service";
 import presentationsService from "../../services/presentation/presentations.service";
 import isOutDated from "../../utils/auth/is-out-date";
-import dayjs from "dayjs";
 
 const initialState = localStorageService.getAccessToken()
   ? {
@@ -87,18 +86,17 @@ const {
 } = actions;
 
 export const loadPresentationsList = () => async (dispatch, getState) => {
-    const { lastFetch } = getState().presentations;
-    if (isOutDated(lastFetch)) {
-      dispatch(presentationsRequested());
-      try {
-        const { content } = await presentationsService.get();
+  const { lastFetch } = getState().presentations;
+  if (isOutDated(lastFetch)) {
+    dispatch(presentationsRequested());
+    try {
+      const { content } = await presentationsService.get();
 
-        dispatch(presentationsReceived(content));
-      } catch (error) {
-        presentationsFailed(error.message);
-      }
+      dispatch(presentationsReceived(content));
+    } catch (error) {
+      presentationsFailed(error.message);
     }
-
+  }
 };
 
 export function createPresentation(payload) {
@@ -133,11 +131,6 @@ export const removePresentation = (presentationsId) => async (dispatch) => {
   }
 };
 
-export const getPresentationsList = () => (state) => state.presentations.entities;
-
-export const getPresentationsLoadingStatus = () => (state) =>
-  state.presentations.isLoading;
-
 export const getPresentationById = (id) => (state) => {
   if (state.presentations.entities) {
     return state.presentations.entities.find((contact) => contact._id === id);
@@ -152,18 +145,10 @@ export const getPresentationsByObjectId = (objectId) => (state) => {
   }
 };
 
-export const getPresentationsWeeklyList = () => (state) => {
-  const currentDate = dayjs();
-  const presentations = state.presentations.entities;
+export const getPresentationsList = () => (state) =>
+  state.presentations.entities;
 
-  const weeklyPresentations = presentations?.filter((pres) => {
-    const createdAt = dayjs(pres.created_at);
-    const startOfWeek = currentDate.startOf('week');
-    const endOfWeek = currentDate.endOf('week');
-    return createdAt.isBetween(startOfWeek, endOfWeek);
-  });
-
-  return weeklyPresentations;
-};
+export const getPresentationsLoadingStatus = () => (state) =>
+  state.presentations.isLoading;
 
 export default presentationsReducer;

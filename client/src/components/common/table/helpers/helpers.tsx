@@ -5,18 +5,18 @@ import dayjs from "dayjs";
 import { enterPhoneFormat } from "../../../../utils/data/enter-phone-format";
 import { getPriceForRentMetr } from "../../../../utils/data/get-price-rent-for-metr";
 // store
-import { getMetroName } from "../../../../store/object/metro.store";
+import { getMetroName } from "../../../../store/object-params/metro.store";
 import { getObjectById } from "../../../../store/object/objects.store";
 import { getUserNameById } from "../../../../store/user/users.store";
-import { getDistrictName } from "../../../../store/object/districts.store";
-import { getRentTypeNameById } from "../../../../store/object/rent-types.store";
-import { getObjectTypeNameById } from "../../../../store/object/object-types.store";
-import { getEstateTypeNameById } from "../../../../store/object/estate-types.store";
-import { getObjectStatusNameById } from "../../../../store/object/object-status.store";
-import { getCurrentRenterNameById } from "../../../../store/object/current-renter.store";
+import { getDistrictName } from "../../../../store/object-params/districts.store";
+import { getRentTypeNameById } from "../../../../store/object-params/rent-types.store";
+import { getObjectTypeNameById } from "../../../../store/object-params/object-types.store";
+import { getEstateTypeNameById } from "../../../../store/object-params/estate-types.store";
+import { getObjectStatusNameById } from "../../../../store/object-params/object-status.store";
+import { getCurrentRenterNameById } from "../../../../store/object-params/current-renter.store";
 import { getWorkingPositionNameById } from "../../../../store/user/working-position.store";
-import { getEstateConditionNameById } from "../../../../store/object/object-conditions.store";
-import { getObjectPropertiesNameById } from "../../../../store/object/object-properties";
+import { getEstateConditionNameById } from "../../../../store/object-params/object-conditions.store";
+import { getObjectPropertiesNameById } from "../../../../store/object-params/object-properties";
 
 export const FormatDate = (date) => {
   return dayjs(date).format("DD.MM.YY");
@@ -54,7 +54,7 @@ export const FormatCurrentRenter = (id) => {
   return useSelector(getCurrentRenterNameById(id));
 };
 
-export const FormatObjectProperties= (id) => {
+export const FormatObjectProperties = (id) => {
   return useSelector(getObjectPropertiesNameById(id));
 };
 
@@ -75,7 +75,7 @@ export const priceForMetr = (id) => {
   return getPriceForRentMetr(object);
 };
 
-export const UserAvatar = ({ path, width= "30px" }) => {
+export const UserAvatar = ({ path, width = "30px" }) => {
   return (
     <Box sx={{ display: "flex", justifyContent: "center" }}>
       <img src={path} alt="" style={{ width: width, borderRadius: "50%" }} />

@@ -11,6 +11,8 @@ import FooterButtons from "../../common/forms/footer-buttons/footer-buttons";
 import ConfirmRemoveDialog from "../../common/dialog/confirm-remove-dialog";
 import TitleWithCloseButton from "../../common/page-titles/title-with-close-button";
 import IsLoadingDialog from "../../common/dialog/is-loading-dialog";
+// schema
+import { taskSchema } from "../../../schemas/task-shema";
 // store
 import { getUpdateMyTaskId } from "../../../store/task/update-my-task.store";
 import {
@@ -22,8 +24,6 @@ import {
 import { getObjectsList } from "../../../store/object/objects.store";
 import { getCurrentUserId } from "../../../store/user/users.store";
 import { loadOpenObjectPageOpenState } from "../../../store/object/open-object-page.store";
-// schema
-import { taskSchema } from "../../../schemas/task-shema";
 
 const UpdateMyTask = ({ title, onClose }) => {
   const dispatch = useDispatch();

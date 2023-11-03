@@ -1,16 +1,17 @@
 // libraries
 import { useState } from "react";
+import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { yupResolver } from "@hookform/resolvers/yup";
-// MUI
 import { Box } from "@mui/material";
 // components
 import Header from "./components/header";
-import Loader from "../../common/loader/loader";
 import FooterButtons from "../../common/forms/footer-buttons/footer-buttons";
 import ConfirmRemoveDialog from "../../common/dialog/confirm-remove-dialog";
 import ManagerPresentationForm from "../../common/forms/presentation/manager-presentation-form";
+import CuratorPresentationForm from "../../common/forms/presentation/curator-presentation-form";
+import IsLoadingDialog from "../../common/dialog/is-loading-dialog";
 // schema
 import { presentationSchema } from "../../../schemas/presentation-schema";
 // store
@@ -26,9 +27,6 @@ import {
   removePresentation,
   updatePresentation,
 } from "../../../store/presentation/presentations.store";
-import CuratorPresentationForm from "../../common/forms/presentation/curator-presentation-form";
-import { toast } from "react-toastify";
-import IsLoadingDialog from "../../common/dialog/is-loading-dialog";
 
 const UpdatePresentation = ({ onClose }) => {
   const dispatch = useDispatch();
@@ -120,7 +118,6 @@ const UpdatePresentation = ({ onClose }) => {
       ) : (
         <CuratorPresentationForm
           data={data}
-          objects={transformObjects}
           register={register}
           errors={errors}
           watch={watch}

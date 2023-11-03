@@ -9,13 +9,11 @@ import Attribute from "../../common/map/baloon/attribute";
 import { makeDigitSeparator } from "../../../utils/data/make-digit-separator";
 // store
 import { getUserNameById } from "../../../store/user/users.store";
-import {
-  getDistrictName,
-} from "../../../store/object/districts.store";
-import { getRentTypeNameById } from "../../../store/object/rent-types.store";
-import { getEstateTypeNameById } from "../../../store/object/estate-types.store";
-import { getObjectTypeNameById } from "../../../store/object/object-types.store";
-import { getCurrentRenterNameById } from "../../../store/object/current-renter.store";
+import { getDistrictName } from "../../../store/object-params/districts.store";
+import { getRentTypeNameById } from "../../../store/object-params/rent-types.store";
+import { getEstateTypeNameById } from "../../../store/object-params/estate-types.store";
+import { getObjectTypeNameById } from "../../../store/object-params/object-types.store";
+import { getCurrentRenterNameById } from "../../../store/object-params/current-renter.store";
 import {
   setOpenObjectPageId,
   setOpenObjectPageOpenState,

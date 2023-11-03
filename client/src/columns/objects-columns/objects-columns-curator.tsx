@@ -28,7 +28,7 @@ import {
   getMeetingsList,
   getObjectMeetingsList,
 } from "../../store/meeting/meetings.store";
-import { getDistrictName } from "../../store/object/districts.store";
+import { getDistrictName } from "../../store/object-params/districts.store";
 import { getUserDataById } from "../../store/user/users.store";
 
 export const objectsColumnsCurator = [

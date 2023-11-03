@@ -1,6 +1,7 @@
 // libraries
 import { useState } from "react";
 import dayjs from "dayjs";
+import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -8,17 +9,17 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Box } from "@mui/material";
 // components
 import Header from "./components/header";
-import Loader from "../../common/loader/loader";
 import MeetingForm from "../../common/forms/meeting-form/meeting-form";
 import FooterButtons from "../../common/forms/footer-buttons/footer-buttons";
 import ConfirmRemoveDialog from "../../common/dialog/confirm-remove-dialog";
+import IsLoadingDialog from "../../common/dialog/is-loading-dialog";
+// schema
+import { meetingSchema } from "../../../schemas/meeting-schema";
 // store
 import { getObjectsList } from "../../../store/object/objects.store";
 import { getCurrentUserId } from "../../../store/user/users.store";
 import { getMeetingTypesList } from "../../../store/meeting/meeting-types.store";
-import {
-  getMeetingStatusesList,
-} from "../../../store/meeting/meeting-status.store";
+import { getMeetingStatusesList } from "../../../store/meeting/meeting-status.store";
 import { getUpdateMeetingId } from "../../../store/meeting/update-meeting.store";
 import {
   getMeetingById,
@@ -26,9 +27,6 @@ import {
   removeMeeting,
   updateMeeting,
 } from "../../../store/meeting/meetings.store";
-// schema
-import { meetingSchema } from "../../../schemas/meeting-schema";
-import { toast } from "react-toastify";
 
 const UpdateMeeting = ({ onClose }) => {
   const dispatch = useDispatch();
@@ -62,7 +60,7 @@ const UpdateMeeting = ({ onClose }) => {
   const watchTime = watch("time", null);
   const isFullValid = isValid && watchDate && watchTime;
   const isEditMode = meetingId ? true : false;
-  
+
   const objects = useSelector(getObjectsList());
   const currentUserId = useSelector(getCurrentUserId());
   const currentUserObjects = objects?.filter(
@@ -97,8 +95,7 @@ const UpdateMeeting = ({ onClose }) => {
   };
 
   const handleRemoveMeeting = (meetingId) => {
-    dispatch<any>(removeMeeting(meetingId))
-      .then(onClose())
+    dispatch<any>(removeMeeting(meetingId)).then(onClose());
   };
 
   const handleClickOpen = () => {
@@ -109,7 +106,12 @@ const UpdateMeeting = ({ onClose }) => {
     setOpen(false);
   };
 
-  return meeting ? (
+  return isLoading ? (
+    <IsLoadingDialog
+      text="Немного подождите, изменяем `Встречу`"
+      isLoading={isLoading}
+    />
+  ) : (
     <Box>
       <Header meeting={meeting} onClose={onClose} />
       <MeetingForm
@@ -138,8 +140,6 @@ const UpdateMeeting = ({ onClose }) => {
         onRemove={handleRemoveMeeting}
       />
     </Box>
-  ) : (
-    <Loader />
   );
 };
 

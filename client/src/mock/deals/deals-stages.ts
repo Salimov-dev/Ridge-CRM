@@ -51,3 +51,13 @@ const dealStagesArray = [
 ];
 
 export { dealStagesArray };
+
+export const allowedStatuses = [
+  "64c140880e87d7e4532f79d5",
+  "64ecf9f34284e591a86bec2f",
+  "651af4fb687b71e04dde43ce",
+  "64de0da4063bb018afc97f0e",
+  "651af512687b71e04dde43cf",
+  "64c140880e87d7e4532f79d6",
+  "651af52f687b71e04dde43d0",
+];

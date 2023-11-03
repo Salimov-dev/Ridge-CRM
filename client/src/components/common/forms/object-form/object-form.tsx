@@ -10,6 +10,11 @@ import ElectricBoltIcon from "@mui/icons-material/ElectricBolt";
 import VerticalAlignBottomOutlinedIcon from "@mui/icons-material/VerticalAlignBottomOutlined";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import FingerprintIcon from "@mui/icons-material/Fingerprint";
+// styled
+import { FieldsContainer, Form } from "../styled/styled";
+// mock
+import { districtsMSK } from "../../../../mock/districts/districts-msk";
+import { districtsSPB } from "../../../../mock/districts/districts-spb";
 // components
 import Title from "../title/title";
 import FooterButtons from "../footer-buttons/footer-buttons";
@@ -17,20 +22,15 @@ import TextFieldStyled from "../../inputs/text-field-styled";
 import SimpleSelectField from "../../inputs/simple-select-field";
 import AutocompleteStyled from "../../inputs/autocomplete-styled";
 // store
-import { getMetroList } from "../../../../store/object/metro.store";
-import { getRentTypesList } from "../../../../store/object/rent-types.store";
-import { getObjectTypesList } from "../../../../store/object/object-types.store";
-import { getEstateTypesList } from "../../../../store/object/estate-types.store";
-import { getObjectsStatusList } from "../../../../store/object/object-status.store";
-import { getObjectPropertiesList } from "../../../../store/object/object-properties";
-import { getCurrentRentersList } from "../../../../store/object/current-renter.store";
+import { getMetroList } from "../../../../store/object-params/metro.store";
+import { getRentTypesList } from "../../../../store/object-params/rent-types.store";
+import { getObjectTypesList } from "../../../../store/object-params/object-types.store";
+import { getEstateTypesList } from "../../../../store/object-params/estate-types.store";
+import { getObjectsStatusList } from "../../../../store/object-params/object-status.store";
+import { getObjectPropertiesList } from "../../../../store/object-params/object-properties";
+import { getCurrentRentersList } from "../../../../store/object-params/current-renter.store";
 import { getWorkingPositionsList } from "../../../../store/user/working-position.store";
-import { getObjectConditionsList } from "../../../../store/object/object-conditions.store";
-// styled
-import { FieldsContainer, Form } from "../styled/styled";
-// mock
-import { districtsMSK } from "../../../../mock/districts/districts-msk";
-import { districtsSPB } from "../../../../mock/districts/districts-spb";
+import { getObjectConditionsList } from "../../../../store/object-params/object-conditions.store";
 
 const ObjectForm = ({
   data,
