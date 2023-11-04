@@ -13,12 +13,16 @@ const SearchSwitch = ({
   isChecked,
   onChange,
   whiteSpace = "none",
+  height='100%',
+  margin="0"
 }) => {
   return (
     <Box>
       <FormControl
         component="fieldset"
         sx={{
+          height: height,
+          margin: margin,
           padding: "5px 15px 5px 0px",
           border: "1px solid",
           borderColor: isChecked ? "green" : "gray",

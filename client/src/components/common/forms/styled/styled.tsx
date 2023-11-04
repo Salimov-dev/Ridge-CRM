@@ -12,5 +12,6 @@ export const Form = styled(`form`)({
 export const FieldsContainer = styled(Box)`
   width: 100%;
   display: flex;
+  align-items: start;
   gap: 4px;
 `;

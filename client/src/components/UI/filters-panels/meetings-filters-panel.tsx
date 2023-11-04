@@ -1,3 +1,4 @@
+import { orderBy } from "lodash";
 // components
 import SearchField from "../../common/inputs/search-field";
 import { FieldsContainer, Form } from "../../common/forms/styled/styled";
@@ -9,8 +10,6 @@ import { meetingDoneTypes } from "../../../mock/meetings/meeting-done-status";
 // utils
 import { getActualUsersList } from "../../../utils/actual-items/get-actual-users-list";
 import { getActualStatusesList } from "../../../utils/actual-items/get-actual-statuses-list";
-import { getActualTypesList } from "../../../utils/actual-items/get-actual-types-list";
-
 
 const MeetingsFiltersPanel = ({
   data,
@@ -22,10 +21,28 @@ const MeetingsFiltersPanel = ({
   isCurator,
   isLoading,
 }) => {
+  const usersList = getActualUsersList(meetings);
+  const statusesList = getActualStatusesList(meetings, statuses);
 
-const usersList = getActualUsersList(meetings)
-const statusesList = getActualStatusesList(meetings, statuses)
-const typesList = getActualTypesList(meetings, types)
+  const getActualTypesList = () => {
+    const filteredTypes = meetings?.map((meet) => meet?.meetingType);
+    const formatedTypesArray = filteredTypes?.filter((type) => type !== "");
+    const uniqueTypes = [...new Set(formatedTypesArray)];
+
+    const actualTypesArray = uniqueTypes?.map((id) => {
+      const foundObject = types?.find((type) => type._id === id);
+      return foundObject
+        ? {
+            _id: foundObject._id,
+            name: foundObject.name,
+          }
+        : null;
+    });
+
+    const sortedTypes = orderBy(actualTypesArray, ["name"], ["asc"]);
+
+    return sortedTypes;
+  };
 
   return (
     <Form>
@@ -51,7 +68,7 @@ const typesList = getActualTypesList(meetings, types)
           name="selectedTypes"
           labelId="selectedTypes-label"
           label="Выбор по типу"
-          itemsList={typesList}
+          itemsList={getActualTypesList()}
           selectedItems={data.selectedTypes}
           onChange={(e) => setValue("selectedTypes", e.target.value)}
           disabled={isLoading ? true : false}

@@ -1,17 +1,12 @@
-import { useSelector } from "react-redux";
+import dayjs from "dayjs";
+import { orderBy } from "lodash";
 import useTableHeader from "../../../columns/result-my-columns/hooks/use-table-header";
 import { objectStatusesArray } from "../../../mock/object/object-status";
 import { getWeeklyObjects } from "../../../utils/objects/get-weekly-objects";
 import { getWeeklyObjectsWithPhone } from "../../../utils/objects/get-weekly-objects-with-phone";
-import { getObjectsList } from "../../../store/object/objects.store";
-import dayjs from "dayjs";
-import { orderBy } from "lodash";
-import { getLastContactsList } from "../../../store/last-contact/last-contact.store";
 
-const useData = () => {
+const useData = (objects, lastContacts) => {
   const currentDate = dayjs();
-  const objects = useSelector(getObjectsList());
-  const lastContacts = useSelector(getLastContactsList());
 
   // текущая неделя месяца
   const startOfCurrentWeek = currentDate.startOf("week");
@@ -20,10 +15,11 @@ const useData = () => {
     "DD.MM"
   )} - ${endOfCurrentWeek.format("DD.MM")}`;
 
-  const weeklyObjects = getWeeklyObjects(startOfCurrentWeek, endOfCurrentWeek);
+  const weeklyObjects = getWeeklyObjects(startOfCurrentWeek, endOfCurrentWeek, objects);
   const weeklyObjectsWithPhone = getWeeklyObjectsWithPhone(
     startOfCurrentWeek,
-    endOfCurrentWeek
+    endOfCurrentWeek,
+    objects
   );
 
   // предыдущая неделя месяца
@@ -35,11 +31,13 @@ const useData = () => {
   const formattedEndPrevWeekDate = startOfPrevWeek.format("YYYY-MM-DD");
   const previousWeekObjects = getWeeklyObjects(
     formattedStartPrevWeekDate,
-    formattedEndPrevWeekDate
+    formattedEndPrevWeekDate,
+    objects
   );
   const previousWeekObjectsWithPhone = getWeeklyObjectsWithPhone(
     formattedStartPrevWeekDate,
-    formattedEndPrevWeekDate
+    formattedEndPrevWeekDate,
+    objects
   );
 
   // 3 неделя месяца
@@ -51,11 +49,13 @@ const useData = () => {
   const formattedEndNexDate = endOfThirdWeek.format("YYYY-MM-DD");
   const thirdWeekObjects = getWeeklyObjects(
     formattedStartNexDate,
-    formattedEndNexDate
+    formattedEndNexDate,
+    objects
   );
   const thirdWeekObjectsWithPhone = getWeeklyObjectsWithPhone(
     formattedStartNexDate,
-    formattedEndNexDate
+    formattedEndNexDate,
+    objects
   );
 
   // 4 неделя месяца
@@ -67,11 +67,13 @@ const useData = () => {
   const formattedEnFourthDate = endOFourthWeek.format("YYYY-MM-DD");
   const fourthWeekObjects = getWeeklyObjects(
     formattedStarFourthDate,
-    formattedEnFourthDate
+    formattedEnFourthDate,
+    objects
   );
   const fourthWeekObjectsWithPhone = getWeeklyObjectsWithPhone(
     formattedStarFourthDate,
-    formattedEnFourthDate
+    formattedEnFourthDate,
+    objects
   );
 
   // объекты для отрисовки кривых линий

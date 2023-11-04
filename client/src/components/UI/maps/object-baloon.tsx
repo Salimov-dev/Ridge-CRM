@@ -8,7 +8,7 @@ import Attribute from "../../common/map/baloon/attribute";
 // utils
 import { makeDigitSeparator } from "../../../utils/data/make-digit-separator";
 // store
-import { getUserNameById } from "../../../store/user/users.store";
+import { getCurrentUserId, getIsUserCurator, getUserNameById } from "../../../store/user/users.store";
 import { getDistrictName } from "../../../store/object-params/districts.store";
 import { getRentTypeNameById } from "../../../store/object-params/rent-types.store";
 import { getEstateTypeNameById } from "../../../store/object-params/estate-types.store";
@@ -30,9 +30,14 @@ const BaloonContainer = styled(Box)`
 `;
 
 const ObjectBaloon = ({ object }) => {
+  const dispatch = useDispatch();
+
   const objectId = object?._id;
   const manager = useSelector(getUserNameById(object?.userId));
   const city = object?.location?.city;
+
+  const currentUserId = useSelector(getCurrentUserId());
+  const isCurator = useSelector(getIsUserCurator(currentUserId));
 
   const district = useSelector(getDistrictName(object?.location?.district));
   const address = object?.location?.address;
@@ -43,7 +48,6 @@ const ObjectBaloon = ({ object }) => {
   const rentPrice = object?.commercialTerms?.rentPrice;
   const rentTypes = object?.commercialTerms?.rentTypes;
 
-  const dispatch = useDispatch();
 
   const objectType = useSelector(
     getObjectTypeNameById(object?.estateOptions?.objectTypes)
@@ -64,7 +68,7 @@ const ObjectBaloon = ({ object }) => {
       <Attribute title="Город:" subTitle={city} />
       <Attribute title="Район:" subTitle={district} />
       <Attribute title="Адрес:" subTitle={address} />
-      <Attribute title="Менеджер:" subTitle={manager} />
+      {isCurator && <Attribute title="Менеджер:" subTitle={manager} />}
 
       <DividerStyled />
       <Attribute title="Тип объекта:" subTitle={objectType} />

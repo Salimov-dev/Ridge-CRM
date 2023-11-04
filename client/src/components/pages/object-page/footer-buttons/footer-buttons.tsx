@@ -74,6 +74,7 @@ const FooterButtons = ({
         setValue={setValue}
         watchItemId={watchStatus}
         errors={errors?.status}
+        disabled={!isAuthorEntity}
       />
       <ButtonsPanel
         object={object}

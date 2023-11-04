@@ -31,14 +31,14 @@ const TableCell = ({ objects, objectsWithPhone, presentations }) => {
           background: "FireBrick",
         }}
       >
-        С телефоном: {objectsWithPhone?.length}шт
+        С телеф.: {objectsWithPhone?.length}шт
       </Container>
       <Container
         sx={{
           background: "RoyalBlue",
         }}
       >
-        Презентаций: {presentations?.length}шт
+        Презент.: {presentations?.length}шт
       </Container>
     </Box>
   );

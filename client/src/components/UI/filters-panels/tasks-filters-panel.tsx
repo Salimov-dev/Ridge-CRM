@@ -46,6 +46,7 @@ const TasksFiltersPanel = ({
           isLoading={isLoading}
           isChecked={data?.onlyMyTasks}
           whiteSpace="nowrap"
+          height="52px"
           checked={data?.onlyMyTasks}
           onChange={(e) => {
             setValue("onlyMyTasks", e.target.checked);
