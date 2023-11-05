@@ -34,7 +34,7 @@ const Deals = () => {
     localStorage.getItem("search-deals-data")
   );
 
-  const { register, watch, setValue } = useForm({
+  const { register, watch, setValue, reset } = useForm({
     defaultValues: Boolean(localStorageState)
       ? localStorageState
       : initialState,
@@ -46,6 +46,7 @@ const Deals = () => {
   const isCurator = useSelector(getIsUserCurator(currentUserId));
   const objects = useSelector(getObjectsList());
   const isLoading = useSelector(getObjectsLoadingStatus());
+  const isInputEmpty = JSON.stringify(initialState) !== JSON.stringify(data);
 
   const objectsInDeals = objects?.filter((obj) => {
     if (obj && allowedStatuses.includes(obj.status)) {
@@ -79,14 +80,16 @@ const Deals = () => {
   return (
     <Box>
       <LayoutTitle title="Сделки" />
-      <DealsFiltersPanel
+      {isCurator && <DealsFiltersPanel
         data={data}
         deals={objectsInDeals}
         register={register}
+        initialState={initialState}
+        reset={reset}
         setValue={setValue}
-        isCurator={isCurator}
+        isInputEmpty={isInputEmpty}
         isLoading={isLoading}
-      />
+      />}
       <Stages
         objects={searchedDeals}
         stages={dealStagesArray}

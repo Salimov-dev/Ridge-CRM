@@ -65,6 +65,59 @@ const generateMonthHeaders = () => {
 
 export const resultMyColumns = [
   {
+    header: "Мои результаты",
+    columns: [
+      {
+        accessorFn: (row) => row,
+        header: "Позиция",
+        cell: () => {
+          return <TableCell onlyTitle={true} />;
+        },
+      },
+      {
+        accessorFn: (row) => row,
+        header: "ИТОГО",
+        cell: (info) => {
+          const currentMonth = dayjs();
+          const sixMonthsAgo = currentMonth.subtract(6, "month");
+          const objects = useSelector(getObjectsList());
+          const presentations = useSelector(getPresentationsList());
+
+          const currentMonthObjects = objects?.filter((object) => {
+            const objectDate = dayjs(object.created_at);
+            return (
+              objectDate.isAfter(sixMonthsAgo) &&
+              objectDate.isBefore(currentMonth)
+            );
+          });
+
+          const objectsWithPhone = currentMonthObjects?.filter((obj) => {
+            const phoneNumber = obj?.contact?.phone;
+            return phoneNumber !== null && String(phoneNumber)?.length > 0;
+          });
+
+          const currentMonthPresentations = presentations?.filter(
+            (presentation) => {
+              const presentationDate = dayjs(presentation.created_at);
+              return (
+                presentationDate.isAfter(sixMonthsAgo) &&
+                presentationDate.isBefore(currentMonth)
+              );
+            }
+          );
+
+          return (
+            <TableCell
+              objects={currentMonthObjects}
+              objectsWithPhone={objectsWithPhone}
+              presentations={currentMonthPresentations}
+            />
+          );
+        },
+      },
+    ],
+  },
+  {
     header: "ПОСЛЕДНИЕ 6 МЕСЯЦЕВ",
     columns: generateMonthHeaders(),
   },

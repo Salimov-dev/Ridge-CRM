@@ -38,7 +38,6 @@ const generateMonthHeaders = () => {
           (obj) => obj?.userId === user?._id
         );
 
-  
         const currentUserPresentations = presentations?.filter(
           (pres) => pres?.userId === user?._id
         );
@@ -83,6 +82,63 @@ export const resultMyColumnsCurator = [
           const userId = info.getValue();
           const user = useSelector(getUserDataById(userId));
           return <UserNameWithAvatar user={user} />;
+        },
+      },
+      {
+        accessorFn: (row) => row,
+        header: "Позиция",
+        cell: () => {
+          return <TableCell onlyTitle={true} />;
+        },
+      },
+      {
+        accessorFn: (row) => row,
+        header: "ИТОГО",
+        cell: (info) => {
+          const currentMonth = dayjs();
+          const sixMonthsAgo = currentMonth.subtract(6, "month");
+          const user = info.getValue();
+          const objects = useSelector(getObjectsList());
+          const presentations = useSelector(getPresentationsList());
+
+          const currentUserObjects = objects?.filter(
+            (obj) => obj?.userId === user?._id
+          );
+
+          const currentUserPresentations = presentations?.filter(
+            (pres) => pres?.userId === user?._id
+          );
+
+          const currentMonthObjects = currentUserObjects?.filter((object) => {
+            const objectDate = dayjs(object.created_at);
+            return (
+              objectDate.isAfter(sixMonthsAgo) &&
+              objectDate.isBefore(currentMonth)
+            );
+          });
+
+          const objectsWithPhone = currentMonthObjects?.filter((obj) => {
+            const phoneNumber = obj?.contact?.phone;
+            return phoneNumber !== null && String(phoneNumber)?.length > 0;
+          });
+
+          const currentMonthPresentations = currentUserPresentations?.filter(
+            (presentation) => {
+              const presentationDate = dayjs(presentation.created_at);
+              return (
+                presentationDate.isAfter(sixMonthsAgo) &&
+                presentationDate.isBefore(currentMonth)
+              );
+            }
+          );
+
+          return (
+            <TableCell
+              objects={currentMonthObjects}
+              objectsWithPhone={objectsWithPhone}
+              presentations={currentMonthPresentations}
+            />
+          );
         },
       },
     ],

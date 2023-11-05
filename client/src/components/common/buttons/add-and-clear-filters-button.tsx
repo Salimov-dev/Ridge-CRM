@@ -1,11 +1,5 @@
 import { Box, styled, Button, Typography } from "@mui/material";
-import ClearOutlinedIcon from "@mui/icons-material/ClearOutlined";
-
-const ButtonStyled = styled(Button)`
-  display: flex;
-  align-items: center;
-  gap: 3px;
-`;
+import ClearFilterButton from "./clear-filter-button";
 
 const AddAndClearFiltersButton = ({
   initialState,
@@ -21,22 +15,11 @@ const AddAndClearFiltersButton = ({
     gap: 4px;
   `;
 
-  const handleClearForm = () => {
-    reset(initialState);
-  };
-
   return (
     <Component>
       {button}
       {isInputEmpty && (
-        <ButtonStyled
-          variant="outlined"
-          color="success"
-          onClick={handleClearForm}
-        >
-          <Typography>Очистить фильтры</Typography>
-          <ClearOutlinedIcon />
-        </ButtonStyled>
+        <ClearFilterButton reset={reset} initialState={initialState} />
       )}
     </Component>
   );

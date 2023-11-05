@@ -2,7 +2,7 @@ import "dayjs/locale/ru";
 import { useForm } from "react-hook-form";
 import { useEffect } from "react";
 import { Box, styled } from "@mui/material";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 // components
 import LayoutTitle from "../../components/common/page-titles/layout-title";
 import BasicTable from "../../components/common/table/basic-table";
@@ -28,6 +28,7 @@ import { resultMyColumnsCurator } from "../../columns/result-my-columns/result-m
 import { resultMyColumns } from "../../columns/result-my-columns/result-my-columns";
 // utils
 import { getUsersWithoutCurrentUser } from "../../utils/user/get-users-without-current-user";
+import { setStaticticPositions } from "../../store/statictics/statictics-positions.store";
 
 const ChartsContainer = styled(Box)`
   display: flex;
@@ -36,15 +37,17 @@ const ChartsContainer = styled(Box)`
 
 const initialState = {
   selectedUsers: [],
+  selectedPositions: [],
   withoutCurator: false,
 };
 
 const Statictics = () => {
+  const dispatch = useDispatch()
   const localStorageState = JSON.parse(
     localStorage.getItem("search-statictics-data")
   );
 
-  const { register, watch, setValue } = useForm({
+  const { register, watch, setValue, reset } = useForm({
     defaultValues: Boolean(localStorageState)
       ? localStorageState
       : initialState,
@@ -52,6 +55,7 @@ const Statictics = () => {
   });
 
   const data = watch();
+  const selectedPositions = watch("selectedPositions");
   const withoutCurator = watch("withoutCurator");
 
   const usersList = useSelector(getUsersList());
@@ -74,7 +78,8 @@ const Statictics = () => {
 
   const lastContacts = useSelector(getLastContactsList());
   const isObjectsLoading = useSelector(getObjectsLoadingStatus());
-
+  const isInputEmpty = JSON.stringify(initialState) !== JSON.stringify(data);
+  
   const columns = isCurator ? resultMyColumnsCurator : resultMyColumns;
 
   const {searchedObjects, searchedUsers} = useSearchStatictics(objects, users, data);
@@ -87,6 +92,10 @@ const Statictics = () => {
   useEffect(() => {
     localStorage.setItem("search-statictics-data", JSON.stringify(data));
   }, [data]);
+
+  useEffect(() => {
+    dispatch<any>(setStaticticPositions(selectedPositions))
+  }, [selectedPositions]);
 
   useEffect(() => {
     const hasLocalStorageData = localStorage.getItem("search-statictics-data");
@@ -102,16 +111,18 @@ const Statictics = () => {
   return (
     <>
       <LayoutTitle title="Статистика" />
-      <StaticticsFiltersPanel
+      {isCurator && <StaticticsFiltersPanel
         data={data}
         objects={objects}
+        initialState={initialState}
         objectsWithoutCurrentUser={objectsWithoutCurrentUser}
         withoutCurator={withoutCurator}
         register={register}
+        reset={reset}
         setValue={setValue}
-        isCurator={isCurator}
+        isInputEmpty={isInputEmpty}
         isLoading={isObjectsLoading}
-      />
+      />}
 
       <ChartsContainer>
         <ChartLine data={chartData} />

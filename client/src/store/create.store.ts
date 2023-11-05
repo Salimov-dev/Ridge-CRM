@@ -25,6 +25,7 @@ import updateMeetingReducer from "./meeting/update-meeting.store";
 // users
 import createUserReducer from "./user/create-user.store";
 import usersListReducer from "./user/users.store";
+import loginReducer from "./user/login.store";
 import userStatusesReducer from "./user/user-statuses.store";
 import updateManagerReducer from "./user/update-user.store";
 import updateManagerTaskReducer from "./task/update-manager-task.store";
@@ -44,12 +45,14 @@ import sidebarCollapsStateReducer from "./sidebar-collaps-state.store";
 import createPresentationReducer from "./presentation/create-presentation.store";
 import presentationsReducer from "./presentation/presentations.store";
 import presentationStatusReducer from "./presentation/presentation-status.store";
+import updatePresentationReducer from "./presentation/update-presentation.store";
+// calendar
+import openSelectedDayReducer from "./calendar/open-selected-day.store";
+// statictic
+import staticticPositionsReducer from "./statictics/statictics-positions.store";
 // other
 import monthIndexReducer from "./month-index.store";
 import currrentPathReducer from "./current-path.store";
-import updatePresentationReducer from "./presentation/update-presentation.store";
-import openSelectedDayReducer from "./calendar/open-selected-day.store";
-import loginReducer from "./user/login.store";
 
 const rootReducer = combineReducers({
   // auth state
@@ -104,6 +107,8 @@ const rootReducer = combineReducers({
   presentationStatus: presentationStatusReducer,
   createPresentation: createPresentationReducer,
   updatePresentation: updatePresentationReducer,
+  //statictic
+  staticticPositions: staticticPositionsReducer,
 });
 
 export function createStore() {

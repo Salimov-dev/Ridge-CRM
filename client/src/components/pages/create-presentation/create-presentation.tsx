@@ -1,6 +1,6 @@
 // libraries
 import { toast } from "react-toastify";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,13 +12,18 @@ import IsLoadingDialog from "../../common/dialog/is-loading-dialog";
 // schema
 import { presentationSchema } from "../../../schemas/presentation-schema";
 // store
-import { getObjectsList } from "../../../store/object/objects.store";
+import { getObjectAddressById, getObjectsList } from "../../../store/object/objects.store";
 import { getOpenObjectPageId } from "../../../store/object/open-object-page.store";
 import { createPresentation } from "../../../store/presentation/presentations.store";
 import {
+  getCurrentUserData,
   getCurrentUserId,
   getIsUserCurator,
+  getUserNameById,
+  getUsersList,
 } from "../../../store/user/users.store";
+import emailjs from '@emailjs/browser';
+import { send } from 'emailjs-com';
 
 const initialState = {
   objectId: "",
@@ -58,11 +63,38 @@ const CreatePresentation = ({ onClose, setConfettiActive }) => {
 
   const data = watch();
   const watchObjectId = watch("objectId");
+  const cloudLink = watch("cloudLink");
+  console.log("cloudLink", cloudLink);
+  
   const isFullValid = isValid && Boolean(watchObjectId?.length);
   const statusToBeAgreedId = "654wqeg3469y9dfsd82dd334"; // статус "На согласовании"
 
+  const [toSend, setToSend] = useState({
+    from_name: '',
+    to_name: '',
+    to_email: "",
+    object_address: "",
+    created_manager: "",
+    cloud_link: "",
+    reply_to: '',
+  });
+
+  const users = useSelector(getUsersList())
+  // console.log("users", users);
+  const currentUser = useSelector(getCurrentUserData())
+  const currentUserName = useSelector(getUserNameById(currentUserId))
+  const curatorUser = users?.find(user => user?.role === "CURATOR")
+  const curatorName = useSelector(getUserNameById(curatorUser?._id))
+  console.log("currentUserName", currentUserName);
+  console.log("curatorUser", curatorName);
+  
+  
+  const selectedObject = objects?.find(obj => obj?._id === watchObjectId)
+  // console.log("selectedObject", selectedObject);
+  const address = useSelector(getObjectAddressById(selectedObject?._id))
+
   const onSubmit = (data) => {
-    setIsLoading(true);
+    // setIsLoading(true);
 
     const presentationNewData = {
       ...data,
@@ -72,6 +104,33 @@ const CreatePresentation = ({ onClose, setConfettiActive }) => {
     };
 
     
+
+    setToSend({from_name: 'test Ridge',
+    to_name: curatorName,
+    to_email: "ruspb1987@gmail.com",
+    created_manager: currentUserName, 
+    object_address: address,
+    cloud_link: cloudLink,
+    reply_to: 'ruspb1987@gmail.com'})
+
+    console.log("toSend", toSend);
+    
+
+    send('service_yldzorr', 'template_z0ijagp', toSend, 'eLap4LxTXi9SlRBQh')
+        .then((result) => {
+            console.log(result.text);
+        }, (error) => {
+            console.log(error.text);
+        });
+
+      // emailjs.sendForm('service_yldzorr', 'template_z0ijagp', toSend, 'eLap4LxTXi9SlRBQh')
+      //   .then((result) => {
+      //       console.log(result.text);
+      //   }, (error) => {
+      //       console.log(error.text);
+      //   });
+
+
 
     // dispatch<any>(createPresentation(presentationNewData))
     //   .then(() => {
@@ -100,6 +159,7 @@ const CreatePresentation = ({ onClose, setConfettiActive }) => {
         color="white"
       />
       <ManagerPresentationForm
+
         data={data}
         objects={transformObjects}
         register={register}
