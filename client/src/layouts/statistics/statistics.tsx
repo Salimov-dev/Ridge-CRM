@@ -27,7 +27,6 @@ import { getLastContactsList } from "../../store/last-contact/last-contact.store
 import { resultMyColumnsCurator } from "../../columns/result-my-columns/result-my-columns-curator";
 import { resultMyColumns } from "../../columns/result-my-columns/result-my-columns";
 // utils
-import { getOnlyCurrentUser } from "../../utils/user/get-only-current-user";
 import { getUsersWithoutCurrentUser } from "../../utils/user/get-users-without-current-user";
 
 const ChartsContainer = styled(Box)`
@@ -60,26 +59,25 @@ const Statictics = () => {
 
   const currentUserId = useSelector(getCurrentUserId());
   const isCurator = useSelector(getIsUserCurator(currentUserId));
+
   const users = isCurator
     ? withoutCurator
       ? usersWithoutCurrentUser
       : usersList
     : usersWithoutCurrentUser;
 
-  const objects = useSelector(getObjectsList());
-  const objectsWithoutCurrentUser = objects?.filter(
+  const objectsList = useSelector(getObjectsList());
+  const objectsWithoutCurrentUser = objectsList?.filter(
     (obj) => obj?.userId !== currentUserId
   );
+  const objects = withoutCurator ? objectsWithoutCurrentUser : objectsList;
 
   const lastContacts = useSelector(getLastContactsList());
   const isObjectsLoading = useSelector(getObjectsLoadingStatus());
 
   const columns = isCurator ? resultMyColumnsCurator : resultMyColumns;
 
-  const searchedObjects = useSearchStatictics(
-    withoutCurator ? objectsWithoutCurrentUser : objects,
-    data
-  );
+  const {searchedObjects, searchedUsers} = useSearchStatictics(objects, users, data);
 
   const { chartData, pieData, pieDataWithContacts } = useData(
     searchedObjects,
@@ -123,7 +121,7 @@ const Statictics = () => {
 
       <Box>
         <BasicTable
-          items={users}
+          items={searchedUsers}
           itemsColumns={columns}
           isLoading={isObjectsLoading}
           isPaginate={false}

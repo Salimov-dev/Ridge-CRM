@@ -78,7 +78,7 @@ export const resultMyColumnsCurator = [
     columns: [
       {
         accessorKey: "_id",
-        header: "Менеджер",
+        header: "ФИО",
         cell: (info) => {
           const userId = info.getValue();
           const user = useSelector(getUserDataById(userId));

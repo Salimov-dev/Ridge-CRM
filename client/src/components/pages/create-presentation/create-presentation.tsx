@@ -71,17 +71,19 @@ const CreatePresentation = ({ onClose, setConfettiActive }) => {
       status: statusToBeAgreedId,
     };
 
-    dispatch<any>(createPresentation(presentationNewData))
-      .then(() => {
-        setIsLoading(false);
-        onClose();
-        setConfettiActive(true);
-        toast.success("Презентация успешно создана!");
-      })
-      .catch((error) => {
-        setIsLoading(false);
-        toast.error(error);
-      });
+    
+
+    // dispatch<any>(createPresentation(presentationNewData))
+    //   .then(() => {
+    //     setIsLoading(false);
+    //     onClose();
+    //     setConfettiActive(true);
+    //     toast.success("Презентация успешно создана!");
+    //   })
+    //   .catch((error) => {
+    //     setIsLoading(false);
+    //     toast.error(error);
+    //   });
   };
 
   return isLoading ? (

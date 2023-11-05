@@ -1,7 +1,7 @@
 import "dayjs/locale/ru";
 import { useMemo } from "react";
 
-const useSearchStatictics = (objects, data) => {
+const useSearchStatictics = (objects, users, data) => {
   const searchedObjects = useMemo(() => {
     let array = objects;
 
@@ -12,7 +12,17 @@ const useSearchStatictics = (objects, data) => {
     return array;
   }, [data, objects]);
 
-  return searchedObjects;
+  const searchedUsers = useMemo(() => {
+    let array = users;
+
+    if (data.selectedUsers?.length) {
+      array = array?.filter((user) => data.selectedUsers.includes(user._id));
+    }
+
+    return array;
+  }, [data, users]);
+
+  return { searchedObjects, searchedUsers };
 };
 
 export default useSearchStatictics;
