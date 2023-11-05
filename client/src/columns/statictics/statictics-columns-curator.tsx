@@ -5,6 +5,8 @@ import { useSelector } from "react-redux";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 // components
 import TableCell from "./components/table-cell";
+import UserNameWithAvatar from "../../components/common/table/helpers/user-name-with-avatar";
+// hooks
 import { useTableHeader } from "./hooks/use-table-header";
 // utils
 import { getWeeklyObjects } from "../../utils/objects/get-weekly-objects";
@@ -13,6 +15,7 @@ import { getWeeklyObjectsWithPhone } from "../../utils/objects/get-weekly-object
 // store
 import { getObjectsList } from "../../store/object/objects.store";
 import { getPresentationsList } from "../../store/presentation/presentations.store";
+import { getUserDataById } from "../../store/user/users.store";
 
 dayjs.extend(customParseFormat);
 dayjs.locale("ru");
@@ -27,33 +30,39 @@ const generateMonthHeaders = () => {
     monthHeaders.push({
       accessorFn: (row) => row,
       header: monthHeader,
-      cell: () => {
+      cell: (info) => {
+        const user = info.getValue();
         const objects = useSelector(getObjectsList());
         const presentations = useSelector(getPresentationsList());
 
-        const currentMonthObjects = objects.filter((object) => {
+        const currentUserObjects = objects?.filter(
+          (obj) => obj?.userId === user?._id
+        );
+
+        const currentUserPresentations = presentations?.filter(
+          (pres) => pres?.userId === user?._id
+        );
+
+        const currentMonthObjects = currentUserObjects?.filter((object) => {
           return dayjs(object.created_at).month() === month.month();
         });
-        const objectQuantity = currentMonthObjects;
-
-        const currentMonthPresentations = presentations?.filter(
-          (presentation) => {
-            return dayjs(presentation.created_at).month() === month.month();
-          }
-        );
-        const presentationsQuantity = currentMonthPresentations;
 
         const objectsWithPhone = currentMonthObjects?.filter((obj) => {
           const phoneNumber = obj?.contact?.phone;
           return phoneNumber !== null && String(phoneNumber)?.length > 0;
         });
-        const objectsWithPhoneQuantity = objectsWithPhone;
+
+        const currentMonthPresentations = currentUserPresentations?.filter(
+          (presentation) => {
+            return dayjs(presentation.created_at).month() === month.month();
+          }
+        );
 
         return (
           <TableCell
-            objects={objectQuantity}
-            objectsWithPhone={objectsWithPhoneQuantity}
-            presentations={presentationsQuantity}
+            objects={currentMonthObjects}
+            objectsWithPhone={objectsWithPhone}
+            presentations={currentMonthPresentations}
           />
         );
       },
@@ -63,10 +72,19 @@ const generateMonthHeaders = () => {
   return monthHeaders;
 };
 
-export const resultMyColumns = [
+export const staticticsColumnsCurator = [
   {
-    header: "Мои результаты",
+    header: "Результат",
     columns: [
+      {
+        accessorKey: "_id",
+        header: "Менеджер",
+        cell: (info) => {
+          const userId = info.getValue();
+          const user = useSelector(getUserDataById(userId));
+          return <UserNameWithAvatar user={user} />;
+        },
+      },
       {
         accessorFn: (row) => row,
         header: "Позиция",
@@ -80,10 +98,19 @@ export const resultMyColumns = [
         cell: (info) => {
           const currentMonth = dayjs();
           const sixMonthsAgo = currentMonth.subtract(6, "month");
+          const user = info.getValue();
           const objects = useSelector(getObjectsList());
           const presentations = useSelector(getPresentationsList());
 
-          const currentMonthObjects = objects?.filter((object) => {
+          const currentUserObjects = objects?.filter(
+            (obj) => obj?.userId === user?._id
+          );
+
+          const currentUserPresentations = presentations?.filter(
+            (pres) => pres?.userId === user?._id
+          );
+
+          const currentMonthObjects = currentUserObjects?.filter((object) => {
             const objectDate = dayjs(object.created_at);
             return (
               objectDate.isAfter(sixMonthsAgo) &&
@@ -96,7 +123,7 @@ export const resultMyColumns = [
             return phoneNumber !== null && String(phoneNumber)?.length > 0;
           });
 
-          const currentMonthPresentations = presentations?.filter(
+          const currentMonthPresentations = currentUserPresentations?.filter(
             (presentation) => {
               const presentationDate = dayjs(presentation.created_at);
               return (
@@ -132,7 +159,8 @@ export const resultMyColumns = [
         })(),
         enableSorting: false,
         size: 30,
-        cell: () => {
+        cell: (info) => {
+          const user = info.getValue();
           const currentDate = dayjs();
           const endOPreviousWeek = currentDate
             .subtract(3, "week")
@@ -141,18 +169,31 @@ export const resultMyColumns = [
 
           const formattedStartDate = startOPreviousWeek.format("YYYY-MM-DD");
           const formattedEndDate = endOPreviousWeek.format("YYYY-MM-DD");
+          const objects = useSelector(getObjectsList());
+
+          const currentUserObjects = objects?.filter(
+            (obj) => obj?.userId === user?._id
+          );
+
+          const presentations = useSelector(getPresentationsList());
+          const currentUserPresentations = presentations?.filter(
+            (pres) => pres?.userId === user?._id
+          );
 
           const weeklyPresentations = getWeeklyPresentations(
             formattedStartDate,
-            formattedEndDate
+            formattedEndDate,
+            currentUserPresentations
           );
           const weeklyObjects = getWeeklyObjects(
             formattedStartDate,
-            formattedEndDate
+            formattedEndDate,
+            currentUserObjects
           );
           const weeklyObjectsWithPhone = getWeeklyObjectsWithPhone(
             formattedStartDate,
-            formattedEndDate
+            formattedEndDate,
+            currentUserObjects
           );
 
           return (
@@ -172,7 +213,7 @@ export const resultMyColumns = [
         })(),
         enableSorting: false,
         size: 30,
-        cell: () => {
+        cell: (info) => {
           const currentDate = dayjs();
 
           const endOPreviousWeek = currentDate
@@ -183,17 +224,31 @@ export const resultMyColumns = [
           const formattedStartDate = startOPreviousWeek.format("YYYY-MM-DD");
           const formattedEndDate = endOPreviousWeek.format("YYYY-MM-DD");
 
+          const user = info.getValue();
+          const objects = useSelector(getObjectsList());
+          const currentUserObjects = objects?.filter(
+            (obj) => obj?.userId === user?._id
+          );
+
+          const presentations = useSelector(getPresentationsList());
+          const currentUserPresentations = presentations?.filter(
+            (pres) => pres?.userId === user?._id
+          );
+
           const weeklyPresentations = getWeeklyPresentations(
             formattedStartDate,
-            formattedEndDate
+            formattedEndDate,
+            currentUserPresentations
           );
           const weeklyObjects = getWeeklyObjects(
             formattedStartDate,
-            formattedEndDate
+            formattedEndDate,
+            currentUserObjects
           );
           const weeklyObjectsWithPhone = getWeeklyObjectsWithPhone(
             formattedStartDate,
-            formattedEndDate
+            formattedEndDate,
+            currentUserObjects
           );
 
           return (
@@ -213,7 +268,7 @@ export const resultMyColumns = [
         })(),
         enableSorting: false,
         size: 30,
-        cell: () => {
+        cell: (info) => {
           const currentDate = dayjs();
 
           const endOPreviousWeek = currentDate
@@ -224,17 +279,31 @@ export const resultMyColumns = [
           const formattedStartDate = startOPreviousWeek.format("YYYY-MM-DD");
           const formattedEndDate = endOPreviousWeek.format("YYYY-MM-DD");
 
+          const user = info.getValue();
+          const objects = useSelector(getObjectsList());
+          const currentUserObjects = objects?.filter(
+            (obj) => obj?.userId === user?._id
+          );
+
+          const presentations = useSelector(getPresentationsList());
+          const currentUserPresentations = presentations?.filter(
+            (pres) => pres?.userId === user?._id
+          );
+
           const weeklyPresentations = getWeeklyPresentations(
             formattedStartDate,
-            formattedEndDate
+            formattedEndDate,
+            currentUserPresentations
           );
           const weeklyObjects = getWeeklyObjects(
             formattedStartDate,
-            formattedEndDate
+            formattedEndDate,
+            currentUserObjects
           );
           const weeklyObjectsWithPhone = getWeeklyObjectsWithPhone(
             formattedStartDate,
-            formattedEndDate
+            formattedEndDate,
+            currentUserObjects
           );
 
           return (
@@ -260,19 +329,36 @@ export const resultMyColumns = [
         })(),
         enableSorting: false,
         size: 30,
-        cell: () => {
+        cell: (info) => {
           const currentDate = dayjs();
           const startOfWeek = currentDate.startOf("week");
           const endOfWeek = currentDate.endOf("week").day(0);
 
+          const user = info.getValue();
+          const objects = useSelector(getObjectsList());
+          const currentUserObjects = objects?.filter(
+            (obj) => obj?.userId === user?._id
+          );
+
+          const presentations = useSelector(getPresentationsList());
+          const currentUserPresentations = presentations?.filter(
+            (pres) => pres?.userId === user?._id
+          );
+
           const weeklyPresentations = getWeeklyPresentations(
             startOfWeek,
-            endOfWeek
+            endOfWeek,
+            currentUserPresentations
           );
-          const weeklyObjects = getWeeklyObjects(startOfWeek, endOfWeek);
+          const weeklyObjects = getWeeklyObjects(
+            startOfWeek,
+            endOfWeek,
+            currentUserObjects
+          );
           const weeklyObjectsWithPhone = getWeeklyObjectsWithPhone(
             startOfWeek,
-            endOfWeek
+            endOfWeek,
+            currentUserObjects
           );
 
           return (

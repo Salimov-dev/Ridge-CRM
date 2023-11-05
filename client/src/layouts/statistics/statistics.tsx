@@ -12,7 +12,14 @@ import StaticticsFiltersPanel from "../../components/UI/filters-panels/statictic
 // hooks
 import useData from "./hooks/use-data";
 import useSearchStatictics from "../../hooks/statictics/use-search-statistics";
+// columns
+import { staticticsColumns } from "../../columns/statictics/statictics-columns";
+import { staticticsColumnsCurator } from "../../columns/statictics/statictics-columns-curator";
+// utils
+import { getUsersWithoutCurrentUser } from "../../utils/user/get-users-without-current-user";
 // store
+import { getLastContactsList } from "../../store/last-contact/last-contact.store";
+import { setStaticticPositions } from "../../store/statictics/statictics-positions.store";
 import {
   getObjectsList,
   getObjectsLoadingStatus,
@@ -22,13 +29,6 @@ import {
   getIsUserCurator,
   getUsersList,
 } from "../../store/user/users.store";
-import { getLastContactsList } from "../../store/last-contact/last-contact.store";
-// columns
-import { resultMyColumnsCurator } from "../../columns/result-my-columns/result-my-columns-curator";
-import { resultMyColumns } from "../../columns/result-my-columns/result-my-columns";
-// utils
-import { getUsersWithoutCurrentUser } from "../../utils/user/get-users-without-current-user";
-import { setStaticticPositions } from "../../store/statictics/statictics-positions.store";
 
 const ChartsContainer = styled(Box)`
   display: flex;
@@ -42,7 +42,7 @@ const initialState = {
 };
 
 const Statictics = () => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const localStorageState = JSON.parse(
     localStorage.getItem("search-statictics-data")
   );
@@ -79,10 +79,14 @@ const Statictics = () => {
   const lastContacts = useSelector(getLastContactsList());
   const isObjectsLoading = useSelector(getObjectsLoadingStatus());
   const isInputEmpty = JSON.stringify(initialState) !== JSON.stringify(data);
-  
-  const columns = isCurator ? resultMyColumnsCurator : resultMyColumns;
 
-  const {searchedObjects, searchedUsers} = useSearchStatictics(objects, users, data);
+  const columns = isCurator ? staticticsColumnsCurator : staticticsColumns;
+
+  const { searchedObjects, searchedUsers } = useSearchStatictics(
+    objects,
+    users,
+    data
+  );
 
   const { chartData, pieData, pieDataWithContacts } = useData(
     searchedObjects,
@@ -94,7 +98,7 @@ const Statictics = () => {
   }, [data]);
 
   useEffect(() => {
-    dispatch<any>(setStaticticPositions(selectedPositions))
+    dispatch<any>(setStaticticPositions(selectedPositions));
   }, [selectedPositions]);
 
   useEffect(() => {
@@ -111,18 +115,20 @@ const Statictics = () => {
   return (
     <>
       <LayoutTitle title="Статистика" />
-      {isCurator && <StaticticsFiltersPanel
-        data={data}
-        objects={objects}
-        initialState={initialState}
-        objectsWithoutCurrentUser={objectsWithoutCurrentUser}
-        withoutCurator={withoutCurator}
-        register={register}
-        reset={reset}
-        setValue={setValue}
-        isInputEmpty={isInputEmpty}
-        isLoading={isObjectsLoading}
-      />}
+      {isCurator && (
+        <StaticticsFiltersPanel
+          data={data}
+          objects={objects}
+          initialState={initialState}
+          objectsWithoutCurrentUser={objectsWithoutCurrentUser}
+          withoutCurator={withoutCurator}
+          register={register}
+          reset={reset}
+          setValue={setValue}
+          isInputEmpty={isInputEmpty}
+          isLoading={isObjectsLoading}
+        />
+      )}
 
       <ChartsContainer>
         <ChartLine data={chartData} />

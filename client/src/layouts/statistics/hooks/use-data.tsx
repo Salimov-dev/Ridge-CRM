@@ -1,7 +1,10 @@
 import dayjs from "dayjs";
 import { orderBy } from "lodash";
-import useTableHeader from "../../../columns/result-my-columns/hooks/use-table-header";
+// columns
+import useTableHeader from "../../../columns/statictics/hooks/use-table-header";
+// mock
 import { objectStatusesArray } from "../../../mock/object/object-status";
+// utils
 import { getWeeklyObjects } from "../../../utils/objects/get-weekly-objects";
 import { getWeeklyObjectsWithPhone } from "../../../utils/objects/get-weekly-objects-with-phone";
 
@@ -15,7 +18,11 @@ const useData = (objects, lastContacts) => {
     "DD.MM"
   )} - ${endOfCurrentWeek.format("DD.MM")}`;
 
-  const weeklyObjects = getWeeklyObjects(startOfCurrentWeek, endOfCurrentWeek, objects);
+  const weeklyObjects = getWeeklyObjects(
+    startOfCurrentWeek,
+    endOfCurrentWeek,
+    objects
+  );
   const weeklyObjectsWithPhone = getWeeklyObjectsWithPhone(
     startOfCurrentWeek,
     endOfCurrentWeek,

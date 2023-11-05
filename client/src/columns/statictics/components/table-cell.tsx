@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
-import { Box, styled } from "@mui/material";
-import Position from "./components/position";
+import { Box } from "@mui/material";
+import Position from "./position";
 import { loadStaticticPositions } from "../../../store/statictics/statictics-positions.store";
 
 const TableCell = ({
