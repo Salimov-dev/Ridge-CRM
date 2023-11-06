@@ -45,6 +45,7 @@ const DayContent = ({ meetings, tasks, isSelectedDayDialog }) => {
         <Meetings
           meetings={meetings}
           currentUserId={currentUserId}
+          isCurator={isCurator}
           isSelectedDayDialog={isSelectedDayDialog}
         />
       ) : null}

@@ -2,8 +2,9 @@ import Truncate from "react-truncate";
 import { Box, Typography } from "@mui/material";
 import MeetingObject from "./meeting-object";
 import MeetingInfo from "./meeting-info";
+import { getUserName } from "../../../../../../../../../../../../../utils/user/get-user-name";
 
-const Body = ({ meet, isSelectedDayDialog }) => {
+const Body = ({ meet, isCurator, isSelectedDayDialog }) => {
   return (
     <Box
       sx={{
@@ -20,6 +21,11 @@ const Body = ({ meet, isSelectedDayDialog }) => {
           </Typography>
         </Truncate>
       ) : null}
+      {isCurator  ? (
+              <Typography>
+                <b>Менеджер:</b> {getUserName(meet?.userId)}
+              </Typography>
+            ) : null}
       <MeetingObject meet={meet} />
     </Box>
   );

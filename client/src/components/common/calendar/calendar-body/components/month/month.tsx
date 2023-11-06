@@ -4,6 +4,7 @@ import { Box, styled } from "@mui/material";
 
 const Component = styled(Box)`
   flex: 1;
+  display: -webkit-grid;
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   grid-template-rows: repeat(5, minmax(200px, auto));
