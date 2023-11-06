@@ -141,7 +141,7 @@ const CreateObject = ({ onClose }) => {
       })
       .catch((error) => {
         setIsLoading(false);
-        toast.error(error)
+        toast.error(error);
       });
   };
 

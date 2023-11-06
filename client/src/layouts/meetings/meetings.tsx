@@ -1,10 +1,11 @@
 // libraries
 import dayjs from "dayjs";
 import { orderBy } from "lodash";
-import { Box } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { useEffect, useState} from "react";
+import XLSX from "xlsx/dist/xlsx.full.min.js";
 // components
 import MeetingBaloon from "../../components/UI/maps/meeting-baloon";
 import MeetingsFiltersPanel from "../../components/UI/filters-panels/meetings-filters-panel";
@@ -34,6 +35,7 @@ import {
 import {
   getCurrentUserId,
   getIsUserCurator,
+  getUserDataById,
 } from "../../store/user/users.store";
 import { getMeetingStatusesList } from "../../store/meeting/meeting-status.store";
 import { getMeetingTypesList } from "../../store/meeting/meeting-types.store";
@@ -100,9 +102,51 @@ const Meetings = () => {
     }
   }, []);
 
+
+  // Модифицируем данные перед экспортом
+  const modifiedMeetingsData = meetings?.map((meeting) => {
+    const userId = meeting?.userId;
+    const user = useSelector(getUserDataById(userId));
+    return {
+      ...meeting,
+      userId: user ? "РУСЛАН" : "", // Предполагая, что у пользователя есть поле "name"
+    };
+  });
+  console.log("modifiedMeetingsData", modifiedMeetingsData);
+  
+
+  const exportToExcel = (data) => {
+    const ws = XLSX.utils.json_to_sheet(data);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+  
+    // Создаем бинарные данные Excel-файла
+    const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
+  
+    // Конвертируем бинарные данные в Blob
+    const blob = new Blob([excelBuffer], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
+  
+    // Создаем URL для Blob
+    const blobUrl = URL.createObjectURL(blob);
+  
+    // Создаем ссылку для скачивания
+    const a = document.createElement("a");
+    a.href = blobUrl;
+    a.download = "data.xlsx";
+  
+    // Эмулируем клик по ссылке для начала загрузки
+    a.click();
+  
+    // Очищаем ссылку
+    URL.revokeObjectURL(blobUrl);
+  };
+
   return (
     <Box>
       <LayoutTitle title="Встречи" />
+
+      {/* <Button onClick={() => exportToExcel(modifiedMeetingsData)}>DOWNLOAD</Button> */}
+
       <AddAndClearFiltersButton
         reset={reset}
         isInputEmpty={isInputEmpty}

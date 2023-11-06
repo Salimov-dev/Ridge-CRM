@@ -18,8 +18,10 @@ import ObjectPageDialog from "../../components/UI/dialogs/object-page-dialog/obj
 import ObjectUpdatePageDialog from "../../components/UI/dialogs/objects/object-update-page-dialog";
 import ObjectCreatePageDialog from "../../components/UI/dialogs/objects/object-create-page-dialog";
 import CreateObjectButton from "../../components/UI/dialogs/buttons/create-object-button";
+import ExportToExelButton from "../../components/common/buttons/export-to-excel-button";
 // hooks
 import useSearchObject from "../../hooks/object/use-search-object";
+import useModifyObjectToExportExel from "../../hooks/object/use-modify-object-to-export-exel";
 // store
 import {
   getCurrentUserId,
@@ -74,19 +76,20 @@ const Objects = () => {
   });
 
   const data = watch();
+  const isInputEmpty = JSON.stringify(initialState) !== JSON.stringify(data);
 
   const objects = useSelector(getObjectsList());
-  const objectsSatuses = useSelector(getObjectsStatusList())
+  const objectsSatuses = useSelector(getObjectsStatusList());
   const isLoading = useSelector(getObjectsLoadingStatus());
   const selectedObject = useSelector(getObjectById(selectedBaloon));
-  
+
   const currentUserId = useSelector(getCurrentUserId());
   const isCurator = useSelector(getIsUserCurator(currentUserId));
   const columns = isCurator ? objectsColumnsCurator : objectsColumns;
 
   const searchedObjects = useSearchObject(objects, data);
   const sortedObjects = orderBy(searchedObjects, ["created_at"], ["desc"]);
-  const isInputEmpty = JSON.stringify(initialState) !== JSON.stringify(data);
+  const modifiedObjectsData = useModifyObjectToExportExel(sortedObjects);
 
   useEffect(() => {
     const hasLocalStorageData = localStorage.getItem("search-objects-data");
@@ -128,6 +131,10 @@ const Objects = () => {
         items={sortedObjects}
         itemsColumns={columns}
         isLoading={isLoading}
+      />
+      <ExportToExelButton
+        title="Скачать объекты в EXEL"
+        data={modifiedObjectsData}
       />
 
       <ObjectCreatePageDialog />

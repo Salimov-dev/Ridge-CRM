@@ -7,7 +7,7 @@ const ButtonStyled = styled(Button)`
   gap: 3px;
 `;
 
-const ClearFilterButton = ({ reset, initialState, disabled = false, width='300px', margin="0" }) => {
+const ClearFilterButton = ({ reset, initialState, disabled = false, width='220px', margin="0" }) => {
   const handleClearForm = () => {
     reset(initialState);
   };
