@@ -74,7 +74,6 @@ const ObjectInfo = ({ object, isLoading, isAuthorEntity = true }) => {
         object={object}
         buttons={
           <CreateTasksButtons
-            withoutMeeting={true}
             isAuthorEntity={isAuthorEntity}
           />
         }

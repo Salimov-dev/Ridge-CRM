@@ -6,7 +6,6 @@ import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 // components
 import Header from "../../components/common/calendar/header/header";
-import CreateTasksButtons from "./components/create-tasks-buttons/create-tasks-buttons";
 import TasksTable from "../../components/common/tasks/tasks-table";
 import Dialogs from "./components/dialogs/dialogs";
 import CalendarBody from "../../components/common/calendar/calendar-body/calendar-body";
@@ -111,7 +110,7 @@ const Calendar = () => {
   return (
     <>
       <LayoutTitle title="Календарь" />
-      <Header buttons={<CreateTasksButtons />} />
+      <Header />
       <CalendarBody
         tasks={getTask}
         meetings={getMeeting}

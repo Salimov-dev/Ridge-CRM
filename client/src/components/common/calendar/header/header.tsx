@@ -8,6 +8,8 @@ import ControlButtons from "./components/control-buttons";
 import { getMonthIndexState } from "../../../../store/month-index.store";
 import { getTaskLoadingStatus } from "../../../../store/task/tasks.store";
 import { getMeetingLoadingStatus } from "../../../../store/meeting/meetings.store";
+import CreateTasksButtons from "../../../../layouts/calendar/components/create-tasks-buttons/create-tasks-buttons";
+import CreateMeetingButton from "../../../UI/dialogs/buttons/create-meeting-button";
 
 const Component = styled(Box)`
   margin-bottom: 6px;
@@ -16,7 +18,12 @@ const Component = styled(Box)`
   justify-content: space-between;
 `;
 
-const Header = ({ buttons }) => {
+const Buttons = styled(Box)`
+  display: flex;
+  gap: 4px;
+`;
+
+const Header = () => {
   const monthIndex = useSelector(getMonthIndexState());
   const isTasksLoading = useSelector(getTaskLoadingStatus());
   const isMeetingsLoading = useSelector(getMeetingLoadingStatus());
@@ -25,7 +32,10 @@ const Header = ({ buttons }) => {
 
   return (
     <Component>
-      {buttons}
+      <Buttons>
+        <CreateTasksButtons />
+        <CreateMeetingButton />
+      </Buttons>
       <MonthToday monthIndex={monthIndex} />
       <ControlButtons isLoading={isLoading} />
     </Component>

@@ -139,7 +139,7 @@ const CreateMeeting = ({
         city={getCity()}
         address={getAddress()}
         title="Добавить встречу:"
-        subtitle="Выберите место встречи на карте"
+        subtitle="КЛИКНИТЕ по карте, чтобы выбрать место встречи"
         onClose={onClose}
       />
 

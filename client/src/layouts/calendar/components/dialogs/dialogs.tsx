@@ -49,11 +49,11 @@ const Dialogs = ({
       />
       <MyTaskUpdateDialog />
 
-      <MeetingCreateDialog
+      {!isObjectPage ? <MeetingCreateDialog
         objectPageId={objectPageId}
         isObjectPage={isObjectPage}
         dateCreate={dateCreate}
-      />
+      /> : null}
       <MeetingUpdateDialog />
 
       <OpenSelectedDayDialog

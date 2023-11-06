@@ -9,7 +9,6 @@ const Component = styled(Box)`
 `;
 
 const CreateTasksButtons = ({
-  withoutMeeting = false,
   isAuthorEntity = true,
 }) => {
   return (
@@ -22,7 +21,6 @@ const CreateTasksButtons = ({
           isMyTask={true}
         />
       ) : null}
-      {!withoutMeeting ? <CreateMeetingButton /> : null}
       {!isAuthorEntity ? (
         <CreateManagerTaskButton
           title="Поставить менеджеру задачу"

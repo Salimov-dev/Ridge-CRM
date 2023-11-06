@@ -160,7 +160,7 @@ const CreateObject = ({ onClose }) => {
         city={getCity()}
         address={getAddress()}
         title="Создать объект:"
-        subtitle="Выберите объект на карте"
+        subtitle="КЛИКНИТЕ по карте, чтобы выбрать объект на карте"
         onClose={onClose}
       />
 
