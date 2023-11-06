@@ -54,16 +54,7 @@ const Deals = () => {
     }
   });
 
-  const currentUserObjects = objects?.filter(
-    (obj) => obj?.userId === currentUserId
-  );
-
   const searchedDeals = useSearchDeals(objectsInDeals, data);
-
-  let transformObjects = [];
-  currentUserObjects?.forEach((obj) => {
-    transformObjects?.push({ _id: obj._id, name: obj.location.address });
-  });
 
   useEffect(() => {
     localStorage.setItem("search-deals-data", JSON.stringify(data));

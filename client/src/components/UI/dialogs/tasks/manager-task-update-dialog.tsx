@@ -9,24 +9,19 @@ import {
   getCurrentUserId,
   getUsersList,
 } from "../../../../store/user/users.store";
+import transformUsersForSelect from "../../../../utils/objects/transform-users-for-select";
 
-const ManagerTaskUpdateDialog = ({ objects=[] }) => {
+const ManagerTaskUpdateDialog = ({ objects = [] }) => {
+  const dispatch = useDispatch();
   const users = useSelector(getUsersList());
   const currentUserId = useSelector(getCurrentUserId());
   const isOpenUpdateManagerTask = useSelector(loadUpdateManagerTaskOpenState());
-  const dispatch = useDispatch();
 
   const usersWithoutCurrentUser = users?.filter(
     (user) => user?._id !== currentUserId
   );
 
-  let transformUsers = [];
-  usersWithoutCurrentUser?.forEach((user) => {
-    transformUsers?.push({
-      _id: user?._id,
-      name: `${user.name.lastName} ${user.name.firstName}`,
-    });
-  });
+  const transformUsers = transformUsersForSelect(usersWithoutCurrentUser);
 
   const handleCloseUpdateManagerTask = () => {
     dispatch<any>(setUpdateManagerTaskOpenState(false));

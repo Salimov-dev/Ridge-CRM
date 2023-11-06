@@ -23,6 +23,7 @@ import { meetingSchema } from "../../../schemas/meeting-schema";
 import useFindObject from "../../../hooks/object/use-find-object";
 // utils
 import { capitalizeFirstLetter } from "../../../utils/data/capitalize-first-letter";
+import transformObjectsForSelect from "../../../utils/objects/transform-objects-for-select";
 
 const initialState = {
   status: "",
@@ -57,10 +58,7 @@ const CreateMeeting = ({
   const currentUserObjects = objects?.filter(
     (obj) => obj?.userId === currentUserId
   );
-  let transformObjects = [];
-  currentUserObjects?.forEach((obj) => {
-    transformObjects?.push({ _id: obj._id, name: obj.location.address });
-  });
+  const transformObjects = transformObjectsForSelect(currentUserObjects);
 
   const {
     register,
@@ -109,7 +107,7 @@ const CreateMeeting = ({
       })
       .catch((error) => {
         setIsLoading(false);
-        toast.error(error)
+        toast.error(error);
       });
   };
 

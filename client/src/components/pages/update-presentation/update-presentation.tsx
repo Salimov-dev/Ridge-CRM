@@ -27,6 +27,7 @@ import {
   removePresentation,
   updatePresentation,
 } from "../../../store/presentation/presentations.store";
+import transformObjectsForSelect from "../../../utils/objects/transform-objects-for-select";
 
 const UpdatePresentation = ({ onClose }) => {
   const dispatch = useDispatch();
@@ -65,10 +66,7 @@ const UpdatePresentation = ({ onClose }) => {
     (obj) => obj?.userId === currentUserId
   );
 
-  let transformObjects = [];
-  currentUserObjects?.forEach((obj) => {
-    transformObjects?.push({ _id: obj._id, name: obj.location.address });
-  });
+  const transformObjects = transformObjectsForSelect(currentUserObjects)
 
   const onSubmit = (data) => {
     setIsLoading(true);

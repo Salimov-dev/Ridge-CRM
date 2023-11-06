@@ -24,6 +24,7 @@ import {
   getUserNameById,
   getUsersList,
 } from "../../../store/user/users.store";
+import transformObjectsForSelect from "../../../utils/objects/transform-objects-for-select";
 
 const initialState = {
   objectId: "",
@@ -43,11 +44,8 @@ const CreatePresentation = ({ onClose, setConfettiActive }) => {
     (obj) => obj?.userId === currentUserId
   );
 
-  let transformObjects = [];
   const actualObjects = isCurator ? currentUserObjects : objects;
-  actualObjects?.forEach((obj) => {
-    transformObjects?.push({ _id: obj._id, name: obj.location.address });
-  });
+  const transformObjects = transformObjectsForSelect(actualObjects);
 
   const {
     register,
@@ -88,6 +86,7 @@ const CreatePresentation = ({ onClose, setConfettiActive }) => {
   const address = useSelector(getObjectAddressById(selectedObject?._id));
 
   const onSubmit = (data) => {
+    setIsLoading(true);
     if (data.objectId && curatorName && address && cloudLink) {
       const presentationNewData = {
         ...data,
@@ -98,7 +97,6 @@ const CreatePresentation = ({ onClose, setConfettiActive }) => {
 
       dispatch<any>(createPresentation(presentationNewData))
         .then(() => {
-          setIsLoading(false);
           onClose();
           setConfettiActive(true);
           send(

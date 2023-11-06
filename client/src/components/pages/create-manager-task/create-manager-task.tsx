@@ -28,6 +28,7 @@ import {
   getOpenObjectPageId,
   loadOpenObjectPageOpenState,
 } from "../../../store/object/open-object-page.store";
+import transformObjectsForSelect from "../../../utils/objects/transform-objects-for-select";
 
 const initialState = {
   comment: "",
@@ -73,28 +74,10 @@ const CreateManagerTask = ({ users, title, dateCreate, onClose }) => {
   const currentObject = useSelector(getObjectById(objectPageId));
   const managerId = currentObject?.userId;
 
-  let addressCounts = {}; // Создаем объект для отслеживания количества объектов с одинаковыми адресами
-  let transformObjects = [];
   const selectedManagerObjects = objects?.filter(
     (obj) => obj?.userId === watchManagerId
   );
-
-  selectedManagerObjects.forEach((obj) => {
-    const address = obj.location.address;
-
-    // Если это адрес уже встречался, увеличиваем счетчик и добавляем индекс
-    if (addressCounts[address]) {
-      addressCounts[address]++;
-      transformObjects.push({
-        _id: obj._id,
-        name: `${address} (${addressCounts[address]})`,
-      });
-    } else {
-      // Иначе, просто добавляем адрес и устанавливаем счетчик в 1
-      addressCounts[address] = 1;
-      transformObjects.push({ _id: obj._id, name: address });
-    }
-  });
+  const transformObjects = transformObjectsForSelect(selectedManagerObjects);
 
   const onSubmit = () => {
     setIsLoading(true);

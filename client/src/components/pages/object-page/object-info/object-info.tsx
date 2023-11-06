@@ -20,11 +20,11 @@ import {
   getIsUserCurator,
   getUsersList,
 } from "../../../../store/user/users.store";
-import {
-  getLastContactsList,
-} from "../../../../store/last-contact/last-contact.store";
+import { getLastContactsList } from "../../../../store/last-contact/last-contact.store";
 // columns
 import { tasksColumnsDialog } from "../../../../columns/tasks-columns/tasks-columns-dialog";
+import transformObjectsForSelect from "../../../../utils/objects/transform-objects-for-select";
+import transformUsersForSelect from "../../../../utils/objects/transform-users-for-select";
 
 const Component = styled(Box)`
   display: flex;
@@ -48,38 +48,22 @@ const ObjectInfo = ({ object, isLoading, isAuthorEntity = true }) => {
   const lastContacts = lastContactsList?.filter(
     (contact) => contact.objectId === objectId
   );
-
   const sortedLastContacts = orderBy(lastContacts, ["date"], ["desc"]);
 
   const users = useSelector(getUsersList());
   const currentUserId = useSelector(getCurrentUserId());
-
   const isCurator = useSelector(getIsUserCurator(currentUserId));
+
   const usersWithoutCurrentUser = users?.filter(
     (user) => user?._id !== currentUserId
   );
+  const transformUsers = transformUsersForSelect(usersWithoutCurrentUser);
+
   const currentUserObjects = objects?.filter(
     (obj) => obj?.userId === currentUserId
   );
-
-  let transformUsers = [];
-  usersWithoutCurrentUser?.forEach((user) => {
-    transformUsers?.push({
-      _id: user?._id,
-      name: `${user?.name?.lastName} ${user?.name?.firstName}`,
-    });
-  });
-
-  let transformObjects = [];
-  if (isCurator) {
-    objects?.forEach((obj) => {
-      transformObjects?.push({ _id: obj?._id, name: obj?.location.address });
-    });
-  } else {
-    currentUserObjects?.forEach((obj) => {
-      transformObjects?.push({ _id: obj?._id, name: obj?.location.address });
-    });
-  }
+  const actualObjects = isCurator ? objects : currentUserObjects;
+  const transformObjects = transformObjectsForSelect(actualObjects);
 
   return !isLoading ? (
     <Component>

@@ -1,7 +1,7 @@
 import dayjs from "dayjs";
 import { orderBy } from "lodash";
 import { useSelector } from "react-redux";
-import isBetween from 'dayjs/plugin/isBetween';
+import isBetween from "dayjs/plugin/isBetween";
 // store
 import { getObjectsList } from "../../store/object/objects.store";
 import { getMeetingsList } from "../../store/meeting/meetings.store";
@@ -13,10 +13,11 @@ import {
 // utils
 import getStartWeekDate from "../../utils/date/get-start-week-date";
 import getEndWeekDate from "../../utils/date/get-end-week-date";
-import { getCurrentWeekMeetings } from "../../utils/meetings/get-current-week-meetings";
+import transformObjectsForSelect from "../../utils/objects/transform-objects-for-select";
+import transformUsersForSelect from "../../utils/objects/transform-users-for-select";
 
 const useCalendar = () => {
-  dayjs.extend(isBetween)
+  dayjs.extend(isBetween);
   const objects = useSelector(getObjectsList());
   const meetings = useSelector(getMeetingsList());
   const users = useSelector(getUsersList());
@@ -30,32 +31,22 @@ const useCalendar = () => {
   const currentWeeklyMeetings = meetings?.filter((meet) =>
     dayjs(meet.date).isBetween(startOfWeek, endOfWeek, null, "[]")
   );
-
-  const usersWithoutCurrentUser = users?.filter(
-    (user) => user?._id !== currentUserId
-  );
-  const currentUserObjects = objects?.filter(
-    (obj) => obj?.userId === currentUserId
-  );
   const sortedCurrentWeeklyMeetings = orderBy(
     currentWeeklyMeetings,
     ["date"],
     ["asc"]
   );
 
-  let transformUsers = [];
-  usersWithoutCurrentUser?.forEach((user) => {
-    transformUsers?.push({
-      _id: user._id,
-      name: `${user.name.lastName} ${user.name.firstName}`,
-    });
-  });
+  const usersWithoutCurrentUser = users?.filter(
+    (user) => user?._id !== currentUserId
+  );
+  const transformUsers = transformUsersForSelect(usersWithoutCurrentUser);
 
-  let transformObjects = [];
-  const actualObjects = isCurator ? currentUserObjects : objects ;
-  actualObjects?.forEach((obj) => {
-    transformObjects?.push({ _id: obj._id, name: obj.location.address });
-  });
+  const currentUserObjects = objects?.filter(
+    (obj) => obj?.userId === currentUserId
+  );
+  const actualObjects = isCurator ? currentUserObjects : objects;
+  const transformObjects = transformObjectsForSelect(actualObjects);
 
   return {
     transformUsers,

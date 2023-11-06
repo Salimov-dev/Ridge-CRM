@@ -24,6 +24,7 @@ import {
 import { getObjectsList } from "../../../store/object/objects.store";
 import { getCurrentUserId } from "../../../store/user/users.store";
 import { loadOpenObjectPageOpenState } from "../../../store/object/open-object-page.store";
+import transformObjectsForSelect from "../../../utils/objects/transform-objects-for-select";
 
 const UpdateMyTask = ({ title, onClose }) => {
   const dispatch = useDispatch();
@@ -68,10 +69,7 @@ const UpdateMyTask = ({ title, onClose }) => {
     (obj) => obj?.userId === currentUserId
   );
 
-  let transformObjects = [];
-  currentUserObjects?.forEach((obj) => {
-    transformObjects?.push({ _id: obj._id, name: obj.location.address });
-  });
+  const transformObjects = transformObjectsForSelect(currentUserObjects);
 
   const onSubmit = (data) => {
     setIsLoading(true);

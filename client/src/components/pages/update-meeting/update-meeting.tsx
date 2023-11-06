@@ -27,6 +27,7 @@ import {
   removeMeeting,
   updateMeeting,
 } from "../../../store/meeting/meetings.store";
+import transformObjectsForSelect from "../../../utils/objects/transform-objects-for-select";
 
 const UpdateMeeting = ({ onClose }) => {
   const dispatch = useDispatch();
@@ -70,10 +71,7 @@ const UpdateMeeting = ({ onClose }) => {
   const meetingTypes = useSelector(getMeetingTypesList());
   const statuses = useSelector(getMeetingStatusesList());
 
-  let transformObjects = [];
-  currentUserObjects?.forEach((obj) => {
-    transformObjects?.push({ _id: obj._id, name: obj.location.address });
-  });
+  const transformObjects = transformObjectsForSelect(currentUserObjects)
 
   const onSubmit = (data) => {
     setIsLoading(true);
