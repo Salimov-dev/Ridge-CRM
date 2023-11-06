@@ -29,6 +29,7 @@ import {
   getIsUserCurator,
   getUsersList,
 } from "../../store/user/users.store";
+import { staticticsColumnsCuratorReverse } from "../../columns/statictics/statictics-columns-curator-reverse";
 
 const ChartsContainer = styled(Box)`
   display: flex;
@@ -80,7 +81,8 @@ const Statictics = () => {
   const isObjectsLoading = useSelector(getObjectsLoadingStatus());
   const isInputEmpty = JSON.stringify(initialState) !== JSON.stringify(data);
 
-  const columns = isCurator ? staticticsColumnsCurator : staticticsColumns;
+  // const columns = isCurator ? staticticsColumnsCurator : staticticsColumns;
+  const columns = isCurator ? staticticsColumnsCuratorReverse : staticticsColumns;
 
   const { searchedObjects, searchedUsers } = useSearchStatictics(
     objects,

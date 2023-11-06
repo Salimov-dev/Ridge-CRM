@@ -72,7 +72,7 @@ const generateMonthHeaders = () => {
   return monthHeaders;
 };
 
-export const staticticsColumnsCurator = [
+export const staticticsColumnsCuratorReverse = [
   {
     header: "Результат",
     columns: [
@@ -144,33 +144,87 @@ export const staticticsColumnsCurator = [
       },
     ],
   },
-  {
-    header: "ПОСЛЕДНИЕ 6 МЕСЯЦЕВ",
-    columns: generateMonthHeaders(),
-  },
+ 
   {
     header: "ПОСЛЕДНИЕ 4 НЕДЕЛИ", // Заголовок текущего месяца
     columns: [
       {
-        // 4 неделя
+        // текущая неделя
         accessorFn: (row) => row,
         header: (() => {
-          return useTableHeader(3);
+          const currentDate = dayjs();
+          const startOfWeek = currentDate.startOf("week");
+          const endOfWeek = currentDate.endOf("week").day(0);
+          const formattedDate = `${startOfWeek.format(
+            "DD.MM"
+          )} - ${endOfWeek.format("DD.MM")}`;
+          return formattedDate;
         })(),
         enableSorting: false,
         size: 30,
         cell: (info) => {
-          const user = info.getValue();
           const currentDate = dayjs();
+          const startOfWeek = currentDate.startOf("week");
+          const endOfWeek = currentDate.endOf("week").day(0);
+
+          const user = info.getValue();
+          const objects = useSelector(getObjectsList());
+          const currentUserObjects = objects?.filter(
+            (obj) => obj?.userId === user?._id
+          );
+
+          const presentations = useSelector(getPresentationsList());
+          const currentUserPresentations = presentations?.filter(
+            (pres) => pres?.userId === user?._id
+          );
+
+          const weeklyPresentations = getWeeklyPresentations(
+            startOfWeek,
+            endOfWeek,
+            currentUserPresentations
+          );
+          const weeklyObjects = getWeeklyObjects(
+            startOfWeek,
+            endOfWeek,
+            currentUserObjects
+          );
+          const weeklyObjectsWithPhone = getWeeklyObjectsWithPhone(
+            startOfWeek,
+            endOfWeek,
+            currentUserObjects
+          );
+
+          return (
+            <TableCell
+              objects={weeklyObjects}
+              objectsWithPhone={weeklyObjectsWithPhone}
+              presentations={weeklyPresentations}
+            />
+          );
+        },
+      },
+      
+      {
+        // предыдущая неделя
+        accessorFn: (row) => row,
+        header: (() => {
+          return useTableHeader(1);
+        })(),
+        enableSorting: false,
+        size: 30,
+        cell: (info) => {
+          const currentDate = dayjs();
+
           const endOPreviousWeek = currentDate
-            .subtract(3, "week")
+            .subtract(1, "week")
             .endOf("week");
           const startOPreviousWeek = endOPreviousWeek.subtract(6, "day");
 
           const formattedStartDate = startOPreviousWeek.format("YYYY-MM-DD");
           const formattedEndDate = endOPreviousWeek.format("YYYY-MM-DD");
-          const objects = useSelector(getObjectsList());
 
+          const user = info.getValue();
+          const objects = useSelector(getObjectsList());
           const currentUserObjects = objects?.filter(
             (obj) => obj?.userId === user?._id
           );
@@ -261,26 +315,25 @@ export const staticticsColumnsCurator = [
         },
       },
       {
-        // предыдущая неделя
+        // 4 неделя
         accessorFn: (row) => row,
         header: (() => {
-          return useTableHeader(1);
+          return useTableHeader(3);
         })(),
         enableSorting: false,
         size: 30,
         cell: (info) => {
+          const user = info.getValue();
           const currentDate = dayjs();
-
           const endOPreviousWeek = currentDate
-            .subtract(1, "week")
+            .subtract(3, "week")
             .endOf("week");
           const startOPreviousWeek = endOPreviousWeek.subtract(6, "day");
 
           const formattedStartDate = startOPreviousWeek.format("YYYY-MM-DD");
           const formattedEndDate = endOPreviousWeek.format("YYYY-MM-DD");
-
-          const user = info.getValue();
           const objects = useSelector(getObjectsList());
+
           const currentUserObjects = objects?.filter(
             (obj) => obj?.userId === user?._id
           );
@@ -303,61 +356,6 @@ export const staticticsColumnsCurator = [
           const weeklyObjectsWithPhone = getWeeklyObjectsWithPhone(
             formattedStartDate,
             formattedEndDate,
-            currentUserObjects
-          );
-
-          return (
-            <TableCell
-              objects={weeklyObjects}
-              objectsWithPhone={weeklyObjectsWithPhone}
-              presentations={weeklyPresentations}
-            />
-          );
-        },
-      },
-      {
-        // текущая неделя
-        accessorFn: (row) => row,
-        header: (() => {
-          const currentDate = dayjs();
-          const startOfWeek = currentDate.startOf("week");
-          const endOfWeek = currentDate.endOf("week").day(0);
-          const formattedDate = `${startOfWeek.format(
-            "DD.MM"
-          )} - ${endOfWeek.format("DD.MM")}`;
-          return formattedDate;
-        })(),
-        enableSorting: false,
-        size: 30,
-        cell: (info) => {
-          const currentDate = dayjs();
-          const startOfWeek = currentDate.startOf("week");
-          const endOfWeek = currentDate.endOf("week").day(0);
-
-          const user = info.getValue();
-          const objects = useSelector(getObjectsList());
-          const currentUserObjects = objects?.filter(
-            (obj) => obj?.userId === user?._id
-          );
-
-          const presentations = useSelector(getPresentationsList());
-          const currentUserPresentations = presentations?.filter(
-            (pres) => pres?.userId === user?._id
-          );
-
-          const weeklyPresentations = getWeeklyPresentations(
-            startOfWeek,
-            endOfWeek,
-            currentUserPresentations
-          );
-          const weeklyObjects = getWeeklyObjects(
-            startOfWeek,
-            endOfWeek,
-            currentUserObjects
-          );
-          const weeklyObjectsWithPhone = getWeeklyObjectsWithPhone(
-            startOfWeek,
-            endOfWeek,
             currentUserObjects
           );
 
@@ -371,5 +369,9 @@ export const staticticsColumnsCurator = [
         },
       },
     ],
+  },
+  {
+    header: "ПОСЛЕДНИЕ 6 МЕСЯЦЕВ",
+    columns: generateMonthHeaders(),
   },
 ];

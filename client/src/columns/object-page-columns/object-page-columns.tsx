@@ -27,6 +27,7 @@ export const locationColumns = [
   {
     accessorKey: "created_at",
     header: "Дата",
+    enableSorting: false,
     cell: (info) => {
       const date = info.getValue();
       return <AlignCenter>{FormatDate(date)}</AlignCenter>;
@@ -35,6 +36,7 @@ export const locationColumns = [
   {
     accessorKey: "location.city",
     header: "Город",
+    enableSorting: false,
     cell: (info) => {
       const city = info.getValue();
       return <AlignCenter>{city}</AlignCenter>;
@@ -43,6 +45,7 @@ export const locationColumns = [
   {
     accessorKey: "location.district",
     header: "Район",
+    enableSorting: false,
     cell: (info) => {
       const district = info.getValue();
       const distName = useSelector(getDistrictName(district));
@@ -52,6 +55,7 @@ export const locationColumns = [
   {
     accessorKey: "location.metro",
     header: "Метро",
+    enableSorting: false,
     cell: (info) => {
       const metro = info.getValue();
       return metro ? (
@@ -64,6 +68,7 @@ export const locationColumns = [
   {
     accessorKey: "location.address",
     header: "Адрес",
+    enableSorting: false,
     cell: (info) => {
       const address = info.getValue();
       return <AlignCenter>{address}</AlignCenter>;
@@ -72,6 +77,7 @@ export const locationColumns = [
   {
     accessorFn: (row) => row,
     header: "Идентификатор",
+    enableSorting: false,
     cell: (info) => {
       const object = info.getValue();
       const location = object?.location.identifier;
@@ -85,6 +91,7 @@ export const locationColumns = [
   {
     accessorKey: "userId",
     header: "Менеджер",
+    enableSorting: false,
     cell: (info) => {
       const userId = info.getValue();
       return <AlignCenter>{FormatManagerName(userId)}</AlignCenter>;
@@ -96,6 +103,7 @@ export const estateTypeColumns = [
   {
     accessorKey: "estateOptions.cadastralNumber",
     header: "Кадастровый №",
+    enableSorting: false,
     cell: (info) => {
       const cadNumber = info.getValue();
       return cadNumber ? <AlignCenter>{cadNumber}</AlignCenter> : <EmptyTd />;
@@ -103,7 +111,8 @@ export const estateTypeColumns = [
   },
   {
     accessorKey: "estateOptions.estateTypes",
-    header: "Тип объекта",
+    header: "Тип недвижимости",
+    enableSorting: false,
     cell: (info) => {
       const type = info.getValue();
       return <AlignCenter>{FormatTypeEstate(type)}</AlignCenter>;
@@ -111,32 +120,26 @@ export const estateTypeColumns = [
   },
   {
     accessorKey: "estateOptions.objectTypes",
-    header: "Тип недвижимости",
+    header: "Тип объекта",
+    enableSorting: false,
     cell: (info) => {
       const type = info.getValue();
       return <AlignCenter>{FormatTypeObject(type)}</AlignCenter>;
     },
   },
   {
-    accessorFn: (row) => row,
-    header: "Тип недвижимости",
+    accessorKey: "estateOptions.objectProperties",
+    header: "Расположение объекта",
+    enableSorting: false,
     cell: (info) => {
-      const object = info.getValue();
-      const estateOptions = object?.estateOptions.objectProperties;
-      if (estateOptions && estateOptions.objectProperties) {
-        return (
-          <AlignCenter>
-            {FormatObjectProperties(estateOptions.objectProperties)}
-          </AlignCenter>
-        );
-      } else {
-        return <EmptyTd />;
-      }
+      const type = info.getValue();
+      return type ? <AlignCenter>{FormatObjectProperties(type)}</AlignCenter> :  <EmptyTd />;
     },
   },
   {
     accessorKey: "estateOptions.currentRenters",
     header: "Текущий арендатор",
+    enableSorting: false,
     cell: (info) => {
       const renter = info.getValue();
       return <AlignCenter>{FormatCurrentRenter(renter)}</AlignCenter>;
@@ -145,6 +148,7 @@ export const estateTypeColumns = [
   {
     accessorKey: "estateOptions.objectConditions",
     header: "Состояние помещения",
+    enableSorting: false,
     cell: (info) => {
       const сondition = info.getValue();
       const conditionName = useSelector(getEstateConditionNameById(сondition));
@@ -159,6 +163,7 @@ export const estateTypeColumns = [
   {
     accessorKey: "status",
     header: "Статус",
+    enableSorting: false,
     cell: (info) => {
       const status = info.getValue();
       return <AlignCenter>{FormatObjectStatus(status)}</AlignCenter>;
@@ -170,6 +175,7 @@ export const estateOptionsColumns = [
   {
     accessorKey: "estateOptions.electricityKw",
     header: "Электр.",
+    enableSorting: false,
     cell: (info) => {
       const square = info.getValue();
       return square ? <AlignCenter>{`${square}кВт`}</AlignCenter> : <EmptyTd />;
@@ -178,6 +184,7 @@ export const estateOptionsColumns = [
   {
     accessorKey: "estateOptions.waterSuply",
     header: "Водоснабжение",
+    enableSorting: false,
     cell: (info) => {
       const waterSuply = info.getValue();
       return waterSuply ? <AlignCenter>{waterSuply}</AlignCenter> : <EmptyTd />;
@@ -186,6 +193,7 @@ export const estateOptionsColumns = [
   {
     accessorKey: "estateOptions.premisesHeight",
     header: "Потолки",
+    enableSorting: false,
     cell: (info) => {
       const premisesHeight = info.getValue();
       return premisesHeight ? (
@@ -198,6 +206,7 @@ export const estateOptionsColumns = [
   {
     accessorKey: "estateOptions.premisesFloor",
     header: "Полы",
+    enableSorting: false,
     cell: (info) => {
       const premisesFloor = info.getValue();
       return premisesFloor ? (
@@ -210,6 +219,7 @@ export const estateOptionsColumns = [
   {
     accessorKey: "estateOptions.parkingQuantity",
     header: "Парковка",
+    enableSorting: false,
     cell: (info) => {
       const parkingQuantity = info.getValue();
       return parkingQuantity ? (
@@ -222,6 +232,7 @@ export const estateOptionsColumns = [
   {
     accessorKey: "estateOptions.loadingArea",
     header: "Разгрузка",
+    enableSorting: false,
     cell: (info) => {
       const loadingArea = info.getValue();
       return loadingArea ? (
@@ -237,6 +248,7 @@ export const commercialTermsColumns = [
   {
     accessorKey: "commercialTerms.rentSquare",
     header: "S аренды",
+    enableSorting: false,
     cell: (info) => {
       const square = info.getValue();
       return square ? (
@@ -249,6 +261,7 @@ export const commercialTermsColumns = [
   {
     accessorKey: "commercialTerms.rentPrice",
     header: "Стоимость аренды",
+    enableSorting: false,
     cell: (info) => {
       const price = info.getValue();
       return price ? (
@@ -261,6 +274,7 @@ export const commercialTermsColumns = [
   {
     accessorFn: (row) => row,
     header: "Стоимость 1м²",
+    enableSorting: false,
     cell: (info) => {
       const object = info.getValue();
       const priceForMetr = object?.commercialTerms.priceForMetr;
@@ -274,6 +288,7 @@ export const commercialTermsColumns = [
   {
     accessorKey: "commercialTerms.indexingAnnual",
     header: "Индексация",
+    enableSorting: false,
     cell: (info) => {
       const indexing = info.getValue();
       return indexing ? (
@@ -286,6 +301,7 @@ export const commercialTermsColumns = [
   {
     accessorKey: "commercialTerms.rentalHolidays",
     header: "Каникулы",
+    enableSorting: false,
     cell: (info) => {
       const holidays = info.getValue();
       return holidays ? (
@@ -298,10 +314,24 @@ export const commercialTermsColumns = [
   {
     accessorKey: "commercialTerms.securityDeposit",
     header: "Обеспечительный",
+    enableSorting: false,
     cell: (info) => {
       const securityDeposit = info.getValue();
       return securityDeposit ? (
         <AlignCenter>{`${makeDigitSeparator(securityDeposit)}₽`}</AlignCenter>
+      ) : (
+        <EmptyTd />
+      );
+    },
+  },
+  {
+    accessorKey: "commercialTerms.advanseDeposit",
+    header: "Авансовый",
+    enableSorting: false,
+    cell: (info) => {
+      const advanseDeposit = info.getValue();
+      return advanseDeposit ? (
+        <AlignCenter>{`${makeDigitSeparator(advanseDeposit)}₽`}</AlignCenter>
       ) : (
         <EmptyTd />
       );
@@ -322,6 +352,7 @@ export const commercialTermsColumns = [
   {
     accessorKey: "commercialTerms.rentTypes",
     header: "Договор",
+    enableSorting: false,
     cell: (info) => {
       const deal = info.getValue();
       return deal ? (
@@ -337,6 +368,7 @@ export const contactsColumns = [
   {
     accessorKey: "contact.name",
     header: "Имя",
+    enableSorting: false,
     cell: (info) => {
       const name = info?.getValue();
       return name ? <AlignCenter>{name}</AlignCenter> : <EmptyTd />;
@@ -345,6 +377,7 @@ export const contactsColumns = [
   {
     accessorKey: "contact.position",
     header: "Позиция",
+    enableSorting: false,
     cell: (info) => {
       const position = info?.getValue();
       return position ? (
@@ -357,6 +390,7 @@ export const contactsColumns = [
   {
     accessorKey: "contact.phone",
     header: "Телефон",
+    enableSorting: false,
     cell: (info) => {
       const phone = info?.getValue();
       return phone ? (
@@ -369,6 +403,7 @@ export const contactsColumns = [
   {
     accessorKey: "contact.email",
     header: "Почта",
+    enableSorting: false,
     cell: (info) => {
       const email = info?.getValue();
       return email ? <AlignCenter>{email}</AlignCenter> : <EmptyTd />;
