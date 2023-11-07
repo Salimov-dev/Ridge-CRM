@@ -19,6 +19,8 @@ import ObjectUpdatePageDialog from "../../components/UI/dialogs/objects/object-u
 import ObjectCreatePageDialog from "../../components/UI/dialogs/objects/object-create-page-dialog";
 import CreateObjectButton from "../../components/UI/dialogs/buttons/create-object-button";
 import ExportToExelButton from "../../components/common/buttons/export-to-excel-button";
+import TransferObjectToAnotherManagerButton from "../../components/UI/dialogs/buttons/transfer-object-to-another-manager-button";
+import TransferObjectToAnotherManagerDialog from "../../components/UI/dialogs/objects/transfer-object-to-another-manager-dialog";
 // hooks
 import useSearchObject from "../../hooks/object/use-search-object";
 import useModifyObjectToExportExel from "../../hooks/object/use-modify-object-to-export-exel";
@@ -33,8 +35,6 @@ import {
   getObjectsLoadingStatus,
 } from "../../store/object/objects.store";
 import { getObjectsStatusList } from "../../store/object-params/object-status.store";
-import TransferObjectToAnotherManagerButton from "../../components/UI/dialogs/buttons/transfer-object-to-another-manager-button";
-import TransferObjectToAnotherManagerDialog from "../../components/UI/dialogs/objects/transfer-object-to-another-manager-dialog";
 
 const initialState = {
   address: "",
@@ -174,7 +174,10 @@ const Objects = React.memo(() => {
       <ObjectCreatePageDialog />
       <ObjectPageDialog />
       <ObjectUpdatePageDialog />
-      <TransferObjectToAnotherManagerDialog objectsToTransfer={selectedObjects} setRowSelection={setRowSelection}/>
+      <TransferObjectToAnotherManagerDialog
+        objectsToTransfer={selectedObjects}
+        setRowSelection={setRowSelection}
+      />
     </>
   );
 });
