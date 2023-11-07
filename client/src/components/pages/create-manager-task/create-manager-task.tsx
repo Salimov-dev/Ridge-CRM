@@ -14,6 +14,7 @@ import FooterButtons from "../../common/forms/footer-buttons/footer-buttons";
 import { taskManagerSchema } from "../../../schemas/task-manager-shema";
 // utils
 import { capitalizeFirstLetter } from "../../../utils/data/capitalize-first-letter";
+import transformObjectsForSelect from "../../../utils/objects/transform-objects-for-select";
 // store
 import { createTask } from "../../../store/task/tasks.store";
 import {
@@ -28,7 +29,6 @@ import {
   getOpenObjectPageId,
   loadOpenObjectPageOpenState,
 } from "../../../store/object/open-object-page.store";
-import transformObjectsForSelect from "../../../utils/objects/transform-objects-for-select";
 
 const initialState = {
   comment: "",

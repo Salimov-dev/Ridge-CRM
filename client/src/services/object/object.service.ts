@@ -22,5 +22,18 @@ const objectService = {
     );
     return data;
   },
+  updateMultiple: async (objectIds, userId) => {
+    const data = {
+      objectIds,
+      userId,
+    };
+
+    const { data: updatedObjects } = await httpService.patch(
+      objectEndpoint + "update-multiple",
+      data
+    );
+      
+    return updatedObjects;
+  },
 };
 export default objectService;

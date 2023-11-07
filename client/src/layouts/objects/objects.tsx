@@ -33,6 +33,8 @@ import {
   getObjectsLoadingStatus,
 } from "../../store/object/objects.store";
 import { getObjectsStatusList } from "../../store/object-params/object-status.store";
+import TransferObjectToAnotherManagerButton from "../../components/UI/dialogs/buttons/transfer-object-to-another-manager-button";
+import TransferObjectToAnotherManagerDialog from "../../components/UI/dialogs/objects/transfer-object-to-another-manager-dialog";
 
 const initialState = {
   address: "",
@@ -134,8 +136,14 @@ const Objects = React.memo(() => {
         isInputEmpty={isInputEmpty}
         reset={reset}
         initialState={initialState}
-        button={<CreateObjectButton />}
+        button={
+          <>
+            <CreateObjectButton />
+            {isCurator && <TransferObjectToAnotherManagerButton />}
+          </>
+        }
       />
+
       <ItemsOnMap
         items={searchedObjects}
         onClick={setSelectedBaloon}
@@ -166,6 +174,7 @@ const Objects = React.memo(() => {
       <ObjectCreatePageDialog />
       <ObjectPageDialog />
       <ObjectUpdatePageDialog />
+      <TransferObjectToAnotherManagerDialog objectsToTransfer={selectedObjects} setRowSelection={setRowSelection}/>
     </>
   );
 });

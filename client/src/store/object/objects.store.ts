@@ -61,6 +61,9 @@ const objectCreateRequested = createAction("objects/objectCreateRequested");
 const createObjectFailed = createAction("objects/createObjectFailed");
 const objectUpdateRequested = createAction("objects/objectUpdateRequested");
 const objectUpdateFailed = createAction("objects/objectUpdateFailed");
+const objectГpdateMultipleObjectsFailed = createAction(
+  "objects/objectГpdateMultipleObjectsFailed"
+);
 const objectRemoveRequested = createAction("objects/objectRemoveRequested");
 const objectRemoveFailed = createAction("objects/objectRemoveFailed");
 
@@ -107,6 +110,45 @@ export const updateObject = (payload) => async (dispatch) => {
     dispatch(objectUpdateFailed(error.message));
   }
 };
+
+export const updateMultipleObjects =
+  (objectIds, userId) => async (dispatch, getState) => {
+    try {
+      const updatedObjects = await objectService.updateMultiple(
+        objectIds,
+        userId
+      );
+
+      // Получите текущие объекты из Redux state
+      const currentObjects = getState().objects.entities;
+
+      // Обновите только те объекты, которые вернулись в updatedObjects.content
+      const updatedEntities = currentObjects?.map((obj) => {
+        const updatedObject = updatedObjects?.content?.find(
+          (updatedObj) => updatedObj._id === obj._id
+        );
+        return updatedObject ? updatedObject : obj;
+      });
+
+      // Диспатч действия для обновления объектов в Redux state
+      dispatch(objectsReceived(updatedEntities));
+    } catch (error) {
+      dispatch(objectUpdateMultipleObjectsFailed(error.message));
+    }
+  };
+
+// export const updateMultipleObjects = (objectIds, userId) => async (dispatch) => {
+//   try {
+//     // Вызовите метод updateMultiple из objectService
+//     const updatedObjects = await objectService.updateMultiple(objectIds, userId);
+//     console.log("updatedObjects", updatedObjects);
+
+//     // Диспатч действия для обновления успешных объектов
+//     dispatch(objectsReceived(updatedObjects)); // Обновить все объекты одновременно
+//   } catch (error) {
+//     dispatch(objectГpdateMultipleObjectsFailed(error.message));
+//   }
+// };
 
 export const getObjectById = (objectId) => (state) => {
   if (state?.objects?.entities) {

@@ -3,6 +3,7 @@ import Object from "../models/Object.js";
 import Company from "../models/Company.js";
 import User from "../models/User.js";
 import auth from "../middleware/auth.middleware.js";
+import mongoose from "mongoose";
 
 const router = express.Router({ mergeParams: true });
 
@@ -55,13 +56,27 @@ router.get("/:objectId?", auth, async (req, res) => {
   }
 });
 
-router.patch("/:objectId?/edit", auth, async (req, res) => {
+router.patch("/update-multiple", auth, async (req, res) => {
   try {
-    const { objectId } = req.params;
-    const updatedObject = await Object.findByIdAndUpdate(objectId, req.body);
+    const { objectIds, userId } = req.body;
 
-    res.send(updatedObject);
+    // Проверьте, что массив objectIds содержит действительные Object ID
+    const validObjectIds = objectIds.map(
+      (objectId) => new mongoose.Types.ObjectId(objectId)
+    );
+
+    // Обновите объекты с соответствующими ID
+    await Object.updateMany(
+      { _id: { $in: validObjectIds } },
+      { $set: { userId } }
+    );
+
+    // Найти и вернуть обновленные объекты
+    const updatedObjects = await Object.find({ _id: { $in: validObjectIds } });
+
+    res.status(200).send(updatedObjects);
   } catch (e) {
+    console.error(e);
     res.status(500).json({
       message: "На сервере произошла ошибка, попробуйте позже",
     });

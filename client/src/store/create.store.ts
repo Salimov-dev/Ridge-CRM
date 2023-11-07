@@ -53,6 +53,7 @@ import staticticPositionsReducer from "./statictics/statictics-positions.store";
 // other
 import monthIndexReducer from "./month-index.store";
 import currrentPathReducer from "./current-path.store";
+import transferObjectToAnotherManagerReducer from "./object/transfer-object-to-another-manager.store";
 
 const rootReducer = combineReducers({
   // auth state
@@ -65,6 +66,7 @@ const rootReducer = combineReducers({
   openObjectPage: openObjectPageReducer,
   createObject: createObjectReducer,
   updateObject: updateObjectReducer,
+  transferObjectToAnotherManager: transferObjectToAnotherManagerReducer,
   // objects params
   metro: metroReducer,
   districts: districtsReducer,

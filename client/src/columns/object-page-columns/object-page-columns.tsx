@@ -128,11 +128,11 @@ export const estateTypeColumns = [
     },
   },
   {
-    accessorKey: "estateOptions.objectProperties",
+    accessorFn: (row) => row,
     header: "Расположение объекта",
     enableSorting: false,
     cell: (info) => {
-      const type = info.getValue();
+      const type = info?.getValue()?.estateOptions?.objectProperties;
       return type ? <AlignCenter>{FormatObjectProperties(type)}</AlignCenter> :  <EmptyTd />;
     },
   },
@@ -325,12 +325,12 @@ export const commercialTermsColumns = [
     },
   },
   {
-    accessorKey: "commercialTerms.advanseDeposit",
+    accessorFn: (row) => row,
     header: "Авансовый",
     enableSorting: false,
     cell: (info) => {
-      const advanseDeposit = info.getValue();
-      return advanseDeposit ? (
+      const advanseDeposit = info?.getValue()?.commercialTerms?.advanseDeposit;
+      return advanseDeposit  ? (
         <AlignCenter>{`${makeDigitSeparator(advanseDeposit)}₽`}</AlignCenter>
       ) : (
         <EmptyTd />
