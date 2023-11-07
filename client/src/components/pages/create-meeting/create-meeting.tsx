@@ -1,7 +1,7 @@
 // libraries
 import { toast } from "react-toastify";
 import dayjs from "dayjs";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useDispatch, useSelector } from "react-redux";
@@ -42,7 +42,7 @@ const initialState = {
   },
 };
 
-const CreateMeeting = ({
+const CreateMeeting = React.memo(({
   objectPageId = "",
   onClose,
   dateCreate,
@@ -171,6 +171,6 @@ const CreateMeeting = ({
       )}
     </>
   );
-};
+});
 
 export default CreateMeeting;

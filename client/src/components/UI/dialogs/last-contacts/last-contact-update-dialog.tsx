@@ -5,8 +5,9 @@ import {
   loadUpdateLastContactOpenState,
   setUpdateLastContactOpenState,
 } from "../../../../store/last-contact/update-last-contact.store";
+import React from "react";
 
-const LastContactUpdateDialog = () => {
+const LastContactUpdateDialog = React.memo(() => {
   const dispatch = useDispatch();
   const isOpenUpdateMeeting = useSelector(loadUpdateLastContactOpenState());
 
@@ -22,6 +23,6 @@ const LastContactUpdateDialog = () => {
       fullWidth={false}
     />
   );
-};
+});
 
 export default LastContactUpdateDialog;

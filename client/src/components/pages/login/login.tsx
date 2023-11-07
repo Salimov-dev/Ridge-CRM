@@ -1,5 +1,5 @@
 // liraries
-import { useState } from "react";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
@@ -47,7 +47,7 @@ const initialState = {
   password: "",
 };
 
-const Login = ({ onClose }) => {
+const Login = React.memo(({ onClose }) => {
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -113,6 +113,6 @@ const Login = ({ onClose }) => {
       )}
     </Component>
   );
-};
+});
 
 export default Login;

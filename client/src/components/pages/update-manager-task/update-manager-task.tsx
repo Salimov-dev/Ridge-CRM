@@ -1,7 +1,7 @@
 // liraries
 import dayjs from "dayjs";
 import { toast } from "react-toastify";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useDispatch, useSelector } from "react-redux";
@@ -30,7 +30,7 @@ import { getObjectsList } from "../../../store/object/objects.store";
 import { loadOpenObjectPageOpenState } from "../../../store/object/open-object-page.store";
 import transformObjectsForSelect from "../../../utils/objects/transform-objects-for-select";
 
-const UpdateManagerTask = ({ title, onClose, users }) => {
+const UpdateManagerTask = React.memo(({ title, onClose, users }) => {
   const dispatch = useDispatch();
 
   const [open, setOpen] = useState(false);
@@ -160,6 +160,6 @@ const UpdateManagerTask = ({ title, onClose, users }) => {
       />
     </>
   );
-};
+});
 
 export default UpdateManagerTask;

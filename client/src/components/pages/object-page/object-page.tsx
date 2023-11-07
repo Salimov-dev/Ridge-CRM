@@ -19,8 +19,9 @@ import {
   getCurrentUserId,
   getIsUserAuthorThisEntity,
 } from "../../../store/user/users.store";
+import React from "react";
 
-const ObjectPage = ({ onClose }) => {
+const ObjectPage = React.memo(({ onClose }) => {
   const dispatch = useDispatch();
   const objectId = useSelector(getOpenObjectPageId());
   const object = useSelector(getObjectById(objectId));
@@ -73,6 +74,6 @@ const ObjectPage = ({ onClose }) => {
       />
     </Box>
   );
-};
+});
 
 export default ObjectPage;

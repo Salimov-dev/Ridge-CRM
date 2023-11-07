@@ -23,7 +23,7 @@ import { loadOpenObjectPageOpenState } from "../../../store/object/open-object-p
 // theme
 import { tokens } from "../../../theme";
 
-const BasicTable = ({ items, itemsColumns, isLoading, isPaginate = true }) => {
+const BasicTable = ({ rowSelection, setRowSelection,items, itemsColumns, isLoading, isPaginate = true }) => {
   const [sorting, setSorting] = useState<SortingState>([]);
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -38,7 +38,10 @@ const BasicTable = ({ items, itemsColumns, isLoading, isPaginate = true }) => {
     columns,
     state: {
       sorting,
+      rowSelection
     },
+    enableRowSelection: true,
+    onRowSelectionChange: setRowSelection,
     onSortingChange: setSorting,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),

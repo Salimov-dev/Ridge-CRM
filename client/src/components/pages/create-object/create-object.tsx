@@ -1,5 +1,5 @@
 // libraries
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
@@ -60,7 +60,7 @@ const initialState = {
   cloudLink: "",
 };
 
-const CreateObject = ({ onClose }) => {
+const CreateObject = React.memo(({ onClose }) => {
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
 
@@ -186,6 +186,6 @@ const CreateObject = ({ onClose }) => {
       )}
     </>
   );
-};
+});
 
 export default CreateObject;

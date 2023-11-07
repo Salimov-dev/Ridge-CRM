@@ -5,8 +5,9 @@ import {
   setCreateLastContactOpenState,
 } from "../../../../store/last-contact/create-last-contact.store";
 import CreateLastContact from "../../../pages/create-last-contact/create-last-contact";
+import React from "react";
 
-const LastContactCreateDialog = () => {
+const LastContactCreateDialog = React.memo(() => {
   const dispatch = useDispatch();
   const isOpenCreateMeeting = useSelector(getCreateLastContactOpenState());
 
@@ -22,6 +23,6 @@ const LastContactCreateDialog = () => {
       fullWidth={false}
     />
   );
-};
+});
 
 export default LastContactCreateDialog;

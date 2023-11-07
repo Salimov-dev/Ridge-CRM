@@ -2,8 +2,9 @@ import { useDispatch, useSelector } from "react-redux";
 import DialogStyled from "../../../common/dialog/dialog-styled";
 import { loadUpdatePresentationOpenState, setUpdatePresentationOpenState } from "../../../../store/presentation/update-presentation.store";
 import UpdatePresentation from "../../../pages/update-presentation/update-presentation";
+import React from "react";
 
-const PresentationUpdateDialog = () => {
+const PresentationUpdateDialog = React.memo(() => {
   const dispatch = useDispatch();
   const isOpenUpdatePresentation = useSelector(loadUpdatePresentationOpenState());
 
@@ -19,6 +20,6 @@ const PresentationUpdateDialog = () => {
       fullWidth={false}
     />
   );
-};
+});
 
 export default PresentationUpdateDialog;

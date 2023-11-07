@@ -5,8 +5,9 @@ import {
   loadOpenSelectedDayOpenState,
   setOpenSelectedDayOpenState,
 } from "../../../../store/calendar/open-selected-day.store";
+import React from "react";
 
-const OpenSelectedDayDialog = ({ dateCreate, tasks, meetings }) => {
+const OpenSelectedDayDialog = React.memo(({ dateCreate, tasks, meetings }) => {
   const dispatch = useDispatch();
   const isOpenSelectedDay = useSelector(loadOpenSelectedDayOpenState());
 
@@ -29,6 +30,6 @@ const OpenSelectedDayDialog = ({ dateCreate, tasks, meetings }) => {
       fullWidth={false}
     />
   );
-};
+});
 
 export default OpenSelectedDayDialog;

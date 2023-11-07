@@ -5,8 +5,9 @@ import {
 } from "../../../../store/object/update-object.store";
 import UpdateObject from "../../../pages/update-object/update-object";
 import DialogStyled from "../../../common/dialog/dialog-styled";
+import React from "react";
 
-const ObjectUpdatePageDialog = () => {
+const ObjectUpdatePageDialog = React.memo(() => {
   const dispatch = useDispatch();
   const isOpenUpdateObject = useSelector(loadUpdateObjectOpenState());
 
@@ -22,6 +23,6 @@ const ObjectUpdatePageDialog = () => {
       maxWidth="xl"
     />
   );
-};
+});
 
 export default ObjectUpdatePageDialog;

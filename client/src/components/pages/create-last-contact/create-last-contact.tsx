@@ -1,7 +1,7 @@
 // libraries
 import dayjs from "dayjs";
 import { toast } from "react-toastify";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useDispatch, useSelector } from "react-redux";
@@ -27,7 +27,7 @@ const initialState = {
   commentMyTask: "",
 };
 
-const CreateLastContact = ({ onClose }) => {
+const CreateLastContact = React.memo(({ onClose }) => {
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
   const objectPageId = useSelector(getOpenObjectPageId());
@@ -101,6 +101,6 @@ const CreateLastContact = ({ onClose }) => {
       />
     </>
   );
-};
+});
 
 export default CreateLastContact;

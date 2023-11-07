@@ -5,8 +5,9 @@ import {
   getCreateMyTaskOpenState,
   setCreateMyTaskOpenState,
 } from "../../../../store/task/create-my-task.store";
+import React from "react";
 
-const MyTaskCreateDialog = ({
+const MyTaskCreateDialog = React.memo(({
   objects,
   dateCreate = null,
   setDateCreate = () => {},
@@ -41,6 +42,6 @@ const MyTaskCreateDialog = ({
       }
     />
   );
-};
+});
 
 export default MyTaskCreateDialog;

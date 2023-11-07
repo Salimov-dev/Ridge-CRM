@@ -15,6 +15,7 @@ import {
 } from "../../../store/user/users.store";
 // schema
 import { managerSchema } from "../../../schemas/manager-schema";
+import React from "react";
 
 const initialState = {
   email: "",
@@ -40,7 +41,7 @@ const initialState = {
   image: "",
 };
 
-const CreateManager = ({ onClose }) => {
+const CreateManager = React.memo(({ onClose }) => {
   const {
     register,
     watch,
@@ -102,6 +103,6 @@ const CreateManager = ({ onClose }) => {
       />
     </Box>
   );
-};
+});
 
 export default CreateManager;

@@ -1,6 +1,6 @@
 // libraries
 import dayjs from "dayjs";
-import { useState } from "react";
+import React, { useState } from "react";
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
@@ -23,7 +23,7 @@ import {
 // schema
 import { lastContactSchema } from "../../../schemas/last-contact-schema";
 
-const UpdateLastContact = ({ onClose }) => {
+const UpdateLastContact = React.memo(({ onClose }) => {
   const dispatch = useDispatch();
 
   const [open, setOpen] = useState(false);
@@ -123,6 +123,6 @@ const UpdateLastContact = ({ onClose }) => {
   ) : (
     <Loader />
   );
-};
+});
 
 export default UpdateLastContact;

@@ -1,7 +1,7 @@
 // libraries
 import { send } from "emailjs-com";
 import { toast } from "react-toastify";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useDispatch, useSelector } from "react-redux";
@@ -33,7 +33,7 @@ const initialState = {
   curatorComment: "",
 };
 
-const CreatePresentation = ({ onClose, setConfettiActive }) => {
+const CreatePresentation = React.memo(({ onClose, setConfettiActive }) => {
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
 
@@ -164,6 +164,6 @@ const CreatePresentation = ({ onClose, setConfettiActive }) => {
       />
     </>
   );
-};
+});
 
 export default CreatePresentation;

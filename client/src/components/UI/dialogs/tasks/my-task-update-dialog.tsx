@@ -5,8 +5,9 @@ import {
   loadUpdateMyTaskOpenState,
   setUpdateMyTaskOpenState,
 } from "../../../../store/task/update-my-task.store";
+import React from "react";
 
-const MyTaskUpdateDialog = () => {
+const MyTaskUpdateDialog = React.memo(() => {
   const dispatch = useDispatch();
   const isOpenUpdateMyTask = useSelector(loadUpdateMyTaskOpenState());
 
@@ -28,6 +29,6 @@ const MyTaskUpdateDialog = () => {
       }
     />
   );
-};
+});
 
 export default MyTaskUpdateDialog;

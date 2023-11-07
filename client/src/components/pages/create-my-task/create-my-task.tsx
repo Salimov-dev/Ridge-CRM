@@ -1,7 +1,7 @@
 // libraries
 import dayjs from "dayjs";
 import { toast } from "react-toastify";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -27,7 +27,7 @@ const initialState = {
   isDone: false,
 };
 
-const CreateMyTask = ({
+const CreateMyTask = React.memo(({
   title,
   dateCreate,
   onClose,
@@ -119,6 +119,6 @@ const CreateMyTask = ({
       />
     </>
   );
-};
+});
 
 export default CreateMyTask;

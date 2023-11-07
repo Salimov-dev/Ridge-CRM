@@ -5,8 +5,9 @@ import {
   getCreateObjectOpenState,
   setCreateObjectOpenState,
 } from "../../../../store/object/create-object.store";
+import React from "react";
 
-const ObjectCreatePageDialog = () => {
+const ObjectCreatePageDialog = React.memo(() => {
   const dispatch = useDispatch();
 
   const isOpenCreateObject = useSelector(getCreateObjectOpenState());
@@ -21,6 +22,6 @@ const ObjectCreatePageDialog = () => {
       maxWidth="xl"
     />
   );
-};
+});
 
 export default ObjectCreatePageDialog;

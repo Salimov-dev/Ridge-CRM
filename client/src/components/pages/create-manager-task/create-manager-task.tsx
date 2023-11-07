@@ -3,7 +3,7 @@ import dayjs from "dayjs";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 // components
 import TitleWithCloseButton from "../../common/page-titles/title-with-close-button";
@@ -40,7 +40,7 @@ const initialState = {
   isDone: false,
 };
 
-const CreateManagerTask = ({ users, title, dateCreate, onClose }) => {
+const CreateManagerTask = React.memo(({ users, title, dateCreate, onClose }) => {
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
 
@@ -144,6 +144,6 @@ const CreateManagerTask = ({ users, title, dateCreate, onClose }) => {
       />
     </>
   );
-};
+});
 
 export default CreateManagerTask;

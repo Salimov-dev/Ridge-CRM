@@ -1,5 +1,5 @@
 // libraries
-import { useState } from "react";
+import React, { useState } from "react";
 import dayjs from "dayjs";
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
@@ -29,7 +29,7 @@ import {
 } from "../../../store/meeting/meetings.store";
 import transformObjectsForSelect from "../../../utils/objects/transform-objects-for-select";
 
-const UpdateMeeting = ({ onClose }) => {
+const UpdateMeeting = React.memo(({ onClose }) => {
   const dispatch = useDispatch();
 
   const [open, setOpen] = useState(false);
@@ -139,6 +139,6 @@ const UpdateMeeting = ({ onClose }) => {
       />
     </Box>
   );
-};
+});
 
 export default UpdateMeeting;

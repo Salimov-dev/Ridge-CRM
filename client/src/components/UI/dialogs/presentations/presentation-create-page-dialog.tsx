@@ -5,8 +5,9 @@ import {
   getCreatePresentationOpenState,
   setCreatePresentationOpenState,
 } from "../../../../store/presentation/create-presentation.store";
+import React from "react";
 
-const PresentationCreatePageDialog = ({ setConfettiActive }) => {
+const PresentationCreatePageDialog = React.memo(({ setConfettiActive }) => {
   const dispatch = useDispatch();
 
   const isOpenCreatePresentation = useSelector(
@@ -29,6 +30,6 @@ const PresentationCreatePageDialog = ({ setConfettiActive }) => {
       maxWidth="sm"
     />
   );
-};
+});
 
 export default PresentationCreatePageDialog;

@@ -55,6 +55,8 @@ const initialState = {
 
 const Objects = React.memo(() => {
   const [selectedBaloon, setSelectedBaloon] = useState(null);
+  const [rowSelection, setRowSelection] = useState([]);
+  const [selectedObjects, setSelectedObjects] = useState([]);
 
   const localStorageState = JSON.parse(
     localStorage.getItem("search-objects-data")
@@ -94,6 +96,10 @@ const Objects = React.memo(() => {
   const modifiedObjectsData = useModifyObjectToExportExel(sortedObjects);
 
   useEffect(() => {
+    localStorage.setItem("search-objects-data", JSON.stringify(data));
+  }, [data]);
+
+  useEffect(() => {
     const hasLocalStorageData = localStorage.getItem("search-objects-data");
 
     if (hasLocalStorageData?.length) {
@@ -102,8 +108,24 @@ const Objects = React.memo(() => {
   }, []);
 
   useEffect(() => {
-    localStorage.setItem("search-objects-data", JSON.stringify(data));
-  }, [data]);
+    const getObjectsIdFromRowSelection = () => {
+      return Object.keys(rowSelection)
+        .map((index) => {
+          const objectIndex = parseInt(index, 10);
+          if (
+            !isNaN(objectIndex) &&
+            objectIndex >= 0 &&
+            objectIndex < sortedObjects.length
+          ) {
+            return sortedObjects[objectIndex]._id;
+          }
+          return null;
+        })
+        .filter((objectId) => objectId !== null);
+    };
+
+    setSelectedObjects(getObjectsIdFromRowSelection());
+  }, [rowSelection]);
 
   return (
     <>
@@ -130,6 +152,8 @@ const Objects = React.memo(() => {
         isLoading={isLoading}
       />
       <BasicTable
+        rowSelection={rowSelection}
+        setRowSelection={setRowSelection}
         items={sortedObjects}
         itemsColumns={columns}
         isLoading={isLoading}

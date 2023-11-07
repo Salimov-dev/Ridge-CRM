@@ -6,34 +6,37 @@ import {
   getCreateMeetingOpenState,
   setCreateMeetingOpenState,
 } from "../../../../store/meeting/create-meeting.store";
+import React from "react";
 
-const MeetingCreateDialog = ({
-  dateCreate = getDateToday(),
-  objectPageId="",
-  isObjectPage=false,
-}) => {
-  const dispatch = useDispatch();
-  const isOpenCreateMeeting = useSelector(getCreateMeetingOpenState());
+const MeetingCreateDialog = React.memo(
+  ({
+    dateCreate = getDateToday(),
+    objectPageId = "",
+    isObjectPage = false,
+  }) => {
+    const dispatch = useDispatch();
+    const isOpenCreateMeeting = useSelector(getCreateMeetingOpenState());
 
-  const handleCloseCreateMeeting = () => {
-    dispatch<any>(setCreateMeetingOpenState(false));
-  };
+    const handleCloseCreateMeeting = () => {
+      dispatch<any>(setCreateMeetingOpenState(false));
+    };
 
-  return (
-    <DialogStyled
-      component={
-        <CreateMeeting
-          dateCreate={dateCreate}
-          onClose={handleCloseCreateMeeting}
-          objectPageId={objectPageId}
-          isObjectPage={isObjectPage}
-        />
-      }
-      maxWidth="lg"
-      onClose={handleCloseCreateMeeting}
-      open={isOpenCreateMeeting}
-    />
-  );
-};
+    return (
+      <DialogStyled
+        component={
+          <CreateMeeting
+            dateCreate={dateCreate}
+            onClose={handleCloseCreateMeeting}
+            objectPageId={objectPageId}
+            isObjectPage={isObjectPage}
+          />
+        }
+        maxWidth="lg"
+        onClose={handleCloseCreateMeeting}
+        open={isOpenCreateMeeting}
+      />
+    );
+  }
+);
 
 export default MeetingCreateDialog;
