@@ -6,8 +6,8 @@ import "dayjs/locale/ru";
 import { getLastContactsList } from "../../store/last-contact/last-contact.store";
 
 const useSearchObjectDatabase = (objects, data, period) => {
-  const lastContacts = useSelector(getLastContactsList());
   const currentDate = dayjs();
+  const lastContacts = useSelector(getLastContactsList());
 
   const searchedObjects = useMemo(() => {
     let array = objects;

@@ -1,4 +1,5 @@
 import dayjs from "dayjs";
+import { useMemo } from "react";
 import { orderBy } from "lodash";
 import { useSelector } from "react-redux";
 import isBetween from "dayjs/plugin/isBetween";
@@ -18,9 +19,6 @@ import transformUsersForSelect from "../../utils/objects/transform-users-for-sel
 
 const useCalendar = () => {
   dayjs.extend(isBetween);
-  const objects = useSelector(getObjectsList());
-  const meetings = useSelector(getMeetingsList());
-  const users = useSelector(getUsersList());
 
   const currentUserId = useSelector(getCurrentUserId());
   const isCurator = useSelector(getIsUserCurator(currentUserId));
@@ -28,25 +26,29 @@ const useCalendar = () => {
   const startOfWeek = getStartWeekDate();
   const endOfWeek = getEndWeekDate();
 
-  const currentWeeklyMeetings = meetings?.filter((meet) =>
-    dayjs(meet.date).isBetween(startOfWeek, endOfWeek, null, "[]")
-  );
-  const sortedCurrentWeeklyMeetings = orderBy(
-    currentWeeklyMeetings,
-    ["date"],
-    ["asc"]
-  );
-
-  const usersWithoutCurrentUser = users?.filter(
-    (user) => user?._id !== currentUserId
-  );
-  const transformUsers = transformUsersForSelect(usersWithoutCurrentUser);
-
+  // transformObjects
+  const objects = useSelector(getObjectsList());
   const currentUserObjects = objects?.filter(
     (obj) => obj?.userId === currentUserId
   );
   const actualObjects = isCurator ? currentUserObjects : objects;
   const transformObjects = transformObjectsForSelect(actualObjects);
+
+  // transformUsers
+  const users = useSelector(getUsersList());
+  const usersWithoutCurrentUser = users?.filter(
+    (user) => user?._id !== currentUserId
+  );
+  const transformUsers = transformUsersForSelect(usersWithoutCurrentUser);
+
+  // sortedCurrentWeeklyMeetings
+  const meetings = useSelector(getMeetingsList());
+  const currentWeeklyMeetings = meetings?.filter((meet) =>
+    dayjs(meet.date).isBetween(startOfWeek, endOfWeek, null, "[]")
+  );
+  const sortedCurrentWeeklyMeetings = useMemo(() => {
+    return orderBy(currentWeeklyMeetings, ["date"], ["asc"]);
+  }, [currentWeeklyMeetings]);
 
   return {
     transformUsers,

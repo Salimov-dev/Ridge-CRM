@@ -3,7 +3,7 @@ import dayjs from "dayjs";
 import { orderBy } from "lodash";
 import { useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
-import { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 // components
 import Header from "../../components/common/calendar/header/header";
 import TasksTable from "../../components/common/tasks/tasks-table";
@@ -34,7 +34,7 @@ const initialState = {
   selectedTaskTypes: [],
 };
 
-const Calendar = () => {
+const Calendar = React.memo(() => {
   const [currentMonth, setCurrentMonth] = useState(getMonth());
   const [dateCreate, setDateCreate] = useState(null);
 
@@ -50,7 +50,7 @@ const Calendar = () => {
   });
 
   const data = watch();
-  
+
   const monthIndex = useSelector(getMonthIndexState());
   const currentUserId = useSelector(getCurrentUserId());
   const isCurator = useSelector(getIsUserCurator(currentUserId));
@@ -65,7 +65,9 @@ const Calendar = () => {
   );
   const actualTasks = isCurator ? currentUserTasks : tasks;
   const searchedTasks = useSearchTask(actualTasks, data);
-  const sortedTasks = orderBy(searchedTasks, ["date"], ["desc"]);
+  const sortedTasks = useMemo(() => {
+    return orderBy(searchedTasks, ["date"], ["desc"]);
+  }, [searchedTasks]);
 
   const getMeeting = (day) => {
     const meeting = meetings?.filter(
@@ -74,6 +76,7 @@ const Calendar = () => {
         dayjs(day)?.format("YYYY-MM-DD")
     );
     const sortedMeetings = orderBy(meeting, ["date"], ["desc"]);
+
     return sortedMeetings;
   };
 
@@ -92,6 +95,7 @@ const Calendar = () => {
       [(task) => dayjs(task.time)],
       ["asc"]
     );
+
     return sortedTasks;
   };
 
@@ -140,6 +144,6 @@ const Calendar = () => {
       />
     </>
   );
-};
+});
 
 export default Calendar;

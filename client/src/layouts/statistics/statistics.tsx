@@ -1,6 +1,6 @@
 import "dayjs/locale/ru";
 import { useForm } from "react-hook-form";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { Box, styled } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 // components
@@ -30,6 +30,8 @@ import {
   getUsersList,
 } from "../../store/user/users.store";
 import { staticticsColumnsCuratorReverse } from "../../columns/statictics/statictics-columns-curator-reverse";
+import { staticticsColumnsCuratorReverse2 } from "../../columns/statictics/statictics-columns-curator-reverse2";
+import { staticticsColumnsReverse } from "../../columns/statictics/statictics-columns-reverse";
 
 const ChartsContainer = styled(Box)`
   display: flex;
@@ -42,7 +44,7 @@ const initialState = {
   withoutCurator: false,
 };
 
-const Statictics = () => {
+const Statictics = React.memo (() => {
   const dispatch = useDispatch();
   const localStorageState = JSON.parse(
     localStorage.getItem("search-statictics-data")
@@ -82,7 +84,8 @@ const Statictics = () => {
   const isInputEmpty = JSON.stringify(initialState) !== JSON.stringify(data);
 
   // const columns = isCurator ? staticticsColumnsCurator : staticticsColumns;
-  const columns = isCurator ? staticticsColumnsCuratorReverse : staticticsColumns;
+  // const columns = isCurator ? staticticsColumnsCuratorReverse : staticticsColumns;
+  const columns = isCurator ? staticticsColumnsCuratorReverse2 : staticticsColumnsReverse;
 
   const { searchedObjects, searchedUsers } = useSearchStatictics(
     objects,
@@ -148,6 +151,6 @@ const Statictics = () => {
       </Box>
     </>
   );
-};
+});
 
 export default Statictics;

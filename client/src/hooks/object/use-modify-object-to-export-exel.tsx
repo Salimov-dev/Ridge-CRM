@@ -97,21 +97,21 @@ const useModifyObjectToExportExel = (objects) => {
       const cadastralNumber = object?.estateOptions.cadastralNumber;
 
       const result = {
-        Дата: date,
-        Менеджер: userName,
+        "Дата": date,
+        "Менеджер": userName,
         "Телефон менеджера": userPhone,
 
-        Город: city,
-        Район: district?.name,
-        Метро: metro ? metro?.name : "-",
-        Адрес: address,
-        Идентификатор: identifier ? identifier : "-",
-        Долгота: longitude,
-        Широта: latitude,
-        Zoom: zoom,
+        "Город": city,
+        "Район": district?.name,
+        "Метро": metro ? metro?.name : "-",
+        "Адрес": address,
+        "Идентификатор": identifier ? identifier : "-",
+        "Долгота": longitude,
+        "Широта": latitude,
+        "Zoom": zoom,
         "Статус объекта": status?.name,
 
-        Описание: description ? description : "-",
+        "Описание": description ? description : "-",
 
         "Имя представителя": contactName ? contactName : "-",
         "Позиция представителя": contactPosition ? contactPosition?.name : "-",
@@ -119,12 +119,12 @@ const useModifyObjectToExportExel = (objects) => {
         "Email представителя": contactEmail ? contactEmail : "-",
 
         "Стоимость аренды": rentPrice ? rentPrice : "-",
-        Обеспечительный: securityDeposit ? securityDeposit : "-",
+        "Обеспечительный": securityDeposit ? securityDeposit : "-",
         "S аренды": rentSquare ? rentSquare : "-",
-        Каникулы: rentalHolidays ? rentalHolidays : "-",
-        Индексация: indexingAnnual ? indexingAnnual : "-",
+        "Каникулы": rentalHolidays ? rentalHolidays : "-",
+        "Индексация": indexingAnnual ? indexingAnnual : "-",
         "Тип сделки": rentType ? rentType?.name : "-",
-        Авансовый: advanseDeposit ? advanseDeposit : "-",
+        "Авансовый": advanseDeposit ? advanseDeposit : "-",
 
         "Текущий арендатор": currentRenter ? currentRenter?.name : "-",
         "Состояние помещения": objectCondition ? objectCondition?.name : "-",
@@ -136,7 +136,7 @@ const useModifyObjectToExportExel = (objects) => {
         "Высота потолков": premisesHeight ? premisesHeight : "-",
         "Парковка (мест)": parkingQuantity ? parkingQuantity : "-",
         "Электричество (кВт)": electricityKw ? electricityKw : "-",
-        Водоснабжение: waterSuply ? waterSuply : "-",
+        "Водоснабжение": waterSuply ? waterSuply : "-",
         "Состояние полов": premisesFloor ? premisesFloor : "-",
         "Кадастровый №": cadastralNumber ? cadastralNumber : "-",
       };

@@ -3,13 +3,13 @@ import dayjs from "dayjs";
 import { orderBy } from "lodash";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 // columns
 import { objectsColumns } from "../../columns/objects-columns/objects-columns";
 import { objectsColumnsCurator } from "../../columns/objects-columns/objects-columns-curator";
 // components
 import ObjectBaloon from "../../components/UI/maps/object-baloon";
-import ObjectsFiltersPanel from "../../components/UI/filters-panels/obects-filters-panel";
+import ObjectsFiltersPanel from "../../components/UI/filters-panels/objects-filters-panel";
 import BasicTable from "../../components/common/table/basic-table";
 import LayoutTitle from "../../components/common/page-titles/layout-title";
 import ItemsOnMap from "../../components/common/map/items-on-map/items-on-map";
@@ -53,7 +53,7 @@ const initialState = {
   selectedMetro: [],
 };
 
-const Objects = () => {
+const Objects = React.memo(() => {
   const [selectedBaloon, setSelectedBaloon] = useState(null);
 
   const localStorageState = JSON.parse(
@@ -88,7 +88,9 @@ const Objects = () => {
   const columns = isCurator ? objectsColumnsCurator : objectsColumns;
 
   const searchedObjects = useSearchObject(objects, data);
-  const sortedObjects = orderBy(searchedObjects, ["created_at"], ["desc"]);
+  const sortedObjects = useMemo(() => {
+    return orderBy(searchedObjects, ["created_at"], ["desc"]);
+  }, [searchedObjects]);
   const modifiedObjectsData = useModifyObjectToExportExel(sortedObjects);
 
   useEffect(() => {
@@ -142,6 +144,6 @@ const Objects = () => {
       <ObjectUpdatePageDialog />
     </>
   );
-};
+});
 
 export default Objects;

@@ -1,8 +1,7 @@
 // libraries
-import dayjs from "dayjs";
 import { orderBy } from "lodash";
 import { useForm } from "react-hook-form";
-import { useState, useEffect } from "react";
+import React, { useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 import { Box, styled } from "@mui/material";
 // components
@@ -15,6 +14,7 @@ import ChangePeriodButton from "./components/change-period-button";
 import ObjectsDatabaseFiltersPanel from "../../components/UI/filters-panels/objectsdatabase-filters-panel";
 // columns
 import { objectsColumns } from "../../columns/objects-columns/objects-columns";
+import { objectsColumnsCurator } from "../../columns/objects-columns/objects-columns-curator";
 // hooks
 import useSearchObjectDatabase from "../../hooks/objects-database/use-search-object-database";
 // store
@@ -26,7 +26,6 @@ import {
   getCurrentUserId,
   getIsUserCurator,
 } from "../../store/user/users.store";
-import { objectsColumnsCurator } from "../../columns/objects-columns/objects-columns-curator";
 
 const ChangePeriodsContainer = styled(Box)`
   width: 100%;
@@ -41,7 +40,7 @@ const initialState = {
   selectedUsers: [],
 };
 
-const ObjectsDatabase = () => {
+const ObjectsDatabase = React.memo(() => {
   const localStorageState = JSON.parse(
     localStorage.getItem("search-objectsdatabase-data")
   );
@@ -63,7 +62,9 @@ const ObjectsDatabase = () => {
   const columns = isCurator ? objectsColumnsCurator : objectsColumns;
 
   const searchedObjects = useSearchObjectDatabase(objects, data, period);
-  const sortedObjects = orderBy(searchedObjects, ["created_at"], ["desc"]);
+  const sortedObjects = useMemo(() => {
+    return orderBy(searchedObjects, ["created_at"], ["desc"]);
+  }, [searchedObjects]);
 
   const handleChangePeriod = (newPeriod) => {
     setPeriod(newPeriod);
@@ -73,14 +74,16 @@ const ObjectsDatabase = () => {
     <Box>
       <LayoutTitle title="Проработка базы объектов" />
       <ChangePeriodsContainer>
-        {isCurator && <ObjectsDatabaseFiltersPanel
-          data={data}
-          objects={objects}
-          register={register}
-          setValue={setValue}
-          isCurator={isCurator}
-          isLoading={isLoading}
-        />}
+        {isCurator && (
+          <ObjectsDatabaseFiltersPanel
+            data={data}
+            objects={objects}
+            register={register}
+            setValue={setValue}
+            isCurator={isCurator}
+            isLoading={isLoading}
+          />
+        )}
 
         <ChangePeriodButton
           minWidth="320px"
@@ -116,6 +119,6 @@ const ObjectsDatabase = () => {
       <ObjectUpdatePageDialog />
     </Box>
   );
-};
+});
 
 export default ObjectsDatabase;

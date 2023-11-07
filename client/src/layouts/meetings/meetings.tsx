@@ -1,11 +1,10 @@
 // libraries
 import dayjs from "dayjs";
 import { orderBy } from "lodash";
-import { Box, Button } from "@mui/material";
+import { Box } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
-import { useEffect, useState } from "react";
-import XLSX from "xlsx/dist/xlsx.full.min.js";
+import React, { useEffect, useMemo, useState } from "react";
 // components
 import MeetingBaloon from "../../components/UI/maps/meeting-baloon";
 import MeetingsFiltersPanel from "../../components/UI/filters-panels/meetings-filters-panel";
@@ -49,7 +48,7 @@ const initialState = {
   endDate: null,
 };
 
-const Meetings = () => {
+const Meetings = React.memo (() => {
   const [selectedMeetingBaloon, setSelectedMeetingBaloon] = useState(null);
 
   const localStorageState = JSON.parse(
@@ -81,7 +80,10 @@ const Meetings = () => {
   const meetingsTypes = useSelector(getMeetingTypesList());
   const selectedMeeting = useSelector(getMeetingById(selectedMeetingBaloon));
   const searchedMeetings = useSearchMeeting(meetings, data);
-  const sortedMeetings = orderBy(searchedMeetings, ["date"], ["asc"]);
+  
+  const sortedMeetings = useMemo(() => {
+   return orderBy(searchedMeetings, ["date"], ["asc"]);
+  }, [searchedMeetings]);
 
   const isLoading = useSelector(getMeetingLoadingStatus());
   const isInputEmpty = JSON.stringify(initialState) !== JSON.stringify(data);
@@ -140,6 +142,6 @@ const Meetings = () => {
       <ObjectUpdatePageDialog />
     </Box>
   );
-};
+});
 
 export default Meetings;

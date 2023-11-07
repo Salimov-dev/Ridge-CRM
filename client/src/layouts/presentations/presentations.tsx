@@ -1,7 +1,7 @@
 import Confetti from "react-confetti";
 import dayjs from "dayjs";
 import { useForm } from "react-hook-form";
-import { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Box } from "@mui/material";
 import { orderBy } from "lodash";
 import { useSelector } from "react-redux";
@@ -47,7 +47,7 @@ const initialState = {
   endDate: null,
 };
 
-const Presentations = () => {
+const Presentations = React.memo(() => {
   const { width, height } = useWindowSize();
   const [confettiActive, setConfettiActive] = useState(false);
   const [selectedPresentationBaloon, setSelectedPresentationBaloon] =
@@ -86,14 +86,14 @@ const Presentations = () => {
   const presentationsList = useSelector(getPresentationsList());
   const presentationsStatuses = useSelector(getPresentationStatusList());
   const isLoading = useSelector(getPresentationsLoadingStatus());
+  const isInputEmpty = JSON.stringify(initialState) !== JSON.stringify(data);
 
   const searchedPresentations = useSearchPresentation(presentationsList, data);
-  const sortedPresentations = orderBy(
+  const sortedPresentations = useMemo(()=>{return orderBy(
     searchedPresentations,
     ["created_at"],
     ["asc"]
-  );
-  const isInputEmpty = JSON.stringify(initialState) !== JSON.stringify(data);
+  )},[searchedPresentations]) ;
 
   useEffect(() => {
     localStorage.setItem("search-presentations-data", JSON.stringify(data));
@@ -191,6 +191,6 @@ const Presentations = () => {
       <ObjectUpdatePageDialog />
     </Box>
   );
-};
+});
 
 export default Presentations;

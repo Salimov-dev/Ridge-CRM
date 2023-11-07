@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 // components
@@ -29,7 +29,7 @@ const initialState = {
   selectedUsers: [],
 };
 
-const Deals = () => {
+const Deals = React.memo(() => {
   const localStorageState = JSON.parse(
     localStorage.getItem("search-deals-data")
   );
@@ -71,16 +71,18 @@ const Deals = () => {
   return (
     <Box>
       <LayoutTitle title="Сделки" />
-      {isCurator && <DealsFiltersPanel
-        data={data}
-        deals={objectsInDeals}
-        register={register}
-        initialState={initialState}
-        reset={reset}
-        setValue={setValue}
-        isInputEmpty={isInputEmpty}
-        isLoading={isLoading}
-      />}
+      {isCurator && (
+        <DealsFiltersPanel
+          data={data}
+          deals={objectsInDeals}
+          register={register}
+          initialState={initialState}
+          reset={reset}
+          setValue={setValue}
+          isInputEmpty={isInputEmpty}
+          isLoading={isLoading}
+        />
+      )}
       <Stages
         objects={searchedDeals}
         stages={dealStagesArray}
@@ -91,6 +93,6 @@ const Deals = () => {
       <ObjectUpdatePageDialog />
     </Box>
   );
-};
+});
 
 export default Deals;
