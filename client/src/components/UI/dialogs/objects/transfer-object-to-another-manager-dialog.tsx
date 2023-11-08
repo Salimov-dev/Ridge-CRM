@@ -7,7 +7,7 @@ import {
 } from "../../../../store/object/transfer-object-to-another-manager.store";
 import TransferObjectToAnotherManager from "../../../pages/transfer-object-to-another-manager/transfer-object-to-another-manager";
 
-const TransferObjectToAnotherManagerDialog = 
+const TransferObjectToAnotherManagerDialog = React.memo(
   ({ objectsToTransfer, setRowSelection }) => {
     const dispatch = useDispatch();
 
@@ -35,6 +35,6 @@ const TransferObjectToAnotherManagerDialog =
       />
     );
   }
-;
+);
 
 export default TransferObjectToAnotherManagerDialog;

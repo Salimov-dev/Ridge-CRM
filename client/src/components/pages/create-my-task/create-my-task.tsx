@@ -27,7 +27,7 @@ const initialState = {
   isDone: false,
 };
 
-const CreateMyTask = ({
+const CreateMyTask = React.memo(({
   title,
   dateCreate,
   onClose,
@@ -119,6 +119,6 @@ const CreateMyTask = ({
       />
     </>
   );
-};
+});
 
 export default CreateMyTask;

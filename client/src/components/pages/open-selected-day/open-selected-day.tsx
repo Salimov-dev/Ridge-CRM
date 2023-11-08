@@ -5,7 +5,7 @@ import Loader from "../../common/loader/loader";
 import DayContent from "../../common/calendar/calendar-body/components/month/components/day/components/day-content/day-content";
 import React from "react";
 
-const OpenSelectedDay = ({ onClose, dateCreate, tasks, meetings }) => {
+const OpenSelectedDay = React.memo(({ onClose, dateCreate, tasks, meetings }) => {
   const meetingsArray = meetings ? meetings(dateCreate) : [];
   const tasksArray = tasks ? tasks(dateCreate) : [];
   const selectedDateIsEmptyDeals =
@@ -30,6 +30,6 @@ const OpenSelectedDay = ({ onClose, dateCreate, tasks, meetings }) => {
   ) : (
     <Loader />
   );
-};
+});
 
 export default OpenSelectedDay;

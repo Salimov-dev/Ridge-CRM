@@ -23,7 +23,7 @@ import {
 // schema
 import { lastContactSchema } from "../../../schemas/last-contact-schema";
 
-const UpdateLastContact = ({ onClose }) => {
+const UpdateLastContact = React.memo(({ onClose }) => {
   const dispatch = useDispatch();
 
   const [open, setOpen] = useState(false);
@@ -91,7 +91,7 @@ const UpdateLastContact = ({ onClose }) => {
     <Box>
       {isLoading ? (
         <IsLoadingDialog
-          text="Немного подождите, изменяем `Задачу последний контакт`"
+          text="Немного подождите, изменяем `Последний контакт`"
           isLoading={isLoading}
         />
       ) : (
@@ -123,6 +123,6 @@ const UpdateLastContact = ({ onClose }) => {
   ) : (
     <Loader />
   );
-};
+});
 
 export default UpdateLastContact;

@@ -41,7 +41,7 @@ const initialState = {
   image: "",
 };
 
-const CreateManager = ({ onClose }) => {
+const CreateManager = React.memo(({ onClose }) => {
   const {
     register,
     watch,
@@ -103,6 +103,6 @@ const CreateManager = ({ onClose }) => {
       />
     </Box>
   );
-};
+});
 
 export default CreateManager;

@@ -55,7 +55,7 @@ const initialState = {
   selectedMetro: [],
 };
 
-const Objects = () => {
+const Objects = React.memo(() => {
   const [selectedBaloon, setSelectedBaloon] = useState(null);
   const [rowSelection, setRowSelection] = useState([]);
   const [selectedObjects, setSelectedObjects] = useState([]);
@@ -166,10 +166,10 @@ const Objects = () => {
         itemsColumns={columns}
         isLoading={isLoading}
       />
-      <ExportToExelButton
+      {isCurator && <ExportToExelButton
         title="Скачать объекты в EXEL"
         data={modifiedObjectsData}
-      />
+      />}
 
       <ObjectCreatePageDialog />
       <ObjectPageDialog />
@@ -180,6 +180,6 @@ const Objects = () => {
       />
     </>
   );
-};
+});
 
 export default Objects;

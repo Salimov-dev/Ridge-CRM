@@ -12,7 +12,7 @@ import {
 import transformUsersForSelect from "../../../../utils/objects/transform-users-for-select";
 import React from "react";
 
-const ManagerTaskUpdateDialog = ({ objects = [] }) => {
+const ManagerTaskUpdateDialog = React.memo(({ objects = [] }) => {
   const dispatch = useDispatch();
   const users = useSelector(getUsersList());
   const currentUserId = useSelector(getCurrentUserId());
@@ -44,6 +44,6 @@ const ManagerTaskUpdateDialog = ({ objects = [] }) => {
       }
     />
   );
-};
+});
 
 export default ManagerTaskUpdateDialog;

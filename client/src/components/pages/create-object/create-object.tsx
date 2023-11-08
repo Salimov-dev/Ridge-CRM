@@ -60,7 +60,7 @@ const initialState = {
   cloudLink: "",
 };
 
-const CreateObject = ({ onClose }) => {
+const CreateObject = React.memo(({ onClose }) => {
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
 
@@ -186,6 +186,6 @@ const CreateObject = ({ onClose }) => {
       )}
     </>
   );
-};
+});
 
 export default CreateObject;

@@ -7,6 +7,14 @@ const Component = styled(Box)`
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 10px;
+`;
+
+const Title = styled(Box)`
+  display: flex;
+  align-items: center;
+  color: black;
+  padding: 6px 10px;
 `;
 
 const IsLoadingDialog = ({ text, isLoading }) => {
@@ -17,7 +25,15 @@ const IsLoadingDialog = ({ text, isLoading }) => {
       component={
         <>
           <Component>
-            <Typography>{text}</Typography>
+            <Title sx={{  background: 'yellow'}}>
+              <Typography sx={{}}>{text}</Typography>
+            </Title>
+            <Title sx={{background: 'red', color: 'white'}}>
+              <Typography>
+                Не закрывайте окно или вкладку браузера и не переходите на
+                другую страницу
+              </Typography>
+            </Title>
             <Loader />
           </Component>
         </>

@@ -7,7 +7,7 @@ import {
 } from "../../../../store/meeting/update-meeting.store";
 import React from "react";
 
-const MeetingUpdateDialog = () => {
+const MeetingUpdateDialog = React.memo(() => {
   const dispatch = useDispatch();
   const isOpenUpdateMeeting = useSelector(loadUpdateMeetingOpenState());
 
@@ -23,6 +23,6 @@ const MeetingUpdateDialog = () => {
       fullWidth={false}
     />
   );
-};
+});
 
 export default MeetingUpdateDialog;

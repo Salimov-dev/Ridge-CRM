@@ -56,6 +56,19 @@ router.get("/:objectId?", auth, async (req, res) => {
   }
 });
 
+router.patch("/:objectId?/edit", auth, async (req, res) => {
+  try {
+    const { objectId } = req.params;
+    const updatedObject = await Object.findByIdAndUpdate(objectId, req.body);
+
+    res.send(updatedObject);
+  } catch (e) {
+    res.status(500).json({
+      message: "На сервере произошла ошибка, попробуйте позже",
+    });
+  }
+});
+
 router.patch("/update-multiple", auth, async (req, res) => {
   try {
     const { objectIds, userId } = req.body;

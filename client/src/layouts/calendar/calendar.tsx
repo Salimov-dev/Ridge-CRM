@@ -34,7 +34,7 @@ const initialState = {
   selectedTaskTypes: [],
 };
 
-const Calendar = () => {
+const Calendar = React.memo(() => {
   const [currentMonth, setCurrentMonth] = useState(getMonth());
   const [dateCreate, setDateCreate] = useState(null);
 
@@ -144,6 +144,6 @@ const Calendar = () => {
       />
     </>
   );
-};
+});
 
 export default Calendar;

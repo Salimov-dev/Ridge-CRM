@@ -7,7 +7,7 @@ import {
 } from "../../../../store/user/create-user.store";
 import React from "react";
 
-const ManagerCreatePageDialog = () => {
+const ManagerCreatePageDialog = React.memo(() => {
   const isOpenCreateManager = useSelector(getCreateUserOpenState());
   const dispatch = useDispatch();
 
@@ -22,6 +22,6 @@ const ManagerCreatePageDialog = () => {
       maxWidth="xl"
     />
   );
-};
+});
 
 export default ManagerCreatePageDialog;

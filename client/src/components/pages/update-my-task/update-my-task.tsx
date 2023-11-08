@@ -26,7 +26,7 @@ import { getCurrentUserId } from "../../../store/user/users.store";
 import { loadOpenObjectPageOpenState } from "../../../store/object/open-object-page.store";
 import transformObjectsForSelect from "../../../utils/objects/transform-objects-for-select";
 
-const UpdateMyTask = ({ title, onClose }) => {
+const UpdateMyTask = React.memo(({ title, onClose }) => {
   const dispatch = useDispatch();
 
   const [open, setOpen] = useState(false);
@@ -151,6 +151,6 @@ const UpdateMyTask = ({ title, onClose }) => {
       />
     </>
   );
-};
+});
 
 export default UpdateMyTask;
