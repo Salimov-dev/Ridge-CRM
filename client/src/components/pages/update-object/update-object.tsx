@@ -18,7 +18,7 @@ import {
   updateObject,
 } from "../../../store/object/objects.store";
 
-const UpdateObject = React.memo(({ onClose }) => {
+const UpdateObject = ({ onClose }) => {
   const dispatch = useDispatch();
 
   const [isLoading, setIsLoading] = useState(false);
@@ -113,6 +113,6 @@ const UpdateObject = React.memo(({ onClose }) => {
       />
     </Box>
   );
-});
+};
 
 export default UpdateObject;

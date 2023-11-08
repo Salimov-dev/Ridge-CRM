@@ -8,7 +8,7 @@ import {
 } from "../../../../store/meeting/create-meeting.store";
 import React from "react";
 
-const MeetingCreateDialog = React.memo(
+const MeetingCreateDialog = 
   ({
     dateCreate = getDateToday(),
     objectPageId = "",
@@ -37,6 +37,6 @@ const MeetingCreateDialog = React.memo(
       />
     );
   }
-);
+;
 
 export default MeetingCreateDialog;

@@ -32,7 +32,7 @@ const initialState = {
   managerId: "",
 };
 
-const TransferObjectToAnotherManager = React.memo(
+const TransferObjectToAnotherManager = 
   ({
     objectsToTransfer = [],
     title = "",
@@ -121,6 +121,6 @@ const TransferObjectToAnotherManager = React.memo(
       </Component>
     );
   }
-);
+;
 
 export default TransferObjectToAnotherManager;

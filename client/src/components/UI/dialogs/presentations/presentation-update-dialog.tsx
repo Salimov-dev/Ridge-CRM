@@ -4,7 +4,7 @@ import { loadUpdatePresentationOpenState, setUpdatePresentationOpenState } from 
 import UpdatePresentation from "../../../pages/update-presentation/update-presentation";
 import React from "react";
 
-const PresentationUpdateDialog = React.memo(() => {
+const PresentationUpdateDialog = () => {
   const dispatch = useDispatch();
   const isOpenUpdatePresentation = useSelector(loadUpdatePresentationOpenState());
 
@@ -20,6 +20,6 @@ const PresentationUpdateDialog = React.memo(() => {
       fullWidth={false}
     />
   );
-});
+};
 
 export default PresentationUpdateDialog;

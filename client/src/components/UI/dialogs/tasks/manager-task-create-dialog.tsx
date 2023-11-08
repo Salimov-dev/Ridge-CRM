@@ -8,7 +8,7 @@ import {
 import { getOpenObjectPageId, loadOpenObjectPageOpenState } from "../../../../store/object/open-object-page.store";
 import React from "react";
 
-const ManagerTaskCreateDialog = React.memo(({
+const ManagerTaskCreateDialog = ({
   users,
   setDateCreate=()=>{},
   dateCreate=null,
@@ -43,6 +43,6 @@ const ManagerTaskCreateDialog = React.memo(({
       }
     />
   );
-});
+};
 
 export default ManagerTaskCreateDialog;

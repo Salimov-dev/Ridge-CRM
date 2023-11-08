@@ -7,7 +7,7 @@ import {
 } from "../../../../store/object/open-object-page.store";
 import React from "react";
 
-const ObjectPageDialog = React.memo(() => {
+const ObjectPageDialog = () => {
   const dispatch = useDispatch();
   const isOpenObjectPage = useSelector(loadOpenObjectPageOpenState());
 
@@ -23,6 +23,6 @@ const ObjectPageDialog = React.memo(() => {
       maxWidth="xl"
     />
   );
-});
+};
 
 export default ObjectPageDialog;

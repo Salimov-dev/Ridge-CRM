@@ -33,7 +33,7 @@ const initialState = {
   curatorComment: "",
 };
 
-const CreatePresentation = React.memo(({ onClose, setConfettiActive }) => {
+const CreatePresentation = ({ onClose, setConfettiActive }) => {
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
 
@@ -164,6 +164,6 @@ const CreatePresentation = React.memo(({ onClose, setConfettiActive }) => {
       />
     </>
   );
-});
+};
 
 export default CreatePresentation;

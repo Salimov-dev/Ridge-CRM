@@ -55,7 +55,7 @@ const initialState = {
   selectedMetro: [],
 };
 
-const Objects = React.memo(() => {
+const Objects = () => {
   const [selectedBaloon, setSelectedBaloon] = useState(null);
   const [rowSelection, setRowSelection] = useState([]);
   const [selectedObjects, setSelectedObjects] = useState([]);
@@ -180,6 +180,6 @@ const Objects = React.memo(() => {
       />
     </>
   );
-});
+};
 
 export default Objects;

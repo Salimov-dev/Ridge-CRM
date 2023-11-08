@@ -47,7 +47,7 @@ const initialState = {
   endDate: null,
 };
 
-const Presentations = React.memo(() => {
+const Presentations = () => {
   const { width, height } = useWindowSize();
   const [confettiActive, setConfettiActive] = useState(false);
   const [selectedPresentationBaloon, setSelectedPresentationBaloon] =
@@ -191,6 +191,6 @@ const Presentations = React.memo(() => {
       <ObjectUpdatePageDialog />
     </Box>
   );
-});
+};
 
 export default Presentations;

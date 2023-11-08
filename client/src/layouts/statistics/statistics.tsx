@@ -44,7 +44,7 @@ const initialState = {
   withoutCurator: false,
 };
 
-const Statictics = React.memo (() => {
+const Statictics = () => {
   const dispatch = useDispatch();
   const localStorageState = JSON.parse(
     localStorage.getItem("search-statictics-data")
@@ -151,6 +151,6 @@ const Statictics = React.memo (() => {
       </Box>
     </>
   );
-});
+};
 
 export default Statictics;

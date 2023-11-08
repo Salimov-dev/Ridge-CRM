@@ -29,7 +29,7 @@ import {
 } from "../../../store/presentation/presentations.store";
 import transformObjectsForSelect from "../../../utils/objects/transform-objects-for-select";
 
-const UpdatePresentation = React.memo(({ onClose }) => {
+const UpdatePresentation = ({ onClose }) => {
   const dispatch = useDispatch();
 
   const [open, setOpen] = useState(false);
@@ -137,6 +137,6 @@ const UpdatePresentation = React.memo(({ onClose }) => {
       />
     </Box>
   );
-});
+};
 
 export default UpdatePresentation;

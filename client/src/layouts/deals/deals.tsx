@@ -29,7 +29,7 @@ const initialState = {
   selectedUsers: [],
 };
 
-const Deals = React.memo(() => {
+const Deals = () => {
   const localStorageState = JSON.parse(
     localStorage.getItem("search-deals-data")
   );
@@ -93,6 +93,6 @@ const Deals = React.memo(() => {
       <ObjectUpdatePageDialog />
     </Box>
   );
-});
+};
 
 export default Deals;

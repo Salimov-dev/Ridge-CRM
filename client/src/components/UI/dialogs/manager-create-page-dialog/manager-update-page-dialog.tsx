@@ -7,7 +7,7 @@ import {
 } from "../../../../store/user/update-user.store";
 import React from "react";
 
-const ManagerUpdatePageDialog = React.memo(() => {
+const ManagerUpdatePageDialog = () => {
   const isOpenCreateManager = useSelector(getUpdateManagerOpenState());
   const dispatch = useDispatch();
 
@@ -23,6 +23,6 @@ const ManagerUpdatePageDialog = React.memo(() => {
       maxWidth="xl"
     />
   );
-});
+};
 
 export default ManagerUpdatePageDialog;

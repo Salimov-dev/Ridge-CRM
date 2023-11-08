@@ -27,7 +27,7 @@ const initialState = {
   commentMyTask: "",
 };
 
-const CreateLastContact = React.memo(({ onClose }) => {
+const CreateLastContact = ({ onClose }) => {
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
   const objectPageId = useSelector(getOpenObjectPageId());
@@ -101,6 +101,6 @@ const CreateLastContact = React.memo(({ onClose }) => {
       />
     </>
   );
-});
+};
 
 export default CreateLastContact;

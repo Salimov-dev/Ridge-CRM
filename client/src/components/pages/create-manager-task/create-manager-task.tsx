@@ -40,7 +40,7 @@ const initialState = {
   isDone: false,
 };
 
-const CreateManagerTask = React.memo(({ users, title, dateCreate, onClose }) => {
+const CreateManagerTask = ({ users, title, dateCreate, onClose }) => {
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
 
@@ -144,6 +144,6 @@ const CreateManagerTask = React.memo(({ users, title, dateCreate, onClose }) => 
       />
     </>
   );
-});
+};
 
 export default CreateManagerTask;

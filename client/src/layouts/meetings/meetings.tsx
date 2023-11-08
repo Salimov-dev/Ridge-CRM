@@ -48,7 +48,7 @@ const initialState = {
   endDate: null,
 };
 
-const Meetings = React.memo (() => {
+const Meetings = () => {
   const [selectedMeetingBaloon, setSelectedMeetingBaloon] = useState(null);
 
   const localStorageState = JSON.parse(
@@ -142,6 +142,6 @@ const Meetings = React.memo (() => {
       <ObjectUpdatePageDialog />
     </Box>
   );
-});
+};
 
 export default Meetings;

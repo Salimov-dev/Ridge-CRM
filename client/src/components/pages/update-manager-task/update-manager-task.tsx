@@ -30,7 +30,7 @@ import { getObjectsList } from "../../../store/object/objects.store";
 import { loadOpenObjectPageOpenState } from "../../../store/object/open-object-page.store";
 import transformObjectsForSelect from "../../../utils/objects/transform-objects-for-select";
 
-const UpdateManagerTask = React.memo(({ title, onClose, users }) => {
+const UpdateManagerTask = ({ title, onClose, users }) => {
   const dispatch = useDispatch();
 
   const [open, setOpen] = useState(false);
@@ -160,6 +160,6 @@ const UpdateManagerTask = React.memo(({ title, onClose, users }) => {
       />
     </>
   );
-});
+};
 
 export default UpdateManagerTask;

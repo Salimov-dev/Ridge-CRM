@@ -23,7 +23,7 @@ import {
 // schema
 import { lastContactSchema } from "../../../schemas/last-contact-schema";
 
-const UpdateLastContact = React.memo(({ onClose }) => {
+const UpdateLastContact = ({ onClose }) => {
   const dispatch = useDispatch();
 
   const [open, setOpen] = useState(false);
@@ -123,6 +123,6 @@ const UpdateLastContact = React.memo(({ onClose }) => {
   ) : (
     <Loader />
   );
-});
+};
 
 export default UpdateLastContact;

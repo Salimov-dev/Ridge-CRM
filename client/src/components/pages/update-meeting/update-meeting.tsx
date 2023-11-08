@@ -29,7 +29,7 @@ import {
 } from "../../../store/meeting/meetings.store";
 import transformObjectsForSelect from "../../../utils/objects/transform-objects-for-select";
 
-const UpdateMeeting = React.memo(({ onClose }) => {
+const UpdateMeeting = ({ onClose }) => {
   const dispatch = useDispatch();
 
   const [open, setOpen] = useState(false);
@@ -139,6 +139,6 @@ const UpdateMeeting = React.memo(({ onClose }) => {
       />
     </Box>
   );
-});
+};
 
 export default UpdateMeeting;

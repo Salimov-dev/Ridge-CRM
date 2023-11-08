@@ -16,7 +16,7 @@ const Logo = styled(Box)`
   align-items: center;
 `;
 
-const Main = React.memo(() => {
+const Main = () => {
   const isLoggedIn = useSelector(getIsLoggedIn());
   return (
     <Box>
@@ -114,6 +114,6 @@ const Main = React.memo(() => {
       <LoginDialog />
     </Box>
   );
-});
+};
 
 export default Main;

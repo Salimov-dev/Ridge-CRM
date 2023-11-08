@@ -21,7 +21,7 @@ import {
 } from "../../../store/user/users.store";
 import React from "react";
 
-const ObjectPage = React.memo(({ onClose }) => {
+const ObjectPage = ({ onClose }) => {
   const dispatch = useDispatch();
   const objectId = useSelector(getOpenObjectPageId());
   const object = useSelector(getObjectById(objectId));
@@ -74,6 +74,6 @@ const ObjectPage = React.memo(({ onClose }) => {
       />
     </Box>
   );
-});
+};
 
 export default ObjectPage;

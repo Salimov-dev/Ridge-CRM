@@ -47,7 +47,7 @@ const initialState = {
   password: "",
 };
 
-const Login = React.memo(({ onClose }) => {
+const Login = ({ onClose }) => {
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -113,6 +113,6 @@ const Login = React.memo(({ onClose }) => {
       )}
     </Component>
   );
-});
+};
 
 export default Login;

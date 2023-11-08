@@ -42,7 +42,7 @@ const initialState = {
   },
 };
 
-const CreateMeeting = React.memo(({
+const CreateMeeting = ({
   objectPageId = "",
   onClose,
   dateCreate,
@@ -171,6 +171,6 @@ const CreateMeeting = React.memo(({
       )}
     </>
   );
-});
+};
 
 export default CreateMeeting;

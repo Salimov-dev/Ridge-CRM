@@ -40,7 +40,7 @@ const initialState = {
   selectedUsers: [],
 };
 
-const ObjectsDatabase = React.memo(() => {
+const ObjectsDatabase = () => {
   const localStorageState = JSON.parse(
     localStorage.getItem("search-objectsdatabase-data")
   );
@@ -119,6 +119,6 @@ const ObjectsDatabase = React.memo(() => {
       <ObjectUpdatePageDialog />
     </Box>
   );
-});
+};
 
 export default ObjectsDatabase;

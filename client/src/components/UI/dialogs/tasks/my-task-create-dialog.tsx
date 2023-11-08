@@ -7,7 +7,7 @@ import {
 } from "../../../../store/task/create-my-task.store";
 import React from "react";
 
-const MyTaskCreateDialog = React.memo(({
+const MyTaskCreateDialog = ({
   objects,
   dateCreate = null,
   setDateCreate = () => {},
@@ -42,6 +42,6 @@ const MyTaskCreateDialog = React.memo(({
       }
     />
   );
-});
+};
 
 export default MyTaskCreateDialog;
