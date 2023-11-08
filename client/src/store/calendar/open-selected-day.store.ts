@@ -20,7 +20,7 @@ export const setOpenSelectedDayOpenState = (payload) => (dispatch) => {
   dispatch(openSelectedDayOpenSetted(payload));
 };
 
-export const loadOpenSelectedDayOpenState = () => (state) => {
+export const getOpenSelectedDayOpenState = () => (state) => {
   return state?.openSelectedDay?.entities;
 };
 

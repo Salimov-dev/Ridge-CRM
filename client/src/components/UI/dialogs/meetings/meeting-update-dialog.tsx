@@ -2,14 +2,14 @@ import { useDispatch, useSelector } from "react-redux";
 import DialogStyled from "../../../common/dialog/dialog-styled";
 import UpdateMeeting from "../../../pages/update-meeting/update-meeting";
 import {
-  loadUpdateMeetingOpenState,
+  getUpdateMeetingOpenState,
   setUpdateMeetingOpenState,
 } from "../../../../store/meeting/update-meeting.store";
 import React from "react";
 
 const MeetingUpdateDialog = React.memo(() => {
   const dispatch = useDispatch();
-  const isOpenUpdateMeeting = useSelector(loadUpdateMeetingOpenState());
+  const isOpenUpdateMeeting = useSelector(getUpdateMeetingOpenState());
 
   const handleCloseUpdate = () => {
     dispatch<any>(setUpdateMeetingOpenState(false));

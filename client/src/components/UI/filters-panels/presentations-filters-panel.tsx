@@ -6,8 +6,9 @@ import SearchDatePicker from "../../common/inputs/search-date-picker";
 // utils
 import { getActualUsersList } from "../../../utils/actual-items/get-actual-users-list";
 import { getActualStatusesList } from "../../../utils/actual-items/get-actual-statuses-list";
+import React from "react";
 
-const PresentationsFiltersPanel = ({
+const PresentationsFiltersPanel = React.memo(({
   presentations,
   statuses,
   data,
@@ -88,6 +89,6 @@ const PresentationsFiltersPanel = ({
       </FieldsContainer>
     </Form>
   );
-};
+});
 
 export default PresentationsFiltersPanel;

@@ -20,10 +20,6 @@ export const setCreateManagerTaskOpenState = (payload) => (dispatch) => {
   dispatch(createManagerTaskOpenSetted(payload));
 };
 
-export const loadCreateManagerTaskOpenState = () => (state) => {
-  return state?.createManagerTask?.entities;
-};
-
 export const getCreateManagerTaskOpenState = () => (state) => {
   return state?.createManagerTask?.entities;
 };

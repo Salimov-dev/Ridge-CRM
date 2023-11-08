@@ -39,6 +39,7 @@ const Header = ({
         onEdit={onEdit}
         negativeTitle="Закрыть"
         isEdit={isEdit}
+        isTopButtonsPanel={true}
         isAuthorEntity={isAuthorEntity}
       />
     </HeaderContainer>

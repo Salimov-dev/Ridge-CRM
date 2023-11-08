@@ -20,10 +20,6 @@ export const setCreateMeetingOpenState = (payload) => (dispatch) => {
   dispatch(createMeetingOpenSetted(payload));
 };
 
-export const loadCreateMeetingOpenState = () => (state) => {
-  return state?.createMeeting?.entities;
-};
-
 export const getCreateMeetingOpenState = () => (state) => {
   return state?.createMeeting?.entities;
 };

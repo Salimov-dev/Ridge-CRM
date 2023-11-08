@@ -5,8 +5,9 @@ import { FieldsContainer, Form } from "../../common/forms/styled/styled";
 import SearchSelectField from "../../common/inputs/search-select-field";
 // mock
 import { gendersArray } from "../../../mock/genders";
+import React from "react";
 
-const UsersFiltersPanel = ({
+const UsersFiltersPanel = React.memo(({
   register,
   data,
   users,
@@ -71,6 +72,6 @@ const UsersFiltersPanel = ({
       </FieldsContainer>
     </Form>
   );
-};
+});
 
 export default UsersFiltersPanel;

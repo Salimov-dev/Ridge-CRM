@@ -20,10 +20,6 @@ export const setCreateLastContactOpenState = (payload) => (dispatch) => {
   dispatch(createLastContactOpenSetted(payload));
 };
 
-export const loadCreateLastContactOpenState = () => (state) => {
-  return state?.createLastContact?.entities;
-};
-
 export const getCreateLastContactOpenState = () => (state) => {
   return state?.createLastContact?.entities;
 };

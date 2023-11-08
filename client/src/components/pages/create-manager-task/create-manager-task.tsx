@@ -27,7 +27,7 @@ import {
 } from "../../../store/user/users.store";
 import {
   getOpenObjectPageId,
-  loadOpenObjectPageOpenState,
+  getOpenObjectPageOpenState,
 } from "../../../store/object/open-object-page.store";
 
 const initialState = {
@@ -40,110 +40,112 @@ const initialState = {
   isDone: false,
 };
 
-const CreateManagerTask = React.memo(({ users, title, dateCreate, onClose }) => {
-  const dispatch = useDispatch();
-  const [isLoading, setIsLoading] = useState(false);
+const CreateManagerTask = React.memo(
+  ({ users, title, dateCreate, onClose }) => {
+    const dispatch = useDispatch();
+    const [isLoading, setIsLoading] = useState(false);
 
-  const {
-    register,
-    watch,
-    handleSubmit,
-    setValue,
-    formState: { errors, isValid },
-  } = useForm({
-    defaultValues: initialState,
-    mode: "onBlur",
-    resolver: yupResolver(taskManagerSchema),
-  });
-  const data = watch();
-  const watchDate = watch<any>("date", null);
-  const watchTime = watch<any>("time", null);
-  const watchManagerId = watch<any>("managerId", null);
-  const isFullValid =
-    isValid &&
-    Boolean(watchDate) &&
-    Boolean(watchTime) &&
-    Boolean(watchManagerId);
+    const {
+      register,
+      watch,
+      handleSubmit,
+      setValue,
+      formState: { errors, isValid },
+    } = useForm({
+      defaultValues: initialState,
+      mode: "onBlur",
+      resolver: yupResolver(taskManagerSchema),
+    });
+    const data = watch();
+    const watchDate = watch<any>("date", null);
+    const watchTime = watch<any>("time", null);
+    const watchManagerId = watch<any>("managerId", null);
+    const isFullValid =
+      isValid &&
+      Boolean(watchDate) &&
+      Boolean(watchTime) &&
+      Boolean(watchManagerId);
 
-  const currentUserId = useSelector(getCurrentUserId());
-  const isCurator = useSelector(getIsUserCurator(currentUserId));
+    const currentUserId = useSelector(getCurrentUserId());
+    const isCurator = useSelector(getIsUserCurator(currentUserId));
 
-  const objects = useSelector(getObjectsList());
-  const isObjectPage = useSelector(loadOpenObjectPageOpenState());
-  const objectPageId = useSelector(getOpenObjectPageId());
-  const currentObject = useSelector(getObjectById(objectPageId));
-  const managerId = currentObject?.userId;
+    const objects = useSelector(getObjectsList());
+    const isObjectPage = useSelector(getOpenObjectPageOpenState());
+    const objectPageId = useSelector(getOpenObjectPageId());
+    const currentObject = useSelector(getObjectById(objectPageId));
+    const managerId = currentObject?.userId;
 
-  const selectedManagerObjects = objects?.filter(
-    (obj) => obj?.userId === watchManagerId
-  );
-  const transformObjects = transformObjectsForSelect(selectedManagerObjects);
+    const selectedManagerObjects = objects?.filter(
+      (obj) => obj?.userId === watchManagerId
+    );
+    const transformObjects = transformObjectsForSelect(selectedManagerObjects);
 
-  const onSubmit = () => {
-    setIsLoading(true);
+    const onSubmit = () => {
+      setIsLoading(true);
 
-    const newData = {
-      ...data,
-      comment: capitalizeFirstLetter(data.comment),
+      const newData = {
+        ...data,
+        comment: capitalizeFirstLetter(data.comment),
+      };
+      dispatch<any>(createTask(newData))
+        .then(() => {
+          setIsLoading(false);
+          onClose();
+          toast.success("Задача менеджеру успешно создана!");
+        })
+        .catch((error) => {
+          setIsLoading(false);
+          toast.error(error);
+        });
     };
-    dispatch<any>(createTask(newData))
-      .then(() => {
-        setIsLoading(false);
-        onClose();
-        toast.success("Задача менеджеру успешно создана!");
-      })
-      .catch((error) => {
-        setIsLoading(false);
-        toast.error(error);
-      });
-  };
 
-  useEffect(() => {
-    if (isObjectPage) {
-      setValue<any>("objectId", objectPageId);
-      setValue<any>("managerId", managerId);
-    }
-  }, [objectPageId]);
+    useEffect(() => {
+      if (isObjectPage) {
+        setValue<any>("objectId", objectPageId);
+        setValue<any>("managerId", managerId);
+      }
+    }, [objectPageId]);
 
-  useEffect(() => {
-    if (dateCreate !== null) {
-      setValue<any>("date", dateCreate);
-    } else {
-      setValue<any>("date", dayjs());
-    }
-  }, [dateCreate]);
+    useEffect(() => {
+      if (dateCreate !== null) {
+        setValue<any>("date", dateCreate);
+      } else {
+        setValue<any>("date", dayjs());
+      }
+    }, [dateCreate]);
 
-  return isLoading ? (
-    <IsLoadingDialog
-      text="Немного подождите, создаем `Новую задачу менеджеру`"
-      isLoading={isLoading}
-    />
-  ) : (
-    <>
-      <TitleWithCloseButton
-        title={title}
-        background="Crimson"
-        color="white"
-        onClose={onClose}
+    return isLoading ? (
+      <IsLoadingDialog
+        text="Немного подождите, создаем `Новую задачу менеджеру`"
+        isLoading={isLoading}
       />
-      <ManagerTaskForm
-        data={data}
-        objects={transformObjects}
-        users={users}
-        register={register}
-        errors={errors}
-        watch={watch}
-        setValue={setValue}
-        isCurator={isCurator}
-        isObjectPage={isObjectPage}
-      />
-      <FooterButtons
-        onCreate={handleSubmit(onSubmit)}
-        onClose={onClose}
-        isValid={isFullValid}
-      />
-    </>
-  );
-});
+    ) : (
+      <>
+        <TitleWithCloseButton
+          title={title}
+          background="Crimson"
+          color="white"
+          onClose={onClose}
+        />
+        <ManagerTaskForm
+          data={data}
+          objects={transformObjects}
+          users={users}
+          register={register}
+          errors={errors}
+          watch={watch}
+          setValue={setValue}
+          isCurator={isCurator}
+          isObjectPage={isObjectPage}
+        />
+        <FooterButtons
+          onCreate={handleSubmit(onSubmit)}
+          onClose={onClose}
+          isValid={isFullValid}
+        />
+      </>
+    );
+  }
+);
 
 export default CreateManagerTask;

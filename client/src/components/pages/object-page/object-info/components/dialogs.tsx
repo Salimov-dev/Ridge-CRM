@@ -7,21 +7,31 @@ import ManagerTaskCreateDialog from "../../../../UI/dialogs/tasks/manager-task-c
 import ManagerTaskUpdateDialog from "../../../../UI/dialogs/tasks/manager-task-update-dialog";
 import MyTaskCreateDialog from "../../../../UI/dialogs/tasks/my-task-create-dialog";
 import MyTaskUpdateDialog from "../../../../UI/dialogs/tasks/my-task-update-dialog";
-import { getOpenObjectPageId, loadOpenObjectPageOpenState } from "../../../../../store/object/open-object-page.store";
+import {
+  getOpenObjectPageId,
+  getOpenObjectPageOpenState,
+} from "../../../../../store/object/open-object-page.store";
 
 const Dialogs = ({ objects, users }) => {
   const objectPageId = useSelector(getOpenObjectPageId());
-  const isObjectPage = useSelector(loadOpenObjectPageOpenState());
-  
+  const isObjectPage = useSelector(getOpenObjectPageOpenState());
+
   return (
     <>
       <ManagerTaskCreateDialog objects={objects} users={users} />
       <ManagerTaskUpdateDialog />
 
-      <MyTaskCreateDialog objects={objects} objectPageId={objectPageId} isObjectPage={isObjectPage}/>
+      <MyTaskCreateDialog
+        objects={objects}
+        objectPageId={objectPageId}
+        isObjectPage={isObjectPage}
+      />
       <MyTaskUpdateDialog />
 
-      <MeetingCreateDialog objectPageId={objectPageId} isObjectPage={isObjectPage}/>
+      <MeetingCreateDialog
+        objectPageId={objectPageId}
+        isObjectPage={isObjectPage}
+      />
       <MeetingUpdateDialog />
 
       <LastContactCreateDialog />

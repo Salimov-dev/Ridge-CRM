@@ -18,7 +18,7 @@ import {
   setUpdateMeetingOpenState,
 } from "../../store/meeting/update-meeting.store";
 import {
-  loadOpenObjectPageOpenState,
+  getOpenObjectPageOpenState,
   setOpenObjectPageId,
   setOpenObjectPageOpenState,
 } from "../../store/object/open-object-page.store";
@@ -93,7 +93,7 @@ export const meetingsColumns = [
       const objectId = info.getValue();
       const object = useSelector(getObjectById(objectId));
       const fullAddress = `${object?.location.city}, ${object?.location.address}`;
-      const isObjectPage = useSelector(loadOpenObjectPageOpenState());
+      const isObjectPage = useSelector(getOpenObjectPageOpenState());
       const dispatch = useDispatch();
 
       const handleClick = () => {

@@ -6,8 +6,9 @@ import { getActualUsersList } from "../../../utils/actual-items/get-actual-users
 import SearchSwitch from "../../common/inputs/search-switch";
 import { statisticPositionsArray } from "../../../mock/statistics/statistic-positions";
 import ClearFilterButton from "../../common/buttons/clear-filter-button";
+import React from "react";
 
-const StaticticsFiltersPanel = ({
+const StaticticsFiltersPanel = React.memo(({
   data,
   objects,
   objectsWithoutCurrentUser,
@@ -66,6 +67,6 @@ const StaticticsFiltersPanel = ({
       </FieldsContainer>
     </Form>
   );
-};
+});
 
 export default StaticticsFiltersPanel;

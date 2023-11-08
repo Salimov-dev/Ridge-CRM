@@ -5,44 +5,45 @@ import {
   getCreateManagerTaskOpenState,
   setCreateManagerTaskOpenState,
 } from "../../../../store/task/create-manager-task.store";
-import { getOpenObjectPageId, loadOpenObjectPageOpenState } from "../../../../store/object/open-object-page.store";
+import {
+  getOpenObjectPageId,
+  getOpenObjectPageOpenState,
+} from "../../../../store/object/open-object-page.store";
 import React from "react";
 
-const ManagerTaskCreateDialog = React.memo(({
-  users,
-  setDateCreate=()=>{},
-  dateCreate=null,
-}) => {
-  const dispatch = useDispatch();
-  const isOpenCreateTask = useSelector(getCreateManagerTaskOpenState());
-  const objectPageId = useSelector(getOpenObjectPageId())
-  const isObjectPage = useSelector(loadOpenObjectPageOpenState())
+const ManagerTaskCreateDialog = React.memo(
+  ({ users, setDateCreate = () => {}, dateCreate = null }) => {
+    const dispatch = useDispatch();
+    const isOpenCreateTask = useSelector(getCreateManagerTaskOpenState());
+    const objectPageId = useSelector(getOpenObjectPageId());
+    const isObjectPage = useSelector(getOpenObjectPageOpenState());
 
-  const handleCloseCreateMyTask = () => {
-    dispatch<any>(setCreateManagerTaskOpenState(false));
-    if (setDateCreate !== undefined) {
-      setDateCreate(null);
-    }
-  };
-
-  return (
-    <DialogStyled
-      onClose={handleCloseCreateMyTask}
-      open={isOpenCreateTask}
-      maxWidth="lg"
-      fullWidth={false}
-      component={
-        <CreateManagerTask
-          title="Поставить менеджеру задачу"
-          objectPageId={objectPageId}
-          users={users}
-          dateCreate={dateCreate}
-          onClose={handleCloseCreateMyTask}
-          isObjectPage={isObjectPage}
-        />
+    const handleCloseCreateMyTask = () => {
+      dispatch<any>(setCreateManagerTaskOpenState(false));
+      if (setDateCreate !== undefined) {
+        setDateCreate(null);
       }
-    />
-  );
-});
+    };
+
+    return (
+      <DialogStyled
+        onClose={handleCloseCreateMyTask}
+        open={isOpenCreateTask}
+        maxWidth="lg"
+        fullWidth={false}
+        component={
+          <CreateManagerTask
+            title="Поставить менеджеру задачу"
+            objectPageId={objectPageId}
+            users={users}
+            dateCreate={dateCreate}
+            onClose={handleCloseCreateMyTask}
+            isObjectPage={isObjectPage}
+          />
+        }
+      />
+    );
+  }
+);
 
 export default ManagerTaskCreateDialog;

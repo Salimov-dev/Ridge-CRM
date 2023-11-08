@@ -28,7 +28,7 @@ export const setUpdateMeetingId = (payload) => (dispatch) => {
   dispatch(updateMeetingId(payload));
 };
 
-export const loadUpdateMeetingOpenState = () => (state) => {
+export const getUpdateMeetingOpenState = () => (state) => {
   return state?.updateMeeting?.entities;
 };
 

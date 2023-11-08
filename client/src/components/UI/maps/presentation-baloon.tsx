@@ -24,6 +24,7 @@ import {
   setUpdatePresentationId,
   setUpdatePresentationOpenState,
 } from "../../../store/presentation/update-presentation.store";
+import React from "react";
 
 const BaloonContainer = styled(Box)`
   width: 100%;
@@ -35,7 +36,7 @@ const BaloonContainer = styled(Box)`
   padding: 10px 0;
 `;
 
-const PresentationBaloon = ({ presentationId }) => {
+const PresentationBaloon = React.memo(({ presentationId }) => {
   const dispatch = useDispatch();
   const presentation = useSelector(getPresentationById(presentationId));
 
@@ -106,6 +107,6 @@ const PresentationBaloon = ({ presentationId }) => {
       ) : null}
     </BaloonContainer>
   );
-};
+});
 
 export default PresentationBaloon;

@@ -24,7 +24,7 @@ export const setUpdateLastContactOpenState = (payload) => (dispatch) => {
   dispatch(updateLastContactOpenSetted(payload));
 };
 
-export const loadUpdateLastContactOpenState = () => (state) => {
+export const getUpdateLastContactOpenState = () => (state) => {
   return state?.updateLastContact?.entities;
 };
 

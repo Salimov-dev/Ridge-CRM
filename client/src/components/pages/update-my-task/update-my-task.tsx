@@ -23,7 +23,7 @@ import {
 } from "../../../store/task/tasks.store";
 import { getObjectsList } from "../../../store/object/objects.store";
 import { getCurrentUserId } from "../../../store/user/users.store";
-import { loadOpenObjectPageOpenState } from "../../../store/object/open-object-page.store";
+import { getOpenObjectPageOpenState } from "../../../store/object/open-object-page.store";
 import transformObjectsForSelect from "../../../utils/objects/transform-objects-for-select";
 
 const UpdateMyTask = React.memo(({ title, onClose }) => {
@@ -62,7 +62,7 @@ const UpdateMyTask = React.memo(({ title, onClose }) => {
   const objects = useSelector(getObjectsList());
   const objectId = task?.objectId;
 
-  const isObjectPage = useSelector(loadOpenObjectPageOpenState());
+  const isObjectPage = useSelector(getOpenObjectPageOpenState());
 
   const currentUserId = useSelector(getCurrentUserId());
   const currentUserObjects = objects?.filter(

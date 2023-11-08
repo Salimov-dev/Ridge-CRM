@@ -24,6 +24,7 @@ import {
 } from "../../mock/deals/deals-stages";
 // hooks
 import useSearchDeals from "../../hooks/deals/use-search-deals";
+import PresentationCreatePageDialog from "../../components/UI/dialogs/presentations/presentation-create-page-dialog";
 
 const initialState = {
   selectedUsers: [],
@@ -89,6 +90,7 @@ const Deals = React.memo(() => {
         isCurator={isCurator}
       />
 
+<PresentationCreatePageDialog/>
       <ObjectPageDialog />
       <ObjectUpdatePageDialog />
     </Box>

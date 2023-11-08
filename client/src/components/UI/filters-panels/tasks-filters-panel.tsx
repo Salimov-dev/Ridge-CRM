@@ -5,8 +5,9 @@ import { FieldsContainer, Form } from "../../common/forms/styled/styled";
 import SearchSelectField from "../../common/inputs/search-select-field";
 // mock
 import { taskDoneTypes } from "../../../mock/tasks/task-done-status";
+import React from "react";
 
-const TasksFiltersPanel = ({
+const TasksFiltersPanel = React.memo(({
   data,
   register,
   setValue,
@@ -55,6 +56,6 @@ const TasksFiltersPanel = ({
       </FieldsContainer>
     </Form>
   );
-};
+});
 
 export default TasksFiltersPanel;

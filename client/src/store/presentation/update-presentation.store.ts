@@ -28,7 +28,7 @@ export const setUpdatePresentationId = (payload) => (dispatch) => {
   dispatch(updatePresentationId(payload));
 };
 
-export const loadUpdatePresentationOpenState = () => (state) => {
+export const getUpdatePresentationOpenState = () => (state) => {
   return state?.updatePresentation?.entities;
 };
 

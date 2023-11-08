@@ -25,7 +25,7 @@ import {
   setUpdateManagerTaskOpenState,
 } from "../../store/task/update-manager-task.store";
 import {
-  loadOpenObjectPageOpenState,
+  getOpenObjectPageOpenState,
   setOpenObjectPageId,
   setOpenObjectPageOpenState,
 } from "../../store/object/open-object-page.store";
@@ -76,7 +76,7 @@ export const tasksColumns = [
     cell: (info) => {
       const dispatch = useDispatch();
       const objectId = info.getValue();
-      const isObjectPage = useSelector(loadOpenObjectPageOpenState());
+      const isObjectPage = useSelector(getOpenObjectPageOpenState());
       const object = useSelector(getObjectById(objectId));
       const fullAddress = `${object?.location.city}, ${object?.location.address}`;
 
@@ -169,8 +169,7 @@ export const tasksColumns = [
         getIsUserAuthorThisEntity(currentUserId, task)
       );
 
-      const disable = !isCuratorTask && !isAuthorEntity
-
+      const disable = !isCuratorTask && !isAuthorEntity;
 
       const handleClick = () => {
         if (isCuratorTask) {

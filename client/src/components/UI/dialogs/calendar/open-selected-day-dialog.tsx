@@ -2,14 +2,14 @@ import { useDispatch, useSelector } from "react-redux";
 import DialogStyled from "../../../common/dialog/dialog-styled";
 import OpenSelectedDay from "../../../pages/open-selected-day/open-selected-day";
 import {
-  loadOpenSelectedDayOpenState,
+  getOpenSelectedDayOpenState,
   setOpenSelectedDayOpenState,
 } from "../../../../store/calendar/open-selected-day.store";
 import React from "react";
 
 const OpenSelectedDayDialog = React.memo(({ dateCreate, tasks, meetings }) => {
   const dispatch = useDispatch();
-  const isOpenSelectedDay = useSelector(loadOpenSelectedDayOpenState());
+  const isOpenSelectedDay = useSelector(getOpenSelectedDayOpenState());
 
   const handleCloseUpdate = () => {
     dispatch<any>(setOpenSelectedDayOpenState(false));

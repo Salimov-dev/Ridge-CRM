@@ -2,14 +2,14 @@ import { useDispatch, useSelector } from "react-redux";
 import DialogStyled from "../../../common/dialog/dialog-styled";
 import UpdateMyTask from "../../../pages/update-my-task/update-my-task";
 import {
-  loadUpdateMyTaskOpenState,
+  getUpdateMyTaskOpenState,
   setUpdateMyTaskOpenState,
 } from "../../../../store/task/update-my-task.store";
 import React from "react";
 
 const MyTaskUpdateDialog = React.memo(() => {
   const dispatch = useDispatch();
-  const isOpenUpdateMyTask = useSelector(loadUpdateMyTaskOpenState());
+  const isOpenUpdateMyTask = useSelector(getUpdateMyTaskOpenState());
 
   const handleCloseUpdateMyTask = () => {
     dispatch<any>(setUpdateMyTaskOpenState(false));

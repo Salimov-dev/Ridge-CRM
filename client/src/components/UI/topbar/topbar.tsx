@@ -10,6 +10,7 @@ import { getIsLoggedIn } from "../../../store/user/users.store";
 import TopBarCurrentDate from "./components/topbar-current-date";
 import TopBarRightSide from "./components/topbar-right-side";
 import TopBarWeeklyResults from "./components/topbar-weekly-results";
+import React from "react";
 
 const Component = styled(Box)`
   display: flex;
@@ -19,7 +20,7 @@ const Component = styled(Box)`
   margin-bottom: 16px;
 `;
 
-const TopBar = () => {
+const TopBar = React.memo(() => {
   dayjs.locale("ru");
   const isLoggedIn = useSelector(getIsLoggedIn());
 
@@ -34,6 +35,6 @@ const TopBar = () => {
       <TopBarRightSide />
     </Component>
   );
-};
+});
 
 export default TopBar;

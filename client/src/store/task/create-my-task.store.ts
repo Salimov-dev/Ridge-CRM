@@ -20,10 +20,6 @@ export const setCreateMyTaskOpenState = (payload) => (dispatch) => {
   dispatch(createMyTaskOpenSetted(payload));
 };
 
-export const loadCreateMyTaskOpenState = () => (state) => {
-  return state?.createMyTask?.entities;
-};
-
 export const getCreateMyTaskOpenState = () => (state) => {
   return state?.createMyTask.entities;
 };

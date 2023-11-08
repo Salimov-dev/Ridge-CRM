@@ -28,7 +28,7 @@ export const setOpenObjectPageId = (payload) => (dispatch) => {
   dispatch(openObjectPageId(payload));
 };
 
-export const loadOpenObjectPageOpenState = () => (state) => {
+export const getOpenObjectPageOpenState = () => (state) => {
   return state?.openObjectPage?.entities;
 };
 

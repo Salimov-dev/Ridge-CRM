@@ -28,7 +28,7 @@ export const setUpdateManagerTaskId = (payload) => (dispatch) => {
   dispatch(updateManagerTaskId(payload));
 };
 
-export const loadUpdateManagerTaskOpenState = () => (state) => {
+export const getUpdateManagerTaskOpenState = () => (state) => {
   return state?.updateManagerTask?.entities;
 };
 

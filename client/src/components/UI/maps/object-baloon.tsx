@@ -18,6 +18,7 @@ import {
   setOpenObjectPageId,
   setOpenObjectPageOpenState,
 } from "../../../store/object/open-object-page.store";
+import React from "react";
 
 const BaloonContainer = styled(Box)`
   width: 100%;
@@ -29,7 +30,7 @@ const BaloonContainer = styled(Box)`
   padding: 20px 0;
 `;
 
-const ObjectBaloon = ({ object }) => {
+const ObjectBaloon = React.memo(({ object }) => {
   const dispatch = useDispatch();
 
   const objectId = object?._id;
@@ -105,6 +106,6 @@ const ObjectBaloon = ({ object }) => {
       />
     </BaloonContainer>
   );
-};
+});
 
 export default ObjectBaloon;

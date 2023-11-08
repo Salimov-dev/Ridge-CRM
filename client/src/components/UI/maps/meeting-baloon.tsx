@@ -21,6 +21,7 @@ import {
   setUpdateMeetingId,
   setUpdateMeetingOpenState,
 } from "../../../store/meeting/update-meeting.store";
+import React from "react";
 
 const BaloonContainer = styled(Box)`
   width: 100%;
@@ -32,7 +33,7 @@ const BaloonContainer = styled(Box)`
   padding: 10px 0;
 `;
 
-const MeetingBaloon = ({ meeting }) => {
+const MeetingBaloon = React.memo(({ meeting }) => {
   const dispatch = useDispatch();
   const object = useSelector(getObjectById(meeting?.objectId));
   const objectId = meeting?.objectId;
@@ -105,6 +106,6 @@ const MeetingBaloon = ({ meeting }) => {
       ) : null}
     </BaloonContainer>
   );
-};
+});
 
 export default MeetingBaloon;

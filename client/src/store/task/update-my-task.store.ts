@@ -28,7 +28,7 @@ export const setUpdateMyTaskId = (payload) => (dispatch) => {
   dispatch(updateMyTaskId(payload));
 };
 
-export const loadUpdateMyTaskOpenState = () => (state) => {
+export const getUpdateMyTaskOpenState = () => (state) => {
   return state?.updateMyTask?.entities;
 };
 

@@ -1,5 +1,5 @@
 // libraries
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Box, Typography, styled, useTheme } from "@mui/material";
 import { Sidebar as ProSidebar, Menu } from "react-pro-sidebar";
@@ -24,7 +24,7 @@ const Component = styled(Box)`
   overflow-x: hidden;
 `;
 
-const Sidebar = () => {
+const Sidebar = React.memo (() => {
   const dispatch = useDispatch();
 
   const currentPath = useSelector(getCurrrentPathState());
@@ -146,6 +146,6 @@ const Sidebar = () => {
       </ProSidebar>
     </Component>
   );
-};
+});
 
 export default Sidebar;

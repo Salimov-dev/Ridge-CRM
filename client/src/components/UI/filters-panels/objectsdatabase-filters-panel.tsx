@@ -3,8 +3,9 @@ import { FieldsContainer, Form } from "../../common/forms/styled/styled";
 import MultiSelectField from "../../common/inputs/multi-select-field";
 // utils
 import { getActualUsersList } from "../../../utils/actual-items/get-actual-users-list";
+import React from "react";
 
-const ObjectsDatabaseFiltersPanel = ({
+const ObjectsDatabaseFiltersPanel = React.memo(({
   data,
   objects,
   register,
@@ -31,6 +32,6 @@ const ObjectsDatabaseFiltersPanel = ({
       </FieldsContainer>
     </Form>
   );
-};
+});
 
 export default ObjectsDatabaseFiltersPanel;

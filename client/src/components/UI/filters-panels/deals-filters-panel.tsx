@@ -4,8 +4,9 @@ import MultiSelectField from "../../common/inputs/multi-select-field";
 // utils
 import { getActualUsersList } from "../../../utils/actual-items/get-actual-users-list";
 import ClearFilterButton from "../../common/buttons/clear-filter-button";
+import React from "react";
 
-const DealsFiltersPanel = ({
+const DealsFiltersPanel = React.memo(({
   data,
   deals,
   register,
@@ -39,6 +40,6 @@ const DealsFiltersPanel = ({
       </FieldsContainer>
     </Form>
   );
-};
+});
 
 export default DealsFiltersPanel;

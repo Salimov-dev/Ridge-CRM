@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import {
-  loadUpdateObjectOpenState,
+  getUpdateObjectOpenState,
   setUpdateObjectOpenState,
 } from "../../../../store/object/update-object.store";
 import UpdateObject from "../../../pages/update-object/update-object";
@@ -9,7 +9,7 @@ import React from "react";
 
 const ObjectUpdatePageDialog = React.memo(() => {
   const dispatch = useDispatch();
-  const isOpenUpdateObject = useSelector(loadUpdateObjectOpenState());
+  const isOpenUpdateObject = useSelector(getUpdateObjectOpenState());
 
   const handleCloseEditObject = () => {
     dispatch<any>(setUpdateObjectOpenState(false));

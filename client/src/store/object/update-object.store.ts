@@ -24,7 +24,7 @@ export const setUpdateObjectOpenState = (payload) => (dispatch) => {
   dispatch(updateObjectOpenSetted(payload));
 };
 
-export const loadUpdateObjectOpenState = () => (state) => {
+export const getUpdateObjectOpenState = () => (state) => {
   return state?.updateObject?.entities;
 };
 

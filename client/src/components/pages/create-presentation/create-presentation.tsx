@@ -12,19 +12,24 @@ import FooterButtons from "../../common/forms/footer-buttons/footer-buttons";
 import IsLoadingDialog from "../../common/dialog/is-loading-dialog";
 // schema
 import { presentationSchema } from "../../../schemas/presentation-schema";
+// utils
+import transformObjectsForSelect from "../../../utils/objects/transform-objects-for-select";
 // store
+import { createPresentation } from "../../../store/presentation/presentations.store";
 import {
   getObjectAddressById,
   getObjectsList,
 } from "../../../store/object/objects.store";
-import { createPresentation } from "../../../store/presentation/presentations.store";
 import {
   getCurrentUserId,
   getIsUserCurator,
   getUserNameById,
   getUsersList,
 } from "../../../store/user/users.store";
-import transformObjectsForSelect from "../../../utils/objects/transform-objects-for-select";
+import {
+  getOpenObjectPageId,
+  getOpenObjectPageOpenState,
+} from "../../../store/object/open-object-page.store";
 
 const initialState = {
   objectId: "",
@@ -64,17 +69,9 @@ const CreatePresentation = React.memo(({ onClose, setConfettiActive }) => {
   const cloudLink = watch("cloudLink");
 
   const isFullValid = isValid && Boolean(watchObjectId?.length);
+  const objectPageId = useSelector(getOpenObjectPageId());
+  const isObjectPage = useSelector(getOpenObjectPageOpenState());
   const statusToBeAgreedId = "654wqeg3469y9dfsd82dd334"; // статус "На согласовании"
-
-  const [toSend, setToSend] = useState({
-    from_name: "",
-    to_name: "",
-    to_email: "",
-    object_address: "",
-    created_manager: "",
-    cloud_link: "",
-    reply_to: "",
-  });
 
   const users = useSelector(getUsersList());
   const currentUserName = useSelector(getUserNameById(currentUserId));
@@ -83,11 +80,21 @@ const CreatePresentation = React.memo(({ onClose, setConfettiActive }) => {
   const curatorEmail = curatorUser?.email;
 
   const selectedObject = objects?.find((obj) => obj?._id === watchObjectId);
-  const address = useSelector(getObjectAddressById(selectedObject?._id));
+  const addressObject = useSelector(getObjectAddressById(selectedObject?._id));
+
+  const toSend = {
+    from_name: "Грядка",
+    to_name: curatorName,
+    to_email: curatorEmail,
+    object_address: addressObject,
+    created_manager: currentUserName,
+    cloud_link: cloudLink,
+    reply_to: "ridge-crm@mail.ru",
+  };
 
   const onSubmit = (data) => {
     setIsLoading(true);
-    if (data.objectId && curatorName && address && cloudLink) {
+    if (data.objectId && curatorName && addressObject && cloudLink) {
       const presentationNewData = {
         ...data,
         cloudLink: data.cloudLink,
@@ -99,6 +106,7 @@ const CreatePresentation = React.memo(({ onClose, setConfettiActive }) => {
         .then(() => {
           onClose();
           setConfettiActive(true);
+          toast.success("Презентация успешно создана!");
           send(
             "service_yldzorr",
             "template_z0ijagp",
@@ -112,7 +120,6 @@ const CreatePresentation = React.memo(({ onClose, setConfettiActive }) => {
               console.log(error.text);
             }
           );
-          toast.success("Презентация успешно создана!");
         })
         .catch((error) => {
           setIsLoading(false);
@@ -124,17 +131,10 @@ const CreatePresentation = React.memo(({ onClose, setConfettiActive }) => {
   };
 
   useEffect(() => {
-    setToSend({
-      from_name: "test Ridge",
-      to_name: curatorName,
-      // to_email: curatorEmail,
-      to_email: "ruspb1987@gmail.com",
-      created_manager: currentUserName,
-      object_address: address,
-      cloud_link: cloudLink,
-      reply_to: "ridge-crm@mail.ru",
-    });
-  }, [data]);
+    if (isObjectPage) {
+      setValue<any>("objectId", objectPageId);
+    }
+  }, [objectPageId]);
 
   return isLoading ? (
     <IsLoadingDialog
@@ -156,6 +156,7 @@ const CreatePresentation = React.memo(({ onClose, setConfettiActive }) => {
         errors={errors}
         watch={watch}
         setValue={setValue}
+        isObjectPage={isObjectPage}
       />
       <FooterButtons
         onCreate={handleSubmit(onSubmit)}

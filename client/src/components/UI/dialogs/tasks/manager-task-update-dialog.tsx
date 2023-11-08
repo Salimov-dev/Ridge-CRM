@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import DialogStyled from "../../../common/dialog/dialog-styled";
 import UpdateManagerTask from "../../../pages/update-manager-task/update-manager-task";
 import {
-  loadUpdateManagerTaskOpenState,
+  getUpdateManagerTaskOpenState,
   setUpdateManagerTaskOpenState,
 } from "../../../../store/task/update-manager-task.store";
 import {
@@ -16,7 +16,7 @@ const ManagerTaskUpdateDialog = React.memo(({ objects = [] }) => {
   const dispatch = useDispatch();
   const users = useSelector(getUsersList());
   const currentUserId = useSelector(getCurrentUserId());
-  const isOpenUpdateManagerTask = useSelector(loadUpdateManagerTaskOpenState());
+  const isOpenUpdateManagerTask = useSelector(getUpdateManagerTaskOpenState());
 
   const usersWithoutCurrentUser = users?.filter(
     (user) => user?._id !== currentUserId

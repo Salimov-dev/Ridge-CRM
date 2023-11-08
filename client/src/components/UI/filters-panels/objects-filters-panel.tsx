@@ -10,8 +10,9 @@ import useObjectsFiltersPanel from "../../../hooks/object/use-objects-filters-pa
 import { objectActivityVariants } from "../../../mock/object/object-activity-variants";
 import { getActualUsersList } from "../../../utils/actual-items/get-actual-users-list";
 import { getActualStatusesList } from "../../../utils/actual-items/get-actual-statuses-list";
+import React from "react";
 
-const ObjectsFiltersPanel = ({
+const ObjectsFiltersPanel = React.memo(({
   setValue,
   objects,
   statuses,
@@ -184,6 +185,6 @@ const statusesList = getActualStatusesList(objects, statuses)
       </FieldsContainer>
     </Form>
   );
-};
+});
 
 export default ObjectsFiltersPanel;

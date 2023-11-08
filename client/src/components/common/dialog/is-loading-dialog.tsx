@@ -13,7 +13,7 @@ const Component = styled(Box)`
 const Title = styled(Box)`
   display: flex;
   align-items: center;
-  color: black;
+  color: white;
   padding: 6px 10px;
 `;
 
@@ -25,16 +25,16 @@ const IsLoadingDialog = ({ text, isLoading }) => {
       component={
         <>
           <Component>
-            <Title sx={{  background: 'yellow'}}>
+            <Loader padding="10px 0"/>
+            <Title sx={{  background: 'ForestGreen'}}>
               <Typography sx={{}}>{text}</Typography>
             </Title>
-            <Title sx={{background: 'red', color: 'white'}}>
+            <Title sx={{background: 'IndianRed'}}>
               <Typography>
                 Не закрывайте окно или вкладку браузера и не переходите на
                 другую страницу
               </Typography>
             </Title>
-            <Loader />
           </Component>
         </>
       }

@@ -35,6 +35,7 @@ import {
   getObjectsLoadingStatus,
 } from "../../store/object/objects.store";
 import { getObjectsStatusList } from "../../store/object-params/object-status.store";
+import PresentationCreatePageDialog from "../../components/UI/dialogs/presentations/presentation-create-page-dialog";
 
 const initialState = {
   address: "",
@@ -174,6 +175,7 @@ const Objects = React.memo(() => {
       <ObjectCreatePageDialog />
       <ObjectPageDialog />
       <ObjectUpdatePageDialog />
+      <PresentationCreatePageDialog/>
       <TransferObjectToAnotherManagerDialog
         objectsToTransfer={selectedObjects}
         setRowSelection={setRowSelection}

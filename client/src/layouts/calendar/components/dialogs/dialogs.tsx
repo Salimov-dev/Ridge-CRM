@@ -14,7 +14,7 @@ import getDateToday from "../../../../utils/date/get-date-today";
 // store
 import {
   getOpenObjectPageId,
-  loadOpenObjectPageOpenState,
+  getOpenObjectPageOpenState,
 } from "../../../../store/object/open-object-page.store";
 
 const Dialogs = ({
@@ -26,7 +26,7 @@ const Dialogs = ({
   setDateCreate,
 }) => {
   const objectPageId = useSelector(getOpenObjectPageId());
-  const isObjectPage = useSelector(loadOpenObjectPageOpenState());
+  const isObjectPage = useSelector(getOpenObjectPageOpenState());
 
   return (
     <>
@@ -49,11 +49,13 @@ const Dialogs = ({
       />
       <MyTaskUpdateDialog />
 
-      {!isObjectPage ? <MeetingCreateDialog
-        objectPageId={objectPageId}
-        isObjectPage={isObjectPage}
-        dateCreate={dateCreate}
-      /> : null}
+      {!isObjectPage ? (
+        <MeetingCreateDialog
+          objectPageId={objectPageId}
+          isObjectPage={isObjectPage}
+          dateCreate={dateCreate}
+        />
+      ) : null}
       <MeetingUpdateDialog />
 
       <OpenSelectedDayDialog

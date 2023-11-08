@@ -19,26 +19,33 @@ import {
   SortingState,
 } from "@tanstack/react-table";
 // store
-import { loadOpenObjectPageOpenState } from "../../../store/object/open-object-page.store";
+import { getOpenObjectPageOpenState } from "../../../store/object/open-object-page.store";
 // theme
 import { tokens } from "../../../theme";
 
-const BasicTable = ({ rowSelection, setRowSelection,items, itemsColumns, isLoading, isPaginate = true }) => {
+const BasicTable = ({
+  rowSelection,
+  setRowSelection,
+  items,
+  itemsColumns,
+  isLoading,
+  isPaginate = true,
+}) => {
   const [sorting, setSorting] = useState<SortingState>([]);
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const data = useMemo(() => items || [], [items]);
   const columns = useMemo(() => itemsColumns || [], [items]);
 
-  const isObjectPageOpen = useSelector(loadOpenObjectPageOpenState());
-  const isDialogMode = isObjectPageOpen 
+  const isObjectPageOpen = useSelector(getOpenObjectPageOpenState());
+  const isDialogMode = isObjectPageOpen;
 
   const table = useReactTable({
     data,
     columns,
     state: {
       sorting,
-      rowSelection
+      rowSelection,
     },
     enableRowSelection: true,
     onRowSelectionChange: setRowSelection,

@@ -27,7 +27,7 @@ import {
   updateMyTask,
 } from "../../../store/task/tasks.store";
 import { getObjectsList } from "../../../store/object/objects.store";
-import { loadOpenObjectPageOpenState } from "../../../store/object/open-object-page.store";
+import { getOpenObjectPageOpenState } from "../../../store/object/open-object-page.store";
 import transformObjectsForSelect from "../../../utils/objects/transform-objects-for-select";
 
 const UpdateManagerTask = React.memo(({ title, onClose, users }) => {
@@ -71,7 +71,7 @@ const UpdateManagerTask = React.memo(({ title, onClose, users }) => {
     getIsUserAuthorThisEntity(currentUserId, task)
   );
 
-  const isObjectPage = useSelector(loadOpenObjectPageOpenState());
+  const isObjectPage = useSelector(getOpenObjectPageOpenState());
   const isCurator = useSelector(getIsUserCurator(currentUserId));
 
   const objects = useSelector(getObjectsList());

@@ -10,8 +10,9 @@ import { meetingDoneTypes } from "../../../mock/meetings/meeting-done-status";
 // utils
 import { getActualUsersList } from "../../../utils/actual-items/get-actual-users-list";
 import { getActualStatusesList } from "../../../utils/actual-items/get-actual-statuses-list";
+import React from "react";
 
-const MeetingsFiltersPanel = ({
+const MeetingsFiltersPanel = React.memo(({
   data,
   meetings,
   statuses,
@@ -115,6 +116,6 @@ const MeetingsFiltersPanel = ({
       </FieldsContainer>
     </Form>
   );
-};
+});
 
 export default MeetingsFiltersPanel;
