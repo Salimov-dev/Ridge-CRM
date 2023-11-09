@@ -30,6 +30,7 @@ const generateMonthHeaders = () => {
     monthHeaders.push({
       accessorFn: (row) => row,
       header: monthHeader,
+      enableSorting: false,
       cell: (info) => {
         const user = info.getValue();
         const objects = useSelector(getObjectsList());
@@ -79,6 +80,7 @@ export const staticticsColumnsCurator = [
       {
         accessorKey: "_id",
         header: "Менеджер",
+        enableSorting: false,
         cell: (info) => {
           const userId = info.getValue();
           const user = useSelector(getUserDataById(userId));
@@ -88,6 +90,7 @@ export const staticticsColumnsCurator = [
       {
         accessorFn: (row) => row,
         header: "Позиция",
+        enableSorting: false,
         cell: () => {
           return <TableCell onlyTitle={true} />;
         },
@@ -95,6 +98,7 @@ export const staticticsColumnsCurator = [
       {
         accessorFn: (row) => row,
         header: "ИТОГО",
+        enableSorting: false,
         cell: (info) => {
           const currentMonth = dayjs();
           const sixMonthsAgo = currentMonth.subtract(6, "month");
@@ -144,10 +148,7 @@ export const staticticsColumnsCurator = [
       },
     ],
   },
-  {
-    header: "ПОСЛЕДНИЕ 6 МЕСЯЦЕВ",
-    columns: generateMonthHeaders(),
-  },
+ 
   {
     header: "ПОСЛЕДНИЕ 4 НЕДЕЛИ", // Заголовок текущего месяца
     columns: [
@@ -366,10 +367,15 @@ export const staticticsColumnsCurator = [
               objects={weeklyObjects}
               objectsWithPhone={weeklyObjectsWithPhone}
               presentations={weeklyPresentations}
+              isLastWeek={true}
             />
           );
         },
       },
     ],
+  },
+  {
+    header: "ПОСЛЕДНИЕ 6 МЕСЯЦЕВ",
+    columns: generateMonthHeaders(),
   },
 ];

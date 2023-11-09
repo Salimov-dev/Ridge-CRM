@@ -13,8 +13,8 @@ import StaticticsFiltersPanel from "../../components/UI/filters-panels/statictic
 import useData from "./hooks/use-data";
 import useSearchStatictics from "../../hooks/statictics/use-search-statistics";
 // columns
-import { staticticsColumns } from "../../columns/statictics/statictics-columns";
 import { staticticsColumnsCurator } from "../../columns/statictics/statictics-columns-curator";
+import { staticticsColumns } from "../../columns/statictics/statictics-columns";
 // utils
 import { getUsersWithoutCurrentUser } from "../../utils/user/get-users-without-current-user";
 // store
@@ -29,9 +29,6 @@ import {
   getIsUserCurator,
   getUsersList,
 } from "../../store/user/users.store";
-import { staticticsColumnsCuratorReverse } from "../../columns/statictics/statictics-columns-curator-reverse";
-import { staticticsColumnsCuratorReverse2 } from "../../columns/statictics/statictics-columns-curator-reverse2";
-import { staticticsColumnsReverse } from "../../columns/statictics/statictics-columns-reverse";
 
 const ChartsContainer = styled(Box)`
   display: flex;
@@ -83,9 +80,7 @@ const Statictics = React.memo (() => {
   const isObjectsLoading = useSelector(getObjectsLoadingStatus());
   const isInputEmpty = JSON.stringify(initialState) !== JSON.stringify(data);
 
-  // const columns = isCurator ? staticticsColumnsCurator : staticticsColumns;
-  // const columns = isCurator ? staticticsColumnsCuratorReverse : staticticsColumns;
-  const columns = isCurator ? staticticsColumnsCuratorReverse2 : staticticsColumnsReverse;
+  const columns = isCurator ? staticticsColumnsCurator : staticticsColumns;
 
   const { searchedObjects, searchedUsers } = useSearchStatictics(
     objects,

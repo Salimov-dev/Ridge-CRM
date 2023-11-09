@@ -21,7 +21,7 @@ const generateMonthHeaders = () => {
   const currentMonth = dayjs();
   const monthHeaders = [];
 
-  for (let i = 5; i >= 0; i--) {
+  for (let i = 0; i < 6; i++) {
     const month = currentMonth.subtract(i, "month");
     const monthHeader = month.locale("ru").format("MMMM");
     monthHeaders.push({
@@ -117,10 +117,7 @@ export const staticticsColumns = [
       },
     ],
   },
-  {
-    header: "ПОСЛЕДНИЕ 6 МЕСЯЦЕВ",
-    columns: generateMonthHeaders(),
-  },
+
   {
     header: "ПОСЛЕДНИЕ 4 НЕДЕЛИ", // Заголовок текущего месяца
     columns: [
@@ -256,7 +253,8 @@ export const staticticsColumns = [
           const formattedDate = `${startOfWeek.format(
             "DD.MM"
           )} - ${endOfWeek.format("DD.MM")}`;
-          return formattedDate;
+
+          return formattedDate
         })(),
         enableSorting: false,
         size: 30,
@@ -280,10 +278,15 @@ export const staticticsColumns = [
               objects={weeklyObjects}
               objectsWithPhone={weeklyObjectsWithPhone}
               presentations={weeklyPresentations}
+              isLastWeek={true}
             />
           );
         },
       },
     ],
+  },
+  {
+    header: "ПОСЛЕДНИЕ 6 МЕСЯЦЕВ",
+    columns: generateMonthHeaders(),
   },
 ];

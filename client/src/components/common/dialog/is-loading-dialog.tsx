@@ -2,8 +2,6 @@ import { Box, Typography, styled } from "@mui/material";
 import Loader from "../loader/loader";
 import DialogStyled from "./dialog-styled";
 import ErrorOutlineOutlinedIcon from '@mui/icons-material/ErrorOutlineOutlined';
-import ThumbUpAltOutlinedIcon from '@mui/icons-material/ThumbUpAltOutlined';
-import SyncAltOutlinedIcon from '@mui/icons-material/SyncAltOutlined';
 import RotateLeftOutlinedIcon from '@mui/icons-material/RotateLeftOutlined';
 
 const Component = styled(Box)`
@@ -18,7 +16,7 @@ const TitlesContainer = styled(Box)`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 6px;
+  gap: 10px;
   color: white;
   padding: 6px 10px;
 `;

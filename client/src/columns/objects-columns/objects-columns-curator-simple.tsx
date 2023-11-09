@@ -20,6 +20,8 @@ import {
 // store
 import { getLastContactsList } from "../../store/last-contact/last-contact.store";
 import { getTasksList } from "../../store/task/tasks.store";
+import { getDistrictName } from "../../store/object-params/districts.store";
+import { getUserDataById } from "../../store/user/users.store";
 import {
   setOpenObjectPageId,
   setOpenObjectPageOpenState,
@@ -28,12 +30,8 @@ import {
   getMeetingsList,
   getObjectMeetingsList,
 } from "../../store/meeting/meetings.store";
-import { getDistrictName } from "../../store/object-params/districts.store";
-import { getUserDataById } from "../../store/user/users.store";
-
 
 export const objectsColumnsCuratorSimple = [
-
   {
     accessorKey: "created_at",
     header: "Дата",

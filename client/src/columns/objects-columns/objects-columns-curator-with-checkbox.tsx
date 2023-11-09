@@ -55,7 +55,7 @@ function IndeterminateCheckbox({
   )
 }
 
-export const objectsColumnsCurator = [
+export const objectsColumnsCuratorWithCheckbox = [
   {
     id: 'select',
     header: ({ table }) => (

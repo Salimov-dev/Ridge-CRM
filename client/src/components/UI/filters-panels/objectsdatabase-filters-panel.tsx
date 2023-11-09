@@ -2,11 +2,10 @@ import React from "react";
 // components
 import { FieldsContainer, Form } from "../../common/forms/styled/styled";
 import MultiSelectField from "../../common/inputs/multi-select-field";
-import SearchSelectField from "../../common/inputs/search-select-field";
+import ClearFilterButton from "../../common/buttons/clear-filter-button";
 // utils
 import { getActualUsersList } from "../../../utils/actual-items/get-actual-users-list";
 import { getActualStatusesList } from "../../../utils/actual-items/get-actual-statuses-list";
-import ClearFilterButton from "../../common/buttons/clear-filter-button";
 
 const ObjectsDatabaseFiltersPanel = React.memo(
   ({
@@ -49,8 +48,10 @@ const ObjectsDatabaseFiltersPanel = React.memo(
             disabled={isLoading ? true : false}
           />
           <ClearFilterButton
-            width="200px"
-            margin="-1px 0 0 0"
+            width="270px"
+            maxWidth="270px"
+            height="54px"
+            margin="-2px 0 0 0"
             reset={reset}
             initialState={initialState}
             disabled={!isInputEmpty}

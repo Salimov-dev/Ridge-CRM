@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import { getObjectsList } from "../../store/object/objects.store";
 import dayjs from "dayjs";
 
-export const getWeeklyObjectsWithPhone = (startDate, endDate, items) => {
+export const getWeeklyObjectsWithPhone = (startDate, endDate, items=null) => {
   const objects = useSelector(getObjectsList());
 
   const array = items ? items : objects

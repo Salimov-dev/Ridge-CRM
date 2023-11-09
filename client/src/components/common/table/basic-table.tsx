@@ -24,8 +24,8 @@ import { getOpenObjectPageOpenState } from "../../../store/object/open-object-pa
 import { tokens } from "../../../theme";
 
 const BasicTable = ({
-  rowSelection,
-  setRowSelection,
+  rowSelection=[],
+  setRowSelection=()=>{},
   items,
   itemsColumns,
   isLoading,

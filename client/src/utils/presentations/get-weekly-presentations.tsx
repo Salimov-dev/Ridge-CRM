@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import dayjs from "dayjs";
 import { getPresentationsList } from "../../store/presentation/presentations.store";
 
-export const getWeeklyPresentations = (startDate, endDate, items) => {
+export const getWeeklyPresentations = (startDate, endDate, items=null) => {
   const presentations = useSelector(getPresentationsList());
 
   const array = items ? items : presentations

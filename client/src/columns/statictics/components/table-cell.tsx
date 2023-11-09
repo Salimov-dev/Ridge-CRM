@@ -8,7 +8,9 @@ const TableCell = ({
   objectsWithPhone = [],
   presentations = [],
   onlyTitle = false,
+  isLastWeek=false
 }) => {
+ 
   const staticticPositions = useSelector(loadStaticticPositions());
   const isObjects = staticticPositions?.includes("91dfgiuqh2314ugdfh2144213");
   const isObjectsWithPhone = staticticPositions?.includes(
@@ -27,6 +29,8 @@ const TableCell = ({
         justifyContent: "center",
         flexDirection: "column",
         gap: "6px",
+        border: isLastWeek ? "3px dashed white" : "none",
+        padding: isLastWeek ? "4px" : "none"
       }}
     >
       {isShowAll || isObjects ? (

@@ -3,7 +3,7 @@ import { getObjectsList } from "../../store/object/objects.store";
 import dayjs from "dayjs";
 
 
-export const getWeeklyObjects = (startDate, endDate, items) => {
+export const getWeeklyObjects = (startDate, endDate, items=null) => {
   const objects = useSelector(getObjectsList());
 
   const array = items ? items : objects

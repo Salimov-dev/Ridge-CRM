@@ -13,6 +13,8 @@ import CloudOffIcon from "@mui/icons-material/CloudOff";
 import { FormatDate } from "../../utils/date/format-date";
 // store
 import { getObjectById } from "../../store/object/objects.store";
+import { getPresentationStatusNameById } from "../../store/presentation/presentation-status.store";
+import { getPresentationById } from "../../store/presentation/presentations.store";
 import {
   getCurrentUserId,
   getIsUserAuthorThisEntity,
@@ -22,8 +24,6 @@ import {
   setOpenObjectPageId,
   setOpenObjectPageOpenState,
 } from "../../store/object/open-object-page.store";
-import { getPresentationStatusNameById } from "../../store/presentation/presentation-status.store";
-import { getPresentationById } from "../../store/presentation/presentations.store";
 import {
   setUpdatePresentationId,
   setUpdatePresentationOpenState,
