@@ -193,6 +193,21 @@ const useSearchObject = (objects, data) => {
         (obj) => !hasMeetings(obj._id) && !hasTasks(obj._id)
       );
     }
+    // дублирующиеся адреса
+    if (data.objectActivity === "01df84jgfdh2349gj39999") {
+      const countList = array?.reduce(function(p, c){
+        const fullAddress = `${c.location.city}, ${c.location.address}`
+        p[fullAddress] = (p[fullAddress] || 0) + 1;
+        return p;
+      }, {});
+
+      const result = array?.filter(function(obj){
+        const fullAddress = `${obj.location.city}, ${obj.location.address}`
+        return countList[fullAddress] > 1;
+      });
+
+      return result
+    }
 
     // Фильтр для "Звонок от 1 до 2 месяцев"
     if (data.objectActivity === "hgfd23560ogpa213jfdj3432") {

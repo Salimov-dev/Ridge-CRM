@@ -77,15 +77,6 @@ const PresentationsFiltersPanel = React.memo(({
           onChange={(e) => setValue("selectedStatuses", e.target.value)}
           disabled={isLoading ? true : false}
         />
-        {/* <MultiSelectField
-          name="users"
-          labelId="users-label"
-          label="Выбор по менеджеру"
-          itemsList={getActualUsersList()}
-          selectedItems={data.selectedUsers}
-          onChange={(e) => setValue("selectedUsers", e.target.value)}
-          disabled={isLoading ? true : false}
-        /> */}
       </FieldsContainer>
     </Form>
   );

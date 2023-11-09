@@ -137,19 +137,6 @@ export const updateMultipleObjects =
     }
   };
 
-// export const updateMultipleObjects = (objectIds, userId) => async (dispatch) => {
-//   try {
-//     // Вызовите метод updateMultiple из objectService
-//     const updatedObjects = await objectService.updateMultiple(objectIds, userId);
-//     console.log("updatedObjects", updatedObjects);
-
-//     // Диспатч действия для обновления успешных объектов
-//     dispatch(objectsReceived(updatedObjects)); // Обновить все объекты одновременно
-//   } catch (error) {
-//     dispatch(objectГpdateMultipleObjectsFailed(error.message));
-//   }
-// };
-
 export const getObjectById = (objectId) => (state) => {
   if (state?.objects?.entities) {
     return state?.objects?.entities?.find((obj) => obj?._id === objectId);

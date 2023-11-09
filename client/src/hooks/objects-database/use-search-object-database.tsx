@@ -12,10 +12,6 @@ const useSearchObjectDatabase = (objects, data, period) => {
   const searchedObjects = useMemo(() => {
     let array = objects;
 
-    if (data.selectedUsers?.length) {
-      array = array?.filter((obj) => data.selectedUsers.includes(obj.userId));
-    }
-
     // Фильтр для "Звонок от 1 до 2 месяцев"
     if (period === "fromOneMonthToTwo") {
       array = array?.filter((obj) => {

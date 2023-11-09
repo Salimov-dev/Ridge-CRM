@@ -36,7 +36,8 @@ const MultiSelectField = ({
   labelId,
   label,
   disabled = false,
-  isItemValueId = true
+  isItemValueId = true,
+  minWidth="100px"
 }) => {
   function checkArrayElements(arr) {
     for (const element of arr) {
@@ -50,7 +51,7 @@ const MultiSelectField = ({
   const selectedItemsArray = Array.isArray(selectedItems) ? selectedItems : [];
 
   return (
-    <FormControl sx={{ minWidth: "100px", width: "100%" }}>
+    <FormControl sx={{ minWidth: minWidth, width: "100%" }}>
       <InputLabel
         id={labelId}
         sx={{

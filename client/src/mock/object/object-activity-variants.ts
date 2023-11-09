@@ -1,5 +1,9 @@
 const objectActivityVariants = [
   {
+    _id: "01df84jgfdh2349gj39999",
+    name: "Дублирующиеся адреса",
+  },
+  {
     _id: "534gdfsg2356hgd213mnbv",
     name: "С номером телефона",
   },

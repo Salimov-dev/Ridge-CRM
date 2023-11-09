@@ -12,7 +12,7 @@ const OpenObjectCloudButton = ({ object }) => {
   };
 
   return hasCloud ? (
-    <PositiveOutlinedButton title="Открыть облако" onClick={handleOpenCloud} />
+    <PositiveOutlinedButton title="Открыть облако" background='DarkCyan' onClick={handleOpenCloud} />
   ) : null;
 };
 

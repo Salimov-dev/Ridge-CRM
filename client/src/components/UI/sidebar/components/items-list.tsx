@@ -10,8 +10,8 @@ import BusinessCenterOutlinedIcon from "@mui/icons-material/BusinessCenterOutlin
 import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined";
 import BusinessOutlinedIcon from "@mui/icons-material/BusinessOutlined";
 import AssignmentOutlinedIcon from "@mui/icons-material/AssignmentOutlined";
-import CrisisAlertOutlinedIcon from "@mui/icons-material/CrisisAlertOutlined";
 import DonutSmallOutlinedIcon from "@mui/icons-material/DonutSmallOutlined";
+import DatasetOutlinedIcon from '@mui/icons-material/DatasetOutlined';
 
 const ItemsList = ({
   selected,
@@ -65,7 +65,7 @@ const ItemsList = ({
         to="/objectsdatabase"
         icon={
           <Tooltip title="Проработка базы объектов" placement="top-start" arrow>
-            <CrisisAlertOutlinedIcon />
+            <DatasetOutlinedIcon />
           </Tooltip>
         }
         selected={selected}

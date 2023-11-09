@@ -7,6 +7,7 @@ const ChangePeriodButton = ({
   background,
   backgroundHover,
   color = "inherit",
+  border= "inherit",
   onClick = () => {},
 }) => {
   return (
@@ -19,7 +20,7 @@ const ChangePeriodButton = ({
         minWidth: minWidth,
         color: color,
         background: background,
-        borderColor: "inherit",
+        border: border,
         "&:hover": { background: backgroundHover },
       }}
       onClick={onClick}

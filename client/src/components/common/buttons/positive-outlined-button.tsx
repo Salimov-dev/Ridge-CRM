@@ -5,6 +5,7 @@ const PositiveOutlinedButton = ({
   onClick = () => {},
   isValid = false,
   type = "button",
+  background= "DarkGreen"
 }: {
   title?: string;
   onClick?: () => void;
@@ -22,7 +23,7 @@ const PositiveOutlinedButton = ({
         borderColor: "MediumSeaGreen",
         "&:hover": {
           color: "white",
-          background: "DarkGreen",
+          background: background,
           borderColor: "MediumSeaGreen",
         },
       }}
