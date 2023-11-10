@@ -1,4 +1,5 @@
 import { useSelector } from "react-redux";
+import { orderBy } from "lodash";
 // MUI
 import { Box, InputAdornment, Typography } from "@mui/material";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
@@ -45,14 +46,27 @@ const ObjectForm = ({
   isValid,
 }) => {
   const workingPositions = useSelector(getWorkingPositionsList());
+  const sortedWorkingPositions = orderBy(workingPositions, ["name"], ["asc"]);
   const objectStatuses = useSelector(getObjectsStatusList());
+  const sortedObjectStatuses = orderBy(objectStatuses, ["name"], ["asc"]);
   const currentRenters = useSelector(getCurrentRentersList());
+  const sortedCurrentRenters = orderBy(currentRenters, ["name"], ["asc"]);
   const objectProperties = useSelector(getObjectPropertiesList());
+  const sortedObjectProperties = orderBy(objectProperties, ["name"], ["asc"]);
   const objectConditions = useSelector(getObjectConditionsList());
+  const sortedObjectConditions = orderBy(objectConditions, ["name"], ["asc"]);
+
+  const metros = useSelector(getMetroList());
+  const sortedMetros = orderBy(metros, ["name"], ["asc"]);
+  const rentTypes = useSelector(getRentTypesList());
+  const sortedRentTypes = orderBy(rentTypes, ["name"], ["asc"]);
+  const objectTypes = useSelector(getObjectTypesList());
+  const sortedObjectTypes = orderBy(objectTypes, ["name"], ["asc"]);
+  const estateTypes = useSelector(getEstateTypesList());
+  const sortedEstateTypes = orderBy(estateTypes, ["name"], ["asc"]);
 
   const watchStatus = watch("status");
   const watchWorkingPosition = watch("contact.position");
-
   const watchDistrict = watch("location.district");
   const watchAddress = watch("location.address");
   const watchMetro = watch("location.metro");
@@ -62,12 +76,8 @@ const ObjectForm = ({
   const watchCurrentRenters = watch("estateOptions.currentRenters");
   const watchobjectConditions = watch("estateOptions.objectConditions");
   const watchObjectProperties = watch("estateOptions.objectProperties");
-
-  const metros = useSelector(getMetroList());
-  const rentTypes = useSelector(getRentTypesList());
-  const objectTypes = useSelector(getObjectTypesList());
-  const estateTypes = useSelector(getEstateTypesList());
   const watchCloudLink = watch("cloudLink");
+
 
   const hasDistrict =
     watchDistrict?.includes("Санкт-Петербург") ||
@@ -138,7 +148,7 @@ const ObjectForm = ({
             label="Метро"
             register={register}
             name="location.metro"
-            options={metros}
+            options={sortedMetros}
             value={watchMetro}
             setValue={setValue}
             watchItemId={watchMetro}
@@ -148,7 +158,7 @@ const ObjectForm = ({
             label="Статус объекта *"
             register={register}
             name="status"
-            options={objectStatuses}
+            options={sortedObjectStatuses}
             value={watchStatus ?? ""}
             setValue={setValue}
             watchItemId={watchStatus}
@@ -175,7 +185,7 @@ const ObjectForm = ({
             label="Тип объекта *"
             register={register}
             name="estateOptions.objectTypes"
-            options={objectTypes}
+            options={sortedObjectTypes}
             value={watchObjectTypes ?? ""}
             setValue={setValue}
             watchItemId={watchObjectTypes}
@@ -185,7 +195,7 @@ const ObjectForm = ({
             label="Тип недвижимости *"
             register={register}
             name="estateOptions.estateTypes"
-            options={estateTypes}
+            options={sortedEstateTypes}
             value={watchEstateTypes ?? ""}
             setValue={setValue}
             watchItemId={watchEstateTypes}
@@ -195,7 +205,7 @@ const ObjectForm = ({
             label="Расположение объекта *"
             register={register}
             name="estateOptions.objectProperties"
-            options={objectProperties}
+            options={sortedObjectProperties}
             value={watchObjectProperties ?? ""}
             setValue={setValue}
             watchItemId={watchObjectProperties}
@@ -205,7 +215,7 @@ const ObjectForm = ({
             label="Текущий арендатор *"
             register={register}
             name="estateOptions.currentRenters"
-            options={currentRenters}
+            options={sortedCurrentRenters}
             value={watchCurrentRenters ?? ""}
             setValue={setValue}
             watchItemId={watchCurrentRenters}
@@ -234,7 +244,7 @@ const ObjectForm = ({
             label="Позиция"
             register={register}
             name="contact.position"
-            options={workingPositions}
+            options={sortedWorkingPositions}
             value={watchWorkingPosition ?? ""}
             setValue={setValue}
             watchItemId={watchWorkingPosition}
@@ -367,7 +377,7 @@ const ObjectForm = ({
               name="commercialTerms.rentTypes"
               labelId="rentTypes"
               label="Тип договора"
-              itemsList={rentTypes}
+              itemsList={sortedRentTypes}
               value={watchRentTypes ?? ""}
             />
           </FieldsContainer>
@@ -381,7 +391,7 @@ const ObjectForm = ({
               name="estateOptions.objectConditions"
               labelId="objectConditions "
               label="Состояние помещения"
-              itemsList={objectConditions}
+              itemsList={sortedObjectConditions}
               value={watchobjectConditions}
             />
             <TextFieldStyled

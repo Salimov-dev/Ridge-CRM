@@ -35,6 +35,10 @@ const estateTypesArray = [
     _id: "64d95jb9923hhf9ehaqwe933",
     name: "ОСЗ по нашему ТЗ",
   },
+  {
+    _id: "6428f732hfd932jfapq92130",
+    name: "ОСЗ",
+  },
 ];
 
 export { estateTypesArray };

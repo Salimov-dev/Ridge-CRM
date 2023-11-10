@@ -15,6 +15,14 @@ const objectPropertiesArray = [
     _id: "64d95348576aa746bb3d28f2",
     name: "Выше первого",
   },
+  {
+    _id: "64d90dpf1opasd9vb837324",
+    name: "Остров",
+  },
+  {
+    _id: "64pbmn3830fdsh320mxc3499",
+    name: "Прикассовая зона",
+  },
 ];
 
 export { objectPropertiesArray };

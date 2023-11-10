@@ -11,6 +11,10 @@ const objectConditionsArray = [
     _id: "64d9f433a979ac6e61fa9e2e",
     name: "Соответствует нашим стандартам",
   },
+  {
+    _id: "64d9f4393f0d32fd03243343",
+    name: "Требуется реконструкция",
+  },
 ];
 
 export { objectConditionsArray };

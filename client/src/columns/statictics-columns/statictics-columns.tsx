@@ -254,7 +254,7 @@ export const staticticsColumns = [
             "DD.MM"
           )} - ${endOfWeek.format("DD.MM")}`;
 
-          return formattedDate
+          return formattedDate;
         })(),
         enableSorting: false,
         size: 30,

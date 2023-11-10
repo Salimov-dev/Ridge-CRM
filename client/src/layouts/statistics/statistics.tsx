@@ -13,8 +13,8 @@ import StaticticsFiltersPanel from "../../components/UI/filters-panels/statictic
 import useData from "./hooks/use-data";
 import useSearchStatictics from "../../hooks/statictics/use-search-statistics";
 // columns
-import { staticticsColumnsCurator } from "../../columns/statictics/statictics-columns-curator";
-import { staticticsColumns } from "../../columns/statictics/statictics-columns";
+import { staticticsColumnsCurator } from "../../columns/statictics-columns/statictics-columns-curator";
+import { staticticsColumns } from "../../columns/statictics-columns/statictics-columns";
 // utils
 import { getUsersWithoutCurrentUser } from "../../utils/user/get-users-without-current-user";
 // store
@@ -41,7 +41,7 @@ const initialState = {
   withoutCurator: false,
 };
 
-const Statictics = React.memo (() => {
+const Statictics = React.memo(() => {
   const dispatch = useDispatch();
   const localStorageState = JSON.parse(
     localStorage.getItem("search-statictics-data")

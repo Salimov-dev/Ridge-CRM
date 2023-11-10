@@ -1,7 +1,7 @@
 import dayjs from "dayjs";
 import { orderBy } from "lodash";
 // columns
-import useTableHeader from "../../../columns/statictics/hooks/use-table-header";
+import useTableHeader from "../../../columns/statictics-columns/hooks/use-table-header";
 // mock
 import { objectStatusesArray } from "../../../mock/object/object-status";
 // utils

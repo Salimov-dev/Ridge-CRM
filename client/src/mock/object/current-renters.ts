@@ -39,6 +39,10 @@ const currentRentersArray = [
     _id: "64d9f2f8a012ofdp432hfs32",
     name: "Другое",
   },
+  {
+    _id: "649foau2384305jfrg834052",
+    name: "Разное",
+  },
 ];
 
 export { currentRentersArray };

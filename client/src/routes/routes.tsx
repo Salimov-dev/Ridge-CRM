@@ -14,8 +14,13 @@ import Users from "../layouts/users/users";
 import Profile from "../layouts/profile/profile";
 import UpdateProfile from "../components/pages/update-profile/update-profile";
 import NoMatchRoute from "../components/common/rout/no-match";
+import { getCurrentUserId, getIsUserCurator } from "../store/user/users.store";
+import { useSelector } from "react-redux";
 
 export default function AppRoutes() {
+  const currentUserId = useSelector(getCurrentUserId());
+  const isCurator = useSelector(getIsUserCurator(currentUserId));
+
     return (
       <Routes>
         <Route path="/" element={<Main />} />
@@ -28,7 +33,7 @@ export default function AppRoutes() {
         <Route path="calendar/*" element={<RequireAuth><Calendar /></RequireAuth>} />
         <Route path="deals/*" element={<RequireAuth><Deals /></RequireAuth>} />
         <Route path="presentations/*" element={<RequireAuth><Presentations /></RequireAuth>} />
-        <Route path="users/*" element={<RequireAuth><Users /></RequireAuth>} />
+        {isCurator && <Route path="users/*" element={<RequireAuth><Users /></RequireAuth>} />}
         <Route path="profile" element={<Profile />}>
           <Route path=":userId?/profileUpdate" element={<RequireAuth><UpdateProfile /></RequireAuth>} />
         </Route>

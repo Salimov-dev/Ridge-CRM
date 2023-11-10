@@ -17,11 +17,11 @@ const workingPositionsArray = [
   },
   {
     _id: "64c13f8e6a53baca70b5e206",
-    name: "Гендиректор",
+    name: "Директор",
   },
   {
     _id: "64c13f8e6a53baca70b5e207",
-    name: "Замгендиректора",
+    name: "Замдиректора",
   },
   {
     _id: "64c13f8e6a53baca70b5e208",
@@ -46,6 +46,10 @@ const workingPositionsArray = [
   {
     _id: "6500c7065b40f9asqw213945",
     name: "Инженер",
+  },
+  {
+    _id: "62igf0438rudhsdfji324t00",
+    name: "Бухгалтер",
   },
 ];
 

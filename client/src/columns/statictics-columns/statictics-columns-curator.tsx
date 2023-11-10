@@ -148,7 +148,7 @@ export const staticticsColumnsCurator = [
       },
     ],
   },
- 
+
   {
     header: "ПОСЛЕДНИЕ 4 НЕДЕЛИ", // Заголовок текущего месяца
     columns: [
