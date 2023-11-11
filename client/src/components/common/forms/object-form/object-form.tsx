@@ -32,6 +32,7 @@ import { getObjectPropertiesList } from "../../../../store/object-params/object-
 import { getCurrentRentersList } from "../../../../store/object-params/current-renter.store";
 import { getWorkingPositionsList } from "../../../../store/user/working-position.store";
 import { getObjectConditionsList } from "../../../../store/object-params/object-conditions.store";
+import { getTradeAreaList } from "../../../../store/object-params/object-trade-area";
 
 const ObjectForm = ({
   data,
@@ -53,6 +54,8 @@ const ObjectForm = ({
   const sortedCurrentRenters = orderBy(currentRenters, ["name"], ["asc"]);
   const objectProperties = useSelector(getObjectPropertiesList());
   const sortedObjectProperties = orderBy(objectProperties, ["name"], ["asc"]);
+  const objectTradeArea = useSelector(getTradeAreaList());
+  const sortedObjectTradeArea = orderBy(objectTradeArea, ["name"], ["asc"]);
   const objectConditions = useSelector(getObjectConditionsList());
   const sortedObjectConditions = orderBy(objectConditions, ["name"], ["asc"]);
 
@@ -76,6 +79,7 @@ const ObjectForm = ({
   const watchCurrentRenters = watch("estateOptions.currentRenters");
   const watchobjectConditions = watch("estateOptions.objectConditions");
   const watchObjectProperties = watch("estateOptions.objectProperties");
+  const watchObjectTradeArea = watch("estateOptions.tradeArea");
   const watchCloudLink = watch("cloudLink");
 
 
@@ -212,6 +216,16 @@ const ObjectForm = ({
             errors={errors?.estateOptions?.objectProperties}
           />
           <AutocompleteStyled
+            label="Тип торговой площади *"
+            register={register}
+            name="estateOptions.tradeArea"
+            options={sortedObjectTradeArea}
+            value={watchObjectTradeArea ?? ""}
+            setValue={setValue}
+            watchItemId={watchObjectTradeArea}
+            errors={errors?.estateOptions?.tradeArea}
+          />
+          <AutocompleteStyled
             label="Текущий арендатор *"
             register={register}
             name="estateOptions.currentRenters"
@@ -304,7 +318,7 @@ const ObjectForm = ({
             />
             <TextFieldStyled
               register={register}
-              label="Стоимость аренды"
+              label="Общая стоимость арендной платы"
               type="text"
               name="commercialTerms.rentPrice"
               onInputQuantities={60}
@@ -313,15 +327,16 @@ const ObjectForm = ({
                 endAdornment: <InputAdornment position="end">₽</InputAdornment>,
               }}
             />
-            <TextFieldStyled
+             <TextFieldStyled
               register={register}
-              label="Введите стоимость 1м2"
-              type="text"
-              name="commercialTerms.priceForMetr"
-              onInputQuantities={60}
-              value={data?.commercialTerms?.priceForMetr || ""}
+              label="Комиссия агента"
+              type="number"
+              name="commercialTerms.agentComission"
+              valueAsNumber={true}
+              onInputQuantities={3}
+              value={data?.commercialTerms?.agentComission || ""}
               InputProps={{
-                endAdornment: <InputAdornment position="end">₽</InputAdornment>,
+                endAdornment: <InputAdornment position="end">%</InputAdornment>,
               }}
             />
             <TextFieldStyled

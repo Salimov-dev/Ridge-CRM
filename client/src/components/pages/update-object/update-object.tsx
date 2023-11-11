@@ -54,7 +54,7 @@ const UpdateObject = React.memo(({ onClose }) => {
     Boolean(watchObjectProperties);
 
   const isFullValid = isWatchValid;
-  
+
   const onSubmit = (data) => {
     setIsLoading(true);
 
@@ -81,7 +81,9 @@ const UpdateObject = React.memo(({ onClose }) => {
         address: capitalizeFirstLetter(data.location.address),
       },
     };
-    dispatch<any>(updateObject(newData)).then(() => {
+
+    dispatch<any>(updateObject(newData))
+      .then(() => {
         setIsLoading(false);
         onClose();
         toast.success("Объект успешно изменен!");
@@ -92,12 +94,7 @@ const UpdateObject = React.memo(({ onClose }) => {
       });
   };
 
-  return isLoading ? (
-    <IsLoadingDialog
-      text="Немного подождите, изменяем `Объект`"
-      isLoading={isLoading}
-    />
-  ) : (
+  return (
     <Box>
       <Header object={object} onClose={onClose} />
       <ObjectForm
@@ -111,6 +108,12 @@ const UpdateObject = React.memo(({ onClose }) => {
         setValue={setValue}
         isValid={isFullValid}
       />
+      {isLoading && (
+        <IsLoadingDialog
+          text="Немного подождите, изменяем `Объект`"
+          isLoading={isLoading}
+        />
+      )}
     </Box>
   );
 });

@@ -17,6 +17,7 @@ import { getCurrentRenterNameById } from "../../../../store/object-params/curren
 import { getWorkingPositionNameById } from "../../../../store/user/working-position.store";
 import { getEstateConditionNameById } from "../../../../store/object-params/object-conditions.store";
 import { getObjectPropertiesNameById } from "../../../../store/object-params/object-properties";
+import { getTradeAreaNameById } from "../../../../store/object-params/object-trade-area";
 
 export const FormatDate = (date) => {
   return dayjs(date).format("DD.MM.YY");
@@ -56,6 +57,10 @@ export const FormatCurrentRenter = (id) => {
 
 export const FormatObjectProperties = (id) => {
   return useSelector(getObjectPropertiesNameById(id));
+};
+
+export const FormatObjectTradeArea = (id) => {
+  return useSelector(getTradeAreaNameById(id));
 };
 
 export const FormatEstateConditions = (id) => {

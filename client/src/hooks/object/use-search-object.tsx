@@ -88,19 +88,34 @@ const useSearchObject = (objects, data) => {
     if (data.selectedUsers?.length) {
       array = array?.filter((obj) => data.selectedUsers?.includes(obj?.userId));
     }
+    // Текущий арендатор
     if (data.selectedCurrentRenters?.length) {
       array = array?.filter((obj) =>
         data.selectedCurrentRenters?.includes(obj?.estateOptions.currentRenters)
       );
     }
+    // Тип недвижимости
     if (data.selectedEstateTypes?.length) {
       array = array?.filter((obj) =>
         data.selectedEstateTypes?.includes(obj?.estateOptions.estateTypes)
       );
     }
+    // Тип объекта
     if (data.selectedObjectTypes?.length) {
       array = array?.filter((obj) =>
         data.selectedObjectTypes?.includes(obj?.estateOptions.objectTypes)
+      );
+    }
+     // Расположение объекта
+    if (data.selectedObjectProperties?.length) {
+      array = array?.filter((obj) =>
+        data.selectedObjectProperties?.includes(obj?.estateOptions.objectProperties || "undefined")
+      );
+    }
+    // Тип торговой площади
+    if (data.selectedTradeArea?.length) {
+      array = array?.filter((obj) =>
+        data.selectedTradeArea?.includes(obj?.estateOptions.tradeArea || "undefined")
       );
     }
 
@@ -195,18 +210,18 @@ const useSearchObject = (objects, data) => {
     }
     // дублирующиеся адреса
     if (data.objectActivity === "01df84jgfdh2349gj39999") {
-      const countList = array?.reduce(function(p, c){
-        const fullAddress = `${c.location.city}, ${c.location.address}`
+      const countList = array?.reduce(function (p, c) {
+        const fullAddress = `${c.location.city}, ${c.location.address}`;
         p[fullAddress] = (p[fullAddress] || 0) + 1;
         return p;
       }, {});
 
-      const result = array?.filter(function(obj){
-        const fullAddress = `${obj.location.city}, ${obj.location.address}`
+      const result = array?.filter(function (obj) {
+        const fullAddress = `${obj.location.city}, ${obj.location.address}`;
         return countList[fullAddress] > 1;
       });
 
-      return result
+      return result;
     }
 
     // Фильтр для "Звонок от 1 до 2 месяцев"

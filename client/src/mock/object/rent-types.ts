@@ -11,6 +11,10 @@ const rentTypesArray = [
     _id: "64d953b4576aa746bb3d28f8",
     name: "Субсубаренда",
   },
+  {
+    _id: "649fh9vz8231goj328fdj234",
+    name: "Пердварительный договор",
+  },
 ];
 
 export { rentTypesArray };

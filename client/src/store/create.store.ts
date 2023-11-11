@@ -15,6 +15,8 @@ import rentTypesReducer from "./object-params/rent-types.store";
 import estateTypesReducer from "./object-params/estate-types.store";
 import currentRenterReducer from "./object-params/current-renter.store";
 import workingPositionReducer from "./user/working-position.store";
+import transferObjectToAnotherManagerReducer from "./object/transfer-object-to-another-manager.store";
+import tradeAreaReducer from "./object-params/object-trade-area";
 // meetings
 import meetingsReducer from "./meeting/meetings.store";
 import meetingTypesReducer from "./meeting/meeting-types.store";
@@ -53,7 +55,6 @@ import staticticPositionsReducer from "./statictics/statictics-positions.store";
 // other
 import monthIndexReducer from "./month-index.store";
 import currrentPathReducer from "./current-path.store";
-import transferObjectToAnotherManagerReducer from "./object/transfer-object-to-another-manager.store";
 
 const rootReducer = combineReducers({
   // auth state
@@ -75,6 +76,7 @@ const rootReducer = combineReducers({
   rentTypes: rentTypesReducer,
   estateTypes: estateTypesReducer,
   objectProperties: objectPropertiesReducer,
+  tradeArea: tradeAreaReducer,
   // users
   login: loginReducer,
   users: usersListReducer,

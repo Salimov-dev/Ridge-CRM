@@ -19,8 +19,8 @@ const TransferObjectToAnotherManagerButton = () => {
       disabled={isLoading}
       sx={{
         color: "white",
-        background: "MediumBlue",
-        "&:hover": { background: "Blue" },
+        background: "Crimson",
+        "&:hover": { background: "Red" },
       }}
     >
       Передать объекты

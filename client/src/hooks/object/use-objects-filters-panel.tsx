@@ -5,9 +5,13 @@ import { getDistrictsList } from "../../store/object-params/districts.store";
 import { getMetroList } from "../../store/object-params/metro.store";
 import { getCurrentRentersList } from "../../store/object-params/current-renter.store";
 import { getEstateTypesList } from "../../store/object-params/estate-types.store";
+import { getObjectPropertiesList } from "../../store/object-params/object-properties";
+import { getTradeAreaList } from "../../store/object-params/object-trade-area";
 
 const useObjectsFiltersPanel = (objects) => {
   const objectTypes = useSelector(getObjectTypesList());
+  const objectProperties = useSelector(getObjectPropertiesList())
+  const objectTradeArea = useSelector(getTradeAreaList())
   const districts = useSelector(getDistrictsList());
   const metro = useSelector(getMetroList());
   const currentRenters = useSelector(getCurrentRentersList());
@@ -63,7 +67,7 @@ const useObjectsFiltersPanel = (objects) => {
       const foundObject = metro?.find((obj) => obj._id === id);
       return foundObject
         ? { _id: foundObject._id, name: foundObject.name }
-        : null;
+        : { _id: "undefined", name: "Не указано" };
     });
 
     const sortedMetros = orderBy(actualMetroArray, ["name"], ["asc"]);
@@ -83,13 +87,15 @@ const useObjectsFiltersPanel = (objects) => {
       const foundObject = currentRenters?.find((obj) => obj._id === id);
       return foundObject
         ? { _id: foundObject._id, name: foundObject.name }
-        : null;
+        : { _id: "undefined", name: "Не указано" };
     });
 
     const sortedRenter = orderBy(actuaRentersArray, ["name"], ["asc"]);
 
     return sortedRenter;
   };
+
+  // Тип недвижимости
   const getActualEstateTypesList = () => {
     const filteredType = objects?.map(
       (renter) => renter?.estateOptions?.estateTypes
@@ -102,13 +108,15 @@ const useObjectsFiltersPanel = (objects) => {
       const foundObject = estateTypes?.find((obj) => obj._id === id);
       return foundObject
         ? { _id: foundObject._id, name: foundObject.name }
-        : null;
+        : { _id: "undefined", name: "Не указано" };
     });
 
     const sortedType = orderBy(actuaTypeArray, ["name"], ["asc"]);
 
     return sortedType;
   };
+
+  // Тип объекта
   const getActualObjectTypesList = () => {
     const filteredType = objects?.map(
       (renter) => renter?.estateOptions?.objectTypes
@@ -121,7 +129,52 @@ const useObjectsFiltersPanel = (objects) => {
       const foundObject = objectTypes?.find((obj) => obj._id === id);
       return foundObject
         ? { _id: foundObject._id, name: foundObject.name }
-        : null;
+        : { _id: "undefined", name: "Не указано" };
+    });
+
+    const sortedType = orderBy(actuaTypeArray, ["name"], ["asc"]);
+
+    return sortedType;
+  };
+
+  // Расположение объекта
+  const getActualObjectProperties= () => {
+    const filteredProperties = objects?.map(
+      (renter) => renter?.estateOptions?.objectProperties
+      
+    );
+    const formateTypeArray = filteredProperties?.filter((m) => m !== "");
+
+    const uniqueType = [...new Set(formateTypeArray)];
+
+    const actuaTypeArray = uniqueType?.map((id) => {
+      const foundObject = objectProperties?.find((obj) => obj._id === id);
+      return foundObject
+        ? { _id: foundObject._id, name: foundObject.name }
+        : { _id: "undefined", name: "Не указано" };
+
+    });
+
+    const sortedType = orderBy(actuaTypeArray, ["name"], ["asc"]);
+
+    return sortedType;
+  };
+
+  // Тип торговой площади
+  const getActualObjectTradeArea= () => {
+    const filteredProperties = objects?.map(
+      (renter) => renter?.estateOptions?.tradeArea
+      
+    );
+    const formateTypeArray = filteredProperties?.filter((m) => m !== "");
+
+    const uniqueType = [...new Set(formateTypeArray)];
+
+    const actuaTypeArray = uniqueType?.map((id) => {
+      const foundObject = objectTradeArea?.find((obj) => obj._id === id);
+      return foundObject
+        ? { _id: foundObject._id, name: foundObject.name || "Не указано" }
+        : { _id: "undefined", name: "Не указано" };
     });
 
     const sortedType = orderBy(actuaTypeArray, ["name"], ["asc"]);
@@ -137,6 +190,8 @@ const useObjectsFiltersPanel = (objects) => {
     getActualCurrentRentersList,
     getActualEstateTypesList,
     getActualObjectTypesList,
+    getActualObjectProperties,
+    getActualObjectTradeArea
   };
 };
 

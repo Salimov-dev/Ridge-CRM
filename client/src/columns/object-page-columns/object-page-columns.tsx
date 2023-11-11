@@ -7,6 +7,7 @@ import {
   FormatMetro,
   FormatObjectProperties,
   FormatObjectStatus,
+  FormatObjectTradeArea,
   FormatPhone,
   FormatTypeEstate,
   FormatTypeObject,
@@ -134,6 +135,15 @@ export const estateTypeColumns = [
     cell: (info) => {
       const type = info?.getValue()?.estateOptions?.objectProperties;
       return type ? <AlignCenter>{FormatObjectProperties(type)}</AlignCenter> :  <EmptyTd />;
+    },
+  },
+  {
+    accessorFn: (row) => row,
+    header: "Тип торговой площади",
+    enableSorting: false,
+    cell: (info) => {
+      const tradeArea = info?.getValue()?.estateOptions?.tradeArea;
+      return tradeArea ? <AlignCenter>{FormatObjectTradeArea(tradeArea)}</AlignCenter> :  <EmptyTd />;
     },
   },
   {
@@ -277,7 +287,9 @@ export const commercialTermsColumns = [
     enableSorting: false,
     cell: (info) => {
       const object = info.getValue();
-      const priceForMetr = object?.commercialTerms.priceForMetr;
+      const rentPrice = object?.commercialTerms.rentPrice
+      const rentSquare = object?.commercialTerms.rentSquare
+      const priceForMetr = Math.round(rentPrice / rentSquare);
 
       const result = makeDigitSeparator(priceForMetr);
       if (priceForMetr) {
@@ -337,18 +349,19 @@ export const commercialTermsColumns = [
       );
     },
   },
-  // {
-  //   accessorKey: "commercialTerms.agentComission",
-  //   header: "Комиссия",
-  //   cell: (info) => {
-  //     const agentComission = info.getValue();
-  //     return agentComission ? (
-  //       <AlignCenter>{`${makeDigitSeparator(agentComission)}%`}</AlignCenter>
-  //     ) : (
-  //       <EmptyTd />
-  //     );
-  //   },
-  // },
+  {
+    accessorFn: (row) => row,
+    header: "Комиссия",
+    cell: (info) => {
+      const object = info.getValue();
+      const agentComission = object?.commercialTerms.agentComission;
+      return agentComission ? (
+        <AlignCenter>{`${makeDigitSeparator(agentComission)}%`}</AlignCenter>
+      ) : (
+        <EmptyTd />
+      );
+    },
+  },
   {
     accessorKey: "commercialTerms.rentTypes",
     header: "Договор",

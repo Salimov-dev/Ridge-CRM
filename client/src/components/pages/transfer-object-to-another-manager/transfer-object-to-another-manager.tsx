@@ -88,7 +88,7 @@ const TransferObjectToAnotherManager = React.memo(
       <Component>
         <TitleWithCloseButton
           title={title}
-          background="MediumBlue"
+          background="Crimson"
           color="white"
           onClose={onClose}
         />

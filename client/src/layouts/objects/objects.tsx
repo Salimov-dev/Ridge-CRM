@@ -52,6 +52,8 @@ const initialState = {
   selectedStatuses: [],
   selectedCurrentRenters: [],
   selectedEstateTypes: [],
+  selectedTradeArea: [],
+  selectedObjectProperties: [],
   selectedObjectTypes: [],
   selectedMetro: [],
 };
@@ -95,6 +97,7 @@ const Objects = React.memo(() => {
     : objectsColumns;
 
   const searchedObjects = useSearchObject(objects, data);
+  
   const sortedObjects = useMemo(() => {
     return orderBy(searchedObjects, ["created_at"], ["desc"]);
   }, [searchedObjects]);

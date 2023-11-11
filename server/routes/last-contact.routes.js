@@ -1,5 +1,6 @@
 import express from "express";
 import Company from "../models/Company.js";
+import User from "../models/User.js";
 import auth from "../middleware/auth.middleware.js";
 import LastContact from "../models/Last-contact.js";
 
@@ -7,8 +8,22 @@ const router = express.Router({ mergeParams: true });
 
 router.get("/", auth, async (req, res) => {
   try {
-    const list = await LastContact.find();
-    res.status(200).send(list);
+    const userId = req.user._id;
+    const user = await User.findOne({ _id: userId });
+    const userRole = user.role;
+
+    if (userRole === "MANAGER") {
+      const lastContacts = await LastContact.find({ userId });
+      return res.status(200).send(lastContacts);
+    }
+
+    const lastContacts = await LastContact.find({ userId });
+    const managers = await User.find({ curatorId: userId });
+    const managerIds = managers.map((manager) => manager._id);
+    const managerLastContacts = await LastContact.find({ userId: { $in: managerIds } });
+    const allLastContacts = [...lastContacts, ...managerLastContacts];
+
+    return res.status(200).send(allLastContacts);
   } catch (e) {
     res.status(500).json({
       message: "На сервере произошла ошибка, попробуйте позже",

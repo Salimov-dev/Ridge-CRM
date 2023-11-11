@@ -35,6 +35,7 @@ const initialState = {
     priceForMetr: "",
     securityDeposit: "",
     advanseDeposit: "",
+    agentComission: "",
     rentSquare: "",
     rentalHolidays: "",
     indexingAnnual: "",
@@ -45,6 +46,7 @@ const initialState = {
     objectConditions: "",
     estateTypes: "",
     objectTypes: "",
+    tradeArea: "",
     premisesHeight: "",
     premisesFloor: "",
     parkingQuantity: "",
@@ -94,13 +96,15 @@ const CreateObject = React.memo(({ onClose }) => {
   const watchCurrentRenters = watch("estateOptions.currentRenters", "");
   const watchStatus = watch("status", "");
   const watchObjectProperties = watch("estateOptions.objectProperties", "");
+  const watchObjectTradeArea = watch("estateOptions.tradeArea", "");
   const isWatchValid =
     Boolean(watchDistrict) &&
     Boolean(watchObjectTypes) &&
     Boolean(watchEstateTypes) &&
     Boolean(watchCurrentRenters) &&
     Boolean(watchStatus) &&
-    Boolean(watchObjectProperties);
+    Boolean(watchObjectProperties) &&
+    Boolean(watchObjectTradeArea) 
 
   const isFindedObject = Boolean(Object.keys(findedObject)?.length);
   const isObjectHasAddress = Boolean(watchCity) && Boolean(watchAddress);

@@ -31,6 +31,7 @@ import { loadSidebarCollapsState } from "../store/sidebar-collaps-state.store";
 // presentation
 import { loadPresentationsList } from "../store/presentation/presentations.store";
 import { loadPresentationStatusList } from "../store/presentation/presentation-status.store";
+import { loadTradeAreaList } from "../store/object-params/object-trade-area";
 
 interface AppLoaderProps {
   children: React.ReactNode;
@@ -56,6 +57,7 @@ const AppLoader = ({ children }: AppLoaderProps) => {
       dispatch<any>(loadRentTypesList());
       dispatch<any>(loadEstateTypesList());
       dispatch<any>(loadObjectPropertiesList());
+      dispatch<any>(loadTradeAreaList());
       // users
       dispatch<any>(loadUsersList());
       dispatch<any>(loadUserStatusesList());

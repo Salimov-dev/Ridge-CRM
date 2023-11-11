@@ -21,6 +21,8 @@ const ObjectsFiltersPanel = React.memo(
       getActualCurrentRentersList,
       getActualEstateTypesList,
       getActualObjectTypesList,
+      getActualObjectProperties,
+      getActualObjectTradeArea,
     } = useObjectsFiltersPanel(objects);
 
     const usersList = getActualUsersList(objects);
@@ -69,17 +71,6 @@ const ObjectsFiltersPanel = React.memo(
             inputProps={{ maxLength: 30 }}
             disabled={isLoading ? true : false}
           />
-          {isCurator ? (
-            <MultiSelectField
-              name="users"
-              labelId="users-label"
-              label="Выбор по менеджеру"
-              itemsList={usersList}
-              selectedItems={data.selectedUsers}
-              onChange={(e) => setValue("selectedUsers", e.target.value)}
-              disabled={isLoading ? true : false}
-            />
-          ) : null}
         </FieldsContainer>
 
         <FieldsContainer>
@@ -130,17 +121,7 @@ const ObjectsFiltersPanel = React.memo(
             isSelect={Boolean(data?.objectActivity?.length)}
           />
         </FieldsContainer>
-
         <FieldsContainer>
-          <MultiSelectField
-            itemsList={getActualCurrentRentersList()}
-            selectedItems={data.selectedCurrentRenters}
-            onChange={(e) => setValue("selectedCurrentRenters", e.target.value)}
-            name="currentRenters"
-            labelId="currentRenters-label"
-            label="Текущий арендатор"
-            disabled={isLoading ? true : false}
-          />
           <MultiSelectField
             itemsList={getActualEstateTypesList()}
             selectedItems={data.selectedEstateTypes}
@@ -150,6 +131,7 @@ const ObjectsFiltersPanel = React.memo(
             label="Тип недвижимости"
             disabled={isLoading ? true : false}
           />
+
           <MultiSelectField
             itemsList={getActualObjectTypesList()}
             selectedItems={data.selectedObjectTypes}
@@ -159,6 +141,38 @@ const ObjectsFiltersPanel = React.memo(
             label="Тип объекта"
             disabled={isLoading ? true : false}
           />
+
+          <MultiSelectField
+            itemsList={getActualObjectProperties()}
+            selectedItems={data.selectedObjectProperties}
+            onChange={(e) =>
+              setValue("selectedObjectProperties", e.target.value)
+            }
+            name="objectProperties"
+            labelId="objectProperties-label"
+            label="Расположение объекта"
+            disabled={isLoading ? true : false}
+          />
+          <MultiSelectField
+            itemsList={getActualObjectTradeArea()}
+            selectedItems={data.selectedTradeArea}
+            onChange={(e) => setValue("selectedTradeArea", e.target.value)}
+            name="objectTradeArea"
+            labelId="objectTradeArea-label"
+            label="Тип торговой площади"
+            disabled={isLoading ? true : false}
+          />
+          <MultiSelectField
+            itemsList={getActualCurrentRentersList()}
+            selectedItems={data.selectedCurrentRenters}
+            onChange={(e) => setValue("selectedCurrentRenters", e.target.value)}
+            name="currentRenters"
+            labelId="currentRenters-label"
+            label="Текущий арендатор"
+            disabled={isLoading ? true : false}
+          />
+        </FieldsContainer>
+        <FieldsContainer>
           <SearchDatePicker
             register={register}
             name="startDate"
@@ -175,6 +189,17 @@ const ObjectsFiltersPanel = React.memo(
             onChange={(value) => setValue("endDate", value)}
             disabled={isLoading ? true : false}
           />
+          {isCurator ? (
+            <MultiSelectField
+              name="users"
+              labelId="users-label"
+              label="Выбор по менеджеру"
+              itemsList={usersList}
+              selectedItems={data.selectedUsers}
+              onChange={(e) => setValue("selectedUsers", e.target.value)}
+              disabled={isLoading ? true : false}
+            />
+          ) : null}
         </FieldsContainer>
       </Form>
     );

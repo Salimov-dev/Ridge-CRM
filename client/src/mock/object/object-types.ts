@@ -19,10 +19,6 @@ const objectTypesArray = [
     _id: "65fah3h7438f18fhd98217399",
     name: "Земельный участок",
   },
-  {
-    _id: "65fahf921jfd01jsahjfi3403",
-    name: "Заброшенное здание",
-  },
 ];
 
 export { objectTypesArray };

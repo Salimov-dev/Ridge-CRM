@@ -32,12 +32,12 @@ const estateTypesArray = [
     name: "Пристроенное к жилому дому",
   },
   {
-    _id: "64d95jb9923hhf9ehaqwe933",
-    name: "ОСЗ по нашему ТЗ",
-  },
-  {
     _id: "6428f732hfd932jfapq92130",
     name: "ОСЗ",
+  },
+  {
+    _id: "65fahf921jfd01jsahjfi3403",
+    name: "Заброшенное здание",
   },
 ];
 

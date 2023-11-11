@@ -17,6 +17,8 @@ import {
   getCurrentUserId,
   getIsUserAuthorThisEntity,
 } from "../../store/user/users.store";
+import { AlignCenter } from "../../components/common/columns/styled";
+import { FormatManagerName } from "../../components/common/table/helpers/helpers";
 
 export const lastContactColumns = [
   {
@@ -34,6 +36,14 @@ export const lastContactColumns = [
           <Typography>{dayOfWeek}</Typography>{" "}
         </Box>
       );
+    },
+  },
+  {
+    accessorKey: "userId",
+    header: "Менеджер",
+    cell: (info) => {
+      const userId = info.getValue();
+      return <AlignCenter>{FormatManagerName(userId)}</AlignCenter>;
     },
   },
   {
