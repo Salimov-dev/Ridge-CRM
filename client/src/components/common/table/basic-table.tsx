@@ -24,10 +24,11 @@ import { getOpenObjectPageOpenState } from "../../../store/object/open-object-pa
 import { tokens } from "../../../theme";
 
 const BasicTable = ({
-  rowSelection=[],
-  setRowSelection=()=>{},
+  rowSelection = [],
+  setRowSelection = () => {},
   items,
   itemsColumns,
+  hasFooter=false,
   isLoading,
   isPaginate = true,
 }) => {
@@ -59,7 +60,7 @@ const BasicTable = ({
     <>
       <table>
         <Thead table={table} colors={colors} isDialogMode={isDialogMode} />
-        {!isLoading && <Tbody table={table} />}
+        {!isLoading && <Tbody table={table} hasFooter={hasFooter}/>}
       </table>
       {isLoading && <Loader />}
 
