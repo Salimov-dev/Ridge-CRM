@@ -21,9 +21,21 @@ const MyTaskForm = ({
 }) => {
   const watchObjectId = watch("objectId", "");
   const watchIsDone = watch("isDone", false);
+  const watchIsCallTask = watch("isCallTask", false);
 
   return (
     <Form noValidate>
+      <FieldsContainer sx={{justifyContent: 'start'}}>
+        <SimpleSwitch
+          title="Сделать звонок"
+          value={watchIsCallTask}
+          isLoading={isTasksLoading}
+          padding="0px"
+          onChange={(e) => {
+            setValue("isCallTask", e.target.checked);
+          }}
+        />
+      </FieldsContainer>
       <FieldsContainer>
         <DatePickerStyled
           register={register}
@@ -78,6 +90,7 @@ const MyTaskForm = ({
           title="Задача выполненна"
           value={watchIsDone}
           isLoading={isTasksLoading}
+          padding="0px"
           onChange={(e) => {
             setValue("isDone", e.target.checked);
           }}

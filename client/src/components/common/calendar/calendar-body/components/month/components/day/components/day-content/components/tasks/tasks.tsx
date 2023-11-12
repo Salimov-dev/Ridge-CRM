@@ -21,21 +21,18 @@ const Tasks = ({ tasks, isCurator, isSelectedDayDialog }) => {
     <ItemsContainer>
       {tasks?.map((task) => {
         const taskIsDone = task?.isDone;
+        const taskIsCall = task?.isCallTask;
 
         return (
           <ItemContainer
             key={task._id}
             sx={{
-              border: task.managerId ? "3px solid red" : "3px solid darkOrange",
+              border: task.managerId ? "3px solid red" : (taskIsCall ? "3px solid DarkGreen" : "3px solid darkOrange") ,
               color: !taskIsDone
-                ? task.managerId
-                  ? "white"
-                  : "black"
+                ? task.managerId ? "white" : (taskIsCall ? "white" :"black")
                 : "white",
               background: !taskIsDone
-                ? task.managerId
-                  ? "Crimson"
-                  : "orange"
+                ? task.managerId ? "Crimson" : (taskIsCall ? "DarkOliveGreen" :"orange")
                 : "gray",
             }}
           >

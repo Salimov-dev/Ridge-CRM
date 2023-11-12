@@ -25,6 +25,7 @@ const initialState = {
   comment: "",
   result: "",
   isDone: false,
+  isCallTask: true,
 };
 
 const CreateMyTask = React.memo(({

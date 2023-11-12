@@ -3,6 +3,7 @@ import "dayjs/locale/ru";
 import { useDispatch, useSelector } from "react-redux";
 // mui
 import { Box, Typography } from "@mui/material";
+import PhoneEnabledIcon from "@mui/icons-material/PhoneEnabled";
 // components
 import EmptyTd from "../../components/common/columns/empty-td";
 import { FormatManagerName } from "../../components/common/table/helpers/helpers";
@@ -14,7 +15,10 @@ import {
   setUpdateMyTaskOpenState,
 } from "../../store/task/update-my-task.store";
 import { getTaskById } from "../../store/task/tasks.store";
-import { getCurrentUserId, getIsUserAuthorThisEntity } from "../../store/user/users.store";
+import {
+  getCurrentUserId,
+  getIsUserAuthorThisEntity,
+} from "../../store/user/users.store";
 import {
   setUpdateManagerTaskId,
   setUpdateManagerTaskOpenState,
@@ -81,11 +85,26 @@ export const tasksColumnsDialog = [
     },
   },
   {
-    accessorKey: "comment",
+    accessorFn: (row) => row,
     header: "Задача",
     cell: (info) => {
-      const comment = info.getValue();
-      return comment;
+      const task = info.getValue();
+      const comment = task?.comment;
+      const isCallTask = task?.isCallTask;
+      return isCallTask ? (
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "start",
+            gap: "10px",
+          }}
+        >
+          <Typography>{comment}</Typography> <PhoneEnabledIcon />
+        </Box>
+      ) : (
+        comment
+      );
     },
   },
   {
@@ -118,8 +137,7 @@ export const tasksColumnsDialog = [
         getIsUserAuthorThisEntity(currentUserId, task)
       );
 
-      const disable = !isCuratorTask && !isAuthorEntity
-
+      const disable = !isCuratorTask && !isAuthorEntity;
 
       const handleClick = () => {
         if (isCuratorTask) {

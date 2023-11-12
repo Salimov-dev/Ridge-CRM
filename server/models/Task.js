@@ -9,6 +9,7 @@ const schema = new Schema(
     managerId: String,
     isDone: Boolean,
     result: String,
+    isCallTask: Boolean,
     userId: { type: Schema.Types.ObjectId, ref: "User" },
     company: { type: Schema.Types.ObjectId, ref: "Company" },
   },

@@ -3,7 +3,7 @@ import { orderBy } from "lodash";
 import { useForm } from "react-hook-form";
 import React, { useEffect, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
-import { Box, styled } from "@mui/material";
+import { Box, Typography, styled } from "@mui/material";
 // components
 import LayoutTitle from "../../components/common/page-titles/layout-title";
 import BasicTable from "../../components/common/table/basic-table";
@@ -72,7 +72,9 @@ const ObjectsDatabase = React.memo(() => {
 
   let filteredObjects = sortedObjects;
   if (data.selectedUsers?.length) {
-    filteredObjects = filteredObjects?.filter((obj) => data.selectedUsers.includes(obj.userId));
+    filteredObjects = filteredObjects?.filter((obj) =>
+      data.selectedUsers.includes(obj.userId)
+    );
   }
   if (data.selectedStatuses?.length) {
     filteredObjects = filteredObjects?.filter((obj) =>
@@ -117,35 +119,75 @@ const ObjectsDatabase = React.memo(() => {
         isInputEmpty={isInputEmpty}
       />
       <ChangePeriodsContainer>
+        <Box sx={{ display: "flex", alignItems: "center", minWidth: "200px" }}>
+          <Typography>Не было звонков (месяцев):</Typography>
+        </Box>
         <ChangePeriodButton
-          minWidth="320px"
-          text="Не звонили от 1мес до 2мес"
-          background="DarkGreen"
-          backgroundHover="ForestGreen"
+          text="от 1 до 2"
           border={
-            period === "fromOneMonthToTwo" ? "3px solid yellow" : "inherit"
+            period === "fromOneMonthToTwo"
+              ? "2px solid yellow"
+              : "1px solid green"
           }
           onClick={() => handleChangePeriod("fromOneMonthToTwo")}
         />
         <ChangePeriodButton
-          minWidth="320px"
-          text="Не звонили от 2мес до 3мес"
-          background="OrangeRed"
-          backgroundHover="Tomato"
+          text="от 2 до 3"
           border={
-            period === "fromTwoMonthToThree" ? "3px solid yellow" : "inherit"
+            period === "fromTwoMonthToThree"
+              ? "2px solid yellow"
+              : "1px solid green"
           }
           onClick={() => handleChangePeriod("fromTwoMonthToThree")}
         />
         <ChangePeriodButton
-          minWidth="320px"
-          text="Не звонили более 3мес"
-          background="FireBrick"
-          backgroundHover="Crimson"
+          text="более 3"
           border={
-            period === "fromThreeMonthAndMore" ? "3px solid yellow" : "inherit"
+            period === "fromThreeMonthAndMore"
+              ? "2px solid yellow"
+              : "1px solid green"
           }
           onClick={() => handleChangePeriod("fromThreeMonthAndMore")}
+        />
+      </ChangePeriodsContainer>
+
+      <ChangePeriodsContainer>
+        <Box sx={{ display: "flex", alignItems: "center", minWidth: "200px" }}>
+          <Typography>Надо позвонить (месяцев):</Typography>
+        </Box>
+        <ChangePeriodButton
+          text="До одного месяца"
+          border={
+            period === "beforeOneMonth" ? "2px solid yellow" : "1px solid green"
+          }
+          onClick={() => handleChangePeriod("beforeOneMonth")}
+        />
+        <ChangePeriodButton
+          text="через 1 и до 2"
+          border={
+            period === "afterOneMonthUpToTwo"
+              ? "2px solid yellow"
+              : "1px solid green"
+          }
+          onClick={() => handleChangePeriod("afterOneMonthUpToTwo")}
+        />
+        <ChangePeriodButton
+          text="через 2 и до 3"
+          border={
+            period === "afterTwoMonthUpToThree"
+              ? "2px solid yellow"
+              : "1px solid green"
+          }
+          onClick={() => handleChangePeriod("afterTwoMonthUpToThree")}
+        />
+        <ChangePeriodButton
+          text="через 3 и более"
+          border={
+            period === "afterThreeMonthAndMore"
+              ? "2px solid yellow"
+              : "1px solid green"
+          }
+          onClick={() => handleChangePeriod("afterThreeMonthAndMore")}
         />
       </ChangePeriodsContainer>
 

@@ -60,7 +60,7 @@ const UpdateMyTask = React.memo(({ title, onClose }) => {
   const isFullValid = isValid && watchDate && watchTime;
   const isEditMode = taskId ? true : false;
   const objects = useSelector(getObjectsList());
-  const objectId = task?.objectId;
+  const objectId = task?.objectId; 
 
   const isObjectPage = useSelector(getOpenObjectPageOpenState());
 

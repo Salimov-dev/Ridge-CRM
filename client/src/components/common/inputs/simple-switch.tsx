@@ -15,7 +15,6 @@ const Component = styled(Box)`
 `;
 
 const FormControlSyled = styled(FormControl)`
-  padding: 5px 15px 5px 0px;
   display: flex;
   justify-content: start;
 `;
@@ -27,6 +26,7 @@ const SimpleSwitch = ({
   whiteSpace = "nowrap",
   isLoading,
   initialChecked = false,
+  padding= "5px 15px 5px 0px"
 }) => {
   const [checked, setChecked] = useState(initialChecked);
 
@@ -39,7 +39,7 @@ const SimpleSwitch = ({
 
   return (
     <Component>
-      <FormControlSyled component="fieldset">
+      <FormControlSyled component="fieldset" sx={{padding: padding}}>
         <FormGroup aria-label="position" row sx={{ width: "100%" }}>
           <FormControlLabel
             control={

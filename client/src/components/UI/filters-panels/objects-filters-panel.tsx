@@ -75,12 +75,12 @@ const ObjectsFiltersPanel = React.memo(
 
         <FieldsContainer>
           <MultiSelectField
-            name="metro"
-            labelId="metro-label"
-            label="Выбор по метро"
-            itemsList={getActualMetroList()}
-            selectedItems={data.selectedMetro}
-            onChange={(e) => setValue("selectedMetro", e.target.value)}
+            name="cities"
+            labelId="cities-label"
+            label="Выбор по городу"
+            itemsList={getActualCitiesList()}
+            selectedItems={data.selectedCities}
+            onChange={(e) => setValue("selectedCities", e.target.value)}
             disabled={isLoading ? true : false}
           />
           <MultiSelectField
@@ -93,12 +93,12 @@ const ObjectsFiltersPanel = React.memo(
             disabled={isLoading ? true : false}
           />
           <MultiSelectField
-            name="cities"
-            labelId="cities-label"
-            label="Выбор по городу"
-            itemsList={getActualCitiesList()}
-            selectedItems={data.selectedCities}
-            onChange={(e) => setValue("selectedCities", e.target.value)}
+            name="metro"
+            labelId="metro-label"
+            label="Выбор по метро"
+            itemsList={getActualMetroList()}
+            selectedItems={data.selectedMetro}
+            onChange={(e) => setValue("selectedMetro", e.target.value)}
             disabled={isLoading ? true : false}
           />
           <MultiSelectField

@@ -104,7 +104,7 @@ const CreateObject = React.memo(({ onClose }) => {
     Boolean(watchCurrentRenters) &&
     Boolean(watchStatus) &&
     Boolean(watchObjectProperties) &&
-    Boolean(watchObjectTradeArea) 
+    Boolean(watchObjectTradeArea);
 
   const isFindedObject = Boolean(Object.keys(findedObject)?.length);
   const isObjectHasAddress = Boolean(watchCity) && Boolean(watchAddress);

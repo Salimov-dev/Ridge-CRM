@@ -57,7 +57,11 @@ const objectStatusesArray = [
   },
   {
     _id: "64gsdu32ifgkbcawe1259gf10",
-    name: "Не арендовать",
+    name: "Невозможно арендовать",
+  },
+  {
+    _id: "64pq0w921jvmxz92323df00334",
+    name: "Невозможно договориться",
   },
 ];
 

@@ -82,7 +82,6 @@ const ObjectForm = ({
   const watchObjectTradeArea = watch("estateOptions.tradeArea");
   const watchCloudLink = watch("cloudLink");
 
-
   const hasDistrict =
     watchDistrict?.includes("Санкт-Петербург") ||
     watchDistrict?.includes("Москва");
@@ -168,20 +167,15 @@ const ObjectForm = ({
             watchItemId={watchStatus}
             errors={errors?.status}
           />
-          <TextFieldStyled
+          <AutocompleteStyled
+            label="Текущий арендатор *"
             register={register}
-            label="Идентификатор объекта"
-            name="location.identifier"
-            errors={errors?.location?.identifier}
-            onInputQuantities={60}
-            value={data?.location?.identifier || ""}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <FingerprintIcon />
-                </InputAdornment>
-              ),
-            }}
+            name="estateOptions.currentRenters"
+            options={sortedCurrentRenters}
+            value={watchCurrentRenters ?? ""}
+            setValue={setValue}
+            watchItemId={watchCurrentRenters}
+            errors={errors?.estateOptions?.currentRenters}
           />
         </FieldsContainer>
         <FieldsContainer sx={{ gap: "3px" }}>
@@ -225,18 +219,24 @@ const ObjectForm = ({
             watchItemId={watchObjectTradeArea}
             errors={errors?.estateOptions?.tradeArea}
           />
-          <AutocompleteStyled
-            label="Текущий арендатор *"
+        </FieldsContainer>
+        <FieldsContainer>
+          <TextFieldStyled
             register={register}
-            name="estateOptions.currentRenters"
-            options={sortedCurrentRenters}
-            value={watchCurrentRenters ?? ""}
-            setValue={setValue}
-            watchItemId={watchCurrentRenters}
-            errors={errors?.estateOptions?.currentRenters}
+            label="Идентификатор объекта"
+            name="location.identifier"
+            errors={errors?.location?.identifier}
+            onInputQuantities={260}
+            value={data?.location?.identifier || ""}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <FingerprintIcon />
+                </InputAdornment>
+              ),
+            }}
           />
         </FieldsContainer>
-
         <Title title="Контактная информация" />
         <FieldsContainer>
           <TextFieldStyled
@@ -327,7 +327,7 @@ const ObjectForm = ({
                 endAdornment: <InputAdornment position="end">₽</InputAdornment>,
               }}
             />
-             <TextFieldStyled
+            <TextFieldStyled
               register={register}
               label="Комиссия агента"
               type="number"
