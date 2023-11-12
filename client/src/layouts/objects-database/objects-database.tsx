@@ -5,6 +5,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 import { Box, Typography, styled } from "@mui/material";
 // components
+import Loader from "../../components/common/loader/loader";
 import LayoutTitle from "../../components/common/page-titles/layout-title";
 import BasicTable from "../../components/common/table/basic-table";
 import ObjectCreatePageDialog from "../../components/UI/dialogs/objects/object-create-page-dialog";
@@ -191,11 +192,15 @@ const ObjectsDatabase = React.memo(() => {
         />
       </ChangePeriodsContainer>
 
-      <BasicTable
-        items={filteredObjects}
-        itemsColumns={columns}
-        isLoading={isLoading}
-      />
+      {!isLoading ? (
+        <BasicTable
+          items={filteredObjects}
+          itemsColumns={columns}
+          isLoading={isLoading}
+        />
+      ) : (
+        <Loader height="300px" />
+      )}
 
       <ObjectCreatePageDialog />
       <ObjectPageDialog />
