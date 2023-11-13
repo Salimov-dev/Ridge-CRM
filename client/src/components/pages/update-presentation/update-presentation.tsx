@@ -66,12 +66,16 @@ const UpdatePresentation = React.memo(({ onClose }) => {
     (obj) => obj?.userId === currentUserId
   );
 
-  const transformObjects = transformObjectsForSelect(currentUserObjects)
+  const transformObjects = transformObjectsForSelect(currentUserObjects);
 
   const onSubmit = (data) => {
     setIsLoading(true);
 
-    dispatch<any>(updatePresentation(data))
+    const newData = {
+      ...data,
+    };
+
+    dispatch<any>(updatePresentation(newData))
       .then(() => {
         setIsLoading(false);
         onClose();

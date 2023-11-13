@@ -32,7 +32,7 @@ const CuratorPresentationForm = ({
         />
         <TextFieldStyled
           register={register}
-          label="Ссылка на презентацию в облаке"
+          label="Комментарий куратора"
           name="curatorComment"
           rows="6"
           multiline={true}
