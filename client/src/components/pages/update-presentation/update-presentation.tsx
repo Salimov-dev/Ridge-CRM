@@ -14,20 +14,21 @@ import CuratorPresentationForm from "../../common/forms/presentation/curator-pre
 import IsLoadingDialog from "../../common/dialog/is-loading-dialog";
 // schema
 import { presentationSchema } from "../../../schemas/presentation-schema";
+// utils
+import transformObjectsForSelect from "../../../utils/objects/transform-objects-for-select";
 // store
+import { getUpdatePresentationId } from "../../../store/presentation/update-presentation.store";
 import { getObjectsList } from "../../../store/object/objects.store";
 import {
   getCurrentUserId,
   getIsUserAuthorThisEntity,
   getIsUserCurator,
 } from "../../../store/user/users.store";
-import { getUpdatePresentationId } from "../../../store/presentation/update-presentation.store";
 import {
   getPresentationById,
   removePresentation,
   updatePresentation,
 } from "../../../store/presentation/presentations.store";
-import transformObjectsForSelect from "../../../utils/objects/transform-objects-for-select";
 
 const UpdatePresentation = React.memo(({ onClose }) => {
   const dispatch = useDispatch();

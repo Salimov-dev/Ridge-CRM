@@ -140,7 +140,7 @@ const Statictics = React.memo(() => {
         <BasicTable
           items={searchedUsers}
           itemsColumns={columns}
-          hasFooter={true}
+          hasFooter={isCurator && true}
           isLoading={isObjectsLoading}
           isPaginate={false}
         />
