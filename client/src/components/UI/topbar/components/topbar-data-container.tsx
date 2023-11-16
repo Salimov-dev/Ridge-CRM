@@ -2,6 +2,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Box, Typography, styled } from "@mui/material";
 import { setCurrrentPathState } from "../../../../store/current-path.store";
+import Loader from "../../../common/loader/loader";
 
 const DataContainer = styled(Box)`
   display: flex;
@@ -23,6 +24,7 @@ const TopBarDataContainter = ({
   elements,
   path,
   backgroundColor,
+  isLoading=true,
   fontColor = "white",
 }) => {
   const dispatch = useDispatch();
@@ -38,7 +40,7 @@ const TopBarDataContainter = ({
           dispatch<any>(setCurrrentPathState(window.location.pathname));
         }}
       >
-        <Typography variant="h5">{elements?.length}шт</Typography>
+        {!isLoading ? <Typography variant="h5">{elements?.length}шт</Typography> : <Loader size={16} padding="6px"/>}
       </ResultContainer>
     </DataContainer>
   );

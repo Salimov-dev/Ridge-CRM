@@ -1,4 +1,4 @@
-// liraries
+// libraries
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
@@ -47,7 +47,7 @@ const initialState = {
   password: "",
 };
 
-const Login = ({ onClose }) => {
+const Login = React.memo(({ onClose }) => {
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -69,16 +69,17 @@ const Login = ({ onClose }) => {
   const isFormValid = !Object.keys(errors).length;
 
   const onSubmit = () => {
+    
     setIsLoading(true);
-
     dispatch<any>(login({ payload: data }))
-      .then(() => {
+    .then(() => {
         setIsLoading(false);
         navigate(redirectPath, { replace: true });
         onClose();
       })
       .catch((error) => {
-        toast.warn(error)
+        const { message } = error.response.data.error;
+        toast.error(message)
         setIsLoading(false);
       });
   };
@@ -113,6 +114,6 @@ const Login = ({ onClose }) => {
       )}
     </Component>
   );
-};
+});
 
 export default Login;

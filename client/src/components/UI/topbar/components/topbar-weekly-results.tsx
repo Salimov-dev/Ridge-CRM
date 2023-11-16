@@ -1,3 +1,4 @@
+import React from "react";
 import { Box, styled } from "@mui/material";
 import { useSelector } from "react-redux";
 // components
@@ -9,6 +10,10 @@ import { getCurrentWeekMeetings } from "../../../../utils/meetings/get-current-w
 import { getCurrentWeekTasks } from "../../../../utils/tasks/get-current-week-tasks";
 import { getCurrentWeekObjectsWithPhone } from "../../../../utils/objects/get-current-week-objects-wtih-phone";
 // store
+import { getObjectsLoadingStatus } from "../../../../store/object/objects.store";
+import { getPresentationsLoadingStatus } from "../../../../store/presentation/presentations.store";
+import { getMeetingLoadingStatus } from "../../../../store/meeting/meetings.store";
+import { getTaskLoadingStatus } from "../../../../store/task/tasks.store";
 import {
   getCurrentUserId,
   getIsUserCurator,
@@ -26,15 +31,20 @@ const ResultComponent = styled(Box)`
   border-radius: 0 0 6px 6px;
 `;
 
-const TopBarWeeklyResults = () => {
+const TopBarWeeklyResults = React.memo(() => {
   const currentUserId = useSelector(getCurrentUserId());
   const isCurator = useSelector(getIsUserCurator(currentUserId));
 
   const objects = getCurrentWeekObjects();
+  const isObjectLoading = useSelector(getObjectsLoadingStatus());
   const objectsWithPhone = getCurrentWeekObjectsWithPhone();
   const presentations = getCurrentWeekPresentations();
+  const isPresentationsLoading = useSelector(getPresentationsLoadingStatus());
+
   const meetings = getCurrentWeekMeetings();
+  const isMeetingsLoading = useSelector(getMeetingLoadingStatus());
   const tasks = getCurrentWeekTasks();
+  const isTasksLoading = useSelector(getTaskLoadingStatus());
 
   const currentUserTasks = tasks?.filter(
     (task) => task.userId === currentUserId
@@ -58,24 +68,28 @@ const TopBarWeeklyResults = () => {
         path="/objects"
         backgroundColor="Gold"
         fontColor="black"
+        isLoading={isObjectLoading}
       />
       <TopBarDataContainter
         title="С контактами:"
         elements={objectsWithPhone}
         path="/objects"
         backgroundColor="OrangeRed"
+        isLoading={isObjectLoading}
       />
       <TopBarDataContainter
         title="Презентаций:"
         elements={presentations}
         path="/presentations"
         backgroundColor="SaddleBrown"
+        isLoading={isPresentationsLoading}
       />
       <TopBarDataContainter
         title="Провести встреч:"
         elements={meetings}
         path="/meetings"
         backgroundColor="RoyalBlue"
+        isLoading={isMeetingsLoading}
       />
       <TopBarDataContainter
         title="Выполнить задач:"
@@ -84,6 +98,7 @@ const TopBarWeeklyResults = () => {
         }
         path="/calendar"
         backgroundColor="Sienna"
+        isLoading={isTasksLoading}
       />
       {isCurator ? (
         <TopBarDataContainter
@@ -91,6 +106,7 @@ const TopBarWeeklyResults = () => {
           elements={tasksFromCurator}
           path="/calendar"
           backgroundColor="FireBrick"
+          isLoading={isTasksLoading}
         />
       ) : (
         <TopBarDataContainter
@@ -98,10 +114,11 @@ const TopBarWeeklyResults = () => {
           elements={tasksFromCurator}
           path="/calendar"
           backgroundColor="FireBrick"
+          isLoading={isTasksLoading}
         />
       )}
     </ResultComponent>
   );
-};
+});
 
 export default TopBarWeeklyResults;

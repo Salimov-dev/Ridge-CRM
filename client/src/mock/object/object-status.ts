@@ -49,7 +49,7 @@ const objectStatusesArray = [
   },
   {
     _id: "64c140880e87d7e4532f79d7",
-    name: "Завершенные",
+    name: "Открыт",
   },
   {
     _id: "64c140880fdgbav12d7v88009",

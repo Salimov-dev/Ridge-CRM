@@ -1,4 +1,5 @@
 // libraries
+import React from "react";
 import dayjs from "dayjs";
 import "dayjs/locale/ru";
 import { useSelector } from "react-redux";
@@ -10,7 +11,6 @@ import { getIsLoggedIn } from "../../../store/user/users.store";
 import TopBarCurrentDate from "./components/topbar-current-date";
 import TopBarRightSide from "./components/topbar-right-side";
 import TopBarWeeklyResults from "./components/topbar-weekly-results";
-import React from "react";
 
 const Component = styled(Box)`
   display: flex;

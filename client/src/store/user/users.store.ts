@@ -101,6 +101,7 @@ export const login =
       } else {
         dispatch(authRequestFailed(error.message));
       }
+      throw error
     }
   };
 

@@ -25,6 +25,8 @@ import { getObjectsList } from "../../../store/object/objects.store";
 import { getCurrentUserId } from "../../../store/user/users.store";
 import { getOpenObjectPageOpenState } from "../../../store/object/open-object-page.store";
 import transformObjectsForSelect from "../../../utils/objects/transform-objects-for-select";
+import { capitalizeFirstLetter } from "../../../utils/data/capitalize-first-letter";
+import { createLastContact } from "../../../store/last-contact/last-contact.store";
 
 const UpdateMyTask = React.memo(({ title, onClose }) => {
   const dispatch = useDispatch();
@@ -60,7 +62,7 @@ const UpdateMyTask = React.memo(({ title, onClose }) => {
   const isFullValid = isValid && watchDate && watchTime;
   const isEditMode = taskId ? true : false;
   const objects = useSelector(getObjectsList());
-  const objectId = task?.objectId; 
+  const objectId = task?.objectId;
 
   const isObjectPage = useSelector(getOpenObjectPageOpenState());
 
@@ -82,11 +84,31 @@ const UpdateMyTask = React.memo(({ title, onClose }) => {
       time: transformedTime,
     };
 
+    const lastContactData = {
+      date: data.date,
+      objectId: data.objectId,
+      result: capitalizeFirstLetter(data.result).trim(),
+    };
+
     dispatch<any>(updateMyTask(newData))
       .then(() => {
         setIsLoading(false);
         onClose();
         toast.success("Задача себе успешно изменена!");
+      })
+      .then(() => {
+        const result = data?.result;
+        const isCallTask = data?.isCallTask
+        if (isCallTask && result) {
+          dispatch<any>(createLastContact(lastContactData))
+            .then(() => {
+              onClose();
+              toast.success("Последний контакт успешно создан!");
+            })
+            .catch((error) => {
+              toast.error(error);
+            });
+        }
       })
       .catch((error) => {
         setIsLoading(false);

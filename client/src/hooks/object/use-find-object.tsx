@@ -50,10 +50,9 @@ const useFindObject = () => {
     };
 
     const getAddress = (coords) => {
-      myPlacemark.properties.set("iconCaption", "поиск...");
+      myPlacemark.properties.set("iconCaption", "Определяем адрес...");
       ymaps.geocode(coords).then((res) => {
         const firstGeoObject = res.geoObjects.get(0);
-
         myPlacemark.properties.set({
           iconCaption: [
             firstGeoObject.getLocalities().length

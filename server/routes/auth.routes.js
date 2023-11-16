@@ -57,7 +57,7 @@ router.post("/signUp", [
 
 router.post("/signInWithPassword", [
   check("email", "Email некорректный").isEmail(),
-  check("password", "Пароль не может быть пустым").exists(),
+  check("password", "Пароль не может быть пустым").exists().trim(),
   async (req, res) => {
     try {
       const errors = validationResult(req);
@@ -78,7 +78,7 @@ router.post("/signInWithPassword", [
       if (!existingUser) {
         return res.status(400).send({
           error: {
-            message: "EMAIL_NOT_FOUND",
+            message: "Неправильные логин или пароль",
             code: 400,
           },
         });
@@ -92,7 +92,7 @@ router.post("/signInWithPassword", [
       if (!isPasswordEqual) {
         return res.status(400).send({
           error: {
-            message: "INVALID_PASSWORD",
+            message: "Неправильные логин или пароль",
             code: 400,
           },
         });

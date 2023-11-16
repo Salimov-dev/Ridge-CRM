@@ -62,7 +62,7 @@ const BasicTable = ({
         <Thead table={table} colors={colors} isDialogMode={isDialogMode} />
         {!isLoading && <Tbody table={table} hasFooter={hasFooter}/>}
       </table>
-      {isLoading && <Loader />}
+      {isLoading && <Loader height="150px"/>}
 
       {isPaginate && (
         <Pagination table={table} colors={colors} quantity={items?.length} />

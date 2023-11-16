@@ -1,14 +1,16 @@
-import { useEffect, useState } from "react";
+import { orderBy } from "lodash";
 import { useForm } from "react-hook-form";
 import { Box, styled } from "@mui/material";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+// components
 import Loader from "../../../common/loader/loader";
 import ButtonsPanel from "../buttons-panel/buttons-panel";
 import AutocompleteStyled from "../../../common/inputs/autocomplete-styled";
+// store
 import { getObjectsStatusList } from "../../../../store/object-params/object-status.store";
 import {
   updateObject,
-  updateObjectStatus,
 } from "../../../../store/object/objects.store";
 
 const Component = styled(Box)`
@@ -27,6 +29,7 @@ const FooterButtons = ({
 }) => {
   const dispatch = useDispatch();
   const objectStatuses = useSelector(getObjectsStatusList());
+  const sortedObjectStatuses = orderBy(objectStatuses, "name", ["asc"]);
 
   const {
     register,
@@ -69,7 +72,7 @@ const FooterButtons = ({
         register={register}
         name="status"
         width="300px"
-        options={objectStatuses}
+        options={sortedObjectStatuses}
         value={watchStatus ?? ""}
         setValue={setValue}
         watchItemId={watchStatus}

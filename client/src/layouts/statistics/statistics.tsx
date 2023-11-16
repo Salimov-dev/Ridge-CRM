@@ -132,7 +132,7 @@ const Statictics = React.memo(() => {
 
       <ChartsContainer>
         <ChartLine data={chartData} />
-        <PieStyled data={pieDataWithContacts} />
+        {/* <PieStyled data={pieDataWithContacts} /> */}
         <PieStyled data={pieData} />
       </ChartsContainer>
 

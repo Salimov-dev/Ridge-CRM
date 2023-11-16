@@ -1,4 +1,20 @@
+import fs from "fs";
+import path from "path";
+import config from "config";
+import { dirname } from "path";
+import { fileURLToPath } from "url";
+import { spawn } from "child_process";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+const DB_NAME = "test";
+const BACKUP_DIR = path.join(__dirname, "../db");
+const MAX_BACKUPS = 100;
+
 const backupMongoDB = () => {
+
+
   const now = new Date();
   const backupFileName = `${now.toISOString().replace(/:/g, "-")}.gzip`;
   const archivePath = path.join(BACKUP_DIR, backupFileName);

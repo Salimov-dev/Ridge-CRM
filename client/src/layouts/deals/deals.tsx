@@ -5,9 +5,10 @@ import { useSelector } from "react-redux";
 // components
 import Stages from "./components/stages/stages";
 import LayoutTitle from "../../components/common/page-titles/layout-title";
+import DealsFiltersPanel from "../../components/UI/filters-panels/deals-filters-panel";
 import ObjectPageDialog from "../../components/UI/dialogs/object-page-dialog/object-page-dialog";
 import ObjectUpdatePageDialog from "../../components/UI/dialogs/objects/object-update-page-dialog";
-import DealsFiltersPanel from "../../components/UI/filters-panels/deals-filters-panel";
+import PresentationCreatePageDialog from "../../components/UI/dialogs/presentations/presentation-create-page-dialog";
 // store
 import {
   getObjectsList,
@@ -24,7 +25,6 @@ import {
 } from "../../mock/deals/deals-stages";
 // hooks
 import useSearchDeals from "../../hooks/deals/use-search-deals";
-import PresentationCreatePageDialog from "../../components/UI/dialogs/presentations/presentation-create-page-dialog";
 
 const initialState = {
   selectedUsers: [],
@@ -90,7 +90,7 @@ const Deals = React.memo(() => {
         isCurator={isCurator}
       />
 
-<PresentationCreatePageDialog/>
+      <PresentationCreatePageDialog />
       <ObjectPageDialog />
       <ObjectUpdatePageDialog />
     </Box>

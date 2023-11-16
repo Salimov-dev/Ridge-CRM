@@ -1,6 +1,6 @@
 // libraries
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 // components
@@ -9,11 +9,16 @@ import FindObjectOnMap from "../../common/find-object-on-map/find-object-on-map"
 import TitleWithAddress from "../../common/page-titles/title-with-address";
 import IsLoadingDialog from "../../common/dialog/is-loading-dialog";
 // store
-import { createObject } from "../../../store/object/objects.store";
+import {
+  createObject,
+  getObjectsList,
+} from "../../../store/object/objects.store";
 // hooks
 import useFindObject from "../../../hooks/object/use-find-object";
 // utils
 import { capitalizeFirstLetter } from "../../../utils/data/capitalize-first-letter";
+import { Box, Typography } from "@mui/material";
+import AlertObjectInDatabase from "./components/alert-object-in-database";
 
 const initialState = {
   status: "",
@@ -65,6 +70,8 @@ const initialState = {
 const CreateObject = React.memo(({ onClose }) => {
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
+  const [isObjectAlreadyInDatabase, setObjectAlreadyInDatabase] =
+    useState(false);
 
   const {
     register,
@@ -87,6 +94,7 @@ const CreateObject = React.memo(({ onClose }) => {
   } = useFindObject();
 
   const data = watch();
+  const objects = useSelector(getObjectsList());
 
   const watchAddress = watch<any>("location.address", "");
   const watchCity = watch<any>("location.city", "");
@@ -107,6 +115,7 @@ const CreateObject = React.memo(({ onClose }) => {
     Boolean(watchObjectTradeArea);
 
   const isFindedObject = Boolean(Object.keys(findedObject)?.length);
+  const findedObjectFullAddress = `${watchCity}, ${watchAddress}`;
   const isObjectHasAddress = Boolean(watchCity) && Boolean(watchAddress);
   const isValidAndHasAdress =
     isFindedObject && isObjectHasAddress && isWatchValid;
@@ -157,6 +166,16 @@ const CreateObject = React.memo(({ onClose }) => {
     setValue<any>("location.longitude", getLongitudeCoordinates());
   }, [findedObject]);
 
+  useEffect(() => {
+    const objectInDatabase = objects?.filter(
+      (obj) =>
+        `${obj.location.city}, ${obj.location.address}` ===
+        findedObjectFullAddress
+    );
+    const isObjectInDatabase = Boolean(objectInDatabase?.length);
+    setObjectAlreadyInDatabase(isObjectInDatabase);
+  }, [findedObjectFullAddress]);
+
   return (
     <>
       <TitleWithAddress
@@ -167,6 +186,8 @@ const CreateObject = React.memo(({ onClose }) => {
         subtitle="КЛИКНИТЕ по карте, чтобы выбрать объект на карте"
         onClose={onClose}
       />
+
+      {isObjectAlreadyInDatabase && <AlertObjectInDatabase />}
 
       <FindObjectOnMap />
 
