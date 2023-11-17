@@ -1,5 +1,4 @@
 import dayjs from "dayjs";
-import { orderBy } from "lodash";
 // columns
 import useTableHeader from "../../../columns/statictics-columns/hooks/use-table-header";
 // mock
@@ -8,7 +7,7 @@ import { objectStatusesArray } from "../../../mock/object/object-status";
 import { getWeeklyObjects } from "../../../utils/objects/get-weekly-objects";
 import { getWeeklyObjectsWithPhone } from "../../../utils/objects/get-weekly-objects-with-phone";
 
-const useData = (objects, lastContacts) => {
+const useData = (objects) => {
   const currentDate = dayjs();
 
   // текущая неделя месяца
@@ -162,106 +161,7 @@ const useData = (objects, lastContacts) => {
     };
   });
 
-  const hasLastContact = (objectId) => {
-    const objectsWithLastContact = lastContacts?.filter(
-      (contact) => contact?.objectId === objectId
-    );
-    const hasLastContact = objectsWithLastContact?.length > 0;
-
-    return hasLastContact;
-  };
-
-  const objectsWithoutLastContacts = objects?.filter(
-    (obj) => !hasLastContact(obj._id)
-  );
-
-  const objectsOneToTwoMonth = objects?.filter((obj) => {
-    const objectId = obj?._id;
-    const lastContactsList = lastContacts?.filter(
-      (contact) => contact.objectId === objectId
-    );
-    const sortedLastContacts = orderBy(lastContactsList, "date", ["desc"]);
-    const lastContact = sortedLastContacts[0]?.date;
-
-    if (!lastContact) {
-      return false; // Если нет информации о последнем звонке, объект не попадает в фильтр
-    }
-
-    const lastContactDate = dayjs(lastContact);
-
-    return lastContactDate.isBetween(
-      currentDate.subtract(2, "months"),
-      currentDate.subtract(1, "months")
-    );
-  });
-
-  const objectsTwoToThreeMonth = objects?.filter((obj) => {
-    const objectId = obj?._id;
-    const lastContactsList = lastContacts?.filter(
-      (contact) => contact.objectId === objectId
-    );
-    const sortedLastContacts = orderBy(lastContactsList, "date", ["desc"]);
-    const lastContact = sortedLastContacts[0]?.date;
-
-    if (!lastContact) {
-      return false; // Если нет информации о последнем звонке, объект не попадает в фильтр
-    }
-
-    const lastContactDate = dayjs(lastContact);
-
-    return lastContactDate.isBetween(
-      currentDate.subtract(3, "months"),
-      currentDate.subtract(2, "months")
-    );
-  });
-
-  const objectsThreeAndMoreMonth = objects?.filter((obj) => {
-    const objectId = obj?._id;
-    const lastContactsList = lastContacts?.filter(
-      (contact) => contact.objectId === objectId
-    );
-    const sortedLastContacts = orderBy(lastContactsList, "date", ["desc"]);
-    const lastContact = sortedLastContacts[0]?.date;
-
-    if (!lastContact) {
-      return false; // Если нет информации о последнем звонке, объект не попадает в фильтр
-    }
-
-    const lastContactDate = dayjs(lastContact);
-
-    // Проверяем, что разница между текущей датой и датой последнего контакта
-    // составляет более 3 месяцев
-    return lastContactDate.isBefore(currentDate.subtract(3, "months"));
-  });
-
-  const pieDataWithContacts = [
-    {
-      id: "Без звонков",
-      label: "Объектов без звонков", // Замените на соответствующее поле объекта
-      value: objectsWithoutLastContacts?.length, // Замените на поле, содержащее количество контактов
-      color: `hsl(${Math.random() * 360}, 70%, 50%)`,
-    },
-    {
-      id: "От 1 до 2 мес",
-      label: "Звонили от 1 до 2 мес назад", // Замените на соответствующее поле объекта
-      value: objectsOneToTwoMonth?.length, // Замените на поле, содержащее количество контактов
-      color: `hsl(${Math.random() * 360}, 70%, 50%)`,
-    },
-    {
-      id: "От 2 до 3 мес",
-      label: "Звонили от 2 до 3 мес назад", // Замените на соответствующее поле объекта
-      value: objectsTwoToThreeMonth?.length, // Замените на поле, содержащее количество контактов
-      color: `hsl(${Math.random() * 360}, 70%, 50%)`,
-    },
-    {
-      id: "От 3 мес и более",
-      label: "Звонили от 3 мес и более назад", // Замените на соответствующее поле объекта
-      value: objectsThreeAndMoreMonth?.length, // Замените на поле, содержащее количество контактов
-      color: `hsl(${Math.random() * 360}, 70%, 50%)`,
-    },
-  ];
-
-  return { chartData, pieData, pieDataWithContacts };
+  return { chartData, pieData };
 };
 
 export default useData;

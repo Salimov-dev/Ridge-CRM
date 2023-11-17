@@ -18,7 +18,6 @@ import { staticticsColumns } from "../../columns/statictics-columns/statictics-c
 // utils
 import { getUsersWithoutCurrentUser } from "../../utils/user/get-users-without-current-user";
 // store
-import { getLastContactsList } from "../../store/last-contact/last-contact.store";
 import { setStaticticPositions } from "../../store/statictics/statictics-positions.store";
 import {
   getObjectsList,
@@ -76,7 +75,6 @@ const Statictics = React.memo(() => {
   );
   const objects = withoutCurator ? objectsWithoutCurrentUser : objectsList;
 
-  const lastContacts = useSelector(getLastContactsList());
   const isObjectsLoading = useSelector(getObjectsLoadingStatus());
   const isInputEmpty = JSON.stringify(initialState) !== JSON.stringify(data);
 
@@ -88,10 +86,7 @@ const Statictics = React.memo(() => {
     data
   );
 
-  const { chartData, pieData, pieDataWithContacts } = useData(
-    searchedObjects,
-    lastContacts
-  );
+  const { chartData, pieData } = useData(searchedObjects);
 
   useEffect(() => {
     localStorage.setItem("search-statictics-data", JSON.stringify(data));
@@ -132,7 +127,6 @@ const Statictics = React.memo(() => {
 
       <ChartsContainer>
         <ChartLine data={chartData} />
-        {/* <PieStyled data={pieDataWithContacts} /> */}
         <PieStyled data={pieData} />
       </ChartsContainer>
 

@@ -1,7 +1,6 @@
 // libraries
 import { Box, styled } from "@mui/material";
 import { useSelector } from "react-redux";
-import { orderBy } from "lodash";
 // components
 import Dialogs from "./components/dialogs";
 import ObjectsParams from "./components/object-params";
@@ -12,6 +11,7 @@ import LastContacts from "./components/last-contacts";
 import CreateLastContactButton from "../../../UI/dialogs/buttons/create-last-contact-button";
 import CreateTasksButtons from "../../../../layouts/calendar/components/create-tasks-buttons/create-tasks-buttons";
 // store
+import { getLastContactsList } from "../../../../store/last-contact/last-contact.store";
 import { getObjectsList } from "../../../../store/object/objects.store";
 import { getObjectMeetingsList } from "../../../../store/meeting/meetings.store";
 import { getObjectTasksList } from "../../../../store/task/tasks.store";
@@ -20,11 +20,12 @@ import {
   getIsUserCurator,
   getUsersList,
 } from "../../../../store/user/users.store";
-import { getLastContactsList } from "../../../../store/last-contact/last-contact.store";
 // columns
 import { tasksColumnsDialog } from "../../../../columns/tasks-columns/tasks-columns-dialog";
+// utils
 import transformObjectsForSelect from "../../../../utils/objects/transform-objects-for-select";
 import transformUsersForSelect from "../../../../utils/objects/transform-users-for-select";
+import sortingByDateAndTime from "../../../../utils/other/sorting-by-date-and-time";
 
 const Component = styled(Box)`
   display: flex;
@@ -36,19 +37,18 @@ const Component = styled(Box)`
 const ObjectInfo = ({ object, isLoading, isAuthorEntity = true }) => {
   const objects = useSelector(getObjectsList());
   const objectId = object?._id;
-  const meetings = useSelector(getObjectMeetingsList(objectId));
-  const sortedMeetings = orderBy(meetings, ["date"], ["desc"]);
 
-  const tasksColumns = tasksColumnsDialog;
+  const meetings = useSelector(getObjectMeetingsList(objectId));
+  const sortedMeetings = sortingByDateAndTime(meetings);
 
   const tasks = useSelector(getObjectTasksList(object?._id));
-  const sortedTasks = orderBy(tasks, ["date"], ["desc"]);
+  const sortedTasks = sortingByDateAndTime(tasks);
 
   const lastContactsList = useSelector(getLastContactsList());
   const lastContacts = lastContactsList?.filter(
     (contact) => contact.objectId === objectId
   );
-  const sortedLastContacts = orderBy(lastContacts, ["date"], ["desc"]);
+  const sortedLastContacts = sortingByDateAndTime(lastContacts);
 
   const users = useSelector(getUsersList());
   const currentUserId = useSelector(getCurrentUserId());
@@ -62,6 +62,7 @@ const ObjectInfo = ({ object, isLoading, isAuthorEntity = true }) => {
   const currentUserObjects = objects?.filter(
     (obj) => obj?.userId === currentUserId
   );
+
   const actualObjects = isCurator ? objects : currentUserObjects;
   const transformObjects = transformObjectsForSelect(actualObjects);
 
@@ -69,14 +70,10 @@ const ObjectInfo = ({ object, isLoading, isAuthorEntity = true }) => {
     <Component>
       <ObjectsParams object={object} isLoading={isLoading} />
       <ObjectTasks
-        columns={tasksColumns}
+        columns={tasksColumnsDialog}
         tasks={sortedTasks}
         object={object}
-        buttons={
-          <CreateTasksButtons
-            isAuthorEntity={isAuthorEntity}
-          />
-        }
+        buttons={<CreateTasksButtons isAuthorEntity={isAuthorEntity} />}
       />
       <ObjectMeetings
         meetings={sortedMeetings}

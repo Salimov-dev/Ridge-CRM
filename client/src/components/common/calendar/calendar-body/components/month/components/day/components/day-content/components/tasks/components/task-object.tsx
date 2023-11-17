@@ -20,7 +20,7 @@ const TaskObject = ({ task }) => {
 
   return taskObjectId ? (
     <>
-      <DividerStyled color={task?.isDone ? "darkGray" : "gray"} />
+      <DividerStyled color={task?.isDone ? "darkGray" : "gray"} margin="0"/>
       <Box sx={{ display: "flex", gap: "4px" }}>
         <Typography>{objectAddress}</Typography>
         <OpenPageObjectIconButton

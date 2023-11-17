@@ -3,9 +3,10 @@ import { Button, Typography } from "@mui/material";
 const ChangePeriodButton = ({
   width = "100%",
   text,
+  period,
+  selectedPeriod,
   color = "inherit",
-  border= "inherit",
-  onClick = () => {},
+  onChangePeriod
 }) => {
   return (
     <Button
@@ -14,9 +15,9 @@ const ChangePeriodButton = ({
       sx={{
         width: width,
         color: color,
-        border: border
+        border: period === selectedPeriod ? "2px solid yellow" : "1px solid green",
       }}
-      onClick={onClick}
+      onClick={() => onChangePeriod(selectedPeriod)}
     >
       <Typography>{text}</Typography>
     </Button>

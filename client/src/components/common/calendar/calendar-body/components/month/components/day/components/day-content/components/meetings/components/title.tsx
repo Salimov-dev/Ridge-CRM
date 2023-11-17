@@ -46,7 +46,7 @@ const Title = ({ meet, currentUserId }) => {
   };
   return (
     <Component>
-      <Typography sx={{ fontSize: "15px", textDecoration: "underline" }}>
+      <Typography sx={{ textDecoration: "underline" }}>
         <b>Встреча в: {FormatTime(meet.time)}</b>
       </Typography>
       <ButtonsContainer>

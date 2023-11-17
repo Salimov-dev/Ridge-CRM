@@ -153,6 +153,27 @@ const useSearchObjectDatabase = (objects, data, period) => {
       });
     }
 
+    // Фильтр для "Без следующего звонка"
+    if (period === "withouNextCall") {
+      array = array?.filter((obj) => {
+        const objectId = obj?._id;
+        const tasksList = tasks?.filter(
+          (task) =>
+            task.isCallTask &&
+            task.objectId === objectId &&
+            task.isDone === false &&
+            dayjs(task.date).isAfter(currentDate) // Добавлено условие для выбора только будущих задач
+        );
+
+        // Проверяем, есть ли задачи с указанным условием
+        if (tasksList && tasksList.length > 0) {
+          return false; // Если есть такие задачи, объект не попадает в фильтр
+        }
+
+        return true; // Если нет задач с указанным условием, объект попадает в фильтр
+      });
+    }
+
     // Фильтр для "Надо позвонить через 1 месяц и до 2 месяцев"
     if (period === "afterOneMonthUpToTwo") {
       array = array?.filter((obj) => {
@@ -243,7 +264,23 @@ const useSearchObjectDatabase = (objects, data, period) => {
     return array;
   }, [data, objects]);
 
-  return searchedObjects;
+  let filteredObjects = searchedObjects;
+  if (data.selectedUsers?.length) {
+    filteredObjects = filteredObjects?.filter((obj) =>
+      data.selectedUsers.includes(obj.userId)
+    );
+  }
+  if (data.selectedStatuses?.length) {
+    filteredObjects = filteredObjects?.filter((obj) =>
+      data.selectedStatuses.includes(obj.status)
+    );
+  }
+
+  const sortedFilteredObjects = useMemo(() => {
+    return orderBy(filteredObjects, ["created_at"], ["desc"]);
+  }, [filteredObjects]);
+
+  return { searchedObjects, filteredObjects: sortedFilteredObjects };
 };
 
 export default useSearchObjectDatabase;

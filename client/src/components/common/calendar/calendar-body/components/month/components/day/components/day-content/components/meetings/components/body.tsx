@@ -10,7 +10,7 @@ const Body = ({ meet, isCurator, isSelectedDayDialog }) => {
       sx={{
         display: "flex",
         flexDirection: "column",
-        gap: "10px",
+        gap: "4px",
       }}
     >
       {isSelectedDayDialog ? <MeetingInfo meet={meet} /> : null}
@@ -21,11 +21,11 @@ const Body = ({ meet, isCurator, isSelectedDayDialog }) => {
           </Typography>
         </Truncate>
       ) : null}
-      {isCurator  ? (
-              <Typography>
-                <b>Менеджер:</b> {getUserName(meet?.userId)}
-              </Typography>
-            ) : null}
+      {isCurator ? (
+        <Typography>
+          <b>Менеджер:</b> {getUserName(meet?.userId)}
+        </Typography>
+      ) : null}
       <MeetingObject meet={meet} />
     </Box>
   );

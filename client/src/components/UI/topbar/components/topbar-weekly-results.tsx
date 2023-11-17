@@ -38,6 +38,7 @@ const TopBarWeeklyResults = React.memo(() => {
   const objects = getCurrentWeekObjects();
   const isObjectLoading = useSelector(getObjectsLoadingStatus());
   const objectsWithPhone = getCurrentWeekObjectsWithPhone();
+  
   const presentations = getCurrentWeekPresentations();
   const isPresentationsLoading = useSelector(getPresentationsLoadingStatus());
 

@@ -66,22 +66,14 @@ const ObjectsDatabase = React.memo(() => {
   const isCurator = useSelector(getIsUserCurator(currentUserId));
   const columns = isCurator ? objectsColumnsCuratorSimple : objectsColumns;
 
-  const searchedObjects = useSearchObjectDatabase(objects, data, period);
+  const { searchedObjects, filteredObjects } = useSearchObjectDatabase(
+    objects,
+    data,
+    period
+  );
   const sortedObjects = useMemo(() => {
-    return orderBy(searchedObjects, ["created_at"], ["desc"]);
+    return orderBy(searchedObjects, ["created_at"], ["asc"]);
   }, [searchedObjects]);
-
-  let filteredObjects = sortedObjects;
-  if (data.selectedUsers?.length) {
-    filteredObjects = filteredObjects?.filter((obj) =>
-      data.selectedUsers.includes(obj.userId)
-    );
-  }
-  if (data.selectedStatuses?.length) {
-    filteredObjects = filteredObjects?.filter((obj) =>
-      data.selectedStatuses.includes(obj.status)
-    );
-  }
 
   const handleChangePeriod = (newPeriod) => {
     setPeriod(newPeriod);
@@ -125,30 +117,27 @@ const ObjectsDatabase = React.memo(() => {
         </Box>
         <ChangePeriodButton
           text="от 1 до 2"
-          border={
-            period === "fromOneMonthToTwo"
-              ? "2px solid yellow"
-              : "1px solid green"
-          }
-          onClick={() => handleChangePeriod("fromOneMonthToTwo")}
+          period={period}
+          selectedPeriod="fromOneMonthToTwo"
+          onChangePeriod={handleChangePeriod}
         />
         <ChangePeriodButton
           text="от 2 до 3"
-          border={
-            period === "fromTwoMonthToThree"
-              ? "2px solid yellow"
-              : "1px solid green"
-          }
-          onClick={() => handleChangePeriod("fromTwoMonthToThree")}
+          period={period}
+          selectedPeriod="fromTwoMonthToThree"
+          onChangePeriod={handleChangePeriod}
         />
         <ChangePeriodButton
           text="более 3"
-          border={
-            period === "fromThreeMonthAndMore"
-              ? "2px solid yellow"
-              : "1px solid green"
-          }
-          onClick={() => handleChangePeriod("fromThreeMonthAndMore")}
+          period={period}
+          selectedPeriod="fromThreeMonthAndMore"
+          onChangePeriod={handleChangePeriod}
+        />
+        <ChangePeriodButton
+          text="без следующего звонка"
+          period={period}
+          selectedPeriod="withouNextCall"
+          onChangePeriod={handleChangePeriod}
         />
       </ChangePeriodsContainer>
 
@@ -158,37 +147,27 @@ const ObjectsDatabase = React.memo(() => {
         </Box>
         <ChangePeriodButton
           text="До одного месяца"
-          border={
-            period === "beforeOneMonth" ? "2px solid yellow" : "1px solid green"
-          }
-          onClick={() => handleChangePeriod("beforeOneMonth")}
+          period={period}
+          selectedPeriod="beforeOneMonth"
+          onChangePeriod={handleChangePeriod}
         />
         <ChangePeriodButton
           text="через 1 и до 2"
-          border={
-            period === "afterOneMonthUpToTwo"
-              ? "2px solid yellow"
-              : "1px solid green"
-          }
-          onClick={() => handleChangePeriod("afterOneMonthUpToTwo")}
+          period={period}
+          selectedPeriod="afterOneMonthUpToTwo"
+          onChangePeriod={handleChangePeriod}
         />
         <ChangePeriodButton
           text="через 2 и до 3"
-          border={
-            period === "afterTwoMonthUpToThree"
-              ? "2px solid yellow"
-              : "1px solid green"
-          }
-          onClick={() => handleChangePeriod("afterTwoMonthUpToThree")}
+          period={period}
+          selectedPeriod="afterTwoMonthUpToThree"
+          onChangePeriod={handleChangePeriod}
         />
         <ChangePeriodButton
           text="через 3 и более"
-          border={
-            period === "afterThreeMonthAndMore"
-              ? "2px solid yellow"
-              : "1px solid green"
-          }
-          onClick={() => handleChangePeriod("afterThreeMonthAndMore")}
+          period={period}
+          selectedPeriod="afterThreeMonthAndMore"
+          onChangePeriod={handleChangePeriod}
         />
       </ChangePeriodsContainer>
 

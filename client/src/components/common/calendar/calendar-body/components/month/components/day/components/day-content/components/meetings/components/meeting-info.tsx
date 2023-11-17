@@ -19,12 +19,14 @@ const MeetingInfo = ({ meet }) => {
     const result = `${user?.name.lastName} ${user?.name.firstName}`;
     return result;
   };
+  
   const getMeetingTypeName = (id) => {
     const meetingType = meetingTypes?.find((type) => type?._id === id);
     const result = meetingType?.name;
 
     return result;
   };
+
   const getMeetingStatusName = (id) => {
     const meetingStatus = meetingStatuses?.find((status) => status?._id === id);
     const result = meetingStatus?.name;
