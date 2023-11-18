@@ -1,5 +1,4 @@
 import { Box, Typography } from "@mui/material";
-import Truncate from "react-truncate";
 
 const TaskComment = ({ comment }) => {
   return (
@@ -10,11 +9,9 @@ const TaskComment = ({ comment }) => {
         gap: "10px",
       }}
     >
-      <Truncate lines={2} ellipsis="...">
         <Typography>
           <b>Задача:</b> {comment}
         </Typography>
-      </Truncate>
     </Box>
   );
 };

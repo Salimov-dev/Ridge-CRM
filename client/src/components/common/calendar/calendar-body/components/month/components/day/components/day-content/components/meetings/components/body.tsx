@@ -1,25 +1,24 @@
-import Truncate from "react-truncate";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, styled } from "@mui/material";
+// components
 import MeetingObject from "./meeting-object";
 import MeetingInfo from "./meeting-info";
+// utils
 import { getUserName } from "../../../../../../../../../../../../../utils/user/get-user-name";
+
+const Component = styled(Box)`
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+`;
 
 const Body = ({ meet, isCurator, isSelectedDayDialog }) => {
   return (
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        gap: "4px",
-      }}
-    >
+    <Component>
       {isSelectedDayDialog ? <MeetingInfo meet={meet} /> : null}
       {!isSelectedDayDialog ? (
-        <Truncate lines={2} ellipsis="...">
-          <Typography>
-            <b>Комментарий:</b> {meet?.comment}
-          </Typography>
-        </Truncate>
+        <Typography>
+          <b>Комментарий:</b> {meet?.comment}
+        </Typography>
       ) : null}
       {isCurator ? (
         <Typography>
@@ -27,7 +26,7 @@ const Body = ({ meet, isCurator, isSelectedDayDialog }) => {
         </Typography>
       ) : null}
       <MeetingObject meet={meet} />
-    </Box>
+    </Component>
   );
 };
 

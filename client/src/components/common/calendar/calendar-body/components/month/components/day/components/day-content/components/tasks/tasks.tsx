@@ -1,5 +1,5 @@
 import { Box, Typography } from "@mui/material";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 // styled
 import { ItemContainer, ItemsContainer } from "../styled/styled";
 // utils
@@ -11,11 +11,32 @@ import TaskComment from "./components/task-comment";
 import Loader from "../../../../../../../../../../loader/loader";
 import Result from "./components/result";
 // store
-import { getObjectsList } from "../../../../../../../../../../../../store/object/objects.store";
 import { getCurrentUserId } from "../../../../../../../../../../../../store/user/users.store";
+import { updateMyTask } from "../../../../../../../../../../../../store/task/tasks.store";
 
-const Tasks = ({ tasks, isCurator, isSelectedDayDialog }) => {
+const Tasks = ({
+  tasks,
+  isCurator,
+  draggableDay,
+  setDraggableDay,
+  isSelectedDayDialog,
+}) => {
   const currentUserId = useSelector(getCurrentUserId());
+  const dispatch = useDispatch();
+
+  const handleDragEnd = (task) => {
+    if (task?.date !== draggableDay) {
+      const updatedTask = {
+        ...task,
+        date: draggableDay,
+      };
+      dispatch<any>(updateMyTask(updatedTask)).then(() => {
+        setDraggableDay(null);
+      });
+    } else {
+      setDraggableDay(null);
+    }
+  };
 
   return tasks ? (
     <ItemsContainer>
@@ -25,19 +46,35 @@ const Tasks = ({ tasks, isCurator, isSelectedDayDialog }) => {
 
         return (
           <ItemContainer
-            key={task._id}
+            key={task?._id}
+            draggable={true}
+            onDragEnd={() => handleDragEnd(task)}
             sx={{
-              border: task.managerId ? "3px solid red" : (taskIsCall ? "3px solid DarkGreen" : "3px solid darkOrange") ,
+              cursor: "grab",
+              border: task.managerId
+                ? "3px solid red"
+                : taskIsCall
+                ? "3px solid DarkGreen"
+                : "3px solid darkOrange",
               color: !taskIsDone
-                ? task.managerId ? "white" : (taskIsCall ? "white" :"black")
+                ? task.managerId
+                  ? "white"
+                  : taskIsCall
+                  ? "white"
+                  : "black"
                 : "white",
               background: !taskIsDone
-                ? task.managerId ? "Crimson" : (taskIsCall ? "DarkOliveGreen" :"orange")
+                ? task.managerId
+                  ? "Crimson"
+                  : taskIsCall
+                  ? "DarkOliveGreen"
+                  : "orange"
                 : "gray",
             }}
           >
             <Title task={task} />
             <TaskComment comment={task?.comment} />
+
             {task?.managerId === currentUserId ? (
               <Box>
                 <Typography>

@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import { Box, styled } from "@mui/material";
 // components
 import DayContent from "./components/day-content/day-content";
@@ -15,31 +16,44 @@ const OneDayContainer = styled(Box)`
   padding: 6px;
 `;
 
-const Day = ({ day, tasks, meetings, isWeekendColumn, setDateCreate }) => {
-
+const Day = ({
+  day,
+  tasks,
+  meetings,
+  isWeekendColumn,
+  setDateCreate,
+  onDragOver,
+  draggableDay,
+  setDraggableDay,
+}) => {
   const isCurrentDay = chechIsCurrentDay(day);
   const isFutureDay = chechIsFutureDay(day);
 
+  const formattedDay = dayjs(day, { format: "YYYYMMDDHHmmss" }).format(
+    "YYYY-MM-DDTHH:mm:ss.SSSZ"
+  );
+
   return (
     <OneDayContainer
+      onDragOver={onDragOver}
       sx={{
         height: "100%",
         backgroundColor: isWeekendColumn ? "#171e32" : "inherit",
         borderColor: isCurrentDay
           ? "yellow"
           : isFutureDay
-          ? "green"
+          ? "white"
           : "inherit",
-        border: isCurrentDay
-          ? "3px dashed yellow"
-          : isFutureDay
-          ? "1px solid white"
-          : "1px solid gray",
+        borderWidth: isCurrentDay ? "3px" : isFutureDay ? "1px" : "1px",
+        borderStyle: isCurrentDay ? "dashed" : isFutureDay ? "solid" : "solid",
+        border: formattedDay === draggableDay ? "3px dashed DeepPink" : null,
         "&:hover": {
           borderColor: isCurrentDay
             ? "yellow"
             : isFutureDay
-            ? "yellow"
+            ? formattedDay !== draggableDay
+              ? "yellow"
+              : "DeepPink"
             : "Crimson",
         },
       }}
@@ -51,7 +65,13 @@ const Day = ({ day, tasks, meetings, isWeekendColumn, setDateCreate }) => {
         isFutureDay={isFutureDay}
         isWeekendColumn={isWeekendColumn}
       />
-      <DayContent meetings={meetings} tasks={tasks} isSelectedDayDialog={false}/>
+      <DayContent
+        meetings={meetings}
+        tasks={tasks}
+        draggableDay={draggableDay}
+        setDraggableDay={setDraggableDay}
+        isSelectedDayDialog={false}
+      />
       <ActionsIcons
         day={day}
         setDateCreate={setDateCreate}

@@ -15,7 +15,6 @@ const CalendarBody = ({
   meetings,
   background,
 }) => {
-  
   return (
     <Component>
       <DaysOfWeek background={background} />

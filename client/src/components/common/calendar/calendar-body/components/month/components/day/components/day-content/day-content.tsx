@@ -21,7 +21,13 @@ const Components = styled(Box)`
   gap: 4px;
 `;
 
-const DayContent = ({ meetings, tasks, isSelectedDayDialog }) => {
+const DayContent = ({
+  meetings,
+  tasks,
+  draggableDay,
+  setDraggableDay,
+  isSelectedDayDialog,
+}) => {
   const isTasksLoading = useSelector(getTaskLoadingStatus());
   const isMeetingsLoading = useSelector(getMeetingLoadingStatus());
 
@@ -38,6 +44,8 @@ const DayContent = ({ meetings, tasks, isSelectedDayDialog }) => {
         <Tasks
           tasks={tasks}
           isCurator={isCurator}
+          draggableDay={draggableDay}
+          setDraggableDay={setDraggableDay}
           isSelectedDayDialog={isSelectedDayDialog}
         />
       ) : null}
@@ -45,6 +53,8 @@ const DayContent = ({ meetings, tasks, isSelectedDayDialog }) => {
         <Meetings
           meetings={meetings}
           currentUserId={currentUserId}
+          draggableDay={draggableDay}
+          setDraggableDay={setDraggableDay}
           isCurator={isCurator}
           isSelectedDayDialog={isSelectedDayDialog}
         />

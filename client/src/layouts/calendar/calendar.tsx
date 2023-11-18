@@ -89,12 +89,11 @@ const Calendar = React.memo(() => {
         taskDate.isSame(targetDate, "day")
       );
     });
-
     const sortedTasks = orderBy(
       currentTasks,
-      [(task) => dayjs(task.time)],
+      [(task) => dayjs(task.time).format("HH:mm")],
       ["asc"]
-    );
+    );   
 
     return sortedTasks;
   };
