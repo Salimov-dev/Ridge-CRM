@@ -28,7 +28,7 @@ const Sidebar = React.memo (() => {
   const dispatch = useDispatch();
 
   const currentPath = useSelector(getCurrrentPathState());
-  const [selected, setSelected] = useState(setSelectedMenuItem());
+  const [selected, setSelected] = useState(currentPath);
 
   const [isCollapsed, setIsCollapsed] = useState(true);
   const currentUserId = useSelector(getCurrentUserId());
