@@ -25,7 +25,7 @@ const estateTypesArray = [
   },
   {
     _id: "64d952b1576aa746bb3d28e2",
-    name: "Встроенное жилой дом",
+    name: "Жилой дом",
   },
   {
     _id: "64d952b14gj23dm0474jhf11",

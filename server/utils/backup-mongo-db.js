@@ -13,8 +13,6 @@ const BACKUP_DIR = path.join(__dirname, "../db");
 const MAX_BACKUPS = 100;
 
 const backupMongoDB = () => {
-
-
   const now = new Date();
   const backupFileName = `${now.toISOString().replace(/:/g, "-")}.gzip`;
   const archivePath = path.join(BACKUP_DIR, backupFileName);

@@ -1,10 +1,9 @@
 // libraries
 import dayjs from "dayjs";
-import { orderBy } from "lodash";
 import { Box } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 // components
 import MeetingBaloon from "../../components/UI/maps/meeting-baloon";
 import MeetingsFiltersPanel from "../../components/UI/filters-panels/meetings-filters-panel";
@@ -25,6 +24,8 @@ import targetCluster from "../../assets/map/targeMeeting_cluster.png";
 // columns
 import { meetingsColumns } from "../../columns/meetings-columns/meetings-columns";
 import { meetingsCuratorColumns } from "../../columns/meetings-columns/meetings-columns-curator";
+// utils
+import sortingByDateAndTime from "../../utils/other/sorting-by-date-and-time";
 // store
 import { getMeetingStatusesList } from "../../store/meeting/meeting-status.store";
 import { getMeetingTypesList } from "../../store/meeting/meeting-types.store";
@@ -80,10 +81,7 @@ const Meetings = React.memo (() => {
   const meetingsTypes = useSelector(getMeetingTypesList());
   const selectedMeeting = useSelector(getMeetingById(selectedMeetingBaloon));
   const searchedMeetings = useSearchMeeting(meetings, data);
-  
-  const sortedMeetings = useMemo(() => {
-   return orderBy(searchedMeetings, ["date"], ["asc"]);
-  }, [searchedMeetings]);
+  const sortedMeetings = sortingByDateAndTime(searchedMeetings)
 
   const isLoading = useSelector(getMeetingLoadingStatus());
   const isInputEmpty = JSON.stringify(initialState) !== JSON.stringify(data);

@@ -25,7 +25,7 @@ const MeetingObject = ({ meet }) => {
   return isMeetingObjectId ? (
     <>
       <DividerStyled color={isMeetingDone ? "darkGray" : "gray"} margin="0" />
-      <Box sx={{ display: "flex", gap: "4px" }}>
+      <Box sx={{ display: "flex", gap: "4px", justifyContent: 'space-between' }}>
         <Typography>{objectAddress}</Typography>
         <OpenPageObjectIconButton
           onClick={() => handleOpenObjectPage(meetingObjectId)}

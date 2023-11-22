@@ -61,7 +61,7 @@ const objectCreateRequested = createAction("objects/objectCreateRequested");
 const createObjectFailed = createAction("objects/createObjectFailed");
 const objectUpdateRequested = createAction("objects/objectUpdateRequested");
 const objectUpdateFailed = createAction("objects/objectUpdateFailed");
-const objectГpdateMultipleObjectsFailed = createAction(
+const objectUpdateMultipleObjectsFailed = createAction(
   "objects/objectГpdateMultipleObjectsFailed"
 );
 const objectRemoveRequested = createAction("objects/objectRemoveRequested");

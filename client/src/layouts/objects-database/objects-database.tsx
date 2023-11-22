@@ -133,12 +133,6 @@ const ObjectsDatabase = React.memo(() => {
           selectedPeriod="fromThreeMonthAndMore"
           onChangePeriod={handleChangePeriod}
         />
-        <ChangePeriodButton
-          text="без следующего звонка"
-          period={period}
-          selectedPeriod="withouNextCall"
-          onChangePeriod={handleChangePeriod}
-        />
       </ChangePeriodsContainer>
 
       <ChangePeriodsContainer>
@@ -167,6 +161,12 @@ const ObjectsDatabase = React.memo(() => {
           text="через 3 и более"
           period={period}
           selectedPeriod="afterThreeMonthAndMore"
+          onChangePeriod={handleChangePeriod}
+        />
+        <ChangePeriodButton
+          text="без следующего звонка"
+          period={period}
+          selectedPeriod="withouNextCall"
           onChangePeriod={handleChangePeriod}
         />
       </ChangePeriodsContainer>

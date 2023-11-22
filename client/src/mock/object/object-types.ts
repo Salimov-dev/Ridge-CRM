@@ -15,10 +15,10 @@ const objectTypesArray = [
     _id: "64vcqw33443dfs9123jfdsh43",
     name: "Фундамент",
   },
-  // {
-  //   _id: "65fah3h7438f18fhd98217399",
-  //   name: "Земельный участок",
-  // },
+  {
+    _id: "65fah3h7438f18fhd98217399",
+    name: "Земельный участок",
+  },
 ];
 
 export { objectTypesArray };

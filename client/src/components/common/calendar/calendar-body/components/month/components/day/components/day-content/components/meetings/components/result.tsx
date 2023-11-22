@@ -6,7 +6,7 @@ const Result = ({ meet }) => {
 
   return result ? (
     <>
-      <DividerStyled color={result ? "darkGray" : "gray"} />
+      <DividerStyled color={result ? "darkGray" : "gray"} margin="0"/>
       <Typography>
         <b>Итог:</b> {result}
       </Typography>
