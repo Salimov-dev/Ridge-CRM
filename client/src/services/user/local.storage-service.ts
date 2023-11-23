@@ -34,6 +34,17 @@ export function getTokenExpiresDate() {
 export function getUserId() {
     return localStorage.getItem(USERID_KEY);
 }
+
+export function isTokenExpired() {
+    const expiresDate = localStorage.getItem(EXPIRES_KEY);
+    if (!expiresDate || isNaN(expiresDate)) {
+      return true;
+    }
+  
+    const currentTime = new Date().getTime();
+    return currentTime > parseInt(expiresDate, 10);
+  }
+
 const localStorageService = {
     setTokens,
     getAccessToken,

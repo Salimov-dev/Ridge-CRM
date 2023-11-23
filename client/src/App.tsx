@@ -16,6 +16,7 @@ import ScrollToTop from "./utils/other/scroll-to-top";
 // theme
 import { ColorModeContext, useMode } from "./theme";
 import AppRoutes from "./routes/routes";
+import AuthChecker from "./utils/auth/authChecker";
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -24,6 +25,7 @@ function App() {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <AppLoader>
+          <AuthChecker/>
           <ScrollToTop />
           <AppStyled>
             <Sidebar />
