@@ -32,7 +32,7 @@ const objectService = {
       objectEndpoint + "update-multiple",
       data
     );
-      
+
     return updatedObjects;
   },
 };

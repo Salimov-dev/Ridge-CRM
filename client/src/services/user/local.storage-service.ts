@@ -13,8 +13,10 @@ export function setTokens({
     localStorage.setItem(USERID_KEY, userId);
     localStorage.setItem(TOKEN_KEY, accessToken);
     localStorage.setItem(REFRESH_KEY, refreshToken);
-    localStorage.setItem(EXPIRES_KEY, expiresDate);
+    localStorage.setItem(EXPIRES_KEY, expiresDate.toString());
 }
+
+
 export function getAccessToken() {
     return localStorage.getItem(TOKEN_KEY);
 }
@@ -34,17 +36,6 @@ export function getTokenExpiresDate() {
 export function getUserId() {
     return localStorage.getItem(USERID_KEY);
 }
-
-export function isTokenExpired() {
-    const expiresDate = localStorage.getItem(EXPIRES_KEY);
-    if (!expiresDate || isNaN(expiresDate)) {
-      return true;
-    }
-  
-    const currentTime = new Date().getTime();
-    return currentTime > parseInt(expiresDate, 10);
-  }
-
 const localStorageService = {
     setTokens,
     getAccessToken,

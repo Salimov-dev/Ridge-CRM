@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 // auth
-import { loadAuthState } from "../store/user/auth.store";
+import { loadAuthState, setAuthState } from "../store/user/auth.store";
 // objects
 import { loadObjectsList } from "../store/object/objects.store";
 import { loadObjectStatusList } from "../store/object-params/object-status.store";
@@ -43,7 +43,6 @@ const AppLoader = ({ children }: AppLoaderProps) => {
 
   useEffect(() => {
     if (isLoggedIn) {
-      dispatch<any>(loadAuthState(true));
       // objects
       dispatch<any>(loadObjectsList());
       dispatch<any>(loadObjectStatusList());
@@ -74,10 +73,8 @@ const AppLoader = ({ children }: AppLoaderProps) => {
       // presentations
       dispatch<any>(loadPresentationsList());
       dispatch<any>(loadPresentationStatusList());
-    } else {
-      dispatch<any>(loadAuthState(false));
-    }
-  }, [isLoggedIn]);
+    } 
+  }, [isLoggedIn, dispatch]);
 
   return children;
 };

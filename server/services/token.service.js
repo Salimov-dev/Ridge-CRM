@@ -3,17 +3,20 @@ import config from "config";
 import Token from "../models/Tokens.js";
 
 class TokenService {
-  // return: accessToken, refreshToken, expiresIn
   generate(payload) {
     const accessToken = jwt.sign(payload, config.get("accessSecret"), {
-      expiresIn: "1h",
+      expiresIn: "30d",
     });
-    const refreshToken = jwt.sign(payload, config.get("refreshSecret"));
-    return { accessToken, refreshToken, expiresIn: 3600 };
+    const refreshToken = jwt.sign(payload, config.get("refreshSecret"), {
+      expiresIn: "90d",
+    });
+
+    return { accessToken, refreshToken, expiresIn: 30 * 24 * 60 * 60};
   }
 
   async save(user, refreshToken) {
     const data = await Token.findOne({ user });
+
     if (data) {
       data.refreshToken = refreshToken;
       return data.save();

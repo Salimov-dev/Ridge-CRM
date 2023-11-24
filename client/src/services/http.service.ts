@@ -1,5 +1,4 @@
-import axios, { AxiosHeaders  } from "axios"
-import { toast } from "react-toastify";
+import axios from "axios";
 import configFile from "../config.json";
 import authService from "./user/auth-service";
 import localStorageService from "./user/local.storage-service";
@@ -15,13 +14,20 @@ http.interceptors.request.use(
     const isExpired = refreshToken && expiresDate < Date.now();
 
     if (isExpired) {
-      const data = await authService.refresh();
-      localStorageService.setTokens(data);
+      try {
+        const data = await authService.refresh();
+        localStorageService.setTokens(data);
+      } catch (error) {
+        console.error('Token Refresh Error:', error);
+        handleUnauthorizedError(); 
+        throw error; 
+      }
     }
+
     const accessToken = localStorageService.getAccessToken();
     if (accessToken) {
       config.headers = {
-        ...(config.headers as AxiosHeaders), 
+        ...(config.headers as axios.AxiosHeaders),
         Authorization: `Bearer ${accessToken}`,
       };
     }
@@ -45,11 +51,21 @@ http.interceptors.response.use(
       error.response.status < 500;
 
     if (!expectedErrors) {
-      console.log(error);
+      console.error(error);
     }
+
+    if (error.response && error.response.status === 401) {
+      handleUnauthorizedError(); 
+    }
+
     return Promise.reject(error);
   }
 );
+
+function handleUnauthorizedError() {
+  localStorageService.removeAuthData(); 
+  window.location.href = "/";
+}
 
 const httpService = {
   get: http.get,
