@@ -25,18 +25,18 @@ function App() {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <AppLoader>
-  <SocketsIO>
-          <ScrollToTop />
-          <AppStyled>
-            <Sidebar />
-            <RightSide>
-              <Box>
-                <TopBar />
-                <AppRoutes />
-              </Box>
-              <Footer />
-            </RightSide>
-          </AppStyled>
+          <SocketsIO>
+            <ScrollToTop />
+            <AppStyled>
+              <Sidebar />
+              <RightSide>
+                <Box>
+                  <TopBar />
+                  <AppRoutes />
+                </Box>
+                <Footer />
+              </RightSide>
+            </AppStyled>
           </SocketsIO>
         </AppLoader>
       </ThemeProvider>

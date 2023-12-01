@@ -87,18 +87,6 @@ const removeLastContactRequested = createAction(
 const removeLastContactFailed = createAction(
   "lastContact/removelastContactFailed"
 );
-const lastContactIsDoneRequested = createAction(
-  "lastContact/lastContactIsDoneRequested"
-);
-const lastContactNotDoneRequested = createAction(
-  "lastContact/lastContactNotDoneRequested"
-);
-const lastContactIsDoneFailed = createAction(
-  "lastContact/lastContactIsDoneFailed"
-);
-const lastContactNotDoneFailed = createAction(
-  "lastContact/lastContactNotDoneFailed"
-);
 
 const { reducer: lastContactReducer, actions } = lastContactSlice;
 const {
@@ -108,7 +96,6 @@ const {
   lastContactCreated,
   lastContactUpdateSuccessed,
   lastContactRemoved,
-  lastContactIsDoneStatus,
 } = actions;
 
 export const loadLastContactsList = () => async (dispatch, getState) => {
@@ -136,7 +123,7 @@ export function createLastContact(payload) {
   };
 }
 
-export function updateLastContactsList(payload) {
+export function createLastContactUpdateIO(payload) {
   return async function (dispatch) {
     dispatch(lastContactCreateRequested());
     try {
@@ -150,8 +137,17 @@ export function updateLastContactsList(payload) {
 export const updateLastContact = (payload) => async (dispatch) => {
   dispatch(lastContactUpdateRequested());
   try {
-    dispatch(lastContactUpdateSuccessed(payload));
     await lastContactService.update(payload);
+    socket.emit("lastContactUpdated", payload);
+  } catch (error) {
+    dispatch(lastContactUpdateFailed(error.message));
+  }
+};
+
+export const updateLastContactUpdateIO = (payload) => async (dispatch) => {
+  dispatch(lastContactUpdateRequested());
+  try {
+    dispatch(lastContactUpdateSuccessed(payload));
   } catch (error) {
     dispatch(lastContactUpdateFailed(error.message));
   }
@@ -160,32 +156,22 @@ export const updateLastContact = (payload) => async (dispatch) => {
 export const removeLastContact = (lastContactId) => async (dispatch) => {
   dispatch(removeLastContactRequested());
   try {
-    dispatch(lastContactRemoved(lastContactId));
     await lastContactService.remove(lastContactId);
+    socket.emit("lastContactDeleted", lastContactId);
   } catch (error) {
     dispatch(removeLastContactFailed(error.message));
   }
 };
 
-export const setIsDoneLastContact = (payload) => async (dispatch) => {
-  dispatch(lastContactIsDoneRequested());
-  try {
-    dispatch(lastContactIsDoneStatus(payload));
-    await lastContactService.update(payload);
-  } catch (error) {
-    dispatch(lastContactIsDoneFailed(error.message));
-  }
-};
-
-export const setIsNotDoneLastContact = (payload) => async (dispatch) => {
-  dispatch(lastContactNotDoneRequested());
-  try {
-    dispatch(lastContactIsDoneStatus(payload));
-    await lastContactService.update(payload);
-  } catch (error) {
-    dispatch(lastContactNotDoneFailed(error.message));
-  }
-};
+export const removeLastContactUpdateIO =
+  (lastContactId) => async (dispatch) => {
+    dispatch(lastContactUpdateRequested());
+    try {
+      dispatch(lastContactRemoved(lastContactId));
+    } catch (error) {
+      dispatch(lastContactUpdateFailed(error.message));
+    }
+  };
 
 export const getObjectLastContactsList = (objectId) =>
   createSelector(

@@ -1,14 +1,27 @@
 import { io } from "socket.io-client";
 import configFile from "../config.json";
 import { useDispatch } from "react-redux";
-import { updateLastContactsList } from "../store/last-contact/last-contact.store";
+import {
+  createLastContactUpdateIO,
+  removeLastContactUpdateIO,
+  updateLastContactUpdateIO,
+} from "../store/last-contact/last-contact.store";
 
 const SocketsIO = ({ children }) => {
   const dispatch = useDispatch();
   const socket = io(configFile.ioEndPoint);
-  socket.on("updateLastContacts", async (newLastContact) => {
-    dispatch<any>(updateLastContactsList(newLastContact));
+
+  // last contact
+  socket.on("createLastContact", async (newLastContact) => {
+    dispatch<any>(createLastContactUpdateIO(newLastContact));
   });
+  socket.on("updateLastContact", async (updatedLastContact) => {
+    dispatch<any>(updateLastContactUpdateIO(updatedLastContact));
+  });
+  socket.on("deleteLastContact", async (lastContactId) => {
+    dispatch<any>(removeLastContactUpdateIO(lastContactId));
+  });
+
   return children;
 };
 
