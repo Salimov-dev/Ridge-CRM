@@ -1,8 +1,15 @@
+import { io } from "socket.io-client";
 import { createAction, createSlice } from "@reduxjs/toolkit";
+import { createSelector } from "reselect";
+// config
+import configFile from "../../config.json";
+// utils
 import isOutDated from "../../utils/auth/is-out-date";
+// services
 import localStorageService from "../../services/user/local.storage-service";
 import lastContactService from "../../services/last-contact/last-contact.service";
-import { createSelector } from "reselect";
+
+const socket = io(configFile.ioEndPoint);
 
 const initialState = localStorageService.getAccessToken()
   ? {
@@ -112,7 +119,7 @@ export const loadLastContactsList = () => async (dispatch, getState) => {
       const { content } = await lastContactService.get();
       dispatch(lastContactReceived(content));
     } catch (error) {
-      lastContactFailed(error.message);
+      dispatch(lastContactFailed(error.message));
     }
   }
 };
@@ -122,7 +129,18 @@ export function createLastContact(payload) {
     dispatch(lastContactCreateRequested());
     try {
       const { content } = await lastContactService.create(payload);
-      dispatch(lastContactCreated(content));
+      socket.emit("lastContactCreated", content);
+    } catch (error) {
+      dispatch(createLastContactFailed(error.message));
+    }
+  };
+}
+
+export function updateLastContactsList(payload) {
+  return async function (dispatch) {
+    dispatch(lastContactCreateRequested());
+    try {
+      dispatch(lastContactCreated(payload));
     } catch (error) {
       dispatch(createLastContactFailed(error.message));
     }

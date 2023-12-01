@@ -48,7 +48,7 @@ const ObjectInfo = ({ object, isLoading, isAuthorEntity = true }) => {
   const lastContacts = lastContactsList?.filter(
     (contact) => contact.objectId === objectId
   );
-  const sortedLastContacts = sortingByDateAndTime(lastContacts);
+  const sortedLastContacts = lastContacts.reverse();
 
   const users = useSelector(getUsersList());
   const currentUserId = useSelector(getCurrentUserId());

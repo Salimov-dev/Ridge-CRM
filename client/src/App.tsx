@@ -16,6 +16,7 @@ import ScrollToTop from "./utils/other/scroll-to-top";
 // theme
 import { ColorModeContext, useMode } from "./theme";
 import AppRoutes from "./routes/routes";
+import SocketsIO from "./hoc/sockets-io";
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -24,6 +25,7 @@ function App() {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <AppLoader>
+  <SocketsIO>
           <ScrollToTop />
           <AppStyled>
             <Sidebar />
@@ -35,6 +37,7 @@ function App() {
               <Footer />
             </RightSide>
           </AppStyled>
+          </SocketsIO>
         </AppLoader>
       </ThemeProvider>
       <ToastContainer

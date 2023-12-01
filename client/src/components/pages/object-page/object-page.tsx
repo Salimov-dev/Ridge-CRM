@@ -43,6 +43,8 @@ const ObjectPage = React.memo(({ onClose }) => {
     dispatch<any>(setUpdateObjectOpenState(true));
   };
 
+
+
   return (
     <Box>
       <Header

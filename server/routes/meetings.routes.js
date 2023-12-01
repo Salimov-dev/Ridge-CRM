@@ -54,7 +54,7 @@ router.post("/create", auth, async (req, res) => {
 router.patch("/:meetingId?/edit", auth, async (req, res) => {
   try {
     const { meetingId } = req.params;
-    const updatedMeeting =  await Meeting.findByIdAndUpdate(meetingId, req.body);
+    const updatedMeeting = await Meeting.findByIdAndUpdate(meetingId, req.body);
     res.send(updatedMeeting);
   } catch (e) {
     res.status(500).json({
@@ -67,7 +67,7 @@ router.delete("/:meetingId?", auth, async (req, res) => {
   try {
     const { meetingId } = req.params;
     await Meeting.findByIdAndRemove(meetingId);
-    
+
     return res.send(null);
   } catch (e) {
     res.status(500).json({

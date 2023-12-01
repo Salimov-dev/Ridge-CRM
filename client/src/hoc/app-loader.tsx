@@ -1,7 +1,7 @@
 import { useEffect } from "react";
+import { io } from "socket.io-client";
+import configFile from "../config.json";
 import { useDispatch, useSelector } from "react-redux";
-// auth
-import { loadAuthState, setAuthState } from "../store/user/auth.store";
 // objects
 import { loadObjectsList } from "../store/object/objects.store";
 import { loadObjectStatusList } from "../store/object-params/object-status.store";
@@ -25,7 +25,10 @@ import { loadUserStatusesList } from "../store/user/user-statuses.store";
 // tasks
 import { loadTasksList } from "../store/task/tasks.store";
 // last contact
-import { loadLastContactsList } from "../store/last-contact/last-contact.store";
+import {
+  loadLastContactsList,
+  updateLastContactsList,
+} from "../store/last-contact/last-contact.store";
 // sidebar collaps
 import { loadSidebarCollapsState } from "../store/sidebar-collaps-state.store";
 // presentation
@@ -40,6 +43,11 @@ interface AppLoaderProps {
 const AppLoader = ({ children }: AppLoaderProps) => {
   const dispatch = useDispatch();
   const isLoggedIn = useSelector(getIsLoggedIn());
+
+  // const socket = io(configFile.ioEndPoint);
+  // socket.on("updateLastContacts", async (newLastContact) => {
+  //   dispatch<any>(updateLastContactsList(newLastContact));
+  // });
 
   useEffect(() => {
     if (isLoggedIn) {
@@ -73,7 +81,7 @@ const AppLoader = ({ children }: AppLoaderProps) => {
       // presentations
       dispatch<any>(loadPresentationsList());
       dispatch<any>(loadPresentationStatusList());
-    } 
+    }
   }, [isLoggedIn, dispatch]);
 
   return children;

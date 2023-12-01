@@ -44,7 +44,6 @@ const TextFieldStyled = ({
     }
   };
 
-
   return (
     <Box sx={{ width: "100%" }}>
       <StyledTextField

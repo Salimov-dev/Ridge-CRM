@@ -63,7 +63,7 @@ const useSearchMeeting = (meetings, data) => {
       );
     }
 
-    // Проведенные на этой неделе OK!
+    // Проведенные на этой неделе 
     if (data.meetingsActivity === "987645erasg1243tgfdsg3") {
       array = array?.filter(
         (meet) =>
@@ -72,7 +72,7 @@ const useSearchMeeting = (meetings, data) => {
       );
     }
 
-    // Проведенные за всё время OK!
+    // Проведенные за всё время 
     if (data.meetingsActivity === "87634gsdf23gfds3425r43") {
       array = array?.filter((meet) => meet?.isDone === true);
     }

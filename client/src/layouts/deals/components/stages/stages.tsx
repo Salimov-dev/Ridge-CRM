@@ -1,13 +1,14 @@
 import { useState } from "react";
 import { Grid } from "@mui/material";
+import { useSelector } from "react-redux";
 import { Paper, styled } from "@mui/material";
 // components
 import Title from "./components/title";
 import Objects from "./components/objects";
 import DividerStyled from "../../../../components/common/divider/divider-styled";
-import { useSelector } from "react-redux";
-import { getObjectsLoadingStatus } from "../../../../store/object/objects.store";
 import Loader from "../../../../components/common/loader/loader";
+// store
+import { getObjectsLoadingStatus } from "../../../../store/object/objects.store";
 
 const DealContainer = styled(Paper)`
   display: flex;
@@ -23,7 +24,7 @@ const DealContainer = styled(Paper)`
 
 const Stages = ({ objects, stages, isCurator }) => {
   const [draggableStageId, setDraggableStageId] = useState(null);
-  const isLoading = useSelector(getObjectsLoadingStatus())
+  const isLoading = useSelector(getObjectsLoadingStatus());
 
   const handleDragOver = (e, stageId) => {
     e.preventDefault();
@@ -46,13 +47,17 @@ const Stages = ({ objects, stages, isCurator }) => {
               margin="10px 0 20px 0"
               color={draggableStageId === stage?._id ? "yellow" : "inherit"}
             />
-            {!isLoading ? <Objects
-              stage={stage}
-              objects={objects}
-              draggableStageId={draggableStageId}
-              setDraggableStageId={setDraggableStageId}
-              isCurator={isCurator}
-            /> : <Loader/>}
+            {!isLoading ? (
+              <Objects
+                stage={stage}
+                objects={objects}
+                draggableStageId={draggableStageId}
+                setDraggableStageId={setDraggableStageId}
+                isCurator={isCurator}
+              />
+            ) : (
+              <Loader />
+            )}
           </DealContainer>
         </Grid>
       ))}

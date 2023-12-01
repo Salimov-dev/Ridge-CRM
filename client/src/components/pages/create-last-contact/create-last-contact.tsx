@@ -12,7 +12,9 @@ import IsLoadingDialog from "../../common/dialog/is-loading-dialog";
 import FooterButtons from "../../common/forms/footer-buttons/footer-buttons";
 // store
 import { getOpenObjectPageId } from "../../../store/object/open-object-page.store";
-import { createLastContact } from "../../../store/last-contact/last-contact.store";
+import {
+  createLastContact,
+} from "../../../store/last-contact/last-contact.store";
 // schema
 import { lastContactSchema } from "../../../schemas/last-contact-schema";
 // utils
