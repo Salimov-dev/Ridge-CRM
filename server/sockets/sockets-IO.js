@@ -1,5 +1,6 @@
 import { Server } from "socket.io";
 import chalk from "chalk";
+import SocketLastContact from "./components/socket-last-contact.js";
 
 const SocketsIO = (server) => {
   const io = new Server(server, {
@@ -12,16 +13,7 @@ const SocketsIO = (server) => {
   io.on("connection", (socket) => {
     console.log(chalk.blue("A user connected"));
 
-    // last contact
-    socket.on("lastContactCreated", async (newLastContact) => {
-      io.emit("createLastContact", newLastContact);
-    });
-    socket.on("lastContactUpdated", async (updatedLastContact) => {
-      io.emit("updateLastContact", updatedLastContact);
-    });
-    socket.on("lastContactDeleted", async (updatedLastContact) => {
-      io.emit("deleteLastContact", updatedLastContact);
-    });
+    SocketLastContact(io, socket);
 
     socket.on("disconnect", () => {
       console.log(chalk.red("User disconnected"));

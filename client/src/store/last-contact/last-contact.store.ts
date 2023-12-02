@@ -123,7 +123,7 @@ export function createLastContact(payload) {
   };
 }
 
-export function createLastContactUpdateIO(payload) {
+export function createLastContactUpdate(payload) {
   return async function (dispatch) {
     dispatch(lastContactCreateRequested());
     try {
@@ -144,7 +144,7 @@ export const updateLastContact = (payload) => async (dispatch) => {
   }
 };
 
-export const updateLastContactUpdateIO = (payload) => async (dispatch) => {
+export const updateLastContactUpdate = (payload) => async (dispatch) => {
   dispatch(lastContactUpdateRequested());
   try {
     dispatch(lastContactUpdateSuccessed(payload));
@@ -163,7 +163,7 @@ export const removeLastContact = (lastContactId) => async (dispatch) => {
   }
 };
 
-export const removeLastContactUpdateIO =
+export const removeLastContactUpdate =
   (lastContactId) => async (dispatch) => {
     dispatch(lastContactUpdateRequested());
     try {

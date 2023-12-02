@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import config from "config";
 import chalk from "chalk";
-import SocketsIO from "./sockets-IO.js";
+import SocketsIO from "../sockets/sockets-IO.js";
 import http from "http";
 
 const PORT = config.get("port") ?? 8080;
