@@ -1,8 +1,15 @@
 import dayjs from "dayjs";
+import { io } from "socket.io-client";
 import { createAction, createSlice } from "@reduxjs/toolkit";
+// config
+import configFile from "../../config.json";
+// utils
 import isOutDated from "../../utils/auth/is-out-date";
+// services
 import objectService from "../../services/object/object.service";
 import localStorageService from "../../services/user/local.storage-service";
+
+const socket = io(configFile.ioEndPoint);
 
 const initialState = localStorageService.getAccessToken()
   ? {
@@ -94,8 +101,16 @@ export const createObject = (payload) => async (dispatch) => {
   dispatch(objectCreateRequested);
   try {
     const { content } = await objectService.create(payload);
+    socket.emit("objectCreated", content);
+  } catch (error) {
+    dispatch(createObjectFailed(error.message));
+  }
+};
 
-    dispatch(objectCreated(content));
+export const createObjectUpdate = (payload) => async (dispatch) => {
+  dispatch(objectCreateRequested);
+  try {
+    dispatch(objectCreated(payload));
   } catch (error) {
     dispatch(createObjectFailed(error.message));
   }
@@ -104,8 +119,17 @@ export const createObject = (payload) => async (dispatch) => {
 export const updateObject = (payload) => async (dispatch) => {
   dispatch(objectUpdateRequested());
   try {
-    dispatch(objectUpdateSuccessed(payload));
     await objectService.update(payload);
+    socket.emit("objectUpdated", payload);
+  } catch (error) {
+    dispatch(objectUpdateFailed(error.message));
+  }
+};
+
+export const updateObjectUpdate = (payload) => async (dispatch) => {
+  dispatch(objectUpdateRequested());
+  try {
+    dispatch(objectUpdateSuccessed(payload));
   } catch (error) {
     dispatch(objectUpdateFailed(error.message));
   }
@@ -119,10 +143,8 @@ export const updateMultipleObjects =
         userId
       );
 
-      // Получите текущие объекты из Redux state
       const currentObjects = getState().objects.entities;
 
-      // Обновите только те объекты, которые вернулись в updatedObjects.content
       const updatedEntities = currentObjects?.map((obj) => {
         const updatedObject = updatedObjects?.content?.find(
           (updatedObj) => updatedObj._id === obj._id
@@ -130,10 +152,36 @@ export const updateMultipleObjects =
         return updatedObject ? updatedObject : obj;
       });
 
-      // Диспатч действия для обновления объектов в Redux state
-      dispatch(objectsReceived(updatedEntities));
+      socket.emit("multipleObjectsUpdated", updatedEntities);
     } catch (error) {
       dispatch(objectUpdateMultipleObjectsFailed(error.message));
+    }
+  };
+export const updateMultipleObjectsUpdate =
+  (updatedObjects) => async (dispatch) => {
+    try {
+      dispatch(objectsReceived(updatedObjects));
+    } catch (error) {
+      dispatch(objectUpdateMultipleObjectsFailed(error.message));
+    }
+  };
+
+  export const removeObject = (objectId) => async (dispatch) => {
+    dispatch(objectRemoveRequested());
+    try {
+      await objectService.remove(objectId);
+      socket.emit("objectDeleted", objectId);
+    } catch (error) {
+      dispatch(objectRemoveFailed(error.message));
+    }
+  };
+
+  export const removeObjectUpdate = (objectId) => async (dispatch) => {
+    dispatch(objectRemoveRequested());
+    try {
+      dispatch(objectRemoved(objectId));
+    } catch (error) {
+      dispatch(objectRemoveFailed(error.message));
     }
   };
 
@@ -150,16 +198,6 @@ export const getObjectAddressById = (objectId) => (state) => {
     );
     const fullAddress = `${object?.location.city}, ${object?.location.address}`;
     return fullAddress;
-  }
-};
-
-export const removeObject = (objectId) => async (dispatch) => {
-  dispatch(objectRemoveRequested());
-  try {
-    dispatch(objectRemoved(objectId));
-    await objectService.remove(objectId);
-  } catch (error) {
-    dispatch(objectRemoveFailed(error.message));
   }
 };
 

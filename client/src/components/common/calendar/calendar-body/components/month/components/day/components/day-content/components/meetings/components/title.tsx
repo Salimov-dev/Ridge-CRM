@@ -8,8 +8,7 @@ import UpdateElement from "../../../../../../../../../../../buttons/icons button
 import DoneIconToggler from "../../tasks/components/done-icon-toggler";
 // store
 import {
-  setIsDoneMeeting,
-  setIsNotDoneMeeting,
+  updateMeeting,
 } from "../../../../../../../../../../../../../store/meeting/meetings.store";
 import {
   setUpdateMeetingId,
@@ -34,12 +33,12 @@ const Title = ({ meet, currentUserId }) => {
 
   const handleDoneMeeting = (meet) => {
     const newMeeting = { ...meet, isDone: true };
-    dispatch<any>(setIsDoneMeeting(newMeeting));
+    dispatch<any>(updateMeeting(newMeeting))
   };
 
   const handleNotDoneMeeting = (meet) => {
     const newMeeting = { ...meet, isDone: false };
-    dispatch<any>(setIsNotDoneMeeting(newMeeting));
+    dispatch<any>(updateMeeting(newMeeting))
   };
 
   const handleUpdateMeeting = () => {

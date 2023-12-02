@@ -1,8 +1,11 @@
 import { Server } from "socket.io";
 import chalk from "chalk";
+// sockets
 import SocketLastContact from "./components/socket-last-contact.js";
+import SocketMeeting from "./components/socket-meeting.js";
+import SocketObject from "./components/socket-object.js";
 
-const SocketsIO = (server) => {
+const Sockets = (server) => {
   const io = new Server(server, {
     cors: {
       origin: "http://localhost:5173",
@@ -13,6 +16,8 @@ const SocketsIO = (server) => {
   io.on("connection", (socket) => {
     console.log(chalk.blue("A user connected"));
 
+    SocketMeeting(io, socket);
+    SocketObject(io, socket);
     SocketLastContact(io, socket);
 
     socket.on("disconnect", () => {
@@ -21,4 +26,4 @@ const SocketsIO = (server) => {
   });
 };
 
-export default SocketsIO;
+export default Sockets;

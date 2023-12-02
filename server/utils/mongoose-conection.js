@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import config from "config";
 import chalk from "chalk";
-import SocketsIO from "../sockets/sockets-IO.js";
+import Sockets from "../sockets/sockets.js";
 import http from "http";
 
 const PORT = config.get("port") ?? 8080;
@@ -13,7 +13,7 @@ const mongooseConnection = ({ app }) => {
     .then(() => {
       console.log(chalk.green("MongoDB connected"));
 
-      SocketsIO(server);
+      Sockets(server);
 
       server.listen(PORT, () =>
         console.log(chalk.green(`Server has been started on port ${PORT}`))

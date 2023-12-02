@@ -1,21 +1,21 @@
 import { useDispatch } from "react-redux";
 import {
-  createMeetingUpdateIO,
-  removeMeetingUpdateIO,
-  updateMeetingUpdateIO,
-} from "../../store/last-contact/last-contact.store";
+  createMeetingUpdate,
+  removeMeetingUpdate,
+  updateMeetingUpdate,
+} from "../../store/meeting/meetings.store";
 
 const handleMeetingSocket = (socket) => {
   const dispatch = useDispatch();
 
   socket.on("createMeeting", async (newMeeting) => {
-    dispatch<any>(createMeetingUpdateIO(newMeeting));
+    dispatch<any>(createMeetingUpdate(newMeeting));
   });
   socket.on("updateMeeting", async (updatedMeeting) => {
-    dispatch<any>(updateMeetingUpdateIO(updatedMeeting));
+    dispatch<any>(updateMeetingUpdate(updatedMeeting));
   });
   socket.on("deleteMeeting", async (MeetingId) => {
-    dispatch<any>(removeMeetingUpdateIO(MeetingId));
+    dispatch<any>(removeMeetingUpdate(MeetingId));
   });
 };
 

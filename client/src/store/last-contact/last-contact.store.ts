@@ -61,11 +61,6 @@ const lastContactSlice = createSlice({
         (contact) => contact._id !== action.payload
       );
     },
-    lastContactIsDoneStatus: (state, action) => {
-      state.entities[
-        state.entities.findIndex((m) => m._id === action.payload._id)
-      ] = action.payload;
-    },
   },
 });
 
