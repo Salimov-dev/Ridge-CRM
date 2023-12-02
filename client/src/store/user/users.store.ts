@@ -1,10 +1,15 @@
+import { io } from "socket.io-client";
 import { createAction, createSlice } from "@reduxjs/toolkit";
+// config
+import configFile from "../../config.json";
 // utils
 import { generetaAuthError } from "../../utils/auth/generate-auth-error";
 // service
 import authService from "../../services/user/auth-service";
 import userService from "../../services/user/user.service";
 import localStorageService from "../../services/user/local.storage-service";
+
+const socket = io(configFile.ioEndPoint);
 
 const initialState = localStorageService.getAccessToken()
   ? {
@@ -46,7 +51,13 @@ const usersListSlice = createSlice({
     authRequestFailed: (state, action) => {
       state.error = action.payload;
     },
+    // userCreated: (state, action) => {
+    //   state.entities.push(action.payload);
+    // },
     userCreated: (state, action) => {
+      if (!Array.isArray(state.entities)) {
+        state.entities = [];
+      }
       state.entities.push(action.payload);
     },
     userLoggedOut: (state) => {
@@ -75,6 +86,7 @@ const {
   authRequestSuccess,
   userLoggedOut,
   userUpdateSuccessed,
+  userCreated,
 } = actions;
 
 const authRequested = createAction("users/authRequested");
@@ -85,8 +97,8 @@ export const login =
   ({ payload }) =>
   async (dispatch) => {
     const { email, password } = payload;
-
     dispatch(authRequested());
+
     try {
       const data = await authService.login({ email, password });
       localStorageService.setTokens(data);
@@ -101,7 +113,7 @@ export const login =
       } else {
         dispatch(authRequestFailed(error.message));
       }
-      throw error
+      throw error;
     }
   };
 
@@ -117,20 +129,10 @@ export const signUp = (payload) => async (dispatch) => {
   }
 };
 
-export const addNewManager = (payload) => async (dispatch) => {
-  dispatch(authRequested());
-  try {
-    await authService.register(payload);
-    dispatch(loadUsersList());
-  } catch (error) {
-    dispatch(authRequestFailed(error.message));
-  }
-};
-
 export const logOut = () => (dispatch) => {
   localStorageService.removeAuthData();
   dispatch(userLoggedOut());
-  localStorage.setItem("isAuth", "false")
+  localStorage.setItem("isAuth", "false");
 };
 
 export const loadUsersList = () => async (dispatch) => {
@@ -143,17 +145,45 @@ export const loadUsersList = () => async (dispatch) => {
   }
 };
 
+export const createNewUser = (payload) => async (dispatch) => {
+  dispatch(authRequested());
+  try {
+    await authService.register(payload);
+    socket.emit("userCreated", payload);
+  } catch (error) {
+    dispatch(authRequestFailed(error.message));
+  }
+};
+
+export const createNewUserUpdate = (payload) => async (dispatch) => {
+  dispatch(authRequested());
+  try {
+    dispatch(userCreated(payload));
+  } catch (error) {
+    dispatch(authRequestFailed(error.message));
+  }
+};
+
 export const updateUser = (payload) => async (dispatch) => {
   dispatch(userUpdateRequested());
-
   try {
     const { content } = await userService.update(payload);
-
-    dispatch(userUpdateSuccessed(content));
+    socket.emit("userUpdated", content);
   } catch (error) {
     dispatch(userUpdateFailed(error.message));
   }
 };
+
+export const updateUserUpdate = (payload) => async (dispatch) => {
+  dispatch(userUpdateRequested());
+  try {
+    dispatch(userUpdateSuccessed(payload));
+  } catch (error) {
+    dispatch(userUpdateFailed(error.message));
+  }
+};
+
+export const getUsersList = () => (state) => state?.users?.entities;
 
 export const getCurrentUserData = () => (state) => {
   return state?.users?.entities
@@ -179,8 +209,6 @@ export const getUserDataById = (id) => (state) => {
   }
 };
 
-export const getUsersList = () => (state) => state?.users?.entities;
-
 export const getIsUserManager = (userId) => (state) => {
   const user = state.users.entities?.find((user) => user?._id === userId);
   const isManager = user?.role === "MANAGER";
@@ -195,8 +223,8 @@ export const getIsUserCurator = (userId) => (state) => {
 
 export const getIsUserAuthorThisEntity = (userId, entity) => (state) => {
   const user = state.users.entities?.find((user) => user?._id === userId);
-  const isUserAuthorThisEntity = entity?.userId === user?._id
-  return isUserAuthorThisEntity
+  const isUserAuthorThisEntity = entity?.userId === user?._id;
+  return isUserAuthorThisEntity;
 };
 
 export const getIsLoggedIn = () => (state) => state.users.isLoggedIn;

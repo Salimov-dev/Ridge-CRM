@@ -1,7 +1,14 @@
+import { io } from "socket.io-client";
 import { createAction, createSlice } from "@reduxjs/toolkit";
+// config
+import configFile from "../../config.json";
+// utils
+import isOutDated from "../../utils/auth/is-out-date";
+// services
 import localStorageService from "../../services/user/local.storage-service";
 import presentationsService from "../../services/presentation/presentations.service";
-import isOutDated from "../../utils/auth/is-out-date";
+
+const socket = io(configFile.ioEndPoint);
 
 const initialState = localStorageService.getAccessToken()
   ? {
@@ -104,7 +111,18 @@ export function createPresentation(payload) {
     dispatch(presentationCreateRequested());
     try {
       const { content } = await presentationsService.create(payload);
-      dispatch(presentationCreated(content));
+      socket.emit("presentationCreated", content);
+    } catch (error) {
+      dispatch(createPresentationFailed(error.message));
+    }
+  };
+}
+
+export function createPresentationUpdate(payload) {
+  return async function (dispatch) {
+    dispatch(presentationCreateRequested());
+    try {
+      dispatch(presentationCreated(payload));
     } catch (error) {
       dispatch(createPresentationFailed(error.message));
     }
@@ -114,8 +132,17 @@ export function createPresentation(payload) {
 export const updatePresentation = (payload) => async (dispatch) => {
   dispatch(presentationUpdateRequested());
   try {
-    dispatch(presentationUpdateSuccessed(payload));
     await presentationsService.update(payload);
+    socket.emit("presentationUpdated", payload);
+  } catch (error) {
+    dispatch(presentationUpdateFailed(error.message));
+  }
+};
+
+export const updatePresentationUpdate = (payload) => async (dispatch) => {
+  dispatch(presentationUpdateRequested());
+  try {
+    dispatch(presentationUpdateSuccessed(payload));
   } catch (error) {
     dispatch(presentationUpdateFailed(error.message));
   }
@@ -124,8 +151,17 @@ export const updatePresentation = (payload) => async (dispatch) => {
 export const removePresentation = (presentationsId) => async (dispatch) => {
   dispatch(removePresentationRequested());
   try {
-    dispatch(presentationRemoved(presentationsId));
     await presentationsService.remove(presentationsId);
+    socket.emit("presentationDeleted", presentationsId);
+  } catch (error) {
+    dispatch(removePresentationFailed(error.message));
+  }
+};
+
+export const removePresentationUpdate = (presentationsId) => async (dispatch) => {
+  dispatch(removePresentationRequested());
+  try {
+    dispatch(presentationRemoved(presentationsId));
   } catch (error) {
     dispatch(removePresentationFailed(error.message));
   }

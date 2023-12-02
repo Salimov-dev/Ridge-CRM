@@ -1,7 +1,7 @@
 import { Box, Divider, styled } from "@mui/material";
 import Item from "./components/item";
 import { useSelector } from "react-redux";
-import { getAuthState } from "../../../store/user/auth.store";
+import { getAuthState } from "../../../store/auth/auth.store";
 import {
   getCurrentUserId,
   getIsUserCurator,

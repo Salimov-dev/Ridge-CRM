@@ -5,8 +5,8 @@ const SocketMeeting = (io, socket) => {
   socket.on("meetingUpdated", async (updatedMeeting) => {
     io.emit("updateMeeting", updatedMeeting);
   });
-  socket.on("meetingDeleted", async (updatedMeeting) => {
-    io.emit("deleteMeeting", updatedMeeting);
+  socket.on("meetingDeleted", async (meetingId) => {
+    io.emit("deleteMeeting", meetingId);
   });
 };
 

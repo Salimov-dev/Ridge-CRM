@@ -1,9 +1,12 @@
 import { Server } from "socket.io";
 import chalk from "chalk";
 // sockets
-import SocketLastContact from "./components/socket-last-contact.js";
-import SocketMeeting from "./components/socket-meeting.js";
 import SocketObject from "./components/socket-object.js";
+import SocketMeeting from "./components/socket-meeting.js";
+import SocketLastContact from "./components/socket-last-contact.js";
+import SocketPresentation from "./components/socket-presentation.js";
+import SocketTask from "./components/socket-task.js";
+import SocketUser from "./components/socket-user.js";
 
 const Sockets = (server) => {
   const io = new Server(server, {
@@ -16,9 +19,12 @@ const Sockets = (server) => {
   io.on("connection", (socket) => {
     console.log(chalk.blue("A user connected"));
 
-    SocketMeeting(io, socket);
+    SocketUser(io, socket);
     SocketObject(io, socket);
+    SocketMeeting(io, socket);
     SocketLastContact(io, socket);
+    SocketTask(io, socket);
+    SocketPresentation(io, socket);
 
     socket.on("disconnect", () => {
       console.log(chalk.red("User disconnected"));

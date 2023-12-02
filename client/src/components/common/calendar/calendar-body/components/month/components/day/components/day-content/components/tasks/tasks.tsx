@@ -12,7 +12,7 @@ import Loader from "../../../../../../../../../../loader/loader";
 import Result from "./components/result";
 // store
 import { getCurrentUserId } from "../../../../../../../../../../../../store/user/users.store";
-import { updateMyTask } from "../../../../../../../../../../../../store/task/tasks.store";
+import { updateTask } from "../../../../../../../../../../../../store/task/tasks.store";
 import { getOpenSelectedDayOpenState } from "../../../../../../../../../../../../store/calendar/open-selected-day.store";
 
 const Tasks = ({
@@ -32,7 +32,7 @@ const Tasks = ({
         ...task,
         date: draggableDay,
       };
-      dispatch<any>(updateMyTask(updatedTask)).then(() => {
+      dispatch<any>(updateTask(updatedTask)).then(() => {
         setDraggableDay(null);
       });
     } else {

@@ -1,6 +1,6 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 // auth
-import authStateReducer from "./user/auth.store";
+import authStateReducer from "./auth/auth.store";
 // objects
 import objectsReducer from "./object/objects.store";
 import updateObjectReducer from "./object/update-object.store";
@@ -27,7 +27,7 @@ import updateMeetingReducer from "./meeting/update-meeting.store";
 // users
 import createUserReducer from "./user/create-user.store";
 import usersListReducer from "./user/users.store";
-import loginReducer from "./user/login.store";
+import loginReducer from "./auth/login.store";
 import userStatusesReducer from "./user/user-statuses.store";
 import updateManagerReducer from "./user/update-user.store";
 import updateManagerTaskReducer from "./task/update-manager-task.store";

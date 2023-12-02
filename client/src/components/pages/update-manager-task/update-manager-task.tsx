@@ -24,7 +24,7 @@ import {
   getTaskById,
   getTaskLoadingStatus,
   removeTask,
-  updateMyTask,
+  updateTask,
 } from "../../../store/task/tasks.store";
 import { getObjectsList } from "../../../store/object/objects.store";
 import { getOpenObjectPageOpenState } from "../../../store/object/open-object-page.store";
@@ -88,7 +88,7 @@ const UpdateManagerTask = React.memo(({ title, onClose, users }) => {
     const transformedTime = dayjs(data.time).format("YYYY-MM-DDTHH:mm:ss.SSSZ");
     const newData = { ...data, date: transformedDate, time: transformedTime };
 
-    dispatch<any>(updateMyTask(newData))
+    dispatch<any>(updateTask(newData))
       .then(() => {
         setIsLoading(false);
         onClose();

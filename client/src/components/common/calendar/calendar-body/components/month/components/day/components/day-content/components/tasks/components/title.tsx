@@ -7,7 +7,7 @@ import UpdateElement from "../../../../../../../../../../../buttons/icons button
 // utils
 import { FormatTime } from "../../../../../../../../../../../../../utils/date/format-time";
 // store
-import { setIsDoneTaskStatus } from "../../../../../../../../../../../../../store/task/tasks.store";
+import { updateTask } from "../../../../../../../../../../../../../store/task/tasks.store";
 import {
   setUpdateMyTaskId,
   setUpdateMyTaskOpenState,
@@ -35,12 +35,12 @@ const Title = ({ task }) => {
 
   const handleDoneTask = (task) => {
     const newTask = { ...task, isDone: true };
-    dispatch<any>(setIsDoneTaskStatus(newTask));
+    dispatch<any>(updateTask(newTask));
   };
 
   const handleNotDoneTask = (task) => {
     const newTask = { ...task, isDone: false };
-    dispatch<any>(setIsDoneTaskStatus(newTask));
+    dispatch<any>(updateTask(newTask));
   };
 
   const handleUpdateTask = () => {
@@ -59,17 +59,11 @@ const Title = ({ task }) => {
         <b>Задача до: {task.time ? FormatTime(task.time) : "конца дня"}</b>
       </Typography>
       <ButtonsContainer>
-
-        <UpdateElement
-          onClick={handleUpdateTask}
-          isDone={isTaskDone}
-        />
+        <UpdateElement onClick={handleUpdateTask} isDone={isTaskDone} />
         <DoneIconToggler
           item={task}
           onDoneItem={handleDoneTask}
-          onNotDoneItem={
-            handleNotDoneTask
-          }
+          onNotDoneItem={handleNotDoneTask}
         />
       </ButtonsContainer>
     </Component>

@@ -5,8 +5,8 @@ const SocketLastContact = (io, socket) => {
   socket.on("lastContactUpdated", async (updatedLastContact) => {
     io.emit("updateLastContact", updatedLastContact);
   });
-  socket.on("lastContactDeleted", async (updatedLastContact) => {
-    io.emit("deleteLastContact", updatedLastContact);
+  socket.on("lastContactDeleted", async (lastContactId) => {
+    io.emit("deleteLastContact", lastContactId);
   });
 };
 

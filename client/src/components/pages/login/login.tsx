@@ -100,11 +100,11 @@ const Login = React.memo(({ onClose }) => {
       ) : (
         <AuthForm>
           <LoginForm data={data} errors={errors} register={register} />
-          <Subtitle>
+          {/* <Subtitle>
             <Typography sx={{ marginBottom: "10px" }}>
               Нет логина? Нажмите, чтобы получить доступ
             </Typography>
-          </Subtitle>
+          </Subtitle> */}
           <PositiveOutlinedButton
             title="Войти"
             isValid={!isFormValid}

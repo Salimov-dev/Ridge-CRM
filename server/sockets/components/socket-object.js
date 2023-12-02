@@ -8,8 +8,8 @@ const SocketObject = (io, socket) => {
   socket.on("multipleObjectsUpdated", async (updatedObjects) => {
     io.emit("updateMultipleObjects", updatedObjects);
   });
-  socket.on("objectDeleted", async (updatedObject) => {
-    io.emit("deleteObject", updatedObject);
+  socket.on("objectDeleted", async (objectId) => {
+    io.emit("deleteObject", objectId);
   });
 };
 

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   getLoginOpenState,
   setLoginOpenState,
-} from "../../../store/user/login.store";
+} from "../../../store/auth/login.store";
 
 const LoginButton = () => {
   const isLoading = useSelector(getLoginOpenState());

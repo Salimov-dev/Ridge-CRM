@@ -10,7 +10,7 @@ import TitleWithCloseButton from "../../common/page-titles/title-with-close-butt
 // store
 import { getUserStatusesList } from "../../../store/user/user-statuses.store";
 import {
-  addNewManager,
+  createNewUser,
   getCurrentUserId,
 } from "../../../store/user/users.store";
 // schema
@@ -80,7 +80,7 @@ const CreateManager = React.memo(({ onClose }) => {
       curatorId: currentUserId,
     };
 
-    dispatch<any>(addNewManager(newData)).then(onClose());
+    dispatch<any>(createNewUser(newData)).then(onClose());
   };
 
   return (

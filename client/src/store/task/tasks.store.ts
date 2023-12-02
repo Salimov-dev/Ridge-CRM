@@ -1,7 +1,14 @@
+import { io } from "socket.io-client";
 import { createAction, createSelector, createSlice } from "@reduxjs/toolkit";
+// utils
 import isOutDated from "../../utils/auth/is-out-date";
+// services
 import localStorageService from "../../services/user/local.storage-service";
 import tasksService from "../../services/tasks/tasks.service";
+// config
+import configFile from "../../config.json";
+
+const socket = io(configFile.ioEndPoint);
 
 const initialState = localStorageService.getAccessToken()
   ? {
@@ -53,11 +60,6 @@ const tasksSlice = createSlice({
         (meet) => meet._id !== action.payload
       );
     },
-    taskIsDoneStatus: (state, action) => {
-      state.entities[
-        state.entities.findIndex((task) => task._id === action.payload._id)
-      ] = action.payload;
-    },
   },
 });
 
@@ -67,8 +69,6 @@ const taskUpdateRequested = createAction("tasks/taskUpdateRequested");
 const taskUpdateFailed = createAction("tasks/taskUpdateFailed");
 const removeTaskRequested = createAction("tasks/removetaskRequested");
 const removeTaskFailed = createAction("tasks/removetaskFailed");
-const taskIsDoneRequested = createAction("tasks/taskIsDoneRequested");
-const taskIsDoneFailed = createAction("tasks/taskIsDoneFailed");
 
 const { reducer: tasksReducer, actions } = tasksSlice;
 const {
@@ -77,7 +77,6 @@ const {
   tasksFailed,
   taskCreated,
   taskUpdateSuccessed,
-  taskIsDoneStatus,
   taskRemoved,
 } = actions;
 
@@ -100,19 +99,38 @@ export function createTask(payload) {
     dispatch(taskCreateRequested());
     try {
       const { content } = await tasksService.create(payload);
-      dispatch(taskCreated(content));
-      loadTasksList();
+      socket.emit("taskCreated", content);
     } catch (error) {
       dispatch(createTaskFailed(error.message));
     }
   };
 }
 
-export const updateMyTask = (payload) => async (dispatch) => {
+export function createTaskUpdate(payload) {
+  return async function (dispatch) {
+    dispatch(taskCreateRequested());
+    try {
+      dispatch(taskCreated(payload));
+    } catch (error) {
+      dispatch(createTaskFailed(error.message));
+    }
+  };
+}
+
+export const updateTask = (payload) => async (dispatch) => {
+  dispatch(taskUpdateRequested());
+  try {
+    await tasksService.update(payload);
+    socket.emit("taskUpdated", payload);
+  } catch (error) {
+    dispatch(taskUpdateFailed(error.message));
+  }
+};
+
+export const updateTaskUpdate = (payload) => async (dispatch) => {
   dispatch(taskUpdateRequested());
   try {
     dispatch(taskUpdateSuccessed(payload));
-    await tasksService.update(payload);
   } catch (error) {
     dispatch(taskUpdateFailed(error.message));
   }
@@ -121,20 +139,19 @@ export const updateMyTask = (payload) => async (dispatch) => {
 export const removeTask = (taskId) => async (dispatch) => {
   dispatch(removeTaskRequested());
   try {
-    dispatch(taskRemoved(taskId));
     await tasksService.remove(taskId);
+    socket.emit("taskDeleted", taskId);
   } catch (error) {
     dispatch(removeTaskFailed(error.message));
   }
 };
 
-export const setIsDoneTaskStatus = (payload) => async (dispatch) => {
-  dispatch(taskIsDoneRequested());
+export const removeTaskUpdate = (taskId) => async (dispatch) => {
+  dispatch(removeTaskRequested());
   try {
-    dispatch(taskIsDoneStatus(payload));
-    await tasksService.update(payload);
+    dispatch(taskRemoved(taskId));
   } catch (error) {
-    dispatch(taskIsDoneFailed(error.message));
+    dispatch(removeTaskFailed(error.message));
   }
 };
 

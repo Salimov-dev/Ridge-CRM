@@ -19,7 +19,7 @@ import {
   getTaskById,
   getTaskLoadingStatus,
   removeTask,
-  updateMyTask,
+  updateTask,
 } from "../../../store/task/tasks.store";
 import { getObjectsList } from "../../../store/object/objects.store";
 import { getCurrentUserId } from "../../../store/user/users.store";
@@ -90,7 +90,7 @@ const UpdateMyTask = React.memo(({ title, onClose }) => {
       result: capitalizeFirstLetter(data.result).trim(),
     };
 
-    dispatch<any>(updateMyTask(newData))
+    dispatch<any>(updateTask(newData))
       .then(() => {
         setIsLoading(false);
         onClose();
