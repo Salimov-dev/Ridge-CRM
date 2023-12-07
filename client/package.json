@@ -49,6 +49,7 @@
     "material-ui-confirm": "^3.0.9",
     "npm": "^10.0.0",
     "react": "18.2",
+    "react-avatar-edit": "^1.2.0",
     "react-confetti": "^6.1.0",
     "react-data-export": "^0.6.0",
     "react-dom": "^18.2.0",

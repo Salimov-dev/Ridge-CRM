@@ -12,5 +12,14 @@ const avatarUploadService = {
 
     return data;
   },
+
+  update: async (payload) => {
+    console.log("payload", payload.preview);
+    
+    const {currentUserId, preview} = payload
+    const { data } = await httpService.post(uploadEndpoint + "/update/" + currentUserId, payload);
+
+    return data;
+  },
 };
 export default avatarUploadService;

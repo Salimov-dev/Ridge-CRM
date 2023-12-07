@@ -6,7 +6,7 @@ const Component = styled(Box)`
   justify-content: space-between;
   align-items: start;
   gap: 8px;
-  margin-bottom: 40px;
+  margin-bottom: 20px;
 `;
 
 const Title = styled(Box)`
@@ -22,7 +22,7 @@ const Header = ({ onClose }) => {
     <Component>
       <Title>
         <Box sx={{ display: "flex", background: 'SaddleBrown' }}>
-          <Typography variant="h2">Редактировать презентацию</Typography>
+          <Typography variant="h2">Править аватарку</Typography>
         </Box>
       </Title>
 

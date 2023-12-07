@@ -56,6 +56,7 @@ import staticticPositionsReducer from "./statictics/statictics-positions.store";
 import monthIndexReducer from "./month-index.store";
 import currrentPathReducer from "./current-path.store";
 import avatarReducer from "./upload/avatar-upload.store";
+import updateUserAvatarReducer from "./avatar/update-avatar.store";
 
 const rootReducer = combineReducers({
   // auth state
@@ -115,7 +116,9 @@ const rootReducer = combineReducers({
   //statictic
   staticticPositions: staticticPositionsReducer,
   // upload
-  avatar: avatarReducer
+  avatar: avatarReducer,
+  // avatar
+  updateUserAvatar: updateUserAvatarReducer,
 });
 
 export function createStore() {

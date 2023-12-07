@@ -98,6 +98,19 @@ export const uploadAvatar = (payload) => async (dispatch) => {
   }
 }
 
+export const updateAvatar = (payload) => async (dispatch) => {
+  dispatch(avatarUploadRequested());
+  try {    
+    // console.log("payload", payload.preview);
+    
+    await avatarUploadService.update(payload);
+    // dispatch(avatarUploaded(payload))
+  } catch (error) {
+    dispatch(avatarUploadFailed(error.message));
+    throw error
+  }
+}
+
 // export function uploadAvatar(payload) {
 //   return async function (dispatch) {
 //     dispatch(avatarUploadRequested());
