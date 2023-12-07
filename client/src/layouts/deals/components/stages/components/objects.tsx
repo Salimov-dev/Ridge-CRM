@@ -12,6 +12,7 @@ import {
   setOpenObjectPageOpenState,
 } from "../../../../../store/object/open-object-page.store";
 import { getUsersList } from "../../../../../store/user/users.store";
+import useGetUserAvatar from "../../../../../hooks/user/use-get-user-avatar";
 
 const Component = styled(Box)`
   width: 100%;
@@ -76,6 +77,7 @@ const Objects = ({
       {objects?.map((obj) => {
         const isDeal = obj?.status === stage?.objectStatusId;
         const user = users?.find((user) => user?._id === obj?.userId);
+        const getAvatarSrc = () => useGetUserAvatar(user?._id);
 
         return isDeal ? (
           <ObjectContainer
@@ -87,7 +89,13 @@ const Objects = ({
               obj={obj}
               onClick={() => handleOpenObjectPage(obj?._id)}
             />
-            {isCurator && <UserNameWithAvatar user={user} fontStyle="italic" />}
+            {isCurator && (
+              <UserNameWithAvatar
+                userId={user._id}
+                avatarSrc={getAvatarSrc()}
+                fontStyle="italic"
+              />
+            )}
           </ObjectContainer>
         ) : null;
       })}

@@ -30,6 +30,7 @@ import { loadSidebarCollapsState } from "../store/sidebar-collaps-state.store";
 import { loadPresentationsList } from "../store/presentation/presentations.store";
 import { loadPresentationStatusList } from "../store/presentation/presentation-status.store";
 import { loadTradeAreaList } from "../store/object-params/object-trade-area";
+import { loadAvatar } from "../store/upload/avatar-upload.store";
 
 interface AppLoaderProps {
   children: React.ReactNode;
@@ -71,6 +72,9 @@ const AppLoader = ({ children }: AppLoaderProps) => {
       // presentations
       dispatch<any>(loadPresentationsList());
       dispatch<any>(loadPresentationStatusList());
+      // upload
+      // dispatch<any>(loadAvatar());
+
     }
   }, [isLoggedIn, dispatch]);
 

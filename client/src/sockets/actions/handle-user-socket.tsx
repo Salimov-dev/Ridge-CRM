@@ -1,6 +1,8 @@
 import { useDispatch } from "react-redux";
-import { createNewUserUpdate, updateUserUpdate } from "../../store/user/users.store";
-
+import {
+  createNewUserUpdate,
+  updateUserUpdate,
+} from "../../store/user/users.store";
 
 const handleUserSocket = (socket) => {
   const dispatch = useDispatch();

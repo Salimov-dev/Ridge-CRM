@@ -11,7 +11,7 @@ import meetings from "./meetings.routes.js";
 // tasks
 import tasksRoutes from "./tasks.routes.js";
 // uploads
-import uploadRoutes from "./upload-avatar.routes.js";
+import uploadRoutes from "./upload.routes.js";
 // last contact
 import lastContactRoutes from "./last-contact.routes.js";
 // presentations

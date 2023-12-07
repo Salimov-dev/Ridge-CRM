@@ -30,6 +30,7 @@ import {
   getMeetingsList,
   getObjectMeetingsList,
 } from "../../store/meeting/meetings.store";
+import useGetUserAvatar from "../../hooks/user/use-get-user-avatar";
 
 export const objectsColumnsCuratorSimple = [
   {
@@ -216,8 +217,8 @@ export const objectsColumnsCuratorSimple = [
         header: "Менеджер",
         cell: (info) => {
           const userId = info.getValue();
-          const user = useSelector(getUserDataById(userId));
-          return <UserNameWithAvatar user={user} />;
+          const getAvatarSrc = () => useGetUserAvatar(userId);
+          return <UserNameWithAvatar userId={userId}  avatarSrc={getAvatarSrc()} />;
         },
       },
       {

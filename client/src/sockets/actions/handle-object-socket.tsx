@@ -4,7 +4,7 @@ import {
   removeObjectUpdate,
   updateMultipleObjectsUpdate,
   updateObjectUpdate,
-} from "../../store/Object/Objects.store";
+} from "../../store/object/objects.store.ts";
 
 const handleObjectSocket = (socket) => {
   const dispatch = useDispatch();

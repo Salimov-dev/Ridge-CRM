@@ -34,6 +34,8 @@ import { FormatDate } from "../../utils/date/format-date";
 import { FormatTime } from "../../utils/date/format-time";
 // styled
 import { AlignCenter } from "../../components/common/columns/styled";
+import UserNameWithAvatar from "../../components/common/table/helpers/user-name-with-avatar";
+import useGetUserAvatar from "../../hooks/user/use-get-user-avatar";
 
 export const tasksColumns = [
   {
@@ -116,7 +118,12 @@ export const tasksColumns = [
     header: "Задачу поставил",
     cell: (info) => {
       const userId = info.getValue();
-      return <AlignCenter>{FormatManagerName(userId)}</AlignCenter>;
+      const getAvatarSrc = () => useGetUserAvatar(userId);
+      return (
+        <AlignCenter>
+          <UserNameWithAvatar userId={userId} avatarSrc={getAvatarSrc()} />
+        </AlignCenter>
+      );
     },
   },
   {
@@ -124,9 +131,14 @@ export const tasksColumns = [
     header: "Ответственный",
     cell: (info) => {
       const managerId = info.getValue();
+      const getAvatarSrc = () => useGetUserAvatar(managerId);
       return (
         <AlignCenter>
-          {managerId ? FormatManagerName(managerId) : <EmptyTd />}
+          {managerId ? (
+            <UserNameWithAvatar userId={managerId} avatarSrc={getAvatarSrc()} />
+          ) : (
+            <EmptyTd />
+          )}
         </AlignCenter>
       );
     },

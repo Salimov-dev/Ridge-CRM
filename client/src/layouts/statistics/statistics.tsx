@@ -29,6 +29,10 @@ import {
   getUsersList,
 } from "../../store/user/users.store";
 
+const Component = styled(Box)`
+  margin-bottom: 150px;
+`;
+
 const ChartsContainer = styled(Box)`
   display: flex;
   height: 420px;
@@ -108,7 +112,7 @@ const Statictics = React.memo(() => {
   }, []);
 
   return (
-    <>
+    <Component>
       <LayoutTitle title="Статистика" />
       {isCurator && (
         <StaticticsFiltersPanel
@@ -130,16 +134,14 @@ const Statictics = React.memo(() => {
         <PieStyled data={pieData} />
       </ChartsContainer>
 
-      <Box>
-        <BasicTable
-          items={searchedUsers}
-          itemsColumns={columns}
-          hasFooter={isCurator && true}
-          isLoading={isObjectsLoading}
-          isPaginate={false}
-        />
-      </Box>
-    </>
+      <BasicTable
+        items={searchedUsers}
+        itemsColumns={columns}
+        hasFooter={isCurator && true}
+        isLoading={isObjectsLoading}
+        isPaginate={false}
+      />
+    </Component>
   );
 });
 

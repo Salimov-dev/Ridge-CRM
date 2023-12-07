@@ -82,7 +82,12 @@ router.patch("/update-multiple", auth, async (req, res) => {
     const toConnectObjectStatus = "64bvcpas34kszc21d2344876";
     await Object.updateMany(
       { _id: { $in: validObjectIds } },
-      { $set: { userId, status: toConnectObjectStatus } }
+      {
+        $set: {
+          userId,
+          status: toConnectObjectStatus,
+        },
+      }
     );
 
     // Найти и вернуть обновленные объекты

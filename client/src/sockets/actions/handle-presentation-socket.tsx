@@ -3,7 +3,7 @@ import {
   createPresentationUpdate,
   removePresentationUpdate,
   updatePresentationUpdate,
-} from "../../store/Presentation/presentations.store";
+} from "../../store/presentation/presentations.store";
 
 const handlePresentationSocket = (socket) => {
   const dispatch = useDispatch();

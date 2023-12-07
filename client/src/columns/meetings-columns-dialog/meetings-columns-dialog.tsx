@@ -18,8 +18,13 @@ import {
 } from "../../store/meeting/update-meeting.store";
 // styled
 import { AlignCenter } from "../../components/common/columns/styled";
-import { getCurrentUserId, getIsUserAuthorThisEntity } from "../../store/user/users.store";
+import {
+  getCurrentUserId,
+  getIsUserAuthorThisEntity,
+} from "../../store/user/users.store";
 import { getMeetingById } from "../../store/meeting/meetings.store";
+import useGetUserAvatar from "../../hooks/user/use-get-user-avatar";
+import UserNameWithAvatar from "../../components/common/table/helpers/user-name-with-avatar";
 
 export const meetingsColumnsDialog = [
   {
@@ -92,7 +97,12 @@ export const meetingsColumnsDialog = [
     header: "Инициатор",
     cell: (info) => {
       const userId = info.getValue();
-      return <AlignCenter>{FormatManagerName(userId)}</AlignCenter>;
+      const getAvatarSrc = () => useGetUserAvatar(userId);
+      return (
+        <AlignCenter>
+          <UserNameWithAvatar userId={userId} avatarSrc={getAvatarSrc()} />
+        </AlignCenter>
+      );
     },
   },
   {
@@ -124,9 +134,9 @@ export const meetingsColumnsDialog = [
     header: "",
     cell: (info) => {
       const meetingId = info.getValue();
-      const meeting = useSelector(getMeetingById(meetingId))
+      const meeting = useSelector(getMeetingById(meetingId));
       const dispatch = useDispatch();
-      const currentUserId = useSelector(getCurrentUserId())
+      const currentUserId = useSelector(getCurrentUserId());
       const isAuthorEntity = useSelector(
         getIsUserAuthorThisEntity(currentUserId, meeting)
       );

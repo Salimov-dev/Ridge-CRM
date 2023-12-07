@@ -17,6 +17,7 @@ import { getObjectsList } from "../../store/object/objects.store";
 import { getPresentationsList } from "../../store/presentation/presentations.store";
 import { getUserDataById } from "../../store/user/users.store";
 import { Typography } from "@mui/material";
+import useGetUserAvatar from "../../hooks/user/use-get-user-avatar";
 
 dayjs.extend(customParseFormat);
 dayjs.locale("ru");
@@ -113,7 +114,8 @@ export const staticticsColumnsCurator = [
         cell: (info) => {
           const userId = info.getValue();
           const user = useSelector(getUserDataById(userId));
-          return <UserNameWithAvatar user={user} />;
+          const getAvatarSrc = () => useGetUserAvatar(user?._id);
+          return <UserNameWithAvatar userId={userId}  avatarSrc={getAvatarSrc()} />;
         },
       },
       {

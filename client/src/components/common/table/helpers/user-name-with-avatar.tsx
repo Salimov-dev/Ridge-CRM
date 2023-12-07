@@ -1,24 +1,23 @@
 import { Box, Typography, styled } from "@mui/material";
-import basicAva from "../../../../assets/basic-ava.jpg";
-import { FormatManagerName, UserAvatar } from "./helpers";
+import { FormatManagerName } from "./helpers";
+import UserAvatar from "../../avatar/user-avatar";
+import React from "react";
 
 const Component = styled(Box)`
-  width: 100%;
   display: flex;
   gap: 6px;
   align-items: center;
   justify-content: start;
 `;
 
-const UserNameWithAvatar = ({ user, fontStyle = 'normal' }) => {
-  const userId = user?._id;
-  const ava = user?.image;
+const UserNameWithAvatar = React.memo( ({ userId, avatarSrc, fontStyle = 'normal' }) => {
+
   return (
     <Component>
-      <UserAvatar width="24px" path={ava ? ava : basicAva} />
+      <UserAvatar avatarSrc={avatarSrc}/>
       <Typography sx={{fontStyle: fontStyle}}>{FormatManagerName(userId)}</Typography>
     </Component>
   );
-};
+});
 
 export default UserNameWithAvatar;

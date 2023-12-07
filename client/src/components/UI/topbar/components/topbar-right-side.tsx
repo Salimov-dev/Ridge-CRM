@@ -6,7 +6,6 @@ import {
 } from "../../../../store/user/users.store";
 import UserMenu from "./user-menu";
 import Loader from "../../../common/loader/loader";
-// import { isTokenExpired } from "../../../../services/user/local.storage-service";
 
 const Component = styled(Box)`
   display: flex;
@@ -15,7 +14,6 @@ const Component = styled(Box)`
 const TopBarRightSide = () => {
   const currentUser = useSelector(getCurrentUserData());
   const isLoading = useSelector(getUsersLoadingStatus());
-  // const isTokenExpiredToken = isTokenExpired()
 
   return (
     <Component>

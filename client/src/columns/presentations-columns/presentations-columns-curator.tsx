@@ -29,6 +29,7 @@ import {
   setUpdatePresentationOpenState,
 } from "../../store/presentation/update-presentation.store";
 import UserNameWithAvatar from "../../components/common/table/helpers/user-name-with-avatar";
+import useGetUserAvatar from "../../hooks/user/use-get-user-avatar";
 
 export const presentationsCuratorColumns = [
   {
@@ -105,7 +106,8 @@ export const presentationsCuratorColumns = [
     cell: (info) => {
       const userId = info.getValue();
       const user = useSelector(getUserDataById(userId));
-      return <UserNameWithAvatar user={user} />;
+      const getAvatarSrc = () => useGetUserAvatar(user?._id);
+      return <UserNameWithAvatar userId={userId}  avatarSrc={getAvatarSrc()} />;
     },
   },
   {

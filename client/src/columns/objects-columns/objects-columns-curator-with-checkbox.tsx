@@ -31,6 +31,7 @@ import {
 import { getDistrictName } from "../../store/object-params/districts.store";
 import { getUserDataById } from "../../store/user/users.store";
 import React, { HTMLProps } from "react";
+import useGetUserAvatar from "../../hooks/user/use-get-user-avatar";
 
 function IndeterminateCheckbox({
   indeterminate,
@@ -265,7 +266,8 @@ export const objectsColumnsCuratorWithCheckbox = [
         cell: (info) => {
           const userId = info.getValue();
           const user = useSelector(getUserDataById(userId));
-          return <UserNameWithAvatar user={user} />;
+          const getAvatarSrc = () => useGetUserAvatar(user?._id);
+          return <UserNameWithAvatar userId={userId} avatarSrc={getAvatarSrc()}  />;
         },
       },
       {

@@ -1,13 +1,15 @@
 // libraries
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 // MUI
 import { Box, Button, Menu, MenuItem, Typography, styled } from "@mui/material";
 // store
-import { logOut } from "../../../../store/user/users.store";
+import { getCurrentUserId, logOut } from "../../../../store/user/users.store";
 // assets
 import basicAva from "../../../../assets/basic-ava.jpg"
+import UserAvatar from "../../../common/avatar/user-avatar";
+import useGetUserAvatar from "../../../../hooks/user/use-get-user-avatar";
 
 const Component = styled(Box)`
   display: flex;
@@ -19,18 +21,19 @@ const UserName = styled(Typography)`
   color: gray;
 `;
 
-const Avatar = styled(`img`)({
-  width: "30px",
-  borderRadius: "50%",
-  marginRight: "10px",
-});
+// const Avatar = styled(`img`)({
+//   width: "30px",
+//   borderRadius: "50%",
+//   marginRight: "10px",
+// });
 
 const UserMenu = ({ currentUser }) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const open = Boolean(anchorEl);
-  const managerAva = currentUser?.image
+  const currentUserId = useSelector(getCurrentUserId());
+  const avatarSrc = useGetUserAvatar(currentUserId);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -65,10 +68,11 @@ const UserMenu = ({ currentUser }) => {
           },
         }}
       >
-        <Avatar src={managerAva ? managerAva : basicAva} />
+        <UserAvatar avatarSrc={avatarSrc}/>
         <UserName
           sx={{
             color: open ? "white !important" : "gray",
+            marginLeft: '6px'
           }}
         >
           {currentUser?.name?.firstName}
@@ -83,7 +87,7 @@ const UserMenu = ({ currentUser }) => {
           "aria-labelledby": "basic-button",
         }}
       >
-        {/* <MenuItem onClick={handleOpenProfile}>Профиль</MenuItem> */}
+        <MenuItem onClick={handleOpenProfile}>Профиль</MenuItem>
         <MenuItem onClick={handleLogOut}>Выйти</MenuItem>
       </Menu>
     </Component>

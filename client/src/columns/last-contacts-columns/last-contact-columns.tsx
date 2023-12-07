@@ -5,7 +5,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { Box, Typography } from "@mui/material";
 // components
 import EmptyTd from "../../components/common/columns/empty-td";
+import UserNameWithAvatar from "../../components/common/table/helpers/user-name-with-avatar";
 import MultiColorContainedButton from "../../components/common/buttons/multi-color-contained-button";
+import { AlignCenter } from "../../components/common/columns/styled";
 // utils
 import { FormatDate } from "../../utils/date/format-date";
 import {
@@ -17,8 +19,8 @@ import {
   getCurrentUserId,
   getIsUserAuthorThisEntity,
 } from "../../store/user/users.store";
-import { AlignCenter } from "../../components/common/columns/styled";
-import { FormatManagerName } from "../../components/common/table/helpers/helpers";
+// hooks
+import useGetUserAvatar from "../../hooks/user/use-get-user-avatar";
 
 export const lastContactColumns = [
   {
@@ -43,7 +45,8 @@ export const lastContactColumns = [
     header: "Менеджер",
     cell: (info) => {
       const userId = info.getValue();
-      return <AlignCenter>{FormatManagerName(userId)}</AlignCenter>;
+      const getAvatarSrc = () => useGetUserAvatar(userId);
+      return <AlignCenter><UserNameWithAvatar userId={userId}  avatarSrc={getAvatarSrc()} /></AlignCenter> ;
     },
   },
   {

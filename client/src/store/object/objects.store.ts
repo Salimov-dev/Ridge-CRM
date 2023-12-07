@@ -8,6 +8,13 @@ import isOutDated from "../../utils/auth/is-out-date";
 // services
 import objectService from "../../services/object/object.service";
 import localStorageService from "../../services/user/local.storage-service";
+import { useSelector } from "react-redux";
+import {
+  getCurrentUserData,
+  getCurrentUserId,
+  getIsUserCurator,
+  getIsUserManager,
+} from "../user/users.store";
 
 const socket = io(configFile.ioEndPoint);
 
@@ -19,6 +26,7 @@ const initialState = localStorageService.getAccessToken()
       isLoggedIn: true,
       dataLoaded: false,
       lastFetch: null,
+      auth: { userId: localStorageService.getUserId() },
     }
   : {
       entities: null,
@@ -68,8 +76,11 @@ const objectCreateRequested = createAction("objects/objectCreateRequested");
 const createObjectFailed = createAction("objects/createObjectFailed");
 const objectUpdateRequested = createAction("objects/objectUpdateRequested");
 const objectUpdateFailed = createAction("objects/objectUpdateFailed");
+const multipleObjectsUpdateFailed = createAction(
+  "objects/multipleObjectsUpdateFailed"
+);
 const objectUpdateMultipleObjectsFailed = createAction(
-  "objects/objectГpdateMultipleObjectsFailed"
+  "objects/objectUpdateMultipleObjectsFailed"
 );
 const objectRemoveRequested = createAction("objects/objectRemoveRequested");
 const objectRemoveFailed = createAction("objects/objectRemoveFailed");
@@ -136,54 +147,47 @@ export const updateObjectUpdate = (payload) => async (dispatch) => {
 };
 
 export const updateMultipleObjects =
-  (objectIds, userId) => async (dispatch, getState) => {
+  (objectIds, userId) => async (dispatch) => {
     try {
       const updatedObjects = await objectService.updateMultiple(
         objectIds,
         userId
       );
-
-      const currentObjects = getState().objects.entities;
-
-      const updatedEntities = currentObjects?.map((obj) => {
-        const updatedObject = updatedObjects?.content?.find(
-          (updatedObj) => updatedObj._id === obj._id
-        );
-        return updatedObject ? updatedObject : obj;
-      });
-
-      socket.emit("multipleObjectsUpdated", updatedEntities);
-    } catch (error) {
-      dispatch(objectUpdateMultipleObjectsFailed(error.message));
-    }
-  };
-export const updateMultipleObjectsUpdate =
-  (updatedObjects) => async (dispatch) => {
-    try {
-      dispatch(objectsReceived(updatedObjects));
+      const result = updatedObjects?.content;
+      socket.emit("multipleObjectsUpdated", result);
+      return result;
     } catch (error) {
       dispatch(objectUpdateMultipleObjectsFailed(error.message));
     }
   };
 
-  export const removeObject = (objectId) => async (dispatch) => {
-    dispatch(objectRemoveRequested());
-    try {
-      await objectService.remove(objectId);
-      socket.emit("objectDeleted", objectId);
-    } catch (error) {
-      dispatch(objectRemoveFailed(error.message));
-    }
-  };
+export const updateMultipleObjectsUpdate = () => async (dispatch) => {
+  try {
+    const { content } = await objectService.get();
+    dispatch(objectsReceived(content));
+  } catch (error) {
+    dispatch(multipleObjectsUpdateFailed(error.message));
+  }
+};
 
-  export const removeObjectUpdate = (objectId) => async (dispatch) => {
-    dispatch(objectRemoveRequested());
-    try {
-      dispatch(objectRemoved(objectId));
-    } catch (error) {
-      dispatch(objectRemoveFailed(error.message));
-    }
-  };
+export const removeObject = (objectId) => async (dispatch) => {
+  dispatch(objectRemoveRequested());
+  try {
+    await objectService.remove(objectId);
+    socket.emit("objectDeleted", objectId);
+  } catch (error) {
+    dispatch(objectRemoveFailed(error.message));
+  }
+};
+
+export const removeObjectUpdate = (objectId) => async (dispatch) => {
+  dispatch(objectRemoveRequested());
+  try {
+    dispatch(objectRemoved(objectId));
+  } catch (error) {
+    dispatch(objectRemoveFailed(error.message));
+  }
+};
 
 export const getObjectById = (objectId) => (state) => {
   if (state?.objects?.entities) {
