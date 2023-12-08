@@ -19,7 +19,12 @@ import {
 // utils
 import { FormatDate } from "../../utils/date/format-date";
 // icons
-import basicAva from "../../assets/basic-ava.jpg"
+import basicAva from "../../assets/basic-ava.jpg";
+import useGetUserAvatar from "../../hooks/user/use-get-user-avatar";
+import UserNameWithAvatar from "../../components/common/table/helpers/user-name-with-avatar";
+import EmptyTd from "../../components/common/columns/empty-td";
+import { getUserAvatarsList } from "../../store/avatar/avatar.store";
+import { useEffect } from "react";
 
 export const usersColumns = [
   {
@@ -34,11 +39,23 @@ export const usersColumns = [
         },
       },
       {
-        accessorKey: "image",
+        accessorKey: "_id",
         header: "Аватар",
         cell: (info) => {
-          const ava = info.getValue();
-          return <UserAvatar path={ava ? ava : basicAva} />;
+          const userId = info.getValue();
+          const { avatarSrc, isLoading } = useGetUserAvatar(userId);
+          // console.log("avatarSrc", avatarSrc);
+          
+          
+          const getAvatarSrc = () => {
+            return isLoading ? null : avatarSrc;
+          };
+          // useEffect(()=>{
+          //   getAvatarSrc()
+          // }, [userId])
+          return (
+            <UserNameWithAvatar userId={userId} avatarSrc={getAvatarSrc()} isLoading={isLoading}/>
+          );
         },
       },
       {
@@ -170,12 +187,12 @@ export const usersColumns = [
     ],
   },
   {
-    accessorKey: "_id",
+    accessorFn: (row) => row,
     header: "Править",
     enableSorting: false,
     cell: (info) => {
       const dispatch = useDispatch();
-      const userId = info.getValue();
+      const userId = info.getValue()._id;
 
       const handleClick = () => {
         dispatch<any>(setUpdateManagerId(userId));

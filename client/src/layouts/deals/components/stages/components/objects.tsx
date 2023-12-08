@@ -78,8 +78,8 @@ const Objects = ({
       {objects?.map((obj) => {
         const isDeal = obj?.status === stage?.objectStatusId;
         const user = users?.find((user) => user?._id === obj?.userId);
+        const { avatarSrc, isLoading } = useGetUserAvatar(user?._id);
         const getAvatarSrc = () => {
-          const { avatarSrc, isLoading } = useGetUserAvatar(user?._id);
           return isLoading ? null : avatarSrc;
         };
 

@@ -141,11 +141,17 @@ export const meetingsCuratorColumns = [
     header: "Менеджер",
     cell: (info) => {
       const userId = info.getValue();
+      const { avatarSrc, isLoading } = useGetUserAvatar(userId);
       const getAvatarSrc = () => {
-        const { avatarSrc, isLoading } = useGetUserAvatar(userId);
         return isLoading ? null : avatarSrc;
       };
-      return <UserNameWithAvatar userId={userId}  avatarSrc={getAvatarSrc()} isLoading={isLoading}/>;
+      return (
+        <UserNameWithAvatar
+          userId={userId}
+          avatarSrc={getAvatarSrc()}
+          isLoading={isLoading}
+        />
+      );
     },
   },
   {

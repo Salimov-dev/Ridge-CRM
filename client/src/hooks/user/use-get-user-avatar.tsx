@@ -1,21 +1,21 @@
 import { useEffect, useState } from "react";
-import avatarUploadService from "../../services/upload/avatart-upload.service";
+import { useSelector } from "react-redux";
+import { getUserAvatarsList } from "../../store/avatar/avatar.store";
 
 const useGetUserAvatar = (userId) => {
   const [avatarSrc, setAvatarSrc] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const userAvatarsList = useSelector(getUserAvatarsList());
 
-  const getUserAvatar = async (userId) => {
+  const usersArray = Array.isArray(userAvatarsList) ? userAvatarsList : [];
+
+  const user = usersArray.find((user) => user.userId === userId);
+  const userSrc = user?.src;
+
+  const getUserAvatar = () => {
     try {
-      const { content } = await avatarUploadService.get(userId);
-      const contentLength = content.byteLength;
-
-      if (contentLength) {
-        const arrayBuffer = new Uint8Array(content);
-        const base64ImageString = btoa(
-          String.fromCharCode.apply(null, arrayBuffer)
-        );
-        const srcValue = "data:image/png;base64," + base64ImageString;
+      if (userSrc) {
+        const srcValue = "data:image/png;base64," + userSrc;
         setIsLoading(false);
         setAvatarSrc(srcValue);
       } else {
@@ -29,8 +29,8 @@ const useGetUserAvatar = (userId) => {
   };
 
   useEffect(() => {
-    getUserAvatar(userId)
-  }, [userId]);
+    getUserAvatar(userId);
+  });
 
   const refreshAvatar = () => {
     getUserAvatar(userId);

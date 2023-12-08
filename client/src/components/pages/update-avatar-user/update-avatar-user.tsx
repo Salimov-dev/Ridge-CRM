@@ -10,7 +10,7 @@ import PositiveOutlinedButton from "../../common/buttons/positive-outlined-butto
 import IsLoadingDialog from "../../common/dialog/is-loading-dialog";
 // store
 import { getCurrentUserId } from "../../../store/user/users.store";
-import { updateAvatar } from "../../../store/upload/avatar-upload.store";
+import { updateAvatar } from "../../../store/avatar/avatar.store";
 
 const AvatarContainer = styled(Box)`
   width: 100%;
@@ -31,9 +31,10 @@ const UpdateAvatar = React.memo(({ onClose }) => {
 
   const [preview, setPreview] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  
+
   const currentUserId = useSelector(getCurrentUserId());
   const newPreview = preview?.replace(/^data:image\/\w+;base64,/, "");
+  console.log("newPreview", newPreview);
 
   const onClosePreview = () => {
     setPreview(null);

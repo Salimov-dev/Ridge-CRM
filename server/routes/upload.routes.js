@@ -1,7 +1,6 @@
 import express from "express";
 import Company from "../models/Company.js";
 import auth from "../middleware/auth.middleware.js";
-import checkFileTypeMiddleware from "../middleware/check-file-type.middleware.js";
 import fs from "fs/promises";
 import path from "path";
 import { fileURLToPath } from "url";

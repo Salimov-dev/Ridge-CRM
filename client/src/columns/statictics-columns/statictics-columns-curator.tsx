@@ -113,11 +113,17 @@ export const staticticsColumnsCurator = [
         footer: <Typography variant="h3">Итого</Typography>,
         cell: (info) => {
           const userId = info.getValue();
+          const { avatarSrc, isLoading } = useGetUserAvatar(userId);
           const getAvatarSrc = () => {
-            const { avatarSrc, isLoading } = useGetUserAvatar(userId);
             return isLoading ? null : avatarSrc;
           };
-          return <UserNameWithAvatar userId={userId}  avatarSrc={getAvatarSrc()} isLoading={isLoading}/>;
+          return (
+            <UserNameWithAvatar
+              userId={userId}
+              avatarSrc={getAvatarSrc()}
+              isLoading={isLoading}
+            />
+          );
         },
       },
       {

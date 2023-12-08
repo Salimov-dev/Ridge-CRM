@@ -118,13 +118,17 @@ export const tasksColumns = [
     header: "Задачу поставил",
     cell: (info) => {
       const userId = info.getValue();
+      const { avatarSrc, isLoading } = useGetUserAvatar(userId);
       const getAvatarSrc = () => {
-        const { avatarSrc, isLoading } = useGetUserAvatar(userId);
         return isLoading ? null : avatarSrc;
       };
       return (
         <AlignCenter>
-          <UserNameWithAvatar userId={userId} avatarSrc={getAvatarSrc()} isLoading={isLoading}/>
+          <UserNameWithAvatar
+            userId={userId}
+            avatarSrc={getAvatarSrc()}
+            isLoading={isLoading}
+          />
         </AlignCenter>
       );
     },
@@ -138,7 +142,11 @@ export const tasksColumns = [
       return (
         <AlignCenter>
           {managerId ? (
-            <UserNameWithAvatar userId={managerId} avatarSrc={getAvatarSrc()} isLoading={isLoading}/>
+            <UserNameWithAvatar
+              userId={managerId}
+              avatarSrc={getAvatarSrc()}
+              isLoading={isLoading}
+            />
           ) : (
             <EmptyTd />
           )}

@@ -21,7 +21,6 @@ import {
   getUsersList,
   getUsersLoadingStatus,
 } from "../../store/user/users.store";
-import { getUserStatusesList } from "../../store/user/user-statuses.store";
 
 const initialState = {
   lastName: "",

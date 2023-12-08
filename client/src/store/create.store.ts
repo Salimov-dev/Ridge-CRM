@@ -55,7 +55,7 @@ import staticticPositionsReducer from "./statictics/statictics-positions.store";
 // other
 import monthIndexReducer from "./month-index.store";
 import currrentPathReducer from "./current-path.store";
-import avatarReducer from "./upload/avatar-upload.store";
+import avatarReducer from "./avatar/avatar.store";
 import updateUserAvatarReducer from "./avatar/update-avatar.store";
 
 const rootReducer = combineReducers({
