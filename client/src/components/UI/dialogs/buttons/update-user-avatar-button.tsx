@@ -15,6 +15,7 @@ const UpdateUserAvatarButton = () => {
       color="success"
       onClick={handleOpenUpdateAvatar}
       sx={{
+        width: '100%',
         color: "white",
         background: "seaGreen",
         "&:hover": { background: "green" },

@@ -87,7 +87,7 @@ export const tasksColumnsDialog = [
       return (
         <AlignCenter>
           {managerId ? (
-            <UserNameWithAvatar userId={managerId} avatarSrc={getAvatarSrc()} />
+            <UserNameWithAvatar userId={managerId} avatarSrc={getAvatarSrc()} isLoading={isLoading}/>
           ) : (
             <EmptyTd />
           )}

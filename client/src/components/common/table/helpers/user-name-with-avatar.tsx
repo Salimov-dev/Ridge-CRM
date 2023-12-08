@@ -1,7 +1,7 @@
-import { Box, Typography, styled } from "@mui/material";
-import { FormatManagerName } from "./helpers";
-import UserAvatar from "../../avatar/user-avatar";
 import React from "react";
+import { FormatManagerName } from "./helpers";
+import { Box, Typography, styled } from "@mui/material";
+import AvatarImage from "../../../../layouts/profile/components/avatar-image";
 
 const Component = styled(Box)`
   display: flex;
@@ -10,14 +10,22 @@ const Component = styled(Box)`
   justify-content: start;
 `;
 
-const UserNameWithAvatar = React.memo( ({ userId, avatarSrc, fontStyle = 'normal' }) => {
-
-  return (
-    <Component>
-      <UserAvatar avatarSrc={avatarSrc}/>
-      <Typography sx={{fontStyle: fontStyle}}>{FormatManagerName(userId)}</Typography>
-    </Component>
-  );
-});
+const UserNameWithAvatar = React.memo(
+  ({ userId, avatarSrc, isLoading, fontStyle = "normal" }) => {
+    return (
+      <Component>
+        <AvatarImage
+            width="30px"
+            height="30px"
+            avatarSrc={avatarSrc}
+            isLoading={isLoading}
+          />
+        <Typography sx={{ fontStyle: fontStyle }}>
+          {FormatManagerName(userId)}
+        </Typography>
+      </Component>
+    );
+  }
+);
 
 export default UserNameWithAvatar;

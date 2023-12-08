@@ -1,11 +1,11 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import DialogStyled from "../../../common/dialog/dialog-styled";
+import UpdateAvatar from "../../../pages/update-avatar-user/update-avatar-user";
 import {
   getUpdateUserAvatarOpenState,
   setUpdateUserAvatarOpenState,
 } from "../../../../store/avatar/update-avatar.store";
-import UpdateAvatar from "../../../pages/update-avatar-user/update-avatar-user";
 
 const UpdateAvatarDialog = React.memo(({ avatarSrc }) => {
   const dispatch = useDispatch();

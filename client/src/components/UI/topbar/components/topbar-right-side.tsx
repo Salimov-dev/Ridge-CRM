@@ -22,7 +22,7 @@ const TopBarRightSide = () => {
           <UserMenu currentUser={currentUser} />
         ) : null
       ) : (
-        <Loader />
+        <Loader height="40px" width="60px" padding="0" size={20}/>
       )}
     </Component>
   );

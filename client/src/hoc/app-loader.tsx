@@ -13,6 +13,7 @@ import { loadObjectConditionsList } from "../store/object-params/object-conditio
 import { loadRentTypesList } from "../store/object-params/rent-types.store";
 import { loadEstateTypesList } from "../store/object-params/estate-types.store";
 import { loadObjectPropertiesList } from "../store/object-params/object-properties";
+import { loadTradeAreaList } from "../store/object-params/object-trade-area";
 // meetings
 import { loadMeetingsList } from "../store/meeting/meetings.store";
 import { loadMeetingStatusesList } from "../store/meeting/meeting-status.store";
@@ -29,8 +30,6 @@ import { loadSidebarCollapsState } from "../store/sidebar-collaps-state.store";
 // presentation
 import { loadPresentationsList } from "../store/presentation/presentations.store";
 import { loadPresentationStatusList } from "../store/presentation/presentation-status.store";
-import { loadTradeAreaList } from "../store/object-params/object-trade-area";
-import { loadAvatar } from "../store/upload/avatar-upload.store";
 
 interface AppLoaderProps {
   children: React.ReactNode;
@@ -72,9 +71,6 @@ const AppLoader = ({ children }: AppLoaderProps) => {
       // presentations
       dispatch<any>(loadPresentationsList());
       dispatch<any>(loadPresentationStatusList());
-      // upload
-      // dispatch<any>(loadAvatar());
-
     }
   }, [isLoggedIn, dispatch]);
 

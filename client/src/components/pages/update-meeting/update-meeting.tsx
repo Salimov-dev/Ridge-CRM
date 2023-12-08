@@ -27,6 +27,7 @@ import {
   removeMeeting,
   updateMeeting,
 } from "../../../store/meeting/meetings.store";
+// utils
 import transformObjectsForSelect from "../../../utils/objects/transform-objects-for-select";
 
 const UpdateMeeting = React.memo(({ onClose }) => {

@@ -266,12 +266,12 @@ export const objectsColumnsCuratorWithCheckbox = [
         cell: (info) => {
           const userId = info.getValue();
           const user = useSelector(getUserDataById(userId));
+          const { avatarSrc, isLoading } = useGetUserAvatar(user?._id);
           const getAvatarSrc = () => {
-            const { avatarSrc, isLoading } = useGetUserAvatar(user?._id);
             return isLoading ? null : avatarSrc;
           };
           return (
-            <UserNameWithAvatar userId={userId} avatarSrc={getAvatarSrc()} />
+            <UserNameWithAvatar userId={userId} avatarSrc={getAvatarSrc()} isLoading={isLoading}/>
           );
         },
       },

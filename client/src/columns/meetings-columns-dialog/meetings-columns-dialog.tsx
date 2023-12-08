@@ -103,7 +103,7 @@ export const meetingsColumnsDialog = [
       };
       return (
         <AlignCenter>
-          <UserNameWithAvatar userId={userId} avatarSrc={getAvatarSrc()} />
+          <UserNameWithAvatar userId={userId} avatarSrc={getAvatarSrc()} isLoading={isLoading}/>
         </AlignCenter>
       );
     },

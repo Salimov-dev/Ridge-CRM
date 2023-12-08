@@ -221,7 +221,7 @@ export const objectsColumnsCuratorSimple = [
             const { avatarSrc, isLoading } = useGetUserAvatar(userId);
             return isLoading ? null : avatarSrc;
           };
-          return <UserNameWithAvatar userId={userId}  avatarSrc={getAvatarSrc()} />;
+          return <UserNameWithAvatar userId={userId}  avatarSrc={getAvatarSrc()} isLoading={isLoading}/>;
         },
       },
       {

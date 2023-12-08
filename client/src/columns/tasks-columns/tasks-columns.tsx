@@ -124,7 +124,7 @@ export const tasksColumns = [
       };
       return (
         <AlignCenter>
-          <UserNameWithAvatar userId={userId} avatarSrc={getAvatarSrc()} />
+          <UserNameWithAvatar userId={userId} avatarSrc={getAvatarSrc()} isLoading={isLoading}/>
         </AlignCenter>
       );
     },
@@ -138,7 +138,7 @@ export const tasksColumns = [
       return (
         <AlignCenter>
           {managerId ? (
-            <UserNameWithAvatar userId={managerId} avatarSrc={getAvatarSrc()} />
+            <UserNameWithAvatar userId={managerId} avatarSrc={getAvatarSrc()} isLoading={isLoading}/>
           ) : (
             <EmptyTd />
           )}

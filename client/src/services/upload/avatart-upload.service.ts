@@ -7,18 +7,6 @@ const avatarUploadService = {
       responseType: "arraybuffer",
     });
 
-
-    return data;
-  },
-  getAll: async () => {
-    const { data } = await httpService.get(uploadEndpoint + "/", {
-      responseType: "arraybuffer",
-    });
-
-    return data;
-  },
-  post: async (payload) => {
-    const { data } = await httpService.post(uploadEndpoint, payload);
     return data;
   },
   update: async (payload) => {

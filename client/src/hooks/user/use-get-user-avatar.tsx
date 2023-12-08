@@ -19,18 +19,22 @@ const useGetUserAvatar = (userId) => {
         setIsLoading(false);
         setAvatarSrc(srcValue);
       } else {
+        setIsLoading(false);
         setAvatarSrc(null);
       }
-    } catch (error) {}
+    } catch (error) {
+      setIsLoading(false);
+      console.log("error", error.message);
+    }
   };
+
+  useEffect(() => {
+    getUserAvatar(userId)
+  }, [userId]);
 
   const refreshAvatar = () => {
     getUserAvatar(userId);
   };
-
-  useEffect(() => {
-    getUserAvatar(userId);
-  }, [userId]);
 
   return { avatarSrc, isLoading, refreshAvatar };
 };

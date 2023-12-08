@@ -12,6 +12,7 @@ import {
   setOpenObjectPageOpenState,
 } from "../../../../../store/object/open-object-page.store";
 import { getUsersList } from "../../../../../store/user/users.store";
+// hooks
 import useGetUserAvatar from "../../../../../hooks/user/use-get-user-avatar";
 
 const Component = styled(Box)`
@@ -97,6 +98,7 @@ const Objects = ({
                 userId={user._id}
                 avatarSrc={getAvatarSrc()}
                 fontStyle="italic"
+                isLoading={isLoading}
               />
             )}
           </ObjectContainer>

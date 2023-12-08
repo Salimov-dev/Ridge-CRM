@@ -7,11 +7,10 @@ import { useDispatch, useSelector } from "react-redux";
 import Header from "./components/header";
 import NegativeOutlinedButton from "../../common/buttons/negative-outlined-button";
 import PositiveOutlinedButton from "../../common/buttons/positive-outlined-button";
+import IsLoadingDialog from "../../common/dialog/is-loading-dialog";
 // store
 import { getCurrentUserId } from "../../../store/user/users.store";
-import {
-  updateAvatar,
-} from "../../../store/upload/avatar-upload.store";
+import { updateAvatar } from "../../../store/upload/avatar-upload.store";
 
 const AvatarContainer = styled(Box)`
   width: 100%;
@@ -31,6 +30,8 @@ const UpdateAvatar = React.memo(({ onClose }) => {
   const dispatch = useDispatch();
 
   const [preview, setPreview] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  
   const currentUserId = useSelector(getCurrentUserId());
   const newPreview = preview?.replace(/^data:image\/\w+;base64,/, "");
 
@@ -42,18 +43,26 @@ const UpdateAvatar = React.memo(({ onClose }) => {
   };
 
   const handleUploadImage = () => {
+    setIsLoading(true);
     dispatch<any>(updateAvatar({ preview: newPreview, currentUserId }))
-      .then(() => onClose())
       .then(() => {
+        setIsLoading(false);
+        onClose();
         toast.success("Аватарка успешно загружена");
       })
       .catch((err) => {
+        setIsLoading(false);
         console.log("err", err);
       });
   };
 
-  return (
-    <>
+  return isLoading ? (
+    <IsLoadingDialog
+      text="Немного подождите, изменяем `Аватарку`"
+      isLoading={isLoading}
+    />
+  ) : (
+    <Box>
       <Header onClose={onClose} />
       <AvatarContainer>
         <Avatar
@@ -75,7 +84,7 @@ const UpdateAvatar = React.memo(({ onClose }) => {
         />
         <NegativeOutlinedButton title="Отмена" onClick={onClose} />
       </ButtonsContainer>
-    </>
+    </Box>
   );
 });
 
