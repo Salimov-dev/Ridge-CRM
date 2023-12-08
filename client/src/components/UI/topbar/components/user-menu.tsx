@@ -11,6 +11,9 @@ import basicAva from "../../../../assets/basic-ava.jpg"
 import UserAvatar from "../../../common/avatar/user-avatar";
 import useGetUserAvatar from "../../../../hooks/user/use-get-user-avatar";
 
+import { io } from "socket.io-client";
+import configFile from "../../../../config.json";
+
 const Component = styled(Box)`
   display: flex;
   gap: 12px;
@@ -33,7 +36,13 @@ const UserMenu = ({ currentUser }) => {
   const dispatch = useDispatch();
   const open = Boolean(anchorEl);
   const currentUserId = useSelector(getCurrentUserId());
-  const avatarSrc = useGetUserAvatar(currentUserId);
+  const {avatarSrc, refreshAvatar} = useGetUserAvatar(currentUserId);
+
+  const socket = io(configFile.ioEndPoint);
+
+  socket.on("updateAvatar", async () => {
+    refreshAvatar();
+  });
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);

@@ -35,30 +35,30 @@ import useGetUserAvatar from "../../hooks/user/use-get-user-avatar";
 
 function IndeterminateCheckbox({
   indeterminate,
-  className = '',
+  className = "",
   ...rest
 }: { indeterminate?: boolean } & HTMLProps) {
-  const ref = React.useRef(null!)
+  const ref = React.useRef(null!);
 
   React.useEffect(() => {
-    if (typeof indeterminate === 'boolean') {
-      ref.current.indeterminate = !rest.checked && indeterminate
+    if (typeof indeterminate === "boolean") {
+      ref.current.indeterminate = !rest.checked && indeterminate;
     }
-  }, [ref, indeterminate])
+  }, [ref, indeterminate]);
 
   return (
     <input
       type="checkbox"
       ref={ref}
-      className={className + ' cursor-pointer'}
+      className={className + " cursor-pointer"}
       {...rest}
     />
-  )
+  );
 }
 
 export const objectsColumnsCuratorWithCheckbox = [
   {
-    id: 'select',
+    id: "select",
     header: ({ table }) => (
       <IndeterminateCheckbox
         {...{
@@ -266,8 +266,13 @@ export const objectsColumnsCuratorWithCheckbox = [
         cell: (info) => {
           const userId = info.getValue();
           const user = useSelector(getUserDataById(userId));
-          const getAvatarSrc = () => useGetUserAvatar(user?._id);
-          return <UserNameWithAvatar userId={userId} avatarSrc={getAvatarSrc()}  />;
+          const getAvatarSrc = () => {
+            const { avatarSrc, isLoading } = useGetUserAvatar(user?._id);
+            return isLoading ? null : avatarSrc;
+          };
+          return (
+            <UserNameWithAvatar userId={userId} avatarSrc={getAvatarSrc()} />
+          );
         },
       },
       {

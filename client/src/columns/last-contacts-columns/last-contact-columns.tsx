@@ -45,8 +45,15 @@ export const lastContactColumns = [
     header: "Менеджер",
     cell: (info) => {
       const userId = info.getValue();
-      const getAvatarSrc = () => useGetUserAvatar(userId);
-      return <AlignCenter><UserNameWithAvatar userId={userId}  avatarSrc={getAvatarSrc()} /></AlignCenter> ;
+      const getAvatarSrc = () => {
+        const { avatarSrc, isLoading } = useGetUserAvatar(userId);
+        return isLoading ? null : avatarSrc;
+      };
+      return (
+        <AlignCenter>
+          <UserNameWithAvatar userId={userId} avatarSrc={getAvatarSrc()} />
+        </AlignCenter>
+      );
     },
   },
   {

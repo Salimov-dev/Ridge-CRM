@@ -21,7 +21,7 @@ const Header = ({ onClose }) => {
   return (
     <Component>
       <Title>
-        <Box sx={{ display: "flex", background: 'SaddleBrown' }}>
+        <Box sx={{ display: "flex", background: 'Lime', color: 'black', padding: '0 4px' }}>
           <Typography variant="h2">Править аватарку</Typography>
         </Box>
       </Title>

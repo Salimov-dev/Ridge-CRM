@@ -15,6 +15,7 @@ const initialState = localStorageService.getAccessToken()
       entities: null,
       isLoading: true,
       error: null,
+      isUpdated: false,
       isLoggedIn: true,
       dataLoaded: false,
       lastFetch: null,
@@ -23,6 +24,7 @@ const initialState = localStorageService.getAccessToken()
       entities: null,
       isLoading: false,
       error: null,
+      isUpdated: false,
       isLoggedIn: false,
       dataLoaded: false,
       lastFetch: null,
@@ -49,14 +51,24 @@ const avatarSlice = createSlice({
     },
     avatarRemoved: (state, action) => {
       // state.entities = state.entities.filter(
-      //   (meet) => meet._id !== action.payload
-      // );
-    },
+        //   (meet) => meet._id !== action.payload
+        // );
+      },
+      avatarIsUpdated: (state, action) => {
+        const isUpdate = action.payload
+        if(isUpdate) {
+
+          state.isUpdated = false
+          state.isUpdated = true
+        }
+      },
   },
 });
 
 const avatarUploadRequested = createAction("avatar/avatarUploadRequested");
+const avatarUpdateRequested = createAction("avatar/avatarUpdateRequested");
 const avatarUploadFailed = createAction("avatar/avatarUploadFailed");
+const avatarUpdateFailed = createAction("avatar/avatarUpdateFailed");
 const removeAvatarRequested = createAction("avatar/removeAvatarRequested");
 const removeAvatarFailed = createAction("avatar/removeAvatarFailed");
 
@@ -67,23 +79,36 @@ const {
   avatarFailed,
   avatarUploaded,
   avatarRemoved,
+  avatarIsUpdated
 } = actions;
 
-export const loadAvatar = (userId) => async (dispatch, getState) => {
-  const { lastFetch } = getState().avatar;
-  if (isOutDated(lastFetch)) {
-    // dispatch(avatarRequested());
-    try {
+export const loadAvatar = (userId) => async (dispatch) => {
+  dispatch(avatarRequested());
+  try {
+    const { content } = await avatarUploadService.get(userId);
 
-      
-      const { content } = await avatarUploadService.get(userId);
-      console.log("content", content);
-      
-      dispatch(avatarReceived(content));
-    } catch (error) {
-      dispatch(avatarFailed(error));
-      
-    }
+    return content;
+  } catch (error) {
+    dispatch(avatarFailed(error));
+  }
+
+};
+
+export const updateUserAvatar = () => async (dispatch) => {
+  try {
+    dispatch(avatarIsUpdated(true));
+  } catch (error) {
+    dispatch(avatarFailed(error));
+  }
+
+};
+
+export const loadAvatarsList = () => async (dispatch) => {
+  dispatch(avatarRequested());
+  try {
+    const { content } = await avatarUploadService.getAll();
+  } catch (error) {
+    dispatch(avatarFailed(error));
   }
 };
 
@@ -94,104 +119,31 @@ export const uploadAvatar = (payload) => async (dispatch) => {
     // dispatch(avatarUploaded(payload))
   } catch (error) {
     dispatch(avatarUploadFailed(error.message));
-    throw error
+    throw error;
   }
-}
+};
 
 export const updateAvatar = (payload) => async (dispatch) => {
-  dispatch(avatarUploadRequested());
-  try {    
-    // console.log("payload", payload.preview);
-    
+  dispatch(avatarUpdateRequested());
+  try {
     await avatarUploadService.update(payload);
-    // dispatch(avatarUploaded(payload))
+    socket.emit("avatarUpdated", payload);
   } catch (error) {
-    dispatch(avatarUploadFailed(error.message));
-    throw error
+    dispatch(avatarUpdateFailed(error.message));
+    throw error;
   }
-}
+};
 
-// export function uploadAvatar(payload) {
-//   return async function (dispatch) {
-//     dispatch(avatarUploadRequested());
-//     try {
-//       await avatarUploadService.post(payload);
-//       // dispatch(avatarUploaded(payload))
-//     } catch (error) {
-//       dispatch(avatarUploadFailed(error.message));
-//       throw error
-//     }
-//   };
-// }
+export const updateAvatarUpdate = (payload) => async (dispatch) => {
+  try {
+    dispatch(avatarUploaded(payload));
+  } catch (error) {
+    dispatch(avatarUpdateFailed(error.message));
+    throw error;
+  }
+};
 
-// export function createavatarUpdate(payload) {
-//   return async function (dispatch) {
-//     dispatch(avatarCreateRequested());
-//     try {
-//       dispatch(avatarCreated(payload));
-//     } catch (error) {
-//       dispatch(createavatarFailed(error.message));
-//     }
-//   };
-// }
-
-// export const updateavatar = (payload) => async (dispatch) => {
-//   dispatch(avatarUpdateRequested());
-//   try {
-//     await avatarService.update(payload);
-//     socket.emit("avatarUpdated", payload);
-//   } catch (error) {
-//     dispatch(avatarUpdateFailed(error.message));
-//   }
-// };
-
-// export const updateavatarUpdate = (payload) => async (dispatch) => {
-//   dispatch(avatarUpdateRequested());
-//   try {
-//     dispatch(avatarUpdateSuccessed(payload));
-//   } catch (error) {
-//     dispatch(avatarUpdateFailed(error.message));
-//   }
-// };
-
-// export const removeavatar = (avatarId) => async (dispatch) => {
-//   dispatch(removeavatarRequested());
-//   try {
-//     await avatarService.remove(avatarId);
-//     socket.emit("avatarDeleted", avatarId);
-//   } catch (error) {
-//     dispatch(removeavatarFailed(error.message));
-//   }
-// };
-
-// export const removeavatarUpdate = (avatarId) => async (dispatch) => {
-//   dispatch(removeavatarRequested());
-//   try {
-//     dispatch(avatarRemoved(avatarId));
-//   } catch (error) {
-//     dispatch(removeavatarFailed(error.message));
-//   }
-// };
-
-// export const getObjectavatarList = (objectId) =>
-//   createSelector(
-//     (state) => state?.avatar?.entities,
-//     (avatar) => avatar?.filter((avatar) => avatar?.objectId === objectId)
-//   );
-
-// export const getavatarByObjectId = (objectId) => (state) => {
-//   const avatar = state?.avatar.entities;
-//   const objectavatar = avatar?.filter((avatar) => avatar.objectId === objectId);
-//   return objectavatar;
-// };
-
-// export const getavatarById = (id) => (state) => {
-//   if (state.avatar.entities) {
-//     return state.avatar.entities.find((avatar) => avatar._id === id);
-//   }
-// };
-
-export const getAvatar = () => (state) => state.avatar.entities;
+// export const getAvatar = () => (state) => state.avatar.entities;
 // export const getavatarLoadingStatus = () => (state) => state.avatar.isLoading;
 // export const getDataavatarStatus = () => (state) => state.avatar.dataLoaded;
 

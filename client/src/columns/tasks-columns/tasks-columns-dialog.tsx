@@ -71,7 +71,10 @@ export const tasksColumnsDialog = [
     header: "Задачу поставил",
     cell: (info) => {
       const userId = info.getValue();
-      const getAvatarSrc = () => useGetUserAvatar(userId);
+      const getAvatarSrc = () => {
+        const { avatarSrc, isLoading } = useGetUserAvatar(userId);
+        return isLoading ? null : avatarSrc;
+      };
       return <AlignCenter><UserNameWithAvatar userId={userId} avatarSrc={getAvatarSrc()} /></AlignCenter> 
     },
   },

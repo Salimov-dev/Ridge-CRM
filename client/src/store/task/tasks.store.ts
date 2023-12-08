@@ -128,7 +128,6 @@ export const updateTask = (payload) => async (dispatch) => {
 };
 
 export const updateTaskUpdate = (payload) => async (dispatch) => {
-  dispatch(taskUpdateRequested());
   try {
     dispatch(taskUpdateSuccessed(payload));
   } catch (error) {

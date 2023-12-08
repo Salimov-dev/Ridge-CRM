@@ -1,9 +1,9 @@
 import { Box,styled } from "@mui/material";
-import Loader from "../../../components/common/loader/loader";
+import basicAva from "../../../assets/basic-ava.jpg"
 
 const Avatar = styled("img")({
   width: "200px",
-  borderRadius: "20px",
+  borderRadius: "50%",
 });
 
 const AvatarImage = ({ avatarSrc }) => {
@@ -11,8 +11,8 @@ const AvatarImage = ({ avatarSrc }) => {
     <Box>
       {avatarSrc ? (
         <Avatar src={avatarSrc} alt="User Avatar" />
-      ) : (
-        <Loader width="200px"/>
+        ) : (
+        <Avatar src={basicAva} alt="User Avatar" />
       )}
     </Box>
   );
