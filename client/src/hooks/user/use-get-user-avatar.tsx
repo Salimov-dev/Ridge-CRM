@@ -7,6 +7,7 @@ const useGetUserAvatar = (userId) => {
   const [isLoading, setIsLoading] = useState(true);
   
   const userAvatarsList = useSelector(getUserAvatarsList());
+
   const usersArray = Array.isArray(userAvatarsList) ? userAvatarsList : [];
 
   const user = usersArray.find((user) => user.userId === userId);
@@ -28,13 +29,14 @@ const useGetUserAvatar = (userId) => {
     }
   };
 
+  const refreshAvatar = () => {
+    getUserAvatar(userId);
+  };
+  
   useEffect(() => {
     getUserAvatar(userId);
   });
 
-  const refreshAvatar = () => {
-    getUserAvatar(userId);
-  };
 
   return { avatarSrc, isLoading, refreshAvatar };
 };

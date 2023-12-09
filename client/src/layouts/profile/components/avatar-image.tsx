@@ -16,6 +16,7 @@ const AvatarImage = ({
   height = "150px",
   isLoading,
 }) => {
+
   return !isLoading ? (
     <Component>
       {avatarSrc ? (

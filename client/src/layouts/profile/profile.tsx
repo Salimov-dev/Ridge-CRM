@@ -1,6 +1,6 @@
 import { Box, styled } from "@mui/material";
 import { io } from "socket.io-client";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 // hooks
 import useGetUserAvatar from "../../hooks/user/use-get-user-avatar";
 // components
@@ -14,8 +14,11 @@ import configFile from "../../config.json";
 import {
   getCurrentUserData,
   getCurrentUserId,
-  getUsersLoadingStatus,
 } from "../../store/user/users.store";
+import { getUserAvatarsLoadingStatus, removeAvatar } from "../../store/avatar/avatar.store";
+import DeleteUserAvatarButton from "../../components/UI/dialogs/buttons/delete-user-avatar-button";
+import ConfirmRemoveDialog from "../../components/common/dialog/confirm-remove-dialog";
+import { useState } from "react";
 
 const AvatarContainer = styled(Box)`
   width: 150px;
@@ -24,33 +27,59 @@ const AvatarContainer = styled(Box)`
   gap: 6px;
 `;
 
-const Profile = () => {
-  const socket = io(configFile.ioEndPoint);
+const ButtonsContainer = styled(Box)`
+  display: flex;
+  gap: 4px;
+`;
 
+const Profile = () => {
+  const dispatch = useDispatch();
+  const [open, setOpen] = useState(false);
+
+  const socket = io(configFile.ioEndPoint);
+  
   const user = useSelector(getCurrentUserData());
-  const isUserLoading = useSelector(getUsersLoadingStatus());
+  const isUserLoading = useSelector(getUserAvatarsLoadingStatus());
   const currentUserId = useSelector(getCurrentUserId());
 
-  const { avatarSrc, isLoading, refreshAvatar } =
-    useGetUserAvatar(currentUserId);
+  const { avatarSrc } = useGetUserAvatar(currentUserId);
 
-  socket.on("updateAvatar", async () => {
-    refreshAvatar();
-  });
+  const handleDeleteAvatar = () => {
+    dispatch<any>(removeAvatar(currentUserId))
+  };
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   return (
     <Box>
       <LayoutTitle
         title={`Мой профиль: ${
-          !isUserLoading ? `${user?.name?.firstName} ${user?.name?.lastName}` : "загрузка..."
+          !isUserLoading
+            ? `${user?.name?.firstName} ${user?.name?.lastName}`
+            : "загрузка..."
         }`}
       />
       <AvatarContainer>
-        <AvatarImage avatarSrc={avatarSrc} isLoading={isLoading} />
-        <UpdateUserAvatarButton />
+        <AvatarImage avatarSrc={avatarSrc} isLoading={isUserLoading} />
+        <ButtonsContainer>
+          <UpdateUserAvatarButton />
+          <DeleteUserAvatarButton onOpen={handleClickOpen}/>
+        </ButtonsContainer>
       </AvatarContainer>
 
       <UpdateAvatarDialog />
+      <ConfirmRemoveDialog
+            removeId={currentUserId}
+            open={open}
+            onClose={handleClose}
+            onRemove={handleDeleteAvatar}
+          />
     </Box>
   );
 };

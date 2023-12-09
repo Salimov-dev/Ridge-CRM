@@ -38,6 +38,7 @@ const UpdateAvatar = React.memo(({ onClose }) => {
   const onClosePreview = () => {
     setPreview(null);
   };
+  
   const onCropPreview = (view) => {
     setPreview(view);
   };

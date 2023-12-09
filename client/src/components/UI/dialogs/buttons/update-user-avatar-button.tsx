@@ -1,6 +1,7 @@
 import { Button } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { setUpdateUserAvatarOpenState } from "../../../../store/avatar/update-avatar.store";
+import BorderColorOutlinedIcon from '@mui/icons-material/BorderColorOutlined';
 
 const UpdateUserAvatarButton = () => {
   const dispatch = useDispatch();
@@ -21,7 +22,7 @@ const UpdateUserAvatarButton = () => {
         "&:hover": { background: "green" },
       }}
     >
-      Изменить
+      <BorderColorOutlinedIcon/>
     </Button>
   );
 };

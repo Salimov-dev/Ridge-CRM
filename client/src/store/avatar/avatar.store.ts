@@ -4,7 +4,7 @@ import { createAction, createSlice } from "@reduxjs/toolkit";
 import configFile from "../../config.json";
 // services
 import localStorageService from "../../services/user/local.storage-service";
-import avatarUploadService from "../../services/upload/avatar-upload.service";
+import avatarService from "../../services/upload/avatar.service";
 import userService from "../../services/user/user.service";
 
 const socket = io(configFile.ioEndPoint);
@@ -36,18 +36,17 @@ const avatarSlice = createSlice({
       state.error = action.payload;
       state.isLoading = false;
     },
-    avatarUploaded: (state, action) => {
-      state.entities = action.payload;
-    },
     avatarUpdateSuccessed: (state, action) => {
       state.entities[
-        state.entities.findIndex((user) => user.userId === action.payload.userId)
+        state.entities.findIndex((item) => {
+          return item.userId === action.payload.userId})
       ] = action.payload;
+      state.isLoading = false;
     },
     avatarRemoved: (state, action) => {
-      // state.entities = state.entities.filter(
-      //   (meet) => meet._id !== action.payload
-      // );
+      state.entities = state.entities.filter(
+        (item) => item.userId !== action.payload
+      );
     },
   },
 });
@@ -56,9 +55,11 @@ const avatarUploadRequested = createAction("avatar/avatarUploadRequested");
 const avatarUpdateRequested = createAction("avatar/avatarUpdateRequested");
 const avatarUploadFailed = createAction("avatar/avatarUploadFailed");
 const avatarUpdateFailed = createAction("avatar/avatarUpdateFailed");
+const removeAvatarRequested = createAction("avatar/removeAvatarRequested");
+const removeAvatarFailed = createAction("avatar/removeAvatarFailed");
 
 const { reducer: avatarReducer, actions } = avatarSlice;
-const { avatarReceived, avatarUpdateSuccessed } = actions;
+const { avatarReceived, avatarUpdateSuccessed, avatarRemoved } = actions;
 
 export const loadAvatarList = () => async (dispatch) => {
   dispatch(avatarUploadRequested());
@@ -67,7 +68,7 @@ export const loadAvatarList = () => async (dispatch) => {
 
     const usersArray = await Promise.all(
       userContent.map(async (user) => {
-        const { content: avatarUploadContent } = await avatarUploadService.get(
+        const { content: avatarUploadContent } = await avatarService.get(
           user._id
         );
         const serializedSrc = btoa(
@@ -85,20 +86,10 @@ export const loadAvatarList = () => async (dispatch) => {
   }
 };
 
-export const uploadAvatar = (payload) => async (dispatch) => {
-  dispatch(avatarUploadRequested());
-  try {
-    await avatarUploadService.post(payload);
-  } catch (error) {
-    dispatch(avatarUploadFailed(error.message));
-    throw error;
-  }
-};
-
 export const updateAvatar = (payload) => async (dispatch) => {
   dispatch(avatarUpdateRequested());
   try {
-    await avatarUploadService.update(payload);
+    await avatarService.update(payload);
     socket.emit("avatarUpdated", payload);
   } catch (error) {
     dispatch(avatarUpdateFailed(error.message));
@@ -108,6 +99,7 @@ export const updateAvatar = (payload) => async (dispatch) => {
 
 export const updateAvatarUpdate = (payload) => async (dispatch) => {
   try {
+    
     dispatch(avatarUpdateSuccessed(payload));
   } catch (error) {
     dispatch(avatarUpdateFailed(error.message));
@@ -115,6 +107,27 @@ export const updateAvatarUpdate = (payload) => async (dispatch) => {
   }
 };
 
+export const removeAvatar = (userId) => async (dispatch) => {
+  dispatch(removeAvatarRequested());
+  try {
+    await avatarService.remove(userId);
+    socket.emit("avatarDeleted", userId);
+  } catch (error) {
+    dispatch(removeAvatarFailed(error.message));
+  }
+};
+
+export const removeAvatartUpdate =
+  (userId) => async (dispatch) => {
+    dispatch(removeAvatarRequested());
+    try {
+      dispatch(avatarRemoved(userId));
+    } catch (error) {
+      dispatch(avatarUpdateFailed(error.message));
+    }
+  };
+
 export const getUserAvatarsList = () => (state) => state.avatar.entities;
+export const getUserAvatarsLoadingStatus = () => (state) => state.avatar.isLoading;
 
 export default avatarReducer;

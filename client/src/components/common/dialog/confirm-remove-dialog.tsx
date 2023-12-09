@@ -39,7 +39,7 @@ const ConfirmRemoveDialog = ({ open, onClose, onRemove, removeId }) => {
           <Button autoFocus onClick={onClose} sx={{color: "white"}}>
             Отмена
           </Button>
-          <Button onClick={() => onRemove(removeId)} sx={{color: "white"}}>Подтверждаю</Button>
+          <Button onClick={() => {onRemove(removeId); onClose()}} sx={{color: "white"}}>Подтверждаю</Button>
         </DialogActions>
       </Dialog>
     </>

@@ -8,7 +8,7 @@ import { dirname } from "path";
 
 const router = express.Router({ mergeParams: true });
 
-router.get("/avatar/:userId", auth, async (req, res) => {
+router.get("/:userId", auth, async (req, res) => {
   try {
     const { userId } = req.params;
 
@@ -62,7 +62,7 @@ router.get("/avatar/:userId", auth, async (req, res) => {
   }
 });
 
-router.post("/avatar/update/:userId", auth, async (req, res) => {
+router.post("/update/:userId", auth, async (req, res) => {
   try {
     res.setHeader("Content-Type", "application/json");
     const userId = req.user._id;
@@ -99,5 +99,50 @@ router.post("/avatar/update/:userId", auth, async (req, res) => {
     });
   }
 });
+
+router.delete("/:userId", auth, async (req, res) => {
+  try {
+    const { userId } = req.params;
+
+    const company = await Company.findOne({
+      $or: [{ managers: userId }, { curators: userId }],
+    });
+
+    if (!company) {
+      return res.status(404).json({ message: "Company not found" });
+    }
+
+    const companyId = company._id.toString();
+    const currentModuleUrl = import.meta.url;
+    const currentModulePath = fileURLToPath(currentModuleUrl);
+    const currentModuleDir = dirname(currentModulePath);
+    const avatarFolderPath = path.join(
+      currentModuleDir,
+      `../../server/uploads/${companyId}/avatars/${userId}`
+    );
+
+    try {
+      // Check if the avatar folder exists
+      await fs.access(avatarFolderPath);
+
+      // Remove the avatar folder
+      await fs.rmdir(avatarFolderPath, { recursive: true });
+
+      res.status(200).json({ message: "Avatar deleted successfully" });
+    } catch (err) {
+      if (err.code === "ENOENT") {
+        // If the avatar folder doesn't exist, consider it as already deleted
+        return res.status(404).json({ message: "Avatar not found" });
+      } else {
+        throw err;
+      }
+    }
+  } catch (e) {
+    res.status(500).json({
+      message: e.message || "На сервере произошла ошибка, попробуйте позже",
+    });
+  }
+});
+
 
 export default router;

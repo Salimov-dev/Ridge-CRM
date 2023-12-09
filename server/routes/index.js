@@ -11,7 +11,7 @@ import meetings from "./meetings.routes.js";
 // tasks
 import tasksRoutes from "./tasks.routes.js";
 // uploads
-import uploadRoutes from "./upload.routes.js";
+import avatarRoutes from "./avatar.routes.js";
 // last contact
 import lastContactRoutes from "./last-contact.routes.js";
 // presentations
@@ -31,7 +31,7 @@ router.use("/meetings", meetings);
 // tasks
 router.use("/tasks", tasksRoutes);
 // uploads
-router.use("/upload", uploadRoutes);
+router.use("/avatar", avatarRoutes);
 // last contact
 router.use("/lastContact", lastContactRoutes);
 // presentations
