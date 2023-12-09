@@ -41,7 +41,7 @@ const avatarSlice = createSlice({
     },
     avatarUpdateSuccessed: (state, action) => {
       state.entities[
-        state.entities.findIndex((obj) => obj._id === action.payload._id)
+        state.entities.findIndex((user) => user.userId === action.payload.userId)
       ] = action.payload;
     },
     avatarRemoved: (state, action) => {
@@ -99,8 +99,16 @@ export const updateAvatar = (payload) => async (dispatch) => {
   dispatch(avatarUpdateRequested());
   try {
     await avatarUploadService.update(payload);
-    dispatch(avatarUpdateSuccessed(payload));
     socket.emit("avatarUpdated", payload);
+  } catch (error) {
+    dispatch(avatarUpdateFailed(error.message));
+    throw error;
+  }
+};
+
+export const updateAvatarUpdate = (payload) => async (dispatch) => {
+  try {
+    dispatch(avatarUpdateSuccessed(payload));
   } catch (error) {
     dispatch(avatarUpdateFailed(error.message));
     throw error;

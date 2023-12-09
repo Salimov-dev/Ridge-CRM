@@ -7,6 +7,7 @@ import handleObjectSocket from "./actions/handle-object-socket";
 import handlePresentationSocket from "./actions/handle-presentation-socket";
 import handleTaskSocket from "./actions/handle-task-socket";
 import handleUserSocket from "./actions/handle-user-socket";
+import handleAvatarSocket from "./actions/handle-avatar-socket";
 
 const Sockets = () => {
   const socket = io(configFile.ioEndPoint);
@@ -17,6 +18,7 @@ const Sockets = () => {
   handleTaskSocket(socket);
   handleLastContactSocket(socket);
   handlePresentationSocket(socket);
+  handleAvatarSocket(socket);
 };
 
 export default Sockets;

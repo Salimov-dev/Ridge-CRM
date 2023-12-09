@@ -43,16 +43,10 @@ export const usersColumns = [
         header: "Аватар",
         cell: (info) => {
           const userId = info.getValue();
-          const { avatarSrc, isLoading } = useGetUserAvatar(userId);
-          // console.log("avatarSrc", avatarSrc);
-          
-          
+          const { avatarSrc, isLoading } = useGetUserAvatar(userId);          
           const getAvatarSrc = () => {
             return isLoading ? null : avatarSrc;
           };
-          // useEffect(()=>{
-          //   getAvatarSrc()
-          // }, [userId])
           return (
             <UserNameWithAvatar userId={userId} avatarSrc={getAvatarSrc()} isLoading={isLoading}/>
           );

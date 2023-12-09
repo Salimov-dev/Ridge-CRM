@@ -1,6 +1,6 @@
 const SocketAvatar = (io, socket) => {
-  socket.on("avatarUpdated", async (newTask) => {
-    io.emit("updateAvatar", newTask);
+  socket.on("avatarUpdated", async (newAvatar) => {
+    io.emit("updateAvatar", newAvatar);
   });
 };
 

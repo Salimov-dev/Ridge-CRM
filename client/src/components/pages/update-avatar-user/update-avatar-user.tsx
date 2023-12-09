@@ -34,7 +34,6 @@ const UpdateAvatar = React.memo(({ onClose }) => {
 
   const currentUserId = useSelector(getCurrentUserId());
   const newPreview = preview?.replace(/^data:image\/\w+;base64,/, "");
-  console.log("newPreview", newPreview);
 
   const onClosePreview = () => {
     setPreview(null);
@@ -45,7 +44,7 @@ const UpdateAvatar = React.memo(({ onClose }) => {
 
   const handleUploadImage = () => {
     setIsLoading(true);
-    dispatch<any>(updateAvatar({ preview: newPreview, currentUserId }))
+    dispatch<any>(updateAvatar({ userId: currentUserId, src: newPreview  }))
       .then(() => {
         setIsLoading(false);
         onClose();

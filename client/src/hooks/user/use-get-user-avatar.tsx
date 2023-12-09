@@ -5,8 +5,8 @@ import { getUserAvatarsList } from "../../store/avatar/avatar.store";
 const useGetUserAvatar = (userId) => {
   const [avatarSrc, setAvatarSrc] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  
   const userAvatarsList = useSelector(getUserAvatarsList());
-
   const usersArray = Array.isArray(userAvatarsList) ? userAvatarsList : [];
 
   const user = usersArray.find((user) => user.userId === userId);

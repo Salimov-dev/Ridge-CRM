@@ -74,9 +74,8 @@ router.post("/avatar/update/:userId", auth, async (req, res) => {
       return res.status(404).json({ message: "Company not found" });
     }
 
-    const preview = req.body.preview;
-
     const companyId = company._id;
+    const preview = req.body.src;
     const currentModuleUrl = import.meta.url;
     const currentModulePath = fileURLToPath(currentModuleUrl);
     const currentModuleDir = dirname(currentModulePath);

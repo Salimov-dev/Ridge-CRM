@@ -10,9 +10,9 @@ const avatarUploadService = {
     return data;
   },
   update: async (payload) => {
-    const { currentUserId } = payload;
+    const { userId } = payload;
     const { data } = await httpService.post(
-      uploadEndpoint + "/update/" + currentUserId,
+      uploadEndpoint + "/update/" + userId,
       payload
     );
 
