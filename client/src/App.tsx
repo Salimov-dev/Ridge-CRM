@@ -14,7 +14,7 @@ import AppLoader from "./hoc/app-loader";
 // utils
 import ScrollToTop from "./utils/other/scroll-to-top";
 // theme
-import { ColorModeContext, useMode } from "./theme";
+import { ColorModeContext, useMode } from "./theme/theme";
 import AppRoutes from "./routes/routes";
 import Sockets from "./sockets/sockets";
 
@@ -25,18 +25,18 @@ function App() {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <AppLoader>
-          <Sockets/>
-            <ScrollToTop />
-            <AppStyled>
-              <Sidebar />
-              <RightSide>
-                <Box>
-                  <TopBar />
-                  <AppRoutes />
-                </Box>
-                <Footer />
-              </RightSide>
-            </AppStyled>
+          <Sockets />
+          <ScrollToTop />
+          <AppStyled>
+            <Sidebar />
+            <RightSide>
+              <Box>
+                <TopBar />
+                <AppRoutes />
+              </Box>
+              <Footer />
+            </RightSide>
+          </AppStyled>
         </AppLoader>
       </ThemeProvider>
       <ToastContainer

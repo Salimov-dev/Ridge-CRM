@@ -134,7 +134,11 @@ export const estateTypeColumns = [
     enableSorting: false,
     cell: (info) => {
       const type = info?.getValue()?.estateOptions?.objectProperties;
-      return type ? <AlignCenter>{FormatObjectProperties(type)}</AlignCenter> :  <EmptyTd />;
+      return type ? (
+        <AlignCenter>{FormatObjectProperties(type)}</AlignCenter>
+      ) : (
+        <EmptyTd />
+      );
     },
   },
   {
@@ -143,7 +147,11 @@ export const estateTypeColumns = [
     enableSorting: false,
     cell: (info) => {
       const tradeArea = info?.getValue()?.estateOptions?.tradeArea;
-      return tradeArea ? <AlignCenter>{FormatObjectTradeArea(tradeArea)}</AlignCenter> :  <EmptyTd />;
+      return tradeArea ? (
+        <AlignCenter>{FormatObjectTradeArea(tradeArea)}</AlignCenter>
+      ) : (
+        <EmptyTd />
+      );
     },
   },
   {
@@ -287,8 +295,8 @@ export const commercialTermsColumns = [
     enableSorting: false,
     cell: (info) => {
       const object = info.getValue();
-      const rentPrice = object?.commercialTerms.rentPrice
-      const rentSquare = object?.commercialTerms.rentSquare
+      const rentPrice = object?.commercialTerms.rentPrice;
+      const rentSquare = object?.commercialTerms.rentSquare;
       const priceForMetr = Math.round(rentPrice / rentSquare);
 
       const result = makeDigitSeparator(priceForMetr);
@@ -342,7 +350,7 @@ export const commercialTermsColumns = [
     enableSorting: false,
     cell: (info) => {
       const advanseDeposit = info?.getValue()?.commercialTerms?.advanseDeposit;
-      return advanseDeposit  ? (
+      return advanseDeposit ? (
         <AlignCenter>{`${makeDigitSeparator(advanseDeposit)}₽`}</AlignCenter>
       ) : (
         <EmptyTd />

@@ -21,9 +21,9 @@ import {
 } from "../../../store/user/users.store";
 import React from "react";
 
-const ObjectPage = React.memo(({ onClose }) => {
+const ObjectPage = React.memo(({ objectId, onClose, onEdit }) => {
   const dispatch = useDispatch();
-  const objectId = useSelector(getOpenObjectPageId());
+  // const objectId = useSelector(getOpenObjectPageId());
   const object = useSelector(getObjectById(objectId));
   const isLoading = useSelector(getObjectsLoadingStatus());
 
@@ -50,7 +50,7 @@ const ObjectPage = React.memo(({ onClose }) => {
       <Header
         object={object}
         onClose={onClose}
-        onEdit={handleOpenEditObject}
+        onEdit={onEdit}
         isLoading={isLoading}
         isEdit={true}
         isAuthorEntity={isAuthorEntity}

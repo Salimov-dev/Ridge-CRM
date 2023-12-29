@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import { Box, Typography, Link, useTheme } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { tokens } from "../../../theme";
+import { tokens } from "../../../theme/theme";
 
 const Account = styled(Box)`
   display: flex;

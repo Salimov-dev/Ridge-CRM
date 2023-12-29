@@ -18,6 +18,7 @@ import { getTaskById } from "../../store/task/tasks.store";
 import {
   getCurrentUserId,
   getIsUserAuthorThisEntity,
+  getUsersLoadingStatus,
 } from "../../store/user/users.store";
 import {
   setUpdateManagerTaskId,
@@ -87,6 +88,7 @@ export const tasksColumnsDialog = [
     header: "Ответственный",
     cell: (info) => {
       const managerId = info.getValue();
+      const isLoading = useSelector(getUsersLoadingStatus());
       const getAvatarSrc = () => useGetUserAvatar(managerId);
       return (
         <AlignCenter>

@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Box, Typography, styled, useTheme } from "@mui/material";
 import { Sidebar as ProSidebar, Menu } from "react-pro-sidebar";
 // theme
-import { tokens } from "../../../theme";
+import { tokens } from "../../../theme/theme";
 // components
 import Header from "./components/header";
 import ItemsList from "./components/items-list";
@@ -24,7 +24,7 @@ const Component = styled(Box)`
   overflow-x: hidden;
 `;
 
-const Sidebar = React.memo (() => {
+const Sidebar = React.memo(() => {
   const dispatch = useDispatch();
 
   const currentPath = useSelector(getCurrrentPathState());
@@ -138,7 +138,7 @@ const Sidebar = React.memo (() => {
             position: "absolute",
             left: "-45px",
             bottom: "100px",
-            whiteSpace: "nowrap"
+            whiteSpace: "nowrap",
           }}
         >
           Г Р Я Д К А

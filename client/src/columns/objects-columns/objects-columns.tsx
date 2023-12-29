@@ -11,6 +11,7 @@ import Flags from "../../components/common/columns/flags";
 import { AlignCenter } from "../../components/common/columns/styled";
 import EmptyTd from "../../components/common/columns/empty-td";
 import MultiColorContainedButton from "../../components/common/buttons/multi-color-contained-button";
+import UserNameWithAvatar from "../../components/common/table/helpers/user-name-with-avatar";
 import {
   FormatMetro,
   FormatObjectStatus,
@@ -28,8 +29,58 @@ import {
   getObjectMeetingsList,
 } from "../../store/meeting/meetings.store";
 import { getDistrictName } from "../../store/object-params/districts.store";
+import { getUserDataById } from "../../store/user/users.store";
+import React, { HTMLProps } from "react";
+import useGetUserAvatar from "../../hooks/user/use-get-user-avatar";
 
-export const objectsColumns = [
+function IndeterminateCheckbox({
+  indeterminate,
+  className = "",
+  ...rest
+}: { indeterminate?: boolean } & HTMLProps) {
+  const ref = React.useRef(null!);
+
+  React.useEffect(() => {
+    if (typeof indeterminate === "boolean") {
+      ref.current.indeterminate = !rest.checked && indeterminate;
+    }
+  }, [ref, indeterminate]);
+
+  return (
+    <input
+      type="checkbox"
+      ref={ref}
+      className={className + " cursor-pointer"}
+      {...rest}
+    />
+  );
+}
+
+export const objectsColumns = (handleOpenObjectPage, isCurator) => [
+  {
+    id: "select",
+    header: ({ table }) => (
+      <IndeterminateCheckbox
+        {...{
+          checked: table.getIsAllRowsSelected(),
+          indeterminate: table.getIsSomeRowsSelected(),
+          onChange: table.getToggleAllRowsSelectedHandler(),
+        }}
+      />
+    ),
+    cell: ({ row }) => (
+      <div className="px-1">
+        <IndeterminateCheckbox
+          {...{
+            checked: row.getIsSelected(),
+            disabled: !row.getCanSelect(),
+            indeterminate: row.getIsSomeSelected(),
+            onChange: row.getToggleSelectedHandler(),
+          }}
+        />
+      </div>
+    ),
+  },
   {
     accessorKey: "created_at",
     header: "Дата",
@@ -210,6 +261,25 @@ export const objectsColumns = [
     header: "Другое",
     columns: [
       {
+        accessorKey: "userId",
+        header: "Менеджер",
+        cell: (info) => {
+          const userId = info.getValue();
+          const user = useSelector(getUserDataById(userId));
+          const { avatarSrc, isLoading } = useGetUserAvatar(user?._id);
+          const getAvatarSrc = () => {
+            return isLoading ? null : avatarSrc;
+          };
+          return (
+            <UserNameWithAvatar
+              userId={userId}
+              avatarSrc={getAvatarSrc()}
+              isLoading={isLoading}
+            />
+          );
+        },
+      },
+      {
         accessorKey: "status",
         header: "Статус",
         cell: (info) => {
@@ -255,10 +325,15 @@ export const objectsColumns = [
           const objectId = info.getValue();
           const dispatch = useDispatch();
 
-          const handleClick = () => {
-            dispatch<any>(setOpenObjectPageId(objectId));
-            dispatch<any>(setOpenObjectPageOpenState(true));
-          };
+          // const handleClick = () => {
+          //   setState((prevState) => ({
+          //     ...prevState,
+          //     objectId: objectId,
+          //     page: true,
+          //   }));
+          //   dispatch<any>(setOpenObjectPageId(objectId));
+          //   dispatch<any>(setOpenObjectPageOpenState(true));
+          // };
 
           return (
             <MultiColorContainedButton
@@ -266,7 +341,7 @@ export const objectsColumns = [
               backgroudHover="green"
               fontColor="white"
               text="Открыть"
-              onClick={handleClick}
+              onClick={() => handleOpenObjectPage(objectId)}
             />
           );
         },

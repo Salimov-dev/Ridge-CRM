@@ -7,7 +7,26 @@
     "skipLibCheck": true,
 
     /* Bundler mode */
-    "moduleResolution": "bundler",
+    "moduleResolution": "node", // Change to "node" for paths to work properly
+    "baseUrl": "./", // Set the base URL for relative paths
+    "paths": {
+      "@components/*": ["src/components/*"],
+      "@common/*": ["src/components/common/*"],
+      "@ui/*": ["src/components/ui/*"],
+      "@pages/*": ["src/components/pages/*"],
+      "@columns/*": ["src/columns/*"],
+      "@hooks/*": ["src/hooks/*"],
+      "@store/*": ["src/store/*"],
+      "@layouts/*": ["src/layouts/*"],
+      "@data/*": ["src/data/*"],
+      "@schemas/*": ["src/schemas/*"],
+      "@services/*": ["src/services/*"],
+      "@sockets/*": ["src/sockets/*"],
+      "@hoc/*": ["src/hoc/*"],
+      "@utils/*": ["src/utils/*"],
+      "@routes/*": ["src/routes/*"],
+      "@theme/*": ["src/theme/*"]
+    },
     "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
     "isolatedModules": true,

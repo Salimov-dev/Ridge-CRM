@@ -6,36 +6,31 @@ import { useSelector } from "react-redux";
 import React, { useEffect, useMemo, useState } from "react";
 // columns
 import { objectsColumns } from "../../columns/objects-columns/objects-columns";
-import { objectsColumnsCuratorWithCheckbox } from "../../columns/objects-columns/objects-columns-curator-with-checkbox";
 // components
-import ObjectBaloon from "../../components/UI/maps/object-baloon";
-import ObjectsFiltersPanel from "../../components/UI/filters-panels/objects-filters-panel";
-import BasicTable from "../../components/common/table/basic-table";
-import LayoutTitle from "../../components/common/page-titles/layout-title";
-import ItemsOnMap from "../../components/common/map/items-on-map/items-on-map";
-import AddAndClearFiltersButton from "../../components/common/buttons/add-and-clear-filters-button";
-import ObjectPageDialog from "../../components/UI/dialogs/object-page-dialog/object-page-dialog";
-import ObjectUpdatePageDialog from "../../components/UI/dialogs/objects/object-update-page-dialog";
-import ObjectCreatePageDialog from "../../components/UI/dialogs/objects/object-create-page-dialog";
-import CreateObjectButton from "../../components/UI/dialogs/buttons/create-object-button";
-import ExportToExelButton from "../../components/common/buttons/export-to-excel-button";
-import PresentationCreatePageDialog from "../../components/UI/dialogs/presentations/presentation-create-page-dialog";
-import TransferObjectToAnotherManagerButton from "../../components/UI/dialogs/buttons/transfer-object-to-another-manager-button";
-import TransferObjectToAnotherManagerDialog from "../../components/UI/dialogs/objects/transfer-object-to-another-manager-dialog";
+import ObjectBaloon from "@components/UI/maps/object-baloon";
+import ObjectsFiltersPanel from "@components/UI/filters-panels/objects-filters-panel";
+import BasicTable from "@components/common/table/basic-table";
+import LayoutTitle from "@components/common/page-titles/layout-title";
+import ItemsOnMap from "@components/common/map/items-on-map/items-on-map";
+import ExportToExelButton from "@components/common/buttons/export-to-excel-button";
+import CreateObject from "@components/pages/create-object/create-object";
+import DialogStyled from "@components/common/dialog/dialog-styled";
+import UpdateObject from "@components/pages/update-object/update-object";
+import ObjectPage from "@components/pages/object-page/object-page";
+import CreatePresentation from "@components/pages/create-presentation/create-presentation";
+import Buttons from "./components/buttons";
+import TransferObjectToAnotherManager from "@components/pages/transfer-object-to-another-manager/transfer-object-to-another-manager";
 // hooks
-import useSearchObject from "../../hooks/object/use-search-object";
-import useModifyObjectToExportExel from "../../hooks/object/use-modify-object-to-export-exel";
+import useSearchObject from "@hooks/object/use-search-object";
+import useModifyObjectToExportExel from "@hooks/object/use-modify-object-to-export-exel";
 // store
-import { getObjectsStatusList } from "../../store/object-params/object-status.store";
-import {
-  getCurrentUserId,
-  getIsUserCurator,
-} from "../../store/user/users.store";
+import { getObjectsStatusList } from "@store/object-params/object-status.store";
+import { getCurrentUserId, getIsUserCurator } from "@store/user/users.store";
 import {
   getObjectById,
   getObjectsList,
   getObjectsLoadingStatus,
-} from "../../store/object/objects.store";
+} from "@store/object/objects.store";
 
 const initialState = {
   address: "",
@@ -59,9 +54,18 @@ const initialState = {
 };
 
 const Objects = React.memo(() => {
-  const [selectedBaloon, setSelectedBaloon] = useState(null);
   const [rowSelection, setRowSelection] = useState([]);
+  const [selectedBaloon, setSelectedBaloon] = useState(null);
   const [selectedObjects, setSelectedObjects] = useState([]);
+
+  const [state, setState] = useState({
+    objectPage: false,
+    createPage: false,
+    updatePage: false,
+    objectId: null,
+    presentationPage: false,
+    transferObjectPage: false,
+  });
 
   const localStorageState = JSON.parse(
     localStorage.getItem("search-objects-data")
@@ -83,25 +87,62 @@ const Objects = React.memo(() => {
   });
 
   const data = watch();
+  const currentUserId = useSelector(getCurrentUserId());
   const isInputEmpty = JSON.stringify(initialState) !== JSON.stringify(data);
-
+  const isLoading = useSelector(getObjectsLoadingStatus());
+  const isCurator = useSelector(getIsUserCurator(currentUserId));
   const objects = useSelector(getObjectsList());
   const objectsSatuses = useSelector(getObjectsStatusList());
-  const isLoading = useSelector(getObjectsLoadingStatus());
   const selectedObject = useSelector(getObjectById(selectedBaloon));
-
-  const currentUserId = useSelector(getCurrentUserId());
-  const isCurator = useSelector(getIsUserCurator(currentUserId));
-  const columns = isCurator
-    ? objectsColumnsCuratorWithCheckbox
-    : objectsColumns;
-
   const searchedObjects = useSearchObject(objects, data);
-  
   const sortedObjects = useMemo(() => {
     return orderBy(searchedObjects, ["created_at"], ["desc"]);
   }, [searchedObjects]);
   const modifiedObjectsData = useModifyObjectToExportExel(sortedObjects);
+
+  // обновление стейта при открытии страницы создания объекта
+  const handleOpenCreateObjectPage = () => {
+    setState((prevState) => ({ ...prevState, createPage: true }));
+  };
+  const handleCloseCreateObjectPage = () => {
+    setState((prevState) => ({ ...prevState, createPage: false }));
+  };
+
+  // обновление стейта при открытии страницы обновления объекта
+  const handleOpenUpdateObjectPage = () => {
+    setState((prevState) => ({ ...prevState, updatePage: true }));
+  };
+  const handleCloseUpdateObjectPage = () => {
+    setState((prevState) => ({ ...prevState, updatePage: false }));
+  };
+
+  // обновление стейта при открытии страницы объекта
+  const handleOpenObjectPage = (objectId) => {
+    setState((prevState) => ({
+      ...prevState,
+      objectPage: true,
+      objectId: objectId,
+    }));
+  };
+  const handleCloseObjectPage = () => {
+    setState((prevState) => ({ ...prevState, objectPage: false }));
+  };
+
+  // обновление стейта при открытии окна создания презентации
+  const handleOpenCreatePresentationPage = () => {
+    setState((prevState) => ({ ...prevState, presentationPage: true }));
+  };
+  const handleCloseCreatePresentationPage = () => {
+    setState((prevState) => ({ ...prevState, presentationPage: false }));
+  };
+
+  // обновление стейта при открытии окна передачи объекта другому менеджеру
+  const handleOpenTransferObjectPage = () => {
+    setState((prevState) => ({ ...prevState, transferObjectPage: true }));
+  };
+  const handleCloseTransferObjectPage = () => {
+    setState((prevState) => ({ ...prevState, transferObjectPage: false }));
+  };
 
   useEffect(() => {
     localStorage.setItem("search-objects-data", JSON.stringify(data));
@@ -138,18 +179,13 @@ const Objects = React.memo(() => {
   return (
     <>
       <LayoutTitle title="Таблица объектов" />
-      <AddAndClearFiltersButton
-        isInputEmpty={isInputEmpty}
-        reset={reset}
+      <Buttons
         initialState={initialState}
-        button={
-          <>
-            <CreateObjectButton />
-            {isCurator && <TransferObjectToAnotherManagerButton />}
-          </>
-        }
+        reset={reset}
+        onOpenCreateObjectPage={handleOpenCreateObjectPage}
+        isCurator={isCurator}
+        isInputEmpty={isInputEmpty}
       />
-
       <ItemsOnMap
         items={searchedObjects}
         onClick={setSelectedBaloon}
@@ -169,23 +205,60 @@ const Objects = React.memo(() => {
         rowSelection={rowSelection}
         setRowSelection={setRowSelection}
         items={sortedObjects}
-        itemsColumns={columns}
+        itemsColumns={objectsColumns(handleOpenObjectPage, isCurator)}
         isLoading={isLoading}
       />
       {isCurator && (
         <ExportToExelButton
-          title="Скачать объекты в EXEL"
+          title="Скачать все объекты в EXEL"
           data={modifiedObjectsData}
         />
       )}
 
-      <ObjectCreatePageDialog />
-      <ObjectPageDialog />
-      <ObjectUpdatePageDialog />
-      <PresentationCreatePageDialog />
-      <TransferObjectToAnotherManagerDialog
-        objectsToTransfer={selectedObjects}
-        setRowSelection={setRowSelection}
+      <DialogStyled
+        component={
+          <ObjectPage
+            onClose={handleCloseObjectPage}
+            onEdit={handleOpenUpdateObjectPage}
+            objectId={state.objectId}
+          />
+        }
+        onClose={handleCloseObjectPage}
+        open={state.objectPage}
+        maxWidth="lg"
+      />
+      <DialogStyled
+        component={<CreateObject onClose={handleCloseCreateObjectPage} />}
+        onClose={handleCloseCreateObjectPage}
+        open={state.createPage}
+        maxWidth="lg"
+      />
+      <DialogStyled
+        component={<UpdateObject onClose={handleCloseUpdateObjectPage} />}
+        onClose={handleCloseUpdateObjectPage}
+        open={state.updatePage}
+        maxWidth="lg"
+      />
+      <DialogStyled
+        component={
+          <CreatePresentation onClose={handleCloseCreatePresentationPage} />
+        }
+        onClose={handleCloseUpdateObjectPage}
+        open={state.presentationPage}
+        maxWidth="lg"
+      />
+      <DialogStyled
+        onClose={handleCloseTransferObjectPage}
+        open={state.transferObjectPage}
+        fullWidth={false}
+        component={
+          <TransferObjectToAnotherManager
+            title="Передать объекты"
+            objectsToTransfer={selectedObjects}
+            onClose={handleCloseTransferObjectPage}
+            setRowSelection={setRowSelection}
+          />
+        }
       />
     </>
   );

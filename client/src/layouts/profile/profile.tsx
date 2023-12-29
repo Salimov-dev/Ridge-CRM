@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Box, styled } from "@mui/material";
 import { io } from "socket.io-client";
 import { useDispatch, useSelector } from "react-redux";
@@ -18,7 +19,6 @@ import {
 import { getUserAvatarsLoadingStatus, removeAvatar } from "../../store/avatar/avatar.store";
 import DeleteUserAvatarButton from "../../components/UI/dialogs/buttons/delete-user-avatar-button";
 import ConfirmRemoveDialog from "../../components/common/dialog/confirm-remove-dialog";
-import { useState } from "react";
 
 const AvatarContainer = styled(Box)`
   width: 150px;

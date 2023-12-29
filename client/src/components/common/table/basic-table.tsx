@@ -21,14 +21,14 @@ import {
 // store
 import { getOpenObjectPageOpenState } from "../../../store/object/open-object-page.store";
 // theme
-import { tokens } from "../../../theme";
+import { tokens } from "../../../theme/theme";
 
 const BasicTable = ({
   rowSelection = [],
   setRowSelection = () => {},
   items,
   itemsColumns,
-  hasFooter=false,
+  hasFooter = false,
   isLoading,
   isPaginate = true,
 }) => {
@@ -60,9 +60,9 @@ const BasicTable = ({
     <>
       <table>
         <Thead table={table} colors={colors} isDialogMode={isDialogMode} />
-        {!isLoading && <Tbody table={table} hasFooter={hasFooter}/>}
+        {!isLoading && <Tbody table={table} hasFooter={hasFooter} />}
       </table>
-      {isLoading && <Loader height="150px"/>}
+      {isLoading && <Loader height="150px" />}
 
       {isPaginate && (
         <Pagination table={table} colors={colors} quantity={items?.length} />
