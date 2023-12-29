@@ -2,23 +2,20 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
-import { toast } from "react-toastify";
 // components
-import ObjectForm from "../../common/forms/object-form/object-form";
-import FindObjectOnMap from "../../common/find-object-on-map/find-object-on-map";
-import TitleWithAddress from "../../common/page-titles/title-with-address";
-import IsLoadingDialog from "../../common/dialog/is-loading-dialog";
+import ObjectForm from "@common/forms/object-form/object-form";
+import FindObjectOnMap from "@common/find-object-on-map/find-object-on-map";
+import TitleWithAddress from "@common/page-titles/title-with-address";
+import IsLoadingDialog from "@common/dialog/is-loading-dialog";
 // store
-import {
-  createObject,
-  getObjectsList,
-} from "../../../store/object/objects.store";
+import { getObjectsList } from "@store/object/objects.store";
 // hooks
-import useFindObject from "../../../hooks/object/use-find-object";
+import useFindObject from "@hooks/object/use-find-object";
 // utils
-import { capitalizeFirstLetter } from "../../../utils/data/capitalize-first-letter";
-import { Box, Typography } from "@mui/material";
+import { capitalizeFirstLetter } from "@utils/data/capitalize-first-letter";
 import AlertObjectInDatabase from "./components/alert-object-in-database";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { objectSchema } from "@schemas/object-schema";
 
 const initialState = {
   status: "",
@@ -78,11 +75,14 @@ const CreateObject = React.memo(({ onClose }) => {
     watch,
     handleSubmit,
     setValue,
-    formState: { errors },
+    formState: { errors, isValid },
   } = useForm({
     defaultValues: initialState,
-    mode: "onBlur",
+    mode: "onChange",
+    resolver: yupResolver(objectSchema),
   });
+  console.log("errors", errors);
+  // console.log("isValid", isValid);
 
   const {
     getCity,
@@ -94,34 +94,20 @@ const CreateObject = React.memo(({ onClose }) => {
   } = useFindObject();
 
   const data = watch();
+  console.log("data", data);
+
   const objects = useSelector(getObjectsList());
 
   const watchAddress = watch<any>("location.address", "");
   const watchCity = watch<any>("location.city", "");
-  const watchDistrict = watch("location.district", "");
-  const watchObjectTypes = watch("estateOptions.objectTypes", "");
-  const watchEstateTypes = watch("estateOptions.estateTypes", "");
-  const watchCurrentRenters = watch("estateOptions.currentRenters", "");
-  const watchStatus = watch("status", "");
-  const watchObjectProperties = watch("estateOptions.objectProperties", "");
-  const watchObjectTradeArea = watch("estateOptions.tradeArea", "");
-  const isWatchValid =
-    Boolean(watchDistrict) &&
-    Boolean(watchObjectTypes) &&
-    Boolean(watchEstateTypes) &&
-    Boolean(watchCurrentRenters) &&
-    Boolean(watchStatus) &&
-    Boolean(watchObjectProperties) &&
-    Boolean(watchObjectTradeArea);
 
   const isFindedObject = Boolean(Object.keys(findedObject)?.length);
   const findedObjectFullAddress = `${watchCity}, ${watchAddress}`;
   const isObjectHasAddress = Boolean(watchCity) && Boolean(watchAddress);
-  const isValidAndHasAdress =
-    isFindedObject && isObjectHasAddress && isWatchValid;
+  const isValidAndHasAdress = isFindedObject && isObjectHasAddress && isValid;
 
   const onSubmit = (data) => {
-    setIsLoading(true);
+    // setIsLoading(true);
 
     const newData = {
       ...data,
@@ -146,16 +132,15 @@ const CreateObject = React.memo(({ onClose }) => {
         ),
       },
     };
-    dispatch<any>(createObject(newData))
-      .then(() => {
-        setIsLoading(false);
-        onClose();
-        toast.success("Объект успешно создан!");
-      })
-      .catch((error) => {
-        setIsLoading(false);
-        toast.error(error);
-      });
+    // dispatch<any>(createObject(newData))
+    //   .then(() => {
+    //     setIsLoading(false);
+    //     onClose();
+    //   })
+    //   .catch((error) => {
+    //     setIsLoading(false);
+    //     toast.error(error);
+    //   });
   };
 
   useEffect(() => {

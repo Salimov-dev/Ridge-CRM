@@ -20,7 +20,7 @@ const StyledSelect = styled(Select)(({ theme }) => ({
     marginTop: "-5px",
     height: "24px !important",
   },
-  zIndex: theme.zIndex.modal + 1
+  zIndex: theme.zIndex.modal + 1,
 }));
 
 const SimpleSelectField = ({
@@ -29,6 +29,7 @@ const SimpleSelectField = ({
   labelId,
   label,
   itemsList,
+  required = false,
   value,
   disabled = false,
   errors = null,
@@ -69,6 +70,7 @@ const SimpleSelectField = ({
         value={value || ""}
         input={<OutlinedInput label={label} />}
         MenuProps={MenuProps}
+        required={required}
         disabled={disabled}
         defaultValue=""
         error={!!errors}
@@ -78,7 +80,6 @@ const SimpleSelectField = ({
           },
           "& .MuiInputLabel-root": {
             color: selectedItems ? "white" : "gray",
-  
           },
         }}
       >

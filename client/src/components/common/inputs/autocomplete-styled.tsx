@@ -1,4 +1,11 @@
-import { Autocomplete, FormHelperText, TextField } from "@mui/material";
+import styled from "@emotion/styled";
+import { Autocomplete, Box, FormHelperText, TextField } from "@mui/material";
+
+const Component = styled(Box)`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+`;
 
 const AutocompleteStyled = ({
   register,
@@ -7,18 +14,20 @@ const AutocompleteStyled = ({
   options,
   watchItemId,
   setValue,
+  required = false,
   disabled = false,
   label,
   errors = null,
   width = "100%",
 }) => {
   return (
-    <>
+    <Component>
       <Autocomplete
         {...register(name)}
         disablePortal
         id={name}
         options={options}
+        required={required}
         value={
           value
             ? options.find((option) => {
@@ -56,7 +65,7 @@ const AutocompleteStyled = ({
           },
           "&:not(:focus-within)": {
             "& .MuiOutlinedInput-notchedOutline": {
-              borderColor: "gray !important",
+              borderColor: errors ? "yellow !important" : "gray !important",
             },
             "& .MuiInputLabel-root": {
               color: "gray",
@@ -77,10 +86,10 @@ const AutocompleteStyled = ({
           },
         }}
       />
-      <FormHelperText sx={{ color: "Crimson" }}>
+      <FormHelperText sx={{ color: "yellow" }}>
         {errors?.message}
       </FormHelperText>
-    </>
+    </Component>
   );
 };
 

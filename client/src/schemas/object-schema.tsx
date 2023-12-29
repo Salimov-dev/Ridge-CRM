@@ -13,6 +13,7 @@ export const objectSchema = yup.object().shape({
     currentRenters: yup.string().required("Выберите арендатора"),
     estateTypes: yup.string().required("Выберите тип"),
     objectTypes: yup.string().required("Выберите тип"),
+    tradeArea: yup.string().required("Выберите тип"),
     objectProperties: yup.string().required("Выберите расположение объекта"),
   }),
 });

@@ -147,76 +147,76 @@ const ObjectForm = ({
               errors={errors?.location?.district}
             />
           )}
-          <AutocompleteStyled
+          <SimpleSelectField
             label="Метро"
             register={register}
             name="location.metro"
-            options={sortedMetros}
-            value={watchMetro}
-            setValue={setValue}
-            watchItemId={watchMetro}
-            disabled={!watchDistrict && true}
+            labelId="location.metro"
+            required={true}
+            itemsList={sortedMetros}
+            value={watchMetro ?? ""}
+            disabled={!watchMetro && true}
           />
-          <AutocompleteStyled
-            label="Статус объекта *"
+          <SimpleSelectField
+            label="Статус объекта"
             register={register}
             name="status"
-            options={sortedObjectStatuses}
+            labelId="status"
+            required={true}
+            itemsList={sortedObjectStatuses}
             value={watchStatus ?? ""}
-            setValue={setValue}
-            watchItemId={watchStatus}
             errors={errors?.status}
           />
-          <AutocompleteStyled
-            label="Текущий арендатор *"
+          <SimpleSelectField
+            label="Текущий арендатор"
             register={register}
             name="estateOptions.currentRenters"
-            options={sortedCurrentRenters}
+            labelId="estateOptions.currentRenters"
+            required={true}
+            itemsList={sortedCurrentRenters}
             value={watchCurrentRenters ?? ""}
-            setValue={setValue}
-            watchItemId={watchCurrentRenters}
             errors={errors?.estateOptions?.currentRenters}
           />
         </FieldsContainer>
         <FieldsContainer sx={{ gap: "3px" }}>
-          <AutocompleteStyled
-            label="Тип объекта *"
+          <SimpleSelectField
+            label="Тип объекта"
             register={register}
             name="estateOptions.objectTypes"
-            options={sortedObjectTypes}
+            labelId="estateOptions.objectTypes"
+            required={true}
+            itemsList={sortedObjectTypes}
             value={watchObjectTypes ?? ""}
-            setValue={setValue}
-            watchItemId={watchObjectTypes}
             errors={errors?.estateOptions?.objectTypes}
           />
-          <AutocompleteStyled
-            label="Тип недвижимости *"
+          <SimpleSelectField
+            label="Тип недвижимости"
             register={register}
             name="estateOptions.estateTypes"
-            options={sortedEstateTypes}
+            labelId="estateOptions.estateTypes"
+            required={true}
+            itemsList={sortedEstateTypes}
             value={watchEstateTypes ?? ""}
-            setValue={setValue}
-            watchItemId={watchEstateTypes}
             errors={errors?.estateOptions?.estateTypes}
           />
-          <AutocompleteStyled
-            label="Расположение объекта *"
+          <SimpleSelectField
+            label="Расположение объекта"
             register={register}
             name="estateOptions.objectProperties"
-            options={sortedObjectProperties}
+            labelId="estateOptions.objectProperties"
+            required={true}
+            itemsList={sortedObjectProperties}
             value={watchObjectProperties ?? ""}
-            setValue={setValue}
-            watchItemId={watchObjectProperties}
             errors={errors?.estateOptions?.objectProperties}
           />
-          <AutocompleteStyled
-            label="Тип торговой площади *"
+          <SimpleSelectField
+            label="Тип торговой площади"
             register={register}
             name="estateOptions.tradeArea"
-            options={sortedObjectTradeArea}
+            labelId="estateOptions.tradeArea"
+            required={true}
+            itemsList={sortedObjectTradeArea}
             value={watchObjectTradeArea ?? ""}
-            setValue={setValue}
-            watchItemId={watchObjectTradeArea}
             errors={errors?.estateOptions?.tradeArea}
           />
         </FieldsContainer>
@@ -254,14 +254,14 @@ const ObjectForm = ({
               ),
             }}
           />
-          <AutocompleteStyled
+          <SimpleSelectField
             label="Позиция"
             register={register}
             name="contact.position"
-            options={sortedWorkingPositions}
+            labelId="contact.position"
+            required={true}
+            itemsList={sortedWorkingPositions}
             value={watchWorkingPosition ?? ""}
-            setValue={setValue}
-            watchItemId={watchWorkingPosition}
           />
           <TextFieldStyled
             register={register}
@@ -536,7 +536,7 @@ const ObjectForm = ({
         <FooterButtons
           onCreate={onCreate}
           isEditMode={true}
-          isValid={isValid}
+          isValid={!isValid}
           onClose={onClose}
           withoutRemoveButton={true}
         />
