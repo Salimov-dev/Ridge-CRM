@@ -3,7 +3,6 @@ import { Box, CssBaseline, ThemeProvider } from "@mui/material";
 import { ToastContainer } from "react-toastify";
 // styled
 import "./styles.css";
-import { AppStyled, RightSide } from "./styled";
 import "react-toastify/dist/ReactToastify.css";
 // components
 import TopBar from "./components/UI/topbar/topbar";
@@ -13,10 +12,30 @@ import Footer from "./components/common/footer/footer";
 import AppLoader from "./hoc/app-loader";
 // utils
 import ScrollToTop from "./utils/other/scroll-to-top";
+// image
+import grassImage from "./assets/grass.png"; // Путь к изображению
 // theme
 import { ColorModeContext, useMode } from "./theme/theme";
 import AppRoutes from "./routes/routes";
 import Sockets from "./sockets/sockets";
+import styled from "@emotion/styled";
+
+export const AppStyled = styled(Box)`
+  display: flex;
+  min-height: 100vh;
+`;
+
+export const RightSide = styled(Box)`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 0 20px 150px 20px;
+  width: 100%;
+  background-image: url(${grassImage});
+  background-repeat: repeat-x;
+  background-size: auto 35px;
+  background-position: bottom;
+`;
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -30,10 +49,8 @@ function App() {
           <AppStyled>
             <Sidebar />
             <RightSide>
-              <Box>
-                <TopBar />
-                <AppRoutes />
-              </Box>
+              <TopBar />
+              <AppRoutes />
               <Footer />
             </RightSide>
           </AppStyled>

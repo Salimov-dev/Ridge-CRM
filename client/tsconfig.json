@@ -25,7 +25,8 @@
       "@hoc/*": ["src/hoc/*"],
       "@utils/*": ["src/utils/*"],
       "@routes/*": ["src/routes/*"],
-      "@theme/*": ["src/theme/*"]
+      "@theme/*": ["src/theme/*"],
+      "@assets/*": ["src/assets/*"],
     },
     "allowImportingTsExtensions": true,
     "resolveJsonModule": true,

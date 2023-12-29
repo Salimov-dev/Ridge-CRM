@@ -1,29 +1,24 @@
 import dayjs from "dayjs";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import { useSelector } from "react-redux";
-// MUI
 import { Box, styled } from "@mui/material";
 // components
 import Loader from "../../loader/loader";
-// store
-import { getSidebarCollapsState } from "../../../../store/sidebar-collaps-state.store";
 // yandex map
-import targetDefault from "../../../../assets/map/target.png";
+import targetDefault from "@assets/map/target.png";
 import {
   Map,
   Placemark,
   Clusterer,
   FullscreenControl,
 } from "@pbe/react-yandex-maps";
-import target_cluster from "../../../../assets/map/target_cluster.png";
+import target_cluster from "@assets/map/target_cluster.png";
 // styles
 import "./styles.css";
 
 const MapContainer = styled(Box)`
   width: 100%;
   height: 350px;
-  flex: 5;
   display: flex;
   background: gray;
   margin-bottom: 20px;
@@ -38,15 +33,9 @@ const ItemsOnMap = ({
   targetCluster = target_cluster,
 }) => {
   const [activePortal, setActivePortal] = useState(false);
-  const [width, setWidth] = useState(null);
-  const isCollapsedSidebar = useSelector(getSidebarCollapsState());
 
   const center = [59.930320630519155, 30.32906024941998];
   const mapZoom = 11;
-
-  const screenWidth = window?.innerWidth;
-  const fullWidth = screenWidth - 262;
-  const collapseWidth = screenWidth - 126;
   const clustererInstanceRef = useRef(null);
 
   const Portal = ({ children, getHTMLElementId }) => {
@@ -63,27 +52,11 @@ const ItemsOnMap = ({
     return createPortal(children, el);
   };
 
-  const handleResize = () => {
-    setWidth(fullWidth);
-  };
-
-  useEffect(() => {
-    setWidth(isCollapsedSidebar ? collapseWidth : fullWidth);
-    window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
-
-  useEffect(() => {
-    setWidth(isCollapsedSidebar ? collapseWidth : fullWidth);
-  }, [isCollapsedSidebar]);
-
   return (
     <MapContainer>
       {!isLoading ? (
         <Map
-          width={width}
+          width="100%"
           height="100%"
           defaultState={{
             center: center,
