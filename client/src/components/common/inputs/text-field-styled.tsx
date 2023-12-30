@@ -1,14 +1,18 @@
+import { useTheme } from "@emotion/react";
 import { Box, TextField, styled, FormHelperText } from "@mui/material";
+import { tokens } from "@theme/theme";
+import { makeDigitSeparator } from "@utils/data/make-digit-separator";
+import Errors from "./errors";
 
-const StyledTextField = styled(TextField)(() => ({
+const StyledTextField = styled(TextField)(({ colors }) => ({
   minWidth: "30px",
   width: "100%",
   "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
-    borderColor: "green",
+    borderColor: colors.green["green"],
     color: "white",
   },
   "& .MuiInputLabel-root": {
-    color: "gray",
+    color: colors.grey[400],
     "&.Mui-focused": {
       color: "white",
     },
@@ -35,21 +39,30 @@ const TextFieldStyled = ({
   valueAsNumber = false,
   disabled = false,
   isHelperText = false,
-  helperText = "",
+  subtitle = "",
 }) => {
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
+
   const handleInput = (e) => {
     const maxLength = onInputQuantities;
-    if (e.target.value.length > maxLength) {
-      e.target.value = e.target.value.slice(0, maxLength);
+    let inputValue = e.target.value;
+
+    if (valueAsNumber) {
+      inputValue = makeDigitSeparator(inputValue);
     }
+
+    if (inputValue.length > maxLength) {
+      inputValue = inputValue.slice(0, maxLength);
+    }
+
+    e.target.value = inputValue;
   };
 
   return (
     <Box sx={{ width: "100%" }}>
       <StyledTextField
-        {...register(name, {
-          valueAsNumber: valueAsNumber,
-        })}
+        {...register(name)}
         variant="outlined"
         type={type}
         id={name}
@@ -60,12 +73,14 @@ const TextFieldStyled = ({
         inputProps={inputProps}
         multiline={multiline}
         error={!!errors}
-        helperText={errors?.message}
+        subtitle={errors?.message}
         disabled={disabled}
         onInput={(e) => handleInput(e)}
         onWheel={(e) => e.target.blur()}
+        colors={colors}
       />
-      {isHelperText ? <FormHelperText>{helperText}</FormHelperText> : null}
+      {isHelperText ? <FormHelperText>{subtitle}</FormHelperText> : null}
+      <Errors errors={errors} />
     </Box>
   );
 };

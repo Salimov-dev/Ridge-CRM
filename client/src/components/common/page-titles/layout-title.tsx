@@ -13,7 +13,7 @@ const LayoutTitle = ({ title, background = "yellow", color = "black" }) => {
     <Component>
       <Typography
         variant="h2"
-        sx={{ background: background, color: color, padding: "0 4px" }}
+        sx={{ background: background, color: color, padding: "0 10px" }}
       >
         {title}
       </Typography>

@@ -68,7 +68,7 @@ const metroListArraySPB = [
     name: "Заставская",
   },
   {
-    _id: "64c4d9a818e37d1120424057",
+    _id: "64c4d9a822e37d1120424057",
     name: "Звездная",
   },
   {

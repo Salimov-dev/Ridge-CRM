@@ -6,8 +6,27 @@ export const tokens = (mode) => ({
   ...(mode === "dark"
     ? {
         green: {
+          green: "#008000",
           seaGreen: "#2E8B57",
           darkGreen: "#006400",
+          mediumSeaGreen: "#3CB371",
+        },
+        error: {
+          red: "#FF0000",
+          gold: "#FFD700",
+        },
+        success: {
+          mediumSeaGreen: "#3CB371",
+          darkGreen: "#006400",
+        },
+        cancel: {
+          fireBrick: "#B22222",
+          red: "#FF0000",
+          indianRed: "#CD5C5C",
+          lightCoral: "#F08080",
+        },
+        entities: {
+          object: "#228B22",
         },
         grey: {
           100: "#e0e0e0",
@@ -67,7 +86,24 @@ export const tokens = (mode) => ({
       }
     : {
         green: {
+          green: "#008000",
           seaGreen: "#2E8B57",
+          darkGreen: "#006400",
+          mediumSeaGreen: "#3CB371",
+        },
+        error: {
+          red: "#FF0000",
+          gold: "#FFD700",
+        },
+        success: {
+          mediumSeaGreen: "#3CB371",
+          darkGreen: "#006400",
+        },
+        cancel: {
+          fireBrick: "#B22222",
+          red: "#FF0000",
+          indianRed: "#CD5C5C",
+          lightCoral: "#F08080",
         },
         grey: {
           100: "#141414",

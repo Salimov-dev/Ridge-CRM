@@ -7,25 +7,39 @@ import {
   MenuItem,
   OutlinedInput,
   ListItemText,
-  FormHelperText,
 } from "@mui/material";
 import { useTheme } from "@emotion/react";
 import { tokens } from "@theme/theme";
+import Errors from "./errors";
 
-const StyledSelect = styled(Select)(({ theme }) => ({
+const StyledSelect = styled(Select)(({ theme, colors, items }) => ({
   "&.Mui-focused": {
     "& .MuiOutlinedInput-notchedOutline": {
-      borderColor: "green",
+      borderColor: colors.green["green"],
     },
   },
   "& .MuiSelect-select": {
     marginTop: "-5px",
     height: "24px !important",
   },
+  "& .MuiOutlinedInput-notchedOutline": {
+    borderColor: items ? colors.green["green"] : colors.grey[400],
+  },
+  "& .MuiInputLabel-root": {
+    color: items ? "white" : colors.grey[400],
+  },
   zIndex: theme.zIndex.modal + 1,
 }));
 
-const SimpleSelectField = ({
+const StyledInputLabel = styled(InputLabel)(({ theme }) => ({
+  color: "gray !important",
+  "&.Mui-focused": {
+    color: "white !important",
+  },
+  zIndex: theme.zIndex.modal + 1,
+}));
+
+const SelectFieldStyled = ({
   register,
   name,
   labelId,
@@ -39,34 +53,13 @@ const SimpleSelectField = ({
 }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-
   const sortedItems = orderBy(itemsList, ["name"], ["asc"]);
-
-  const ITEM_HEIGHT = 48;
-  const ITEM_PADDING_TOP = 8;
-  const MenuProps = {
-    PaperProps: {
-      style: {
-        maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-        width: 250,
-      },
-    },
-  };
 
   return (
     <FormControl sx={{ minWidth: "200px", width: "100%" }}>
-      <InputLabel
-        required={required}
-        id={labelId}
-        sx={{
-          color: "gray !important",
-          "&.Mui-focused": {
-            color: "white !important",
-          },
-        }}
-      >
+      <StyledInputLabel required={required} id={labelId}>
         {label}
-      </InputLabel>
+      </StyledInputLabel>
 
       <StyledSelect
         {...register(name)}
@@ -75,18 +68,11 @@ const SimpleSelectField = ({
         name={name}
         value={value || ""}
         input={<OutlinedInput label={label} />}
-        MenuProps={MenuProps}
         disabled={disabled}
         defaultValue=""
         error={!!errors}
-        sx={{
-          "& .MuiOutlinedInput-notchedOutline": {
-            borderColor: selectedItems ? "green" : "gray",
-          },
-          "& .MuiInputLabel-root": {
-            color: selectedItems ? "white" : "gray",
-          },
-        }}
+        items={selectedItems}
+        colors={colors}
       >
         <MenuItem value="">
           <em>Отмена</em>
@@ -97,11 +83,9 @@ const SimpleSelectField = ({
           </MenuItem>
         ))}
       </StyledSelect>
-      <FormHelperText sx={{ color: colors.error["gold"] }}>
-        {errors?.message}
-      </FormHelperText>
+      <Errors errors={errors} />
     </FormControl>
   );
 };
 
-export default SimpleSelectField;
+export default SelectFieldStyled;

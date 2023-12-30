@@ -15,10 +15,14 @@ const Container = styled(Box)`
   gap: 8px;
 `;
 
-const Title = styled(Typography)`
+const Address = styled(Typography)`
   background: yellow;
   color: black;
   padding: 4px;
+`;
+
+const Title = styled(Typography)`
+  white-space: nowrap;
 `;
 
 const TitleWithAddress = ({
@@ -32,11 +36,11 @@ const TitleWithAddress = ({
   return (
     <Component>
       <Container>
-        <Typography variant="h2">{title}</Typography>
+        <Title variant="h2">{title}</Title>
         {isFindedObject ? (
-          <Title variant="h2">
+          <Address variant="h2">
             {city}, {address}
-          </Title>
+          </Address>
         ) : (
           <Typography
             variant="h2"

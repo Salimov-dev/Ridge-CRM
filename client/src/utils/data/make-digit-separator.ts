@@ -1,5 +1,9 @@
 export const makeDigitSeparator = (data) => {
   data = String(data);
 
-  return data?.replace(/[^\d]/g, "")?.replace(/\B(?=(?:\d{3})+(?!\d))/g, " ");
+  const result = data
+    ?.replace(/[^\d]/g, "")
+    ?.replace(/\B(?=(?:\d{3})+(?!\d))/g, " ");
+
+  return result;
 };

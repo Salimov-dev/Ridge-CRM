@@ -6,30 +6,52 @@ const ButtonStyled = ({
   title = "title",
   onClick = () => {},
   isLoading = false,
-  variant = "OBJECT",
+  style,
+  variant = "outlined",
 }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
   let color = "white";
+  let colorHover = "black";
+  let borderColor = colors.grey[700];
   let background = colors.grey[700];
-  let backgroundHover = colors.grey[300];
+  let backgroundHover = colors.green["darkGreen"];
 
-  if ((variant = "OBJECT")) {
+  if (style === "OBJECT") {
+    colorHover = "white";
     background = colors.green["seaGreen"];
     backgroundHover = colors.green["darkGreen"];
   }
 
+  if (style === "SUCCESS") {
+    color = colors.green["mediumSeaGreen"];
+    colorHover = "white";
+    borderColor = colors.success["mediumSeaGreen"];
+    backgroundHover = colors.success["darkGreen"];
+  }
+
+  if (style === "CANCEL") {
+    color = colors.cancel["lightCoral"];
+    colorHover = "white";
+    borderColor = colors.cancel["lightCoral"];
+    backgroundHover = colors.cancel["red"];
+  }
+
   return (
     <Button
-      variant="contained"
-      color="success"
+      variant={variant}
       onClick={onClick}
       disabled={isLoading}
       sx={{
         color: color,
+        borderColor: borderColor,
         background: background,
-        "&:hover": { background: backgroundHover },
+        "&:hover": {
+          color: colorHover,
+          background: backgroundHover,
+          borderColor: borderColor,
+        },
       }}
     >
       {title}

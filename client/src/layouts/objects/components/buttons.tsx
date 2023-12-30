@@ -21,7 +21,8 @@ const Buttons = ({
     <Component>
       <ButtonStyled
         title="Создать объект"
-        variant="OBJECT"
+        style="OBJECT"
+        variant="contained"
         onClick={onOpenCreateObjectPage}
       />
       {isCurator && <TransferObjectToAnotherManagerButton />}
