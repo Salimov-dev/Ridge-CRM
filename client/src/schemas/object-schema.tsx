@@ -1,12 +1,12 @@
 import * as yup from "yup";
 
 const isValidPhone = (phone) => {
-  if (phone === "") {
+  if (phone === "" || phone === null) {
     return true;
   }
 
   const formattedPhone = String(phone).replace(/\D/g, "");
-  const validFormats = [/^7\d{10}$/, /^9\d{6}$/];
+  const validFormats = [/^7\d{10}$/, /^7\d{6}$/, /^\d{7}$/];
 
   return validFormats.some((format) => format.test(formattedPhone));
 };
@@ -18,7 +18,8 @@ export const objectSchema = yup.object().shape({
     email: yup.string().email("Некорректный адрес электронной почты"),
     phone: yup
       .string()
-      .test("is-valid-phone", "Некорректный номер телефона", isValidPhone),
+      .test("is-valid-phone", "Некорректный номер телефона", isValidPhone)
+      .nullable(),
   }),
   location: yup.object().shape({
     district: yup.string().required("Район обязателен для заполнения"),

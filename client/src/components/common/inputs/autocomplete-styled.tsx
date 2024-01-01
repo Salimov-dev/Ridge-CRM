@@ -19,6 +19,7 @@ const AutocompleteStyled = ({
   label,
   errors = null,
   width = "100%",
+  optionLabel = (option) => option.name,
 }) => {
   return (
     <Component>
@@ -39,7 +40,8 @@ const AutocompleteStyled = ({
           setValue(name, newValue ? newValue._id : null)
         }
         renderInput={(params) => <TextField {...params} label={label} />}
-        getOptionLabel={(option) => option.name}
+        // getOptionLabel={(option) => option._id}
+        getOptionLabel={optionLabel}
         isOptionEqualToValue={(option, value) => option._id === value?._id}
         ListboxProps={{ style: { background: "#2f2f2f", maxHeight: "10rem" } }}
         disabled={disabled}

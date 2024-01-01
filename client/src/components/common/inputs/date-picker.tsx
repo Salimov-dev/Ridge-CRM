@@ -5,6 +5,9 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 // utils
 import getDateToday from "../../../utils/date/get-date-today";
+import Errors from "./errors";
+import { useTheme } from "@emotion/react";
+import { tokens } from "@theme/theme";
 
 const today = getDateToday();
 
@@ -14,14 +17,17 @@ const DatePickerStyled = ({
   label,
   value,
   onChange,
-  helperText="",
-  errors=null,
-  disabled=false,
+  helperText = "",
+  errors = null,
+  disabled = false,
   color = "Crimson",
   minDate = today,
   maxDate = null,
-  isEditMode=false,
+  isEditMode = false,
 }) => {
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
+
   return (
     <Box sx={{ width: "100%", marginBottom: "-3px" }}>
       <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="ru">
@@ -37,8 +43,11 @@ const DatePickerStyled = ({
           sx={{
             width: "100%",
             "& .MuiOutlinedInput-root": {
+              "& fieldset": {
+                borderColor: errors ? colors.error["red"] : "gray",
+              },
               "&.Mui-focused fieldset": {
-                borderColor: "green",
+                borderColor: errors ? "red" : "green",
               },
             },
             "& .MuiInputLabel-root": {
@@ -53,9 +62,7 @@ const DatePickerStyled = ({
           }}
         />
       </LocalizationProvider>
-      <FormHelperText sx={{ color: color }}>
-        {errors ? errors?.message : helperText}
-      </FormHelperText>
+      <Errors errors={errors} padding="0 0 0 10px" />
     </Box>
   );
 };

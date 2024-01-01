@@ -2,7 +2,7 @@ import { Box, Typography, styled } from "@mui/material";
 // components
 import ObjectName from "./components/object-name";
 import ButtonsPanel from "../buttons-panel/buttons-panel";
-import Loader from "../../../common/loader/loader";
+import Loader from "@common/loader/loader";
 
 const HeaderContainer = styled(Box)`
   display: flex;
@@ -19,8 +19,8 @@ const Title = styled(Box)`
 const Header = ({
   object,
   isLoading,
-  onClose,
   onEdit,
+  onClose,
   isEdit,
   isAuthorEntity = true,
 }) => {
@@ -35,9 +35,8 @@ const Header = ({
       </Title>
       <ButtonsPanel
         object={object}
-        onClose={onClose}
         onEdit={onEdit}
-        negativeTitle="Закрыть"
+        onClose={onClose}
         isEdit={isEdit}
         isTopButtonsPanel={true}
         isAuthorEntity={isAuthorEntity}

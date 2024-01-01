@@ -118,6 +118,8 @@ const Objects = React.memo(() => {
 
   // обновление стейта при открытии страницы объекта
   const handleOpenObjectPage = (objectId) => {
+    // console.log("objectId", objectId);
+
     setState((prevState) => ({
       ...prevState,
       objectPage: true,
@@ -225,19 +227,21 @@ const Objects = React.memo(() => {
         }
         onClose={handleCloseObjectPage}
         open={state.objectPage}
-        maxWidth="lg"
       />
       <DialogStyled
         component={<CreateObject onClose={handleCloseCreateObjectPage} />}
         onClose={handleCloseCreateObjectPage}
         open={state.createPage}
-        maxWidth="lg"
       />
       <DialogStyled
-        component={<UpdateObject onClose={handleCloseUpdateObjectPage} />}
+        component={
+          <UpdateObject
+            onClose={handleCloseUpdateObjectPage}
+            objectId={state.objectId}
+          />
+        }
         onClose={handleCloseUpdateObjectPage}
         open={state.updatePage}
-        maxWidth="lg"
       />
       <DialogStyled
         component={
@@ -245,7 +249,6 @@ const Objects = React.memo(() => {
         }
         onClose={handleCloseUpdateObjectPage}
         open={state.presentationPage}
-        maxWidth="lg"
       />
       <DialogStyled
         onClose={handleCloseTransferObjectPage}

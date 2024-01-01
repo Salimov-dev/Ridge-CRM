@@ -8,24 +8,21 @@ import ObjectTasks from "./components/object-tasks";
 import ObjectMeetings from "./components/object-meetings";
 import Loader from "../../../common/loader/loader";
 import LastContacts from "./components/last-contacts";
-import CreateLastContactButton from "../../../UI/dialogs/buttons/create-last-contact-button";
-import CreateTasksButtons from "../../../../layouts/calendar/components/create-tasks-buttons/create-tasks-buttons";
 // store
-import { getLastContactsList } from "../../../../store/last-contact/last-contact.store";
-import { getObjectsList } from "../../../../store/object/objects.store";
-import { getObjectMeetingsList } from "../../../../store/meeting/meetings.store";
-import { getObjectTasksList } from "../../../../store/task/tasks.store";
+import { getObjectsList } from "@store/object/objects.store";
 import {
   getCurrentUserId,
   getIsUserCurator,
   getUsersList,
-} from "../../../../store/user/users.store";
-// columns
-import { tasksColumnsDialog } from "../../../../columns/tasks-columns/tasks-columns-dialog";
+} from "@store/user/users.store";
 // utils
-import transformObjectsForSelect from "../../../../utils/objects/transform-objects-for-select";
-import transformUsersForSelect from "../../../../utils/objects/transform-users-for-select";
-import sortingByDateAndTime from "../../../../utils/other/sorting-by-date-and-time";
+import transformObjectsForSelect from "@utils/objects/transform-objects-for-select";
+import transformUsersForSelect from "@utils/objects/transform-users-for-select";
+import DialogStyled from "@components/common/dialog/dialog-styled";
+import CreateMyTask from "@components/pages/create-my-task/create-my-task";
+import { useState } from "react";
+import { tasksColumns } from "@columns/tasks-columns/tasks-columns";
+import UpdateMyTask from "@components/pages/update-my-task/update-my-task";
 
 const Component = styled(Box)`
   display: flex;
@@ -34,21 +31,8 @@ const Component = styled(Box)`
   margin-bottom: 20px;
 `;
 
-const ObjectInfo = ({ object, isLoading, isAuthorEntity = true }) => {
+const ObjectInfo = ({ object, objectId, isLoading, isAuthorEntity = true }) => {
   const objects = useSelector(getObjectsList());
-  const objectId = object?._id;
-
-  const meetings = useSelector(getObjectMeetingsList(objectId));
-  const sortedMeetings = sortingByDateAndTime(meetings);
-
-  const tasks = useSelector(getObjectTasksList(object?._id));
-  const sortedTasks = sortingByDateAndTime(tasks);
-
-  const lastContactsList = useSelector(getLastContactsList());
-  const lastContacts = lastContactsList?.filter(
-    (contact) => contact.objectId === objectId
-  );
-  const sortedLastContacts = lastContacts.reverse();
 
   const users = useSelector(getUsersList());
   const currentUserId = useSelector(getCurrentUserId());
@@ -66,27 +50,82 @@ const ObjectInfo = ({ object, isLoading, isAuthorEntity = true }) => {
   const actualObjects = isCurator ? objects : currentUserObjects;
   const transformObjects = transformObjectsForSelect(actualObjects);
 
+  const [state, setState] = useState({
+    createMyTaskPage: false,
+    updateMyTaskPage: false,
+    taskId: "",
+  });
+  // console.log("state", state);
+
+  // обновление стейта при создании задачи себе
+  const handleOpenCreateMyTaskPage = () => {
+    setState((prevState) => ({
+      ...prevState,
+      createMyTaskPage: true,
+    }));
+  };
+  const handleCloseCreateMyTaskPage = () => {
+    setState((prevState) => ({ ...prevState, createMyTaskPage: false }));
+  };
+
+  // обновление стейта при обновлении задачи себе
+  const handleOpenUpdateMyTaskPage = (taskId) => {
+    setState((prevState) => ({
+      ...prevState,
+      updateMyTaskPage: true,
+      taskId: taskId,
+    }));
+  };
+  const handleCloseUpdateMyTaskPage = () => {
+    setState((prevState) => ({ ...prevState, updateMyTaskPage: false }));
+  };
+
   return !isLoading ? (
     <Component>
       <ObjectsParams object={object} isLoading={isLoading} />
       <ObjectTasks
-        columns={tasksColumnsDialog}
-        tasks={sortedTasks}
         object={object}
-        buttons={<CreateTasksButtons isAuthorEntity={isAuthorEntity} />}
+        objectId={objectId}
+        onOpen={handleOpenCreateMyTaskPage}
+        columns={tasksColumns(handleOpenUpdateMyTaskPage)}
+        isAuthorEntity={isAuthorEntity}
       />
       <ObjectMeetings
-        meetings={sortedMeetings}
         object={object}
+        objectId={objectId}
         isAuthorEntity={isAuthorEntity}
       />
       <LastContacts
-        lastContacts={sortedLastContacts}
         object={object}
-        buttons={
-          <CreateLastContactButton
-            title="Добавить последний контакт"
-            isAuthorEntity={isAuthorEntity}
+        objectId={objectId}
+        isAuthorEntity={isAuthorEntity}
+      />
+
+      <DialogStyled
+        component={
+          <CreateMyTask
+            title="Добавить себе задачу"
+            objectPageId={objectId}
+            isObjectPage={state.createMyTaskPage}
+            objects={objects}
+            onClose={handleCloseCreateMyTaskPage}
+          />
+        }
+        maxWidth="sm"
+        onClose={handleCloseCreateMyTaskPage}
+        open={state.createMyTaskPage}
+      />
+      <DialogStyled
+        onClose={handleCloseUpdateMyTaskPage}
+        open={state.updateMyTaskPage}
+        maxWidth="sm"
+        fullWidth={false}
+        component={
+          <UpdateMyTask
+            title="Изменить свою задачу"
+            taskId={state.taskId}
+            objectId={objectId}
+            onClose={handleCloseUpdateMyTaskPage}
           />
         }
       />

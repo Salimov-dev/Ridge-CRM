@@ -6,7 +6,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import dayjs from "dayjs";
 // components
 import ManagerForm from "../../common/forms/manager-form/manager-form";
-import TitleWithCloseButton from "../../common/page-titles/title-with-close-button";
+import TitleWithCloseButton from "../../common/page-titles/header-with-close-button";
 // store
 import { getUserStatusesList } from "../../../store/user/user-statuses.store";
 import {

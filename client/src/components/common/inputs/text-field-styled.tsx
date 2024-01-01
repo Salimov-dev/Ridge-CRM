@@ -40,6 +40,7 @@ const TextFieldStyled = ({
   disabled = false,
   isHelperText = false,
   subtitle = "",
+  required = false,
 }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -75,12 +76,13 @@ const TextFieldStyled = ({
         error={!!errors}
         subtitle={errors?.message}
         disabled={disabled}
+        required={required}
         onInput={(e) => handleInput(e)}
         onWheel={(e) => e.target.blur()}
         colors={colors}
       />
       {isHelperText ? <FormHelperText>{subtitle}</FormHelperText> : null}
-      <Errors errors={errors} />
+      <Errors errors={errors} padding="0 0 0 10px" />
     </Box>
   );
 };

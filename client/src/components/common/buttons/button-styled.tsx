@@ -38,6 +38,18 @@ const ButtonStyled = ({
     backgroundHover = colors.cancel["red"];
   }
 
+  if (style === "MY_TASK") {
+    background = colors.task["myTask"];
+    colorHover = "white";
+    backgroundHover = colors.task["myTaskHover"];
+  }
+
+  if (style === "MANAGER_TASK") {
+    background = colors.task["managerTask"];
+    colorHover = "white";
+    backgroundHover = colors.task["managerTaskHover"];
+  }
+
   return (
     <Button
       variant={variant}
@@ -47,6 +59,7 @@ const ButtonStyled = ({
         color: color,
         borderColor: borderColor,
         background: background,
+        whiteSpace: "nowrap",
         "&:hover": {
           color: colorHover,
           background: backgroundHover,

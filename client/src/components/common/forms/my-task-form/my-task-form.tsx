@@ -15,17 +15,16 @@ const MyTaskForm = ({
   watch,
   errors = null,
   setValue,
-  isObjectPage = false,
   isEditMode = false,
   isTasksLoading = false,
 }) => {
   const watchObjectId = watch("objectId", "");
   const watchIsDone = watch("isDone", false);
-  const watchIsCallTask = watch("isCallTask", false);
+  const watchIsCallTask = watch("isCallTask");
 
   return (
     <Form noValidate>
-      <FieldsContainer sx={{justifyContent: 'start'}}>
+      <FieldsContainer sx={{ justifyContent: "start" }}>
         <SimpleSwitch
           title="Сделать звонок"
           value={watchIsCallTask}
@@ -40,14 +39,17 @@ const MyTaskForm = ({
         <DatePickerStyled
           register={register}
           name="date"
-          label="Дата"
+          label="Дата *"
+          required={true}
           value={data?.date}
+          errors={errors?.date}
           onChange={(value) => setValue("date", value)}
         />
         <TimePickerStyled
           register={register}
           label="Время *"
           name="time"
+          required={true}
           value={data?.time}
           setValue={setValue}
           errors={errors?.time}
@@ -61,14 +63,18 @@ const MyTaskForm = ({
         value={data.objectId}
         setValue={setValue}
         watchItemId={watchObjectId}
-        disabled={isObjectPage}
+        disabled={isEditMode}
+        optionLabel={(option) =>
+          `${option?.location?.city}, ${option?.location?.address}`
+        }
       />
       <TextFieldStyled
         register={register}
-        label="Комментарий *"
+        label="Комментарий"
         name="comment"
         value={data?.comment}
         rows="3"
+        required={true}
         multiline={true}
         errors={errors?.comment}
         onInputQuantities={200}

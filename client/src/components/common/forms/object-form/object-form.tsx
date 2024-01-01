@@ -15,7 +15,7 @@ import FingerprintIcon from "@mui/icons-material/Fingerprint";
 import { FieldsContainer, Form } from "../styled/styled";
 // components
 import Title from "../title/title";
-import FooterButtons from "../footer-buttons/footer-buttons";
+import FooterButtons from "../footer-buttons/success-cance-form-buttons";
 import TextFieldStyled from "../../inputs/text-field-styled";
 import DistrictSelect from "./components/district-select";
 import SelectFieldStyled from "@components/common/inputs/select-field-styled";
@@ -35,14 +35,9 @@ const ObjectForm = ({
   data,
   register,
   errors,
-  handleSubmit,
-  onCreate = () => {},
-  onSubmit,
-  onClose,
-  selectedArea,
+  selectedArea = "",
   watch,
-  isValid,
-  isCityHasMetro,
+  isUpdate = false,
 }) => {
   const workingPositions = useSelector(getWorkingPositionsList());
   const sortedWorkingPositions = orderBy(workingPositions, ["name"], ["asc"]);
@@ -81,7 +76,7 @@ const ObjectForm = ({
 
   return (
     <>
-      <Form onSubmit={handleSubmit(onSubmit)} noValidate>
+      <Form noValidate>
         <Title title="Объект" />
         <FieldsContainer sx={{ gap: "3px" }}>
           <DistrictSelect
@@ -89,6 +84,7 @@ const ObjectForm = ({
             selectedArea={selectedArea}
             errors={errors}
             watchDistrict={watchDistrict}
+            isUpdate={isUpdate}
           />
           <SelectFieldStyled
             label="Метро"
@@ -98,7 +94,7 @@ const ObjectForm = ({
             required={true}
             itemsList={sortedMetros}
             value={watchMetro ?? ""}
-            disabled={!isCityHasMetro}
+            disabled={!watchDistrict}
           />
           <SelectFieldStyled
             label="Статус объекта"
@@ -468,12 +464,6 @@ const ObjectForm = ({
             errors={errors?.cloudLink}
           />
         </FieldsContainer>
-        {/* <FooterButtons
-          onCreate={onCreate}
-          isEditMode={true}
-          onClose={onClose}
-          withoutRemoveButton={true}
-        /> */}
       </Form>
     </>
   );

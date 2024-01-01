@@ -6,15 +6,13 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useDispatch, useSelector } from "react-redux";
 // components
-import TitleWithCloseButton from "../../common/page-titles/title-with-close-button";
+import TitleWithCloseButton from "../../common/page-titles/header-with-close-button";
 import LastContactForm from "../../common/forms/last-contact-form/last-contact-form";
 import IsLoadingDialog from "../../common/dialog/is-loading-dialog";
-import FooterButtons from "../../common/forms/footer-buttons/footer-buttons";
+import FooterButtons from "../../common/forms/footer-buttons/success-cance-form-buttons";
 // store
 import { getOpenObjectPageId } from "../../../store/object/open-object-page.store";
-import {
-  createLastContact,
-} from "../../../store/last-contact/last-contact.store";
+import { createLastContact } from "../../../store/last-contact/last-contact.store";
 // schema
 import { lastContactSchema } from "../../../schemas/last-contact-schema";
 // utils

@@ -22,7 +22,7 @@ const CreatePresentationButton = ({
       variant={variant}
       color="success"
       onClick={handleOpenCreateObject}
-      disabled={isLoading}
+      // disabled={isLoading}
       sx={{
         color: color,
         borderColor: "MediumSeaGreen",

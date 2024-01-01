@@ -39,19 +39,7 @@ const SimpleSelectField = ({
 }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-
   const sortedItems = orderBy(itemsList, ["name"], ["asc"]);
-
-  const ITEM_HEIGHT = 48;
-  const ITEM_PADDING_TOP = 8;
-  const MenuProps = {
-    PaperProps: {
-      style: {
-        maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-        width: 250,
-      },
-    },
-  };
 
   return (
     <FormControl sx={{ minWidth: "200px", width: "100%" }}>
@@ -75,7 +63,6 @@ const SimpleSelectField = ({
         name={name}
         value={value || ""}
         input={<OutlinedInput label={label} />}
-        MenuProps={MenuProps}
         disabled={disabled}
         defaultValue=""
         error={!!errors}

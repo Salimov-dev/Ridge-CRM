@@ -21,12 +21,12 @@ const Dialogs = ({ objects, users }) => {
       <ManagerTaskCreateDialog objects={objects} users={users} />
       <ManagerTaskUpdateDialog />
 
-      <MyTaskCreateDialog
+      {/* <MyTaskCreateDialog
         objects={objects}
         objectPageId={objectPageId}
         isObjectPage={isObjectPage}
       />
-      <MyTaskUpdateDialog />
+      <MyTaskUpdateDialog /> */}
 
       <MeetingCreateDialog
         objectPageId={objectPageId}

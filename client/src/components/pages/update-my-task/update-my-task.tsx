@@ -7,9 +7,9 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useDispatch, useSelector } from "react-redux";
 // components
 import MyTaskForm from "../../common/forms/my-task-form/my-task-form";
-import FooterButtons from "../../common/forms/footer-buttons/footer-buttons";
+import FooterButtons from "../../common/forms/footer-buttons/success-cance-form-buttons";
 import ConfirmRemoveDialog from "../../common/dialog/confirm-remove-dialog";
-import TitleWithCloseButton from "../../common/page-titles/title-with-close-button";
+import TitleWithCloseButton from "../../common/page-titles/header-with-close-button";
 import IsLoadingDialog from "../../common/dialog/is-loading-dialog";
 // schema
 import { taskSchema } from "../../../schemas/task-shema";
@@ -27,14 +27,19 @@ import { getOpenObjectPageOpenState } from "../../../store/object/open-object-pa
 import transformObjectsForSelect from "../../../utils/objects/transform-objects-for-select";
 import { capitalizeFirstLetter } from "../../../utils/data/capitalize-first-letter";
 import { createLastContact } from "../../../store/last-contact/last-contact.store";
+import SuccessCancelFormButtons from "../../common/forms/footer-buttons/success-cance-form-buttons";
+import LoaderFullWindow from "@components/common/loader/loader-full-window";
+import { useTheme } from "@emotion/react";
+import { tokens } from "@theme/theme";
 
-const UpdateMyTask = React.memo(({ title, onClose }) => {
+const UpdateMyTask = React.memo(({ title, taskId, objectId, onClose }) => {
   const dispatch = useDispatch();
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
 
   const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const taskId = useSelector(getUpdateMyTaskId());
   const task = useSelector(getTaskById(taskId));
   const isTasksLoading = useSelector(getTaskLoadingStatus());
 
@@ -57,21 +62,14 @@ const UpdateMyTask = React.memo(({ title, onClose }) => {
   });
 
   const data = watch();
-  const watchDate = watch("date", null);
-  const watchTime = watch("time", null);
-  const isFullValid = isValid && watchDate && watchTime;
+
   const isEditMode = taskId ? true : false;
   const objects = useSelector(getObjectsList());
-  const objectId = task?.objectId;
-
-  const isObjectPage = useSelector(getOpenObjectPageOpenState());
 
   const currentUserId = useSelector(getCurrentUserId());
   const currentUserObjects = objects?.filter(
     (obj) => obj?.userId === currentUserId
   );
-
-  const transformObjects = transformObjectsForSelect(currentUserObjects);
 
   const onSubmit = (data) => {
     setIsLoading(true);
@@ -98,7 +96,7 @@ const UpdateMyTask = React.memo(({ title, onClose }) => {
       })
       .then(() => {
         const result = data?.result;
-        const isCallTask = data?.isCallTask
+        const isCallTask = data?.isCallTask;
         if (isCallTask && result) {
           dispatch<any>(createLastContact(lastContactData))
             .then(() => {
@@ -134,12 +132,7 @@ const UpdateMyTask = React.memo(({ title, onClose }) => {
     }
   }, [objectId]);
 
-  return isLoading ? (
-    <IsLoadingDialog
-      text="Немного подождите, изменяем `Задачу себе`"
-      isLoading={isLoading}
-    />
-  ) : (
+  return (
     <>
       <TitleWithCloseButton
         title={title}
@@ -149,27 +142,28 @@ const UpdateMyTask = React.memo(({ title, onClose }) => {
       />
       <MyTaskForm
         data={data}
-        objects={transformObjects}
+        objects={currentUserObjects}
         register={register}
         watch={watch}
         errors={errors}
         setValue={setValue}
         isEditMode={isEditMode}
         isTasksLoading={isTasksLoading}
-        isObjectPage={isObjectPage}
       />
-      <FooterButtons
-        onUpdate={handleSubmit(onSubmit)}
-        onClose={onClose}
-        onRemove={handleClickOpen}
-        isEditMode={isEditMode}
-        isValid={isFullValid}
+      <SuccessCancelFormButtons
+        onClickSuccess={handleSubmit(onSubmit)}
+        onClickSuccessCancel={onClose}
       />
       <ConfirmRemoveDialog
         removeId={taskId}
         open={open}
         onClose={handleClose}
         onRemove={handleRemoveTask}
+      />
+      <LoaderFullWindow
+        color={colors.grey[600]}
+        size={75}
+        isLoading={isLoading}
       />
     </>
   );

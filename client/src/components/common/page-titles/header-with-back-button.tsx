@@ -1,5 +1,5 @@
 import { Box, Typography, styled } from "@mui/material";
-import PageBackButton from "../../../common/buttons/page-back-button";
+import PageBackButton from "../buttons/page-back-button";
 
 const Component = styled(Box)`
   display: flex;
@@ -14,15 +14,17 @@ const Title = styled(Box)`
   gap: 8px;
 `;
 
-const Header = ({ object, onClose }) => {
+const SubTitle = styled(Typography)`
+  padding: 0 4px;
+`;
+
+const HeaderWithBackButton = ({ title, subtitle, onClose, padding = "0" }) => {
   return (
-    <Component>
+    <Component sx={{ padding: padding }}>
       <Title>
-        <Typography variant="h2">Изменить объект:</Typography>
+        <Typography variant="h2">{title}</Typography>
         <Box sx={{ background: "yellow", color: "black" }}>
-          <Typography variant="h2">
-            {object?.location?.city}, {object?.location?.address}
-          </Typography>
+          <SubTitle variant="h2">{subtitle}</SubTitle>
         </Box>
       </Title>
 
@@ -31,4 +33,4 @@ const Header = ({ object, onClose }) => {
   );
 };
 
-export default Header;
+export default HeaderWithBackButton;

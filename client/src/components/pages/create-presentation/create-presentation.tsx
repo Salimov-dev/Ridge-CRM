@@ -6,9 +6,9 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useDispatch, useSelector } from "react-redux";
 // components
-import TitleWithCloseButton from "../../common/page-titles/title-with-close-button";
+import TitleWithCloseButton from "../../common/page-titles/header-with-close-button";
 import ManagerPresentationForm from "../../common/forms/presentation/manager-presentation-form";
-import FooterButtons from "../../common/forms/footer-buttons/footer-buttons";
+import FooterButtons from "../../common/forms/footer-buttons/success-cance-form-buttons";
 import IsLoadingDialog from "../../common/dialog/is-loading-dialog";
 // schema
 import { presentationSchema } from "../../../schemas/presentation-schema";

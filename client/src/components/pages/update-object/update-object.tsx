@@ -3,57 +3,53 @@ import React, { useState } from "react";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
-// MUI
+import styled from "@emotion/styled";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useTheme } from "@emotion/react";
+import { tokens } from "@theme/theme";
 import { Box } from "@mui/material";
 // components
-import Header from "./components/header";
-import IsLoadingDialog from "../../common/dialog/is-loading-dialog";
+import LoaderFullWindow from "@components/common/loader/loader-full-window";
 import ObjectForm from "../../common/forms/object-form/object-form";
+import ButtonStyled from "@components/common/buttons/button-styled";
+import HeaderWithBackButton from "../../common/page-titles/header-with-back-button";
 // utils
 import { capitalizeFirstLetter } from "../../../utils/data/capitalize-first-letter";
+// schemas
+import { objectSchema } from "@schemas/object-schema";
 // store
-import { getUpdateObjectId } from "../../../store/object/update-object.store";
 import {
   getObjectById,
   updateObject,
 } from "../../../store/object/objects.store";
 
-const UpdateObject = React.memo(({ onClose }) => {
+const ButtonsContainer = styled(Box)`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 30px;
+`;
+
+const UpdateObject = React.memo(({ onClose, objectId }) => {
   const dispatch = useDispatch();
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
 
   const [isLoading, setIsLoading] = useState(false);
-
-  const objectId = useSelector(getUpdateObjectId());
   const object = useSelector(getObjectById(objectId));
 
   const {
     register,
     watch,
-    setValue,
     handleSubmit,
     formState: { errors },
   } = useForm({
     defaultValues: object,
-    mode: "onBlur",
+    mode: "onChange",
+    resolver: yupResolver(objectSchema),
   });
 
   const data = watch();
-  const watchDistrict = watch("location.district");
-  const watchObjectTypes = watch("estateOptions.objectTypes");
-  const watchEstateTypes = watch("estateOptions.estateTypes");
-  const watchCurrentRenters = watch("estateOptions.currentRenters");
-  const watchStatus = watch("status");
-  const watchObjectProperties = watch("estateOptions.objectProperties");
-
-  const isWatchValid =
-    Boolean(watchDistrict) &&
-    Boolean(watchObjectTypes) &&
-    Boolean(watchEstateTypes) &&
-    Boolean(watchCurrentRenters) &&
-    Boolean(watchStatus) &&
-    Boolean(watchObjectProperties);
-
-  const isFullValid = isWatchValid;
 
   const onSubmit = (data) => {
     setIsLoading(true);
@@ -95,26 +91,33 @@ const UpdateObject = React.memo(({ onClose }) => {
   };
 
   return (
-    <Box>
-      <Header object={object} onClose={onClose} />
+    <>
+      <HeaderWithBackButton
+        onClose={onClose}
+        title="Изменить объект:"
+        subtitle={`${object.location.city}, ${object.location.address}`}
+      />
       <ObjectForm
         data={data}
         register={register}
         errors={errors}
-        handleSubmit={handleSubmit}
-        onSubmit={onSubmit}
-        onClose={onClose}
         watch={watch}
-        setValue={setValue}
-        isValid={isFullValid}
+        isUpdate={true}
       />
-      {isLoading && (
-        <IsLoadingDialog
-          text="Немного подождите, изменяем `Объект`"
-          isLoading={isLoading}
+      <ButtonsContainer>
+        <ButtonStyled
+          title="Сохранить"
+          style="SUCCESS"
+          onClick={handleSubmit(onSubmit)}
         />
-      )}
-    </Box>
+        <ButtonStyled title="Отмена" style="CANCEL" onClick={onClose} />
+      </ButtonsContainer>
+      <LoaderFullWindow
+        color={colors.grey[600]}
+        size={75}
+        isLoading={isLoading}
+      />
+    </>
   );
 });
 

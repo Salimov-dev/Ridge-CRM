@@ -1,33 +1,25 @@
+import React from "react";
 import { Box } from "@mui/material";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 // components
 import Header from "./header/header";
 import ObjectInfo from "./object-info/object-info";
-import FooterButtons from "./footer-buttons/footer-buttons";
-import ItemOnMap from "../../common/map/item-on-map/item-on-map";
+import Footer from "./footer/footer";
+import ItemOnMap from "@common/map/item-on-map/item-on-map";
 // store
-import { getOpenObjectPageId } from "../../../store/object/open-object-page.store";
 import {
   getObjectById,
   getObjectsLoadingStatus,
-} from "../../../store/object/objects.store";
-import {
-  setUpdateObjectId,
-  setUpdateObjectOpenState,
-} from "../../../store/object/update-object.store";
+} from "@store/object/objects.store";
 import {
   getCurrentUserId,
   getIsUserAuthorThisEntity,
-} from "../../../store/user/users.store";
-import React from "react";
+} from "@store/user/users.store";
 
 const ObjectPage = React.memo(({ objectId, onClose, onEdit }) => {
-  const dispatch = useDispatch();
-  // const objectId = useSelector(getOpenObjectPageId());
   const object = useSelector(getObjectById(objectId));
-  const isLoading = useSelector(getObjectsLoadingStatus());
-
   const currentUserId = useSelector(getCurrentUserId());
+  const isLoading = useSelector(getObjectsLoadingStatus());
   const isAuthorEntity = useSelector(
     getIsUserAuthorThisEntity(currentUserId, object)
   );
@@ -37,13 +29,6 @@ const ObjectPage = React.memo(({ objectId, onClose, onEdit }) => {
   const longitude = object?.location?.longitude || null;
   const mapZoom = object?.location?.zoom || null;
   const center = [latitude, longitude];
-
-  const handleOpenEditObject = () => {
-    dispatch<any>(setUpdateObjectId(objectId));
-    dispatch<any>(setUpdateObjectOpenState(true));
-  };
-
-
 
   return (
     <Box>
@@ -63,13 +48,14 @@ const ObjectPage = React.memo(({ objectId, onClose, onEdit }) => {
       />
       <ObjectInfo
         object={object}
+        objectId={objectId}
         isLoading={isLoading}
         isAuthorEntity={isAuthorEntity}
       />
-      <FooterButtons
+      <Footer
         object={object}
         onClose={onClose}
-        onEdit={handleOpenEditObject}
+        onEdit={onEdit}
         isEdit={true}
         isLoading={isLoading}
         isAuthorEntity={isAuthorEntity}

@@ -9,7 +9,7 @@ const DialogStyled = ({
   onClose = () => {},
   open = false,
   fullWidth = true,
-  maxWidth = false,
+  maxWidth = "lg",
 }) => {
   return (
     <Dialog

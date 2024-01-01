@@ -12,7 +12,7 @@ export const tokens = (mode) => ({
           mediumSeaGreen: "#3CB371",
         },
         error: {
-          red: "#FF0000",
+          red: "#F44336",
           gold: "#FFD700",
         },
         success: {
@@ -27,6 +27,12 @@ export const tokens = (mode) => ({
         },
         entities: {
           object: "#228B22",
+        },
+        task: {
+          myTask: "#FF8C00", // DarkOrange
+          myTaskHover: "#FFA500", // Orange
+          managerTask: "#DC143C", // Crimson
+          managerTaskHover: "#FF0000", // Red
         },
         grey: {
           100: "#e0e0e0",
@@ -92,7 +98,7 @@ export const tokens = (mode) => ({
           mediumSeaGreen: "#3CB371",
         },
         error: {
-          red: "#FF0000",
+          red: "#F44336",
           gold: "#FFD700",
         },
         success: {
@@ -104,6 +110,12 @@ export const tokens = (mode) => ({
           red: "#FF0000",
           indianRed: "#CD5C5C",
           lightCoral: "#F08080",
+        },
+        task: {
+          myTask: "#FF8C00", // DarkOrange
+          myTaskHover: "#FFA500", // Orange
+          managerTask: "#DC143C", // Crimson
+          managerTaskHover: "#FF0000", // Red
         },
         grey: {
           100: "#141414",

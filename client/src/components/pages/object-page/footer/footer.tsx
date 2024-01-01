@@ -4,14 +4,12 @@ import { Box, styled } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 // components
-import Loader from "../../../common/loader/loader";
+import Loader from "@common/loader/loader";
 import ButtonsPanel from "../buttons-panel/buttons-panel";
-import AutocompleteStyled from "../../../common/inputs/autocomplete-styled";
+import AutocompleteStyled from "@common/inputs/autocomplete-styled";
 // store
-import { getObjectsStatusList } from "../../../../store/object-params/object-status.store";
-import {
-  updateObject,
-} from "../../../../store/object/objects.store";
+import { getObjectsStatusList } from "@store/object-params/object-status.store";
+import { updateObject } from "@store/object/objects.store";
 
 const Component = styled(Box)`
   display: flex;
@@ -19,7 +17,7 @@ const Component = styled(Box)`
   gap: 4px;
 `;
 
-const FooterButtons = ({
+const Footer = ({
   object,
   onClose,
   onEdit,
@@ -38,7 +36,7 @@ const FooterButtons = ({
     formState: { errors },
   } = useForm({
     defaultValues: object,
-    mode: "onBlur",
+    mode: "onChange",
   });
 
   const watchStatus = watch("status");
@@ -47,7 +45,6 @@ const FooterButtons = ({
   const [statusChanged, setStatusChanged] = useState(false);
 
   useEffect(() => {
-    // Проверьте, изменился ли статус объекта
     if (watchStatus !== objectStatus) {
       setStatusChanged(true);
     } else {
@@ -93,4 +90,4 @@ const FooterButtons = ({
   );
 };
 
-export default FooterButtons;
+export default Footer;

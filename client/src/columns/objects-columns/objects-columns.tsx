@@ -323,17 +323,6 @@ export const objectsColumns = (handleOpenObjectPage, isCurator) => [
         enableSorting: false,
         cell: (info) => {
           const objectId = info.getValue();
-          const dispatch = useDispatch();
-
-          // const handleClick = () => {
-          //   setState((prevState) => ({
-          //     ...prevState,
-          //     objectId: objectId,
-          //     page: true,
-          //   }));
-          //   dispatch<any>(setOpenObjectPageId(objectId));
-          //   dispatch<any>(setOpenObjectPageOpenState(true));
-          // };
 
           return (
             <MultiColorContainedButton

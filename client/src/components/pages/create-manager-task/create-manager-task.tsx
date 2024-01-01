@@ -6,10 +6,10 @@ import { useForm } from "react-hook-form";
 import React, { useEffect, useState } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 // components
-import TitleWithCloseButton from "../../common/page-titles/title-with-close-button";
+import TitleWithCloseButton from "../../common/page-titles/header-with-close-button";
 import ManagerTaskForm from "../../common/forms/manager-task-form/manager-task-form";
 import IsLoadingDialog from "../../common/dialog/is-loading-dialog";
-import FooterButtons from "../../common/forms/footer-buttons/footer-buttons";
+import FooterButtons from "../../common/forms/footer-buttons/success-cance-form-buttons";
 // schema
 import { taskManagerSchema } from "../../../schemas/task-manager-shema";
 // utils

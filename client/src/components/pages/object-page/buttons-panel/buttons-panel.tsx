@@ -1,8 +1,9 @@
+import { useDispatch } from "react-redux";
 import { Box, styled } from "@mui/material";
-import NegativeOutlinedButton from "../../../common/buttons/negative-outlined-button";
-import PositiveOutlinedButton from "../../../common/buttons/positive-outlined-button";
-import OpenObjectCloudButton from "../../../UI/dialogs/buttons/open-object-cloud-button";
-import CreatePresentationButton from "../../../UI/dialogs/buttons/create-presentation-button";
+// components
+import ButtonStyled from "@components/common/buttons/button-styled";
+// store
+import { setCreatePresentationOpenState } from "@store/presentation/create-presentation.store";
 
 const Component = styled(Box)`
   display: flex;
@@ -12,35 +13,53 @@ const Component = styled(Box)`
 
 const ButtonsPanel = ({
   object,
-  onClose,
   onEdit,
+  onClose,
   isEdit,
-  negativeTitle = "отмена",
   isAuthorEntity = true,
   isTopButtonsPanel = false,
 }) => {
+  const dispatch = useDispatch();
+  const hasCloud = !!object?.cloudLink?.length;
+
+  const handleOpenCreateObject = () => {
+    dispatch<any>(setCreatePresentationOpenState(true));
+  };
+
+  const handleOpenCloud = () => {
+    const cloudLink = object?.cloudLink;
+
+    if (cloudLink) {
+      window.open(cloudLink, "_blank");
+    }
+  };
+
   return (
     <Component>
-      <Box sx={{ display: "flex", gap: "4px" }}>
-        {isEdit ? (
-          <>
-            <OpenObjectCloudButton object={object} />
-            {isAuthorEntity ? (
-              <>
-                {!isTopButtonsPanel && (
-                  <CreatePresentationButton
-                    variant="outlined"
-                    background="null"
-                    color="MediumSeaGreen"
-                  />
-                )}
-                <PositiveOutlinedButton title="Править" onClick={onEdit} />
-              </>
-            ) : null}
-          </>
-        ) : null}
-        <NegativeOutlinedButton title={negativeTitle} onClick={onClose} />
-      </Box>
+      {isEdit ? (
+        <>
+          {hasCloud ? (
+            <ButtonStyled
+              title="Открыть облако"
+              style="SUCCESS"
+              onClick={handleOpenCloud}
+            />
+          ) : null}
+          {isAuthorEntity ? (
+            <>
+              {!isTopButtonsPanel && (
+                <ButtonStyled
+                  title="Добавить презентацию"
+                  style="SUCCESS"
+                  onClick={handleOpenCreateObject}
+                />
+              )}
+              <ButtonStyled title="Править" style="SUCCESS" onClick={onEdit} />
+            </>
+          ) : null}
+        </>
+      ) : null}
+      <ButtonStyled title="Закрыть" style="CANCEL" onClick={onClose} />
     </Component>
   );
 };

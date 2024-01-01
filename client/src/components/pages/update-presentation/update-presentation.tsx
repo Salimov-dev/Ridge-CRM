@@ -7,7 +7,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Box } from "@mui/material";
 // components
 import Header from "./components/header";
-import FooterButtons from "../../common/forms/footer-buttons/footer-buttons";
+import FooterButtons from "../../common/forms/footer-buttons/success-cance-form-buttons";
 import ConfirmRemoveDialog from "../../common/dialog/confirm-remove-dialog";
 import ManagerPresentationForm from "../../common/forms/presentation/manager-presentation-form";
 import CuratorPresentationForm from "../../common/forms/presentation/curator-presentation-form";

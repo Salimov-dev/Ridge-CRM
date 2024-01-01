@@ -19,6 +19,7 @@ import { getTaskById } from "../../store/task/tasks.store";
 import {
   getCurrentUserId,
   getIsUserAuthorThisEntity,
+  getUsersLoadingStatus,
 } from "../../store/user/users.store";
 import {
   setUpdateManagerTaskId,
@@ -37,7 +38,7 @@ import { AlignCenter } from "../../components/common/columns/styled";
 import UserNameWithAvatar from "../../components/common/table/helpers/user-name-with-avatar";
 import useGetUserAvatar from "../../hooks/user/use-get-user-avatar";
 
-export const tasksColumns = [
+export const tasksColumns = (handleOpenUpdateMyTaskPage) => [
   {
     accessorKey: "isDone",
     header: "",
@@ -138,6 +139,7 @@ export const tasksColumns = [
     header: "Ответственный",
     cell: (info) => {
       const managerId = info.getValue();
+      const isLoading = useSelector(getUsersLoadingStatus());
       const getAvatarSrc = () => useGetUserAvatar(managerId);
       return (
         <AlignCenter>
@@ -207,7 +209,7 @@ export const tasksColumns = [
       return (
         <MultiColorContainedButton
           text="Править"
-          onClick={handleClick}
+          onClick={() => handleOpenUpdateMyTaskPage(taskId)}
           disabled={disable}
           fontColor={isCuratorTask ? "inherit" : "black"}
           background={isCuratorTask ? "crimson" : "orange"}

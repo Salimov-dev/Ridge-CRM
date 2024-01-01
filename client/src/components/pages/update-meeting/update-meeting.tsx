@@ -10,7 +10,7 @@ import { Box } from "@mui/material";
 // components
 import Header from "./components/header";
 import MeetingForm from "../../common/forms/meeting-form/meeting-form";
-import FooterButtons from "../../common/forms/footer-buttons/footer-buttons";
+import FooterButtons from "../../common/forms/footer-buttons/success-cance-form-buttons";
 import ConfirmRemoveDialog from "../../common/dialog/confirm-remove-dialog";
 import IsLoadingDialog from "../../common/dialog/is-loading-dialog";
 // schema
@@ -72,7 +72,7 @@ const UpdateMeeting = React.memo(({ onClose }) => {
   const meetingTypes = useSelector(getMeetingTypesList());
   const statuses = useSelector(getMeetingStatusesList());
 
-  const transformObjects = transformObjectsForSelect(currentUserObjects)
+  const transformObjects = transformObjectsForSelect(currentUserObjects);
 
   const onSubmit = (data) => {
     setIsLoading(true);

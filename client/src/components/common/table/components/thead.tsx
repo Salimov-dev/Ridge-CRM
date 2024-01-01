@@ -16,7 +16,7 @@ const Thead = ({ table, colors, isDialogMode }) => {
                   cursor: "pointer",
                   background: !isDialogMode
                     ? `${colors.primary[400]}`
-                    : "#2d2d2d",
+                    : `${colors.grey[800]}`,
                 }}
               >
                 {header.isPlaceholder ? null : (

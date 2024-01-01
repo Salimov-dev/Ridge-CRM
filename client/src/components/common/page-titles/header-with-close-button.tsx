@@ -4,11 +4,11 @@ import CloseButtonIconButton from "../buttons/icons buttons/close-button-icon";
 
 const Component = styled(Box)`
   display: flex;
-  align-items: start;
+  align-items: center;
   justify-content: space-between;
 `;
 
-const TitleWithCloseButton = ({
+const HeaderWithCloseButton = ({
   title = "",
   onClose,
   background = "inherit",
@@ -16,10 +16,15 @@ const TitleWithCloseButton = ({
 }) => {
   return (
     <Component>
-      <LayoutTitle title={title} background={background} color={color} />
+      <LayoutTitle
+        title={title}
+        background={background}
+        color={color}
+        margin="0px"
+      />
       <CloseButtonIconButton onClose={onClose} />
     </Component>
   );
 };
 
-export default TitleWithCloseButton;
+export default HeaderWithCloseButton;

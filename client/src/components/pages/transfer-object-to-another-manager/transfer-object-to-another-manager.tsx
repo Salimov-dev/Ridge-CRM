@@ -9,7 +9,7 @@ import Titles from "./components/titles";
 import SelectedError from "./components/selected-error";
 import FooterButtons from "./components/footer-buttons";
 import IsLoadingDialog from "../../common/dialog/is-loading-dialog";
-import TitleWithCloseButton from "../../common/page-titles/title-with-close-button";
+import TitleWithCloseButton from "../../common/page-titles/header-with-close-button";
 import ConfirmTransferObjectDialog from "../../common/dialog/confirm-transfer-object-dialog";
 import TransferObjectToAnotherManagerForm from "../../common/forms/transfer-object-to-another-manager-form/transfer-object-to-another-manager-form";
 // store

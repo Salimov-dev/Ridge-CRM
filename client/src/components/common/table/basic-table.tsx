@@ -2,7 +2,7 @@
 import { useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 // MUI
-import { useTheme } from "@mui/material";
+import { getFormLabelUtilityClasses, useTheme } from "@mui/material";
 // styles
 import "./styles/styles.css";
 // components
@@ -31,15 +31,13 @@ const BasicTable = ({
   hasFooter = false,
   isLoading,
   isPaginate = true,
+  isDialogMode = false,
 }) => {
   const [sorting, setSorting] = useState<SortingState>([]);
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const data = useMemo(() => items || [], [items]);
   const columns = useMemo(() => itemsColumns || [], [items]);
-
-  const isObjectPageOpen = useSelector(getOpenObjectPageOpenState());
-  const isDialogMode = isObjectPageOpen;
 
   const table = useReactTable({
     data,

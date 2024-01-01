@@ -1,7 +1,7 @@
-import PositiveOutlinedButton from "../../../common/buttons/positive-outlined-button";
+import ButtonStyled from "@components/common/buttons/button-styled";
 
-const OpenObjectCloudButton = ({ object }) => {
-  const hasCloud = Boolean(object?.cloudLink?.length);
+const OpenObjectCloudIcon = ({ object }) => {
+  const hasCloud = !!object?.cloudLink?.length;
 
   const handleOpenCloud = () => {
     const cloudLink = object?.cloudLink;
@@ -12,8 +12,12 @@ const OpenObjectCloudButton = ({ object }) => {
   };
 
   return hasCloud ? (
-    <PositiveOutlinedButton title="Открыть облако" background='DarkCyan' onClick={handleOpenCloud} />
+    <ButtonStyled
+      title="Открыть облако"
+      style="SUCCESS"
+      onClick={handleOpenCloud}
+    />
   ) : null;
 };
 
-export default OpenObjectCloudButton;
+export default OpenObjectCloudIcon;

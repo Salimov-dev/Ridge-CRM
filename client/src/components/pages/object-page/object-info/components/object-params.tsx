@@ -1,13 +1,13 @@
 import { Box } from "@mui/material";
+import BasicTable from "@common/table/basic-table";
+import Title from "./title";
 import {
   commercialTermsColumns,
   contactsColumns,
   estateOptionsColumns,
   estateTypeColumns,
   locationColumns,
-} from "../../../../../columns/object-page-columns/object-page-columns";
-import BasicTable from "../../../../common/table/basic-table";
-import Title from "./title";
+} from "@columns/object-page-columns/object-page-columns";
 
 const ObjectsParams = ({ object, isLoading }) => {
   const description = object?.description?.fullDescription;
@@ -19,6 +19,7 @@ const ObjectsParams = ({ object, isLoading }) => {
         itemsColumns={locationColumns}
         isLoading={isLoading}
         isPaginate={false}
+        isDialogMode={true}
       />
 
       <Title title="Объект" />
@@ -27,6 +28,7 @@ const ObjectsParams = ({ object, isLoading }) => {
         itemsColumns={estateTypeColumns}
         isLoading={isLoading}
         isPaginate={false}
+        isDialogMode={true}
       />
 
       <Title title="Параметры" />
@@ -35,6 +37,7 @@ const ObjectsParams = ({ object, isLoading }) => {
         itemsColumns={estateOptionsColumns}
         isLoading={isLoading}
         isPaginate={false}
+        isDialogMode={true}
       />
 
       <Title title="Условия" />
@@ -43,6 +46,7 @@ const ObjectsParams = ({ object, isLoading }) => {
         itemsColumns={commercialTermsColumns}
         isLoading={isLoading}
         isPaginate={false}
+        isDialogMode={true}
       />
 
       <Title title="Контакты" />
@@ -51,6 +55,7 @@ const ObjectsParams = ({ object, isLoading }) => {
         itemsColumns={contactsColumns}
         isLoading={isLoading}
         isPaginate={false}
+        isDialogMode={true}
       />
 
       <Title title="Описание" />

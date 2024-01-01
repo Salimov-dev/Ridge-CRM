@@ -25,10 +25,9 @@ const SimpleSwitch = ({
   value,
   whiteSpace = "nowrap",
   isLoading,
-  initialChecked = false,
-  padding= "5px 15px 5px 0px"
+  padding = "5px 15px 5px 0px",
 }) => {
-  const [checked, setChecked] = useState(initialChecked);
+  const [checked, setChecked] = useState(value);
 
   const handleChange = (event) => {
     setChecked(event.target.checked);
@@ -39,7 +38,7 @@ const SimpleSwitch = ({
 
   return (
     <Component>
-      <FormControlSyled component="fieldset" sx={{padding: padding}}>
+      <FormControlSyled component="fieldset" sx={{ padding: padding }}>
         <FormGroup aria-label="position" row sx={{ width: "100%" }}>
           <FormControlLabel
             control={

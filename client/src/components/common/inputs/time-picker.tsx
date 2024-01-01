@@ -18,9 +18,12 @@ const TimePickerStyled = ({
   value,
   setValue,
   errors = null,
-  disabled=false,
+  disabled = false,
   isHelperText = false,
+  required = false,
 }) => {
+  const helperText = errors?.message; // Добавляем переменную helperText
+
   return (
     <FieldsContainer>
       <Box sx={{ width: "100%", marginBottom: "-3px", marginTop: "-8px" }}>
@@ -32,17 +35,17 @@ const TimePickerStyled = ({
             }}
           >
             <TimePicker
-              {...register(name)}
+              {...register(name, { required: required })}
               label={label}
               ampm={false}
               onChange={(value) => setValue(name, value)}
               error={!!errors}
               value={value}
-              helperText={errors?.message}
+              required={required}
+              helperText={helperText} // Используем переменную helperText
               disabled={disabled}
               sx={{
                 width: "100%",
-
                 "& .MuiOutlinedInput-root": {
                   "&.Mui-focused fieldset": {
                     borderColor: "green",

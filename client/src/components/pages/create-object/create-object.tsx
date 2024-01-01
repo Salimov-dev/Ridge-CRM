@@ -2,8 +2,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
-import styled from "@emotion/styled";
-import { Box } from "@mui/material";
 import { toast } from "react-toastify";
 import { useTheme } from "@emotion/react";
 import { tokens } from "@theme/theme";
@@ -11,10 +9,10 @@ import { yupResolver } from "@hookform/resolvers/yup";
 // components
 import ObjectForm from "@common/forms/object-form/object-form";
 import FindObjectOnMap from "@common/find-object-on-map/find-object-on-map";
-import ButtonStyled from "@components/common/buttons/button-styled";
-import IsLoadingDialog from "@common/dialog/is-loading-dialog";
 import AlertObjectInDatabase from "./components/alert-object-in-database";
-import TitleWithCloseButton from "@components/common/page-titles/title-with-close-button";
+import HeaderWithCloseButton from "@components/common/page-titles/header-with-close-button";
+import LoaderFullWindow from "@components/common/loader/loader-full-window";
+import SuccessCancelFormButtons from "@components/common/forms/footer-buttons/success-cance-form-buttons";
 // store
 import { createObject, getObjectsList } from "@store/object/objects.store";
 // hooks
@@ -24,13 +22,6 @@ import { objectSchema } from "@schemas/object-schema";
 // utils
 import { capitalizeFirstLetter } from "@utils/data/capitalize-first-letter";
 import { capitalizeAllFirstLetters } from "@utils/data/capitalize-all-first-letters";
-
-const ButtonsContainer = styled(Box)`
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  margin-top: 30px;
-`;
 
 const initialState = {
   status: "",
@@ -85,7 +76,7 @@ const CreateObject = React.memo(({ onClose }) => {
   const colors = tokens(theme.palette.mode);
 
   const [selectedArea, setSelectedArea] = useState("");
-  const [isCityHasMetro, setIsCityHasMetro] = useState(false);
+  // const [isCityHasMetro, setIsCityHasMetro] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isObjectAlreadyInDatabase, setObjectAlreadyInDatabase] =
     useState(false);
@@ -95,7 +86,7 @@ const CreateObject = React.memo(({ onClose }) => {
     watch,
     handleSubmit,
     setValue,
-    formState: { errors, isValid },
+    formState: { errors },
   } = useForm({
     defaultValues: initialState,
     mode: "onChange",
@@ -112,7 +103,6 @@ const CreateObject = React.memo(({ onClose }) => {
   } = useFindObject();
 
   const data = watch();
-  // console.log("data", data);
 
   const objects = useSelector(getObjectsList());
 
@@ -123,7 +113,7 @@ const CreateObject = React.memo(({ onClose }) => {
   const findedObjectFullAddress = `${watchCity}, ${watchAddress}`;
 
   const onSubmit = (data) => {
-    // setIsLoading(true);
+    setIsLoading(true);
 
     const newData = {
       ...data,
@@ -148,7 +138,6 @@ const CreateObject = React.memo(({ onClose }) => {
         ),
       },
     };
-    console.log("newData", newData);
 
     dispatch<any>(createObject(newData))
       .then(() => {
@@ -176,10 +165,10 @@ const CreateObject = React.memo(({ onClose }) => {
       selectedArea?.includes("Санкт-Петербург") ||
       selectedArea?.includes("Москва")
     ) {
-      setIsCityHasMetro(true);
+      // setIsCityHasMetro(true);
       setValue("location.district", "");
     } else {
-      setIsCityHasMetro(false);
+      // setIsCityHasMetro(false);
       setValue("location.district", selectedArea);
     }
   }, [selectedArea]);
@@ -197,7 +186,7 @@ const CreateObject = React.memo(({ onClose }) => {
 
   return (
     <>
-      <TitleWithCloseButton
+      <HeaderWithCloseButton
         title={
           isFindedObject
             ? `Создать объект: ${getCity()}, ${getAddress()}`
@@ -212,29 +201,19 @@ const CreateObject = React.memo(({ onClose }) => {
       <ObjectForm
         data={data}
         register={register}
-        onSubmit={onSubmit}
-        handleSubmit={handleSubmit}
         errors={errors}
         watch={watch}
         selectedArea={selectedArea}
-        onClose={onClose}
-        isValid={isValid}
-        isCityHasMetro={isCityHasMetro}
       />
-      <ButtonsContainer>
-        <ButtonStyled
-          title="Сохранить"
-          style="SUCCESS"
-          onClick={handleSubmit(onSubmit)}
-        />
-        <ButtonStyled title="Отмена" style="CANCEL" onClick={onClose} />
-      </ButtonsContainer>
-      {isLoading && (
-        <IsLoadingDialog
-          text="Немного подождите, создаем новый `Объект`"
-          isLoading={isLoading}
-        />
-      )}
+      <SuccessCancelFormButtons
+        onClickSuccess={handleSubmit(onSubmit)}
+        onClickSuccessCancel={onClose}
+      />
+      <LoaderFullWindow
+        color={colors.grey[600]}
+        size={75}
+        isLoading={isLoading}
+      />
     </>
   );
 });

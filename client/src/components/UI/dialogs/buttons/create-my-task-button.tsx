@@ -4,7 +4,7 @@ import { getTaskLoadingStatus } from "../../../../store/task/tasks.store";
 import { setCreateMyTaskOpenState } from "../../../../store/task/create-my-task.store";
 
 const CreateMyTaskButton = ({
-  title,
+  title = "Создать",
   background,
   color = "inherit",
   isMyTask = false,
