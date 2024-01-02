@@ -12,7 +12,7 @@ const LayoutTitle = ({
   title,
   background = "yellow",
   color = "black",
-  margin,
+  margin = "0 0 20px 0",
 }) => {
   return (
     <Component sx={{ margin: margin }}>

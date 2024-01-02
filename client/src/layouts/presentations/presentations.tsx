@@ -89,11 +89,9 @@ const Presentations = React.memo(() => {
   const isInputEmpty = JSON.stringify(initialState) !== JSON.stringify(data);
 
   const searchedPresentations = useSearchPresentation(presentationsList, data);
-  const sortedPresentations = useMemo(()=>{return orderBy(
-    searchedPresentations,
-    ["created_at"],
-    ["asc"]
-  )},[searchedPresentations]) ;
+  const sortedPresentations = useMemo(() => {
+    return orderBy(searchedPresentations, ["created_at"], ["asc"]);
+  }, [searchedPresentations]);
 
   useEffect(() => {
     localStorage.setItem("search-presentations-data", JSON.stringify(data));
@@ -153,7 +151,7 @@ const Presentations = React.memo(() => {
         reset={reset}
         isInputEmpty={isInputEmpty}
         initialState={initialState}
-        button={!isCurator ? <CreatePresentationButton /> : null}
+        button={<CreatePresentationButton />}
       />
 
       <ItemsOnMap
