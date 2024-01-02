@@ -8,6 +8,9 @@ import {
 } from "../../../../../store/last-contact/last-contact.store";
 import { lastContactColumns } from "../../../../../columns/last-contacts-columns/last-contact-columns";
 import CreateLastContactButton from "@components/UI/dialogs/buttons/create-last-contact-button";
+import ButtonStyled from "@components/common/buttons/button-styled";
+import { useTheme } from "@emotion/react";
+import { tokens } from "@theme/theme";
 
 const Container = styled(Box)`
   display: flex;
@@ -15,9 +18,19 @@ const Container = styled(Box)`
   justify-content: space-between;
 `;
 
-const LastContacts = ({ objectId, object, margin = "0", isAuthorEntity }) => {
+const LastContacts = ({
+  objectId,
+  onOpen,
+  onUpdate,
+  object,
+  margin = "0",
+  isAuthorEntity,
+}) => {
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
+
   const isLastContactsLoading = useSelector(getLastContactsLoadingStatus());
-  const columns = lastContactColumns;
+  const columns = lastContactColumns(onUpdate);
   const address = `${object?.location?.city}, ${object?.location?.address}`;
 
   const lastContactsList = useSelector(getLastContactsList());
@@ -33,9 +46,11 @@ const LastContacts = ({ objectId, object, margin = "0", isAuthorEntity }) => {
         <Typography variant="h3" sx={{ margin: margin }}>
           Последние контакты: {address}
         </Typography>
-        <CreateLastContactButton
+        <ButtonStyled
           title="Добавить последний контакт"
-          isAuthorEntity={isAuthorEntity}
+          style="LAST_CONTACT"
+          variant="contained"
+          onClick={onOpen}
         />
       </Container>
 

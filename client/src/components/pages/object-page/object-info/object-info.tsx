@@ -1,3 +1,4 @@
+import { useState } from "react";
 // libraries
 import { Box, styled } from "@mui/material";
 import { useSelector } from "react-redux";
@@ -6,8 +7,20 @@ import Dialogs from "./components/dialogs";
 import ObjectsParams from "./components/object-params";
 import ObjectTasks from "./components/object-tasks";
 import ObjectMeetings from "./components/object-meetings";
-import Loader from "../../../common/loader/loader";
+import Loader from "@common/loader/loader";
 import LastContacts from "./components/last-contacts";
+import DialogStyled from "@components/common/dialog/dialog-styled";
+import CreateMyTask from "@components/pages/create-my-task/create-my-task";
+import UpdateMyTask from "@components/pages/update-my-task/update-my-task";
+import CreateManagerTask from "@components/pages/create-manager-task/create-manager-task";
+import UpdateManagerTask from "@components/pages/update-manager-task/update-manager-task";
+import CreateLastContact from "@components/pages/create-last-contact/create-last-contact";
+import UpdateLastContact from "@components/pages/update-last-contact/update-last-contact";
+// utils
+import transformObjectsForSelect from "@utils/objects/transform-objects-for-select";
+import transformUsersForSelect from "@utils/objects/transform-users-for-select";
+// columns
+import { tasksColumns } from "@columns/tasks-columns/tasks-columns";
 // store
 import { getObjectsList } from "@store/object/objects.store";
 import {
@@ -15,16 +28,6 @@ import {
   getIsUserCurator,
   getUsersList,
 } from "@store/user/users.store";
-// utils
-import transformObjectsForSelect from "@utils/objects/transform-objects-for-select";
-import transformUsersForSelect from "@utils/objects/transform-users-for-select";
-import DialogStyled from "@components/common/dialog/dialog-styled";
-import CreateMyTask from "@components/pages/create-my-task/create-my-task";
-import { useState } from "react";
-import { tasksColumns } from "@columns/tasks-columns/tasks-columns";
-import UpdateMyTask from "@components/pages/update-my-task/update-my-task";
-import CreateManagerTask from "@components/pages/create-manager-task/create-manager-task";
-import UpdateManagerTask from "@components/pages/update-manager-task/update-manager-task";
 
 const Component = styled(Box)`
   display: flex;
@@ -57,7 +60,10 @@ const ObjectInfo = ({ object, objectId, isLoading, isAuthorEntity = true }) => {
     updateMyTaskPage: false,
     createManagerTaskPage: false,
     updateManagerTaskPage: false,
+    createLastContactPage: false,
+    updateLastContactPage: false,
     taskId: "",
+    lastContactId: "",
   });
   // console.log("state", state);
 
@@ -108,6 +114,36 @@ const ObjectInfo = ({ object, objectId, isLoading, isAuthorEntity = true }) => {
     setState((prevState) => ({ ...prevState, updateManagerTaskPage: false }));
   };
 
+  // обновление стейта при создании последнего контакта
+  const handleOpenCreateLastContactPage = (taskId) => {
+    setState((prevState) => ({
+      ...prevState,
+      createLastContactPage: true,
+      taskId: taskId,
+    }));
+  };
+  const handleCloseCreateLastContactPage = () => {
+    setState((prevState) => ({
+      ...prevState,
+      createLastContactPage: false,
+    }));
+  };
+
+  // обновление стейта при обновлении последнего контакта
+  const handleOpenUpdateLastContactPage = (lastContactId) => {
+    setState((prevState) => ({
+      ...prevState,
+      updateLastContactPage: true,
+      lastContactId: lastContactId,
+    }));
+  };
+  const handleCloseUpdateLastContactPage = () => {
+    setState((prevState) => ({
+      ...prevState,
+      updateLastContactPage: false,
+    }));
+  };
+
   return !isLoading ? (
     <Component>
       <ObjectsParams object={object} isLoading={isLoading} />
@@ -130,6 +166,8 @@ const ObjectInfo = ({ object, objectId, isLoading, isAuthorEntity = true }) => {
       <LastContacts
         object={object}
         objectId={objectId}
+        onOpen={handleOpenCreateLastContactPage}
+        onUpdate={handleOpenUpdateLastContactPage}
         isAuthorEntity={isAuthorEntity}
       />
 
@@ -186,6 +224,28 @@ const ObjectInfo = ({ object, objectId, isLoading, isAuthorEntity = true }) => {
             onClose={handleCloseUpdateManagerTaskPage}
           />
         }
+      />
+      <DialogStyled
+        component={
+          <CreateLastContact
+            objectPageId={objectId}
+            onClose={handleCloseCreateLastContactPage}
+          />
+        }
+        onClose={handleCloseCreateLastContactPage}
+        open={state.createLastContactPage}
+        maxWidth="sm"
+      />
+      <DialogStyled
+        component={
+          <UpdateLastContact
+            lastContactId={state.lastContactId}
+            onClose={handleCloseUpdateLastContactPage}
+          />
+        }
+        onClose={handleCloseUpdateLastContactPage}
+        open={state.updateLastContactPage}
+        maxWidth="sm"
       />
 
       <Dialogs objects={transformObjects} users={transformUsers} />

@@ -34,8 +34,8 @@ const Dialogs = ({ objects, users }) => {
       />
       <MeetingUpdateDialog />
 
-      <LastContactCreateDialog />
-      <LastContactUpdateDialog />
+      {/* <LastContactCreateDialog /> */}
+      {/* <LastContactUpdateDialog /> */}
     </>
   );
 };

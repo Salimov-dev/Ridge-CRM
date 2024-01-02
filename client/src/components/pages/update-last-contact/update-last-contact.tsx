@@ -5,31 +5,33 @@ import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Box } from "@mui/material";
+import { useTheme } from "@emotion/react";
+import { tokens } from "@theme/theme";
 // components
-import Header from "./components/header";
-import Loader from "../../common/loader/loader";
-import IsLoadingDialog from "../../common/dialog/is-loading-dialog";
-import LastContactForm from "../../common/forms/last-contact-form/last-contact-form";
-import FooterButtons from "../../common/forms/footer-buttons/success-cancel-form-buttons";
-import ConfirmRemoveDialog from "../../common/dialog/confirm-remove-dialog";
+import TitleWithCloseButton from "@common/page-titles/header-with-close-button";
+import LastContactForm from "@common/forms/last-contact-form/last-contact-form";
+import SuccessCancelFormButtons from "@common/forms/footer-buttons/success-cancel-form-buttons";
+import LoaderFullWindow from "@components/common/loader/loader-full-window";
+import ConfirmRemoveDialog from "@common/dialog/confirm-remove-dialog";
+// schema
+import { lastContactSchema } from "@schemas/last-contact-schema";
+// utils
+import { FormatDate } from "@utils/date/format-date";
 // store
-import { getUpdateLastContactId } from "../../../store/last-contact/update-last-contact.store";
 import {
   getLastContactsById,
   removeLastContact,
   updateLastContact,
-} from "../../../store/last-contact/last-contact.store";
-// schema
-import { lastContactSchema } from "../../../schemas/last-contact-schema";
+} from "@store/last-contact/last-contact.store";
 
-const UpdateLastContact = React.memo(({ onClose }) => {
+const UpdateLastContact = React.memo(({ lastContactId, onClose }) => {
   const dispatch = useDispatch();
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
 
   const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const lastContactId = useSelector(getUpdateLastContactId());
   const lastContact = useSelector(getLastContactsById(lastContactId));
 
   const formatedLastContact = {
@@ -44,18 +46,15 @@ const UpdateLastContact = React.memo(({ onClose }) => {
     register,
     watch,
     handleSubmit,
-    formState: { errors, isValid },
+    formState: { errors },
     setValue,
   } = useForm({
     defaultValues: formatedLastContact,
-    mode: "onBlur",
+    mode: "onChange",
     resolver: yupResolver(lastContactSchema),
   });
 
   const data = watch();
-  const watchDate = watch("date", null);
-  const isFullValid = isValid && watchDate;
-  const isEditMode = lastContactId ? true : false;
 
   const onSubmit = (data) => {
     setIsLoading(true);
@@ -87,41 +86,39 @@ const UpdateLastContact = React.memo(({ onClose }) => {
     setOpen(false);
   };
 
-  return lastContact ? (
-    <Box>
-      {isLoading ? (
-        <IsLoadingDialog
-          text="Немного подождите, изменяем `Последний контакт`"
-          isLoading={isLoading}
-        />
-      ) : (
-        <>
-          <Header lastContact={lastContact} onClose={onClose} />
-          <LastContactForm
-            data={data}
-            register={register}
-            errors={errors}
-            setValue={setValue}
-            isUpdate={true}
-          />
-          <FooterButtons
-            onUpdate={handleSubmit(onSubmit)}
-            onClose={onClose}
-            onRemove={handleClickOpen}
-            isEditMode={isEditMode}
-            isValid={isFullValid}
-          />
-          <ConfirmRemoveDialog
-            removeId={lastContactId}
-            open={open}
-            onClose={handleClose}
-            onRemove={handleRemoveLastContact}
-          />
-        </>
-      )}
-    </Box>
-  ) : (
-    <Loader />
+  return (
+    <>
+      <TitleWithCloseButton
+        title={FormatDate(lastContact?.date)}
+        background={colors.task["managerTask"]}
+        color="white"
+        onClose={onClose}
+        margin="0 0 20px 0"
+      />
+      <LastContactForm
+        data={data}
+        register={register}
+        errors={errors}
+        setValue={setValue}
+      />
+      <SuccessCancelFormButtons
+        onSuccess={handleSubmit(onSubmit)}
+        onCancel={onClose}
+        onRemove={handleClickOpen}
+        isUpdate={true}
+      />
+      <LoaderFullWindow
+        color={colors.grey[600]}
+        size={75}
+        isLoading={isLoading}
+      />
+      <ConfirmRemoveDialog
+        removeId={lastContactId}
+        open={open}
+        onClose={handleClose}
+        onRemove={handleRemoveLastContact}
+      />
+    </>
   );
 });
 

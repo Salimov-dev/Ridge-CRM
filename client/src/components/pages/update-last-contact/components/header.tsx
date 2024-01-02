@@ -23,9 +23,7 @@ const Header = ({ lastContact, onClose }) => {
     <Component>
       <Title>
         <Box sx={{ display: "flex" }}>
-          <Typography variant="h2">
-            Редактировать последний контакт от:
-          </Typography>
+          <Typography variant="h2">Редактировать контакт от:</Typography>
           <Typography
             variant="h2"
             sx={{ background: "yellow", color: "black", marginLeft: "4px" }}

@@ -4,36 +4,20 @@ import { toast } from "react-toastify";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useDispatch, useSelector } from "react-redux";
-// components
-import TitleWithCloseButton from "../../common/page-titles/header-with-close-button";
-import ManagerTaskForm from "../../common/forms/manager-task-form/manager-task-form";
-import FooterButtons from "../../common/forms/footer-buttons/success-cancel-form-buttons";
-import ConfirmRemoveDialog from "../../common/dialog/confirm-remove-dialog";
-import IsLoadingDialog from "../../common/dialog/is-loading-dialog";
-// schema
-import { taskSchema } from "../../../schemas/task-shema";
-// store
-import {
-  getCurrentUserId,
-  getIsUserAuthorThisEntity,
-  getIsUserCurator,
-} from "../../../store/user/users.store";
-import { getUpdateManagerTaskId } from "../../../store/task/update-manager-task.store";
-import {
-  getTaskById,
-  getTaskLoadingStatus,
-  removeTask,
-  updateTask,
-} from "../../../store/task/tasks.store";
-import { getObjectsList } from "../../../store/object/objects.store";
-import { getOpenObjectPageOpenState } from "../../../store/object/open-object-page.store";
-import transformObjectsForSelect from "../../../utils/objects/transform-objects-for-select";
-import LoaderFullWindow from "@components/common/loader/loader-full-window";
-import SuccessCancelFormButtons from "../../common/forms/footer-buttons/success-cancel-form-buttons";
 import { useTheme } from "@emotion/react";
 import { tokens } from "@theme/theme";
+import { useDispatch, useSelector } from "react-redux";
+// components
+import LoaderFullWindow from "@components/common/loader/loader-full-window";
+import SuccessCancelFormButtons from "@common/forms/footer-buttons/success-cancel-form-buttons";
 import MyTaskForm from "@components/common/forms/my-task-form/my-task-form";
+import TitleWithCloseButton from "@common/page-titles/header-with-close-button";
+import ConfirmRemoveDialog from "@common/dialog/confirm-remove-dialog";
+// schema
+import { taskSchema } from "@schemas/task-shema";
+// store
+import { getObjectsList } from "@store/object/objects.store";
+import { getTaskById, updateTask } from "@store/task/tasks.store";
 
 const UpdateManagerTask = React.memo(({ title, onClose, taskId, users }) => {
   const dispatch = useDispatch();
@@ -112,7 +96,7 @@ const UpdateManagerTask = React.memo(({ title, onClose, taskId, users }) => {
     <>
       <TitleWithCloseButton
         title={title}
-        background="Crimson"
+        background={colors.task["managerTask"]}
         color="white"
         onClose={onClose}
       />

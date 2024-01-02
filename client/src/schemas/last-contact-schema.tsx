@@ -1,5 +1,6 @@
 import * as yup from "yup";
 
 export const lastContactSchema = yup.object().shape({
-  result: yup.string().required("Заполните комментарий"),
+  date: yup.date().required("Выберите дату"),
+  result: yup.string().required("Заполните результат"),
 });

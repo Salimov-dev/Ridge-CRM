@@ -17,6 +17,10 @@ import { createLastContact } from "../../../store/last-contact/last-contact.stor
 import { lastContactSchema } from "../../../schemas/last-contact-schema";
 // utils
 import { capitalizeFirstLetter } from "../../../utils/data/capitalize-first-letter";
+import SuccessCancelFormButtons from "../../common/forms/footer-buttons/success-cancel-form-buttons";
+import LoaderFullWindow from "@components/common/loader/loader-full-window";
+import { useTheme } from "@emotion/react";
+import { tokens } from "@theme/theme";
 
 const initialState = {
   date: dayjs(),
@@ -27,26 +31,26 @@ const initialState = {
   commentMyTask: "",
 };
 
-const CreateLastContact = React.memo(({ onClose }) => {
+const CreateLastContact = React.memo(({ objectPageId, onClose }) => {
   const dispatch = useDispatch();
-  const [isLoading, setIsLoading] = useState(false);
-  const objectPageId = useSelector(getOpenObjectPageId());
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
 
+  const [isLoading, setIsLoading] = useState(false);
+  
   const {
     register,
     watch,
     handleSubmit,
     setValue,
-    formState: { errors, isValid },
+    formState: { errors },
   } = useForm({
     defaultValues: initialState,
-    mode: "onBlur",
+    mode: "onChange",
     resolver: yupResolver(lastContactSchema),
   });
 
   const data = watch();
-  const watchDate = watch<any>("date", null);
-  const isFullValid = isValid && watchDate;
 
   const onSubmit = (data) => {
     setIsLoading(true);
@@ -75,18 +79,14 @@ const CreateLastContact = React.memo(({ onClose }) => {
     }
   }, [objectPageId]);
 
-  return isLoading ? (
-    <IsLoadingDialog
-      text="Немного подождите, создаем `Последний контакт`"
-      isLoading={isLoading}
-    />
-  ) : (
+  return (
     <>
       <TitleWithCloseButton
         title="Добавить последний контакт"
-        onClose={onClose}
-        background="SaddleBrown"
+        background={colors.lastContact["primary"]}
         color="white"
+        margin="0 0 20px 0"
+        onClose={onClose}
       />
       <LastContactForm
         data={data}
@@ -94,10 +94,14 @@ const CreateLastContact = React.memo(({ onClose }) => {
         errors={errors}
         setValue={setValue}
       />
-      <FooterButtons
-        onCreate={handleSubmit(onSubmit)}
-        onClose={onClose}
-        isValid={isFullValid}
+      <SuccessCancelFormButtons
+        onSuccess={handleSubmit(onSubmit)}
+        onCancel={onClose}
+      />
+      <LoaderFullWindow
+        color={colors.grey[600]}
+        size={75}
+        isLoading={isLoading}
       />
     </>
   );

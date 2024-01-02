@@ -50,6 +50,12 @@ const ButtonStyled = ({
     backgroundHover = colors.task["managerTaskHover"];
   }
 
+  if (style === "LAST_CONTACT") {
+    background = colors.lastContact["primary"];
+    colorHover = "white";
+    backgroundHover = colors.lastContact["hover"];
+  }
+
   return (
     <Button
       variant={variant}

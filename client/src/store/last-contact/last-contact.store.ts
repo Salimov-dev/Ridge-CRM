@@ -158,15 +158,14 @@ export const removeLastContact = (lastContactId) => async (dispatch) => {
   }
 };
 
-export const removeLastContactUpdate =
-  (lastContactId) => async (dispatch) => {
-    dispatch(lastContactUpdateRequested());
-    try {
-      dispatch(lastContactRemoved(lastContactId));
-    } catch (error) {
-      dispatch(lastContactUpdateFailed(error.message));
-    }
-  };
+export const removeLastContactUpdate = (lastContactId) => async (dispatch) => {
+  dispatch(lastContactUpdateRequested());
+  try {
+    dispatch(lastContactRemoved(lastContactId));
+  } catch (error) {
+    dispatch(lastContactUpdateFailed(error.message));
+  }
+};
 
 export const getObjectLastContactsList = (objectId) =>
   createSelector(

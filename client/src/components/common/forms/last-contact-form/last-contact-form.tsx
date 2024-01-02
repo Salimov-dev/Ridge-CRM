@@ -4,21 +4,16 @@ import DatePickerStyled from "../../inputs/date-picker";
 // styled
 import { FieldsContainer, Form } from "../styled/styled";
 
-const LastContactForm = ({
-  data,
-  register,
-  errors,
-  setValue,
-}) => {
+const LastContactForm = ({ data, register, errors, setValue }) => {
   return (
     <Form>
       <FieldsContainer sx={{ flexDirection: "column" }}>
         <DatePickerStyled
           register={register}
           name="date"
-          label="Дата последнего контакта"
-          value={data?.date}
-          minDate={null}
+          label="Дата последнего контакта *"
+          value={data?.date || null}
+          errors={errors?.date}
           onChange={(value) => setValue("date", value)}
         />
         <TextFieldStyled

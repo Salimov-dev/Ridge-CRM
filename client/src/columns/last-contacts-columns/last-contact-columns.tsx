@@ -22,7 +22,7 @@ import {
 // hooks
 import useGetUserAvatar from "../../hooks/user/use-get-user-avatar";
 
-export const lastContactColumns = [
+export const lastContactColumns = (onUpdate) => [
   {
     accessorKey: "date",
     header: "Дата",
@@ -94,7 +94,7 @@ export const lastContactColumns = [
           fontColor="white"
           background="SaddleBrown"
           backgroudHover="Sienna"
-          onClick={handleClick}
+          onClick={() => onUpdate(lastContactId)}
           disabled={!isAuthorEntity}
         />
       );
