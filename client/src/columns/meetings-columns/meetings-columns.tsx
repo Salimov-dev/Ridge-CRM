@@ -30,7 +30,7 @@ import { getMeetingById } from "../../store/meeting/meetings.store";
 // styled
 import { AlignCenter } from "../../components/common/columns/styled";
 
-export const meetingsColumns = [
+export const meetingsColumns = (onUpdate) => [
   {
     accessorKey: "isDone",
     header: "",
@@ -179,7 +179,7 @@ export const meetingsColumns = [
           fontColor="white"
           background="royalBlue"
           backgroudHover="cornflowerBlue"
-          onClick={handleClick}
+          onClick={() => onUpdate(meetingId)}
           disabled={!isAuthorEntity}
         />
       );

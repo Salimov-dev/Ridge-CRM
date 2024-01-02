@@ -1,4 +1,6 @@
 // libraries
+import { useTheme } from "@emotion/react";
+import { tokens } from "@theme/theme";
 import { toast } from "react-toastify";
 import dayjs from "dayjs";
 import React, { useEffect, useState } from "react";
@@ -6,29 +8,32 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useDispatch, useSelector } from "react-redux";
 // components
-import MeetingForm from "../../common/forms/meeting-form/meeting-form";
-import IsLoadingDialog from "../../common/dialog/is-loading-dialog";
-import TitleWithAddress from "../../common/page-titles/title-with-address";
-import FindObjectOnMap from "../../common/find-object-on-map/find-object-on-map";
-import FooterButtons from "../../common/forms/footer-buttons/success-cancel-form-buttons";
+import MeetingForm from "@common/forms/meeting-form/meeting-form";
+import IsLoadingDialog from "@common/dialog/is-loading-dialog";
+import TitleWithAddress from "@common/page-titles/title-with-address";
+import FindObjectOnMap from "@common/find-object-on-map/find-object-on-map";
+import SuccessCancelFormButtons from "@common/forms/footer-buttons/success-cancel-form-buttons";
+import LoaderFullWindow from "@components/common/loader/loader-full-window";
+import HeaderWithCloseButton from "@components/common/page-titles/header-with-close-button";
+import FooterButtons from "@common/forms/footer-buttons/success-cancel-form-buttons";
 // store
-import { getCurrentUserId } from "../../../store/user/users.store";
-import { createMeeting } from "../../../store/meeting/meetings.store";
-import { getObjectsList } from "../../../store/object/objects.store";
-import { getMeetingTypesList } from "../../../store/meeting/meeting-types.store";
-import { getMeetingStatusesList } from "../../../store/meeting/meeting-status.store";
+import { getCurrentUserId } from "@store/user/users.store";
+import { createMeeting } from "@store/meeting/meetings.store";
+import { getObjectsList } from "@store/object/objects.store";
+import { getMeetingTypesList } from "@store/meeting/meeting-types.store";
+import { getMeetingStatusesList } from "@store/meeting/meeting-status.store";
 // schema
-import { meetingSchema } from "../../../schemas/meeting-schema";
+import { meetingSchema } from "@schemas/meeting-schema";
 // hooks
-import useFindObject from "../../../hooks/object/use-find-object";
+import useFindObject from "@hooks/object/use-find-object";
 // utils
-import { capitalizeFirstLetter } from "../../../utils/data/capitalize-first-letter";
-import transformObjectsForSelect from "../../../utils/objects/transform-objects-for-select";
+import { capitalizeFirstLetter } from "@utils/data/capitalize-first-letter";
+import transformObjectsForSelect from "@utils/objects/transform-objects-for-select";
 
 const initialState = {
   status: "",
   meetingType: "",
-  date: dayjs(),
+  date: null,
   time: null,
   comment: "",
   objectId: null,
@@ -45,6 +50,9 @@ const initialState = {
 const CreateMeeting = React.memo(
   ({ objectPageId = "", onClose, dateCreate, isObjectPage = false }) => {
     const dispatch = useDispatch();
+    const theme = useTheme();
+    const colors = tokens(theme.palette.mode);
+
     const [isLoading, setIsLoading] = useState(false);
     const statuses = useSelector(getMeetingStatusesList());
     const meetingTypes = useSelector(getMeetingTypesList());
@@ -61,10 +69,10 @@ const CreateMeeting = React.memo(
       watch,
       handleSubmit,
       setValue,
-      formState: { errors, isValid },
+      formState: { errors },
     } = useForm({
       defaultValues: initialState,
-      mode: "onBlur",
+      mode: "onChange",
       resolver: yupResolver(meetingSchema),
     });
 
@@ -77,11 +85,9 @@ const CreateMeeting = React.memo(
     } = useFindObject();
 
     const data = watch();
-    const watchDate = watch<any>("date", null);
-    const watchTime = watch<any>("time", null);
+    console.log("data", data);
+
     const isEmptyFindedObject = Boolean(Object.keys(findedObject)?.length);
-    const isFullValid =
-      isValid && watchDate && watchTime && isEmptyFindedObject;
 
     const onSubmit = (data) => {
       setIsLoading(true);
@@ -116,35 +122,36 @@ const CreateMeeting = React.memo(
     }, [findedObject]);
 
     useEffect(() => {
-      if (isObjectPage) {
-        setValue<any>("objectId", objectPageId);
-      }
-    }, [objectPageId]);
+      setValue<any>("objectId", objectPageId);
+    }, []);
 
     useEffect(() => {
       if (dateCreate !== null) {
         setValue<any>("date", dateCreate);
       } else {
-        setValue<any>("date", dayjs());
+        setValue<any>("date", null);
       }
     }, [dateCreate]);
 
     return (
       <>
-        <TitleWithAddress
-          isFindedObject={isEmptyFindedObject}
-          city={getCity()}
-          address={getAddress()}
-          title="Добавить встречу:"
-          subtitle="КЛИКНИТЕ по карте, чтобы выбрать место встречи"
+        <HeaderWithCloseButton
+          title={
+            !isEmptyFindedObject
+              ? "КЛИКНИТЕ по карте, чтобы выбрать место встречи"
+              : `Встреча по адресу: ${getCity()}, ${getAddress()}`
+          }
+          color={!isEmptyFindedObject ? "white" : "black"}
+          margin="0 0 20px 0"
+          background={
+            !isEmptyFindedObject ? colors.error["red"] : colors.header["gold"]
+          }
           onClose={onClose}
         />
-
         <FindObjectOnMap />
-
         <MeetingForm
           data={data}
-          objects={transformObjects}
+          objects={currentUserObjects}
           statuses={statuses}
           meetingTypes={meetingTypes}
           watch={watch}
@@ -153,19 +160,15 @@ const CreateMeeting = React.memo(
           setValue={setValue}
           isObjectPage={isObjectPage}
         />
-
-        <FooterButtons
-          onClose={onClose}
-          onCreate={handleSubmit(onSubmit)}
-          isValid={isFullValid}
+        <SuccessCancelFormButtons
+          onSuccess={handleSubmit(onSubmit)}
+          onCancel={onClose}
         />
-
-        {isLoading && (
-          <IsLoadingDialog
-            text="Немного подождите, создаем новую `Встречу`"
-            isLoading={isLoading}
-          />
-        )}
+        <LoaderFullWindow
+          color={colors.grey[600]}
+          size={75}
+          isLoading={isLoading}
+        />
       </>
     );
   }

@@ -188,12 +188,15 @@ const CreateObject = React.memo(({ onClose }) => {
     <>
       <HeaderWithCloseButton
         title={
-          isFindedObject
-            ? `Создать объект: ${getCity()}, ${getAddress()}`
-            : "КЛИКНИТЕ по карте, чтобы выбрать объект"
+          !isFindedObject
+            ? "КЛИКНИТЕ по карте, чтобы выбрать объект"
+            : `Создать объект: ${getCity()}, ${getAddress()}`
         }
-        color="white"
-        background={colors.error["red"]}
+        color={!isFindedObject ? "white" : "black"}
+        margin="0 0 20px 0"
+        background={
+          !isFindedObject ? colors.error["red"] : colors.header["gold"]
+        }
         onClose={onClose}
       />
       {isObjectAlreadyInDatabase && <AlertObjectInDatabase />}

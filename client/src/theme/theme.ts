@@ -15,6 +15,9 @@ export const tokens = (mode) => ({
           red: "#F44336",
           gold: "#FFD700",
         },
+        header: {
+          gold: "#FFD700",
+        },
         success: {
           mediumSeaGreen: "#3CB371",
           darkGreen: "#006400",
@@ -37,6 +40,10 @@ export const tokens = (mode) => ({
         lastContact: {
           primary: "#8B4513", // SaddleBrown,
           hover: "#A0522D", // Sienna,
+        },
+        meeting: {
+          primary: "#4169E1", // RoyalBlue,
+          hover: "#6495ED", // CornflowerBlue,
         },
         grey: {
           100: "#e0e0e0",
@@ -103,6 +110,9 @@ export const tokens = (mode) => ({
         },
         error: {
           red: "#F44336",
+          gold: "#FFD700",
+        },
+        header: {
           gold: "#FFD700",
         },
         success: {

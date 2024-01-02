@@ -9,6 +9,7 @@ import TimePickerStyled from "../../inputs/time-picker";
 import { FieldsContainer, Form } from "../styled/styled";
 import SimpleSwitch from "../../inputs/simple-switch";
 import AutocompleteStyled from "../../inputs/autocomplete-styled";
+import getDateToday from "@utils/date/get-date-today";
 
 const MeetingForm = ({
   data,
@@ -36,8 +37,10 @@ const MeetingForm = ({
             register={register}
             name="date"
             label="Дата встречи *"
-            value={data?.date}
+            value={data?.date || null}
             onChange={(value) => setValue("date", value)}
+            errors={errors?.date}
+            minDate={getDateToday()}
           />
           <TimePickerStyled
             register={register}
@@ -45,6 +48,7 @@ const MeetingForm = ({
             name="time"
             value={data?.time}
             setValue={setValue}
+            errors={errors?.time}
           />
           <SimpleSelectField
             register={register}
@@ -75,7 +79,10 @@ const MeetingForm = ({
             value={data.objectId}
             setValue={setValue}
             watchItemId={watchObjectId}
-            disabled={isObjectPage}
+            disabled={!!watchObjectId}
+            optionLabel={(option) =>
+              `${option?.location?.city}, ${option?.location?.address}`
+            }
           />
 
           <TextFieldStyled

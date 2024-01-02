@@ -63,7 +63,7 @@ const ObjectsDatabase = React.memo(() => {
 
   const currentUserId = useSelector(getCurrentUserId());
   const isCurator = useSelector(getIsUserCurator(currentUserId));
-  const columns = objectsColumns;
+  const columns = objectsColumns();
 
   const { searchedObjects, filteredObjects } = useSearchObjectDatabase(
     objects,

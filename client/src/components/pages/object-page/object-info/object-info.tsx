@@ -28,6 +28,8 @@ import {
   getIsUserCurator,
   getUsersList,
 } from "@store/user/users.store";
+import CreateMeeting from "@components/pages/create-meeting/create-meeting";
+import UpdateMeeting from "@components/pages/update-meeting/update-meeting";
 
 const Component = styled(Box)`
   display: flex;
@@ -62,8 +64,11 @@ const ObjectInfo = ({ object, objectId, isLoading, isAuthorEntity = true }) => {
     updateManagerTaskPage: false,
     createLastContactPage: false,
     updateLastContactPage: false,
+    createMeetingPage: false,
+    updateMeetingPage: false,
     taskId: "",
     lastContactId: "",
+    meetingId: "",
   });
   // console.log("state", state);
 
@@ -91,11 +96,10 @@ const ObjectInfo = ({ object, objectId, isLoading, isAuthorEntity = true }) => {
   };
 
   // обновление стейта при создании задачи менеджеру
-  const handleOpenCreateManagerTaskPage = (taskId) => {
+  const handleOpenCreateManagerTaskPage = () => {
     setState((prevState) => ({
       ...prevState,
       createManagerTaskPage: true,
-      taskId: taskId,
     }));
   };
   const handleCloseCreateManagerTaskPage = () => {
@@ -115,11 +119,10 @@ const ObjectInfo = ({ object, objectId, isLoading, isAuthorEntity = true }) => {
   };
 
   // обновление стейта при создании последнего контакта
-  const handleOpenCreateLastContactPage = (taskId) => {
+  const handleOpenCreateLastContactPage = () => {
     setState((prevState) => ({
       ...prevState,
       createLastContactPage: true,
-      taskId: taskId,
     }));
   };
   const handleCloseCreateLastContactPage = () => {
@@ -144,6 +147,35 @@ const ObjectInfo = ({ object, objectId, isLoading, isAuthorEntity = true }) => {
     }));
   };
 
+  // обновление стейта при создании встречи
+  const handleOpenCreateMeetingPage = () => {
+    setState((prevState) => ({
+      ...prevState,
+      createMeetingPage: true,
+    }));
+  };
+  const handleCloseCreateMeetingPage = () => {
+    setState((prevState) => ({
+      ...prevState,
+      createMeetingPage: false,
+    }));
+  };
+
+  // обновление стейта при обновлении встречи
+  const handleOpenUpdateMeetingPage = (meetingId) => {
+    setState((prevState) => ({
+      ...prevState,
+      updateMeetingPage: true,
+      meetingId: meetingId,
+    }));
+  };
+  const handleCloseUpdateMeetingPage = () => {
+    setState((prevState) => ({
+      ...prevState,
+      updateMeetingPage: false,
+    }));
+  };
+
   return !isLoading ? (
     <Component>
       <ObjectsParams object={object} isLoading={isLoading} />
@@ -161,6 +193,8 @@ const ObjectInfo = ({ object, objectId, isLoading, isAuthorEntity = true }) => {
       <ObjectMeetings
         object={object}
         objectId={objectId}
+        onOpen={handleOpenCreateMeetingPage}
+        onUpdate={handleOpenUpdateMeetingPage}
         isAuthorEntity={isAuthorEntity}
       />
       <LastContacts
@@ -247,8 +281,28 @@ const ObjectInfo = ({ object, objectId, isLoading, isAuthorEntity = true }) => {
         open={state.updateLastContactPage}
         maxWidth="sm"
       />
-
-      <Dialogs objects={transformObjects} users={transformUsers} />
+      <DialogStyled
+        component={
+          <CreateMeeting
+            onClose={handleCloseCreateMeetingPage}
+            objectPageId={objectId}
+          />
+        }
+        maxWidth="lg"
+        onClose={handleCloseCreateMeetingPage}
+        open={state.createMeetingPage}
+      />
+      <DialogStyled
+        component={
+          <UpdateMeeting
+            meetingId={state.meetingId}
+            onClose={handleCloseUpdateMeetingPage}
+          />
+        }
+        onClose={handleCloseUpdateMeetingPage}
+        maxWidth="md"
+        open={state.updateMeetingPage}
+      />
     </Component>
   ) : (
     <Loader />

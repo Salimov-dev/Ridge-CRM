@@ -28,11 +28,11 @@ const Dialogs = ({ objects, users }) => {
       />
       <MyTaskUpdateDialog /> */}
 
-      <MeetingCreateDialog
+      {/* <MeetingCreateDialog
         objectPageId={objectPageId}
         isObjectPage={isObjectPage}
       />
-      <MeetingUpdateDialog />
+      <MeetingUpdateDialog /> */}
 
       {/* <LastContactCreateDialog /> */}
       {/* <LastContactUpdateDialog /> */}

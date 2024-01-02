@@ -56,6 +56,12 @@ const ButtonStyled = ({
     backgroundHover = colors.lastContact["hover"];
   }
 
+  if (style === "MEETING") {
+    background = colors.meeting["primary"];
+    colorHover = "white";
+    backgroundHover = colors.meeting["hover"];
+  }
+
   return (
     <Button
       variant={variant}

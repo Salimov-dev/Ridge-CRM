@@ -49,7 +49,7 @@ const initialState = {
   endDate: null,
 };
 
-const Meetings = React.memo (() => {
+const Meetings = React.memo(() => {
   const [selectedMeetingBaloon, setSelectedMeetingBaloon] = useState(null);
 
   const localStorageState = JSON.parse(
@@ -81,7 +81,7 @@ const Meetings = React.memo (() => {
   const meetingsTypes = useSelector(getMeetingTypesList());
   const selectedMeeting = useSelector(getMeetingById(selectedMeetingBaloon));
   const searchedMeetings = useSearchMeeting(meetings, data);
-  const sortedMeetings = sortingByDateAndTime(searchedMeetings)
+  const sortedMeetings = sortingByDateAndTime(searchedMeetings);
 
   const isLoading = useSelector(getMeetingLoadingStatus());
   const isInputEmpty = JSON.stringify(initialState) !== JSON.stringify(data);
@@ -102,7 +102,7 @@ const Meetings = React.memo (() => {
   }, []);
 
   return (
-    <Box>
+    <>
       <LayoutTitle title="Встречи" />
       <AddAndClearFiltersButton
         reset={reset}
@@ -138,7 +138,7 @@ const Meetings = React.memo (() => {
       <MeetingUpdateDialog />
       <ObjectPageDialog />
       <ObjectUpdatePageDialog />
-    </Box>
+    </>
   );
 });
 

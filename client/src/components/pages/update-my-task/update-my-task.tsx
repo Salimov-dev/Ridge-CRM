@@ -152,10 +152,10 @@ const UpdateMyTask = React.memo(({ title, taskId, objectId, onClose }) => {
         isUpdate={true}
       />
       <ConfirmRemoveDialog
-        removeId={taskId}
         open={open}
         onClose={handleClose}
         onRemove={handleRemoveTask}
+        removeId={taskId}
       />
       <LoaderFullWindow
         color={colors.grey[600]}

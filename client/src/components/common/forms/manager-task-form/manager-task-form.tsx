@@ -35,7 +35,7 @@ const ManagerTaskForm = ({
         <DatePickerStyled
           register={register}
           name="date"
-          label="Дата"
+          label="Дата *"
           value={data?.date}
           onChange={(value) => setValue("date", value)}
           errors={errors?.date}
@@ -45,7 +45,7 @@ const ManagerTaskForm = ({
         <TimePickerStyled
           register={register}
           name="time"
-          label="Время"
+          label="Время *"
           value={data.time}
           setValue={setValue}
           errors={errors?.time}

@@ -1,42 +1,39 @@
 // libraries
+import { useTheme } from "@emotion/react";
+import { tokens } from "@theme/theme";
 import React, { useState } from "react";
 import dayjs from "dayjs";
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { yupResolver } from "@hookform/resolvers/yup";
-// MUI
-import { Box } from "@mui/material";
 // components
-import Header from "./components/header";
-import MeetingForm from "../../common/forms/meeting-form/meeting-form";
-import FooterButtons from "../../common/forms/footer-buttons/success-cancel-form-buttons";
-import ConfirmRemoveDialog from "../../common/dialog/confirm-remove-dialog";
-import IsLoadingDialog from "../../common/dialog/is-loading-dialog";
+import SuccessCancelFormButtons from "@common/forms/footer-buttons/success-cancel-form-buttons";
+import LoaderFullWindow from "@components/common/loader/loader-full-window";
+import HeaderWithCloseButton from "@components/common/page-titles/header-with-close-button";
+import MeetingForm from "@common/forms/meeting-form/meeting-form";
+import ConfirmRemoveDialog from "@common/dialog/confirm-remove-dialog";
 // schema
-import { meetingSchema } from "../../../schemas/meeting-schema";
+import { meetingSchema } from "@schemas/meeting-schema";
 // store
-import { getObjectsList } from "../../../store/object/objects.store";
-import { getCurrentUserId } from "../../../store/user/users.store";
-import { getMeetingTypesList } from "../../../store/meeting/meeting-types.store";
-import { getMeetingStatusesList } from "../../../store/meeting/meeting-status.store";
-import { getUpdateMeetingId } from "../../../store/meeting/update-meeting.store";
+import { getObjectsList } from "@store/object/objects.store";
+import { getCurrentUserId } from "@store/user/users.store";
+import { getMeetingTypesList } from "@store/meeting/meeting-types.store";
+import { getMeetingStatusesList } from "@store/meeting/meeting-status.store";
 import {
   getMeetingById,
   getMeetingLoadingStatus,
   removeMeeting,
   updateMeeting,
-} from "../../../store/meeting/meetings.store";
-// utils
-import transformObjectsForSelect from "../../../utils/objects/transform-objects-for-select";
+} from "@store/meeting/meetings.store";
 
-const UpdateMeeting = React.memo(({ onClose }) => {
+const UpdateMeeting = React.memo(({ meetingId, onClose }) => {
   const dispatch = useDispatch();
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
 
   const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-
-  const meetingId = useSelector(getUpdateMeetingId());
   const meeting = useSelector(getMeetingById(meetingId));
 
   const formatedMeeting = {
@@ -49,18 +46,16 @@ const UpdateMeeting = React.memo(({ onClose }) => {
     register,
     watch,
     handleSubmit,
-    formState: { errors, isValid },
+    formState: { errors },
     setValue,
   } = useForm({
     defaultValues: formatedMeeting,
-    mode: "onBlur",
+    mode: "onChange",
     resolver: yupResolver(meetingSchema),
   });
 
   const data = watch();
-  const watchDate = watch("date", null);
-  const watchTime = watch("time", null);
-  const isFullValid = isValid && watchDate && watchTime;
+
   const isEditMode = meetingId ? true : false;
 
   const objects = useSelector(getObjectsList());
@@ -71,8 +66,6 @@ const UpdateMeeting = React.memo(({ onClose }) => {
   const isMeetingsLoading = useSelector(getMeetingLoadingStatus());
   const meetingTypes = useSelector(getMeetingTypesList());
   const statuses = useSelector(getMeetingStatusesList());
-
-  const transformObjects = transformObjectsForSelect(currentUserObjects);
 
   const onSubmit = (data) => {
     setIsLoading(true);
@@ -105,17 +98,18 @@ const UpdateMeeting = React.memo(({ onClose }) => {
     setOpen(false);
   };
 
-  return isLoading ? (
-    <IsLoadingDialog
-      text="Немного подождите, изменяем `Встречу`"
-      isLoading={isLoading}
-    />
-  ) : (
-    <Box>
-      <Header meeting={meeting} onClose={onClose} />
+  return (
+    <>
+      <HeaderWithCloseButton
+        title={`Встреча по адресу: ${meeting?.location?.city}, ${meeting?.location?.address}`}
+        color="black"
+        margin="0 0 20px 0"
+        background={colors.header["gold"]}
+        onClose={onClose}
+      />
       <MeetingForm
         data={data}
-        objects={transformObjects}
+        objects={currentUserObjects}
         meetingTypes={meetingTypes}
         statuses={statuses}
         register={register}
@@ -125,20 +119,24 @@ const UpdateMeeting = React.memo(({ onClose }) => {
         isEditMode={isEditMode}
         isMeetingsLoading={isMeetingsLoading}
       />
-      <FooterButtons
-        onClose={onClose}
-        onUpdate={handleSubmit(onSubmit)}
+      <SuccessCancelFormButtons
+        onSuccess={handleSubmit(onSubmit)}
+        onCancel={onClose}
         onRemove={handleClickOpen}
-        isValid={isFullValid}
-        isEditMode={isEditMode}
+        isUpdate={true}
+      />
+      <LoaderFullWindow
+        color={colors.grey[600]}
+        size={75}
+        isLoading={isLoading}
       />
       <ConfirmRemoveDialog
-        removeId={meetingId}
         open={open}
         onClose={handleClose}
         onRemove={handleRemoveMeeting}
+        removeId={meetingId}
       />
-    </Box>
+    </>
   );
 });
 
