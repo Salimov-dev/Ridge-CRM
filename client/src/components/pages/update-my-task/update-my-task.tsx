@@ -4,33 +4,29 @@ import { toast } from "react-toastify";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useTheme } from "@emotion/react";
+import { tokens } from "@theme/theme";
 import { useDispatch, useSelector } from "react-redux";
 // components
-import MyTaskForm from "../../common/forms/my-task-form/my-task-form";
-import FooterButtons from "../../common/forms/footer-buttons/success-cance-form-buttons";
-import ConfirmRemoveDialog from "../../common/dialog/confirm-remove-dialog";
-import TitleWithCloseButton from "../../common/page-titles/header-with-close-button";
-import IsLoadingDialog from "../../common/dialog/is-loading-dialog";
+import MyTaskForm from "@common/forms/my-task-form/my-task-form";
+import ConfirmRemoveDialog from "@common/dialog/confirm-remove-dialog";
+import TitleWithCloseButton from "@common/page-titles/header-with-close-button";
+import SuccessCancelFormButtons from "@components/common/forms/footer-buttons/success-cancel-form-buttons";
+import LoaderFullWindow from "@components/common/loader/loader-full-window";
 // schema
-import { taskSchema } from "../../../schemas/task-shema";
+import { taskSchema } from "@schemas/task-shema";
+//utils
+import { capitalizeFirstLetter } from "@utils/data/capitalize-first-letter";
+import { getObjectsList } from "@store/object/objects.store";
+import { getCurrentUserId } from "@store/user/users.store";
+import { createLastContact } from "@store/last-contact/last-contact.store";
 // store
-import { getUpdateMyTaskId } from "../../../store/task/update-my-task.store";
 import {
   getTaskById,
   getTaskLoadingStatus,
   removeTask,
   updateTask,
-} from "../../../store/task/tasks.store";
-import { getObjectsList } from "../../../store/object/objects.store";
-import { getCurrentUserId } from "../../../store/user/users.store";
-import { getOpenObjectPageOpenState } from "../../../store/object/open-object-page.store";
-import transformObjectsForSelect from "../../../utils/objects/transform-objects-for-select";
-import { capitalizeFirstLetter } from "../../../utils/data/capitalize-first-letter";
-import { createLastContact } from "../../../store/last-contact/last-contact.store";
-import SuccessCancelFormButtons from "../../common/forms/footer-buttons/success-cance-form-buttons";
-import LoaderFullWindow from "@components/common/loader/loader-full-window";
-import { useTheme } from "@emotion/react";
-import { tokens } from "@theme/theme";
+} from "@store/task/tasks.store";
 
 const UpdateMyTask = React.memo(({ title, taskId, objectId, onClose }) => {
   const dispatch = useDispatch();
@@ -53,16 +49,15 @@ const UpdateMyTask = React.memo(({ title, taskId, objectId, onClose }) => {
     register,
     watch,
     handleSubmit,
-    formState: { errors, isValid },
+    formState: { errors },
     setValue,
   } = useForm({
     defaultValues: formatedTask,
-    mode: "onBlur",
+    mode: "onChange",
     resolver: yupResolver(taskSchema),
   });
 
   const data = watch();
-
   const isEditMode = taskId ? true : false;
   const objects = useSelector(getObjectsList());
 
@@ -81,6 +76,7 @@ const UpdateMyTask = React.memo(({ title, taskId, objectId, onClose }) => {
       date: transformedDate,
       time: transformedTime,
     };
+    console.log("newData", newData);
 
     const lastContactData = {
       date: data.date,
@@ -148,11 +144,12 @@ const UpdateMyTask = React.memo(({ title, taskId, objectId, onClose }) => {
         errors={errors}
         setValue={setValue}
         isEditMode={isEditMode}
-        isTasksLoading={isTasksLoading}
       />
       <SuccessCancelFormButtons
-        onClickSuccess={handleSubmit(onSubmit)}
-        onClickSuccessCancel={onClose}
+        onSuccess={handleSubmit(onSubmit)}
+        onCancel={onClose}
+        onRemove={handleClickOpen}
+        isUpdate={true}
       />
       <ConfirmRemoveDialog
         removeId={taskId}

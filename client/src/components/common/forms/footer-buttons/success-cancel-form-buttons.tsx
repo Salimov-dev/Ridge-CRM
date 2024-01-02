@@ -11,25 +11,31 @@ const ButtonsContainer = styled(Box)`
   margin-top: 30px;
 `;
 
-const SuccessCancelFormButtons = ({ onClickSuccess, onClickSuccessCancel }) => {
+const Container = styled(Box)`
+  display: flex;
+  gap: 4px;
+`;
+
+const SuccessCancelFormButtons = ({
+  onSuccess,
+  onCancel,
+  onRemove=()=>{},
+  isUpdate = false,
+}) => {
   return (
     <ButtonsContainer>
-      <ButtonStyled
-        title="Сохранить"
-        style="SUCCESS"
-        onClick={onClickSuccess}
-      />
-      <ButtonStyled
-        title="Отмена"
-        style="CANCEL"
-        onClick={onClickSuccessCancel}
-      />
+      <ButtonStyled title="Сохранить" style="SUCCESS" onClick={onSuccess} />
+      <Container>
+        {isUpdate && (
+          <ButtonStyled title="Удалить" style="CANCEL" onClick={onRemove} />
+        )}
+        <ButtonStyled title="Отмена" style="CANCEL" onClick={onCancel} />
+      </Container>
     </ButtonsContainer>
   );
 };
 
 export default SuccessCancelFormButtons;
-
 
 // import { Box, styled } from "@mui/material";
 // import NegativeOutlinedButton from "../../buttons/negative-outlined-button";

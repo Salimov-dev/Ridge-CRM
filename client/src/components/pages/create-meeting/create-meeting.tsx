@@ -10,7 +10,7 @@ import MeetingForm from "../../common/forms/meeting-form/meeting-form";
 import IsLoadingDialog from "../../common/dialog/is-loading-dialog";
 import TitleWithAddress from "../../common/page-titles/title-with-address";
 import FindObjectOnMap from "../../common/find-object-on-map/find-object-on-map";
-import FooterButtons from "../../common/forms/footer-buttons/success-cance-form-buttons";
+import FooterButtons from "../../common/forms/footer-buttons/success-cancel-form-buttons";
 // store
 import { getCurrentUserId } from "../../../store/user/users.store";
 import { createMeeting } from "../../../store/meeting/meetings.store";

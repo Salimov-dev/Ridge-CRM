@@ -18,8 +18,8 @@ const Dialogs = ({ objects, users }) => {
 
   return (
     <>
-      <ManagerTaskCreateDialog objects={objects} users={users} />
-      <ManagerTaskUpdateDialog />
+      {/* <ManagerTaskCreateDialog objects={objects} users={users} /> */}
+      {/* <ManagerTaskUpdateDialog /> */}
 
       {/* <MyTaskCreateDialog
         objects={objects}

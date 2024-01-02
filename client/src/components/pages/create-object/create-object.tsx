@@ -12,7 +12,7 @@ import FindObjectOnMap from "@common/find-object-on-map/find-object-on-map";
 import AlertObjectInDatabase from "./components/alert-object-in-database";
 import HeaderWithCloseButton from "@components/common/page-titles/header-with-close-button";
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
-import SuccessCancelFormButtons from "@components/common/forms/footer-buttons/success-cance-form-buttons";
+import SuccessCancelFormButtons from "@components/common/forms/footer-buttons/success-cancel-form-buttons";
 // store
 import { createObject, getObjectsList } from "@store/object/objects.store";
 // hooks

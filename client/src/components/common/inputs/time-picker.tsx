@@ -3,6 +3,9 @@ import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { TimePicker } from "@mui/x-date-pickers/TimePicker";
+import Errors from "./errors";
+import { useTheme } from "@emotion/react";
+import { tokens } from "@theme/theme";
 
 const FieldsContainer = styled(Box)`
   width: 100%;
@@ -22,6 +25,8 @@ const TimePickerStyled = ({
   isHelperText = false,
   required = false,
 }) => {
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
   const helperText = errors?.message; // Добавляем переменную helperText
 
   return (
@@ -47,8 +52,11 @@ const TimePickerStyled = ({
               sx={{
                 width: "100%",
                 "& .MuiOutlinedInput-root": {
+                  "& fieldset": {
+                    borderColor: errors ? colors.error["red"] : "gray",
+                  },
                   "&.Mui-focused fieldset": {
-                    borderColor: "green",
+                    borderColor: errors ? "red" : "green",
                   },
                 },
                 "& .MuiInputLabel-root": {
@@ -57,11 +65,15 @@ const TimePickerStyled = ({
                 "& label.Mui-focused": {
                   color: "white",
                 },
+                "& .MuiButtonBase-root": {
+                  color: value ? "white" : "gray",
+                },
               }}
             />
           </DemoContainer>
           {isHelperText ? <FormHelperText>{helperText}</FormHelperText> : null}
         </LocalizationProvider>
+        <Errors errors={errors} padding="0 0 0 10px" />
       </Box>
     </FieldsContainer>
   );

@@ -11,7 +11,7 @@ import Header from "./components/header";
 import Loader from "../../common/loader/loader";
 import IsLoadingDialog from "../../common/dialog/is-loading-dialog";
 import LastContactForm from "../../common/forms/last-contact-form/last-contact-form";
-import FooterButtons from "../../common/forms/footer-buttons/success-cance-form-buttons";
+import FooterButtons from "../../common/forms/footer-buttons/success-cancel-form-buttons";
 import ConfirmRemoveDialog from "../../common/dialog/confirm-remove-dialog";
 // store
 import { getUpdateLastContactId } from "../../../store/last-contact/update-last-contact.store";

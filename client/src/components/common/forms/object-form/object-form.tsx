@@ -15,7 +15,7 @@ import FingerprintIcon from "@mui/icons-material/Fingerprint";
 import { FieldsContainer, Form } from "../styled/styled";
 // components
 import Title from "../title/title";
-import FooterButtons from "../footer-buttons/success-cance-form-buttons";
+import FooterButtons from "../footer-buttons/success-cancel-form-buttons";
 import TextFieldStyled from "../../inputs/text-field-styled";
 import DistrictSelect from "./components/district-select";
 import SelectFieldStyled from "@components/common/inputs/select-field-styled";

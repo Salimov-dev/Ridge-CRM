@@ -10,7 +10,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 // components
 import MyTaskForm from "@common/forms/my-task-form/my-task-form";
 import TitleWithCloseButton from "@common/page-titles/header-with-close-button";
-import SuccessCancelFormButtons from "@common/forms/footer-buttons/success-cance-form-buttons";
+import SuccessCancelFormButtons from "@components/common/forms/footer-buttons/success-cancel-form-buttons";
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
 // store
 import { createTask } from "@store/task/tasks.store";
@@ -89,7 +89,7 @@ const CreateMyTask = React.memo(
       if (dateCreate !== null) {
         setValue<any>("date", dateCreate);
       } else {
-        setValue<any>("date", dayjs());
+        setValue<any>("date", null);
       }
     }, [dateCreate]);
 
@@ -109,8 +109,8 @@ const CreateMyTask = React.memo(
           errors={errors}
         />
         <SuccessCancelFormButtons
-          onClickSuccess={handleSubmit(onSubmit)}
-          onClickSuccessCancel={onClose}
+          onSuccess={handleSubmit(onSubmit)}
+          onCancel={onClose}
         />
         <LoaderFullWindow
           color={colors.grey[600]}

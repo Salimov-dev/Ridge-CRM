@@ -23,6 +23,8 @@ import CreateMyTask from "@components/pages/create-my-task/create-my-task";
 import { useState } from "react";
 import { tasksColumns } from "@columns/tasks-columns/tasks-columns";
 import UpdateMyTask from "@components/pages/update-my-task/update-my-task";
+import CreateManagerTask from "@components/pages/create-manager-task/create-manager-task";
+import UpdateManagerTask from "@components/pages/update-manager-task/update-manager-task";
 
 const Component = styled(Box)`
   display: flex;
@@ -53,6 +55,8 @@ const ObjectInfo = ({ object, objectId, isLoading, isAuthorEntity = true }) => {
   const [state, setState] = useState({
     createMyTaskPage: false,
     updateMyTaskPage: false,
+    createManagerTaskPage: false,
+    updateManagerTaskPage: false,
     taskId: "",
   });
   // console.log("state", state);
@@ -80,14 +84,42 @@ const ObjectInfo = ({ object, objectId, isLoading, isAuthorEntity = true }) => {
     setState((prevState) => ({ ...prevState, updateMyTaskPage: false }));
   };
 
+  // обновление стейта при создании задачи менеджеру
+  const handleOpenCreateManagerTaskPage = (taskId) => {
+    setState((prevState) => ({
+      ...prevState,
+      createManagerTaskPage: true,
+      taskId: taskId,
+    }));
+  };
+  const handleCloseCreateManagerTaskPage = () => {
+    setState((prevState) => ({ ...prevState, createManagerTaskPage: false }));
+  };
+
+  // обновление стейта при обновлении задачи менеджеру
+  const handleOpenUpdateManagerTaskPage = (taskId) => {
+    setState((prevState) => ({
+      ...prevState,
+      updateManagerTaskPage: true,
+      taskId: taskId,
+    }));
+  };
+  const handleCloseUpdateManagerTaskPage = () => {
+    setState((prevState) => ({ ...prevState, updateManagerTaskPage: false }));
+  };
+
   return !isLoading ? (
     <Component>
       <ObjectsParams object={object} isLoading={isLoading} />
       <ObjectTasks
         object={object}
         objectId={objectId}
-        onOpen={handleOpenCreateMyTaskPage}
-        columns={tasksColumns(handleOpenUpdateMyTaskPage)}
+        onOpenCreateMyTask={handleOpenCreateMyTaskPage}
+        onOpenCreateManagerTask={handleOpenCreateManagerTaskPage}
+        columns={tasksColumns(
+          handleOpenUpdateMyTaskPage,
+          handleOpenUpdateManagerTaskPage
+        )}
         isAuthorEntity={isAuthorEntity}
       />
       <ObjectMeetings
@@ -119,13 +151,39 @@ const ObjectInfo = ({ object, objectId, isLoading, isAuthorEntity = true }) => {
         onClose={handleCloseUpdateMyTaskPage}
         open={state.updateMyTaskPage}
         maxWidth="sm"
-        fullWidth={false}
         component={
           <UpdateMyTask
             title="Изменить свою задачу"
             taskId={state.taskId}
             objectId={objectId}
             onClose={handleCloseUpdateMyTaskPage}
+          />
+        }
+      />
+      <DialogStyled
+        onClose={handleCloseCreateManagerTaskPage}
+        open={state.createManagerTaskPage}
+        maxWidth="sm"
+        component={
+          <CreateManagerTask
+            title="Поставить менеджеру задачу"
+            objectPageId={objectId}
+            users={users}
+            onClose={handleCloseCreateManagerTaskPage}
+          />
+        }
+      />
+      <DialogStyled
+        onClose={handleCloseUpdateManagerTaskPage}
+        open={state.updateManagerTaskPage}
+        maxWidth="sm"
+        component={
+          <UpdateManagerTask
+            title="Изменить задачу менеджеру"
+            objects={objects}
+            users={users}
+            taskId={state.taskId}
+            onClose={handleCloseUpdateManagerTaskPage}
           />
         }
       />

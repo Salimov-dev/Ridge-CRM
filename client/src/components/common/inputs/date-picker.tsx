@@ -1,15 +1,21 @@
 // MUI
-import { Box, FormHelperText } from "@mui/material";
+import { Box } from "@mui/material";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 // utils
-import getDateToday from "../../../utils/date/get-date-today";
+import getDateToday from "@utils/date/get-date-today";
 import Errors from "./errors";
 import { useTheme } from "@emotion/react";
 import { tokens } from "@theme/theme";
+import styled from "@emotion/styled";
 
 const today = getDateToday();
+
+const Component = styled(Box)`
+  width: 100%;
+  margin-bottom: -3px;
+`;
 
 const DatePickerStyled = ({
   register,
@@ -17,10 +23,8 @@ const DatePickerStyled = ({
   label,
   value,
   onChange,
-  helperText = "",
   errors = null,
   disabled = false,
-  color = "Crimson",
   minDate = today,
   maxDate = null,
   isEditMode = false,
@@ -29,7 +33,7 @@ const DatePickerStyled = ({
   const colors = tokens(theme.palette.mode);
 
   return (
-    <Box sx={{ width: "100%", marginBottom: "-3px" }}>
+    <Component>
       <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="ru">
         <DatePicker
           {...register(name)}
@@ -63,7 +67,7 @@ const DatePickerStyled = ({
         />
       </LocalizationProvider>
       <Errors errors={errors} padding="0 0 0 10px" />
-    </Box>
+    </Component>
   );
 };
 

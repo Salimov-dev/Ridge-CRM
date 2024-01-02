@@ -13,9 +13,10 @@ const HeaderWithCloseButton = ({
   onClose,
   background = "inherit",
   color = "inherit",
+  margin = "0",
 }) => {
   return (
-    <Component>
+    <Component sx={{ margin: margin }}>
       <LayoutTitle
         title={title}
         background={background}

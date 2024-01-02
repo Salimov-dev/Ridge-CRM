@@ -1,10 +1,7 @@
-// components
+import { FieldsContainer, Form } from "../styled/styled";
 import TextFieldStyled from "../../inputs/text-field-styled";
 import DatePickerStyled from "../../inputs/date-picker";
 import TimePickerStyled from "../../inputs/time-picker";
-// styled
-import { FieldsContainer, Form } from "../styled/styled";
-// utils
 import SimpleSwitch from "../../inputs/simple-switch";
 import AutocompleteStyled from "../../inputs/autocomplete-styled";
 
@@ -12,15 +9,17 @@ const MyTaskForm = ({
   data,
   objects,
   register,
+  setValue,
   watch,
   errors = null,
-  setValue,
+  isCurator = false,
   isEditMode = false,
-  isTasksLoading = false,
+  users = [],
 }) => {
   const watchObjectId = watch("objectId", "");
   const watchIsDone = watch("isDone", false);
   const watchIsCallTask = watch("isCallTask");
+  const watchManagerId = watch("managerId", "");
 
   return (
     <Form noValidate>
@@ -28,7 +27,6 @@ const MyTaskForm = ({
         <SimpleSwitch
           title="Сделать звонок"
           value={watchIsCallTask}
-          isLoading={isTasksLoading}
           padding="0px"
           onChange={(e) => {
             setValue("isCallTask", e.target.checked);
@@ -40,8 +38,7 @@ const MyTaskForm = ({
           register={register}
           name="date"
           label="Дата *"
-          required={true}
-          value={data?.date}
+          value={data?.date || null}
           errors={errors?.date}
           onChange={(value) => setValue("date", value)}
         />
@@ -63,11 +60,26 @@ const MyTaskForm = ({
         value={data.objectId}
         setValue={setValue}
         watchItemId={watchObjectId}
-        disabled={isEditMode}
+        disabled={!!watchObjectId}
         optionLabel={(option) =>
           `${option?.location?.city}, ${option?.location?.address}`
         }
       />
+      {isCurator && (
+        <AutocompleteStyled
+          label="Менеджер"
+          register={register}
+          name="managerId"
+          options={users}
+          value={watchManagerId}
+          setValue={setValue}
+          watchItemId={watchManagerId}
+          disabled={!!watchManagerId}
+          optionLabel={(option) =>
+            `${option?.name?.lastName} ${option?.name?.firstName}`
+          }
+        />
+      )}
       <TextFieldStyled
         register={register}
         label="Комментарий"
@@ -95,7 +107,6 @@ const MyTaskForm = ({
         <SimpleSwitch
           title="Задача выполненна"
           value={watchIsDone}
-          isLoading={isTasksLoading}
           padding="0px"
           onChange={(e) => {
             setValue("isDone", e.target.checked);

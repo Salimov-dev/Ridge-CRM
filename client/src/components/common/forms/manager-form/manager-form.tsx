@@ -6,7 +6,7 @@ import AlternateEmailOutlinedIcon from "@mui/icons-material/AlternateEmailOutlin
 import KeyOutlinedIcon from "@mui/icons-material/KeyOutlined";
 // components
 import Title from "../title/title";
-import FooterButtons from "../footer-buttons/success-cance-form-buttons";
+import FooterButtons from "../footer-buttons/success-cancel-form-buttons";
 import TextFieldStyled from "../../inputs/text-field-styled";
 import DatePickerStyled from "../../inputs/date-picker";
 import SimpleSelectField from "../../inputs/simple-select-field";

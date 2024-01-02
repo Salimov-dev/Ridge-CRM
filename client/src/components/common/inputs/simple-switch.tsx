@@ -24,7 +24,7 @@ const SimpleSwitch = ({
   onChange,
   value,
   whiteSpace = "nowrap",
-  isLoading,
+  isLoading = false,
   padding = "5px 15px 5px 0px",
 }) => {
   const [checked, setChecked] = useState(value);
@@ -45,7 +45,7 @@ const SimpleSwitch = ({
               <Switch
                 color="success"
                 checked={value}
-                disabled={isLoading ? true : false}
+                disabled={isLoading}
                 onChange={handleChange}
               />
             }

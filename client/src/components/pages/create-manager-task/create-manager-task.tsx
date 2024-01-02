@@ -1,4 +1,6 @@
 // libraries
+import { useTheme } from "@emotion/react";
+import { tokens } from "@theme/theme";
 import dayjs from "dayjs";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
@@ -6,29 +8,17 @@ import { useForm } from "react-hook-form";
 import React, { useEffect, useState } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 // components
-import TitleWithCloseButton from "../../common/page-titles/header-with-close-button";
-import ManagerTaskForm from "../../common/forms/manager-task-form/manager-task-form";
-import IsLoadingDialog from "../../common/dialog/is-loading-dialog";
-import FooterButtons from "../../common/forms/footer-buttons/success-cance-form-buttons";
+import TitleWithCloseButton from "@common/page-titles/header-with-close-button";
+import SuccessCancelFormButtons from "@common/forms/footer-buttons/success-cancel-form-buttons";
+import LoaderFullWindow from "@components/common/loader/loader-full-window";
+import MyTaskForm from "@components/common/forms/my-task-form/my-task-form";
 // schema
-import { taskManagerSchema } from "../../../schemas/task-manager-shema";
+import { taskSchema } from "@schemas/task-shema";
 // utils
-import { capitalizeFirstLetter } from "../../../utils/data/capitalize-first-letter";
-import transformObjectsForSelect from "../../../utils/objects/transform-objects-for-select";
+import { capitalizeFirstLetter } from "@utils/data/capitalize-first-letter";
 // store
-import { createTask } from "../../../store/task/tasks.store";
-import {
-  getObjectById,
-  getObjectsList,
-} from "../../../store/object/objects.store";
-import {
-  getCurrentUserId,
-  getIsUserCurator,
-} from "../../../store/user/users.store";
-import {
-  getOpenObjectPageId,
-  getOpenObjectPageOpenState,
-} from "../../../store/object/open-object-page.store";
+import { createTask } from "@store/task/tasks.store";
+import { getObjectById, getObjectsList } from "@store/object/objects.store";
 
 const initialState = {
   comment: "",
@@ -38,11 +28,15 @@ const initialState = {
   managerId: "",
   result: "",
   isDone: false,
+  isCallTask: true,
 };
 
 const CreateManagerTask = React.memo(
-  ({ users, title, dateCreate, onClose }) => {
+  ({ users, title, dateCreate, onClose, objectPageId }) => {
     const dispatch = useDispatch();
+    const theme = useTheme();
+    const colors = tokens(theme.palette.mode);
+
     const [isLoading, setIsLoading] = useState(false);
 
     const {
@@ -50,35 +44,17 @@ const CreateManagerTask = React.memo(
       watch,
       handleSubmit,
       setValue,
-      formState: { errors, isValid },
+      formState: { errors },
     } = useForm({
       defaultValues: initialState,
-      mode: "onBlur",
-      resolver: yupResolver(taskManagerSchema),
+      mode: "onChange",
+      resolver: yupResolver(taskSchema),
     });
     const data = watch();
-    const watchDate = watch<any>("date", null);
-    const watchTime = watch<any>("time", null);
-    const watchManagerId = watch<any>("managerId", null);
-    const isFullValid =
-      isValid &&
-      Boolean(watchDate) &&
-      Boolean(watchTime) &&
-      Boolean(watchManagerId);
-
-    const currentUserId = useSelector(getCurrentUserId());
-    const isCurator = useSelector(getIsUserCurator(currentUserId));
 
     const objects = useSelector(getObjectsList());
-    const isObjectPage = useSelector(getOpenObjectPageOpenState());
-    const objectPageId = useSelector(getOpenObjectPageId());
     const currentObject = useSelector(getObjectById(objectPageId));
     const managerId = currentObject?.userId;
-
-    const selectedManagerObjects = objects?.filter(
-      (obj) => obj?.userId === watchManagerId
-    );
-    const transformObjects = transformObjectsForSelect(selectedManagerObjects);
 
     const onSubmit = () => {
       setIsLoading(true);
@@ -100,11 +76,9 @@ const CreateManagerTask = React.memo(
     };
 
     useEffect(() => {
-      if (isObjectPage) {
-        setValue<any>("objectId", objectPageId);
-        setValue<any>("managerId", managerId);
-      }
-    }, [objectPageId]);
+      setValue<any>("objectId", objectPageId);
+      setValue<any>("managerId", managerId);
+    }, []);
 
     useEffect(() => {
       if (dateCreate !== null) {
@@ -114,34 +88,32 @@ const CreateManagerTask = React.memo(
       }
     }, [dateCreate]);
 
-    return isLoading ? (
-      <IsLoadingDialog
-        text="Немного подождите, создаем `Новую задачу менеджеру`"
-        isLoading={isLoading}
-      />
-    ) : (
+    return (
       <>
         <TitleWithCloseButton
           title={title}
-          background="Crimson"
-          color="white"
+          background={colors.task["managerTask"]}
           onClose={onClose}
+          margin="0 0 20px 0"
         />
-        <ManagerTaskForm
+        <MyTaskForm
           data={data}
-          objects={transformObjects}
-          users={users}
+          objects={objects}
           register={register}
-          errors={errors}
-          watch={watch}
           setValue={setValue}
-          isCurator={isCurator}
-          isObjectPage={isObjectPage}
+          watch={watch}
+          errors={errors}
+          isCurator={true}
+          users={users}
         />
-        <FooterButtons
-          onCreate={handleSubmit(onSubmit)}
-          onClose={onClose}
-          isValid={isFullValid}
+        <SuccessCancelFormButtons
+          onSuccess={handleSubmit(onSubmit)}
+          onCancel={onClose}
+        />
+        <LoaderFullWindow
+          color={colors.grey[600]}
+          size={75}
+          isLoading={isLoading}
         />
       </>
     );

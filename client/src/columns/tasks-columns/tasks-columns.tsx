@@ -38,7 +38,10 @@ import { AlignCenter } from "../../components/common/columns/styled";
 import UserNameWithAvatar from "../../components/common/table/helpers/user-name-with-avatar";
 import useGetUserAvatar from "../../hooks/user/use-get-user-avatar";
 
-export const tasksColumns = (handleOpenUpdateMyTaskPage) => [
+export const tasksColumns = (
+  handleOpenUpdateMyTaskPage,
+  handleOpenUpdateManagerTaskPage
+) => [
   {
     accessorKey: "isDone",
     header: "",
@@ -209,7 +212,11 @@ export const tasksColumns = (handleOpenUpdateMyTaskPage) => [
       return (
         <MultiColorContainedButton
           text="Править"
-          onClick={() => handleOpenUpdateMyTaskPage(taskId)}
+          onClick={() =>
+            isCuratorTask
+              ? handleOpenUpdateManagerTaskPage(taskId)
+              : handleOpenUpdateMyTaskPage(taskId)
+          }
           disabled={disable}
           fontColor={isCuratorTask ? "inherit" : "black"}
           background={isCuratorTask ? "crimson" : "orange"}

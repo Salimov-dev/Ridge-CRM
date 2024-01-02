@@ -14,7 +14,14 @@ const Container = styled(Box)`
   justify-content: space-between;
 `;
 
-const ObjectTasks = ({ columns, objectId, object, onOpen, isAuthorEntity }) => {
+const ObjectTasks = ({
+  columns,
+  objectId,
+  object,
+  onOpenCreateMyTask,
+  onOpenCreateManagerTask,
+  isAuthorEntity,
+}) => {
   const isTasksLoading = useSelector(getTaskLoadingStatus());
   const address = `${object?.location?.city}, ${object?.location?.address}`;
 
@@ -30,14 +37,14 @@ const ObjectTasks = ({ columns, objectId, object, onOpen, isAuthorEntity }) => {
             title="Поставить себе задачу"
             style="MY_TASK"
             variant="contained"
-            onClick={onOpen}
+            onClick={onOpenCreateMyTask}
           />
         ) : (
           <ButtonStyled
             title="Поставить менеджеру задачу"
             style="MANAGER_TASK"
             variant="contained"
-            // onClick={onOpenCreateObjectPage}
+            onClick={onOpenCreateManagerTask}
           />
         )}
       </Container>
