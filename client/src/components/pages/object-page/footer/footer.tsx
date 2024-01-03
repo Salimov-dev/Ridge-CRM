@@ -23,6 +23,7 @@ const Footer = ({
   onEdit,
   isEdit,
   isLoading,
+  onOpenCreatePresentationPage,
   isAuthorEntity = true,
 }) => {
   const dispatch = useDispatch();
@@ -80,6 +81,7 @@ const Footer = ({
         object={object}
         onClose={onClose}
         onEdit={onEdit}
+        onOpenCreatePresentationPage={onOpenCreatePresentationPage}
         negativeTitle="Закрыть"
         isEdit={isEdit}
         isAuthorEntity={isAuthorEntity}

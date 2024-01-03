@@ -1,32 +1,21 @@
 // libraries
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 // components
-import MultiColorContainedButton from "../../components/common/buttons/multi-color-contained-button";
-import {
-  FormatPhone,
-  UserAvatar,
-} from "../../components/common/table/helpers/helpers";
-import { AlignCenter } from "../../components/common/columns/styled";
+import { FormatPhone } from "@components/common/table/helpers/helpers";
+import { AlignCenter } from "@components/common/columns/styled";
 // mock
-import { gendersArray } from "../../mock/genders";
+import { gendersArray } from "../mock/genders";
 // store
-import { getUserNameById } from "../../store/user/users.store";
-import { getUserStatusNameById } from "../../store/user/user-statuses.store";
-import {
-  setUpdateManagerId,
-  setUpdateManagerOpenState,
-} from "../../store/user/update-user.store";
+import { getUserNameById } from "@store/user/users.store";
+import { getUserStatusNameById } from "@store/user/user-statuses.store";
 // utils
-import { FormatDate } from "../../utils/date/format-date";
+import { FormatDate } from "@utils/date/format-date";
 // icons
-import basicAva from "../../assets/basic-ava.jpg";
-import useGetUserAvatar from "../../hooks/user/use-get-user-avatar";
-import UserNameWithAvatar from "../../components/common/table/helpers/user-name-with-avatar";
-import EmptyTd from "../../components/common/columns/empty-td";
-import { getUserAvatarsList } from "../../store/avatar/avatar.store";
-import { useEffect } from "react";
+import useGetUserAvatar from "@hooks/user/use-get-user-avatar";
+import UserNameWithAvatar from "@components/common/table/helpers/user-name-with-avatar";
+import ButtonStyled from "@components/common/buttons/button-styled";
 
-export const usersColumns = [
+export const usersColumns = (handleOpenUpdatePresentationPage) => [
   {
     header: "Основная информация",
     columns: [
@@ -43,12 +32,16 @@ export const usersColumns = [
         header: "Аватар",
         cell: (info) => {
           const userId = info.getValue();
-          const { avatarSrc, isLoading } = useGetUserAvatar(userId);          
+          const { avatarSrc, isLoading } = useGetUserAvatar(userId);
           const getAvatarSrc = () => {
             return isLoading ? null : avatarSrc;
           };
           return (
-            <UserNameWithAvatar userId={userId} avatarSrc={getAvatarSrc()} isLoading={isLoading}/>
+            <UserNameWithAvatar
+              userId={userId}
+              avatarSrc={getAvatarSrc()}
+              isLoading={isLoading}
+            />
           );
         },
       },
@@ -185,21 +178,13 @@ export const usersColumns = [
     header: "Править",
     enableSorting: false,
     cell: (info) => {
-      const dispatch = useDispatch();
       const userId = info.getValue()._id;
 
-      const handleClick = () => {
-        dispatch<any>(setUpdateManagerId(userId));
-        dispatch<any>(setUpdateManagerOpenState(true));
-      };
-
       return (
-        <MultiColorContainedButton
-          text="Править"
-          onClick={handleClick}
-          background="chocolate"
-          backgroudHover="sienna"
-          fontColor="white"
+        <ButtonStyled
+          title="Править"
+          style="SUCCESS"
+          onClick={() => handleOpenUpdatePresentationPage(userId)}
         />
       );
     },

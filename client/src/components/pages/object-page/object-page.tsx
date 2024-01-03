@@ -16,7 +16,7 @@ import {
   getIsUserAuthorThisEntity,
 } from "@store/user/users.store";
 
-const ObjectPage = React.memo(({ objectId, onClose, onEdit }) => {
+const ObjectPage = React.memo(({ objectId, onClose, onEdit, onOpenCreatePresentationPage }) => {
   const object = useSelector(getObjectById(objectId));
   const currentUserId = useSelector(getCurrentUserId());
   const isLoading = useSelector(getObjectsLoadingStatus());
@@ -57,6 +57,7 @@ const ObjectPage = React.memo(({ objectId, onClose, onEdit }) => {
         onClose={onClose}
         onEdit={onEdit}
         isEdit={true}
+        onOpenCreatePresentationPage={onOpenCreatePresentationPage}
         isLoading={isLoading}
         isAuthorEntity={isAuthorEntity}
       />

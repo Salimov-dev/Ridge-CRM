@@ -6,8 +6,7 @@ import {
   getLastContactsList,
   getLastContactsLoadingStatus,
 } from "../../../../../store/last-contact/last-contact.store";
-import { lastContactColumns } from "../../../../../columns/last-contacts-columns/last-contact-columns";
-import CreateLastContactButton from "@components/UI/dialogs/buttons/create-last-contact-button";
+import { lastContactColumns } from "../../../../../columns/last-contact.columns";
 import ButtonStyled from "@components/common/buttons/button-styled";
 import { useTheme } from "@emotion/react";
 import { tokens } from "@theme/theme";
@@ -37,7 +36,7 @@ const LastContacts = ({
   const lastContacts = lastContactsList?.filter(
     (contact) => contact.objectId === objectId
   );
-  const sortedLastContacts = lastContacts.reverse();
+  const sortedLastContacts = lastContacts?.reverse();
 
   return (
     <>

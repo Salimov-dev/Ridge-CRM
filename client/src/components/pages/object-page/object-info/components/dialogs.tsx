@@ -1,41 +1,135 @@
 import { useSelector } from "react-redux";
-import LastContactCreateDialog from "../../../../UI/dialogs/last-contacts/last-contact-create-dialog";
-import LastContactUpdateDialog from "../../../../UI/dialogs/last-contacts/last-contact-update-dialog";
-import MeetingCreateDialog from "../../../../UI/dialogs/meetings/meeting-create-dialog";
-import MeetingUpdateDialog from "../../../../UI/dialogs/meetings/meeting-update-dialog";
-import ManagerTaskCreateDialog from "../../../../UI/dialogs/tasks/manager-task-create-dialog";
-import ManagerTaskUpdateDialog from "../../../../UI/dialogs/tasks/manager-task-update-dialog";
-import MyTaskCreateDialog from "../../../../UI/dialogs/tasks/my-task-create-dialog";
-import MyTaskUpdateDialog from "../../../../UI/dialogs/tasks/my-task-update-dialog";
-import {
-  getOpenObjectPageId,
-  getOpenObjectPageOpenState,
-} from "../../../../../store/object/open-object-page.store";
+// components
+import DialogStyled from "@components/common/dialog/dialog-styled";
+import CreateLastContact from "@components/pages/create-last-contact/create-last-contact";
+import CreateManagerTask from "@components/pages/create-manager-task/create-manager-task";
+import CreateMeeting from "@components/pages/create-meeting/create-meeting";
+import CreateMyTask from "@components/pages/create-my-task/create-my-task";
+import UpdateLastContact from "@components/pages/update-last-contact/update-last-contact";
+import UpdateManagerTask from "@components/pages/update-manager-task/update-manager-task";
+import UpdateMeeting from "@components/pages/update-meeting/update-meeting";
+import UpdateMyTask from "@components/pages/update-my-task/update-my-task";
+// hooks
+import useObjectInfo from "../hooks/use-object-info.hook";
+// store
+import { getObjectsList } from "@store/object/objects.store";
+import { getUsersList } from "@store/user/users.store";
 
-const Dialogs = ({ objects, users }) => {
-  const objectPageId = useSelector(getOpenObjectPageId());
-  const isObjectPage = useSelector(getOpenObjectPageOpenState());
+const Dialogs = ({ state, objectId, setState }) => {
+  const objects = useSelector(getObjectsList());
+  const users = useSelector(getUsersList());
+
+  const {
+    handleCloseCreateMyTaskPage,
+    handleCloseUpdateMyTaskPage,
+    handleCloseCreateManagerTaskPage,
+    handleCloseUpdateManagerTaskPage,
+    handleCloseCreateLastContactPage,
+    handleCloseUpdateLastContactPage,
+    handleCloseCreateMeetingPage,
+    handleCloseUpdateMeetingPage,
+  } = useObjectInfo(setState);
 
   return (
     <>
-      {/* <ManagerTaskCreateDialog objects={objects} users={users} /> */}
-      {/* <ManagerTaskUpdateDialog /> */}
-
-      {/* <MyTaskCreateDialog
-        objects={objects}
-        objectPageId={objectPageId}
-        isObjectPage={isObjectPage}
+      <DialogStyled
+        component={
+          <CreateMyTask
+            title="Добавить себе задачу"
+            objectPageId={objectId}
+            isObjectPage={state.createMyTaskPage}
+            objects={objects}
+            onClose={handleCloseCreateMyTaskPage}
+          />
+        }
+        maxWidth="sm"
+        onClose={handleCloseCreateMyTaskPage}
+        open={state.createMyTaskPage}
       />
-      <MyTaskUpdateDialog /> */}
-
-      {/* <MeetingCreateDialog
-        objectPageId={objectPageId}
-        isObjectPage={isObjectPage}
+      <DialogStyled
+        onClose={handleCloseUpdateMyTaskPage}
+        open={state.updateMyTaskPage}
+        maxWidth="sm"
+        component={
+          <UpdateMyTask
+            title="Изменить свою задачу"
+            taskId={state.taskId}
+            objectId={objectId}
+            onClose={handleCloseUpdateMyTaskPage}
+          />
+        }
       />
-      <MeetingUpdateDialog /> */}
-
-      {/* <LastContactCreateDialog /> */}
-      {/* <LastContactUpdateDialog /> */}
+      <DialogStyled
+        onClose={handleCloseCreateManagerTaskPage}
+        open={state.createManagerTaskPage}
+        maxWidth="sm"
+        component={
+          <CreateManagerTask
+            title="Поставить менеджеру задачу"
+            objectPageId={objectId}
+            users={users}
+            onClose={handleCloseCreateManagerTaskPage}
+          />
+        }
+      />
+      <DialogStyled
+        onClose={handleCloseUpdateManagerTaskPage}
+        open={state.updateManagerTaskPage}
+        maxWidth="sm"
+        component={
+          <UpdateManagerTask
+            title="Изменить задачу менеджеру"
+            objects={objects}
+            users={users}
+            taskId={state.taskId}
+            onClose={handleCloseUpdateManagerTaskPage}
+          />
+        }
+      />
+      <DialogStyled
+        component={
+          <CreateLastContact
+            objectPageId={objectId}
+            onClose={handleCloseCreateLastContactPage}
+          />
+        }
+        onClose={handleCloseCreateLastContactPage}
+        open={state.createLastContactPage}
+        maxWidth="sm"
+      />
+      <DialogStyled
+        component={
+          <UpdateLastContact
+            lastContactId={state.lastContactId}
+            onClose={handleCloseUpdateLastContactPage}
+          />
+        }
+        onClose={handleCloseUpdateLastContactPage}
+        open={state.updateLastContactPage}
+        maxWidth="sm"
+      />
+      <DialogStyled
+        component={
+          <CreateMeeting
+            onClose={handleCloseCreateMeetingPage}
+            objectPageId={objectId}
+          />
+        }
+        maxWidth="lg"
+        onClose={handleCloseCreateMeetingPage}
+        open={state.createMeetingPage}
+      />
+      <DialogStyled
+        component={
+          <UpdateMeeting
+            meetingId={state.meetingId}
+            onClose={handleCloseUpdateMeetingPage}
+          />
+        }
+        onClose={handleCloseUpdateMeetingPage}
+        maxWidth="md"
+        open={state.updateMeetingPage}
+      />
     </>
   );
 };

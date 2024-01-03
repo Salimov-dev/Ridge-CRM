@@ -17,6 +17,7 @@ const ButtonsPanel = ({
   onClose,
   isEdit,
   isAuthorEntity = true,
+  onOpenCreatePresentationPage,
   isTopButtonsPanel = false,
 }) => {
   const dispatch = useDispatch();
@@ -51,7 +52,7 @@ const ButtonsPanel = ({
                 <ButtonStyled
                   title="Добавить презентацию"
                   style="SUCCESS"
-                  onClick={handleOpenCreateObject}
+                  onClick={onOpenCreatePresentationPage}
                 />
               )}
               <ButtonStyled title="Править" style="SUCCESS" onClick={onEdit} />

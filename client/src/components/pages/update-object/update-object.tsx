@@ -22,6 +22,7 @@ import {
   getObjectById,
   updateObject,
 } from "../../../store/object/objects.store";
+import SuccessCancelFormButtons from "@components/common/forms/footer-buttons/success-cancel-form-buttons";
 
 const ButtonsContainer = styled(Box)`
   width: 100%;
@@ -104,19 +105,11 @@ const UpdateObject = React.memo(({ onClose, objectId }) => {
         watch={watch}
         isUpdate={true}
       />
-      <ButtonsContainer>
-        <ButtonStyled
-          title="Сохранить"
-          style="SUCCESS"
-          onClick={handleSubmit(onSubmit)}
-        />
-        <ButtonStyled title="Отмена" style="CANCEL" onClick={onClose} />
-      </ButtonsContainer>
-      <LoaderFullWindow
-        color={colors.grey[600]}
-        size={75}
-        isLoading={isLoading}
+      <SuccessCancelFormButtons
+        onSuccess={handleSubmit(onSubmit)}
+        onCancel={onClose}
       />
+      <LoaderFullWindow isLoading={isLoading} />
     </>
   );
 });

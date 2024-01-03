@@ -4,10 +4,9 @@ import Avatar from "react-avatar-edit";
 import { Box, styled } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 // components
-import Header from "./components/header";
-import NegativeOutlinedButton from "../../common/buttons/negative-outlined-button";
-import PositiveOutlinedButton from "../../common/buttons/positive-outlined-button";
-import IsLoadingDialog from "../../common/dialog/is-loading-dialog";
+import HeaderWithCloseButton from "@components/common/page-titles/header-with-close-button";
+import LoaderFullWindow from "@components/common/loader/loader-full-window";
+import SuccessCancelFormButtons from "@components/common/forms/footer-buttons/success-cancel-form-buttons";
 // store
 import { getCurrentUserId } from "../../../store/user/users.store";
 import { updateAvatar } from "../../../store/avatar/avatar.store";
@@ -18,12 +17,6 @@ const AvatarContainer = styled(Box)`
   flex-direction: column;
   justify-content: center;
   margin-bottom: 40px;
-`;
-
-const ButtonsContainer = styled(Box)`
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
 `;
 
 const UpdateAvatar = React.memo(({ onClose }) => {
@@ -38,14 +31,14 @@ const UpdateAvatar = React.memo(({ onClose }) => {
   const onClosePreview = () => {
     setPreview(null);
   };
-  
+
   const onCropPreview = (view) => {
     setPreview(view);
   };
 
   const handleUploadImage = () => {
     setIsLoading(true);
-    dispatch<any>(updateAvatar({ userId: currentUserId, src: newPreview  }))
+    dispatch<any>(updateAvatar({ userId: currentUserId, src: newPreview }))
       .then(() => {
         setIsLoading(false);
         onClose();
@@ -57,14 +50,14 @@ const UpdateAvatar = React.memo(({ onClose }) => {
       });
   };
 
-  return isLoading ? (
-    <IsLoadingDialog
-      text="Немного подождите, изменяем `Аватарку`"
-      isLoading={isLoading}
-    />
-  ) : (
-    <Box>
-      <Header onClose={onClose} />
+  return (
+    <>
+      <HeaderWithCloseButton
+        title="Изменить аватарку"
+        color="black"
+        margin="0 0 20px 0"
+        onClose={onClose}
+      />
       <AvatarContainer>
         <Avatar
           width="100%"
@@ -76,16 +69,12 @@ const UpdateAvatar = React.memo(({ onClose }) => {
           labelStyle={{ color: "white", cursor: "pointer" }}
         />
       </AvatarContainer>
-      <ButtonsContainer>
-        <PositiveOutlinedButton
-          title="Загрузить"
-          type="text"
-          isValid={!preview}
-          onClick={() => handleUploadImage()}
-        />
-        <NegativeOutlinedButton title="Отмена" onClick={onClose} />
-      </ButtonsContainer>
-    </Box>
+      <SuccessCancelFormButtons
+        onSuccess={() => handleUploadImage()}
+        onCancel={onClose}
+      />
+      <LoaderFullWindow isLoading={isLoading} />
+    </>
   );
 });
 

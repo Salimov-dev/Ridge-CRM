@@ -18,7 +18,12 @@ const SubTitle = styled(Typography)`
   padding: 0 4px;
 `;
 
-const HeaderWithBackButton = ({ title, subtitle, onClose, padding = "0" }) => {
+const HeaderWithBackButton = ({
+  title,
+  subtitle = "",
+  onClose,
+  padding = "0",
+}) => {
   return (
     <Component sx={{ padding: padding }}>
       <Title>

@@ -12,8 +12,8 @@ import CalendarBody from "../../components/common/calendar/calendar-body/calenda
 import LayoutTitle from "../../components/common/page-titles/layout-title";
 import CurrentWeeklyMeetings from "./components/current-weekly-meetings/current-weekly-meetings";
 // columns
-import { tasksColumns } from "../../columns/tasks-columns/tasks-columns";
-import { meetingsColumns } from "../../columns/meetings-columns/meetings-columns";
+import { tasksColumns } from "../../columns/tasks.columns";
+import { meetingsColumns } from "../../columns/meetings.columns";
 // utils
 import getMonth from "../../utils/calendar/get-month";
 // store
@@ -93,7 +93,7 @@ const Calendar = React.memo(() => {
       currentTasks,
       [(task) => dayjs(task.time).format("HH:mm")],
       ["asc"]
-    );   
+    );
 
     return sortedTasks;
   };

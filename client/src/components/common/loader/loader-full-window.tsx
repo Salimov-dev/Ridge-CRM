@@ -1,6 +1,8 @@
 import { Box } from "@mui/material";
 import Loader from "./loader";
 import styled from "@emotion/styled";
+import { useTheme } from "@emotion/react";
+import { tokens } from "@theme/theme";
 
 const Component = styled(Box)`
   width: 100%;
@@ -13,10 +15,12 @@ const Component = styled(Box)`
   z-ndex: 99999999;
 `;
 
-const LoaderFullWindow = ({ color, size, isLoading }) => {
+const LoaderFullWindow = ({ color = "white", size = 75, isLoading }) => {
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
   return (
     isLoading && (
-      <Component>
+      <Component sx={{ color: colors.grey[600] }}>
         <Loader size={size} color={color} />
       </Component>
     )

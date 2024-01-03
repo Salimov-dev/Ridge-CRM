@@ -21,7 +21,7 @@ import useSearchMeeting from "@hooks/meeting/use-search-meeting";
 import target from "@assets/map/target_meeting.png";
 import targetCluster from "@assets/map/targeMeeting_cluster.png";
 // columns
-import { meetingsColumns } from "@columns/meetings-columns/meetings-columns";
+import { meetingsColumns } from "@columns/meetings.columns";
 // utils
 import sortingByDateAndTime from "@utils/other/sorting-by-date-and-time";
 // store
@@ -163,7 +163,6 @@ const Meetings = React.memo(() => {
         initialState={initialState}
         reset={reset}
         onOpenCreateObjectPage={handleOpenCreateMeetingPage}
-        isCurator={isCurator}
         isInputEmpty={isInputEmpty}
       />
       <ItemsOnMap
@@ -191,12 +190,7 @@ const Meetings = React.memo(() => {
       />
 
       <DialogStyled
-        component={
-          <CreateMeeting
-            onClose={handleCloseCreateMeetingPage}
-            // objectPageId={objectId}
-          />
-        }
+        component={<CreateMeeting onClose={handleCloseCreateMeetingPage} />}
         maxWidth="lg"
         onClose={handleCloseCreateMeetingPage}
         open={state.createMeetingPage}

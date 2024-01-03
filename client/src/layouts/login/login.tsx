@@ -9,11 +9,13 @@ import { Box, Typography, styled } from "@mui/material";
 import { login } from "../../store/user/users.store";
 // components
 import LoginForm from "./components/login-form";
-import PositiveOutlinedButton from "../../components/common/buttons/positive-outlined-button";
 // schema
 import { loginSchema } from "../../schemas/login-schema";
 import { useState } from "react";
-import IsLoadingDialog from "../../components/common/dialog/is-loading-dialog";
+import ButtonStyled from "@components/common/buttons/button-styled";
+import LoaderFullWindow from "@components/common/loader/loader-full-window";
+import { useTheme } from "@emotion/react";
+import { tokens } from "@theme/theme";
 
 const Component = styled(Box)`
   height: 100%;
@@ -57,6 +59,8 @@ const initialState = {
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
   const [isLoading, setIsLoading] = useState(false);
 
   const {
@@ -100,11 +104,9 @@ const Login = () => {
           НАША СИСТЕМА АВТОМАТИЗАЦИИ ДЛЯ ОТДЕЛОВ РАЗВИТИЯ
         </Typography>
       </Logo>
-      {isLoading ? (
-        <IsLoadingDialog
-          text="Немного подождите, авторизуемся в системе"
-          isLoading={isLoading}
-        />
+      <LoaderFullWindow
+        isLoading={isLoading}
+      />
       ) : (
       <AuthForm>
         <Title>
@@ -113,9 +115,10 @@ const Login = () => {
           </Typography>
         </Title>
         <LoginForm data={data} errors={errors} register={register} />
-        <PositiveOutlinedButton
+        <ButtonStyled
           title="Войти"
-          isValid={!isFormValid}
+          style="SUCCESS"
+          disabled={!isFormValid}
           onClick={handleSubmit(onSubmit)}
         />
       </AuthForm>

@@ -1,5 +1,7 @@
+import { useTheme } from "@emotion/react";
 import styled from "@emotion/styled";
 import { Autocomplete, Box, FormHelperText, TextField } from "@mui/material";
+import { tokens } from "@theme/theme";
 
 const Component = styled(Box)`
   width: 100%;
@@ -21,6 +23,9 @@ const AutocompleteStyled = ({
   width = "100%",
   optionLabel = (option) => option.name,
 }) => {
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
+
   return (
     <Component>
       <Autocomplete
@@ -40,7 +45,6 @@ const AutocompleteStyled = ({
           setValue(name, newValue ? newValue._id : null)
         }
         renderInput={(params) => <TextField {...params} label={label} />}
-        // getOptionLabel={(option) => option._id}
         getOptionLabel={optionLabel}
         isOptionEqualToValue={(option, value) => option._id === value?._id}
         ListboxProps={{ style: { background: "#2f2f2f", maxHeight: "10rem" } }}
@@ -67,7 +71,7 @@ const AutocompleteStyled = ({
           },
           "&:not(:focus-within)": {
             "& .MuiOutlinedInput-notchedOutline": {
-              borderColor: errors ? "yellow !important" : "gray !important",
+              borderColor: errors ? "red !important" : "gray !important",
             },
             "& .MuiInputLabel-root": {
               color: "gray",

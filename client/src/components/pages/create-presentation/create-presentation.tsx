@@ -6,10 +6,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useDispatch, useSelector } from "react-redux";
 // components
-import TitleWithCloseButton from "../../common/page-titles/header-with-close-button";
 import ManagerPresentationForm from "../../common/forms/presentation/manager-presentation-form";
-import FooterButtons from "../../common/forms/footer-buttons/success-cancel-form-buttons";
-import IsLoadingDialog from "../../common/dialog/is-loading-dialog";
 // schema
 import { presentationSchema } from "../../../schemas/presentation-schema";
 // utils
@@ -30,6 +27,11 @@ import {
   getOpenObjectPageId,
   getOpenObjectPageOpenState,
 } from "../../../store/object/open-object-page.store";
+import SuccessCancelFormButtons from "../../common/forms/footer-buttons/success-cancel-form-buttons";
+import LoaderFullWindow from "@components/common/loader/loader-full-window";
+import { useTheme } from "@emotion/react";
+import { tokens } from "@theme/theme";
+import HeaderWithCloseButton from "../../common/page-titles/header-with-close-button";
 
 const initialState = {
   objectId: "",
@@ -40,6 +42,9 @@ const initialState = {
 
 const CreatePresentation = React.memo(({ onClose, setConfettiActive }) => {
   const dispatch = useDispatch();
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
+
   const [isLoading, setIsLoading] = useState(false);
 
   const objects = useSelector(getObjectsList());
@@ -57,10 +62,10 @@ const CreatePresentation = React.memo(({ onClose, setConfettiActive }) => {
     watch,
     handleSubmit,
     setValue,
-    formState: { errors, isValid },
+    formState: { errors },
   } = useForm({
     defaultValues: initialState,
-    mode: "onBlur",
+    mode: "onChange",
     resolver: yupResolver(presentationSchema),
   });
 
@@ -68,7 +73,6 @@ const CreatePresentation = React.memo(({ onClose, setConfettiActive }) => {
   const watchObjectId = watch("objectId");
   const cloudLink = watch("cloudLink");
 
-  const isFullValid = isValid && Boolean(watchObjectId?.length);
   const objectPageId = useSelector(getOpenObjectPageId());
   const isObjectPage = useSelector(getOpenObjectPageOpenState());
   const statusToBeAgreedId = "654wqeg3469y9dfsd82dd334"; // статус "На согласовании"
@@ -107,19 +111,19 @@ const CreatePresentation = React.memo(({ onClose, setConfettiActive }) => {
           onClose();
           setConfettiActive(true);
           toast.success("Презентация успешно создана!");
-          send(
-            "service_yldzorr",
-            "template_z0ijagp",
-            toSend,
-            "eLap4LxTXi9SlRBQh"
-          ).then(
-            (result) => {
-              console.log(result.text);
-            },
-            (error) => {
-              console.log(error.text);
-            }
-          );
+          // send(
+          //   "service_yldzorr",
+          //   "template_z0ijagp",
+          //   toSend,
+          //   "eLap4LxTXi9SlRBQh"
+          // ).then(
+          //   (result) => {
+          //     console.log(result.text);
+          //   },
+          //   (error) => {
+          //     console.log(error.text);
+          //   }
+          // );
         })
         .catch((error) => {
           setIsLoading(false);
@@ -136,18 +140,14 @@ const CreatePresentation = React.memo(({ onClose, setConfettiActive }) => {
     }
   }, [objectPageId]);
 
-  return isLoading ? (
-    <IsLoadingDialog
-      text="Немного подождите, создаем `Презентацию`"
-      isLoading={isLoading}
-    />
-  ) : (
+  return (
     <>
-      <TitleWithCloseButton
+      <HeaderWithCloseButton
         title="Добавить презентацию"
-        onClose={onClose}
-        background="SaddleBrown"
         color="white"
+        margin="0 0 20px 0"
+        background={colors.presentation["primary"]}
+        onClose={onClose}
       />
       <ManagerPresentationForm
         data={data}
@@ -158,10 +158,14 @@ const CreatePresentation = React.memo(({ onClose, setConfettiActive }) => {
         setValue={setValue}
         isObjectPage={isObjectPage}
       />
-      <FooterButtons
-        onCreate={handleSubmit(onSubmit)}
-        onClose={onClose}
-        isValid={isFullValid}
+      <SuccessCancelFormButtons
+        onSuccess={handleSubmit(onSubmit)}
+        onCancel={onClose}
+      />
+      <LoaderFullWindow
+        color={colors.grey[600]}
+        size={75}
+        isLoading={isLoading}
       />
     </>
   );

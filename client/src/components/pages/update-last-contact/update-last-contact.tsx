@@ -89,9 +89,9 @@ const UpdateLastContact = React.memo(({ lastContactId, onClose }) => {
   return (
     <>
       <TitleWithCloseButton
-        title={FormatDate(lastContact?.date)}
-        background={colors.task["managerTask"]}
-        color="white"
+        title="Изменить последний контакт"
+        background={colors.header["gold"]}
+        color="black"
         onClose={onClose}
         margin="0 0 20px 0"
       />

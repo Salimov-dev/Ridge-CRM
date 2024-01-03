@@ -9,18 +9,11 @@ import { useWindowSize } from "@react-hook/window-size";
 // components
 import BasicTable from "../../components/common/table/basic-table";
 import LayoutTitle from "../../components/common/page-titles/layout-title";
-import CreatePresentationButton from "../../components/UI/dialogs/buttons/create-presentation-button";
-import PresentationCreatePageDialog from "../../components/UI/dialogs/presentations/presentation-create-page-dialog";
-import ObjectUpdatePageDialog from "../../components/UI/dialogs/objects/object-update-page-dialog";
-import ObjectPageDialog from "../../components/UI/dialogs/object-page-dialog/object-page-dialog";
 import PresentationsFiltersPanel from "../../components/UI/filters-panels/presentations-filters-panel";
-import PresentationUpdateDialog from "../../components/UI/dialogs/presentations/presentation-update-dialog";
-import AddAndClearFiltersButton from "../../components/common/buttons/add-and-clear-filters-button";
 import ItemsOnMap from "../../components/common/map/items-on-map/items-on-map";
 import PresentationBaloon from "../../components/UI/maps/presentation-baloon";
 // columns
-import { presentationsColumns } from "../../columns/presentations-columns/presentations-columns";
-import { presentationsCuratorColumns } from "../../columns/presentations-columns/presentations-columns-curator";
+import { presentationsColumns } from "../../columns/presentations.columns";
 // map images
 import target from "../../assets/map/target-presentation.png";
 import targetCluster from "../../assets/map/target-presentation-cluster.png";
@@ -37,6 +30,12 @@ import {
   getIsUserCurator,
 } from "../../store/user/users.store";
 import { getPresentationStatusList } from "../../store/presentation/presentation-status.store";
+import DialogStyled from "@components/common/dialog/dialog-styled";
+import ObjectPage from "@components/pages/object-page/object-page";
+import CreatePresentation from "@components/pages/create-presentation/create-presentation";
+import UpdatePresentation from "@components/pages/update-presentation/update-presentation";
+import UpdateObject from "@components/pages/update-object/update-object";
+import Buttons from "./components/buttons";
 
 const initialState = {
   objectAddress: "",
@@ -79,9 +78,6 @@ const Presentations = React.memo(() => {
   const objects = useSelector(getObjectsList());
   const currentUserId = useSelector(getCurrentUserId());
   const isCurator = useSelector(getIsUserCurator(currentUserId));
-  const columns = isCurator
-    ? presentationsCuratorColumns
-    : presentationsColumns;
 
   const presentationsList = useSelector(getPresentationsList());
   const presentationsStatuses = useSelector(getPresentationStatusList());
@@ -90,7 +86,7 @@ const Presentations = React.memo(() => {
 
   const searchedPresentations = useSearchPresentation(presentationsList, data);
   const sortedPresentations = useMemo(() => {
-    return orderBy(searchedPresentations, ["created_at"], ["asc"]);
+    return orderBy(searchedPresentations, ["created_at"], ["desc"]);
   }, [searchedPresentations]);
 
   useEffect(() => {
@@ -144,16 +140,81 @@ const Presentations = React.memo(() => {
     }, 4000);
   }, [confettiActive]);
 
+  const [state, setState] = useState({
+    objectPage: false,
+    updateObjectPage: false,
+    createPresentationPage: false,
+    updatePresentationPage: false,
+    objectId: null,
+    presentationId: "",
+  });
+
+  // обновление стейта при создании презентации
+  const handleOpenCreatePresentationPage = () => {
+    setState((prevState) => ({
+      ...prevState,
+      createPresentationPage: true,
+    }));
+  };
+  const handleCloseCreatePresentationPage = () => {
+    setState((prevState) => ({
+      ...prevState,
+      createPresentationPage: false,
+    }));
+  };
+
+  // обновление стейта при обновлении презентации
+  const handleOpenUpdatePresentationPage = (presentationId) => {
+    setState((prevState) => ({
+      ...prevState,
+      updatePresentationPage: true,
+      presentationId: presentationId,
+    }));
+  };
+  const handleCloseUpdatePresentationPage = () => {
+    setState((prevState) => ({
+      ...prevState,
+      updatePresentationPage: false,
+    }));
+  };
+
+  // обновление стейта при открытии страницы объекта
+  const handleOpenObjectPage = (objectId) => {
+    // console.log("objectId", objectId);
+
+    setState((prevState) => ({
+      ...prevState,
+      objectPage: true,
+      objectId: objectId,
+    }));
+  };
+  const handleCloseObjectPage = () => {
+    setState((prevState) => ({
+      ...prevState,
+      objectPage: false,
+      // objectId: null,
+    }));
+  };
+
+  // обновление стейта при открытии страницы обновления объекта
+  const handleOpenUpdateObjectPage = () => {
+    setState((prevState) => ({ ...prevState, updateObjectPage: true }));
+  };
+  const handleCloseUpdateObjectPage = () => {
+    setState((prevState) => ({ ...prevState, updateObjectPage: false }));
+  };
+
+  const isDialogPage = true;
+
   return (
     <Box>
       <LayoutTitle title="Презентации" />
-      <AddAndClearFiltersButton
-        reset={reset}
-        isInputEmpty={isInputEmpty}
+      <Buttons
         initialState={initialState}
-        button={<CreatePresentationButton />}
+        reset={reset}
+        onOpenCreatePresentationPage={handleOpenCreatePresentationPage}
+        isInputEmpty={isInputEmpty}
       />
-
       <ItemsOnMap
         items={presentationsWithLocation}
         onClick={setSelectedPresentationBaloon}
@@ -177,16 +238,57 @@ const Presentations = React.memo(() => {
 
       <BasicTable
         items={sortedPresentations}
-        itemsColumns={columns}
+        itemsColumns={presentationsColumns(
+          handleOpenObjectPage,
+          handleOpenUpdatePresentationPage,
+          isDialogPage,
+          isCurator
+        )}
         isLoading={isLoading}
       />
 
       {confettiActive && <Confetti width={width} height={height} />}
 
-      <PresentationCreatePageDialog setConfettiActive={setConfettiActive} />
-      <PresentationUpdateDialog />
-      <ObjectPageDialog />
-      <ObjectUpdatePageDialog />
+      <DialogStyled
+        component={
+          <ObjectPage
+            onClose={handleCloseObjectPage}
+            onEdit={handleOpenUpdateObjectPage}
+            objectId={state.objectId}
+          />
+        }
+        onClose={handleCloseObjectPage}
+        open={state.objectPage}
+      />
+      <DialogStyled
+        component={
+          <UpdateObject
+            onClose={handleCloseUpdateObjectPage}
+            objectId={state.objectId}
+          />
+        }
+        onClose={handleCloseUpdateObjectPage}
+        open={state.updateObjectPage}
+      />
+      <DialogStyled
+        component={
+          <CreatePresentation
+            onClose={handleCloseCreatePresentationPage}
+            setConfettiActive={setConfettiActive}
+          />
+        }
+        onClose={handleCloseCreatePresentationPage}
+        open={state.createPresentationPage}
+        maxWidth="sm"
+      />
+      <DialogStyled
+        component={
+          <UpdatePresentation onClose={handleCloseUpdatePresentationPage} />
+        }
+        onClose={handleCloseUpdatePresentationPage}
+        open={state.updatePresentationPage}
+        maxWidth="sm"
+      />
     </Box>
   );
 });

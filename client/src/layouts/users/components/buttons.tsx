@@ -12,16 +12,16 @@ const Component = styled(Box)`
 const Buttons = ({
   initialState,
   reset,
-  onOpenCreateObjectPage,
+  handleOpenCreatePresentationPage,
   isInputEmpty,
 }) => {
   return (
     <Component>
       <ButtonStyled
-        title="Создать встречу"
-        style="MEETING"
+        title="Добавить менеджера"
+        style="PRESENTATION"
         variant="contained"
-        onClick={onOpenCreateObjectPage}
+        onClick={handleOpenCreatePresentationPage}
       />
       {isInputEmpty && (
         <ClearFilterButton reset={reset} initialState={initialState} />

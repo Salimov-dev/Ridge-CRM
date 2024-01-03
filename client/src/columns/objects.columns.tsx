@@ -5,33 +5,33 @@ import { Box, Button, Tooltip, Typography } from "@mui/material";
 import CloudDoneIcon from "@mui/icons-material/CloudDone";
 import CloudOffIcon from "@mui/icons-material/CloudOff";
 // utils
-import { FormatDate } from "../../utils/date/format-date";
+import { FormatDate } from "../utils/date/format-date";
 // components
-import Flags from "../../components/common/columns/flags";
-import { AlignCenter } from "../../components/common/columns/styled";
-import EmptyTd from "../../components/common/columns/empty-td";
-import MultiColorContainedButton from "../../components/common/buttons/multi-color-contained-button";
-import UserNameWithAvatar from "../../components/common/table/helpers/user-name-with-avatar";
+import Flags from "../components/common/columns/flags";
+import { AlignCenter } from "../components/common/columns/styled";
+import EmptyTd from "../components/common/columns/empty-td";
+import UserNameWithAvatar from "../components/common/table/helpers/user-name-with-avatar";
 import {
   FormatMetro,
   FormatObjectStatus,
   FormatPhone,
-} from "../../components/common/table/helpers/helpers";
+} from "../components/common/table/helpers/helpers";
 // store
-import { getLastContactsList } from "../../store/last-contact/last-contact.store";
-import { getTasksList } from "../../store/task/tasks.store";
+import { getLastContactsList } from "../store/last-contact/last-contact.store";
+import { getTasksList } from "../store/task/tasks.store";
 import {
   setOpenObjectPageId,
   setOpenObjectPageOpenState,
-} from "../../store/object/open-object-page.store";
+} from "../store/object/open-object-page.store";
 import {
   getMeetingsList,
   getObjectMeetingsList,
-} from "../../store/meeting/meetings.store";
-import { getDistrictName } from "../../store/object-params/districts.store";
-import { getUserDataById } from "../../store/user/users.store";
+} from "../store/meeting/meetings.store";
+import { getDistrictName } from "../store/object-params/districts.store";
+import { getUserDataById } from "../store/user/users.store";
 import React, { HTMLProps } from "react";
-import useGetUserAvatar from "../../hooks/user/use-get-user-avatar";
+import useGetUserAvatar from "../hooks/user/use-get-user-avatar";
+import ButtonStyled from "@components/common/buttons/button-styled";
 
 function IndeterminateCheckbox({
   indeterminate,
@@ -56,8 +56,10 @@ function IndeterminateCheckbox({
   );
 }
 
-export const objectsColumns = (handleOpenObjectPage, isCurator) => [
-  {
+export const objectsColumns = (handleOpenObjectPage, isCurator) => {
+  let columns = [];
+  
+  const selectColumn = {
     id: "select",
     header: ({ table }) => (
       <IndeterminateCheckbox
@@ -80,8 +82,9 @@ export const objectsColumns = (handleOpenObjectPage, isCurator) => [
         />
       </div>
     ),
-  },
-  {
+  };
+
+  const dateColumn = {
     accessorKey: "created_at",
     header: "Дата",
     enableSorting: false,
@@ -89,8 +92,9 @@ export const objectsColumns = (handleOpenObjectPage, isCurator) => [
       const date = info.getValue();
       return <AlignCenter>{FormatDate(date)}</AlignCenter>;
     },
-  },
-  {
+  };
+
+  const locationColumn = {
     header: "Расположение объекта",
     columns: [
       {
@@ -166,8 +170,9 @@ export const objectsColumns = (handleOpenObjectPage, isCurator) => [
         },
       },
     ],
-  },
-  {
+  };
+
+  const contactsColumn = {
     header: "Контактная информация",
     columns: [
       {
@@ -195,8 +200,9 @@ export const objectsColumns = (handleOpenObjectPage, isCurator) => [
         },
       },
     ],
-  },
-  {
+  };
+
+  const lastContactsColumn = {
     header: "Последние контакты",
     columns: [
       {
@@ -256,13 +262,14 @@ export const objectsColumns = (handleOpenObjectPage, isCurator) => [
         },
       },
     ],
-  },
-  {
-    header: "Другое",
+  };
+
+  const managerColumn = {
+    header: "Менеджер",
     columns: [
       {
         accessorKey: "userId",
-        header: "Менеджер",
+        header: "Фамилия и Имя",
         cell: (info) => {
           const userId = info.getValue();
           const user = useSelector(getUserDataById(userId));
@@ -279,6 +286,12 @@ export const objectsColumns = (handleOpenObjectPage, isCurator) => [
           );
         },
       },
+    ],
+  };
+
+  const otherColumn = {
+    header: "Другое",
+    columns: [
       {
         accessorKey: "status",
         header: "Статус",
@@ -325,16 +338,38 @@ export const objectsColumns = (handleOpenObjectPage, isCurator) => [
           const objectId = info.getValue();
 
           return (
-            <MultiColorContainedButton
-              background="seaGreen"
-              backgroudHover="green"
-              fontColor="white"
-              text="Открыть"
+            <ButtonStyled
+              title="Открыть"
+              style="OBJECT"
+              size="small"
+              variant="contained"
               onClick={() => handleOpenObjectPage(objectId)}
             />
           );
         },
       },
     ],
-  },
-];
+  };
+
+  if (isCurator) {
+    columns = [
+      selectColumn,
+      dateColumn,
+      locationColumn,
+      contactsColumn,
+      managerColumn,
+      lastContactsColumn,
+      otherColumn,
+    ];
+  } else {
+    columns = [
+      dateColumn,
+      locationColumn,
+      contactsColumn,
+      lastContactsColumn,
+      otherColumn,
+    ];
+  }
+
+  return columns;
+};

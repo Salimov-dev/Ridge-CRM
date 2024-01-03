@@ -5,8 +5,9 @@ import { tokens } from "@theme/theme";
 const ButtonStyled = ({
   title = "title",
   onClick = () => {},
-  isLoading = false,
   style,
+  size = "medium",
+  disabled = false,
   variant = "outlined",
 }) => {
   const theme = useTheme();
@@ -38,6 +39,13 @@ const ButtonStyled = ({
     backgroundHover = colors.cancel["red"];
   }
 
+  if (style === "DELETE") {
+    color = colors.cancel["lightCoral"];
+    colorHover = "white";
+    borderColor = colors.cancel["lightCoral"];
+    backgroundHover = colors.cancel["red"];
+  }
+
   if (style === "MY_TASK") {
     background = colors.task["myTask"];
     colorHover = "white";
@@ -62,11 +70,30 @@ const ButtonStyled = ({
     backgroundHover = colors.meeting["hover"];
   }
 
+  if (style === "PRESENTATION") {
+    background = colors.presentation["primary"];
+    colorHover = "white";
+    backgroundHover = colors.presentation["hover"];
+  }
+
+  if (style === "TRANSFER_OJECTS") {
+    background = colors.presentation["primary"];
+    colorHover = "white";
+    backgroundHover = colors.presentation["hover"];
+  }
+
+  if (style === "OPEN_OBJECT") {
+    color = colors.grey[200];
+    colorHover = "white";
+    backgroundHover = colors.green["darkGreen"];
+  }
+
   return (
     <Button
       variant={variant}
       onClick={onClick}
-      disabled={isLoading}
+      disabled={disabled}
+      size={size}
       sx={{
         color: color,
         borderColor: borderColor,

@@ -1,16 +1,12 @@
 // libraries
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Box } from "@mui/material";
 import { useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 // components
-import { usersColumns } from "../../columns/users-columns/users-columns";
+import { usersColumns } from "../../columns/users.columns";
 import UsersFiltersPanel from "../../components/UI/filters-panels/users-filters-panel";
 import BasicTable from "../../components/common/table/basic-table";
-import AddAndClearFiltersButton from "../../components/common/buttons/add-and-clear-filters-button";
-import ManagerCreatePageDialog from "../../components/UI/dialogs/manager-create-page-dialog/manager-create-page-dialog";
-import CreateManagerButton from "../../components/UI/dialogs/buttons/create-manager-button";
-import ManagerUpdatePageDialog from "../../components/UI/dialogs/manager-create-page-dialog/manager-update-page-dialog";
 // hooks
 import useUsers from "../../hooks/user/use-users";
 import useSearchUser from "../../hooks/user/use-search-user";
@@ -21,6 +17,10 @@ import {
   getUsersList,
   getUsersLoadingStatus,
 } from "../../store/user/users.store";
+import Buttons from "./components/buttons";
+import CreateManager from "@components/pages/create-manager/create-manager";
+import UpdateManager from "@components/pages/update-manager/update-manager";
+import DialogStyled from "@components/common/dialog/dialog-styled";
 
 const initialState = {
   lastName: "",
@@ -36,7 +36,7 @@ const initialState = {
 };
 
 const Users = () => {
-  const columns = usersColumns;
+  // const columns = usersColumns;
   const isLoading = useSelector(getUsersLoadingStatus());
   const users = useSelector(getUsersList());
   const currentUserId = useSelector(getCurrentUserId());
@@ -72,14 +72,53 @@ const Users = () => {
     localStorage.setItem("search-users-data", JSON.stringify(initialState));
   }, []);
 
+  const [state, setState] = useState({
+    createManagerPage: false,
+    updateManagerPage: false,
+    managerId: "",
+  });
+
+  // обновление стейта при создании менеджера
+  const handleOpenCreatePresentationPage = () => {
+    setState((prevState) => ({
+      ...prevState,
+      createManagerPage: true,
+    }));
+  };
+  const handleCloseCreatePresentationPage = () => {
+    setState((prevState) => ({
+      ...prevState,
+      createManagerPage: false,
+    }));
+  };
+
+  // обновление стейта при обновлении менеджера
+  const handleOpenUpdatePresentationPage = (userId) => {
+    setState((prevState) => ({
+      ...prevState,
+      updateManagerPage: true,
+      managerId: userId,
+    }));
+  };
+  const handleCloseUpdatePresentationPage = () => {
+    setState((prevState) => ({
+      ...prevState,
+      updateManagerPage: false,
+    }));
+  };
+
   return (
-    <Box>
+    <Box
+      sx={{
+        height: "100%",
+      }}
+    >
       <LayoutTitle title="Менеджеры" />
-      <AddAndClearFiltersButton
+      <Buttons
         initialState={initialState}
-        isInputEmpty={isInputEmpty}
         reset={reset}
-        button={<CreateManagerButton />}
+        handleOpenCreatePresentationPage={handleOpenCreatePresentationPage}
+        isInputEmpty={isInputEmpty}
       />
       <UsersFiltersPanel
         data={data}
@@ -91,12 +130,29 @@ const Users = () => {
       />
       <BasicTable
         items={searchedUsers}
-        itemsColumns={columns}
+        itemsColumns={usersColumns(handleOpenUpdatePresentationPage)}
         isLoading={isLoading}
       />
 
-      <ManagerCreatePageDialog />
-      <ManagerUpdatePageDialog />
+      <DialogStyled
+        component={
+          <CreateManager onClose={handleCloseCreatePresentationPage} />
+        }
+        onClose={handleCloseCreatePresentationPage}
+        open={state.createManagerPage}
+        maxWidth="xl"
+      />
+      <DialogStyled
+        component={
+          <UpdateManager
+            userId={state.managerId}
+            onClose={handleCloseUpdatePresentationPage}
+          />
+        }
+        onClose={handleCloseUpdatePresentationPage}
+        open={state.updateManagerPage}
+        maxWidth="xl"
+      />
     </Box>
   );
 };

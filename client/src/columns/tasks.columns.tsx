@@ -1,38 +1,33 @@
 import dayjs from "dayjs";
 import "dayjs/locale/ru";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 // mui
 import { Box, Typography } from "@mui/material";
-import PhoneEnabledIcon from "@mui/icons-material/PhoneEnabled";
 // components
-import EmptyTd from "../../components/common/columns/empty-td";
-import { FormatManagerName } from "../../components/common/table/helpers/helpers";
-import MultiColorContainedButton from "../../components/common/buttons/multi-color-contained-button";
-import DoneStatusIcon from "../../components/common/columns/done-status-icon";
+import EmptyTd from "@components/common/columns/empty-td";
+import { AlignCenter } from "@components/common/columns/styled";
+import UserNameWithAvatar from "@components/common/table/helpers/user-name-with-avatar";
+import ButtonStyled from "@components/common/buttons/button-styled";
+import DoneStatusIcon from "@components/common/columns/done-status-icon";
 // store
-import {
-  setUpdateMyTaskId,
-  setUpdateMyTaskOpenState,
-} from "../../store/task/update-my-task.store";
-import { getTaskById } from "../../store/task/tasks.store";
+import { getObjectById } from "@store/object/objects.store";
+import { getTaskById } from "@store/task/tasks.store";
 import {
   getCurrentUserId,
   getIsUserAuthorThisEntity,
   getUsersLoadingStatus,
-} from "../../store/user/users.store";
-import {
-  setUpdateManagerTaskId,
-  setUpdateManagerTaskOpenState,
-} from "../../store/task/update-manager-task.store";
+} from "@store/user/users.store";
 // utils
-import { FormatDate } from "../../utils/date/format-date";
-import { FormatTime } from "../../utils/date/format-time";
-// styled
-import { AlignCenter } from "../../components/common/columns/styled";
-import UserNameWithAvatar from "../../components/common/table/helpers/user-name-with-avatar";
-import useGetUserAvatar from "../../hooks/user/use-get-user-avatar";
+import { FormatDate } from "@utils/date/format-date";
+import { FormatTime } from "@utils/date/format-time";
+// hooks
+import useGetUserAvatar from "@hooks/user/use-get-user-avatar";
 
-export const tasksColumnsDialog = [
+export const tasksColumns = (
+  handleOpenUpdateMyTaskPage,
+  handleOpenUpdateManagerTaskPage,
+  isDialogPage
+) => [
   {
     accessorKey: "isDone",
     header: "",
@@ -68,6 +63,40 @@ export const tasksColumnsDialog = [
     },
   },
   {
+    accessorKey: "objectId",
+    header: "Объект задачи",
+    cell: (info) => {
+      const objectId = info.getValue();
+      const object = useSelector(getObjectById(objectId));
+      const fullAddress = `${object?.location.city}, ${object?.location.address}`;
+
+      return (
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+        >
+          {objectId ? (
+            <>
+              {fullAddress}
+              {!isDialogPage ? (
+                <ButtonStyled
+                  title="Открыть"
+                  style="OPEN_OBJECT"
+                  // onClick={onOpenCreateMyTask}
+                />
+              ) : null}
+            </>
+          ) : (
+            <EmptyTd />
+          )}
+        </Box>
+      );
+    },
+  },
+  {
     accessorKey: "userId",
     header: "Задачу поставил",
     cell: (info) => {
@@ -78,7 +107,11 @@ export const tasksColumnsDialog = [
       };
       return (
         <AlignCenter>
-          <UserNameWithAvatar userId={userId} avatarSrc={getAvatarSrc()} />
+          <UserNameWithAvatar
+            userId={userId}
+            avatarSrc={getAvatarSrc()}
+            isLoading={isLoading}
+          />
         </AlignCenter>
       );
     },
@@ -106,26 +139,11 @@ export const tasksColumnsDialog = [
     },
   },
   {
-    accessorFn: (row) => row,
+    accessorKey: "comment",
     header: "Задача",
     cell: (info) => {
-      const task = info.getValue();
-      const comment = task?.comment;
-      const isCallTask = task?.isCallTask;
-      return isCallTask ? (
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "start",
-            gap: "10px",
-          }}
-        >
-          <Typography>{comment}</Typography> <PhoneEnabledIcon />
-        </Box>
-      ) : (
-        comment
-      );
+      const comment = info.getValue();
+      return comment;
     },
   },
   {
@@ -148,7 +166,6 @@ export const tasksColumnsDialog = [
     accessorKey: "_id",
     header: "",
     cell: (info) => {
-      const dispatch = useDispatch();
       const taskId = info.getValue();
       const task = useSelector(getTaskById(taskId));
       const currentUserId = useSelector(getCurrentUserId());
@@ -158,26 +175,21 @@ export const tasksColumnsDialog = [
         getIsUserAuthorThisEntity(currentUserId, task)
       );
 
-      const disable = !isCuratorTask && !isAuthorEntity;
+      const disabled = !isCuratorTask && !isAuthorEntity;
 
-      const handleClick = () => {
-        if (isCuratorTask) {
-          dispatch<any>(setUpdateManagerTaskOpenState(true));
-          dispatch<any>(setUpdateManagerTaskId(taskId));
-        } else {
-          dispatch<any>(setUpdateMyTaskId(taskId));
-          dispatch<any>(setUpdateMyTaskOpenState(true));
-        }
-      };
-
-      return (
-        <MultiColorContainedButton
-          text="Править"
-          onClick={handleClick}
-          disabled={disable}
-          fontColor={isCuratorTask ? "inherit" : "black"}
-          background={isCuratorTask ? "crimson" : "orange"}
-          backgroudHover={isCuratorTask ? "darkRed" : "darkOrange"}
+      return isCuratorTask ? (
+        <ButtonStyled
+          title="Править"
+          style="MANAGER_TASK"
+          disabled={disabled}
+          onClick={() => handleOpenUpdateManagerTaskPage(taskId)}
+        />
+      ) : (
+        <ButtonStyled
+          title="Править"
+          style="MY_TASK"
+          disabled={disabled}
+          onClick={() => handleOpenUpdateMyTaskPage(taskId)}
         />
       );
     },

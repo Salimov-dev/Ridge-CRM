@@ -7,7 +7,7 @@ import {
   estateOptionsColumns,
   estateTypeColumns,
   locationColumns,
-} from "@columns/object-page-columns/object-page-columns";
+} from "@columns/object-page.columns";
 
 const ObjectsParams = ({ object, isLoading }) => {
   const description = object?.description?.fullDescription;

@@ -10,7 +10,7 @@ import {
 import { meetingsColumnsDialog } from "@columns/meetings-columns-dialog/meetings-columns-dialog";
 import sortingByDateAndTime from "@utils/other/sorting-by-date-and-time";
 import ButtonStyled from "@components/common/buttons/button-styled";
-import { meetingsColumns } from "@columns/meetings-columns/meetings-columns";
+import { meetingsColumns } from "@columns/meetings.columns";
 
 const Title = styled(Box)`
   display: flex;
@@ -22,7 +22,7 @@ const ObjectMeetings = ({
   object,
   objectId,
   onOpen,
-  onUpdate,
+  columns,
   isAuthorEntity = true,
 }) => {
   const isMeetingsLoading = useSelector(getMeetingLoadingStatus());
@@ -47,7 +47,7 @@ const ObjectMeetings = ({
       {sortedMeetings?.length ? (
         <BasicTable
           items={sortedMeetings}
-          itemsColumns={meetingsColumns(onUpdate)}
+          itemsColumns={columns}
           isLoading={isMeetingsLoading}
           isDialogMode={true}
         />

@@ -12,7 +12,6 @@ import SuccessCancelFormButtons from "@common/forms/footer-buttons/success-cance
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
 import HeaderWithCloseButton from "@components/common/page-titles/header-with-close-button";
 import MeetingForm from "@common/forms/meeting-form/meeting-form";
-import ConfirmRemoveDialog from "@common/dialog/confirm-remove-dialog";
 // schema
 import { meetingSchema } from "@schemas/meeting-schema";
 // store
@@ -26,6 +25,7 @@ import {
   removeMeeting,
   updateMeeting,
 } from "@store/meeting/meetings.store";
+import DialogConfirm from "@components/common/dialog/dialog-confirm";
 
 const UpdateMeeting = React.memo(({ meetingId, onClose }) => {
   const dispatch = useDispatch();
@@ -41,6 +41,7 @@ const UpdateMeeting = React.memo(({ meetingId, onClose }) => {
     date: meeting?.date ? dayjs(meeting?.date) : null,
     time: meeting?.time ? dayjs(meeting?.time) : null,
   };
+  console.log("formatedMeeting", formatedMeeting);
 
   const {
     register,
@@ -55,6 +56,7 @@ const UpdateMeeting = React.memo(({ meetingId, onClose }) => {
   });
 
   const data = watch();
+  console.log("data", data);
 
   const isEditMode = meetingId ? true : false;
 
@@ -101,10 +103,10 @@ const UpdateMeeting = React.memo(({ meetingId, onClose }) => {
   return (
     <>
       <HeaderWithCloseButton
-        title={`Встреча по адресу: ${meeting?.location?.city}, ${meeting?.location?.address}`}
-        color="black"
+        title="Изменить встречу"
+        color="white"
         margin="0 0 20px 0"
-        background={colors.header["gold"]}
+        background={colors.meeting["primary"]}
         onClose={onClose}
       />
       <MeetingForm
@@ -130,11 +132,11 @@ const UpdateMeeting = React.memo(({ meetingId, onClose }) => {
         size={75}
         isLoading={isLoading}
       />
-      <ConfirmRemoveDialog
+      <DialogConfirm
+        question="Вы уверены, что хотите удалить безвозвратно?"
         open={open}
         onClose={handleClose}
-        onRemove={handleRemoveMeeting}
-        removeId={meetingId}
+        onSuccessClick={() => handleRemoveMeeting(meetingId)}
       />
     </>
   );

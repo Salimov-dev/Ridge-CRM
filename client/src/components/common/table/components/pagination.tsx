@@ -14,8 +14,13 @@ import {
   PaginationPageNavigation,
   SearchedRows,
 } from "../styles/styled";
+import { useTheme } from "@emotion/react";
+import { tokens } from "@theme/theme";
 
-const Pagination = ({ table, colors, quantity }) => {
+const Pagination = ({ table, quantity }) => {
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
+
   return (
     <PaginationContainer>
       <SearchedRows>

@@ -14,7 +14,7 @@ import ObjectUpdatePageDialog from "../../components/UI/dialogs/objects/object-u
 import ChangePeriodButton from "./components/change-period-button";
 import ObjectsDatabaseFiltersPanel from "../../components/UI/filters-panels/objectsdatabase-filters-panel";
 // columns
-import { objectsColumns } from "../../columns/objects-columns/objects-columns";
+import { objectsColumns } from "../../columns/objects.columns";
 // hooks
 import useSearchObjectDatabase from "../../hooks/objects-database/use-search-object-database";
 // store

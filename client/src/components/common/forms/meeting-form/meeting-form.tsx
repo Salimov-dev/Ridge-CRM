@@ -10,6 +10,7 @@ import { FieldsContainer, Form } from "../styled/styled";
 import SimpleSwitch from "../../inputs/simple-switch";
 import AutocompleteStyled from "../../inputs/autocomplete-styled";
 import getDateToday from "@utils/date/get-date-today";
+import SelectFieldStyled from "@components/common/inputs/select-field-styled";
 
 const MeetingForm = ({
   data,
@@ -50,22 +51,24 @@ const MeetingForm = ({
             setValue={setValue}
             errors={errors?.time}
           />
-          <SimpleSelectField
+          <SelectFieldStyled
+            label="Тип встречи"
             register={register}
             name="meetingType"
             labelId="meetingType"
-            label="Тип встречи *"
+            required={true}
             itemsList={meetingTypes}
-            value={watchTypeMeeting}
+            value={data.meetingType ?? ""}
             errors={errors?.meetingType}
           />
-          <SimpleSelectField
+          <SelectFieldStyled
+            label="Статус"
             register={register}
             name="status"
             labelId="status"
-            label="Статус *"
-            itemsList={statuses}
-            value={watchStatus}
+            required={true}
+            itemsList={meetingTypes}
+            value={data.meetingType ?? ""}
             errors={errors?.status}
           />
         </FieldsContainer>

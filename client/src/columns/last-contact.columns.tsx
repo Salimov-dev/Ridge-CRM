@@ -4,23 +4,23 @@ import { useDispatch, useSelector } from "react-redux";
 // mui
 import { Box, Typography } from "@mui/material";
 // components
-import EmptyTd from "../../components/common/columns/empty-td";
-import UserNameWithAvatar from "../../components/common/table/helpers/user-name-with-avatar";
-import MultiColorContainedButton from "../../components/common/buttons/multi-color-contained-button";
-import { AlignCenter } from "../../components/common/columns/styled";
+import EmptyTd from "@components/common/columns/empty-td";
+import UserNameWithAvatar from "@components/common/table/helpers/user-name-with-avatar";
+import ButtonStyled from "@components/common/buttons/button-styled";
+import { AlignCenter } from "@components/common/columns/styled";
 // utils
-import { FormatDate } from "../../utils/date/format-date";
+import { FormatDate } from "@utils/date/format-date";
 import {
   setUpdateLastContactId,
   setUpdateLastContactOpenState,
-} from "../../store/last-contact/update-last-contact.store";
-import { getLastContactsById } from "../../store/last-contact/last-contact.store";
+} from "@store/last-contact/update-last-contact.store";
+import { getLastContactsById } from "@store/last-contact/last-contact.store";
 import {
   getCurrentUserId,
   getIsUserAuthorThisEntity,
-} from "../../store/user/users.store";
+} from "@store/user/users.store";
 // hooks
-import useGetUserAvatar from "../../hooks/user/use-get-user-avatar";
+import useGetUserAvatar from "@hooks/user/use-get-user-avatar";
 
 export const lastContactColumns = (onUpdate) => [
   {
@@ -89,13 +89,11 @@ export const lastContactColumns = (onUpdate) => [
       };
 
       return (
-        <MultiColorContainedButton
-          text="Править"
-          fontColor="white"
-          background="SaddleBrown"
-          backgroudHover="Sienna"
-          onClick={() => onUpdate(lastContactId)}
+        <ButtonStyled
+          title="Править"
+          style="LAST_CONTACT"
           disabled={!isAuthorEntity}
+          onClick={() => onUpdate(lastContactId)}
         />
       );
     },

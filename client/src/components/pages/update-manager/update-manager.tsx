@@ -14,12 +14,24 @@ import { getUserStatusesList } from "../../../store/user/user-statuses.store";
 import { getUserDataById, updateUser } from "../../../store/user/users.store";
 import { getUpdateManagerId } from "../../../store/user/update-user.store";
 // schema
+import TitleWithCloseButton from "@common/page-titles/header-with-close-button";
 import { managerSchema } from "../../../schemas/manager-schema";
+import SuccessCancelFormButtons from "@components/common/forms/footer-buttons/success-cancel-form-buttons";
+import LoaderFullWindow from "@components/common/loader/loader-full-window";
+import { useTheme } from "@emotion/react";
+import { tokens } from "@theme/theme";
+import { useState } from "react";
+import { toast } from "react-toastify";
+import HeaderWithCloseButton from "@common/page-titles/header-with-close-button";
 
-const UpdateManager = ({ onClose }) => {
-  const userId = useSelector(getUpdateManagerId());
+const UpdateManager = ({ userId, onClose }) => {
+  // const userId = useSelector(getUpdateManagerId());
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
+
   const user = useSelector(getUserDataById(userId));
   const userStatuses = useSelector(getUserStatusesList());
+  const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
 
   const formatedUser = {
@@ -59,17 +71,25 @@ const UpdateManager = ({ onClose }) => {
     isValid;
 
   const onSubmit = (data) => {
+    setIsLoading(true);
     dispatch<any>(updateUser(data))
       .then(onClose())
+      .catch((error) => {
+        toast.error(error);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
 
-  return user ? (
-    <Box>
-      <Header user={user} onClose={onClose} />
-      <img
-        src={user?.image}
-        alt=""
-        style={{ width: "100px", borderRadius: "10px" }}
+  return (
+    <>
+      <HeaderWithCloseButton
+        title={`Редактировать менеджера: ${user?.name.lastName} ${user?.name.firstName} ${user?.name.surName}`}
+        color="black"
+        margin="0 0 20px 0"
+        background={colors.header["gold"]}
+        onClose={onClose}
       />
       <ManagerForm
         data={data}
@@ -84,9 +104,18 @@ const UpdateManager = ({ onClose }) => {
         isEditMode={isEditMode}
         userStatuses={userStatuses}
       />
-    </Box>
-  ) : (
-    <Loader />
+      <SuccessCancelFormButtons
+        onSuccess={handleSubmit(onSubmit)}
+        onCancel={onClose}
+        // onRemove={handleClickOpen}
+        isUpdate={true}
+      />
+      <LoaderFullWindow
+        color={colors.grey[600]}
+        size={75}
+        isLoading={isLoading}
+      />
+    </>
   );
 };
 

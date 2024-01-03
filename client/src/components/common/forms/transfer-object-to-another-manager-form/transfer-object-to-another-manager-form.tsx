@@ -7,6 +7,7 @@ const TransferObjectToAnotherManagerForm = ({
   users,
   objects,
   register,
+  errors,
   watch,
 }) => {
   const watchManagerId = watch("managerId", "");
@@ -22,6 +23,7 @@ const TransferObjectToAnotherManagerForm = ({
           itemsList={users}
           value={watchManagerId}
           disabled={!objects?.length}
+          errors={errors?.managerId}
         />
       </FieldsContainer>
     </Form>

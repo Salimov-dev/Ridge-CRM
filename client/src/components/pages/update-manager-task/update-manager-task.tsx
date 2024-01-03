@@ -64,13 +64,14 @@ const UpdateManagerTask = React.memo(({ title, onClose, taskId, users }) => {
 
     dispatch<any>(updateTask(newData))
       .then(() => {
-        setIsLoading(false);
         onClose();
         toast.success("Задача менеджеру успешно изменена!");
       })
       .catch((error) => {
-        setIsLoading(false);
         toast.error(error);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   };
 

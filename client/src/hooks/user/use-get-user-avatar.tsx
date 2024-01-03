@@ -5,7 +5,7 @@ import { getUserAvatarsList } from "../../store/avatar/avatar.store";
 const useGetUserAvatar = (userId) => {
   const [avatarSrc, setAvatarSrc] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-  
+
   const userAvatarsList = useSelector(getUserAvatarsList());
 
   const usersArray = Array.isArray(userAvatarsList) ? userAvatarsList : [];
@@ -14,29 +14,28 @@ const useGetUserAvatar = (userId) => {
   const userSrc = user?.src;
 
   const getUserAvatar = () => {
+    setIsLoading(true);
     try {
       if (userSrc) {
         const srcValue = "data:image/png;base64," + userSrc;
-        setIsLoading(false);
         setAvatarSrc(srcValue);
       } else {
-        setIsLoading(false);
         setAvatarSrc(null);
       }
     } catch (error) {
-      setIsLoading(false);
       console.log("error", error.message);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const refreshAvatar = () => {
-    getUserAvatar(userId);
+    getUserAvatar();
   };
-  
-  useEffect(() => {
-    getUserAvatar(userId);
-  });
 
+  useEffect(() => {
+    getUserAvatar();
+  });
 
   return { avatarSrc, isLoading, refreshAvatar };
 };

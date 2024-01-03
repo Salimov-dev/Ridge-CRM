@@ -1,16 +1,5 @@
 // libraries
 import { useMemo, useState } from "react";
-import { useSelector } from "react-redux";
-// MUI
-import { getFormLabelUtilityClasses, useTheme } from "@mui/material";
-// styles
-import "./styles/styles.css";
-// components
-import Pagination from "./components/pagination";
-import Thead from "./components/thead";
-import Tbody from "./components/tbody";
-import Loader from "../loader/loader";
-// react-table
 import {
   getCoreRowModel,
   getSortedRowModel,
@@ -18,10 +7,13 @@ import {
   useReactTable,
   SortingState,
 } from "@tanstack/react-table";
-// store
-import { getOpenObjectPageOpenState } from "../../../store/object/open-object-page.store";
-// theme
-import { tokens } from "../../../theme/theme";
+// styles
+import "./styles/styles.css";
+// components
+import Pagination from "./components/pagination";
+import Thead from "./components/thead";
+import Tbody from "./components/tbody";
+import Loader from "../loader/loader";
 
 const BasicTable = ({
   rowSelection = [],
@@ -29,13 +21,12 @@ const BasicTable = ({
   items,
   itemsColumns,
   hasFooter = false,
-  isLoading,
+  isLoading = false,
   isPaginate = true,
   isDialogMode = false,
 }) => {
   const [sorting, setSorting] = useState<SortingState>([]);
-  const theme = useTheme();
-  const colors = tokens(theme.palette.mode);
+
   const data = useMemo(() => items || [], [items]);
   const columns = useMemo(() => itemsColumns || [], [items]);
 
@@ -57,14 +48,12 @@ const BasicTable = ({
   return (
     <>
       <table>
-        <Thead table={table} colors={colors} isDialogMode={isDialogMode} />
+        <Thead table={table} isDialogMode={isDialogMode} />
         {!isLoading && <Tbody table={table} hasFooter={hasFooter} />}
       </table>
-      {isLoading && <Loader height="150px" />}
+      {isLoading && <Loader color="white" height="150px" />}
 
-      {isPaginate && (
-        <Pagination table={table} colors={colors} quantity={items?.length} />
-      )}
+      {isPaginate && <Pagination table={table} quantity={items?.length} />}
     </>
   );
 };

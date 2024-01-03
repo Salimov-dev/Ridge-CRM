@@ -1,8 +1,13 @@
+import { useTheme } from "@emotion/react";
 import KeyboardArrowDownOutlinedIcon from "@mui/icons-material/KeyboardArrowDownOutlined";
 import KeyboardArrowUpOutlinedIcon from "@mui/icons-material/KeyboardArrowUpOutlined";
 import { flexRender } from "@tanstack/react-table";
+import { tokens } from "@theme/theme";
 
-const Thead = ({ table, colors, isDialogMode }) => {
+const Thead = ({ table, isDialogMode }) => {
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
+
   return (
     <thead>
       {table.getHeaderGroups().map((headerGroup) => (

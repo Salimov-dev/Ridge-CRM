@@ -18,7 +18,7 @@ function PaperComponent(props: PaperProps) {
   );
 }
 
-const ConfirmTransferObjectDialog = ({ open, onClose, onTransfer }) => {
+const DialogConfirm = ({ open, onClose, question, onSuccessClick }) => {
   return (
     <>
       <Dialog
@@ -31,19 +31,19 @@ const ConfirmTransferObjectDialog = ({ open, onClose, onTransfer }) => {
           Подтвердите своё действие
         </DialogTitle>
         <DialogContent>
-          <DialogContentText>
-            Вы уверены, что хотите передать объекты другому Менеджеру?
-          </DialogContentText>
+          <DialogContentText>{question}</DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button autoFocus onClick={onClose} sx={{color: "white"}}>
+          <Button autoFocus onClick={onClose} sx={{ color: "white" }}>
             Отмена
           </Button>
-          <Button onClick={onTransfer} sx={{color: "white"}}>Подтверждаю</Button>
+          <Button onClick={onSuccessClick} sx={{ color: "white" }}>
+            Подтверждаю
+          </Button>
         </DialogActions>
       </Dialog>
     </>
   );
 };
 
-export default ConfirmTransferObjectDialog;
+export default DialogConfirm;

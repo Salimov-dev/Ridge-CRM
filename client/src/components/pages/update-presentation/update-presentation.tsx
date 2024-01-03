@@ -4,14 +4,11 @@ import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Box } from "@mui/material";
 // components
 import Header from "./components/header";
-import FooterButtons from "../../common/forms/footer-buttons/success-cancel-form-buttons";
 import ConfirmRemoveDialog from "../../common/dialog/confirm-remove-dialog";
 import ManagerPresentationForm from "../../common/forms/presentation/manager-presentation-form";
 import CuratorPresentationForm from "../../common/forms/presentation/curator-presentation-form";
-import IsLoadingDialog from "../../common/dialog/is-loading-dialog";
 // schema
 import { presentationSchema } from "../../../schemas/presentation-schema";
 // utils
@@ -29,6 +26,8 @@ import {
   removePresentation,
   updatePresentation,
 } from "../../../store/presentation/presentations.store";
+import LoaderFullWindow from "@components/common/loader/loader-full-window";
+import SuccessCancelFormButtons from "../../common/forms/footer-buttons/success-cancel-form-buttons";
 
 const UpdatePresentation = React.memo(({ onClose }) => {
   const dispatch = useDispatch();
@@ -100,13 +99,8 @@ const UpdatePresentation = React.memo(({ onClose }) => {
     setOpen(false);
   };
 
-  return isLoading ? (
-    <IsLoadingDialog
-      text="Немного подождите, изменяем `Задачу себе`"
-      isLoading={isLoading}
-    />
-  ) : (
-    <Box>
+  return (
+    <>
       <Header onClose={onClose} />
       {isAuthorEntity ? (
         <ManagerPresentationForm
@@ -127,12 +121,11 @@ const UpdatePresentation = React.memo(({ onClose }) => {
           setValue={setValue}
         />
       )}
-      <FooterButtons
-        onClose={onClose}
-        onUpdate={handleSubmit(onSubmit)}
+      <SuccessCancelFormButtons
+        onSuccess={handleSubmit(onSubmit)}
+        onCancel={onClose}
         onRemove={handleClickOpen}
-        isValid={isFullValid}
-        isEditMode={isEditMode}
+        isUpdate={true}
       />
       <ConfirmRemoveDialog
         removeId={presentationId}
@@ -140,7 +133,8 @@ const UpdatePresentation = React.memo(({ onClose }) => {
         onClose={handleClose}
         onRemove={handleRemovePresentation}
       />
-    </Box>
+      <LoaderFullWindow isLoading={isLoading} />
+    </>
   );
 });
 

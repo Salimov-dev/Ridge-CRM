@@ -7,14 +7,14 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Box, Typography, styled } from "@mui/material";
 import { useLocation, useNavigate } from "react-router-dom";
 // components
-import IsLoadingDialog from "../../common/dialog/is-loading-dialog";
 import LoginForm from "../../../layouts/login/components/login-form";
-import PositiveOutlinedButton from "../../common/buttons/positive-outlined-button";
 import LoginHeader from "./components/login-header";
 // schema
 import { loginSchema } from "../../../schemas/login-schema";
 // store
 import { login } from "../../../store/user/users.store";
+import ButtonStyled from "@components/common/buttons/button-styled";
+import LoaderFullWindow from "@components/common/loader/loader-full-window";
 
 const Component = styled(Box)`
   height: 100%;
@@ -69,17 +69,16 @@ const Login = React.memo(({ onClose }) => {
   const isFormValid = !Object.keys(errors).length;
 
   const onSubmit = () => {
-    
     setIsLoading(true);
     dispatch<any>(login({ payload: data }))
-    .then(() => {
+      .then(() => {
         setIsLoading(false);
         navigate(redirectPath, { replace: true });
         onClose();
       })
       .catch((error) => {
         const { message } = error.response.data.error;
-        toast.error(message)
+        toast.error(message);
         setIsLoading(false);
       });
   };
@@ -92,11 +91,7 @@ const Login = React.memo(({ onClose }) => {
         color="white"
         onClose={onClose}
       />
-      {isLoading ? (
-        <IsLoadingDialog
-          text="Немного подождите, авторизуемся в системе"
-          isLoading={isLoading}
-        />
+      <LoaderFullWindow isLoading={isLoading} />
       ) : (
         <AuthForm>
           <LoginForm data={data} errors={errors} register={register} />
@@ -105,10 +100,11 @@ const Login = React.memo(({ onClose }) => {
               Нет логина? Нажмите, чтобы получить доступ
             </Typography>
           </Subtitle> */}
-          <PositiveOutlinedButton
+          <ButtonStyled
             title="Войти"
-            isValid={!isFormValid}
+            style="SUCCESS"
             onClick={handleSubmit(onSubmit)}
+            disabled={!isFormValid}
           />
         </AuthForm>
       )}

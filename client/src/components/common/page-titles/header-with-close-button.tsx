@@ -1,6 +1,8 @@
 import { Box, styled } from "@mui/material";
 import LayoutTitle from "./layout-title";
 import CloseButtonIconButton from "../buttons/icons buttons/close-button-icon";
+import { useTheme } from "@emotion/react";
+import { tokens } from "@theme/theme";
 
 const Component = styled(Box)`
   display: flex;
@@ -11,15 +13,17 @@ const Component = styled(Box)`
 const HeaderWithCloseButton = ({
   title = "",
   onClose,
-  background = "inherit",
-  color = "inherit",
-  margin = "0",
+  background = "",
+  color = "white",
+  margin = "0 0 20px 0",
 }) => {
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
   return (
     <Component sx={{ margin: margin }}>
       <LayoutTitle
         title={title}
-        background={background}
+        background={background ? background : colors.header["gold"]}
         color={color}
         margin="0px"
       />

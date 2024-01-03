@@ -41,6 +41,10 @@ export const tokens = (mode) => ({
           primary: "#8B4513", // SaddleBrown,
           hover: "#A0522D", // Sienna,
         },
+        presentation: {
+          primary: "#8B4513", // SaddleBrown,
+          hover: "#A0522D", // Sienna,
+        },
         meeting: {
           primary: "#4169E1", // RoyalBlue,
           hover: "#6495ED", // CornflowerBlue,
@@ -130,6 +134,14 @@ export const tokens = (mode) => ({
           myTaskHover: "#FFA500", // Orange
           managerTask: "#DC143C", // Crimson
           managerTaskHover: "#FF0000", // Red
+        },
+        meeting: {
+          primary: "#4169E1", // RoyalBlue,
+          hover: "#6495ED", // CornflowerBlue,
+        },
+        presentation: {
+          primary: "#8B4513", // SaddleBrown,
+          hover: "#A0522D", // Sienna,
         },
         lastContact: {
           primary: "8B4513", // SaddleBrown,

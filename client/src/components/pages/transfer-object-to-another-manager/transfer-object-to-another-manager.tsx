@@ -7,16 +7,20 @@ import { useForm } from "react-hook-form";
 // components
 import Titles from "./components/titles";
 import SelectedError from "./components/selected-error";
-import FooterButtons from "./components/footer-buttons";
-import IsLoadingDialog from "../../common/dialog/is-loading-dialog";
-import TitleWithCloseButton from "../../common/page-titles/header-with-close-button";
-import ConfirmTransferObjectDialog from "../../common/dialog/confirm-transfer-object-dialog";
 import TransferObjectToAnotherManagerForm from "../../common/forms/transfer-object-to-another-manager-form/transfer-object-to-another-manager-form";
 // store
 import { updateMultipleObjects } from "../../../store/object/objects.store";
 import { getUsersList } from "../../../store/user/users.store";
 // utils
 import transformUsersForSelect from "../../../utils/objects/transform-users-for-select";
+import SuccessCancelFormButtons from "@components/common/forms/footer-buttons/success-cancel-form-buttons";
+import LoaderFullWindow from "@components/common/loader/loader-full-window";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { transferObjectToAnotherManagerSchema } from "@schemas/transfer-object-to-aother-manager.schema copy";
+import { useTheme } from "@emotion/react";
+import { tokens } from "@theme/theme";
+import HeaderWithCloseButton from "../../common/page-titles/header-with-close-button";
+import DialogConfirm from "@components/common/dialog/dialog-confirm";
 
 const Component = styled(Box)`
   width: 500px;
@@ -40,12 +44,21 @@ const TransferObjectToAnotherManager = React.memo(
     setRowSelection = () => {},
   }) => {
     const dispatch = useDispatch();
+    const theme = useTheme();
+    const colors = tokens(theme.palette.mode);
+
     const [isLoading, setIsLoading] = useState(false);
     const [open, setOpen] = useState(false);
 
-    const { register, watch } = useForm({
+    const {
+      register,
+      watch,
+      handleSubmit,
+      formState: { errors },
+    } = useForm({
       defaultValues: initialState,
-      mode: "onBlur",
+      mode: "onChange",
+      resolver: yupResolver(transferObjectToAnotherManagerSchema),
     });
     const watchManagerId = watch("managerId", "");
     const isValid = !watchManagerId;
@@ -79,17 +92,13 @@ const TransferObjectToAnotherManager = React.memo(
       setOpen(false);
     };
 
-    return isLoading ? (
-      <IsLoadingDialog
-        text="Немного подождите, передаём объекты другому Менеджеру"
-        isLoading={isLoading}
-      />
-    ) : (
-      <Component>
-        <TitleWithCloseButton
-          title={title}
-          background="Crimson"
-          color="white"
+    return (
+      <>
+        <HeaderWithCloseButton
+          title="Передать объекты"
+          color="black"
+          margin="0 0 20px 0"
+          background={colors.header["gold"]}
           onClose={onClose}
         />
 
@@ -102,23 +111,27 @@ const TransferObjectToAnotherManager = React.memo(
               objects={objectsToTransfer}
               users={transformUsers}
               register={register}
+              errors={errors}
               watch={watch}
             />
           )}
         </TitlesContainer>
-
-        <FooterButtons
-          onClose={onClose}
-          onOpen={() => handleClickOpen()}
-          isValid={isValid}
+        <SuccessCancelFormButtons
+          onSuccess={handleClickOpen}
+          onCancel={onClose}
         />
-
-        <ConfirmTransferObjectDialog
+        <LoaderFullWindow
+          color={colors.grey[600]}
+          size={75}
+          isLoading={isLoading}
+        />
+        <DialogConfirm
+          question="Вы уверены, что хотите передать объекты другому Менеджеру?"
           open={open}
+          onClick={() => onSubmit()}
           onClose={handleClose}
-          onTransfer={() => onSubmit()}
         />
-      </Component>
+      </>
     );
   }
 );
