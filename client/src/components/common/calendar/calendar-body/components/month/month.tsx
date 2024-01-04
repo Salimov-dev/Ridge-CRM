@@ -12,7 +12,7 @@ const Component = styled(Box)`
   border: 1px solid gray;
 `;
 
-const Month = ({ meetings, tasks, month, setDateCreate }) => {
+const Month = ({ meetings, tasks, month, setDateCreate, setState }) => {
   const [draggableDay, setDraggableDay] = useState(null);
   const formattedDate = dayjs(draggableDay, {
     format: "YYYYMMDDHHmmss",
@@ -29,14 +29,15 @@ const Month = ({ meetings, tasks, month, setDateCreate }) => {
           {row.map((day, idx) => (
             <Day
               day={day}
+              key={idx}
               draggableDay={formattedDate}
               setDraggableDay={setDraggableDay}
               onDragOver={(e) => handleDragOver(e, day)}
-              key={idx}
               isWeekendColumn={idx === 5 || idx === 6}
               meetings={meetings ? meetings(day) : []}
               tasks={tasks ? tasks(day) : []}
               setDateCreate={setDateCreate}
+              setState={setState}
             />
           ))}
         </React.Fragment>

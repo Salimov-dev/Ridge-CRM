@@ -8,10 +8,10 @@ import { useForm } from "react-hook-form";
 import React, { useEffect, useState } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 // components
-import TitleWithCloseButton from "@common/page-titles/header-with-close-button";
-import SuccessCancelFormButtons from "@common/forms/footer-buttons/success-cancel-form-buttons";
+import TitleWithCloseButton from "@components/common/page-headers/header-with-close-button";
+import SuccessCancelFormButtons from "@components/common/forms/success-cancel-form-buttons/success-cancel-form-buttons";
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
-import MyTaskForm from "@components/common/forms/my-task-form/my-task-form";
+import MyTaskForm from "@components/common/forms/my-task.form";
 // schema
 import { taskSchema } from "@schemas/task-shema";
 // utils

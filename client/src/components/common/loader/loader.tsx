@@ -2,7 +2,7 @@ import { CircularProgress, Box } from "@mui/material";
 
 const Loader = ({
   size = 25,
-  color = "success",
+  color = "white",
   width = "100%",
   height = "100%",
   padding = "30px 0",

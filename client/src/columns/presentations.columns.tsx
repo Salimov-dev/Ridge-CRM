@@ -3,9 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { Box, Button, Tooltip, Typography } from "@mui/material";
 // components
 import { AlignCenter } from "@components/common/columns/styled";
-import RedirectButton from "@components/common/buttons/redirect-button";
-import ButtonStyled from "@components/common/buttons/button-styled";
-import UserNameWithAvatar from "@components/common/table/helpers/user-name-with-avatar";
+import ButtonStyled from "@components/common/buttons/button-styled.button";
+import UserNameWithAvatar from "@components/common/table/components/user-name-with-avatar";
 // hooks
 import useGetUserAvatar from "@hooks/user/use-get-user-avatar";
 // icons
@@ -57,9 +56,9 @@ export const presentationsColumns = (
         >
           {fullAddress}
           {!isDialogPage && objectId ? (
-            <RedirectButton
-              text="Открыть"
-              color="neutral"
+            <ButtonStyled
+              title="Открыть"
+              style="OPEN_OBJECT"
               onClick={() => handleOpenObjectPage(objectId)}
             />
           ) : null}

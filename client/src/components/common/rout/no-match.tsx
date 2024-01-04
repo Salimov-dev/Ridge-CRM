@@ -1,4 +1,4 @@
-import { Box, styled } from "@mui/material";
+import { Box, Typography, styled } from "@mui/material";
 
 const Component = styled(Box)`
   height: 350px;
@@ -11,8 +11,12 @@ const Component = styled(Box)`
 const NoMatchRoute = () => {
   return (
     <Component>
-      <h1>Страницы по такому адресу не существует :-(</h1>
-      <h3>Проверьте вводимый адрес и попробуйте снова</h3>
+      <Typography variant="h1">
+        Страницы по такому адресу не существует :-(
+      </Typography>
+      <Typography variant="h3">
+        Проверьте вводимый адрес и попробуйте снова
+      </Typography>
     </Component>
   );
 };

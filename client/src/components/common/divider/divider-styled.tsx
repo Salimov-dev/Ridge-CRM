@@ -1,6 +1,6 @@
 import { Divider, styled } from "@mui/material";
 
-const DividerStyled = ({ color = "gray", margin= "6px 0" }) => {
+const DividerStyled = ({ color = "gray", margin = "6px 0" }) => {
   const Component = styled(Divider)`
     width: 100%;
     border-style: dashed;

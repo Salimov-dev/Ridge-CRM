@@ -8,21 +8,21 @@ import { Box } from "@mui/material";
 // components
 import Header from "./components/header";
 import Loader from "../../common/loader/loader";
-import ManagerForm from "../../common/forms/manager-form/manager-form";
+import ManagerForm from "../../common/forms/manager/manager.form";
 // store
 import { getUserStatusesList } from "../../../store/user/user-statuses.store";
 import { getUserDataById, updateUser } from "../../../store/user/users.store";
 import { getUpdateManagerId } from "../../../store/user/update-user.store";
 // schema
-import TitleWithCloseButton from "@common/page-titles/header-with-close-button";
+import TitleWithCloseButton from "@components/common/page-headers/header-with-close-button";
 import { managerSchema } from "../../../schemas/manager-schema";
-import SuccessCancelFormButtons from "@components/common/forms/footer-buttons/success-cancel-form-buttons";
+import SuccessCancelFormButtons from "@components/common/forms/success-cancel-form-buttons/success-cancel-form-buttons";
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
 import { useTheme } from "@emotion/react";
 import { tokens } from "@theme/theme";
 import { useState } from "react";
 import { toast } from "react-toastify";
-import HeaderWithCloseButton from "@common/page-titles/header-with-close-button";
+import HeaderWithCloseButton from "@components/common/page-headers/header-with-close-button";
 
 const UpdateManager = ({ userId, onClose }) => {
   // const userId = useSelector(getUpdateManagerId());

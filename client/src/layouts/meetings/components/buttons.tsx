@@ -1,5 +1,5 @@
-import ButtonStyled from "@components/common/buttons/button-styled";
-import ClearFilterButton from "@components/common/buttons/clear-filter-button";
+import ButtonStyled from "@components/common/buttons/button-styled.button";
+import ClearFilterButton from "@components/common/buttons/clear-filter.button";
 import styled from "@emotion/styled";
 import { Box } from "@mui/material";
 
@@ -12,7 +12,7 @@ const Component = styled(Box)`
 const Buttons = ({
   initialState,
   reset,
-  onOpenCreateObjectPage,
+  onOpenCreateMeetingPage,
   isInputEmpty,
 }) => {
   return (
@@ -21,7 +21,7 @@ const Buttons = ({
         title="Создать встречу"
         style="MEETING"
         variant="contained"
-        onClick={onOpenCreateObjectPage}
+        onClick={onOpenCreateMeetingPage}
       />
       {isInputEmpty && (
         <ClearFilterButton reset={reset} initialState={initialState} />

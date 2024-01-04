@@ -1,30 +1,27 @@
 // libraries
 import { Box, styled } from "@mui/material";
 import { toast } from "react-toastify";
+import { useTheme } from "@emotion/react";
+import { tokens } from "@theme/theme";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 // components
 import Titles from "./components/titles";
 import SelectedError from "./components/selected-error";
-import TransferObjectToAnotherManagerForm from "../../common/forms/transfer-object-to-another-manager-form/transfer-object-to-another-manager-form";
-// store
-import { updateMultipleObjects } from "../../../store/object/objects.store";
-import { getUsersList } from "../../../store/user/users.store";
-// utils
-import transformUsersForSelect from "../../../utils/objects/transform-users-for-select";
-import SuccessCancelFormButtons from "@components/common/forms/footer-buttons/success-cancel-form-buttons";
+import TransferObjectToAnotherManagerForm from "@components/common/forms/transfer-object-to-another-manager.form";
+import SuccessCancelFormButtons from "@components/common/forms/success-cancel-form-buttons/success-cancel-form-buttons";
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { transferObjectToAnotherManagerSchema } from "@schemas/transfer-object-to-aother-manager.schema copy";
-import { useTheme } from "@emotion/react";
-import { tokens } from "@theme/theme";
-import HeaderWithCloseButton from "../../common/page-titles/header-with-close-button";
+import HeaderWithCloseButton from "@components/common/page-headers/header-with-close-button";
 import DialogConfirm from "@components/common/dialog/dialog-confirm";
-
-const Component = styled(Box)`
-  width: 500px;
-`;
+// schemas
+import { transferObjectToAnotherManagerSchema } from "@schemas/transfer-object-to-aother-manager.schema";
+// utils
+import transformUsersForSelect from "@utils/objects/transform-users-for-select";
+// store
+import { updateMultipleObjects } from "@store/object/objects.store";
+import { getUsersList } from "@store/user/users.store";
 
 const TitlesContainer = styled(Box)`
   display: flex;
@@ -39,7 +36,6 @@ const initialState = {
 const TransferObjectToAnotherManager = React.memo(
   ({
     objectsToTransfer = [],
-    title = "",
     onClose = () => {},
     setRowSelection = () => {},
   }) => {
@@ -53,7 +49,6 @@ const TransferObjectToAnotherManager = React.memo(
     const {
       register,
       watch,
-      handleSubmit,
       formState: { errors },
     } = useForm({
       defaultValues: initialState,
@@ -61,7 +56,6 @@ const TransferObjectToAnotherManager = React.memo(
       resolver: yupResolver(transferObjectToAnotherManagerSchema),
     });
     const watchManagerId = watch("managerId", "");
-    const isValid = !watchManagerId;
 
     const users = useSelector(getUsersList());
     const transformUsers = transformUsersForSelect(users);
@@ -128,7 +122,7 @@ const TransferObjectToAnotherManager = React.memo(
         <DialogConfirm
           question="Вы уверены, что хотите передать объекты другому Менеджеру?"
           open={open}
-          onClick={() => onSubmit()}
+          onSuccessClick={() => onSubmit()}
           onClose={handleClose}
         />
       </>

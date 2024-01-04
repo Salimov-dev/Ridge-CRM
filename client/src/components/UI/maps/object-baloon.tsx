@@ -1,24 +1,27 @@
-import { useDispatch, useSelector } from "react-redux";
-import { Box, Typography, styled } from "@mui/material";
-// components
-import { FormatPhone } from "../../common/table/helpers/helpers";
-import DividerStyled from "../../common/divider/divider-styled";
-import MultiColorOutlinedButton from "../../common/buttons/multi-color-outlined-button";
-import Attribute from "../../common/map/baloon/attribute";
-// utils
-import { makeDigitSeparator } from "../../../utils/data/make-digit-separator";
-// store
-import { getCurrentUserId, getIsUserCurator, getUserNameById } from "../../../store/user/users.store";
-import { getDistrictName } from "../../../store/object-params/districts.store";
-import { getRentTypeNameById } from "../../../store/object-params/rent-types.store";
-import { getEstateTypeNameById } from "../../../store/object-params/estate-types.store";
-import { getObjectTypeNameById } from "../../../store/object-params/object-types.store";
-import { getCurrentRenterNameById } from "../../../store/object-params/current-renter.store";
-import {
-  setOpenObjectPageId,
-  setOpenObjectPageOpenState,
-} from "../../../store/object/open-object-page.store";
 import React from "react";
+import { useTheme } from "@emotion/react";
+import { tokens } from "@theme/theme";
+import { useSelector } from "react-redux";
+import { Box, styled } from "@mui/material";
+// components
+import { FormatPhone } from "@common/table/helpers/helpers";
+import DividerStyled from "@common/divider/divider-styled";
+import Attribute from "@common/map/baloon/attribute";
+import ButtonStyled from "@components/common/buttons/button-styled.button";
+import Loader from "@components/common/loader/loader";
+// utils
+import { makeDigitSeparator } from "@utils/data/make-digit-separator";
+// store
+import { getDistrictName } from "@store/object-params/districts.store";
+import { getRentTypeNameById } from "@store/object-params/rent-types.store";
+import { getEstateTypeNameById } from "@store/object-params/estate-types.store";
+import { getObjectTypeNameById } from "@store/object-params/object-types.store";
+import { getCurrentRenterNameById } from "@store/object-params/current-renter.store";
+import {
+  getCurrentUserId,
+  getIsUserCurator,
+  getUserNameById,
+} from "@store/user/users.store";
 
 const BaloonContainer = styled(Box)`
   width: 100%;
@@ -30,8 +33,9 @@ const BaloonContainer = styled(Box)`
   padding: 20px 0;
 `;
 
-const ObjectBaloon = React.memo(({ object }) => {
-  const dispatch = useDispatch();
+const ObjectBaloon = React.memo(({ object, onOpenObjectPage, isLoading }) => {
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
 
   const objectId = object?._id;
   const manager = useSelector(getUserNameById(object?.userId));
@@ -49,7 +53,6 @@ const ObjectBaloon = React.memo(({ object }) => {
   const rentPrice = object?.commercialTerms?.rentPrice;
   const rentTypes = object?.commercialTerms?.rentTypes;
 
-
   const objectType = useSelector(
     getObjectTypeNameById(object?.estateOptions?.objectTypes)
   );
@@ -60,11 +63,7 @@ const ObjectBaloon = React.memo(({ object }) => {
     getCurrentRenterNameById(object?.estateOptions?.currentRenters)
   );
 
-  const handleOpenObjectPage = () => {
-    dispatch<any>(setOpenObjectPageId(objectId));
-    dispatch<any>(setOpenObjectPageOpenState(true));
-  };
-  return (
+  return !isLoading ? (
     <BaloonContainer>
       <Attribute title="Город:" subTitle={city} />
       <Attribute title="Район:" subTitle={district} />
@@ -97,14 +96,17 @@ const ObjectBaloon = React.memo(({ object }) => {
       <Attribute title="Телефон:" subTitle={phone ? FormatPhone(phone) : "-"} />
       <Attribute title="Email:" subTitle={email ? email : "-"} />
 
-      <MultiColorOutlinedButton
-        text="Открыть страницу объекта"
-        fontColor="black"
-        borderColor="SlateGrey"
-        backgroundHover="ForestGreen"
-        onClick={handleOpenObjectPage}
-      />
+      <Box sx={{ width: "100%", display: "flex", justifyContent: "center" }}>
+        <ButtonStyled
+          title="Открыть страницу объекта"
+          style="OBJECT"
+          size="small"
+          onClick={() => onOpenObjectPage(objectId)}
+        />
+      </Box>
     </BaloonContainer>
+  ) : (
+    <Loader color={colors.grey[600]} height="85px" />
   );
 });
 

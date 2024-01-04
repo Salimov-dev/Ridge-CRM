@@ -12,8 +12,8 @@ import { getUserStatusNameById } from "@store/user/user-statuses.store";
 import { FormatDate } from "@utils/date/format-date";
 // icons
 import useGetUserAvatar from "@hooks/user/use-get-user-avatar";
-import UserNameWithAvatar from "@components/common/table/helpers/user-name-with-avatar";
-import ButtonStyled from "@components/common/buttons/button-styled";
+import UserNameWithAvatar from "@components/common/table/components/user-name-with-avatar";
+import ButtonStyled from "@components/common/buttons/button-styled.button";
 
 export const usersColumns = (handleOpenUpdatePresentationPage) => [
   {

@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import { Box, Typography, styled } from "@mui/material";
 import BasicTable from "@common/table/basic-table";
-import ButtonStyled from "@components/common/buttons/button-styled";
+import ButtonStyled from "@components/common/buttons/button-styled.button";
 import sortingByDateAndTime from "@utils/other/sorting-by-date-and-time";
 import {
   getObjectTasksList,

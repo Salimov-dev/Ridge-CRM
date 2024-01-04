@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 // components
 import Stages from "./components/stages/stages";
-import LayoutTitle from "../../components/common/page-titles/layout-title";
+import HeaderLayout from "../../components/common/page-headers/header-layout";
 import DealsFiltersPanel from "../../components/UI/filters-panels/deals-filters-panel";
 import ObjectPageDialog from "../../components/UI/dialogs/object-page-dialog/object-page-dialog";
 import ObjectUpdatePageDialog from "../../components/UI/dialogs/objects/object-update-page-dialog";
@@ -71,7 +71,7 @@ const Deals = React.memo(() => {
 
   return (
     <Box>
-      <LayoutTitle title="Сделки" />
+      <HeaderLayout title="Сделки" />
       {isCurator && (
         <DealsFiltersPanel
           data={data}

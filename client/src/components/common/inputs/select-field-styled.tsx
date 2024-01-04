@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import { useTheme } from "@emotion/react";
 import { tokens } from "@theme/theme";
-import Errors from "./errors";
+import Errors from "./components/errors";
 
 const StyledSelect = styled(Select)(({ theme, colors, items }) => ({
   "&.Mui-focused": {

@@ -5,7 +5,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 // utils
 import getDateToday from "@utils/date/get-date-today";
-import Errors from "./errors";
+import Errors from "./components/errors";
 import { useTheme } from "@emotion/react";
 import { tokens } from "@theme/theme";
 import styled from "@emotion/styled";

@@ -8,10 +8,10 @@ import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { yupResolver } from "@hookform/resolvers/yup";
 // components
-import SuccessCancelFormButtons from "@common/forms/footer-buttons/success-cancel-form-buttons";
+import SuccessCancelFormButtons from "@components/common/forms/success-cancel-form-buttons/success-cancel-form-buttons";
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
-import HeaderWithCloseButton from "@components/common/page-titles/header-with-close-button";
-import MeetingForm from "@common/forms/meeting-form/meeting-form";
+import HeaderWithCloseButton from "@components/common/page-headers/header-with-close-button";
+import MeetingForm from "@components/common/forms/meeting.form";
 // schema
 import { meetingSchema } from "@schemas/meeting-schema";
 // store

@@ -1,16 +1,13 @@
 import { useSelector } from "react-redux";
 import { Box, styled } from "@mui/material";
 // components
-import Tasks from "./components/tasks/tasks";
-import Meetings from "./components/meetings/meetings";
+import Tasks from "@layouts/calendar/components/tasks/tasks";
+import Meetings from "@layouts/calendar/components/meetings/meetings";
 import Loader from "../../../../../../../../loader/loader";
 // store
-import { getTaskLoadingStatus } from "../../../../../../../../../../store/task/tasks.store";
-import { getMeetingLoadingStatus } from "../../../../../../../../../../store/meeting/meetings.store";
-import {
-  getCurrentUserId,
-  getIsUserCurator,
-} from "../../../../../../../../../../store/user/users.store";
+import { getTaskLoadingStatus } from "@store/task/tasks.store";
+import { getMeetingLoadingStatus } from "@store/meeting/meetings.store";
+import { getCurrentUserId, getIsUserCurator } from "@store/user/users.store";
 
 const Components = styled(Box)`
   height: 100%;

@@ -14,6 +14,7 @@ const CalendarBody = ({
   setDateCreate,
   meetings,
   background,
+  setState,
 }) => {
   return (
     <Component>
@@ -23,6 +24,7 @@ const CalendarBody = ({
         setDateCreate={setDateCreate}
         meetings={meetings}
         tasks={tasks}
+        setState={setState} 
       />
     </Component>
   );

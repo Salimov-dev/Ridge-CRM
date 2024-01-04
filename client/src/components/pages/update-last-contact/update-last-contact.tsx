@@ -8,15 +8,13 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useTheme } from "@emotion/react";
 import { tokens } from "@theme/theme";
 // components
-import TitleWithCloseButton from "@common/page-titles/header-with-close-button";
-import LastContactForm from "@common/forms/last-contact-form/last-contact-form";
-import SuccessCancelFormButtons from "@common/forms/footer-buttons/success-cancel-form-buttons";
+import TitleWithCloseButton from "@components/common/page-headers/header-with-close-button";
+import LastContactForm from "@components/common/forms/last-contact.form";
+import SuccessCancelFormButtons from "@components/common/forms/success-cancel-form-buttons/success-cancel-form-buttons";
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
-import ConfirmRemoveDialog from "@common/dialog/confirm-remove-dialog";
+import DialogConfirm from "@components/common/dialog/dialog-confirm";
 // schema
 import { lastContactSchema } from "@schemas/last-contact-schema";
-// utils
-import { FormatDate } from "@utils/date/format-date";
 // store
 import {
   getLastContactsById,
@@ -64,18 +62,27 @@ const UpdateLastContact = React.memo(({ lastContactId, onClose }) => {
 
     dispatch<any>(updateLastContact(newData))
       .then(() => {
-        setIsLoading(false);
         onClose();
         toast.success("Последний контакт успешно изменен!");
       })
       .catch((error) => {
-        setIsLoading(false);
         toast.error(error);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   };
 
   const handleRemoveLastContact = (lastContactId) => {
-    dispatch<any>(removeLastContact(lastContactId)).then(onClose());
+    setIsLoading(true);
+    dispatch<any>(removeLastContact(lastContactId))
+      .then(onClose())
+      .catch((error) => {
+        toast.error(error);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
 
   const handleClickOpen = () => {
@@ -107,17 +114,13 @@ const UpdateLastContact = React.memo(({ lastContactId, onClose }) => {
         onRemove={handleClickOpen}
         isUpdate={true}
       />
-      <LoaderFullWindow
-        color={colors.grey[600]}
-        size={75}
-        isLoading={isLoading}
-      />
-      <ConfirmRemoveDialog
-        removeId={lastContactId}
+      <DialogConfirm
+        question="Вы уверены, что хотите удалить последний контакт?"
         open={open}
+        onSuccessClick={() => handleRemoveLastContact(lastContactId)}
         onClose={handleClose}
-        onRemove={handleRemoveLastContact}
       />
+      <LoaderFullWindow isLoading={isLoading} />
     </>
   );
 });

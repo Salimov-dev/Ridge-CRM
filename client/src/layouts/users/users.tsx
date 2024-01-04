@@ -10,7 +10,7 @@ import BasicTable from "../../components/common/table/basic-table";
 // hooks
 import useUsers from "../../hooks/user/use-users";
 import useSearchUser from "../../hooks/user/use-search-user";
-import LayoutTitle from "../../components/common/page-titles/layout-title";
+import HeaderLayout from "../../components/common/page-headers/header-layout";
 // store
 import {
   getCurrentUserId,
@@ -113,7 +113,7 @@ const Users = () => {
         height: "100%",
       }}
     >
-      <LayoutTitle title="Менеджеры" />
+      <HeaderLayout title="Менеджеры" />
       <Buttons
         initialState={initialState}
         reset={reset}

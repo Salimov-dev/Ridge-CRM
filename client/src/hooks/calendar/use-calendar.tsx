@@ -1,23 +1,18 @@
 import dayjs from "dayjs";
+import isBetween from "dayjs/plugin/isBetween";
 import { useMemo } from "react";
 import { orderBy } from "lodash";
 import { useSelector } from "react-redux";
-import isBetween from "dayjs/plugin/isBetween";
 // store
-import { getObjectsList } from "../../store/object/objects.store";
-import { getMeetingsList } from "../../store/meeting/meetings.store";
-import {
-  getCurrentUserId,
-  getIsUserCurator,
-  getUsersList,
-} from "../../store/user/users.store";
+import { getMeetingsList } from "@store/meeting/meetings.store";
+import { getCurrentUserId, getIsUserCurator } from "@store/user/users.store";
 // utils
-import getStartWeekDate from "../../utils/date/get-start-week-date";
-import getEndWeekDate from "../../utils/date/get-end-week-date";
-import transformObjectsForSelect from "../../utils/objects/transform-objects-for-select";
-import transformUsersForSelect from "../../utils/objects/transform-users-for-select";
+import getStartWeekDate from "@utils/date/get-start-week-date";
+import getEndWeekDate from "@utils/date/get-end-week-date";
+import { getTasksList } from "@store/task/tasks.store";
+import useSearchTask from "@hooks/task/use-search-task";
 
-const useCalendar = () => {
+const useCalendar = (data) => {
   dayjs.extend(isBetween);
 
   const currentUserId = useSelector(getCurrentUserId());
@@ -26,23 +21,10 @@ const useCalendar = () => {
   const startOfWeek = getStartWeekDate();
   const endOfWeek = getEndWeekDate();
 
-  // transformObjects
-  const objects = useSelector(getObjectsList());
-  const currentUserObjects = objects?.filter(
-    (obj) => obj?.userId === currentUserId
-  );
-  const actualObjects = isCurator ? currentUserObjects : objects;
-  const transformObjects = transformObjectsForSelect(actualObjects);
-
-  // transformUsers
-  const users = useSelector(getUsersList());
-  const usersWithoutCurrentUser = users?.filter(
-    (user) => user?._id !== currentUserId
-  );
-  const transformUsers = transformUsersForSelect(usersWithoutCurrentUser);
-
-  // sortedCurrentWeeklyMeetings
   const meetings = useSelector(getMeetingsList());
+  const tasks = useSelector(getTasksList());
+
+  // сортируем встречи
   const currentWeeklyMeetings = meetings?.filter((meet) =>
     dayjs(meet.date).isBetween(startOfWeek, endOfWeek, null, "[]")
   );
@@ -50,10 +32,53 @@ const useCalendar = () => {
     return orderBy(currentWeeklyMeetings, ["date"], ["asc"]);
   }, [currentWeeklyMeetings]);
 
+  // сортируем задачи
+  const currentUserTasks = tasks?.filter(
+    (task) => task?.userId === currentUserId
+  );
+  const actualTasks = isCurator ? currentUserTasks : tasks;
+  const searchedTasks = useSearchTask(actualTasks, data);
+  const sortedTasks = useMemo(() => {
+    return orderBy(searchedTasks, ["date"], ["desc"]);
+  }, [searchedTasks]);
+
+  // ищем встречи
+  const getMeeting = (day) => {
+    const meeting = meetings?.filter(
+      (meet) =>
+        dayjs(meet?.date).format("YYYY-MM-DD") ===
+        dayjs(day)?.format("YYYY-MM-DD")
+    );
+    const sortedMeetings = orderBy(meeting, ["date"], ["desc"]);
+
+    return sortedMeetings;
+  };
+
+  // ищем задачи
+  const getTask = (day) => {
+    const currentTasks = actualTasks?.filter((task) => {
+      const taskDate = dayjs(task?.date);
+      const targetDate = dayjs(day);
+      return (
+        taskDate.format("YYYY-MM-DD") === targetDate.format("YYYY-MM-DD") &&
+        taskDate.isSame(targetDate, "day")
+      );
+    });
+    const sortedTasks = orderBy(
+      currentTasks,
+      [(task) => dayjs(task.time).format("HH:mm")],
+      ["asc"]
+    );
+
+    return sortedTasks;
+  };
+
   return {
-    transformUsers,
-    transformObjects,
     sortedCurrentWeeklyMeetings,
+    sortedTasks,
+    actualTasks,
+    getMeeting,
+    getTask,
   };
 };
 

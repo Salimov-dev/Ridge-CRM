@@ -7,7 +7,7 @@ import React, { useEffect, useState } from "react";
 import MeetingBaloon from "@components/UI/maps/meeting-baloon";
 import MeetingsFiltersPanel from "@components/UI/filters-panels/meetings-filters-panel";
 import BasicTable from "@components/common/table/basic-table";
-import LayoutTitle from "@components/common/page-titles/layout-title";
+import HeaderLayout from "@components/common/page-headers/header-layout";
 import DialogStyled from "@components/common/dialog/dialog-styled";
 import UpdateObject from "@components/pages/update-object/update-object";
 import ObjectPage from "@components/pages/object-page/object-page";
@@ -67,11 +67,13 @@ const Meetings = React.memo(() => {
   });
 
   const data = watch();
+
   const currentUserId = useSelector(getCurrentUserId());
   const isCurator = useSelector(getIsUserCurator(currentUserId));
 
   const columns = meetingsColumns();
   const meetings = useSelector(getMeetingsList());
+
   const meetingStatuses = useSelector(getMeetingStatusesList());
   const meetingsTypes = useSelector(getMeetingTypesList());
   const selectedMeeting = useSelector(getMeetingById(selectedMeetingBaloon));
@@ -158,17 +160,23 @@ const Meetings = React.memo(() => {
 
   return (
     <>
-      <LayoutTitle title="Встречи" />
+      <HeaderLayout title="Встречи" />
       <Buttons
         initialState={initialState}
         reset={reset}
-        onOpenCreateObjectPage={handleOpenCreateMeetingPage}
+        onOpenCreateMeetingPage={handleOpenCreateMeetingPage}
         isInputEmpty={isInputEmpty}
       />
       <ItemsOnMap
         items={searchedMeetings}
         onClick={setSelectedMeetingBaloon}
-        baloon={<MeetingBaloon meeting={selectedMeeting} />}
+        baloon={
+          <MeetingBaloon
+            meeting={selectedMeeting}
+            onOpenObjectPage={handleOpenObjectPage}
+            onOpenUpdateMeetingPage={handleOpenUpdateMeetingPage}
+          />
+        }
         isLoading={isLoading}
         target={target}
         targetCluster={targetCluster}

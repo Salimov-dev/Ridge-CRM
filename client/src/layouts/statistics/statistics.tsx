@@ -4,7 +4,7 @@ import React, { useEffect } from "react";
 import { Box, styled } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 // components
-import LayoutTitle from "../../components/common/page-titles/layout-title";
+import HeaderLayout from "../../components/common/page-headers/header-layout";
 import BasicTable from "../../components/common/table/basic-table";
 import PieStyled from "../../components/common/chart/pie";
 import ChartLine from "../../components/common/chart/chart-line";
@@ -113,7 +113,7 @@ const Statictics = React.memo(() => {
 
   return (
     <Component>
-      <LayoutTitle title="Статистика" />
+      <HeaderLayout title="Статистика" />
       {isCurator && (
         <StaticticsFiltersPanel
           data={data}

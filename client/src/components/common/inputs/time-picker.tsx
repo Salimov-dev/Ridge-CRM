@@ -3,7 +3,7 @@ import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { TimePicker } from "@mui/x-date-pickers/TimePicker";
-import Errors from "./errors";
+import Errors from "./components/errors";
 import { useTheme } from "@emotion/react";
 import { tokens } from "@theme/theme";
 

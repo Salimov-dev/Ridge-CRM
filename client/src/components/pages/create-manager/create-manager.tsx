@@ -5,8 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { yupResolver } from "@hookform/resolvers/yup";
 import dayjs from "dayjs";
 // components
-import ManagerForm from "../../common/forms/manager-form/manager-form";
-import TitleWithCloseButton from "../../common/page-titles/header-with-close-button";
+import ManagerForm from "../../common/forms/manager/manager.form";
+import TitleWithCloseButton from "../../common/page-headers/header-with-close-button";
 // store
 import { getUserStatusesList } from "../../../store/user/user-statuses.store";
 import {

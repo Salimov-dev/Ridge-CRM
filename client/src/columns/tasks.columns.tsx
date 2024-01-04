@@ -6,8 +6,8 @@ import { Box, Typography } from "@mui/material";
 // components
 import EmptyTd from "@components/common/columns/empty-td";
 import { AlignCenter } from "@components/common/columns/styled";
-import UserNameWithAvatar from "@components/common/table/helpers/user-name-with-avatar";
-import ButtonStyled from "@components/common/buttons/button-styled";
+import UserNameWithAvatar from "@components/common/table/components/user-name-with-avatar";
+import ButtonStyled from "@components/common/buttons/button-styled.button";
 import DoneStatusIcon from "@components/common/columns/done-status-icon";
 // store
 import { getObjectById } from "@store/object/objects.store";
@@ -82,11 +82,13 @@ export const tasksColumns = (
             <>
               {fullAddress}
               {!isDialogPage ? (
-                <ButtonStyled
-                  title="Открыть"
-                  style="OPEN_OBJECT"
-                  // onClick={onOpenCreateMyTask}
-                />
+                <AlignCenter>
+                  <ButtonStyled
+                    title="Открыть"
+                    style="OPEN_OBJECT"
+                    // onClick={onOpenCreateMyTask}
+                  />
+                </AlignCenter>
               ) : null}
             </>
           ) : (

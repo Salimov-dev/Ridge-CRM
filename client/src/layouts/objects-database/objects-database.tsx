@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import { Box, Typography, styled } from "@mui/material";
 // components
 import Loader from "../../components/common/loader/loader";
-import LayoutTitle from "../../components/common/page-titles/layout-title";
+import HeaderLayout from "../../components/common/page-headers/header-layout";
 import BasicTable from "../../components/common/table/basic-table";
 import ObjectCreatePageDialog from "../../components/UI/dialogs/objects/object-create-page-dialog";
 import ObjectPageDialog from "../../components/UI/dialogs/object-page-dialog/object-page-dialog";
@@ -97,7 +97,7 @@ const ObjectsDatabase = React.memo(() => {
 
   return (
     <Box>
-      <LayoutTitle title="Проработка базы объектов" />
+      <HeaderLayout title="Проработка базы объектов" />
       <ObjectsDatabaseFiltersPanel
         data={data}
         objects={sortedObjects}

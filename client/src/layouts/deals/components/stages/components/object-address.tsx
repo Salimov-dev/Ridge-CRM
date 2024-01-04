@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import { Box, Typography, styled } from "@mui/material";
-import OpenPageObjectIconButton from "../../../../../components/common/buttons/icons buttons/open-page-object-icon";
+import OpenPageObjectIconButton from "../../../../../components/common/buttons/icons buttons/open-page-object.button-icon";
 import { getObjectAddressById } from "../../../../../store/object/objects.store";
 
 const Component = styled(Box)`

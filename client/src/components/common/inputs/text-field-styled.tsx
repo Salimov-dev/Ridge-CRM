@@ -2,7 +2,7 @@ import { useTheme } from "@emotion/react";
 import { Box, TextField, styled, FormHelperText } from "@mui/material";
 import { tokens } from "@theme/theme";
 import { makeDigitSeparator } from "@utils/data/make-digit-separator";
-import Errors from "./errors";
+import Errors from "./components/errors";
 
 const StyledTextField = styled(TextField)(({ colors }) => ({
   minWidth: "30px",

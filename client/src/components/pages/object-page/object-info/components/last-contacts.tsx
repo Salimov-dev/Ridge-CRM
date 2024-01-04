@@ -7,7 +7,7 @@ import {
   getLastContactsLoadingStatus,
 } from "../../../../../store/last-contact/last-contact.store";
 import { lastContactColumns } from "../../../../../columns/last-contact.columns";
-import ButtonStyled from "@components/common/buttons/button-styled";
+import ButtonStyled from "@components/common/buttons/button-styled.button";
 import { useTheme } from "@emotion/react";
 import { tokens } from "@theme/theme";
 

@@ -10,9 +10,9 @@ import { tokens } from "@theme/theme";
 import { Box } from "@mui/material";
 // components
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
-import ObjectForm from "../../common/forms/object-form/object-form";
-import ButtonStyled from "@components/common/buttons/button-styled";
-import HeaderWithBackButton from "../../common/page-titles/header-with-back-button";
+import ObjectForm from "../../common/forms/object-form/object.form";
+import ButtonStyled from "@components/common/buttons/button-styled.button";
+import HeaderWithBackButton from "../../common/page-headers/header-with-back-button";
 // utils
 import { capitalizeFirstLetter } from "../../../utils/data/capitalize-first-letter";
 // schemas
@@ -22,7 +22,7 @@ import {
   getObjectById,
   updateObject,
 } from "../../../store/object/objects.store";
-import SuccessCancelFormButtons from "@components/common/forms/footer-buttons/success-cancel-form-buttons";
+import SuccessCancelFormButtons from "@components/common/forms/success-cancel-form-buttons/success-cancel-form-buttons";
 
 const ButtonsContainer = styled(Box)`
   width: 100%;

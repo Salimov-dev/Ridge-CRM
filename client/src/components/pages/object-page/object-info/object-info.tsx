@@ -6,13 +6,12 @@ import Dialogs from "./components/dialogs";
 import ObjectsParams from "./components/object-params";
 import ObjectTasks from "./components/object-tasks";
 import ObjectMeetings from "./components/object-meetings";
-import Loader from "@common/loader/loader";
 import LastContacts from "./components/last-contacts";
 // columns
 import { tasksColumns } from "@columns/tasks.columns";
+import { meetingsColumns } from "@columns/meetings.columns";
 // hooks
 import useObjectInfo from "./hooks/use-object-info.hook";
-import { meetingsColumns } from "@columns/meetings.columns";
 
 const Component = styled(Box)`
   display: flex;
@@ -49,7 +48,7 @@ const ObjectInfo = ({ object, objectId, isLoading, isAuthorEntity = true }) => {
 
   const isDialogPage = true;
 
-  return !isLoading ? (
+  return (
     <Component>
       <ObjectsParams object={object} isLoading={isLoading} />
       <ObjectTasks
@@ -80,8 +79,6 @@ const ObjectInfo = ({ object, objectId, isLoading, isAuthorEntity = true }) => {
       />
       <Dialogs state={state} objectId={objectId} setState={setState} />
     </Component>
-  ) : (
-    <Loader />
   );
 };
 

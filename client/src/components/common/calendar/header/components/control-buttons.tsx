@@ -1,14 +1,11 @@
 import dayjs from "dayjs";
 import { Box, Button } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  getMonthIndexState,
-  setMonthIndex,
-} from "../../../../../store/month-index.store";
+import { getMonthIndexState, setMonthIndex } from "@store/month-index.store";
 
-const ControlButtons = ({isLoading}) => {
+const ControlButtons = ({ isLoading }) => {
   const monthIndex = useSelector(getMonthIndexState());
 
   const dispatch = useDispatch();

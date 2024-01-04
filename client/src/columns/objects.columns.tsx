@@ -10,7 +10,7 @@ import { FormatDate } from "../utils/date/format-date";
 import Flags from "../components/common/columns/flags";
 import { AlignCenter } from "../components/common/columns/styled";
 import EmptyTd from "../components/common/columns/empty-td";
-import UserNameWithAvatar from "../components/common/table/helpers/user-name-with-avatar";
+import UserNameWithAvatar from "../components/common/table/components/user-name-with-avatar";
 import {
   FormatMetro,
   FormatObjectStatus,
@@ -31,7 +31,7 @@ import { getDistrictName } from "../store/object-params/districts.store";
 import { getUserDataById } from "../store/user/users.store";
 import React, { HTMLProps } from "react";
 import useGetUserAvatar from "../hooks/user/use-get-user-avatar";
-import ButtonStyled from "@components/common/buttons/button-styled";
+import ButtonStyled from "@components/common/buttons/button-styled.button";
 
 function IndeterminateCheckbox({
   indeterminate,
@@ -58,7 +58,7 @@ function IndeterminateCheckbox({
 
 export const objectsColumns = (handleOpenObjectPage, isCurator) => {
   let columns = [];
-  
+
   const selectColumn = {
     id: "select",
     header: ({ table }) => (
@@ -338,13 +338,15 @@ export const objectsColumns = (handleOpenObjectPage, isCurator) => {
           const objectId = info.getValue();
 
           return (
-            <ButtonStyled
-              title="Открыть"
-              style="OBJECT"
-              size="small"
-              variant="contained"
-              onClick={() => handleOpenObjectPage(objectId)}
-            />
+            <AlignCenter>
+              <ButtonStyled
+                title="Открыть"
+                style="OBJECT"
+                size="small"
+                variant="contained"
+                onClick={() => handleOpenObjectPage(objectId)}
+              />
+            </AlignCenter>
           );
         },
       },

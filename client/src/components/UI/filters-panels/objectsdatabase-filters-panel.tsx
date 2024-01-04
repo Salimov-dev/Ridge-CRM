@@ -2,7 +2,7 @@ import React from "react";
 // components
 import { FieldsContainer, Form } from "../../common/forms/styled/styled";
 import MultiSelectField from "../../common/inputs/multi-select-field";
-import ClearFilterButton from "../../common/buttons/clear-filter-button";
+import ClearFilterButton from "../../common/buttons/clear-filter.button";
 // utils
 import { getActualUsersList } from "../../../utils/actual-items/get-actual-users-list";
 import { getActualStatusesList } from "../../../utils/actual-items/get-actual-statuses-list";

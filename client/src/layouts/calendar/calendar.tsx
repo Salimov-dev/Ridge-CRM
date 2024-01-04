@@ -1,32 +1,24 @@
 // libraries
-import dayjs from "dayjs";
-import { orderBy } from "lodash";
 import { useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 // components
-import Header from "../../components/common/calendar/header/header";
-import TasksTable from "../../components/common/tasks/tasks-table";
-import Dialogs from "./components/dialogs/dialogs";
-import CalendarBody from "../../components/common/calendar/calendar-body/calendar-body";
-import LayoutTitle from "../../components/common/page-titles/layout-title";
-import CurrentWeeklyMeetings from "./components/current-weekly-meetings/current-weekly-meetings";
+import CalendarHeader from "@components/common/calendar/header/calendar-header";
+import TasksTable from "./components/meetings/tasks-table";
+import CalendarBody from "@components/common/calendar/calendar-body/calendar-body";
+import HeaderLayout from "@components/common/page-headers/header-layout";
+import PageDialogs from "@components/common/dialog/page-dialogs";
+import CurrentWeeklyMeetings from "./components/meetings/current-weekly-meetings";
 // columns
-import { tasksColumns } from "../../columns/tasks.columns";
-import { meetingsColumns } from "../../columns/meetings.columns";
+import { tasksColumns } from "@columns/tasks.columns";
+import { meetingsColumns } from "@columns/meetings.columns";
 // utils
-import getMonth from "../../utils/calendar/get-month";
+import getMonth from "@utils/calendar/get-month";
 // store
-import { getTasksList } from "../../store/task/tasks.store";
-import { getMonthIndexState } from "../../store/month-index.store";
-import { getMeetingsList } from "../../store/meeting/meetings.store";
-import {
-  getCurrentUserId,
-  getIsUserCurator,
-} from "../../store/user/users.store";
+import { getMonthIndexState } from "@store/month-index.store";
+import { getCurrentUserId, getIsUserCurator } from "@store/user/users.store";
 // hooks
-import useCalendar from "../../hooks/calendar/use-calendar";
-import useSearchTask from "../../hooks/task/use-search-task";
+import useCalendar from "@hooks/calendar/use-calendar";
 
 const initialState = {
   task: "",
@@ -35,8 +27,41 @@ const initialState = {
 };
 
 const Calendar = React.memo(() => {
-  const [currentMonth, setCurrentMonth] = useState(getMonth());
-  const [dateCreate, setDateCreate] = useState(null);
+  const [state, setState] = useState({
+    objectPage: false,
+    updatePage: false,
+    objectId: null,
+    createMyTaskPage: false,
+    updateMyTaskPage: false,
+    createManagerTaskPage: false,
+    updateManagerTaskPage: false,
+    createLastContactPage: false,
+    updateLastContactPage: false,
+    createMeetingPage: false,
+    updateMeetingPage: false,
+    taskId: "",
+    lastContactId: "",
+    meetingId: "",
+    currentMonth: getMonth(),
+    dateCreate: null,
+  });
+  console.log("state", state);
+
+  // обновление стейта при изменении даты создания сущности из календаря
+  const handleChangeDateCreate = (date) => {
+    setState((prevState) => ({
+      ...prevState,
+      dateCreate: date,
+    }));
+  };
+
+  // обновление стейта при изменении даты текущего месяца календаря
+  const handleChangeCurrentMonth = (monthIndex) => {
+    setState((prevState) => ({
+      ...prevState,
+      currentMonth: getMonth(monthIndex),
+    }));
+  };
 
   const localStorageState = JSON.parse(
     localStorage.getItem("search-tasks-data")
@@ -50,56 +75,15 @@ const Calendar = React.memo(() => {
   });
 
   const data = watch();
-
   const monthIndex = useSelector(getMonthIndexState());
   const currentUserId = useSelector(getCurrentUserId());
   const isCurator = useSelector(getIsUserCurator(currentUserId));
-  const meetings = useSelector(getMeetingsList());
-  const tasks = useSelector(getTasksList());
 
-  const { sortedCurrentWeeklyMeetings, transformUsers, transformObjects } =
-    useCalendar();
-
-  const currentUserTasks = tasks?.filter(
-    (task) => task?.userId === currentUserId
-  );
-  const actualTasks = isCurator ? currentUserTasks : tasks;
-  const searchedTasks = useSearchTask(actualTasks, data);
-  const sortedTasks = useMemo(() => {
-    return orderBy(searchedTasks, ["date"], ["desc"]);
-  }, [searchedTasks]);
-
-  const getMeeting = (day) => {
-    const meeting = meetings?.filter(
-      (meet) =>
-        dayjs(meet?.date).format("YYYY-MM-DD") ===
-        dayjs(day)?.format("YYYY-MM-DD")
-    );
-    const sortedMeetings = orderBy(meeting, ["date"], ["desc"]);
-
-    return sortedMeetings;
-  };
-
-  const getTask = (day) => {
-    const currentTasks = actualTasks?.filter((task) => {
-      const taskDate = dayjs(task?.date);
-      const targetDate = dayjs(day);
-      return (
-        taskDate.format("YYYY-MM-DD") === targetDate.format("YYYY-MM-DD") &&
-        taskDate.isSame(targetDate, "day")
-      );
-    });
-    const sortedTasks = orderBy(
-      currentTasks,
-      [(task) => dayjs(task.time).format("HH:mm")],
-      ["asc"]
-    );
-
-    return sortedTasks;
-  };
+  const { sortedCurrentWeeklyMeetings, sortedTasks, getMeeting, getTask } =
+    useCalendar(data);
 
   useEffect(() => {
-    setCurrentMonth(getMonth(monthIndex));
+    handleChangeCurrentMonth(monthIndex);
   }, [monthIndex]);
 
   useEffect(() => {
@@ -112,35 +96,28 @@ const Calendar = React.memo(() => {
 
   return (
     <>
-      <LayoutTitle title="Календарь" />
-      <Header />
+      <HeaderLayout title="Календарь" />
+      <CalendarHeader setState={setState} isCurator={isCurator} />
       <CalendarBody
         tasks={getTask}
         meetings={getMeeting}
-        currentMonth={currentMonth}
-        setDateCreate={setDateCreate}
+        currentMonth={state.currentMonth}
+        setDateCreate={handleChangeDateCreate}
         background="darkOrange"
+        setState={setState}
       />
       <TasksTable
         register={register}
         data={data}
         tasks={sortedTasks}
-        columns={tasksColumns}
+        columns={tasksColumns()}
         setValue={setValue}
       />
       <CurrentWeeklyMeetings
         meetings={sortedCurrentWeeklyMeetings}
-        columns={meetingsColumns}
+        columns={meetingsColumns()}
       />
-
-      <Dialogs
-        tasks={getTask}
-        meetings={getMeeting}
-        users={transformUsers}
-        objects={transformObjects}
-        dateCreate={dateCreate}
-        setDateCreate={setDateCreate}
-      />
+      <PageDialogs state={state} setState={setState} />
     </>
   );
 });

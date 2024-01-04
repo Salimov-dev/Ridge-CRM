@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useDispatch, useSelector } from "react-redux";
 // components
-import ManagerPresentationForm from "../../common/forms/presentation/manager-presentation-form";
+import ManagerPresentationForm from "../../common/forms/presentation-manager.form";
 // schema
 import { presentationSchema } from "../../../schemas/presentation-schema";
 // utils
@@ -27,11 +27,11 @@ import {
   getOpenObjectPageId,
   getOpenObjectPageOpenState,
 } from "../../../store/object/open-object-page.store";
-import SuccessCancelFormButtons from "../../common/forms/footer-buttons/success-cancel-form-buttons";
+import SuccessCancelFormButtons from "../../common/forms/success-cancel-form-buttons/success-cancel-form-buttons";
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
 import { useTheme } from "@emotion/react";
 import { tokens } from "@theme/theme";
-import HeaderWithCloseButton from "../../common/page-titles/header-with-close-button";
+import HeaderWithCloseButton from "../../common/page-headers/header-with-close-button";
 
 const initialState = {
   objectId: "",

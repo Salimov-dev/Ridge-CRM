@@ -6,20 +6,20 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useDispatch, useSelector } from "react-redux";
 // components
-import TitleWithCloseButton from "../../common/page-titles/header-with-close-button";
-import LastContactForm from "../../common/forms/last-contact-form/last-contact-form";
+import TitleWithCloseButton from "../../common/page-headers/header-with-close-button";
+import LastContactForm from "../../common/forms/last-contact.form";
 // store
 import { createLastContact } from "../../../store/last-contact/last-contact.store";
 // schema
 import { lastContactSchema } from "../../../schemas/last-contact-schema";
 // utils
 import { capitalizeFirstLetter } from "../../../utils/data/capitalize-first-letter";
-import SuccessCancelFormButtons from "../../common/forms/footer-buttons/success-cancel-form-buttons";
+import SuccessCancelFormButtons from "../../common/forms/success-cancel-form-buttons/success-cancel-form-buttons";
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
 import { useTheme } from "@emotion/react";
 import { tokens } from "@theme/theme";
-import HeaderWithBackButton from "@components/common/page-titles/header-with-back-button";
-import HeaderWithCloseButton from "../../common/page-titles/header-with-close-button";
+import HeaderWithBackButton from "@components/common/page-headers/header-with-back-button";
+import HeaderWithCloseButton from "../../common/page-headers/header-with-close-button";
 
 const initialState = {
   date: dayjs(),

@@ -1,6 +1,6 @@
 import { Box, Typography, styled } from "@mui/material";
 import { FormatDate } from "../../../../utils/date/format-date";
-import CloseButtonIconButton from "../../../common/buttons/icons buttons/close-button-icon";
+import CloseButtonIconButton from "../../../common/buttons/icons buttons/close.button-icon";
 
 const Component = styled(Box)`
   display: flex;

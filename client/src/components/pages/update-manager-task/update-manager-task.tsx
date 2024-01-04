@@ -9,15 +9,15 @@ import { tokens } from "@theme/theme";
 import { useDispatch, useSelector } from "react-redux";
 // components
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
-import SuccessCancelFormButtons from "@common/forms/footer-buttons/success-cancel-form-buttons";
-import MyTaskForm from "@components/common/forms/my-task-form/my-task-form";
-import TitleWithCloseButton from "@common/page-titles/header-with-close-button";
-import ConfirmRemoveDialog from "@common/dialog/confirm-remove-dialog";
+import SuccessCancelFormButtons from "@components/common/forms/success-cancel-form-buttons/success-cancel-form-buttons";
+import MyTaskForm from "@components/common/forms/my-task.form";
+import TitleWithCloseButton from "@components/common/page-headers/header-with-close-button";
+import DialogConfirm from "@components/common/dialog/dialog-confirm";
 // schema
 import { taskSchema } from "@schemas/task-shema";
 // store
 import { getObjectsList } from "@store/object/objects.store";
-import { getTaskById, updateTask } from "@store/task/tasks.store";
+import { getTaskById, removeTask, updateTask } from "@store/task/tasks.store";
 
 const UpdateManagerTask = React.memo(({ title, onClose, taskId, users }) => {
   const dispatch = useDispatch();
@@ -117,17 +117,13 @@ const UpdateManagerTask = React.memo(({ title, onClose, taskId, users }) => {
         onRemove={handleClickOpen}
         isUpdate={true}
       />
-      <ConfirmRemoveDialog
-        removeId={taskId}
+      <DialogConfirm
+        question="Вы уверены, что хотите удалить задачу менеджеру?"
         open={open}
+        onSuccessClick={() => handleRemoveTask(watchManagerId)}
         onClose={handleClose}
-        onRemove={handleRemoveTask}
       />
-      <LoaderFullWindow
-        color={colors.grey[600]}
-        size={75}
-        isLoading={isLoading}
-      />
+      <LoaderFullWindow isLoading={isLoading} />
     </>
   );
 });

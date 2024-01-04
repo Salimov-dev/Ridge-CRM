@@ -2,7 +2,7 @@ import dayjs from "dayjs";
 import { Box, styled } from "@mui/material";
 // components
 import DayContent from "./components/day-content/day-content";
-import ActionsIcons from "./components/day-content/components/actions-icons/actions-icons";
+import ActionsIcons from "../../../../../../../../layouts/calendar/components/meetings/actions-icons";
 import Date from "./components/date/date";
 // utils
 import { chechIsCurrentDay } from "../../../../../../../../utils/date/check-is-current-day";
@@ -25,6 +25,7 @@ const Day = ({
   onDragOver,
   draggableDay,
   setDraggableDay,
+  setState,
 }) => {
   const isCurrentDay = chechIsCurrentDay(day);
   const isFutureDay = chechIsFutureDay(day);
@@ -74,6 +75,7 @@ const Day = ({
       />
       <ActionsIcons
         day={day}
+        setState={setState}
         setDateCreate={setDateCreate}
         isCurrentDay={isCurrentDay}
         isFutureDay={isFutureDay}

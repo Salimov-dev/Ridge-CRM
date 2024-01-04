@@ -6,28 +6,28 @@ import { useDispatch, useSelector } from "react-redux";
 import { yupResolver } from "@hookform/resolvers/yup";
 // components
 import Header from "./components/header";
-import ConfirmRemoveDialog from "../../common/dialog/confirm-remove-dialog";
-import ManagerPresentationForm from "../../common/forms/presentation/manager-presentation-form";
-import CuratorPresentationForm from "../../common/forms/presentation/curator-presentation-form";
+import ManagerPresentationForm from "@components/common/forms/presentation-manager.form";
+import CuratorPresentationForm from "@components/common/forms/presentation-curator.form";
+import LoaderFullWindow from "@components/common/loader/loader-full-window";
+import SuccessCancelFormButtons from "@components/common/forms/success-cancel-form-buttons/success-cancel-form-buttons";
+import DialogConfirm from "@components/common/dialog/dialog-confirm";
 // schema
-import { presentationSchema } from "../../../schemas/presentation-schema";
+import { presentationSchema } from "@schemas/presentation-schema";
 // utils
-import transformObjectsForSelect from "../../../utils/objects/transform-objects-for-select";
+import transformObjectsForSelect from "@utils/objects/transform-objects-for-select";
 // store
-import { getUpdatePresentationId } from "../../../store/presentation/update-presentation.store";
-import { getObjectsList } from "../../../store/object/objects.store";
+import { getUpdatePresentationId } from "@store/presentation/update-presentation.store";
+import { getObjectsList } from "@store/object/objects.store";
 import {
   getCurrentUserId,
   getIsUserAuthorThisEntity,
   getIsUserCurator,
-} from "../../../store/user/users.store";
+} from "@store/user/users.store";
 import {
   getPresentationById,
   removePresentation,
   updatePresentation,
-} from "../../../store/presentation/presentations.store";
-import LoaderFullWindow from "@components/common/loader/loader-full-window";
-import SuccessCancelFormButtons from "../../common/forms/footer-buttons/success-cancel-form-buttons";
+} from "@store/presentation/presentations.store";
 
 const UpdatePresentation = React.memo(({ onClose }) => {
   const dispatch = useDispatch();
@@ -42,7 +42,7 @@ const UpdatePresentation = React.memo(({ onClose }) => {
     register,
     watch,
     handleSubmit,
-    formState: { errors, isValid },
+    formState: { errors },
     setValue,
   } = useForm({
     defaultValues: presentation,
@@ -51,8 +51,6 @@ const UpdatePresentation = React.memo(({ onClose }) => {
   });
 
   const data = watch();
-  const isFullValid = isValid;
-  const isEditMode = presentationId ? true : false;
 
   const objects = useSelector(getObjectsList());
   const currentUserId = useSelector(getCurrentUserId());
@@ -88,7 +86,15 @@ const UpdatePresentation = React.memo(({ onClose }) => {
   };
 
   const handleRemovePresentation = (presentationId) => {
-    dispatch<any>(removePresentation(presentationId)).then(onClose());
+    setIsLoading(true);
+    dispatch<any>(removePresentation(presentationId))
+      .then(onClose())
+      .catch((error) => {
+        toast.error(error);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
 
   const handleClickOpen = () => {
@@ -127,11 +133,11 @@ const UpdatePresentation = React.memo(({ onClose }) => {
         onRemove={handleClickOpen}
         isUpdate={true}
       />
-      <ConfirmRemoveDialog
-        removeId={presentationId}
+      <DialogConfirm
+        question="Вы уверены, что хотите удалить презентацию?"
         open={open}
+        onSuccessClick={() => handleRemovePresentation(presentationId)}
         onClose={handleClose}
-        onRemove={handleRemovePresentation}
       />
       <LoaderFullWindow isLoading={isLoading} />
     </>

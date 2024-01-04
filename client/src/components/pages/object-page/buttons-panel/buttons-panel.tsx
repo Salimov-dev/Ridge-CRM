@@ -1,7 +1,7 @@
 import { useDispatch } from "react-redux";
 import { Box, styled } from "@mui/material";
 // components
-import ButtonStyled from "@components/common/buttons/button-styled";
+import ButtonStyled from "@components/common/buttons/button-styled.button";
 // store
 import { setCreatePresentationOpenState } from "@store/presentation/create-presentation.store";
 

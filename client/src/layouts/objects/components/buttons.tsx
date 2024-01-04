@@ -1,5 +1,5 @@
-import ButtonStyled from "@components/common/buttons/button-styled";
-import ClearFilterButton from "@components/common/buttons/clear-filter-button";
+import ButtonStyled from "@components/common/buttons/button-styled.button";
+import ClearFilterButton from "@components/common/buttons/clear-filter.button";
 import styled from "@emotion/styled";
 import { Box } from "@mui/material";
 

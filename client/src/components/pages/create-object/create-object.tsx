@@ -7,12 +7,12 @@ import { useTheme } from "@emotion/react";
 import { tokens } from "@theme/theme";
 import { yupResolver } from "@hookform/resolvers/yup";
 // components
-import ObjectForm from "@common/forms/object-form/object-form";
+import ObjectForm from "@components/common/forms/object-form/object.form";
 import FindObjectOnMap from "@common/find-object-on-map/find-object-on-map";
 import AlertObjectInDatabase from "./components/alert-object-in-database";
-import HeaderWithCloseButton from "@components/common/page-titles/header-with-close-button";
+import HeaderWithCloseButton from "@components/common/page-headers/header-with-close-button";
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
-import SuccessCancelFormButtons from "@components/common/forms/footer-buttons/success-cancel-form-buttons";
+import SuccessCancelFormButtons from "@components/common/forms/success-cancel-form-buttons/success-cancel-form-buttons";
 // store
 import { createObject, getObjectsList } from "@store/object/objects.store";
 // hooks

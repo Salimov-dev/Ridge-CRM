@@ -1,30 +1,21 @@
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
+import { useSelector } from "react-redux";
 import { Box, Divider, Typography, styled } from "@mui/material";
+// components
+import Attribute from "@common/map/baloon/attribute";
+import DividerStyled from "@common/divider/divider-styled";
+import ButtonStyled from "@components/common/buttons/button-styled.button";
 // utils
-import { FormatDate } from "../../../utils/date/format-date";
+import { FormatDate } from "@utils/date/format-date";
 // store
+import { getObjectById } from "@store/object/objects.store";
+import { getPresentationById } from "@store/presentation/presentations.store";
+import { getPresentationStatusNameById } from "@store/presentation/presentation-status.store";
 import {
   getCurrentUserId,
   getIsUserCurator,
   getUserNameById,
-} from "../../../store/user/users.store";
-import { getObjectById } from "../../../store/object/objects.store";
-// components
-import Attribute from "../../common/map/baloon/attribute";
-import DividerStyled from "../../common/divider/divider-styled";
-import MultiColorOutlinedButton from "../../common/buttons/multi-color-outlined-button";
-// store
-import {
-  setOpenObjectPageId,
-  setOpenObjectPageOpenState,
-} from "../../../store/object/open-object-page.store";
-import { getPresentationById } from "../../../store/presentation/presentations.store";
-import { getPresentationStatusNameById } from "../../../store/presentation/presentation-status.store";
-import {
-  setUpdatePresentationId,
-  setUpdatePresentationOpenState,
-} from "../../../store/presentation/update-presentation.store";
-import React from "react";
+} from "@store/user/users.store";
 
 const BaloonContainer = styled(Box)`
   width: 100%;
@@ -36,77 +27,73 @@ const BaloonContainer = styled(Box)`
   padding: 10px 0;
 `;
 
-const PresentationBaloon = React.memo(({ presentationId }) => {
-  const dispatch = useDispatch();
-  const presentation = useSelector(getPresentationById(presentationId));
+const PresentationBaloon = React.memo(
+  ({ presentationId, onOpenObjectPage, onOpenUpdatePresentationPage }) => {
+    const presentation = useSelector(getPresentationById(presentationId));
 
-  const object = useSelector(getObjectById(presentation?.objectId));
-  const objectId = presentation?.objectId;
-  const objectAddress = `${object?.location.city}, ${object?.location.address}`;
+    const object = useSelector(getObjectById(presentation?.objectId));
+    const objectId = presentation?.objectId;
+    const objectAddress = `${object?.location.city}, ${object?.location.address}`;
 
-  const currentUserId = useSelector(getCurrentUserId());
-  const isCurator = useSelector(getIsUserCurator(currentUserId));
-  const manager = useSelector(getUserNameById(presentation?.userId));
+    const currentUserId = useSelector(getCurrentUserId());
+    const isCurator = useSelector(getIsUserCurator(currentUserId));
+    const manager = useSelector(getUserNameById(presentation?.userId));
 
-  const status = useSelector(
-    getPresentationStatusNameById(presentation?.status)
-  );
+    const status = useSelector(
+      getPresentationStatusNameById(presentation?.status)
+    );
 
-  const handleOpenObjectPage = () => {
-    dispatch<any>(setOpenObjectPageId(objectId));
-    dispatch<any>(setOpenObjectPageOpenState(true));
-  };
+    return (
+      <BaloonContainer>
+        <Typography>
+          <b>Объект презентации:</b>
+        </Typography>
+        <Attribute gap="0" subTitle={objectAddress} />
+        <Attribute title="Статус:" subTitle={status} />
 
-  const handleOpenUpdatePresentation = () => {
-    dispatch<any>(setUpdatePresentationId(presentationId));
-    dispatch<any>(setUpdatePresentationOpenState(true));
-  };
+        <DividerStyled />
+        <Typography>
+          <b>Дата добавления:</b> {FormatDate(presentation?.created_at)}
+        </Typography>
+        {isCurator && <Attribute title="Менеджер:" subTitle={manager} />}
+        {presentation?.curatorComment && (
+          <>
+            <Typography>
+              <b>Комментарий Куратора:</b>
+            </Typography>
+            <Attribute subTitle={presentation?.curatorComment} gap="0" />
+          </>
+        )}
 
-  return (
-    <BaloonContainer>
-      <Typography>
-        <b>Объект презентации:</b>
-      </Typography>
-      <Attribute gap="0" subTitle={objectAddress} />
-      <Attribute title="Статус:" subTitle={status} />
-
-      <DividerStyled />
-      <Typography>
-        <b>Дата добавления:</b> {FormatDate(presentation?.created_at)}
-      </Typography>
-      {isCurator && <Attribute title="Менеджер:" subTitle={manager} />}
-      {presentation?.curatorComment && (
-        <>
-          <Typography>
-            <b>Комментарий Куратора:</b>
-          </Typography>
-          <Attribute subTitle={presentation?.curatorComment} gap="0" />
-        </>
-      )}
-
-      {objectId ? (
-        <>
-          <Divider />
-          <Box sx={{ width: "100%", display: "flex", gap: "4px" }}>
-            <MultiColorOutlinedButton
-              text="Править презентацию"
-              fontColor="black"
-              borderColor="SaddleBrown"
-              backgroundHover="Chocolate"
-              onClick={handleOpenUpdatePresentation}
-            />
-            <MultiColorOutlinedButton
-              text="Страница объекта"
-              fontColor="black"
-              borderColor="SlateGrey"
-              backgroundHover="ForestGreen"
-              onClick={handleOpenObjectPage}
-            />
-          </Box>
-        </>
-      ) : null}
-    </BaloonContainer>
-  );
-});
+        {objectId ? (
+          <>
+            <Divider />
+            <Box
+              sx={{
+                width: "100%",
+                display: "flex",
+                justifyContent: "center",
+                gap: "4px",
+              }}
+            >
+              <ButtonStyled
+                title="Страница объекта"
+                style="OBJECT"
+                size="small"
+                onClick={() => onOpenObjectPage(objectId)}
+              />
+              <ButtonStyled
+                title="Править презентацию"
+                style="PRESENTATION"
+                size="small"
+                onClick={() => onOpenUpdatePresentationPage(presentationId)}
+              />
+            </Box>
+          </>
+        ) : null}
+      </BaloonContainer>
+    );
+  }
+);
 
 export default PresentationBaloon;

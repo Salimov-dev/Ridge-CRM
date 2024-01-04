@@ -10,13 +10,11 @@ import { objectsColumns } from "@columns/objects.columns";
 import ObjectBaloon from "@components/UI/maps/object-baloon";
 import ObjectsFiltersPanel from "@components/UI/filters-panels/objects-filters-panel";
 import BasicTable from "@components/common/table/basic-table";
-import LayoutTitle from "@components/common/page-titles/layout-title";
+import HeaderLayout from "@components/common/page-headers/header-layout";
 import ItemsOnMap from "@components/common/map/items-on-map/items-on-map";
-import ExportToExelButton from "@components/common/buttons/export-to-excel-button";
-import Dialogs from "./components/dialogs";
+import ExportToExelButton from "@components/common/buttons/export-to-excel.button";
 import Buttons from "./components/buttons";
 // hooks
-import useObject from "./hooks/use-objects.hook";
 import useSearchObject from "@hooks/object/use-search-object";
 import useModifyObjectToExportExel from "@hooks/object/use-modify-object-to-export-exel";
 // store
@@ -27,6 +25,8 @@ import {
   getObjectsList,
   getObjectsLoadingStatus,
 } from "@store/object/objects.store";
+import PageDialogs from "../../components/common/dialog/page-dialogs";
+import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
 
 const initialState = {
   address: "",
@@ -102,7 +102,7 @@ const Objects = React.memo(() => {
     handleOpenCreateObjectPage,
     handleOpenObjectPage,
     handleOpenTransferObjectPage,
-  } = useObject(setState);
+  } = useDialogHandlers(setState);
 
   useEffect(() => {
     localStorage.setItem("search-objects-data", JSON.stringify(data));
@@ -138,7 +138,7 @@ const Objects = React.memo(() => {
 
   return (
     <>
-      <LayoutTitle title="Таблица объектов" />
+      <HeaderLayout title="Таблица объектов" />
       <Buttons
         initialState={initialState}
         reset={reset}
@@ -150,8 +150,14 @@ const Objects = React.memo(() => {
       <ItemsOnMap
         items={searchedObjects}
         onClick={setSelectedBaloon}
-        baloon={<ObjectBaloon object={selectedObject} />}
         isLoading={isLoading}
+        baloon={
+          <ObjectBaloon
+            object={selectedObject}
+            onOpenObjectPage={handleOpenObjectPage}
+            isLoading={isLoading}
+          />
+        }
       />
       <ObjectsFiltersPanel
         data={data}
@@ -175,7 +181,7 @@ const Objects = React.memo(() => {
           data={modifiedObjectsData}
         />
       )}
-      <Dialogs
+      <PageDialogs
         state={state}
         setState={setState}
         selectedObjects={selectedObjects}

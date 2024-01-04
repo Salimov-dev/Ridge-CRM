@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Box, Paper, styled } from "@mui/material";
 // components
 import ObjectAddress from "./object-address";
-import UserNameWithAvatar from "../../../../../components/common/table/helpers/user-name-with-avatar";
+import UserNameWithAvatar from "../../../../../components/common/table/components/user-name-with-avatar";
 // mock
 import { dealStagesArray } from "../../../../../mock/deals/deals-stages";
 // store

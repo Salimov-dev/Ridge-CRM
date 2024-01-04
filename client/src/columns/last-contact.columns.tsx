@@ -5,8 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { Box, Typography } from "@mui/material";
 // components
 import EmptyTd from "@components/common/columns/empty-td";
-import UserNameWithAvatar from "@components/common/table/helpers/user-name-with-avatar";
-import ButtonStyled from "@components/common/buttons/button-styled";
+import UserNameWithAvatar from "@components/common/table/components/user-name-with-avatar";
+import ButtonStyled from "@components/common/buttons/button-styled.button";
 import { AlignCenter } from "@components/common/columns/styled";
 // utils
 import { FormatDate } from "@utils/date/format-date";
@@ -75,7 +75,6 @@ export const lastContactColumns = (onUpdate) => [
     minWidth: 50,
     width: 60,
     cell: (info) => {
-      const dispatch = useDispatch();
       const lastContactId = info.getValue();
       const lastContact = useSelector(getLastContactsById(lastContactId));
       const currentUserId = useSelector(getCurrentUserId());
@@ -83,18 +82,15 @@ export const lastContactColumns = (onUpdate) => [
         getIsUserAuthorThisEntity(currentUserId, lastContact)
       );
 
-      const handleClick = () => {
-        dispatch<any>(setUpdateLastContactId(lastContactId));
-        dispatch<any>(setUpdateLastContactOpenState(true));
-      };
-
       return (
-        <ButtonStyled
-          title="Править"
-          style="LAST_CONTACT"
-          disabled={!isAuthorEntity}
-          onClick={() => onUpdate(lastContactId)}
-        />
+        <AlignCenter>
+          <ButtonStyled
+            title="Править"
+            style="LAST_CONTACT"
+            disabled={!isAuthorEntity}
+            onClick={() => onUpdate(lastContactId)}
+          />
+        </AlignCenter>
       );
     },
   },

@@ -13,7 +13,7 @@ import LoginHeader from "./components/login-header";
 import { loginSchema } from "../../../schemas/login-schema";
 // store
 import { login } from "../../../store/user/users.store";
-import ButtonStyled from "@components/common/buttons/button-styled";
+import ButtonStyled from "@components/common/buttons/button-styled.button";
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
 
 const Component = styled(Box)`

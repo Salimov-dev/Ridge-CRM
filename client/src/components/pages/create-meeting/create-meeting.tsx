@@ -7,24 +7,23 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useDispatch, useSelector } from "react-redux";
 // components
-import MeetingForm from "@common/forms/meeting-form/meeting-form";
+import MeetingForm from "@components/common/forms/meeting.form";
 import FindObjectOnMap from "@common/find-object-on-map/find-object-on-map";
-import SuccessCancelFormButtons from "@common/forms/footer-buttons/success-cancel-form-buttons";
+import SuccessCancelFormButtons from "@components/common/forms/success-cancel-form-buttons/success-cancel-form-buttons";
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
-import HeaderWithCloseButton from "@components/common/page-titles/header-with-close-button";
-// store
-import { getCurrentUserId } from "@store/user/users.store";
-import { createMeeting } from "@store/meeting/meetings.store";
-import { getObjectsList } from "@store/object/objects.store";
-import { getMeetingTypesList } from "@store/meeting/meeting-types.store";
-import { getMeetingStatusesList } from "@store/meeting/meeting-status.store";
+import HeaderWithCloseButton from "@components/common/page-headers/header-with-close-button";
 // schema
 import { meetingSchema } from "@schemas/meeting-schema";
 // hooks
 import useFindObject from "@hooks/object/use-find-object";
 // utils
 import { capitalizeFirstLetter } from "@utils/data/capitalize-first-letter";
-import transformObjectsForSelect from "@utils/objects/transform-objects-for-select";
+// store
+import { getCurrentUserId } from "@store/user/users.store";
+import { createMeeting } from "@store/meeting/meetings.store";
+import { getObjectsList } from "@store/object/objects.store";
+import { getMeetingTypesList } from "@store/meeting/meeting-types.store";
+import { getMeetingStatusesList } from "@store/meeting/meeting-status.store";
 
 const initialState = {
   status: "",
@@ -44,7 +43,7 @@ const initialState = {
 };
 
 const CreateMeeting = React.memo(
-  ({ objectPageId = "", onClose, dateCreate, isObjectPage = false }) => {
+  ({ objectPageId = "", onClose, dateCreate }) => {
     const dispatch = useDispatch();
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
@@ -58,7 +57,6 @@ const CreateMeeting = React.memo(
     const currentUserObjects = objects?.filter(
       (obj) => obj?.userId === currentUserId
     );
-    const transformObjects = transformObjectsForSelect(currentUserObjects);
 
     const {
       register,
@@ -81,8 +79,6 @@ const CreateMeeting = React.memo(
     } = useFindObject();
 
     const data = watch();
-    console.log("data", data);
-
     const isEmptyFindedObject = Boolean(Object.keys(findedObject)?.length);
 
     const onSubmit = (data) => {
@@ -154,7 +150,6 @@ const CreateMeeting = React.memo(
           errors={errors}
           register={register}
           setValue={setValue}
-          isObjectPage={isObjectPage}
         />
         <SuccessCancelFormButtons
           onSuccess={handleSubmit(onSubmit)}

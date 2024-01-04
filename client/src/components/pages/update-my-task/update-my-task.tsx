@@ -4,14 +4,11 @@ import { toast } from "react-toastify";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useTheme } from "@emotion/react";
-import { tokens } from "@theme/theme";
 import { useDispatch, useSelector } from "react-redux";
 // components
-import MyTaskForm from "@common/forms/my-task-form/my-task-form";
-import ConfirmRemoveDialog from "@common/dialog/confirm-remove-dialog";
-import TitleWithCloseButton from "@common/page-titles/header-with-close-button";
-import SuccessCancelFormButtons from "@components/common/forms/footer-buttons/success-cancel-form-buttons";
+import MyTaskForm from "@components/common/forms/my-task.form";
+import TitleWithCloseButton from "@components/common/page-headers/header-with-close-button";
+import SuccessCancelFormButtons from "@components/common/forms/success-cancel-form-buttons/success-cancel-form-buttons";
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
 // schema
 import { taskSchema } from "@schemas/task-shema";
@@ -21,23 +18,15 @@ import { getObjectsList } from "@store/object/objects.store";
 import { getCurrentUserId } from "@store/user/users.store";
 import { createLastContact } from "@store/last-contact/last-contact.store";
 // store
-import {
-  getTaskById,
-  getTaskLoadingStatus,
-  removeTask,
-  updateTask,
-} from "@store/task/tasks.store";
+import { getTaskById, removeTask, updateTask } from "@store/task/tasks.store";
+import DialogConfirm from "@components/common/dialog/dialog-confirm";
 
 const UpdateMyTask = React.memo(({ title, taskId, objectId, onClose }) => {
   const dispatch = useDispatch();
-  const theme = useTheme();
-  const colors = tokens(theme.palette.mode);
-
   const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const task = useSelector(getTaskById(taskId));
-  const isTasksLoading = useSelector(getTaskLoadingStatus());
 
   const formatedTask = {
     ...task,
@@ -76,7 +65,6 @@ const UpdateMyTask = React.memo(({ title, taskId, objectId, onClose }) => {
       date: transformedDate,
       time: transformedTime,
     };
-    console.log("newData", newData);
 
     const lastContactData = {
       date: data.date,
@@ -111,7 +99,15 @@ const UpdateMyTask = React.memo(({ title, taskId, objectId, onClose }) => {
   };
 
   const handleRemoveTask = (taskId: number) => {
-    dispatch<any>(removeTask(taskId)).then(onClose());
+    setIsLoading(true);
+    dispatch<any>(removeTask(taskId))
+      .then(onClose())
+      .catch((error) => {
+        toast.error(error);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
 
   const handleClickOpen = () => {
@@ -151,17 +147,13 @@ const UpdateMyTask = React.memo(({ title, taskId, objectId, onClose }) => {
         onRemove={handleClickOpen}
         isUpdate={true}
       />
-      <ConfirmRemoveDialog
+      <DialogConfirm
+        question="Вы уверены, что хотите удалить свою задачу?"
         open={open}
+        onSuccessClick={() => handleRemoveTask(taskId)}
         onClose={handleClose}
-        onRemove={handleRemoveTask}
-        removeId={taskId}
       />
-      <LoaderFullWindow
-        color={colors.grey[600]}
-        size={75}
-        isLoading={isLoading}
-      />
+      <LoaderFullWindow isLoading={isLoading} />
     </>
   );
 });

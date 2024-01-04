@@ -5,7 +5,7 @@ import { Box, Typography } from "@mui/material";
 // components
 import DoneStatusIcon from "@components/common/columns/done-status-icon";
 import { AlignCenter } from "@components/common/columns/styled";
-import ButtonStyled from "@components/common/buttons/button-styled";
+import ButtonStyled from "@components/common/buttons/button-styled.button";
 // utils
 import { FormatDate } from "@utils/date/format-date";
 import { FormatTime } from "@utils/date/format-time";
@@ -150,12 +150,14 @@ export const meetingsColumns = (onOpenUpdateMeetingPage, isDialogPage) => [
       );
 
       return (
-        <ButtonStyled
-          title="Править"
-          style="MEETING"
-          disabled={!isAuthorEntity}
-          onClick={() => onOpenUpdateMeetingPage(meetingId)}
-        />
+        <AlignCenter>
+          <ButtonStyled
+            title="Править"
+            style="MEETING"
+            disabled={!isAuthorEntity}
+            onClick={() => onOpenUpdateMeetingPage(meetingId)}
+          />
+        </AlignCenter>
       );
     },
   },

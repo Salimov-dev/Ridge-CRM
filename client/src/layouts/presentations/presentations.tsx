@@ -8,7 +8,7 @@ import { useSelector } from "react-redux";
 import { useWindowSize } from "@react-hook/window-size";
 // components
 import BasicTable from "../../components/common/table/basic-table";
-import LayoutTitle from "../../components/common/page-titles/layout-title";
+import HeaderLayout from "../../components/common/page-headers/header-layout";
 import PresentationsFiltersPanel from "../../components/UI/filters-panels/presentations-filters-panel";
 import ItemsOnMap from "../../components/common/map/items-on-map/items-on-map";
 import PresentationBaloon from "../../components/UI/maps/presentation-baloon";
@@ -180,8 +180,6 @@ const Presentations = React.memo(() => {
 
   // обновление стейта при открытии страницы объекта
   const handleOpenObjectPage = (objectId) => {
-    // console.log("objectId", objectId);
-
     setState((prevState) => ({
       ...prevState,
       objectPage: true,
@@ -208,7 +206,7 @@ const Presentations = React.memo(() => {
 
   return (
     <Box>
-      <LayoutTitle title="Презентации" />
+      <HeaderLayout title="Презентации" />
       <Buttons
         initialState={initialState}
         reset={reset}
@@ -219,7 +217,11 @@ const Presentations = React.memo(() => {
         items={presentationsWithLocation}
         onClick={setSelectedPresentationBaloon}
         baloon={
-          <PresentationBaloon presentationId={selectedPresentationBaloon} />
+          <PresentationBaloon
+            presentationId={selectedPresentationBaloon}
+            onOpenObjectPage={handleOpenObjectPage}
+            onOpenUpdatePresentationPage={handleOpenUpdatePresentationPage}
+          />
         }
         isLoading={isLoading}
         target={target}

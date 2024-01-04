@@ -1,9 +1,9 @@
 import { Box, styled } from "@mui/material";
-import CloseButtonIconButton from "../../../common/buttons/icons buttons/close-button-icon";
+import CloseButtonIconButton from "../../../common/buttons/icons buttons/close.button-icon";
 import LoginHeaderTitle from "./login-header-title";
 
 const Component = styled(Box)`
-width: 100%;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;

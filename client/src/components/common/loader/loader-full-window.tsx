@@ -15,7 +15,7 @@ const Component = styled(Box)`
   z-ndex: 99999999;
 `;
 
-const LoaderFullWindow = ({ color = "white", size = 75, isLoading }) => {
+const LoaderFullWindow = ({ color = "grey", size = 75, isLoading }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   return (

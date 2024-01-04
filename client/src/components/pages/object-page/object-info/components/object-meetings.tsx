@@ -9,7 +9,7 @@ import {
 } from "@store/meeting/meetings.store";
 import { meetingsColumnsDialog } from "@columns/meetings-columns-dialog/meetings-columns-dialog";
 import sortingByDateAndTime from "@utils/other/sorting-by-date-and-time";
-import ButtonStyled from "@components/common/buttons/button-styled";
+import ButtonStyled from "@components/common/buttons/button-styled.button";
 import { meetingsColumns } from "@columns/meetings.columns";
 
 const Title = styled(Box)`

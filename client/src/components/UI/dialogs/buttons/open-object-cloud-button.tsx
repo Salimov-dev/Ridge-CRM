@@ -1,4 +1,4 @@
-import ButtonStyled from "@components/common/buttons/button-styled";
+import ButtonStyled from "@components/common/buttons/button-styled.button";
 
 const OpenObjectCloudIcon = ({ object }) => {
   const hasCloud = !!object?.cloudLink?.length;
