@@ -16,7 +16,7 @@ import ManagerForm from "@common/forms/manager/manager.form";
 import { getUserStatusesList } from "@store/user/user-statuses.store";
 import { getUserDataById, updateUser } from "@store/user/users.store";
 // schema
-import { managerSchema } from "@schemas/manager-schema";
+import { managerSchema } from "@schemas/manager.schema";
 
 const UpdateManager = ({ userId, onClose }) => {
   const theme = useTheme();

@@ -15,7 +15,7 @@ import LoaderFullWindow from "@components/common/loader/loader-full-window";
 // store
 import { createTask } from "@store/task/tasks.store";
 // schema
-import { taskSchema } from "@schemas/task-shema";
+import { taskSchema } from "@schemas/task.shema";
 // utils
 import { capitalizeFirstLetter } from "@utils/data/capitalize-first-letter";
 

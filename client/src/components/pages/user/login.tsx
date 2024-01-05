@@ -14,7 +14,7 @@ import LoaderFullWindow from "@components/common/loader/loader-full-window";
 import HeaderWithCloseButton from "@components/common/page-headers/header-with-close-button";
 import LoginForm from "@common/forms/login-form";
 // schema
-import { loginSchema } from "@schemas/login-schema";
+import { loginSchema } from "@schemas/login.schema";
 // store
 import { login } from "@store/user/users.store";
 

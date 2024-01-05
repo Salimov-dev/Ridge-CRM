@@ -10,10 +10,6 @@ import ButtonStyled from "@components/common/buttons/button-styled.button";
 import { AlignCenter } from "@components/common/columns/styled";
 // utils
 import { FormatDate } from "@utils/date/format-date";
-import {
-  setUpdateLastContactId,
-  setUpdateLastContactOpenState,
-} from "@store/last-contact/update-last-contact.store";
 import { getLastContactsById } from "@store/last-contact/last-contact.store";
 import {
   getCurrentUserId,

@@ -11,7 +11,7 @@ import LastContacts from "./components/last-contacts";
 import { tasksColumns } from "@columns/tasks.columns";
 import { meetingsColumns } from "@columns/meetings.columns";
 // hooks
-import useObjectInfo from "./hooks/use-object-info.hook";
+import useObjectInfo from "../../../../hooks/object-info/use-object-info.hook";
 
 const Component = styled(Box)`
   display: flex;

@@ -10,7 +10,7 @@ import UpdateManagerTask from "@components/pages/task/update-manager-task";
 import UpdateMeeting from "@components/pages/meeting/update-meeting";
 import UpdateMyTask from "@components/pages/task/update-my-task";
 // hooks
-import useObjectInfo from "../hooks/use-object-info.hook";
+import useObjectInfo from "../../../../../hooks/object-info/use-object-info.hook";
 // store
 import { getObjectsList } from "@store/object/objects.store";
 import { getUsersList } from "@store/user/users.store";

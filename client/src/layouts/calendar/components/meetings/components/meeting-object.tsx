@@ -5,22 +5,12 @@ import DividerStyled from "@components/common/divider/divider-styled";
 import OpenPageObjectIconButton from "@components/common/buttons/icons buttons/open-page-object.button-icon";
 // store
 import { getObjectAddressById } from "@store/object/objects.store";
-import {
-  setOpenObjectPageId,
-  setOpenObjectPageOpenState,
-} from "@store/object/open-object-page.store";
 
 const MeetingObject = ({ meet }) => {
-  const dispatch = useDispatch();
   const meetingObjectId = meet?.objectId;
   const isMeetingObjectId = Boolean(meetingObjectId);
   const isMeetingDone = meet?.isDone;
   const objectAddress = useSelector(getObjectAddressById(meetingObjectId));
-
-  const handleOpenObjectPage = (objectId) => {
-    dispatch<any>(setOpenObjectPageId(objectId));
-    dispatch<any>(setOpenObjectPageOpenState(true));
-  };
 
   return isMeetingObjectId ? (
     <>
@@ -30,7 +20,7 @@ const MeetingObject = ({ meet }) => {
       >
         <Typography>{objectAddress}</Typography>
         <OpenPageObjectIconButton
-          onClick={() => handleOpenObjectPage(meetingObjectId)}
+        // onClick={() => handleOpenObjectPage(meetingObjectId)}
         />
       </Box>
     </>

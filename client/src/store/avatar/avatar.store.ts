@@ -4,7 +4,7 @@ import { createAction, createSlice } from "@reduxjs/toolkit";
 import configFile from "../../config.json";
 // services
 import localStorageService from "../../services/user/local.storage-service";
-import avatarService from "../../services/upload/avatar.service";
+import avatarService from "../../services/avatar/avatar.service";
 import userService from "../../services/user/user.service";
 
 const socket = io(configFile.ioEndPoint);

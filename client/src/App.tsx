@@ -3,6 +3,7 @@ import { Box, CssBaseline, ThemeProvider } from "@mui/material";
 import { ToastContainer } from "react-toastify";
 // styled
 import "./styles.css";
+import styled from "@emotion/styled";
 import "react-toastify/dist/ReactToastify.css";
 // components
 import TopBar from "./components/UI/topbar/topbar";
@@ -13,12 +14,13 @@ import AppLoader from "./hoc/app-loader";
 // utils
 import ScrollToTop from "./utils/other/scroll-to-top";
 // image
-import grassImage from "./assets/grass.png"; // Путь к изображению
+import grassImage from "./assets/grass.png";
 // theme
 import { ColorModeContext, useMode } from "./theme/theme";
+// routes
 import AppRoutes from "./routes/routes";
+// sockets
 import Sockets from "./sockets/sockets";
-import styled from "@emotion/styled";
 
 export const AppStyled = styled(Box)`
   display: flex;

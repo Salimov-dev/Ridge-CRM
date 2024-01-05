@@ -11,7 +11,7 @@ import TitleWithCloseButton from "@components/common/page-headers/header-with-cl
 import SuccessCancelFormButtons from "@components/common/forms/buttons/success-cancel-form-buttons";
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
 // schema
-import { taskSchema } from "@schemas/task-shema";
+import { taskSchema } from "@schemas/task.shema";
 //utils
 import { capitalizeFirstLetter } from "@utils/data/capitalize-first-letter";
 import { getObjectsList } from "@store/object/objects.store";

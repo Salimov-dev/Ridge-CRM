@@ -19,6 +19,8 @@ const Sockets = () => {
   handleLastContactSocket(socket);
   handlePresentationSocket(socket);
   handleAvatarSocket(socket);
+
+  return null;
 };
 
 export default Sockets;

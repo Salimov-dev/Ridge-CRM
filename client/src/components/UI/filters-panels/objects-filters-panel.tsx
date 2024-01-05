@@ -1,16 +1,16 @@
 // components
-import SearchField from "../../common/inputs/search-field";
-import SearchDatePicker from "../../common/inputs/search-date-picker";
-import MultiSelectField from "../../common/inputs/multi-select-field";
-import { FieldsContainer, Form } from "../../common/forms/styled/styled";
-import SearchSelectField from "../../common/inputs/search-select-field";
-// hooks
-import useObjectsFiltersPanel from "../../../hooks/object/use-objects-filters-panel";
-// mock
-import { objectActivityVariants } from "../../../data/object/object-activity-variants";
-import { getActualUsersList } from "../../../utils/actual-items/get-actual-users-list";
-import { getActualStatusesList } from "../../../utils/actual-items/get-actual-statuses-list";
 import React from "react";
+import SearchField from "@common/inputs/search-field";
+import SearchDatePicker from "@common/inputs/search-date-picker";
+import MultiSelectField from "@common/inputs/multi-select-field";
+import { FieldsContainer, Form } from "@common/forms/styled/styled";
+import SearchSelectField from "@common/inputs/search-select-field";
+// hooks
+import useObjectsFiltersPanel from "@hooks/object/use-objects-filters-panel";
+// data
+import { objectActivityVariants } from "@data/object/object-activity-variants";
+import { getActualUsersList } from "@utils/actual-items/get-actual-users-list";
+import { getActualStatusesList } from "@utils/actual-items/get-actual-statuses-list";
 
 const ObjectsFiltersPanel = React.memo(
   ({ setValue, objects, statuses, data, register, isCurator, isLoading }) => {

@@ -11,7 +11,7 @@ import LastContactForm from "../../common/forms/last-contact.form";
 // store
 import { createLastContact } from "../../../store/last-contact/last-contact.store";
 // schema
-import { lastContactSchema } from "../../../schemas/last-contact-schema";
+import { lastContactSchema } from "../../../schemas/last-contact.schema";
 // utils
 import { capitalizeFirstLetter } from "../../../utils/data/capitalize-first-letter";
 import SuccessCancelFormButtons from "../../common/forms/buttons/success-cancel-form-buttons";

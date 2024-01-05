@@ -1,11 +1,11 @@
 import dayjs from "dayjs";
 // columns
-import useTableHeader from "../../../columns/statictics-columns/hooks/use-table-header";
-// mock
-import { objectStatusesArray } from "../../../data/object/object-status";
+import useTableHeader from "@columns/statictics-columns/hooks/use-table-header";
+// data
+import { objectStatusesArray } from "@data/object/object-status";
 // utils
-import { getWeeklyObjects } from "../../../utils/objects/get-weekly-objects";
-import { getWeeklyObjectsWithPhone } from "../../../utils/objects/get-weekly-objects-with-phone";
+import { getWeeklyObjects } from "@utils/objects/get-weekly-objects";
+import { getWeeklyObjectsWithPhone } from "@utils/objects/get-weekly-objects-with-phone";
 
 const useData = (objects) => {
   const currentDate = dayjs();

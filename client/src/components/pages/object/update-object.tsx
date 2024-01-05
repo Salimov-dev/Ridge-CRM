@@ -16,7 +16,7 @@ import HeaderWithBackButton from "../../common/page-headers/header-with-back-but
 // utils
 import { capitalizeFirstLetter } from "../../../utils/data/capitalize-first-letter";
 // schemas
-import { objectSchema } from "@schemas/object-schema";
+import { objectSchema } from "@schemas/object.schema";
 // store
 import {
   getObjectById,

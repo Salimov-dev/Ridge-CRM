@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 // components
 import ManagerPresentationForm from "../../common/forms/presentation-manager.form";
 // schema
-import { presentationSchema } from "../../../schemas/presentation-schema";
+import { presentationSchema } from "../../../schemas/presentation.schema";
 // utils
 import transformObjectsForSelect from "../../../utils/objects/transform-objects-for-select";
 // store

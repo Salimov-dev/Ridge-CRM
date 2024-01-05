@@ -1,5 +1,5 @@
 import { orderBy } from "lodash";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 // MUI
 import { Box, Button, Tooltip, Typography } from "@mui/material";
 import CloudDoneIcon from "@mui/icons-material/CloudDone";
@@ -127,7 +127,6 @@ export const objectsColumns = (handleOpenObjectPage, isCurator) => {
         accessorFn: (row) => row,
         header: "Адрес",
         cell: (info) => {
-          const dispatch = useDispatch();
           const object = info.getValue();
           const objectId = object?._id;
           const meetings = useSelector(getObjectMeetingsList(objectId));
@@ -137,11 +136,6 @@ export const objectsColumns = (handleOpenObjectPage, isCurator) => {
           const lastContacts = lastContactsList?.filter(
             (contact) => contact.objectId === objectId
           );
-
-          // const handleClick = () => {
-          //   dispatch<any>(setOpenObjectPageId(objectId));
-          //   dispatch<any>(setOpenObjectPageOpenState(true));
-          // };
 
           if (objectId) {
             return (

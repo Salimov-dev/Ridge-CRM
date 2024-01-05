@@ -10,10 +10,10 @@ import FooterButtons from "../buttons/success-cancel-form-buttons";
 import TextFieldStyled from "../../inputs/text-field-styled";
 import DatePickerStyled from "../../inputs/date-picker";
 import SimpleSelectField from "../../inputs/simple-select-field";
-// mock
-import { gendersArray } from "../../../../data/genders";
+// data
+import { gendersArray } from "@data/genders";
 // utils
-import getDateToday from "../../../../utils/date/get-date-today";
+import getDateToday from "@utils/date/get-date-today";
 // styled
 import { FieldsContainer, Form } from "../styled/styled";
 

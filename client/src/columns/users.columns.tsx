@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 // components
 import { FormatPhone } from "@components/common/table/helpers/helpers";
 import { AlignCenter } from "@components/common/columns/styled";
-// mock
+// data
 import { gendersArray } from "../data/genders";
 // store
 import { getUserNameById } from "@store/user/users.store";

@@ -1,4 +1,4 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 // styled
 import { ItemContainer, ItemsContainer } from "../styled";
 // components
@@ -8,7 +8,6 @@ import Result from "../tasks/components/result";
 import Loader from "@components/common/loader/loader";
 // store
 import { updateMeeting } from "@store/meeting/meetings.store";
-import { getOpenSelectedDayOpenState } from "@store/calendar/open-selected-day.store";
 
 const Meetings = ({
   meetings,
@@ -19,7 +18,6 @@ const Meetings = ({
   isSelectedDayDialog,
 }) => {
   const dispatch = useDispatch();
-  const isOpenSelectedDay = useSelector(getOpenSelectedDayOpenState());
 
   const handleDragEnd = (meet) => {
     if (meet?.date !== draggableDay) {
@@ -40,10 +38,10 @@ const Meetings = ({
       {meetings?.map((meet) => (
         <ItemContainer
           key={meet._id}
-          draggable={!isOpenSelectedDay && true}
+          draggable={true}
           onDragEnd={() => handleDragEnd(meet)}
           sx={{
-            cursor: !isOpenSelectedDay && "grab",
+            cursor: "grab",
             border: "3px solid RoyalBlue",
             color: "GhostWhite",
             background: !meet?.isDone ? "RoyalBlue" : "gray",

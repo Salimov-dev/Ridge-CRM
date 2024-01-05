@@ -18,7 +18,7 @@ import { createObject, getObjectsList } from "@store/object/objects.store";
 // hooks
 import useFindObject from "@hooks/object/use-find-object";
 // schema
-import { objectSchema } from "@schemas/object-schema";
+import { objectSchema } from "@schemas/object.schema";
 // utils
 import { capitalizeFirstLetter } from "@utils/data/capitalize-first-letter";
 import { capitalizeAllFirstLetters } from "@utils/data/capitalize-all-first-letters";

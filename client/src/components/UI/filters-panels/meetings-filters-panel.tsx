@@ -1,15 +1,15 @@
 import { orderBy } from "lodash";
 // components
-import SearchField from "../../common/inputs/search-field";
-import { FieldsContainer, Form } from "../../common/forms/styled/styled";
-import MultiSelectField from "../../common/inputs/multi-select-field";
-import SearchDatePicker from "../../common/inputs/search-date-picker";
-import SearchSelectField from "../../common/inputs/search-select-field";
-// mock
-import { meetingDoneTypes } from "../../../data/meetings/meeting-done-status";
+import SearchField from "@common/inputs/search-field";
+import { FieldsContainer, Form } from "@common/forms/styled/styled";
+import MultiSelectField from "@common/inputs/multi-select-field";
+import SearchDatePicker from "@common/inputs/search-date-picker";
+import SearchSelectField from "@common/inputs/search-select-field";
+// data
+import { meetingDoneTypes } from "@data/meetings/meeting-done-status";
 // utils
-import { getActualUsersList } from "../../../utils/actual-items/get-actual-users-list";
-import { getActualStatusesList } from "../../../utils/actual-items/get-actual-statuses-list";
+import { getActualUsersList } from "@utils/actual-items/get-actual-users-list";
+import { getActualStatusesList } from "@utils/actual-items/get-actual-statuses-list";
 import React from "react";
 
 const MeetingsFiltersPanel = React.memo(

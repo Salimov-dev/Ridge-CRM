@@ -14,7 +14,7 @@ import {
   getCurrentUserId,
 } from "../../../store/user/users.store";
 // schema
-import { managerSchema } from "../../../schemas/manager-schema";
+import { managerSchema } from "../../../schemas/manager.schema";
 import React from "react";
 
 const initialState = {

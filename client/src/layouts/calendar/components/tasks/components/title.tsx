@@ -8,14 +8,6 @@ import UpdateElement from "../../../../../components/common/buttons/icons button
 import { FormatTime } from "../../../../../utils/date/format-time";
 // store
 import { updateTask } from "../../../../../store/task/tasks.store";
-import {
-  setUpdateMyTaskId,
-  setUpdateMyTaskOpenState,
-} from "../../../../../store/task/update-my-task.store";
-import {
-  setUpdateManagerTaskId,
-  setUpdateManagerTaskOpenState,
-} from "../../../../../store/task/update-manager-task.store";
 
 const Component = styled(Box)`
   display: flex;
@@ -43,15 +35,15 @@ const Title = ({ task }) => {
     dispatch<any>(updateTask(newTask));
   };
 
-  const handleUpdateTask = () => {
-    if (isCuratorTask) {
-      dispatch<any>(setUpdateManagerTaskOpenState(true));
-      dispatch<any>(setUpdateManagerTaskId(taskId));
-    } else {
-      dispatch<any>(setUpdateMyTaskId(taskId));
-      dispatch<any>(setUpdateMyTaskOpenState(true));
-    }
-  };
+  // const handleUpdateTask = () => {
+  //   if (isCuratorTask) {
+  //     dispatch<any>(setUpdateManagerTaskOpenState(true));
+  //     dispatch<any>(setUpdateManagerTaskId(taskId));
+  //   } else {
+  //     dispatch<any>(setUpdateMyTaskId(taskId));
+  //     dispatch<any>(setUpdateMyTaskOpenState(true));
+  //   }
+  // };
 
   return (
     <Component>
@@ -59,7 +51,9 @@ const Title = ({ task }) => {
         <b>Задача до: {task.time ? FormatTime(task.time) : "конца дня"}</b>
       </Typography>
       <ButtonsContainer>
-        <UpdateElement onClick={handleUpdateTask} isDone={isTaskDone} />
+        <UpdateElement 
+        // onClick={handleUpdateTask} 
+        isDone={isTaskDone} />
         <DoneIconToggler
           item={task}
           onDoneItem={handleDoneTask}

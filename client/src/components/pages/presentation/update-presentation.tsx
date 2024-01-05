@@ -12,11 +12,10 @@ import LoaderFullWindow from "@components/common/loader/loader-full-window";
 import SuccessCancelFormButtons from "@components/common/forms/buttons/success-cancel-form-buttons";
 import DialogConfirm from "@components/common/dialog/dialog-confirm";
 // schema
-import { presentationSchema } from "@schemas/presentation-schema";
+import { presentationSchema } from "@schemas/presentation.schema";
 // utils
 import transformObjectsForSelect from "@utils/objects/transform-objects-for-select";
 // store
-import { getUpdatePresentationId } from "@store/presentation/update-presentation.store";
 import { getObjectsList } from "@store/object/objects.store";
 import {
   getCurrentUserId,
@@ -40,7 +39,7 @@ const UpdatePresentation = React.memo(({ onClose }) => {
   const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const presentationId = useSelector(getUpdatePresentationId());
+  // const presentationId = useSelector(getUpdatePresentationId());
   const presentation = useSelector(getPresentationById(presentationId));
 
   const {
@@ -146,7 +145,7 @@ const UpdatePresentation = React.memo(({ onClose }) => {
       <DialogConfirm
         question="Вы уверены, что хотите удалить презентацию?"
         open={open}
-        onSuccessClick={() => handleRemovePresentation(presentationId)}
+        // onSuccessClick={() => handleRemovePresentation(presentationId)}
         onClose={handleClose}
       />
       <LoaderFullWindow isLoading={isLoading} />

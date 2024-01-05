@@ -2,8 +2,6 @@ import { useDispatch } from "react-redux";
 import { Box, styled } from "@mui/material";
 // components
 import ButtonStyled from "@components/common/buttons/button-styled.button";
-// store
-import { setCreatePresentationOpenState } from "@store/presentation/create-presentation.store";
 
 const Component = styled(Box)`
   display: flex;
@@ -22,10 +20,6 @@ const ButtonsPanel = ({
 }) => {
   const dispatch = useDispatch();
   const hasCloud = !!object?.cloudLink?.length;
-
-  const handleOpenCreateObject = () => {
-    dispatch<any>(setCreatePresentationOpenState(true));
-  };
 
   const handleOpenCloud = () => {
     const cloudLink = object?.cloudLink;

@@ -13,7 +13,7 @@ import SuccessCancelFormButtons from "@components/common/forms/buttons/success-c
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
 import HeaderWithCloseButton from "@components/common/page-headers/header-with-close-button";
 // schema
-import { meetingSchema } from "@schemas/meeting-schema";
+import { meetingSchema } from "@schemas/meeting.schema";
 // hooks
 import useFindObject from "@hooks/object/use-find-object";
 // utils

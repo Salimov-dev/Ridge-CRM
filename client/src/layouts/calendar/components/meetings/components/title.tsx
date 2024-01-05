@@ -7,12 +7,7 @@ import { FormatTime } from "@utils/date/format-time";
 import UpdateElementIconButton from "@components/common/buttons/icons buttons/update-element.button-icon";
 import DoneIconToggler from "../../tasks/components/done-icon-toggler";
 // store
-
 import { updateMeeting } from "@store/meeting/meetings.store";
-import {
-  setUpdateMeetingId,
-  setUpdateMeetingOpenState,
-} from "@store/meeting/update-meeting.store";
 
 const Component = styled(Box)`
   display: flex;
@@ -40,11 +35,6 @@ const Title = ({ meet, currentUserId }) => {
     dispatch<any>(updateMeeting(newMeeting));
   };
 
-  const handleUpdateMeeting = () => {
-    dispatch<any>(setUpdateMeetingId(meetingId));
-    dispatch<any>(setUpdateMeetingOpenState(true));
-  };
-
   return (
     <Component>
       <Typography sx={{ textDecoration: "underline" }}>
@@ -53,7 +43,7 @@ const Title = ({ meet, currentUserId }) => {
       <ButtonsContainer>
         {isAuthor ? (
           <UpdateElementIconButton
-            onClick={handleUpdateMeeting}
+            // onClick={handleUpdateMeeting}
             isDone={isMeetingDone}
           />
         ) : null}

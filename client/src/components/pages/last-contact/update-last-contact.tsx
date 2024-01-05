@@ -14,7 +14,7 @@ import LoaderFullWindow from "@components/common/loader/loader-full-window";
 import HeaderWithCloseButton from "@components/common/page-headers/header-with-close-button";
 import DialogConfirm from "@components/common/dialog/dialog-confirm";
 // schema
-import { lastContactSchema } from "@schemas/last-contact-schema";
+import { lastContactSchema } from "@schemas/last-contact.schema";
 // store
 import {
   getLastContactsById,

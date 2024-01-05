@@ -1,7 +1,6 @@
 import "dayjs/locale/ru";
 // components
 import MainHeader from "./components/main-header";
-import LoginDialog from "../../components/UI/dialogs/main/login-dialog";
 import { useSelector } from "react-redux";
 import { getIsLoggedIn } from "../../store/user/users.store";
 import { Box, Typography, styled } from "@mui/material";

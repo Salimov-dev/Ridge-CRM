@@ -14,7 +14,7 @@ import HeaderWithCloseButton from "@components/common/page-headers/header-with-c
 import MeetingForm from "@components/common/forms/meeting.form";
 import DialogConfirm from "@components/common/dialog/dialog-confirm";
 // schema
-import { meetingSchema } from "@schemas/meeting-schema";
+import { meetingSchema } from "@schemas/meeting.schema";
 // store
 import { getObjectsList } from "@store/object/objects.store";
 import { getCurrentUserId } from "@store/user/users.store";

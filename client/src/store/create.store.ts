@@ -41,22 +41,17 @@ import createMyTaskReducer from "./task/create-my-task.store";
 import lastContactReducer from "./last-contact/last-contact.store";
 import createLastContactReducer from "./last-contact/create-last-contact.store";
 import updateLastContactReducer from "./last-contact/update-last-contact.store";
-// sidebar
-import sidebarCollapsStateReducer from "./sidebar-collaps-state.store";
 // presentations
 import createPresentationReducer from "./presentation/create-presentation.store";
 import presentationsReducer from "./presentation/presentations.store";
 import presentationStatusReducer from "./presentation/presentation-status.store";
 import updatePresentationReducer from "./presentation/update-presentation.store";
-// calendar
-import openSelectedDayReducer from "./calendar/open-selected-day.store";
 // statictic
 import staticticPositionsReducer from "./statictics/statictics-positions.store";
 // other
 import monthIndexReducer from "./month-index.store";
 import currrentPathReducer from "./current-path.store";
 import avatarReducer from "./avatar/avatar.store";
-import updateUserAvatarReducer from "./avatar/update-avatar.store";
 
 const rootReducer = combineReducers({
   // auth state
@@ -66,10 +61,6 @@ const rootReducer = combineReducers({
   objectStatus: objectStatusReducer,
   objectConditions: objectConditionsReducer,
   objectTypes: objectTypesReducer,
-  openObjectPage: openObjectPageReducer,
-  createObject: createObjectReducer,
-  updateObject: updateObjectReducer,
-  transferObjectToAnotherManager: transferObjectToAnotherManagerReducer,
   // objects params
   metro: metroReducer,
   districts: districtsReducer,
@@ -89,36 +80,21 @@ const rootReducer = combineReducers({
   meetings: meetingsReducer,
   meetingStatuses: meetingStatusesReducer,
   meetingTypes: meetingTypesReducer,
-  createMeeting: createMeetingReducer,
-  updateMeeting: updateMeetingReducer,
   // tasks
   tasks: tasksReducer,
-  createMyTask: createMyTaskReducer,
-  updateMyTask: updateMyTaskReducer,
-  createManagerTask: createManagerTaskReducer,
-  updateManagerTask: updateManagerTaskReducer,
   // calendar
   monthIndex: monthIndexReducer,
-  openSelectedDay: openSelectedDayReducer,
   // last contact
   lastContact: lastContactReducer,
-  createLastContact: createLastContactReducer,
-  updateLastContact: updateLastContactReducer,
-  // sidebar collaps state
-  sidebarCollapsState: sidebarCollapsStateReducer,
   // currrentPath
   currrentPath: currrentPathReducer,
   // presentations
   presentations: presentationsReducer,
   presentationStatus: presentationStatusReducer,
-  createPresentation: createPresentationReducer,
-  updatePresentation: updatePresentationReducer,
   //statictic
   staticticPositions: staticticPositionsReducer,
-  // upload
-  avatar: avatarReducer,
   // avatar
-  updateUserAvatar: updateUserAvatarReducer,
+  avatar: avatarReducer,
 });
 
 export function createStore() {

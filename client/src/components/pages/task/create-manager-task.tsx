@@ -13,7 +13,7 @@ import SuccessCancelFormButtons from "@components/common/forms/buttons/success-c
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
 import MyTaskForm from "@components/common/forms/my-task.form";
 // schema
-import { taskSchema } from "@schemas/task-shema";
+import { taskSchema } from "@schemas/task.shema";
 // utils
 import { capitalizeFirstLetter } from "@utils/data/capitalize-first-letter";
 // store

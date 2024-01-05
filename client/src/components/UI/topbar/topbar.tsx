@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 // MUI
 import { Box, styled } from "@mui/material";
 // store
-import { getIsLoggedIn } from "../../../store/user/users.store";
+import { getIsLoggedIn } from "@store/user/users.store";
 // components
 import TopBarCurrentDate from "./components/topbar-current-date";
 import TopBarRightSide from "./components/topbar-right-side";

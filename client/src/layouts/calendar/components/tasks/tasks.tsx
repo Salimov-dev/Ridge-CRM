@@ -13,7 +13,6 @@ import Result from "./components/result";
 // store
 import { getCurrentUserId } from "@store/user/users.store";
 import { updateTask } from "@store/task/tasks.store";
-import { getOpenSelectedDayOpenState } from "@store/calendar/open-selected-day.store";
 
 const Tasks = ({
   tasks,
@@ -24,7 +23,6 @@ const Tasks = ({
 }) => {
   const dispatch = useDispatch();
   const currentUserId = useSelector(getCurrentUserId());
-  const isOpenSelectedDay = useSelector(getOpenSelectedDayOpenState());
 
   const handleDragEnd = (task) => {
     if (task?.date !== draggableDay) {
@@ -49,10 +47,10 @@ const Tasks = ({
         return (
           <ItemContainer
             key={task?._id}
-            draggable={!isOpenSelectedDay && true}
+            draggable={true}
             onDragEnd={() => handleDragEnd(task)}
             sx={{
-              cursor: !isOpenSelectedDay && "grab",
+              cursor: "grab",
               border: task.managerId
                 ? "3px solid red"
                 : taskIsCall
