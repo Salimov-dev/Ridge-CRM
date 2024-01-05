@@ -1,34 +1,27 @@
 // libraries
-import { send } from "emailjs-com";
 import { toast } from "react-toastify";
+import { useTheme } from "@emotion/react";
+import { tokens } from "@theme/theme";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useDispatch, useSelector } from "react-redux";
 // components
 import ManagerPresentationForm from "../../common/forms/presentation-manager.form";
+import SuccessCancelFormButtons from "@common/forms/buttons/success-cancel-form-buttons";
+import HeaderWithCloseButton from "@common/page-headers/header-with-close-button";
+import LoaderFullWindow from "@components/common/loader/loader-full-window";
 // schema
-import { presentationSchema } from "../../../schemas/presentation.schema";
+import { presentationSchema } from "@schemas/presentation.schema";
 // utils
-import transformObjectsForSelect from "../../../utils/objects/transform-objects-for-select";
+import transformObjectsForSelect from "@utils/objects/transform-objects-for-select";
 // store
-import { createPresentation } from "../../../store/presentation/presentations.store";
+import { createPresentation } from "@store/presentation/presentations.store";
+import { getCurrentUserId, getIsUserCurator } from "@store/user/users.store";
 import {
   getObjectAddressById,
   getObjectsList,
-} from "../../../store/object/objects.store";
-import {
-  getCurrentUserId,
-  getIsUserCurator,
-  getUserNameById,
-  getUsersList,
-} from "../../../store/user/users.store";
-
-import SuccessCancelFormButtons from "../../common/forms/buttons/success-cancel-form-buttons";
-import LoaderFullWindow from "@components/common/loader/loader-full-window";
-import { useTheme } from "@emotion/react";
-import { tokens } from "@theme/theme";
-import HeaderWithCloseButton from "../../common/page-headers/header-with-close-button";
+} from "@store/object/objects.store";
 
 const initialState = {
   objectId: "",
@@ -37,7 +30,7 @@ const initialState = {
   curatorComment: "",
 };
 
-const CreatePresentation = React.memo(({ onClose, setConfettiActive }) => {
+const CreatePresentation = React.memo(({ objectId, onClose }) => {
   const dispatch = useDispatch();
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -70,32 +63,13 @@ const CreatePresentation = React.memo(({ onClose, setConfettiActive }) => {
   const watchObjectId = watch("objectId");
   const cloudLink = watch("cloudLink");
 
-  // const objectPageId = useSelector(getOpenObjectPageId());
-  // const isObjectPage = useSelector(getOpenObjectPageOpenState());
   const statusToBeAgreedId = "654wqeg3469y9dfsd82dd334"; // статус "На согласовании"
-
-  const users = useSelector(getUsersList());
-  const currentUserName = useSelector(getUserNameById(currentUserId));
-  const curatorUser = users?.find((user) => user?.role === "CURATOR");
-  const curatorName = useSelector(getUserNameById(curatorUser?._id));
-  const curatorEmail = curatorUser?.email;
-
   const selectedObject = objects?.find((obj) => obj?._id === watchObjectId);
   const addressObject = useSelector(getObjectAddressById(selectedObject?._id));
 
-  const toSend = {
-    from_name: "Грядка",
-    to_name: curatorName,
-    to_email: curatorEmail,
-    object_address: addressObject,
-    created_manager: currentUserName,
-    cloud_link: cloudLink,
-    reply_to: "ridge-crm@mail.ru",
-  };
-
   const onSubmit = (data) => {
     setIsLoading(true);
-    if (data.objectId && curatorName && addressObject && cloudLink) {
+    if (data.objectId && addressObject && cloudLink) {
       const presentationNewData = {
         ...data,
         cloudLink: data.cloudLink,
@@ -106,21 +80,7 @@ const CreatePresentation = React.memo(({ onClose, setConfettiActive }) => {
       dispatch<any>(createPresentation(presentationNewData))
         .then(() => {
           onClose();
-          setConfettiActive(true);
           toast.success("Презентация успешно создана!");
-          // send(
-          //   "service_yldzorr",
-          //   "template_z0ijagp",
-          //   toSend,
-          //   "eLap4LxTXi9SlRBQh"
-          // ).then(
-          //   (result) => {
-          //     console.log(result.text);
-          //   },
-          //   (error) => {
-          //     console.log(error.text);
-          //   }
-          // );
         })
         .catch((error) => {
           setIsLoading(false);
@@ -131,11 +91,9 @@ const CreatePresentation = React.memo(({ onClose, setConfettiActive }) => {
     }
   };
 
-  // useEffect(() => {
-  //   if (isObjectPage) {
-  //     setValue<any>("objectId", objectPageId);
-  //   }
-  // }, [objectPageId]);
+  useEffect(() => {
+    setValue<any>("objectId", objectId);
+  }, [objectId]);
 
   return (
     <>
@@ -153,17 +111,13 @@ const CreatePresentation = React.memo(({ onClose, setConfettiActive }) => {
         errors={errors}
         watch={watch}
         setValue={setValue}
-        // isObjectPage={isObjectPage}
+        isObjectPage={true}
       />
       <SuccessCancelFormButtons
         onSuccess={handleSubmit(onSubmit)}
         onCancel={onClose}
       />
-      <LoaderFullWindow
-        color={colors.grey[600]}
-        size={75}
-        isLoading={isLoading}
-      />
+      <LoaderFullWindow isLoading={isLoading} />
     </>
   );
 });

@@ -31,7 +31,7 @@ import { useTheme } from "@emotion/react";
 import { tokens } from "@theme/theme";
 import HeaderWithCloseButton from "@components/common/page-headers/header-with-close-button";
 
-const UpdatePresentation = React.memo(({ onClose }) => {
+const UpdatePresentation = React.memo(({ presentationId, onClose }) => {
   const dispatch = useDispatch();
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -39,7 +39,6 @@ const UpdatePresentation = React.memo(({ onClose }) => {
   const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  // const presentationId = useSelector(getUpdatePresentationId());
   const presentation = useSelector(getPresentationById(presentationId));
 
   const {
@@ -145,7 +144,7 @@ const UpdatePresentation = React.memo(({ onClose }) => {
       <DialogConfirm
         question="Вы уверены, что хотите удалить презентацию?"
         open={open}
-        // onSuccessClick={() => handleRemovePresentation(presentationId)}
+        onSuccessClick={() => handleRemovePresentation(presentationId)}
         onClose={handleClose}
       />
       <LoaderFullWindow isLoading={isLoading} />

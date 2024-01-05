@@ -3,38 +3,21 @@ import React, { useState } from "react";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
-import styled from "@emotion/styled";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useTheme } from "@emotion/react";
-import { tokens } from "@theme/theme";
-import { Box } from "@mui/material";
 // components
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
-import ObjectForm from "../../common/forms/object-form/object.form";
-import ButtonStyled from "@components/common/buttons/button-styled.button";
-import HeaderWithBackButton from "../../common/page-headers/header-with-back-button";
+import ObjectForm from "@common/forms/object-form/object.form";
+import HeaderWithBackButton from "@common/page-headers/header-with-back-button";
+import SuccessCancelFormButtons from "@components/common/forms/buttons/success-cancel-form-buttons";
 // utils
-import { capitalizeFirstLetter } from "../../../utils/data/capitalize-first-letter";
+import { capitalizeFirstLetter } from "@utils/data/capitalize-first-letter";
 // schemas
 import { objectSchema } from "@schemas/object.schema";
 // store
-import {
-  getObjectById,
-  updateObject,
-} from "../../../store/object/objects.store";
-import SuccessCancelFormButtons from "@components/common/forms/buttons/success-cancel-form-buttons";
-
-const ButtonsContainer = styled(Box)`
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  margin-top: 30px;
-`;
+import { getObjectById, updateObject } from "@store/object/objects.store";
 
 const UpdateObject = React.memo(({ onClose, objectId }) => {
   const dispatch = useDispatch();
-  const theme = useTheme();
-  const colors = tokens(theme.palette.mode);
 
   const [isLoading, setIsLoading] = useState(false);
   const object = useSelector(getObjectById(objectId));

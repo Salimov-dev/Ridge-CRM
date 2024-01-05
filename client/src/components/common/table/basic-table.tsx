@@ -16,10 +16,10 @@ import Tbody from "./components/tbody";
 import Loader from "../loader/loader";
 
 const BasicTable = ({
-  rowSelection = [],
-  setRowSelection = () => {},
   items,
   itemsColumns,
+  rowSelection = [],
+  setRowSelection,
   hasFooter = false,
   isLoading = false,
   isPaginate = true,

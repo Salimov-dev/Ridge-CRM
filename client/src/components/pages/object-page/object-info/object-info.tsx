@@ -1,17 +1,21 @@
-import { useState } from "react";
 // libraries
+import { useState } from "react";
+import { useSelector } from "react-redux";
 import { Box, styled } from "@mui/material";
 // components
-import Dialogs from "./components/dialogs";
 import ObjectsParams from "./components/object-params";
 import ObjectTasks from "./components/object-tasks";
 import ObjectMeetings from "./components/object-meetings";
 import LastContacts from "./components/last-contacts";
+import PageDialogs from "@components/common/dialog/page-dialogs";
 // columns
 import { tasksColumns } from "@columns/tasks.columns";
 import { meetingsColumns } from "@columns/meetings.columns";
 // hooks
-import useObjectInfo from "../../../../hooks/object-info/use-object-info.hook";
+import useObjectInfo from "@hooks/object-info/use-object-info.hook";
+// store
+import { getObjectsList } from "@store/object/objects.store";
+import { getCurrentUserId, getIsUserCurator } from "@store/user/users.store";
 
 const Component = styled(Box)`
   display: flex;
@@ -31,9 +35,18 @@ const ObjectInfo = ({ object, objectId, isLoading, isAuthorEntity = true }) => {
     createMeetingPage: false,
     updateMeetingPage: false,
     taskId: "",
+    objectId: "",
     lastContactId: "",
     meetingId: "",
   });
+
+  const objects = useSelector(getObjectsList());
+  const currentUserId = useSelector(getCurrentUserId());
+  const isCurator = useSelector(getIsUserCurator(currentUserId));
+  const currentUserObjects = objects?.filter(
+    (obj) => obj?.userId === currentUserId
+  );
+  const actualObjects = isCurator ? currentUserObjects : objects;
 
   const {
     handleOpenCreateMyTaskPage,
@@ -59,6 +72,7 @@ const ObjectInfo = ({ object, objectId, isLoading, isAuthorEntity = true }) => {
         columns={tasksColumns(
           handleOpenUpdateMyTaskPage,
           handleOpenUpdateManagerTaskPage,
+          () => {},
           isDialogPage
         )}
         isAuthorEntity={isAuthorEntity}
@@ -67,7 +81,11 @@ const ObjectInfo = ({ object, objectId, isLoading, isAuthorEntity = true }) => {
         object={object}
         objectId={objectId}
         onOpen={handleOpenCreateMeetingPage}
-        columns={meetingsColumns(handleOpenUpdateMeetingPage, isDialogPage)}
+        columns={meetingsColumns(
+          handleOpenUpdateMeetingPage,
+          () => {},
+          isDialogPage
+        )}
         isAuthorEntity={isAuthorEntity}
       />
       <LastContacts
@@ -77,7 +95,7 @@ const ObjectInfo = ({ object, objectId, isLoading, isAuthorEntity = true }) => {
         onUpdate={handleOpenUpdateLastContactPage}
         isAuthorEntity={isAuthorEntity}
       />
-      <Dialogs state={state} objectId={objectId} setState={setState} />
+      <PageDialogs state={state} setState={setState} objects={actualObjects} />
     </Component>
   );
 };

@@ -1,3 +1,5 @@
+import * as dayjs from "dayjs";
+
 const useDialogHandlers = (setState) => {
   // обновление стейта при открытии страницы создания объекта
   const handleOpenCreateObjectPage = () => {
@@ -34,6 +36,17 @@ const useDialogHandlers = (setState) => {
   const handleCloseCreatePresentationPage = () => {
     setState((prevState) => ({ ...prevState, presentationPage: false }));
   };
+  // обновление стейта при открытии страницы обновления объекта
+  const handleOpenUpdatePresentationPage = (presentationId) => {
+    setState((prevState) => ({
+      ...prevState,
+      updatePresentationPage: true,
+      presentationId: presentationId,
+    }));
+  };
+  const handleCloseUpdatePresentationPage = () => {
+    setState((prevState) => ({ ...prevState, updatePresentationPage: false }));
+  };
 
   // обновление стейта при открытии окна передачи объекта другому менеджеру
   const handleOpenTransferObjectPage = () => {
@@ -48,7 +61,7 @@ const useDialogHandlers = (setState) => {
     setState((prevState) => ({
       ...prevState,
       createMyTaskPage: true,
-      dateCreate: day,
+      dateCreate: day instanceof dayjs ? day : null,
     }));
   };
   const handleCloseCreateMyTaskPage = () => {
@@ -68,11 +81,11 @@ const useDialogHandlers = (setState) => {
   };
 
   // обновление стейта при создании задачи менеджеру
-  const handleOpenCreateManagerTaskPage = (dateCreate) => {
+  const handleOpenCreateManagerTaskPage = (day) => {
     setState((prevState) => ({
       ...prevState,
       createManagerTaskPage: true,
-      dateCreate: dateCreate ? dateCreate : null,
+      dateCreate: day instanceof dayjs ? day : null,
     }));
   };
   const handleCloseCreateManagerTaskPage = () => {
@@ -122,12 +135,10 @@ const useDialogHandlers = (setState) => {
 
   // обновление стейта при создании встречи
   const handleOpenCreateMeetingPage = (day) => {
-    console.log("day", day);
-
     setState((prevState) => ({
       ...prevState,
       createMeetingPage: true,
-      dateCreate: day,
+      dateCreate: day instanceof dayjs ? day : null,
     }));
   };
   const handleCloseCreateMeetingPage = () => {
@@ -189,6 +200,8 @@ const useDialogHandlers = (setState) => {
     handleCloseObjectPage,
     handleOpenCreatePresentationPage,
     handleCloseCreatePresentationPage,
+    handleOpenUpdatePresentationPage,
+    handleCloseUpdatePresentationPage,
     handleOpenTransferObjectPage,
     handleCloseTransferObjectPage,
     handleOpenCreateMyTaskPage,

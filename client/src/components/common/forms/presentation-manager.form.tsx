@@ -45,7 +45,7 @@ const ManagerPresentationForm = ({
           onInputQuantities={200}
         />
         {isCurator && (
-          <Box sx={{ marginTop: "20px" }}>
+          <Box sx={{ width: "100%", marginTop: "20px" }}>
             <AutocompleteStyled
               label="Статус объекта *"
               register={register}

@@ -1,9 +1,10 @@
 const useObjectInfo = (setState) => {
   // обновление стейта при создании задачи себе
-  const handleOpenCreateMyTaskPage = () => {
+  const handleOpenCreateMyTaskPage = (objectId) => {
     setState((prevState) => ({
       ...prevState,
       createMyTaskPage: true,
+      objectId: objectId,
     }));
   };
   const handleCloseCreateMyTaskPage = () => {

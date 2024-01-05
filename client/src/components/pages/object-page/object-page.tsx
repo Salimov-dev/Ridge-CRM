@@ -16,53 +16,55 @@ import {
   getIsUserAuthorThisEntity,
 } from "@store/user/users.store";
 
-const ObjectPage = React.memo(({ objectId, onClose, onEdit, onOpenCreatePresentationPage }) => {
-  const object = useSelector(getObjectById(objectId));
-  const currentUserId = useSelector(getCurrentUserId());
-  const isLoading = useSelector(getObjectsLoadingStatus());
-  const isAuthorEntity = useSelector(
-    getIsUserAuthorThisEntity(currentUserId, object)
-  );
+const ObjectPage = React.memo(
+  ({ objectId, onClose, onEdit, onOpenCreatePresentationPage }) => {
+    const object = useSelector(getObjectById(objectId));
+    const currentUserId = useSelector(getCurrentUserId());
+    const isLoading = useSelector(getObjectsLoadingStatus());
+    const isAuthorEntity = useSelector(
+      getIsUserAuthorThisEntity(currentUserId, object)
+    );
 
-  const address = `${object?.location?.city}, ${object?.location?.address}`;
-  const latitude = object?.location?.latitude || null;
-  const longitude = object?.location?.longitude || null;
-  const mapZoom = object?.location?.zoom || null;
-  const center = [latitude, longitude];
+    const address = `${object?.location?.city}, ${object?.location?.address}`;
+    const latitude = object?.location?.latitude || null;
+    const longitude = object?.location?.longitude || null;
+    const mapZoom = object?.location?.zoom || null;
+    const center = [latitude, longitude];
 
-  return (
-    <Box>
-      <Header
-        object={object}
-        onClose={onClose}
-        onEdit={onEdit}
-        isLoading={isLoading}
-        isEdit={true}
-        isAuthorEntity={isAuthorEntity}
-      />
-      <ItemOnMap
-        mapZoom={mapZoom}
-        hintContent={address}
-        center={center}
-        isLoading={isLoading}
-      />
-      <ObjectInfo
-        object={object}
-        objectId={objectId}
-        isLoading={isLoading}
-        isAuthorEntity={isAuthorEntity}
-      />
-      <Footer
-        object={object}
-        onClose={onClose}
-        onEdit={onEdit}
-        isEdit={true}
-        onOpenCreatePresentationPage={onOpenCreatePresentationPage}
-        isLoading={isLoading}
-        isAuthorEntity={isAuthorEntity}
-      />
-    </Box>
-  );
-});
+    return (
+      <Box>
+        <Header
+          object={object}
+          onClose={onClose}
+          onEdit={onEdit}
+          isLoading={isLoading}
+          isEdit={true}
+          isAuthorEntity={isAuthorEntity}
+        />
+        <ItemOnMap
+          mapZoom={mapZoom}
+          hintContent={address}
+          center={center}
+          isLoading={isLoading}
+        />
+        <ObjectInfo
+          object={object}
+          objectId={objectId}
+          isLoading={isLoading}
+          isAuthorEntity={isAuthorEntity}
+        />
+        <Footer
+          object={object}
+          onClose={onClose}
+          onEdit={onEdit}
+          isEdit={true}
+          onOpenCreatePresentationPage={onOpenCreatePresentationPage}
+          isLoading={isLoading}
+          isAuthorEntity={isAuthorEntity}
+        />
+      </Box>
+    );
+  }
+);
 
 export default ObjectPage;

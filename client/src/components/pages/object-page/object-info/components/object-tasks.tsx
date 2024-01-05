@@ -37,7 +37,7 @@ const ObjectTasks = ({
             title="Поставить себе задачу"
             style="MY_TASK"
             variant="contained"
-            onClick={onOpenCreateMyTask}
+            onClick={() => onOpenCreateMyTask(objectId)}
           />
         ) : (
           <ButtonStyled

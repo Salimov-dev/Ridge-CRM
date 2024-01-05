@@ -18,6 +18,7 @@ import { createTask } from "@store/task/tasks.store";
 import { taskSchema } from "@schemas/task.shema";
 // utils
 import { capitalizeFirstLetter } from "@utils/data/capitalize-first-letter";
+import HeaderWithCloseButton from "@components/common/page-headers/header-with-close-button";
 
 const initialState = {
   date: null,
@@ -36,7 +37,7 @@ const CreateMyTask = React.memo(
     dateCreate = null,
     onClose,
     objects,
-    objectPageId = "",
+    objectId = "",
     isObjectPage = false,
   }) => {
     const dispatch = useDispatch();
@@ -57,6 +58,9 @@ const CreateMyTask = React.memo(
       resolver: yupResolver(taskSchema),
     });
     const data = watch();
+
+    console.log("data", data);
+    console.log("dateCreate", dateCreate);
 
     const onSubmit = () => {
       setIsLoading(true);
@@ -81,9 +85,9 @@ const CreateMyTask = React.memo(
 
     useEffect(() => {
       if (isObjectPage) {
-        setValue<any>("objectId", objectPageId);
+        setValue<any>("objectId", objectId);
       }
-    }, [objectPageId]);
+    }, [objectId]);
 
     useEffect(() => {
       if (dateCreate !== null) {
@@ -91,11 +95,11 @@ const CreateMyTask = React.memo(
       } else {
         setValue<any>("date", null);
       }
-    }, [dateCreate]);
+    }, []);
 
     return (
       <>
-        <TitleWithCloseButton
+        <HeaderWithCloseButton
           title={title}
           background={colors.task["myTask"]}
           onClose={onClose}
@@ -107,17 +111,13 @@ const CreateMyTask = React.memo(
           setValue={setValue}
           watch={watch}
           errors={errors}
-          // isObjectPage={true}
+          isObjectPage={isObjectPage}
         />
         <SuccessCancelFormButtons
           onSuccess={handleSubmit(onSubmit)}
           onCancel={onClose}
         />
-        <LoaderFullWindow
-          color={colors.grey[600]}
-          size={75}
-          isLoading={isLoading}
-        />
+        <LoaderFullWindow isLoading={isLoading} />
       </>
     );
   }

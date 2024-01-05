@@ -14,9 +14,11 @@ import HeaderLayout from "@components/common/page-headers/header-layout";
 import ItemsOnMap from "@components/common/map/items-on-map/items-on-map";
 import ExportToExelButton from "@components/common/buttons/export-to-excel.button";
 import Buttons from "./components/buttons";
+import PageDialogs from "@components/common/dialog/page-dialogs";
 // hooks
 import useSearchObject from "@hooks/object/use-search-object";
 import useModifyObjectToExportExel from "@hooks/object/use-modify-object-to-export-exel";
+import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
 // store
 import { getObjectsStatusList } from "@store/object-params/object-status.store";
 import { getCurrentUserId, getIsUserCurator } from "@store/user/users.store";
@@ -25,8 +27,6 @@ import {
   getObjectsList,
   getObjectsLoadingStatus,
 } from "@store/object/objects.store";
-import PageDialogs from "../../components/common/dialog/page-dialogs";
-import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
 
 const initialState = {
   address: "",
@@ -51,10 +51,11 @@ const initialState = {
 
 const Objects = React.memo(() => {
   const [rowSelection, setRowSelection] = useState([]);
-  const [selectedBaloon, setSelectedBaloon] = useState(null);
-  const [selectedObjects, setSelectedObjects] = useState([]);
 
   const [state, setState] = useState({
+    selectedObjects: [],
+    selectedBaloon: null,
+    rowSelection: [],
     objectPage: false,
     createPage: false,
     updatePage: false,
@@ -91,7 +92,7 @@ const Objects = React.memo(() => {
   const isCurator = useSelector(getIsUserCurator(currentUserId));
 
   const objects = useSelector(getObjectsList());
-  const selectedObject = useSelector(getObjectById(selectedBaloon));
+  const selectedObject = useSelector(getObjectById(state.selectedBaloon));
   const searchedObjects = useSearchObject(objects, data);
   const sortedObjects = useMemo(() => {
     return orderBy(searchedObjects, ["created_at"], ["desc"]);
@@ -103,6 +104,14 @@ const Objects = React.memo(() => {
     handleOpenObjectPage,
     handleOpenTransferObjectPage,
   } = useDialogHandlers(setState);
+
+  const handleSelectedBaloon = (item) => {
+    setState((prevState) => ({ ...prevState, selectedBaloon: item }));
+  };
+
+  const handleSelectObjects = (objects) => {
+    setState((prevState) => ({ ...prevState, selectedObjects: objects }));
+  };
 
   useEffect(() => {
     localStorage.setItem("search-objects-data", JSON.stringify(data));
@@ -133,7 +142,7 @@ const Objects = React.memo(() => {
         .filter((objectId) => objectId !== null);
     };
 
-    setSelectedObjects(getObjectsIdFromRowSelection());
+    handleSelectObjects(getObjectsIdFromRowSelection());
   }, [rowSelection]);
 
   return (
@@ -149,7 +158,7 @@ const Objects = React.memo(() => {
       />
       <ItemsOnMap
         items={searchedObjects}
-        onClick={setSelectedBaloon}
+        onClick={handleSelectedBaloon}
         isLoading={isLoading}
         baloon={
           <ObjectBaloon
@@ -184,7 +193,7 @@ const Objects = React.memo(() => {
       <PageDialogs
         state={state}
         setState={setState}
-        selectedObjects={selectedObjects}
+        selectedObjects={state.selectedObjects}
         setRowSelection={setRowSelection}
       />
     </>

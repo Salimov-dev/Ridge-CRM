@@ -11,8 +11,8 @@ import { useDispatch, useSelector } from "react-redux";
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
 import SuccessCancelFormButtons from "@components/common/forms/buttons/success-cancel-form-buttons";
 import MyTaskForm from "@components/common/forms/my-task.form";
-import TitleWithCloseButton from "@components/common/page-headers/header-with-close-button";
 import DialogConfirm from "@components/common/dialog/dialog-confirm";
+import HeaderWithCloseButton from "@components/common/page-headers/header-with-close-button";
 // schema
 import { taskSchema } from "@schemas/task.shema";
 // store
@@ -43,7 +43,7 @@ const UpdateManagerTask = React.memo(({ title, onClose, taskId, users }) => {
     setValue,
   } = useForm({
     defaultValues: formatedTask,
-    mode: "onBlur",
+    mode: "onChange",
     resolver: yupResolver(taskSchema),
   });
 
@@ -95,7 +95,7 @@ const UpdateManagerTask = React.memo(({ title, onClose, taskId, users }) => {
 
   return (
     <>
-      <TitleWithCloseButton
+      <HeaderWithCloseButton
         title={title}
         background={colors.task["managerTask"]}
         color="white"

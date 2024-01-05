@@ -209,12 +209,10 @@ const CreateObject = React.memo(({ onClose }) => {
         selectedArea={selectedArea}
       />
       <SuccessCancelFormButtons
-        onClickSuccess={handleSubmit(onSubmit)}
-        onClickSuccessCancel={onClose}
+        onSuccess={handleSubmit(onSubmit)}
+        onCancel={onClose}
       />
       <LoaderFullWindow
-        color={colors.grey[600]}
-        size={75}
         isLoading={isLoading}
       />
     </>

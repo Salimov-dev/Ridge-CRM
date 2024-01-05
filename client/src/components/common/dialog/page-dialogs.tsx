@@ -17,6 +17,7 @@ import UpdateMyTask from "@components/pages/task/update-my-task";
 import CreateMyTask from "@components/pages/task/create-my-task";
 import UpdateAvatar from "@components/pages/user/update-avatar-user";
 import Login from "@components/pages/user/login";
+import UpdatePresentation from "@components/pages/presentation/update-presentation";
 
 const PageDialogs = ({
   state,
@@ -33,6 +34,7 @@ const PageDialogs = ({
     handleCloseObjectPage,
     handleOpenCreatePresentationPage,
     handleCloseCreatePresentationPage,
+    handleCloseUpdatePresentationPage,
     handleCloseTransferObjectPage,
     handleCloseCreateMyTaskPage,
     handleCloseUpdateMyTaskPage,
@@ -77,11 +79,25 @@ const PageDialogs = ({
       />
       <DialogStyled
         component={
-          <CreatePresentation onClose={handleCloseCreatePresentationPage} />
+          <CreatePresentation
+            objectId={state.objectId}
+            onClose={handleCloseCreatePresentationPage}
+          />
         }
         onClose={handleCloseUpdateObjectPage}
         maxWidth="sm"
         open={state.presentationPage}
+      />
+      <DialogStyled
+        component={
+          <UpdatePresentation
+            onClose={handleCloseUpdatePresentationPage}
+            presentationId={state.presentationId}
+          />
+        }
+        onClose={handleCloseUpdatePresentationPage}
+        maxWidth="sm"
+        open={state.updatePresentationPage}
       />
       <DialogStyled
         onClose={handleCloseTransferObjectPage}
@@ -103,6 +119,7 @@ const PageDialogs = ({
             objectPageId={state.objectId}
             isObjectPage={state.createMyTaskPage}
             objects={objects}
+            objectId={state.objectId}
             dateCreate={state.dateCreate}
             onClose={handleCloseCreateMyTaskPage}
           />

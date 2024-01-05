@@ -1,6 +1,4 @@
-import { useDispatch } from "react-redux";
 import { Box, styled } from "@mui/material";
-// components
 import ButtonStyled from "@components/common/buttons/button-styled.button";
 
 const Component = styled(Box)`
@@ -18,7 +16,6 @@ const ButtonsPanel = ({
   onOpenCreatePresentationPage,
   isTopButtonsPanel = false,
 }) => {
-  const dispatch = useDispatch();
   const hasCloud = !!object?.cloudLink?.length;
 
   const handleOpenCloud = () => {

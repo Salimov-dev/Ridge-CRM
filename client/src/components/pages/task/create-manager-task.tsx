@@ -8,7 +8,7 @@ import { useForm } from "react-hook-form";
 import React, { useEffect, useState } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 // components
-import TitleWithCloseButton from "@components/common/page-headers/header-with-close-button";
+import HeaderWithCloseButton from "@components/common/page-headers/header-with-close-button";
 import SuccessCancelFormButtons from "@components/common/forms/buttons/success-cancel-form-buttons";
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
 import MyTaskForm from "@components/common/forms/my-task.form";
@@ -51,6 +51,7 @@ const CreateManagerTask = React.memo(
       resolver: yupResolver(taskSchema),
     });
     const data = watch();
+    console.log("data", data);
 
     const objects = useSelector(getObjectsList());
     const currentObject = useSelector(getObjectById(objectPageId));
@@ -90,7 +91,7 @@ const CreateManagerTask = React.memo(
 
     return (
       <>
-        <TitleWithCloseButton
+        <HeaderWithCloseButton
           title={title}
           background={colors.task["managerTask"]}
           onClose={onClose}

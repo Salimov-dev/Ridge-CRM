@@ -28,6 +28,7 @@ import { loadLastContactsList } from "@store/last-contact/last-contact.store";
 // presentation
 import { loadPresentationsList } from "@store/presentation/presentations.store";
 import { loadPresentationStatusList } from "@store/presentation/presentation-status.store";
+// avatar
 import { loadAvatarList } from "@store/avatar/avatar.store";
 
 interface AppLoaderProps {

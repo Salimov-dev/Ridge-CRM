@@ -82,7 +82,7 @@ export const tasksColumns = (
           {objectId ? (
             <>
               {fullAddress}
-              {isDialogPage ? (
+              {!isDialogPage ? (
                 <AlignCenter>
                   <ButtonStyled
                     title="Открыть"
