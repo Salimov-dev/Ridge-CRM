@@ -8,6 +8,7 @@ import UpdateElementIconButton from "@components/common/buttons/icons buttons/up
 import DoneIconToggler from "../../tasks/components/done-icon-toggler";
 // store
 import { updateMeeting } from "@store/meeting/meetings.store";
+import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
 
 const Component = styled(Box)`
   display: flex;
@@ -18,12 +19,14 @@ const ButtonsContainer = styled(Box)`
   display: flex;
 `;
 
-const Title = ({ meet, currentUserId }) => {
+const Title = ({ meet, currentUserId, setState }) => {
   const meetingId = meet?._id;
   const isMeetingDone = meet?.isDone;
   const dispatch = useDispatch();
 
   const isAuthor = meet?.userId === currentUserId;
+
+  const { handleOpenUpdateMeetingPage } = useDialogHandlers(setState);
 
   const handleDoneMeeting = (meet) => {
     const newMeeting = { ...meet, isDone: true };
@@ -43,7 +46,7 @@ const Title = ({ meet, currentUserId }) => {
       <ButtonsContainer>
         {isAuthor ? (
           <UpdateElementIconButton
-            // onClick={handleUpdateMeeting}
+            onClick={() => handleOpenUpdateMeetingPage(meetingId)}
             isDone={isMeetingDone}
           />
         ) : null}

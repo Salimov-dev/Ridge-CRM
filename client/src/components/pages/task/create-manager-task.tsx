@@ -85,7 +85,7 @@ const CreateManagerTask = React.memo(
       if (dateCreate !== null) {
         setValue<any>("date", dateCreate);
       } else {
-        setValue<any>("date", dayjs());
+        setValue<any>("date", null);
       }
     }, [dateCreate]);
 

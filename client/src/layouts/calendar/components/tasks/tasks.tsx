@@ -20,6 +20,7 @@ const Tasks = ({
   draggableDay,
   setDraggableDay,
   isSelectedDayDialog,
+  setState,
 }) => {
   const dispatch = useDispatch();
   const currentUserId = useSelector(getCurrentUserId());
@@ -72,7 +73,7 @@ const Tasks = ({
                 : "gray",
             }}
           >
-            <Title task={task} />
+            <Title task={task} setState={setState}/>
             <TaskComment comment={task?.comment} />
 
             {task?.managerId === currentUserId ? (
@@ -88,7 +89,7 @@ const Tasks = ({
                 <b>Менеджер:</b> {getUserName(task?.managerId)}
               </Typography>
             ) : null}
-            <TaskObject task={task} />
+            <TaskObject task={task} setState={setState}/>
             {isSelectedDayDialog ? <Result task={task} /> : null}
           </ItemContainer>
         );

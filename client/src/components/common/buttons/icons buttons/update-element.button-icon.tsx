@@ -5,9 +5,9 @@ const Component = styled(Box)`
   cursor: pointer;
 `;
 
-const UpdateElementIconButton = ({ onClick, isDone = false }) => {
+const UpdateElementIconButton = ({ itemId = "", onClick, isDone = false }) => {
   return !isDone ? (
-    <Component onClick={onClick}>
+    <Component onClick={() => onClick(itemId)}>
       <EditOutlinedIcon
         sx={{
           opacity: "0.5",

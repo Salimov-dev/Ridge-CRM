@@ -11,7 +11,7 @@ const Component = styled(Box)`
   gap: 4px;
 `;
 
-const Body = ({ meet, isCurator, isSelectedDayDialog }) => {
+const Body = ({ meet, isCurator, isSelectedDayDialog, setState }) => {
 
   return (
     <Component>
@@ -26,7 +26,7 @@ const Body = ({ meet, isCurator, isSelectedDayDialog }) => {
           <b>Менеджер:</b> {getUserName(meet?.userId)}
         </Typography>
       ) : null}
-      <MeetingObject meet={meet} />
+      <MeetingObject meet={meet} setState={setState}/>
     </Component>
   );
 };

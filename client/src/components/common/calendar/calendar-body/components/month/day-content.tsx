@@ -24,6 +24,7 @@ const DayContent = ({
   draggableDay,
   setDraggableDay,
   isSelectedDayDialog,
+  setState
 }) => {
   const isTasksLoading = useSelector(getTaskLoadingStatus());
   const isMeetingsLoading = useSelector(getMeetingLoadingStatus());
@@ -44,6 +45,7 @@ const DayContent = ({
           draggableDay={draggableDay}
           setDraggableDay={setDraggableDay}
           isSelectedDayDialog={isSelectedDayDialog}
+          setState={setState}
         />
       ) : null}
       {isMeetings ? (
@@ -54,6 +56,7 @@ const DayContent = ({
           setDraggableDay={setDraggableDay}
           isCurator={isCurator}
           isSelectedDayDialog={isSelectedDayDialog}
+          setState={setState}
         />
       ) : null}
     </Components>

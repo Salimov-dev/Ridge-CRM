@@ -16,6 +16,7 @@ const Meetings = ({
   setDraggableDay,
   isCurator,
   isSelectedDayDialog,
+  setState,
 }) => {
   const dispatch = useDispatch();
 
@@ -47,11 +48,16 @@ const Meetings = ({
             background: !meet?.isDone ? "RoyalBlue" : "gray",
           }}
         >
-          <Title meet={meet} currentUserId={currentUserId} />
+          <Title
+            meet={meet}
+            currentUserId={currentUserId}
+            setState={setState}
+          />
           <Body
             meet={meet}
             isCurator={isCurator}
             isSelectedDayDialog={isSelectedDayDialog}
+            setState={setState}
           />
           {isSelectedDayDialog ? <Result meet={meet} /> : null}
         </ItemContainer>

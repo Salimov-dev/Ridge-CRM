@@ -70,6 +70,7 @@ const Day = ({
         draggableDay={draggableDay}
         setDraggableDay={setDraggableDay}
         isSelectedDayDialog={false}
+        setState={setState}
       />
       <ActionsIcons
         day={day}
