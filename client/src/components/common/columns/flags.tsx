@@ -1,4 +1,6 @@
+import { useTheme } from "@emotion/react";
 import { Box, Tooltip, styled } from "@mui/material";
+import { tokens } from "@theme/theme";
 
 const Component = styled(Box)`
   height: 100%;
@@ -11,7 +13,6 @@ const Component = styled(Box)`
 const LastContantFlag = styled(Box)`
   width: 10px;
   height: 10px;
-  background: SaddleBrown;
   border-radius: 50%;
   border: 1px solid gray;
 `;
@@ -19,7 +20,6 @@ const LastContantFlag = styled(Box)`
 const MeetingFlag = styled(Box)`
   width: 10px;
   height: 10px;
-  background: RoyalBlue;
   border-radius: 50%;
   border: 1px solid gray;
 `;
@@ -27,7 +27,6 @@ const MeetingFlag = styled(Box)`
 const TaskFlag = styled(Box)`
   width: 10px;
   height: 10px;
-  background: orange;
   border-radius: 50%;
   border: 1px solid orange;
 `;
@@ -38,21 +37,33 @@ const Flags = ({
   lastContacts = [],
   onClick = () => {},
 }) => {
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
+
   return (
     <Component>
       {lastContacts?.length ? (
         <Tooltip title="Есть последний контакт" placement="top-start" arrow>
-          <LastContantFlag onClick={onClick}></LastContantFlag>
+          <LastContantFlag
+            onClick={onClick}
+            sx={{ background: colors.lastContact["primary"] }}
+          ></LastContantFlag>
         </Tooltip>
       ) : null}
       {meetings?.length ? (
         <Tooltip title="Есть встречи" placement="top-start" arrow>
-          <MeetingFlag onClick={onClick}></MeetingFlag>
+          <MeetingFlag
+            onClick={onClick}
+            sx={{ background: colors.meeting["primary"] }}
+          ></MeetingFlag>
         </Tooltip>
       ) : null}
       {tasks?.length ? (
         <Tooltip title="Есть задачи" placement="top-start" arrow>
-          <TaskFlag onClick={onClick}></TaskFlag>
+          <TaskFlag
+            onClick={onClick}
+            sx={{ background: colors.task["myTask"] }}
+          ></TaskFlag>
         </Tooltip>
       ) : null}
     </Component>

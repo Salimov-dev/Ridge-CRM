@@ -19,7 +19,11 @@ import {
   getIsUserAuthorThisEntity,
 } from "@store/user/users.store";
 
-export const meetingsColumns = (onOpenUpdateMeetingPage, isDialogPage) => [
+export const meetingsColumns = (
+  handleOpenUpdateMeetingPage,
+  handleOpenObjectPage,
+  isDialogPage
+) => [
   {
     accessorKey: "isDone",
     header: "",
@@ -92,11 +96,11 @@ export const meetingsColumns = (onOpenUpdateMeetingPage, isDialogPage) => [
           }}
         >
           {fullAddress}
-          {!isDialogPage ? (
+          {isDialogPage ? (
             <ButtonStyled
               title="Открыть"
               style="OPEN_OBJECT"
-              // onClick={onOpenCreateMyTask}
+              onClick={() => handleOpenObjectPage(objectId)}
             />
           ) : null}
         </Box>
@@ -155,7 +159,7 @@ export const meetingsColumns = (onOpenUpdateMeetingPage, isDialogPage) => [
             title="Править"
             style="MEETING"
             disabled={!isAuthorEntity}
-            onClick={() => onOpenUpdateMeetingPage(meetingId)}
+            onClick={() => handleOpenUpdateMeetingPage(meetingId)}
           />
         </AlignCenter>
       );

@@ -2,18 +2,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { Box, Paper, styled } from "@mui/material";
 // components
 import ObjectAddress from "./object-address";
-import UserNameWithAvatar from "../../../../../components/common/table/components/user-name-with-avatar";
-// mock
-import { dealStagesArray } from "../../../../../mock/deals/deals-stages";
+import UserNameWithAvatar from "@components/common/table/components/user-name-with-avatar";
+// data
+import { dealStagesArray } from "@data/deals/deals-stages";
 // store
-import { updateObject } from "../../../../../store/object/objects.store";
-import {
-  setOpenObjectPageId,
-  setOpenObjectPageOpenState,
-} from "../../../../../store/object/open-object-page.store";
-import { getUsersList } from "../../../../../store/user/users.store";
+import { updateObject } from "@store/object/objects.store";
+import { getUsersList } from "@store/user/users.store";
 // hooks
-import useGetUserAvatar from "../../../../../hooks/user/use-get-user-avatar";
+import useGetUserAvatar from "@hooks/user/use-get-user-avatar";
+import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
 
 const Component = styled(Box)`
   width: 100%;
@@ -41,17 +38,14 @@ const ObjectContainer = styled(Paper)`
 const Objects = ({
   objects,
   stage,
+  setState,
   draggableStageId,
   setDraggableStageId,
   isCurator,
 }) => {
   const dispatch = useDispatch();
+  const { handleOpenObjectPage } = useDialogHandlers(setState);
   const users = useSelector(getUsersList());
-
-  const handleOpenObjectPage = (objectId) => {
-    dispatch<any>(setOpenObjectPageId(objectId));
-    dispatch<any>(setOpenObjectPageOpenState(true));
-  };
 
   const getNewDealStage = (stageId) => {
     const stage = dealStagesArray.find((deal) => deal?._id === stageId);

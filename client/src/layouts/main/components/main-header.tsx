@@ -1,5 +1,5 @@
 import { Box, Typography, styled } from "@mui/material";
-import LoginButton from "./login-button";
+import ButtonStyled from "@components/common/buttons/button-styled.button";
 
 const Component = styled(Box)`
   display: flex;
@@ -9,7 +9,12 @@ const Component = styled(Box)`
   margin-bottom: 20px;
 `;
 
-const MainHeader = ({ isLoggedIn, background = "yellow", color = "black" }) => {
+const MainHeader = ({
+  handleOpenLoginPage,
+  isLoggedIn,
+  background = "yellow",
+  color = "black",
+}) => {
   return (
     <Component>
       {/* <Typography
@@ -18,7 +23,14 @@ const MainHeader = ({ isLoggedIn, background = "yellow", color = "black" }) => {
       >
         Здесь будет какая-то важная информация
       </Typography> */}
-      {!isLoggedIn && <LoginButton />}
+      {!isLoggedIn && (
+        <ButtonStyled
+          title="Войти"
+          style="MANAGER_TASK"
+          variant="contained"
+          onClick={handleOpenLoginPage}
+        />
+      )}
     </Component>
   );
 };

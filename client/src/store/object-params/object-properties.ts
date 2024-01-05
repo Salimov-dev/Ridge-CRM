@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { objectPropertiesArray } from "../../mock/object/object-properties";
+import { objectPropertiesArray } from "../../data/object/object-properties";
 
 const objectPropertiesSlice = createSlice({
   name: "objectProperties",
@@ -20,10 +20,13 @@ export const loadObjectPropertiesList = () => async (dispatch) => {
   dispatch(objectPropertiesLoaded(objectPropertiesArray));
 };
 
-export const getObjectPropertiesList = () => (state) => state.objectProperties.entities;
+export const getObjectPropertiesList = () => (state) =>
+  state.objectProperties.entities;
 
 export const getObjectPropertiesNameById = (id) => (state) => {
-  const rentType = state?.objectProperties?.entities?.find((type) => type?._id === id);
+  const rentType = state?.objectProperties?.entities?.find(
+    (type) => type?._id === id
+  );
   const result = rentType?.name;
 
   return result;

@@ -9,8 +9,6 @@ const useDialogHandlers = (setState) => {
 
   // обновление стейта при открытии страницы объекта
   const handleOpenObjectPage = (objectId) => {
-    // console.log("objectId", objectId);
-
     setState((prevState) => ({
       ...prevState,
       objectPage: true,
@@ -46,10 +44,11 @@ const useDialogHandlers = (setState) => {
   };
 
   // обновление стейта при создании задачи себе
-  const handleOpenCreateMyTaskPage = () => {
+  const handleOpenCreateMyTaskPage = (day) => {
     setState((prevState) => ({
       ...prevState,
       createMyTaskPage: true,
+      dateCreate: day,
     }));
   };
   const handleCloseCreateMyTaskPage = () => {
@@ -122,10 +121,13 @@ const useDialogHandlers = (setState) => {
   };
 
   // обновление стейта при создании встречи
-  const handleOpenCreateMeetingPage = () => {
+  const handleOpenCreateMeetingPage = (day) => {
+    console.log("day", day);
+
     setState((prevState) => ({
       ...prevState,
       createMeetingPage: true,
+      dateCreate: day,
     }));
   };
   const handleCloseCreateMeetingPage = () => {
@@ -149,6 +151,35 @@ const useDialogHandlers = (setState) => {
       updateMeetingPage: false,
     }));
   };
+
+  // обновление стейта при обновлении автарки пользователя
+  const handleOpenUpdateUserAvatarPage = () => {
+    setState((prevState) => ({
+      ...prevState,
+      avatarUpdatePage: true,
+    }));
+  };
+  const handleCloseUpdateUserAvatarPage = () => {
+    setState((prevState) => ({
+      ...prevState,
+      avatarUpdatePage: false,
+    }));
+  };
+
+  // обновление стейта при открытии окна логина
+  const handleOpenLoginPage = () => {
+    setState((prevState) => ({
+      ...prevState,
+      loginPage: true,
+    }));
+  };
+  const handleCloseLoginPage = () => {
+    setState((prevState) => ({
+      ...prevState,
+      loginPage: false,
+    }));
+  };
+
   return {
     handleOpenCreateObjectPage,
     handleCloseCreateObjectPage,
@@ -176,6 +207,10 @@ const useDialogHandlers = (setState) => {
     handleCloseCreateMeetingPage,
     handleOpenUpdateMeetingPage,
     handleCloseUpdateMeetingPage,
+    handleOpenUpdateUserAvatarPage,
+    handleCloseUpdateUserAvatarPage,
+    handleOpenLoginPage,
+    handleCloseLoginPage,
   };
 };
 

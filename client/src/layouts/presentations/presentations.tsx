@@ -32,9 +32,9 @@ import {
 import { getPresentationStatusList } from "../../store/presentation/presentation-status.store";
 import DialogStyled from "@components/common/dialog/dialog-styled";
 import ObjectPage from "@components/pages/object-page/object-page";
-import CreatePresentation from "@components/pages/create-presentation/create-presentation";
-import UpdatePresentation from "@components/pages/update-presentation/update-presentation";
-import UpdateObject from "@components/pages/update-object/update-object";
+import CreatePresentation from "@components/pages/presentation/create-presentation";
+import UpdatePresentation from "@components/pages/presentation/update-presentation";
+import UpdateObject from "@components/pages/object/update-object";
 import Buttons from "./components/buttons";
 
 const initialState = {

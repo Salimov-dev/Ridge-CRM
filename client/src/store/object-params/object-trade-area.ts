@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { objectTradeAreaArray } from "../../mock/object/object-trade-area"; 
+import { objectTradeAreaArray } from "../../data/object/object-trade-area";
 
 const tradeAreaSlice = createSlice({
   name: "tradeArea",
@@ -23,7 +23,9 @@ export const loadTradeAreaList = () => async (dispatch) => {
 export const getTradeAreaList = () => (state) => state.tradeArea.entities;
 
 export const getTradeAreaNameById = (id) => (state) => {
-  const tradeArea = state?.tradeArea?.entities?.find((type) => type?._id === id);
+  const tradeArea = state?.tradeArea?.entities?.find(
+    (type) => type?._id === id
+  );
   const result = tradeArea?.name;
 
   return result;

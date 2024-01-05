@@ -15,6 +15,7 @@ const MyTaskForm = ({
   isCurator = false,
   isEditMode = false,
   users = [],
+  isObjectPage=false
 }) => {
   const watchObjectId = watch("objectId", "");
   const watchIsDone = watch("isDone", false);
@@ -60,7 +61,7 @@ const MyTaskForm = ({
         value={data.objectId}
         setValue={setValue}
         watchItemId={watchObjectId}
-        disabled={!!watchObjectId}
+        disabled={isObjectPage}
         optionLabel={(option) =>
           `${option?.location?.city}, ${option?.location?.address}`
         }

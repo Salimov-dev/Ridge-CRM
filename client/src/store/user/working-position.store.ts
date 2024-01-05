@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { workingPositionsArray } from "../../mock/users/working-positions";
+import { workingPositionsArray } from "../../data/users/working-positions";
 
 const workingPositionSlice = createSlice({
   name: "workingPosition",

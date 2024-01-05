@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { currentRentersArray } from "../../mock/object/current-renters";
+import { currentRentersArray } from "../../data/object/current-renters";
 
 const currentRentersSlice = createSlice({
   name: "currentRenters",

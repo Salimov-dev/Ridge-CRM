@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { metroListArraySPB } from "../../mock/metro/metro-spb";
+import { metroListArraySPB } from "../../data/metro/metro-spb";
 
 const metroSlice = createSlice({
   name: "metro",

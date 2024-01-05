@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-import { userStatusesArray } from "../../mock/users/user-statuses";
+import { userStatusesArray } from "../../data/users/user-statuses";
 
 const userStatusesSlice = createSlice({
   name: "userStatuses",

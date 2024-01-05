@@ -29,7 +29,7 @@ export const RightSide = styled(Box)`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 0 20px 150px 20px;
+  padding: 0 20px 50px 20px;
   width: 100%;
   background-image: url(${grassImage});
   background-repeat: repeat-x;

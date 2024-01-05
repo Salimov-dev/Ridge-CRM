@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { estateTypesArray } from "../../mock/object/estate-types";
+import { estateTypesArray } from "../../data/object/estate-types";
 
 const estateTypesSlice = createSlice({
   name: "estateTypes",
@@ -14,11 +14,10 @@ const estateTypesSlice = createSlice({
 });
 
 const { reducer: estateTypesReducer, actions } = estateTypesSlice;
-const { estateTypesLoaded } =
-  actions;
+const { estateTypesLoaded } = actions;
 
 export const loadEstateTypesList = () => async (dispatch) => {
-    dispatch(estateTypesLoaded(estateTypesArray));
+  dispatch(estateTypesLoaded(estateTypesArray));
 };
 
 export const getEstateTypesList = () => (state) => state.estateTypes.entities;

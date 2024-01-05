@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { objectTypesArray } from "../../mock/object/object-types";
+import { objectTypesArray } from "../../data/object/object-types";
 
 const objectTypesSlice = createSlice({
   name: "objectTypes",
@@ -14,11 +14,10 @@ const objectTypesSlice = createSlice({
 });
 
 const { reducer: objectTypesReducer, actions } = objectTypesSlice;
-const { objectTypesLoaded } =
-  actions;
+const { objectTypesLoaded } = actions;
 
 export const loadObjectTypesList = () => async (dispatch) => {
-    dispatch(objectTypesLoaded(objectTypesArray));
+  dispatch(objectTypesLoaded(objectTypesArray));
 };
 
 export const getObjectTypesList = () => (state) => state.objectTypes.entities;

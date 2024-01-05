@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { presentationStatusesArrray } from "../../mock/presentations/presentations-status";
+import { presentationStatusesArrray } from "../../data/presentations/presentations-status";
 
 const presentationStatusSlice = createSlice({
   name: "presentationStatus",

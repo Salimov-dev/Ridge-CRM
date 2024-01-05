@@ -11,8 +11,8 @@ import { FormatTime } from "@utils/date/format-time";
 // store
 import { getUserNameById } from "@store/user/users.store";
 import { getObjectById } from "@store/object/objects.store";
-import { getMeetingTypeNameById } from "@store/meeting/meeting-types.store";
 import { getMeetingStatusNameById } from "@store/meeting/meeting-status.store";
+import { getMeetingTypeNameById } from "@store/meeting/meeting-types.store";
 
 const BaloonContainer = styled(Box)`
   width: 100%;
@@ -61,6 +61,21 @@ const MeetingBaloon = React.memo(
         <Attribute title="Статус:" subTitle={status} />
         <Attribute title="Менеджер:" subTitle={manager} />
 
+        <Box
+          sx={{
+            width: "100%",
+            display: "flex",
+            justifyContent: "center",
+            gap: "4px",
+          }}
+        >
+          <ButtonStyled
+            title="Править встречу"
+            style="MEETING"
+            size="small"
+            onClick={() => onOpenUpdateMeetingPage(meetingId)}
+          />
+        </Box>
         {objectId ? (
           <>
             <DividerStyled />
@@ -82,12 +97,6 @@ const MeetingBaloon = React.memo(
                 style="OBJECT"
                 size="small"
                 onClick={() => onOpenObjectPage(objectId)}
-              />
-              <ButtonStyled
-                title="Править встречу"
-                style="MEETING"
-                size="small"
-                onClick={() => onOpenUpdateMeetingPage(meetingId)}
               />
             </Box>
           </>

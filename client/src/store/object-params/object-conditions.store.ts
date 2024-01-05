@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { objectConditionsArray } from "../../mock/object/object-conditions";
+import { objectConditionsArray } from "../../data/object/object-conditions";
 
 const objectConditionsSlice = createSlice({
   name: "objectConditions",
@@ -14,12 +14,10 @@ const objectConditionsSlice = createSlice({
 });
 
 const { reducer: objectConditionsReducer, actions } = objectConditionsSlice;
-const {
-  objectConditionsLoaded,
-} = actions;
+const { objectConditionsLoaded } = actions;
 
-export const loadObjectConditionsList = () =>  (dispatch) => {
-    dispatch(objectConditionsLoaded(objectConditionsArray));
+export const loadObjectConditionsList = () => (dispatch) => {
+  dispatch(objectConditionsLoaded(objectConditionsArray));
 };
 
 export const getObjectConditionsList = () => (state) =>

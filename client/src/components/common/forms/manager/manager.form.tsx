@@ -6,12 +6,12 @@ import AlternateEmailOutlinedIcon from "@mui/icons-material/AlternateEmailOutlin
 import KeyOutlinedIcon from "@mui/icons-material/KeyOutlined";
 // components
 import Title from "./components/title";
-import FooterButtons from "../success-cancel-form-buttons/success-cancel-form-buttons";
+import FooterButtons from "../buttons/success-cancel-form-buttons";
 import TextFieldStyled from "../../inputs/text-field-styled";
 import DatePickerStyled from "../../inputs/date-picker";
 import SimpleSelectField from "../../inputs/simple-select-field";
 // mock
-import { gendersArray } from "../../../../mock/genders";
+import { gendersArray } from "../../../../data/genders";
 // utils
 import getDateToday from "../../../../utils/date/get-date-today";
 // styled

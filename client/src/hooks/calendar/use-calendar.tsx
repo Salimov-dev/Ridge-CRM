@@ -9,10 +9,13 @@ import { getCurrentUserId, getIsUserCurator } from "@store/user/users.store";
 // utils
 import getStartWeekDate from "@utils/date/get-start-week-date";
 import getEndWeekDate from "@utils/date/get-end-week-date";
+import getMonth from "@utils/calendar/get-month";
+// store
 import { getTasksList } from "@store/task/tasks.store";
+// hooks
 import useSearchTask from "@hooks/task/use-search-task";
 
-const useCalendar = (data) => {
+const useCalendar = (data, setState) => {
   dayjs.extend(isBetween);
 
   const currentUserId = useSelector(getCurrentUserId());
@@ -73,12 +76,21 @@ const useCalendar = (data) => {
     return sortedTasks;
   };
 
+    // обновление стейта при изменении даты текущего месяца календаря
+    const handleChangeCurrentMonth = (monthIndex) => {
+      setState((prevState) => ({
+        ...prevState,
+        currentMonth: getMonth(monthIndex),
+      }));
+    };
+
   return {
     sortedCurrentWeeklyMeetings,
     sortedTasks,
     actualTasks,
     getMeeting,
     getTask,
+    handleChangeCurrentMonth
   };
 };
 

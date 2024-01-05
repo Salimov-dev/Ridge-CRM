@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { objectStatusesArray } from "../../mock/object/object-status.ts";
+import { objectStatusesArray } from "../../data/object/object-status.ts";
 
 const objectStatusSlice = createSlice({
   name: "objectStatus",
@@ -14,8 +14,7 @@ const objectStatusSlice = createSlice({
 });
 
 const { reducer: objectStatusReducer, actions } = objectStatusSlice;
-const { objectStatusLoaded } =
-  actions;
+const { objectStatusLoaded } = actions;
 
 export const loadObjectStatusList = () => (dispatch) => {
   dispatch(objectStatusLoaded(objectStatusesArray));

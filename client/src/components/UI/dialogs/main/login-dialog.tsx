@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import DialogStyled from "../../../common/dialog/dialog-styled";
-import Login from "../../../pages/login/login";
+import Login from "../../../pages/user/login";
 import {
   getLoginOpenState,
   setLoginOpenState,

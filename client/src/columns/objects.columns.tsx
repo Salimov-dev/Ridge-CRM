@@ -20,10 +20,6 @@ import {
 import { getLastContactsList } from "../store/last-contact/last-contact.store";
 import { getTasksList } from "../store/task/tasks.store";
 import {
-  setOpenObjectPageId,
-  setOpenObjectPageOpenState,
-} from "../store/object/open-object-page.store";
-import {
   getMeetingsList,
   getObjectMeetingsList,
 } from "../store/meeting/meetings.store";
@@ -142,10 +138,10 @@ export const objectsColumns = (handleOpenObjectPage, isCurator) => {
             (contact) => contact.objectId === objectId
           );
 
-          const handleClick = () => {
-            dispatch<any>(setOpenObjectPageId(objectId));
-            dispatch<any>(setOpenObjectPageOpenState(true));
-          };
+          // const handleClick = () => {
+          //   dispatch<any>(setOpenObjectPageId(objectId));
+          //   dispatch<any>(setOpenObjectPageOpenState(true));
+          // };
 
           if (objectId) {
             return (
@@ -162,7 +158,7 @@ export const objectsColumns = (handleOpenObjectPage, isCurator) => {
                   meetings={meetings}
                   tasks={tasks}
                   lastContacts={lastContacts}
-                  onClick={handleClick}
+                  // onClick={handleClick}
                 />
               </Box>
             );

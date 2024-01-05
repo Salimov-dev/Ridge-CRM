@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { FormatPhone } from "@components/common/table/helpers/helpers";
 import { AlignCenter } from "@components/common/columns/styled";
 // mock
-import { gendersArray } from "../mock/genders";
+import { gendersArray } from "../data/genders";
 // store
 import { getUserNameById } from "@store/user/users.store";
 import { getUserStatusNameById } from "@store/user/user-statuses.store";

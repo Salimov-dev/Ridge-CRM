@@ -7,9 +7,10 @@ import useGetUserAvatar from "@hooks/user/use-get-user-avatar";
 import AvatarImage from "./components/avatar-image";
 import HeaderLayout from "@components/common/page-headers/header-layout";
 import DialogConfirm from "@components/common/dialog/dialog-confirm";
-import UpdateAvatarDialog from "@components/UI/dialogs/avatar/update-avatar-dialog";
-import UpdateUserAvatarButton from "@components/UI/dialogs/buttons/update-user-avatar-button";
-import DeleteUserAvatarButton from "@components/UI/dialogs/buttons/delete-user-avatar-button";
+import PageDialogs from "@components/common/dialog/page-dialogs";
+import Buttons from "./components/buttons";
+// hooks
+import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
 // store
 import { getCurrentUserData, getCurrentUserId } from "@store/user/users.store";
 import {
@@ -24,14 +25,14 @@ const AvatarContainer = styled(Box)`
   gap: 6px;
 `;
 
-const ButtonsContainer = styled(Box)`
-  display: flex;
-  gap: 4px;
-`;
-
 const Profile = () => {
   const dispatch = useDispatch();
-  const [open, setOpen] = useState(false);
+  const [state, setState] = useState({
+    avatarUpdatePage: false,
+    openDialog: false,
+  });
+
+  const { handleOpenUpdateUserAvatarPage } = useDialogHandlers(setState);
 
   const user = useSelector(getCurrentUserData());
   const isUserLoading = useSelector(getUserAvatarsLoadingStatus());
@@ -39,16 +40,18 @@ const Profile = () => {
 
   const { avatarSrc } = useGetUserAvatar(currentUserId);
 
+  const handleClickOpenConfirmDialog = () => {
+    setState((prevState) => ({ ...prevState, openDialog: true }));
+  };
+
+  const handleCloseConfirmDialog = () => {
+    setState((prevState) => ({ ...prevState, openDialog: false }));
+  };
+
   const handleDeleteAvatar = (currentUserId) => {
-    dispatch<any>(removeAvatar(currentUserId));
-  };
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
+    dispatch<any>(removeAvatar(currentUserId)).then(() =>
+      handleCloseConfirmDialog()
+    );
   };
 
   return (
@@ -62,19 +65,20 @@ const Profile = () => {
       />
       <AvatarContainer>
         <AvatarImage avatarSrc={avatarSrc} isLoading={isUserLoading} />
-        <ButtonsContainer>
-          <UpdateUserAvatarButton />
-          <DeleteUserAvatarButton onOpen={handleClickOpen} />
-        </ButtonsContainer>
+        <Buttons
+          handleOpenUpdateUserAvatarPage={handleOpenUpdateUserAvatarPage}
+          handleClickOpenConfirmDialog={handleClickOpenConfirmDialog}
+          avatarSrc={avatarSrc}
+        />
       </AvatarContainer>
 
-      <UpdateAvatarDialog />
       <DialogConfirm
         question="Вы уверены, что хотите удалить аватарку?"
-        open={open}
+        open={state.openDialog}
         onSuccessClick={() => handleDeleteAvatar(currentUserId)}
-        onClose={handleClose}
+        onClose={handleCloseConfirmDialog}
       />
+      <PageDialogs state={state} setState={setState} />
     </Box>
   );
 };

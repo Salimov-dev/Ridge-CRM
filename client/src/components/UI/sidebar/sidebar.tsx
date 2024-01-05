@@ -9,7 +9,6 @@ import { tokens } from "@theme/theme";
 import Header from "./components/header";
 import ItemsList from "./components/items-list";
 // store
-import { setSidebarCollapsState } from "@store/sidebar-collaps-state.store";
 import { getCurrentUserId, getIsUserCurator } from "@store/user/users.store";
 import {
   getCurrrentPathState,
@@ -102,7 +101,6 @@ const Sidebar = React.memo(() => {
 
   const handleSetCollapsed = (value) => {
     setIsCollapsed(value);
-    dispatch<any>(setSidebarCollapsState(value));
   };
 
   useEffect(() => {

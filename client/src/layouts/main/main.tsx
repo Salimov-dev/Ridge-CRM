@@ -6,7 +6,9 @@ import { useSelector } from "react-redux";
 import { getIsLoggedIn } from "../../store/user/users.store";
 import { Box, Typography, styled } from "@mui/material";
 import telegramIcon from "../../assets/telegram.png";
-import React from "react";
+import React, { useState } from "react";
+import PageDialogs from "@components/common/dialog/page-dialogs";
+import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
 
 const Logo = styled(Box)`
   padding: 20px;
@@ -17,10 +19,20 @@ const Logo = styled(Box)`
 `;
 
 const Main = React.memo(() => {
+  const [state, setState] = useState({
+    loginPage: false,
+  });
+
+  const { handleOpenLoginPage, handleCloseLoginPage } =
+    useDialogHandlers(setState);
+
   const isLoggedIn = useSelector(getIsLoggedIn());
   return (
     <Box>
-      <MainHeader isLoggedIn={isLoggedIn} />
+      <MainHeader
+        isLoggedIn={isLoggedIn}
+        handleOpenLoginPage={handleOpenLoginPage}
+      />
       <Box
         sx={{
           display: "flex",
@@ -110,8 +122,7 @@ const Main = React.memo(() => {
           </Typography>
         </Box>
       </Box>
-
-      <LoginDialog />
+      <PageDialogs state={state} setState={setState} />
     </Box>
   );
 });

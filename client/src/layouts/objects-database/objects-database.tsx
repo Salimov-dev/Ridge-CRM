@@ -5,28 +5,24 @@ import React, { useEffect, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 import { Box, Typography, styled } from "@mui/material";
 // components
-import Loader from "../../components/common/loader/loader";
-import HeaderLayout from "../../components/common/page-headers/header-layout";
-import BasicTable from "../../components/common/table/basic-table";
-import ObjectCreatePageDialog from "../../components/UI/dialogs/objects/object-create-page-dialog";
-import ObjectPageDialog from "../../components/UI/dialogs/object-page-dialog/object-page-dialog";
-import ObjectUpdatePageDialog from "../../components/UI/dialogs/objects/object-update-page-dialog";
+import Loader from "@components/common/loader/loader";
+import HeaderLayout from "@components/common/page-headers/header-layout";
+import BasicTable from "@components/common/table/basic-table";
 import ChangePeriodButton from "./components/change-period-button";
-import ObjectsDatabaseFiltersPanel from "../../components/UI/filters-panels/objectsdatabase-filters-panel";
+import ObjectsDatabaseFiltersPanel from "@components/UI/filters-panels/objectsdatabase-filters-panel";
+import PageDialogs from "@components/common/dialog/page-dialogs";
 // columns
-import { objectsColumns } from "../../columns/objects.columns";
+import { objectsColumns } from "@columns/objects.columns";
 // hooks
-import useSearchObjectDatabase from "../../hooks/objects-database/use-search-object-database";
+import useSearchObjectDatabase from "@hooks/objects-database/use-search-object-database";
+import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
 // store
-import { getObjectsStatusList } from "../../store/object-params/object-status.store";
+import { getObjectsStatusList } from "@store/object-params/object-status.store";
+import { getCurrentUserId, getIsUserCurator } from "@store/user/users.store";
 import {
   getObjectsList,
   getObjectsLoadingStatus,
-} from "../../store/object/objects.store";
-import {
-  getCurrentUserId,
-  getIsUserCurator,
-} from "../../store/user/users.store";
+} from "@store/object/objects.store";
 
 const ChangePeriodsContainer = styled(Box)`
   width: 100%;
@@ -43,6 +39,15 @@ const initialState = {
 };
 
 const ObjectsDatabase = React.memo(() => {
+  const [state, setState] = useState({
+    objectPage: false,
+    createPage: false,
+    updatePage: false,
+    objectId: null,
+  });
+
+  const { handleOpenObjectPage } = useDialogHandlers(setState);
+
   const localStorageState = JSON.parse(
     localStorage.getItem("search-objectsdatabase-data")
   );
@@ -63,7 +68,6 @@ const ObjectsDatabase = React.memo(() => {
 
   const currentUserId = useSelector(getCurrentUserId());
   const isCurator = useSelector(getIsUserCurator(currentUserId));
-  const columns = objectsColumns();
 
   const { searchedObjects, filteredObjects } = useSearchObjectDatabase(
     objects,
@@ -173,16 +177,14 @@ const ObjectsDatabase = React.memo(() => {
       {!isLoading ? (
         <BasicTable
           items={filteredObjects}
-          itemsColumns={columns}
+          itemsColumns={objectsColumns(handleOpenObjectPage, isCurator)}
           isLoading={isLoading}
         />
       ) : (
         <Loader height="300px" />
       )}
 
-      <ObjectCreatePageDialog />
-      <ObjectPageDialog />
-      <ObjectUpdatePageDialog />
+      <PageDialogs state={state} setState={setState} />
     </Box>
   );
 });

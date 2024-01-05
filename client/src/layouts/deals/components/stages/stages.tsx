@@ -5,10 +5,10 @@ import { Paper, styled } from "@mui/material";
 // components
 import Title from "./components/title";
 import Objects from "./components/objects";
-import DividerStyled from "../../../../components/common/divider/divider-styled";
-import Loader from "../../../../components/common/loader/loader";
+import DividerStyled from "@components/common/divider/divider-styled";
+import Loader from "@components/common/loader/loader";
 // store
-import { getObjectsLoadingStatus } from "../../../../store/object/objects.store";
+import { getObjectsLoadingStatus } from "@store/object/objects.store";
 
 const DealContainer = styled(Paper)`
   display: flex;
@@ -22,7 +22,7 @@ const DealContainer = styled(Paper)`
   padding: 10px;
 `;
 
-const Stages = ({ objects, stages, isCurator }) => {
+const Stages = ({ objects, stages, setState, isCurator }) => {
   const [draggableStageId, setDraggableStageId] = useState(null);
   const isLoading = useSelector(getObjectsLoadingStatus());
 
@@ -54,6 +54,7 @@ const Stages = ({ objects, stages, isCurator }) => {
                 draggableStageId={draggableStageId}
                 setDraggableStageId={setDraggableStageId}
                 isCurator={isCurator}
+                setState={setState}
               />
             ) : (
               <Loader />

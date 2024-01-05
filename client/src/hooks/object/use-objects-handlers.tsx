@@ -9,7 +9,6 @@ const useObjectHandlers = (setState) => {
 
   // обновление стейта при открытии страницы объекта
   const handleOpenObjectPage = (objectId) => {
-    // console.log("objectId", objectId);
 
     setState((prevState) => ({
       ...prevState,

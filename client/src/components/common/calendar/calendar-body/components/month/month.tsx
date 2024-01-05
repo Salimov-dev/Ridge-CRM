@@ -1,7 +1,7 @@
 import dayjs from "dayjs";
+import Day from "./day";
 import React, { useState } from "react";
 import { Box, styled } from "@mui/material";
-import Day from "./components/day/day";
 
 const Component = styled(Box)`
   flex: 1;
@@ -12,8 +12,9 @@ const Component = styled(Box)`
   border: 1px solid gray;
 `;
 
-const Month = ({ meetings, tasks, month, setDateCreate, setState }) => {
+const Month = ({ meetings, tasks, month, setState }) => {
   const [draggableDay, setDraggableDay] = useState(null);
+
   const formattedDate = dayjs(draggableDay, {
     format: "YYYYMMDDHHmmss",
   }).format("YYYY-MM-DDTHH:mm:ss.SSSZ");
@@ -36,7 +37,6 @@ const Month = ({ meetings, tasks, month, setDateCreate, setState }) => {
               isWeekendColumn={idx === 5 || idx === 6}
               meetings={meetings ? meetings(day) : []}
               tasks={tasks ? tasks(day) : []}
-              setDateCreate={setDateCreate}
               setState={setState}
             />
           ))}

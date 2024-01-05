@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { districtsSPB } from "../../mock/districts/districts-spb";
-import { districtsMSK } from "../../mock/districts/districts-msk";
+import { districtsSPB } from "../../data/districts/districts-spb";
+import { districtsMSK } from "../../data/districts/districts-msk";
 
 const districtsSlice = createSlice({
   name: "districts",

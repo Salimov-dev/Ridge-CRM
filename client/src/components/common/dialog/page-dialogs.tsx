@@ -1,18 +1,22 @@
+// hooks
+import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
+// components
 import DialogStyled from "@components/common/dialog/dialog-styled";
 import ObjectPage from "@components/pages/object-page/object-page";
-import useObject from "../../../hooks/object/use-objects-handlers";
-import CreateObject from "@components/pages/create-object/create-object";
-import UpdateObject from "@components/pages/update-object/update-object";
-import CreatePresentation from "@components/pages/create-presentation/create-presentation";
+import CreateObject from "@components/pages/object/create-object/create-object";
+import UpdateObject from "@components/pages/object/update-object";
+import CreatePresentation from "@components/pages/presentation/create-presentation";
 import TransferObjectToAnotherManager from "@components/pages/transfer-object-to-another-manager/transfer-object-to-another-manager";
-import UpdateMeeting from "@components/pages/update-meeting/update-meeting";
-import CreateMeeting from "@components/pages/create-meeting/create-meeting";
-import UpdateLastContact from "@components/pages/update-last-contact/update-last-contact";
-import CreateLastContact from "@components/pages/create-last-contact/create-last-contact";
-import UpdateManagerTask from "@components/pages/update-manager-task/update-manager-task";
-import CreateManagerTask from "@components/pages/create-manager-task/create-manager-task";
-import UpdateMyTask from "@components/pages/update-my-task/update-my-task";
-import CreateMyTask from "@components/pages/create-my-task/create-my-task";
+import UpdateMeeting from "@components/pages/meeting/update-meeting";
+import CreateMeeting from "@components/pages/meeting/create-meeting";
+import UpdateLastContact from "@components/pages/last-contact/update-last-contact";
+import CreateLastContact from "@components/pages/last-contact/create-last-contact";
+import UpdateManagerTask from "@components/pages/task/update-manager-task";
+import CreateManagerTask from "@components/pages/task/create-manager-task";
+import UpdateMyTask from "@components/pages/task/update-my-task";
+import CreateMyTask from "@components/pages/task/create-my-task";
+import UpdateAvatar from "@components/pages/user/update-avatar-user";
+import Login from "@components/pages/user/login";
 
 const PageDialogs = ({
   state,
@@ -38,7 +42,9 @@ const PageDialogs = ({
     handleCloseUpdateLastContactPage,
     handleCloseCreateMeetingPage,
     handleCloseUpdateMeetingPage,
-  } = useObject(setState);
+    handleCloseUpdateUserAvatarPage,
+    handleCloseLoginPage,
+  } = useDialogHandlers(setState);
 
   return (
     <>
@@ -190,6 +196,19 @@ const PageDialogs = ({
         onClose={handleCloseUpdateMeetingPage}
         maxWidth="md"
         open={state.updateMeetingPage}
+      />
+      <DialogStyled
+        component={<UpdateAvatar onClose={handleCloseUpdateUserAvatarPage} />}
+        maxWidth="sm"
+        onClose={handleCloseUpdateUserAvatarPage}
+        open={state.avatarUpdatePage}
+      />
+      <DialogStyled
+        component={<Login onClose={handleCloseLoginPage} />}
+        maxWidth="sm"
+        fullWidth={false}
+        onClose={handleCloseLoginPage}
+        open={state.loginPage}
       />
     </>
   );

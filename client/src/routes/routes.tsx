@@ -1,6 +1,5 @@
 import { Route, Routes } from "react-router-dom";
 import Main from "../layouts/main/main";
-import Login from "../layouts/login/login";
 import SignUp from "../layouts/sigup/signup";
 import RequireAuth from "../layouts/users/components/require-auth";
 import Objects from "../layouts/objects/objects";
@@ -12,7 +11,7 @@ import Deals from "../layouts/deals/deals";
 import Presentations from "../layouts/presentations/presentations";
 import Users from "../layouts/users/users";
 import Profile from "../layouts/profile/profile";
-import UpdateProfile from "../components/pages/update-profile/update-profile";
+import UpdateProfile from "../components/pages/user/update-profile";
 import NoMatchRoute from "../components/common/rout/no-match";
 import { getCurrentUserId, getIsUserCurator } from "../store/user/users.store";
 import { useSelector } from "react-redux";
@@ -25,7 +24,6 @@ export default function AppRoutes() {
     <Routes>
       <Route path="/" element={<Main />} />
       <Route path="auth" element={<SignUp />} />
-      <Route path="auth/*" element={<Login />} />
       <Route
         path="objects/*"
         element={

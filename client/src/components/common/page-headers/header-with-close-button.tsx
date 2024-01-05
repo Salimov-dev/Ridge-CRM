@@ -5,6 +5,7 @@ import { useTheme } from "@emotion/react";
 import { tokens } from "@theme/theme";
 
 const Component = styled(Box)`
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;

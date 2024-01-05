@@ -22,10 +22,11 @@ const Menu = styled(Box)`
 
 const Footer = () => {
   const isAuth = useSelector(getAuthState());
+
   const currentUserId = useSelector(getCurrentUserId());
   const isCurator = useSelector(getIsUserCurator(currentUserId));
 
-  return isAuth ? (
+  return !isAuth ? (
     <Component>
       <Menu>
         <Item title="Главная" path="/" />

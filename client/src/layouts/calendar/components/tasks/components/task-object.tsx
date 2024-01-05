@@ -1,22 +1,12 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { Box, Typography } from "@mui/material";
-import DividerStyled from "../../../../../components/common/divider/divider-styled";
-import OpenPageObjectIconButton from "../../../../../components/common/buttons/icons buttons/open-page-object.button-icon";
-import {
-  setOpenObjectPageId,
-  setOpenObjectPageOpenState,
-} from "../../../../../store/object/open-object-page.store";
-import { getObjectAddressById } from "../../../../../store/object/objects.store";
+import DividerStyled from "@components/common/divider/divider-styled";
+import OpenPageObjectIconButton from "@components/common/buttons/icons buttons/open-page-object.button-icon";
+import { getObjectAddressById } from "@store/object/objects.store";
 
 const TaskObject = ({ task }) => {
-  const dispatch = useDispatch();
   const taskObjectId = task?.objectId;
   const objectAddress = useSelector(getObjectAddressById(taskObjectId));
-
-  const handleOpenObjectPage = (objectId) => {
-    dispatch<any>(setOpenObjectPageId(objectId));
-    dispatch<any>(setOpenObjectPageOpenState(true));
-  };
 
   return taskObjectId ? (
     <>
@@ -26,7 +16,7 @@ const TaskObject = ({ task }) => {
       >
         <Typography>{objectAddress}</Typography>
         <OpenPageObjectIconButton
-          onClick={() => handleOpenObjectPage(taskObjectId)}
+        // onClick={() => handleOpenObjectPage(taskObjectId)}
         />
       </Box>
     </>

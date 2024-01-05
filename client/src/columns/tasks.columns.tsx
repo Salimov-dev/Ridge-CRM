@@ -26,6 +26,7 @@ import useGetUserAvatar from "@hooks/user/use-get-user-avatar";
 export const tasksColumns = (
   handleOpenUpdateMyTaskPage,
   handleOpenUpdateManagerTaskPage,
+  handleOpenObjectPage,
   isDialogPage
 ) => [
   {
@@ -81,12 +82,12 @@ export const tasksColumns = (
           {objectId ? (
             <>
               {fullAddress}
-              {!isDialogPage ? (
+              {isDialogPage ? (
                 <AlignCenter>
                   <ButtonStyled
                     title="Открыть"
                     style="OPEN_OBJECT"
-                    // onClick={onOpenCreateMyTask}
+                    onClick={() => handleOpenObjectPage(objectId)}
                   />
                 </AlignCenter>
               ) : null}
@@ -180,19 +181,23 @@ export const tasksColumns = (
       const disabled = !isCuratorTask && !isAuthorEntity;
 
       return isCuratorTask ? (
-        <ButtonStyled
-          title="Править"
-          style="MANAGER_TASK"
-          disabled={disabled}
-          onClick={() => handleOpenUpdateManagerTaskPage(taskId)}
-        />
+        <AlignCenter>
+          <ButtonStyled
+            title="Править"
+            style="MANAGER_TASK"
+            disabled={disabled}
+            onClick={() => handleOpenUpdateManagerTaskPage(taskId)}
+          />
+        </AlignCenter>
       ) : (
-        <ButtonStyled
-          title="Править"
-          style="MY_TASK"
-          disabled={disabled}
-          onClick={() => handleOpenUpdateMyTaskPage(taskId)}
-        />
+        <AlignCenter>
+          <ButtonStyled
+            title="Править"
+            style="MY_TASK"
+            disabled={disabled}
+            onClick={() => handleOpenUpdateMyTaskPage(taskId)}
+          />
+        </AlignCenter>
       );
     },
   },

@@ -18,8 +18,8 @@ import {
   getUsersLoadingStatus,
 } from "../../store/user/users.store";
 import Buttons from "./components/buttons";
-import CreateManager from "@components/pages/create-manager/create-manager";
-import UpdateManager from "@components/pages/update-manager/update-manager";
+import CreateManager from "@components/pages/user/create-manager";
+import UpdateManager from "@components/pages/user/update-manager";
 import DialogStyled from "@components/common/dialog/dialog-styled";
 
 const initialState = {

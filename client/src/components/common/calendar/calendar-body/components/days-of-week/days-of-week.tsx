@@ -1,6 +1,6 @@
 import { Box, styled } from "@mui/material";
-import DayOfWeek from "./components/day-of-week";
-import { daysOfWeekArray } from "../../../../../../mock/day-of-week";
+import DayOfWeek from "./day-of-week";
+import { daysOfWeekArray } from "@data/day-of-week";
 
 const Components = styled(Box)`
   display: flex;
@@ -13,11 +13,11 @@ const Components = styled(Box)`
   border-right: 3px solid gray;
 `;
 
-const DaysOfWeek = ({background}) => {
+const DaysOfWeek = ({ background }) => {
   const daysArray = daysOfWeekArray;
 
   return (
-    <Components sx={{  background: background}}>
+    <Components sx={{ background: background }}>
       {daysArray?.map((day) => (
         <DayOfWeek key={day._id} day={day.name} color={day.color} />
       ))}

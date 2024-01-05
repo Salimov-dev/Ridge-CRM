@@ -11,7 +11,6 @@ const Component = styled(Box)`
 const CalendarBody = ({
   tasks,
   currentMonth,
-  setDateCreate,
   meetings,
   background,
   setState,
@@ -21,10 +20,9 @@ const CalendarBody = ({
       <DaysOfWeek background={background} />
       <Month
         month={currentMonth}
-        setDateCreate={setDateCreate}
         meetings={meetings}
         tasks={tasks}
-        setState={setState} 
+        setState={setState}
       />
     </Component>
   );

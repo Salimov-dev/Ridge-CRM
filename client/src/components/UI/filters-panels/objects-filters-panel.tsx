@@ -7,7 +7,7 @@ import SearchSelectField from "../../common/inputs/search-select-field";
 // hooks
 import useObjectsFiltersPanel from "../../../hooks/object/use-objects-filters-panel";
 // mock
-import { objectActivityVariants } from "../../../mock/object/object-activity-variants";
+import { objectActivityVariants } from "../../../data/object/object-activity-variants";
 import { getActualUsersList } from "../../../utils/actual-items/get-actual-users-list";
 import { getActualStatusesList } from "../../../utils/actual-items/get-actual-statuses-list";
 import React from "react";

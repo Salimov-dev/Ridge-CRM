@@ -11,6 +11,10 @@ export const tokens = (mode) => ({
           darkGreen: "#006400",
           mediumSeaGreen: "#3CB371",
         },
+        background: {
+          primary: "#141B2D",
+          secondary: "#1F2A40",
+        },
         error: {
           red: "#F44336",
           gold: "#FFD700",
@@ -111,6 +115,10 @@ export const tokens = (mode) => ({
           seaGreen: "#2E8B57",
           darkGreen: "#006400",
           mediumSeaGreen: "#3CB371",
+        },
+        background: {
+          primary: "#141B2D",
+          secondary: "#1F2A40",
         },
         error: {
           red: "#F44336",

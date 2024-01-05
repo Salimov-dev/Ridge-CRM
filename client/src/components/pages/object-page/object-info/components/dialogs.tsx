@@ -1,14 +1,14 @@
 import { useSelector } from "react-redux";
 // components
 import DialogStyled from "@components/common/dialog/dialog-styled";
-import CreateLastContact from "@components/pages/create-last-contact/create-last-contact";
-import CreateManagerTask from "@components/pages/create-manager-task/create-manager-task";
-import CreateMeeting from "@components/pages/create-meeting/create-meeting";
-import CreateMyTask from "@components/pages/create-my-task/create-my-task";
-import UpdateLastContact from "@components/pages/update-last-contact/update-last-contact";
-import UpdateManagerTask from "@components/pages/update-manager-task/update-manager-task";
-import UpdateMeeting from "@components/pages/update-meeting/update-meeting";
-import UpdateMyTask from "@components/pages/update-my-task/update-my-task";
+import CreateLastContact from "@components/pages/last-contact/create-last-contact";
+import CreateManagerTask from "@components/pages/task/create-manager-task";
+import CreateMeeting from "@components/pages/meeting/create-meeting";
+import CreateMyTask from "@components/pages/task/create-my-task";
+import UpdateLastContact from "@components/pages/last-contact/update-last-contact";
+import UpdateManagerTask from "@components/pages/task/update-manager-task";
+import UpdateMeeting from "@components/pages/meeting/update-meeting";
+import UpdateMyTask from "@components/pages/task/update-my-task";
 // hooks
 import useObjectInfo from "../hooks/use-object-info.hook";
 // store

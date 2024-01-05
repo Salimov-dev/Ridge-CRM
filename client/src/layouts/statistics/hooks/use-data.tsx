@@ -2,7 +2,7 @@ import dayjs from "dayjs";
 // columns
 import useTableHeader from "../../../columns/statictics-columns/hooks/use-table-header";
 // mock
-import { objectStatusesArray } from "../../../mock/object/object-status";
+import { objectStatusesArray } from "../../../data/object/object-status";
 // utils
 import { getWeeklyObjects } from "../../../utils/objects/get-weekly-objects";
 import { getWeeklyObjectsWithPhone } from "../../../utils/objects/get-weekly-objects-with-phone";
