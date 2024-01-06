@@ -24,10 +24,11 @@ const useObjectInfo = (setState) => {
   };
 
   // обновление стейта при создании задачи менеджеру
-  const handleOpenCreateManagerTaskPage = () => {
+  const handleOpenCreateManagerTaskPage = (objectId) => {
     setState((prevState) => ({
       ...prevState,
       createManagerTaskPage: true,
+      objectId: objectId,
     }));
   };
   const handleCloseCreateManagerTaskPage = () => {

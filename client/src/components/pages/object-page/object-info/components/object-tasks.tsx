@@ -44,7 +44,7 @@ const ObjectTasks = ({
             title="Поставить менеджеру задачу"
             style="MANAGER_TASK"
             variant="contained"
-            onClick={onOpenCreateManagerTask}
+            onClick={() => onOpenCreateManagerTask(objectId)}
           />
         )}
       </Container>

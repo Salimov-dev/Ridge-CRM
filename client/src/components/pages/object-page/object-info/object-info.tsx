@@ -69,13 +69,13 @@ const ObjectInfo = ({ object, objectId, isLoading, isAuthorEntity = true }) => {
         objectId={objectId}
         onOpenCreateMyTask={handleOpenCreateMyTaskPage}
         onOpenCreateManagerTask={handleOpenCreateManagerTaskPage}
+        isAuthorEntity={isAuthorEntity}
         columns={tasksColumns(
           handleOpenUpdateMyTaskPage,
           handleOpenUpdateManagerTaskPage,
           () => {},
           isDialogPage
         )}
-        isAuthorEntity={isAuthorEntity}
       />
       <ObjectMeetings
         object={object}

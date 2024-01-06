@@ -59,9 +59,6 @@ const CreateMyTask = React.memo(
     });
     const data = watch();
 
-    console.log("data", data);
-    console.log("dateCreate", dateCreate);
-
     const onSubmit = () => {
       setIsLoading(true);
 

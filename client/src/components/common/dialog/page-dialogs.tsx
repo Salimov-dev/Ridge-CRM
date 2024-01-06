@@ -117,7 +117,7 @@ const PageDialogs = ({
           <CreateMyTask
             title="Добавить себе задачу"
             objectPageId={state.objectId}
-            isObjectPage={state.createMyTaskPage}
+            isObjectPage={!!state?.objectId?.length}
             objects={objects}
             objectId={state.objectId}
             dateCreate={state.dateCreate}
@@ -138,6 +138,7 @@ const PageDialogs = ({
             taskId={state.taskId}
             objectId={state.objectId}
             onClose={handleCloseUpdateMyTaskPage}
+            isObjectPage={!!state?.objectId?.length}
           />
         }
       />
@@ -148,9 +149,10 @@ const PageDialogs = ({
         component={
           <CreateManagerTask
             title="Поставить менеджеру задачу"
-            objectPageId={state.objectId}
+            objectId={state.objectId}
             dateCreate={state.dateCreate}
             users={users}
+            isObjectPage={!!state?.objectId?.length}
             onClose={handleCloseCreateManagerTaskPage}
           />
         }
@@ -166,6 +168,7 @@ const PageDialogs = ({
             users={users}
             taskId={state.taskId}
             onClose={handleCloseUpdateManagerTaskPage}
+            isObjectPage={!!state?.objectId?.length}
           />
         }
       />

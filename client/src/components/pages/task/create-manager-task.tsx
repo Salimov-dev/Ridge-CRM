@@ -32,7 +32,7 @@ const initialState = {
 };
 
 const CreateManagerTask = React.memo(
-  ({ users, title, dateCreate, onClose, objectPageId }) => {
+  ({ users, title, dateCreate, onClose, objectId, isObjectPage }) => {
     const dispatch = useDispatch();
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
@@ -51,10 +51,8 @@ const CreateManagerTask = React.memo(
       resolver: yupResolver(taskSchema),
     });
     const data = watch();
-    console.log("data", data);
-
     const objects = useSelector(getObjectsList());
-    const currentObject = useSelector(getObjectById(objectPageId));
+    const currentObject = useSelector(getObjectById(objectId));
     const managerId = currentObject?.userId;
 
     const onSubmit = () => {
@@ -77,7 +75,7 @@ const CreateManagerTask = React.memo(
     };
 
     useEffect(() => {
-      setValue<any>("objectId", objectPageId);
+      setValue<any>("objectId", objectId);
       setValue<any>("managerId", managerId);
     }, []);
 
@@ -106,16 +104,13 @@ const CreateManagerTask = React.memo(
           errors={errors}
           isCurator={true}
           users={users}
+          isObjectPage={isObjectPage}
         />
         <SuccessCancelFormButtons
           onSuccess={handleSubmit(onSubmit)}
           onCancel={onClose}
         />
-        <LoaderFullWindow
-          color={colors.grey[600]}
-          size={75}
-          isLoading={isLoading}
-        />
+        <LoaderFullWindow isLoading={isLoading} />
       </>
     );
   }

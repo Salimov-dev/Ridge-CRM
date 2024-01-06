@@ -17,6 +17,7 @@ import getMonth from "@utils/calendar/get-month";
 // store
 import { getMonthIndexState } from "@store/month-index.store";
 import { getCurrentUserId, getIsUserCurator } from "@store/user/users.store";
+import { getObjectsList } from "@store/object/objects.store";
 // hooks
 import useCalendar from "@hooks/calendar/use-calendar";
 import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
@@ -61,6 +62,12 @@ const Calendar = React.memo(() => {
   const currentUserId = useSelector(getCurrentUserId());
   const isCurator = useSelector(getIsUserCurator(currentUserId));
   const isDialogPage = true;
+
+  const objects = useSelector(getObjectsList());
+  const currentUserObjects = objects?.filter(
+    (obj) => obj?.userId === currentUserId
+  );
+  const actualObjects = isCurator ? currentUserObjects : objects;
 
   const {
     sortedCurrentWeeklyMeetings,
@@ -120,7 +127,7 @@ const Calendar = React.memo(() => {
           isDialogPage
         )}
       />
-      <PageDialogs state={state} setState={setState} />
+      <PageDialogs state={state} setState={setState} objects={actualObjects} />
     </>
   );
 });
