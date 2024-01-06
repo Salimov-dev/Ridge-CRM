@@ -17,12 +17,12 @@ const TopBarRightSide = () => {
 
   return (
     <Component>
-      {!isLoading  ? (
+      {!isLoading ? (
         currentUser ? (
           <UserMenu currentUser={currentUser} />
         ) : null
       ) : (
-        <Loader height="40px" width="60px" padding="0" size={20}/>
+        <Loader height="40px" width="60px" padding="0" size={20} />
       )}
     </Component>
   );

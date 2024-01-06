@@ -7,7 +7,7 @@ import { AlignCenter } from "@components/common/columns/styled";
 import { gendersArray } from "../data/genders";
 // store
 import { getUserNameById } from "@store/user/users.store";
-import { getUserStatusNameById } from "@store/user/user-statuses.store";
+import { getUserStatusNameById } from "@store/user-params/user-statuses.store";
 // utils
 import { FormatDate } from "@utils/date/format-date";
 // icons

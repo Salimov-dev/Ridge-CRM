@@ -13,7 +13,7 @@ import SuccessCancelFormButtons from "@components/common/forms/buttons/success-c
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
 import ManagerForm from "@common/forms/manager/manager.form";
 // store
-import { getUserStatusesList } from "@store/user/user-statuses.store";
+import { getUserStatusesList } from "@store/user-params/user-statuses.store";
 import { getUserDataById, updateUser } from "@store/user/users.store";
 // schema
 import { managerSchema } from "@schemas/manager.schema";

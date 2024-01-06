@@ -8,7 +8,7 @@ import dayjs from "dayjs";
 import ManagerForm from "../../common/forms/manager/manager.form";
 import TitleWithCloseButton from "../../common/page-headers/header-with-close-button";
 // store
-import { getUserStatusesList } from "../../../store/user/user-statuses.store";
+import { getUserStatusesList } from "../../../store/user-params/user-statuses.store";
 import {
   createNewUser,
   getCurrentUserId,

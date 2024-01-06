@@ -1,4 +1,5 @@
 import axios from "axios";
+import { toast } from "react-toastify";
 import configFile from "../config.json";
 import authService from "./user/auth-service";
 import localStorageService from "./user/local.storage-service";
@@ -9,25 +10,18 @@ const http = axios.create({
 
 http.interceptors.request.use(
   async function (config) {
-    const expiresDate = parseInt(localStorageService.getTokenExpiresDate(), 10);
+    const expiresDate = localStorageService.getTokenExpiresDate();
     const refreshToken = localStorageService.getRefreshToken();
     const isExpired = refreshToken && expiresDate < Date.now();
 
     if (isExpired) {
-      try {
-        const data = await authService.refresh();
-        localStorageService.setTokens(data);
-      } catch (error) {
-        console.error('Token Refresh Error:', error);
-        handleUnauthorizedError(); 
-        throw error; 
-      }
+      const data = await authService.refresh();
+      localStorageService.setTokens(data);
     }
-
     const accessToken = localStorageService.getAccessToken();
     if (accessToken) {
       config.headers = {
-        ...(config.headers as axios.AxiosHeaders),
+        ...config.headers,
         Authorization: `Bearer ${accessToken}`,
       };
     }
@@ -51,22 +45,12 @@ http.interceptors.response.use(
       error.response.status < 500;
 
     if (!expectedErrors) {
-      console.error(error);
+      console.log(error);
+      toast.error("Somthing was wrong. Try it later");
     }
-
-    if (error.response && error.response.status === 401) {
-      handleUnauthorizedError(); 
-    }
-
     return Promise.reject(error);
   }
 );
-
-function handleUnauthorizedError() {
-  localStorageService.removeAuthData(); 
-  window.location.href = "/";
-}
-
 const httpService = {
   get: http.get,
   post: http.post,
@@ -74,5 +58,4 @@ const httpService = {
   delete: http.delete,
   patch: http.patch,
 };
-
 export default httpService;

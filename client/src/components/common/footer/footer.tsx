@@ -1,8 +1,11 @@
 import { Box, Divider, styled } from "@mui/material";
 import Item from "./components/item";
 import { useSelector } from "react-redux";
-import { getAuthState } from "@store/auth/auth.store";
-import { getCurrentUserId, getIsUserCurator } from "@store/user/users.store";
+import {
+  getCurrentUserId,
+  getIsLoggedIn,
+  getIsUserCurator,
+} from "@store/user/users.store";
 
 const Component = styled(Box)`
   height: 200px;
@@ -21,12 +24,12 @@ const Menu = styled(Box)`
 `;
 
 const Footer = () => {
-  const isAuth = useSelector(getAuthState());
+  const isLoggedIn = useSelector(getIsLoggedIn());
 
   const currentUserId = useSelector(getCurrentUserId());
   const isCurator = useSelector(getIsUserCurator(currentUserId));
 
-  return !isAuth ? (
+  return isLoggedIn ? (
     <Component>
       <Menu>
         <Item title="Главная" path="/" />

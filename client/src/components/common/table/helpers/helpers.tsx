@@ -14,7 +14,7 @@ import { getObjectTypeNameById } from "../../../../store/object-params/object-ty
 import { getEstateTypeNameById } from "../../../../store/object-params/estate-types.store";
 import { getObjectStatusNameById } from "../../../../store/object-params/object-status.store";
 import { getCurrentRenterNameById } from "../../../../store/object-params/current-renter.store";
-import { getWorkingPositionNameById } from "../../../../store/user/working-position.store";
+import { getWorkingPositionNameById } from "../../../../store/user-params/working-position.store";
 import { getEstateConditionNameById } from "../../../../store/object-params/object-conditions.store";
 import { getObjectPropertiesNameById } from "../../../../store/object-params/object-properties";
 import { getTradeAreaNameById } from "../../../../store/object-params/object-trade-area";

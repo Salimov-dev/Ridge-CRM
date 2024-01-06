@@ -2,7 +2,6 @@ import { useSelector } from "react-redux";
 import { Route, Routes } from "react-router-dom";
 // layouts
 import Main from "@layouts/main/main";
-import SignUp from "@layouts/sigup/signup";
 import RequireAuth from "@layouts/users/components/require-auth";
 import Objects from "@layouts/objects/objects";
 import ObjectsDatabase from "@layouts/objects-database/objects-database";
@@ -26,17 +25,17 @@ export default function AppRoutes() {
   const routes = [
     { id: 0, path: "*", element: <NoMatchRoute /> },
     { id: 1, path: "/", element: <Main /> },
-    { id: 1, path: "auth", element: <SignUp /> },
-    { id: 1, path: "objects/*", element: <RequireAuth><Objects /></RequireAuth> },
-    { id: 2, path: "objectsdatabase/*", element: <RequireAuth><ObjectsDatabase /></RequireAuth>},
-    { id: 3, path: "statictics/*", element: <RequireAuth><Statictics /></RequireAuth>},
-    { id: 4, path: "meetings/*", element: <RequireAuth><Meetings /></RequireAuth>},
-    { id: 5, path: "calendar/*", element: <RequireAuth><Calendar /></RequireAuth>},
-    { id: 6, path: "deals/*", element: <RequireAuth><Deals /></RequireAuth>},
-    { id: 7, path: "users/*", element: isCurator ? <RequireAuth><Users /></RequireAuth> : <NoMatchRoute />},
-    { id: 8, path: "profile/*", element: <RequireAuth><Profile /></RequireAuth>},
-    { id: 9, path: ":userId?/presentations", element: <RequireAuth><Presentations /></RequireAuth>},
-    { id: 10, path: ":userId?/profileUpdate", element: <RequireAuth><UpdateProfile /></RequireAuth>},
+    { id: 3, path: "auth/*", element: <Main /> },
+    { id: 4, path: "objects/*", element: <RequireAuth><Objects /></RequireAuth> },
+    { id: 5, path: "objectsdatabase/*", element: <RequireAuth><ObjectsDatabase /></RequireAuth>},
+    { id: 6, path: "statictics/*", element: <RequireAuth><Statictics /></RequireAuth>},
+    { id: 7, path: "meetings/*", element: <RequireAuth><Meetings /></RequireAuth>},
+    { id: 8, path: "calendar/*", element: <RequireAuth><Calendar /></RequireAuth>},
+    { id: 9, path: "deals/*", element: <RequireAuth><Deals /></RequireAuth>},
+    { id: 10, path: "users/*", element: isCurator ? <RequireAuth><Users /></RequireAuth> : <NoMatchRoute />},
+    { id: 11, path: "profile/*", element: <RequireAuth><Profile /></RequireAuth>},
+    { id: 12, path: ":userId?/presentations", element: <RequireAuth><Presentations /></RequireAuth>},
+    { id: 13, path: ":userId?/profileUpdate", element: <RequireAuth><UpdateProfile /></RequireAuth>},
   ];
 
   return (
@@ -45,7 +44,7 @@ export default function AppRoutes() {
         <Route
           key={rout.id}
           path={rout.path}
-          element={<RequireAuth>{rout.element}</RequireAuth>}
+          element={rout.element}
         />
       ))}
     </Routes>

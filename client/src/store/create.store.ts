@@ -1,10 +1,6 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-// auth
-import authStateReducer from "./auth/auth.store";
 // objects
 import objectsReducer from "./object/objects.store";
-import updateObjectReducer from "./object/update-object.store";
-import openObjectPageReducer from "./object/open-object-page.store";
 // objects params
 import objectTypesReducer from "./object-params/object-types.store";
 import objectStatusReducer from "./object-params/object-status.store";
@@ -14,38 +10,23 @@ import districtsReducer from "./object-params/districts.store";
 import rentTypesReducer from "./object-params/rent-types.store";
 import estateTypesReducer from "./object-params/estate-types.store";
 import currentRenterReducer from "./object-params/current-renter.store";
-import workingPositionReducer from "./user/working-position.store";
-import transferObjectToAnotherManagerReducer from "./object/transfer-object-to-another-manager.store";
+import workingPositionReducer from "./user-params/working-position.store";
 import tradeAreaReducer from "./object-params/object-trade-area";
 // meetings
 import meetingsReducer from "./meeting/meetings.store";
 import meetingTypesReducer from "./meeting/meeting-types.store";
 import meetingStatusesReducer from "./meeting/meeting-status.store";
-import createMeetingReducer from "./meeting/create-meeting.store";
 import objectPropertiesReducer from "./object-params/object-properties";
-import updateMeetingReducer from "./meeting/update-meeting.store";
 // users
-import createUserReducer from "./user/create-user.store";
 import usersListReducer from "./user/users.store";
-import loginReducer from "./auth/login.store";
-import userStatusesReducer from "./user/user-statuses.store";
-import updateManagerReducer from "./user/update-user.store";
-import updateManagerTaskReducer from "./task/update-manager-task.store";
+import userStatusesReducer from "./user-params/user-statuses.store";
 // tasks
 import tasksReducer from "./task/tasks.store";
-import updateMyTaskReducer from "./task/update-my-task.store";
-import createManagerTaskReducer from "./task/create-manager-task.store";
-import createObjectReducer from "./object/create-object.store";
-import createMyTaskReducer from "./task/create-my-task.store";
 // last contact
 import lastContactReducer from "./last-contact/last-contact.store";
-import createLastContactReducer from "./last-contact/create-last-contact.store";
-import updateLastContactReducer from "./last-contact/update-last-contact.store";
 // presentations
-import createPresentationReducer from "./presentation/create-presentation.store";
 import presentationsReducer from "./presentation/presentations.store";
 import presentationStatusReducer from "./presentation/presentation-status.store";
-import updatePresentationReducer from "./presentation/update-presentation.store";
 // statictic
 import staticticPositionsReducer from "./statictics/statictics-positions.store";
 // other
@@ -54,8 +35,6 @@ import currrentPathReducer from "./current-path.store";
 import avatarReducer from "./avatar/avatar.store";
 
 const rootReducer = combineReducers({
-  // auth state
-  authState: authStateReducer,
   // objects
   objects: objectsReducer,
   objectStatus: objectStatusReducer,
@@ -71,11 +50,8 @@ const rootReducer = combineReducers({
   objectProperties: objectPropertiesReducer,
   tradeArea: tradeAreaReducer,
   // users
-  login: loginReducer,
   users: usersListReducer,
   userStatuses: userStatusesReducer,
-  updateManager: updateManagerReducer,
-  createUser: createUserReducer,
   // meetings
   meetings: meetingsReducer,
   meetingStatuses: meetingStatusesReducer,

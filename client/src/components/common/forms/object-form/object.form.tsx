@@ -15,7 +15,6 @@ import FingerprintIcon from "@mui/icons-material/Fingerprint";
 import { FieldsContainer, Form } from "../styled/styled";
 // components
 import Title from "../manager/components/title";
-import FooterButtons from "../buttons/success-cancel-form-buttons";
 import TextFieldStyled from "../../inputs/text-field-styled";
 import DistrictSelect from "./components/district-select";
 import SelectFieldStyled from "@components/common/inputs/select-field-styled";
@@ -27,7 +26,7 @@ import { getEstateTypesList } from "@store/object-params/estate-types.store";
 import { getObjectsStatusList } from "@store/object-params/object-status.store";
 import { getObjectPropertiesList } from "@store/object-params/object-properties";
 import { getCurrentRentersList } from "@store/object-params/current-renter.store";
-import { getWorkingPositionsList } from "@store/user/working-position.store";
+import { getWorkingPositionsList } from "@store/user-params/working-position.store";
 import { getObjectConditionsList } from "@store/object-params/object-conditions.store";
 import { getTradeAreaList } from "@store/object-params/object-trade-area";
 

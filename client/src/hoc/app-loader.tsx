@@ -7,7 +7,7 @@ import { loadObjectTypesList } from "@store/object-params/object-types.store";
 // objects params
 import { loadMetroList } from "@store/object-params/metro.store";
 import { loadDistrictsList } from "@store/object-params/districts.store";
-import { loadWorkingPositionList } from "@store/user/working-position.store";
+import { loadWorkingPositionList } from "@store/user-params/working-position.store";
 import { loadCurrentRentersList } from "@store/object-params/current-renter.store";
 import { loadObjectConditionsList } from "@store/object-params/object-conditions.store";
 import { loadRentTypesList } from "@store/object-params/rent-types.store";
@@ -20,7 +20,7 @@ import { loadMeetingStatusesList } from "@store/meeting/meeting-status.store";
 import { loadMeetingTypesList } from "@store/meeting/meeting-types.store";
 // users
 import { getIsLoggedIn, loadUsersList } from "@store/user/users.store";
-import { loadUserStatusesList } from "@store/user/user-statuses.store";
+import { loadUserStatusesList } from "@store/user-params/user-statuses.store";
 // tasks
 import { loadTasksList } from "@store/task/tasks.store";
 // last contact

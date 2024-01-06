@@ -51,9 +51,6 @@ const usersListSlice = createSlice({
     authRequestFailed: (state, action) => {
       state.error = action.payload;
     },
-    // userCreated: (state, action) => {
-    //   state.entities.push(action.payload);
-    // },
     userCreated: (state, action) => {
       if (!Array.isArray(state.entities)) {
         state.entities = [];
@@ -132,7 +129,6 @@ export const signUp = (payload) => async (dispatch) => {
 export const logOut = () => (dispatch) => {
   localStorageService.removeAuthData();
   dispatch(userLoggedOut());
-  localStorage.setItem("isAuth", "false");
 };
 
 export const loadUsersList = () => async (dispatch) => {

@@ -26,6 +26,7 @@ const Main = React.memo(() => {
     useDialogHandlers(setState);
 
   const isLoggedIn = useSelector(getIsLoggedIn());
+
   return (
     <Box>
       <MainHeader

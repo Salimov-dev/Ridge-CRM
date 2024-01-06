@@ -1,6 +1,6 @@
 import { orderBy } from "lodash";
 import { useSelector } from "react-redux";
-import { getUserStatusesList } from "../../store/user/user-statuses.store";
+import { getUserStatusesList } from "../../store/user-params/user-statuses.store";
 
 const useUsers = (users, usersWithoutCurrentUser) => {
   const statuses = useSelector(getUserStatusesList());
