@@ -11,6 +11,9 @@ export const tokens = (mode) => ({
           darkGreen: "#006400",
           mediumSeaGreen: "#3CB371",
         },
+        sidebar: {
+          menuItemActive: "#868dfb",
+        },
         background: {
           primary: "#141B2D",
           secondary: "#1F2A40",
@@ -115,6 +118,9 @@ export const tokens = (mode) => ({
           seaGreen: "#2E8B57",
           darkGreen: "#006400",
           mediumSeaGreen: "#3CB371",
+        },
+        sidebar: {
+          menuItemActive: "#868dfb",
         },
         background: {
           primary: "#141B2D",

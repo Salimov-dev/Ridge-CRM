@@ -7,7 +7,11 @@ import UserNameWithAvatar from "@components/common/table/components/user-name-wi
 import { dealStagesArray } from "@data/deals/deals-stages";
 // store
 import { updateObject } from "@store/object/objects.store";
-import { getUsersList } from "@store/user/users.store";
+import {
+  getCurrentUserId,
+  getIsUserAuthorThisEntity,
+  getUsersList,
+} from "@store/user/users.store";
 // hooks
 import useGetUserAvatar from "@hooks/user/use-get-user-avatar";
 import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
@@ -44,8 +48,10 @@ const Objects = ({
   isCurator,
 }) => {
   const dispatch = useDispatch();
-  const { handleOpenObjectPage } = useDialogHandlers(setState);
   const users = useSelector(getUsersList());
+  const currentUserId = useSelector(getCurrentUserId());
+
+  const { handleOpenObjectPage } = useDialogHandlers(setState);
 
   const getNewDealStage = (stageId) => {
     const stage = dealStagesArray.find((deal) => deal?._id === stageId);
@@ -76,11 +82,14 @@ const Objects = ({
         const getAvatarSrc = () => {
           return isLoading ? null : avatarSrc;
         };
+        const isAuthorEntity = useSelector(
+          getIsUserAuthorThisEntity(currentUserId, obj)
+        );
 
         return isDeal ? (
           <ObjectContainer
             key={obj?._id}
-            draggable={true}
+            draggable={isAuthorEntity}
             onDragEnd={(e) => handleDragEnd(obj, stage)}
           >
             <ObjectAddress

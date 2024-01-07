@@ -1,4 +1,4 @@
-import { Tooltip } from "@mui/material";
+import { Icon, Tooltip } from "@mui/material";
 import Item from "./item";
 // components
 import ItemsTitle from "./items-title";
@@ -11,7 +11,7 @@ import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined
 import BusinessOutlinedIcon from "@mui/icons-material/BusinessOutlined";
 import AssignmentOutlinedIcon from "@mui/icons-material/AssignmentOutlined";
 import DonutSmallOutlinedIcon from "@mui/icons-material/DonutSmallOutlined";
-import DatasetOutlinedIcon from '@mui/icons-material/DatasetOutlined';
+import DatasetOutlinedIcon from "@mui/icons-material/DatasetOutlined";
 
 const ItemsList = ({
   selected,
@@ -25,11 +25,7 @@ const ItemsList = ({
       <Item
         title="Главная"
         to="/"
-        icon={
-          <Tooltip title="Главная" placement="top-start" arrow>
-            <HomeOutlinedIcon />
-          </Tooltip>
-        }
+        icon={<HomeOutlinedIcon />}
         selected={selected}
         setSelected={setSelected}
       />
@@ -41,77 +37,49 @@ const ItemsList = ({
       <Item
         title="Статистика"
         to="/statictics"
-        icon={
-          <Tooltip title="Статистика" placement="top-start" arrow>
-            <DonutSmallOutlinedIcon />
-          </Tooltip>
-        }
+        icon={<DonutSmallOutlinedIcon />}
         selected={selected}
         setSelected={setSelected}
       />
       <Item
         title="Объекты"
         to="/objects"
-        icon={
-          <Tooltip title="Объекты" placement="top-start" arrow>
-            <BusinessOutlinedIcon />
-          </Tooltip>
-        }
+        icon={<BusinessOutlinedIcon />}
         selected={selected}
         setSelected={setSelected}
       />
       <Item
         title="Проработка базы объектов"
         to="/objectsdatabase"
-        icon={
-          <Tooltip title="Проработка базы объектов" placement="top-start" arrow>
-            <DatasetOutlinedIcon />
-          </Tooltip>
-        }
+        icon={<DatasetOutlinedIcon />}
         selected={selected}
         setSelected={setSelected}
       />
       <Item
         title="Сделки"
         to="/deals"
-        icon={
-          <Tooltip title="Сделки" placement="top-start" arrow>
-            <BusinessCenterOutlinedIcon />
-          </Tooltip>
-        }
+        icon={<BusinessCenterOutlinedIcon />}
         selected={selected}
         setSelected={setSelected}
       />
       <Item
         title="Встречи"
         to="/meetings"
-        icon={
-          <Tooltip title="Встречи" placement="top-start" arrow>
-            <GroupsOutlinedIcon />
-          </Tooltip>
-        }
+        icon={<GroupsOutlinedIcon />}
         selected={selected}
         setSelected={setSelected}
       />
       <Item
         title="Календарь"
         to="/calendar"
-        icon={
-          <Tooltip title="Календарь" placement="top-start" arrow>
-            <CalendarTodayOutlinedIcon />
-          </Tooltip>
-        }
+        icon={<CalendarTodayOutlinedIcon />}
         selected={selected}
         setSelected={setSelected}
       />
       <Item
         title="Презентации"
         to="/presentations"
-        icon={
-          <Tooltip title="Презентации" placement="top-start" arrow>
-            <AssignmentOutlinedIcon />
-          </Tooltip>
-        }
+        icon={<AssignmentOutlinedIcon />}
         selected={selected}
         setSelected={setSelected}
       />
@@ -126,11 +94,7 @@ const ItemsList = ({
           <Item
             title="Менеджеры"
             to="/users"
-            icon={
-              <Tooltip title="Менеджеры" placement="top-start" arrow>
-                <PeopleOutlinedIcon />
-              </Tooltip>
-            }
+            icon={<PeopleOutlinedIcon />}
             selected={selected}
             setSelected={setSelected}
           />

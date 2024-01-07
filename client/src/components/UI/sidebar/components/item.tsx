@@ -1,19 +1,31 @@
 import { MenuItem } from "react-pro-sidebar";
-import { Typography, useTheme } from "@mui/material";
+import { Box, Tooltip, Typography, useTheme } from "@mui/material";
 import { Link } from "react-router-dom";
-import { tokens } from "../../../../theme/theme";
+import { tokens } from "@theme/theme";
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+
   return (
     <MenuItem
       active={selected === title}
       style={{
         color: colors.grey[100],
       }}
-      onClick={() => setSelected("/")}
-      icon={icon}
+      onClick={() => setSelected(to)}
+      icon={
+        <Tooltip title={title} placement="top-start" arrow>
+          <Box
+            sx={{
+              color:
+                selected === to ? colors.sidebar["menuItemActive"] : "inherit",
+            }}
+          >
+            {icon}
+          </Box>
+        </Tooltip>
+      }
       component={<Link to={to} />}
     >
       <Typography>{title}</Typography>

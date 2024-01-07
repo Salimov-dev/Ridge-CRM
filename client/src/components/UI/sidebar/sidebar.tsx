@@ -27,20 +27,20 @@ const Component = styled(Box)(({ colors }) => ({
     backgroundColor: "transparent !important",
   },
   "& .ps-menu-button:hover": {
-    color: "#868dfb !important",
+    color: `${colors.sidebar["menuItemActive"]} !important`,
     backgroundColor: "inherit !important",
   },
   "& .ps-menu-button.ps-active": {
-    color: "#868dfb !important",
+    color: `${colors.sidebar["menuItemActive"]} !important`,
   },
 }));
 
 const RidgeName = styled(Box)`
-  font-size: 32px;
+  font-size: 24px;
   transform: rotate(-90deg);
   position: absolute;
-  left: -45px;
-  bottom: 100px;
+  left: -22px;
+  bottom: 80px;
   white-space: nowrap;
 `;
 
@@ -62,50 +62,20 @@ const Sidebar = React.memo(() => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
-  const currentPath = useSelector(getCurrrentPathState());
-  const [selected, setSelected] = useState(currentPath);
+  const [selected, setSelected] = useState(null);
   const [isCollapsed, setIsCollapsed] = useState(true);
+
+  const currentPath = useSelector(getCurrrentPathState());
   const currentUserId = useSelector(getCurrentUserId());
   const isCurator = useSelector(getIsUserCurator(currentUserId));
-
-  function setSelectedMenuItem() {
-    if (currentPath === "/") {
-      return "Главная";
-    }
-    if (currentPath === "/statictics") {
-      return "Статистика";
-    }
-    if (currentPath === "/objects") {
-      return "Объекты";
-    }
-    if (currentPath === "/users") {
-      return "Менеджеры";
-    }
-    if (currentPath === "/meetings") {
-      return "Встречи";
-    }
-    if (currentPath === "/calendar") {
-      return "Календарь";
-    }
-    if (currentPath === "/deals") {
-      return "Сделки";
-    }
-    if (currentPath === "/presentations") {
-      return "Презентации";
-    }
-    if (currentPath === "/objectsdatabase") {
-      return "Проработка базы объектов";
-    }
-    return "";
-  }
 
   const handleSetCollapsed = (value) => {
     setIsCollapsed(value);
   };
 
   useEffect(() => {
-    setSelected(setSelectedMenuItem());
-  }, [setSelectedMenuItem()]);
+    setSelected(currentPath);
+  }, [currentPath]);
 
   useEffect(() => {
     dispatch<any>(setCurrrentPathState(window.location.pathname));
