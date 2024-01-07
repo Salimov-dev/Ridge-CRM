@@ -22,10 +22,11 @@ const MeetingForm = ({
   setValue,
   isEditMode = false,
   isMeetingsLoading = false,
+  isObjectPage = false,
 }) => {
-  const watchStatus = watch("status", "");
-  const watchObjectId = watch("objectId", "");
-  const watchTypeMeeting = watch("meetingType", "");
+  const watchStatus = watch("status");
+  const watchObjectId = watch("objectId");
+  const watchTypeMeeting = watch("meetingType");
   const watchIsDone = watch("isDone", false);
 
   return (
@@ -80,7 +81,7 @@ const MeetingForm = ({
             value={data.objectId}
             setValue={setValue}
             watchItemId={watchObjectId}
-            disabled={!!watchObjectId}
+            disabled={!isObjectPage}
             optionLabel={(option) =>
               `${option?.location?.city}, ${option?.location?.address}`
             }

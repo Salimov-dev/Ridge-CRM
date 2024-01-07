@@ -13,6 +13,7 @@ import LoaderFullWindow from "@components/common/loader/loader-full-window";
 import HeaderWithCloseButton from "@components/common/page-headers/header-with-close-button";
 import MeetingForm from "@components/common/forms/meeting.form";
 import DialogConfirm from "@components/common/dialog/dialog-confirm";
+import ItemOnMap from "@components/common/map/item-on-map/item-on-map";
 // schema
 import { meetingSchema } from "@schemas/meeting.schema";
 // store
@@ -27,7 +28,7 @@ import {
   updateMeeting,
 } from "@store/meeting/meetings.store";
 
-const UpdateMeeting = React.memo(({ meetingId, onClose }) => {
+const UpdateMeeting = React.memo(({ meetingId, onClose, isObjectPage }) => {
   const dispatch = useDispatch();
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -66,6 +67,12 @@ const UpdateMeeting = React.memo(({ meetingId, onClose }) => {
   const isMeetingsLoading = useSelector(getMeetingLoadingStatus());
   const meetingTypes = useSelector(getMeetingTypesList());
   const statuses = useSelector(getMeetingStatusesList());
+
+  const address = `${meeting?.location?.city}, ${meeting?.location?.address}`;
+  const latitude = meeting?.location?.latitude || null;
+  const longitude = meeting?.location?.longitude || null;
+  const mapZoom = meeting?.location?.zoom || null;
+  const center = [latitude, longitude];
 
   const onSubmit = (data) => {
     setIsLoading(true);
@@ -107,6 +114,12 @@ const UpdateMeeting = React.memo(({ meetingId, onClose }) => {
         background={colors.meeting["primary"]}
         onClose={onClose}
       />
+      <ItemOnMap
+        mapZoom={mapZoom}
+        hintContent={address}
+        center={center}
+        isLoading={isLoading}
+      />
       <MeetingForm
         data={data}
         objects={currentUserObjects}
@@ -118,6 +131,7 @@ const UpdateMeeting = React.memo(({ meetingId, onClose }) => {
         setValue={setValue}
         isEditMode={isEditMode}
         isMeetingsLoading={isMeetingsLoading}
+        isObjectPage={isObjectPage}
       />
       <SuccessCancelFormButtons
         onSuccess={handleSubmit(onSubmit)}

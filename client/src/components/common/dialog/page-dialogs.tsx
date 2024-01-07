@@ -211,6 +211,7 @@ const PageDialogs = ({
           <UpdateMeeting
             meetingId={state.meetingId}
             onClose={handleCloseUpdateMeetingPage}
+            isObjectPage={!!state?.objectId?.length}
           />
         }
         onClose={handleCloseUpdateMeetingPage}

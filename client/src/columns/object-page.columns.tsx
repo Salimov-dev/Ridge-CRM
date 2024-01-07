@@ -1,5 +1,4 @@
-import { Box, styled } from "@mui/material";
-import { makeDigitSeparator } from "../utils/data/make-digit-separator";
+import { makeDigitSeparator } from "@utils/data/make-digit-separator";
 import {
   FormatCurrentRenter,
   FormatDate,
@@ -13,11 +12,11 @@ import {
   FormatTypeObject,
   FormatTypeRent,
   FormatWorkingPosition,
-} from "../components/common/table/helpers/helpers";
-import EmptyTd from "../components/common/columns/empty-td";
+} from "@components/common/table/helpers/helpers";
+import EmptyTd from "@components/common/columns/empty-td";
 import { useSelector } from "react-redux";
-import { getEstateConditionNameById } from "../store/object-params/object-conditions.store";
-import { getDistrictName } from "../store/object-params/districts.store";
+import { getEstateConditionNameById } from "@store/object-params/object-conditions.store";
+import { getDistrictName } from "@store/object-params/districts.store";
 import { AlignCenter } from "@components/common/columns/styled";
 
 export const locationColumns = [

@@ -8,13 +8,9 @@ import MeetingBaloon from "@components/UI/maps/meeting-baloon";
 import MeetingsFiltersPanel from "@components/UI/filters-panels/meetings-filters-panel";
 import BasicTable from "@components/common/table/basic-table";
 import HeaderLayout from "@components/common/page-headers/header-layout";
-import DialogStyled from "@components/common/dialog/dialog-styled";
-import UpdateObject from "@components/pages/object/update-object";
-import ObjectPage from "@components/pages/object-page/object-page";
-import UpdateMeeting from "@components/pages/meeting/update-meeting";
-import CreateMeeting from "@components/pages/meeting/create-meeting";
 import Buttons from "./components/buttons";
 import ItemsOnMap from "@components/common/map/items-on-map/items-on-map";
+import PageDialogs from "@components/common/dialog/page-dialogs";
 // hooks
 import useSearchMeeting from "@hooks/meeting/use-search-meeting";
 // icons
@@ -44,6 +40,7 @@ const initialState = {
   selectedTypes: [],
   startDate: null,
   endDate: null,
+  hiddenColumns: ["isDone"],
 };
 
 const Meetings = React.memo(() => {
@@ -91,17 +88,12 @@ const Meetings = React.memo(() => {
 
   const isLoading = useSelector(getMeetingLoadingStatus());
   const isInputEmpty = JSON.stringify(initialState) !== JSON.stringify(data);
-  const isDialogPage = true;
+  const isDialogPage = false;
 
   const {
     handleOpenCreateMeetingPage,
-    handleCloseCreateMeetingPage,
     handleOpenUpdateMeetingPage,
-    handleCloseUpdateMeetingPage,
     handleOpenObjectPage,
-    handleCloseObjectPage,
-    handleOpenUpdateObjectPage,
-    handleCloseUpdateObjectPage,
   } = useDialogHandlers(setState);
 
   const handleChangeSelectedMeetingBaloon = (meetingId) => {
@@ -164,49 +156,12 @@ const Meetings = React.memo(() => {
         itemsColumns={meetingsColumns(
           handleOpenUpdateMeetingPage,
           handleOpenObjectPage,
-          isDialogPage
+          isDialogPage,
+          isCurator
         )}
         isLoading={isLoading}
       />
-
-      <DialogStyled
-        component={<CreateMeeting onClose={handleCloseCreateMeetingPage} />}
-        maxWidth="lg"
-        onClose={handleCloseCreateMeetingPage}
-        open={state.createMeetingPage}
-      />
-      <DialogStyled
-        component={
-          <UpdateMeeting
-            meetingId={state.meetingId}
-            onClose={handleCloseUpdateMeetingPage}
-          />
-        }
-        onClose={handleCloseUpdateMeetingPage}
-        maxWidth="md"
-        open={state.updateMeetingPage}
-      />
-      <DialogStyled
-        component={
-          <ObjectPage
-            onClose={handleCloseObjectPage}
-            onEdit={handleOpenUpdateObjectPage}
-            objectId={state.objectId}
-          />
-        }
-        onClose={handleCloseObjectPage}
-        open={state.objectPage}
-      />
-      <DialogStyled
-        component={
-          <UpdateObject
-            onClose={handleCloseUpdateObjectPage}
-            objectId={state.objectId}
-          />
-        }
-        onClose={handleCloseUpdateObjectPage}
-        open={state.updatePage}
-      />
+      <PageDialogs state={state} setState={setState} />
     </>
   );
 });

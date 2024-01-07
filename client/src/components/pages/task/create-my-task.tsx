@@ -1,5 +1,4 @@
 // libraries
-import dayjs from "dayjs";
 import { toast } from "react-toastify";
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
@@ -9,8 +8,8 @@ import { tokens } from "@theme/theme";
 import { yupResolver } from "@hookform/resolvers/yup";
 // components
 import MyTaskForm from "@components/common/forms/my-task.form";
-import TitleWithCloseButton from "@components/common/page-headers/header-with-close-button";
 import SuccessCancelFormButtons from "@components/common/forms/buttons/success-cancel-form-buttons";
+import HeaderWithCloseButton from "@components/common/page-headers/header-with-close-button";
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
 // store
 import { createTask } from "@store/task/tasks.store";
@@ -18,7 +17,6 @@ import { createTask } from "@store/task/tasks.store";
 import { taskSchema } from "@schemas/task.shema";
 // utils
 import { capitalizeFirstLetter } from "@utils/data/capitalize-first-letter";
-import HeaderWithCloseButton from "@components/common/page-headers/header-with-close-button";
 
 const initialState = {
   date: null,

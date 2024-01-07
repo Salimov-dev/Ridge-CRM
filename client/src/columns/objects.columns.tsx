@@ -1,33 +1,34 @@
 import { orderBy } from "lodash";
+import React, { HTMLProps } from "react";
 import { useSelector } from "react-redux";
 // MUI
 import { Box, Button, Tooltip, Typography } from "@mui/material";
 import CloudDoneIcon from "@mui/icons-material/CloudDone";
 import CloudOffIcon from "@mui/icons-material/CloudOff";
 // utils
-import { FormatDate } from "../utils/date/format-date";
+import { FormatDate } from "@utils/date/format-date";
 // components
-import Flags from "../components/common/columns/flags";
-import { AlignCenter } from "../components/common/columns/styled";
-import EmptyTd from "../components/common/columns/empty-td";
-import UserNameWithAvatar from "../components/common/table/components/user-name-with-avatar";
+import Flags from "@components/common/columns/flags";
+import { AlignCenter } from "@components/common/columns/styled";
+import EmptyTd from "@components/common/columns/empty-td";
+import UserNameWithAvatar from "@components/common/table/components/user-name-with-avatar";
+import ButtonStyled from "@components/common/buttons/button-styled.button";
 import {
   FormatMetro,
   FormatObjectStatus,
   FormatPhone,
-} from "../components/common/table/helpers/helpers";
+} from "@components/common/table/helpers/helpers";
+// hooks
+import useGetUserAvatar from "@hooks/user/use-get-user-avatar";
 // store
-import { getLastContactsList } from "../store/last-contact/last-contact.store";
-import { getTasksList } from "../store/task/tasks.store";
+import { getLastContactsList } from "@store/last-contact/last-contact.store";
+import { getDistrictName } from "@store/object-params/districts.store";
+import { getUserDataById } from "@store/user/users.store";
+import { getTasksList } from "@store/task/tasks.store";
 import {
   getMeetingsList,
   getObjectMeetingsList,
-} from "../store/meeting/meetings.store";
-import { getDistrictName } from "../store/object-params/districts.store";
-import { getUserDataById } from "../store/user/users.store";
-import React, { HTMLProps } from "react";
-import useGetUserAvatar from "../hooks/user/use-get-user-avatar";
-import ButtonStyled from "@components/common/buttons/button-styled.button";
+} from "@store/meeting/meetings.store";
 
 function IndeterminateCheckbox({
   indeterminate,
@@ -268,11 +269,13 @@ export const objectsColumns = (handleOpenObjectPage, isCurator) => {
             return isLoading ? null : avatarSrc;
           };
           return (
-            <UserNameWithAvatar
-              userId={userId}
-              avatarSrc={getAvatarSrc()}
-              isLoading={isLoading}
-            />
+            <AlignCenter>
+              <UserNameWithAvatar
+                userId={userId}
+                avatarSrc={getAvatarSrc()}
+                isLoading={isLoading}
+              />
+            </AlignCenter>
           );
         },
       },

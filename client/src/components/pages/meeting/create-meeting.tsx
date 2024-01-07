@@ -44,6 +44,8 @@ const initialState = {
 
 const CreateMeeting = React.memo(
   ({ objectPageId = "", onClose, dateCreate }) => {
+    console.log("objectPageId", objectPageId);
+    
     const dispatch = useDispatch();
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);

@@ -77,10 +77,11 @@ const useObjectInfo = (setState) => {
   };
 
   // обновление стейта при создании встречи
-  const handleOpenCreateMeetingPage = () => {
+  const handleOpenCreateMeetingPage = (objectId) => {
     setState((prevState) => ({
       ...prevState,
       createMeetingPage: true,
+      objectId: objectId,
     }));
   };
   const handleCloseCreateMeetingPage = () => {

@@ -2,15 +2,12 @@ import { useSelector } from "react-redux";
 import { Box, Typography, styled } from "@mui/material";
 import BasicTable from "@common/table/basic-table";
 import DividerStyled from "@common/divider/divider-styled";
-import CreateMeetingButton from "@components/UI/dialogs/buttons/create-meeting-button";
+import sortingByDateAndTime from "@utils/other/sorting-by-date-and-time";
+import ButtonStyled from "@components/common/buttons/button-styled.button";
 import {
   getMeetingLoadingStatus,
   getObjectMeetingsList,
 } from "@store/meeting/meetings.store";
-import { meetingsColumnsDialog } from "@columns/meetings-columns-dialog/meetings-columns-dialog";
-import sortingByDateAndTime from "@utils/other/sorting-by-date-and-time";
-import ButtonStyled from "@components/common/buttons/button-styled.button";
-import { meetingsColumns } from "@columns/meetings.columns";
 
 const Title = styled(Box)`
   display: flex;
@@ -21,7 +18,7 @@ const Title = styled(Box)`
 const ObjectMeetings = ({
   object,
   objectId,
-  onOpen,
+  onOpenCreateMeeting,
   columns,
   isAuthorEntity = true,
 }) => {
@@ -40,7 +37,7 @@ const ObjectMeetings = ({
           <ButtonStyled
             title="Добавить встречу"
             style="MEETING"
-            onClick={onOpen}
+            onClick={() => onOpenCreateMeeting(objectId)}
           />
         ) : null}
       </Title>

@@ -80,7 +80,7 @@ const ObjectInfo = ({ object, objectId, isLoading, isAuthorEntity = true }) => {
       <ObjectMeetings
         object={object}
         objectId={objectId}
-        onOpen={handleOpenCreateMeetingPage}
+        onOpenCreateMeeting={handleOpenCreateMeetingPage}
         columns={meetingsColumns(
           handleOpenUpdateMeetingPage,
           () => {},
