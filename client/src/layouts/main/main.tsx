@@ -1,13 +1,7 @@
 import "dayjs/locale/ru";
-// components
-import MainHeader from "./components/main-header";
-import { useSelector } from "react-redux";
-import { getIsLoggedIn } from "../../store/user/users.store";
+import React from "react";
 import { Box, Typography, styled } from "@mui/material";
-import telegramIcon from "../../assets/telegram.png";
-import React, { useState } from "react";
-import PageDialogs from "@components/common/dialog/page-dialogs";
-import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
+import telegramIcon from "@assets/telegram.png";
 
 const Logo = styled(Box)`
   padding: 20px;
@@ -18,98 +12,55 @@ const Logo = styled(Box)`
 `;
 
 const Main = React.memo(() => {
-  const [state, setState] = useState({
-    loginPage: false,
-  });
-
-  const { handleOpenLoginPage, handleCloseLoginPage } =
-    useDialogHandlers(setState);
-
-  const isLoggedIn = useSelector(getIsLoggedIn());
-
   return (
-    <Box>
-      <MainHeader
-        isLoggedIn={isLoggedIn}
-        handleOpenLoginPage={handleOpenLoginPage}
-      />
+    <Box
+      sx={{
+        height: "100%",
+        display: "flex",
+        justifyContent: "start",
+        flexDirection: "column",
+        gap: "40px",
+      }}
+    >
+      <Logo>
+        <Typography
+          sx={{ fontSize: "80px", fontWeight: "700", marginBottom: "-10px" }}
+        >
+          Г Р Я Д К А
+        </Typography>
+        <Typography sx={{ fontSize: "13px" }}>
+          НАША СИСТЕМА АВТОМАТИЗАЦИИ ДЛЯ ОТДЕЛОВ РАЗВИТИЯ
+        </Typography>
+      </Logo>
+
       <Box
         sx={{
           display: "flex",
           flexDirection: "column",
-          gap: "40px",
+          alignItems: "center",
+          gap: "6px",
         }}
       >
-        <Logo>
-          <Typography
-            sx={{ fontSize: "80px", fontWeight: "700", marginBottom: "-10px" }}
-          >
-            Г Р Я Д К А
-          </Typography>
-          <Typography sx={{ fontSize: "13px" }}>
-            НАША СИСТЕМА АВТОМАТИЗАЦИИ ДЛЯ ОТДЕЛОВ РАЗВИТИЯ
-          </Typography>
-        </Logo>
-
+        <Typography
+          variant="h4"
+          sx={{ background: "yellow", color: "black", padding: "5px 10px" }}
+        >
+          Желаете получить доступ к Системе?
+        </Typography>
+        <Typography
+          variant="h4"
+          sx={{ background: "yellow", color: "black", padding: "5px 10px" }}
+        >
+          Есть вопросы или предложения по использованию?
+        </Typography>
+        <Box sx={{ height: "30px" }}></Box>
         <Box
           sx={{
             display: "flex",
-            flexDirection: "column",
             alignItems: "center",
             gap: "6px",
           }}
         >
-          <Typography
-            variant="h4"
-            sx={{ background: "yellow", color: "black", padding: "5px 10px" }}
-          >
-            Желаете получить доступ к Системе?
-          </Typography>
-          <Typography
-            variant="h4"
-            sx={{ background: "yellow", color: "black", padding: "5px 10px" }}
-          >
-            Есть вопросы или предложения по использованию?
-          </Typography>
-          <Box sx={{ height: "30px" }}></Box>
-          <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              gap: "6px",
-            }}
-          >
-            <Typography
-              variant="h5"
-              sx={{
-                background: "fireBrick",
-                color: "white",
-                padding: "5px 10px",
-              }}
-            >
-              Свяжитесь с нами в Телеграм
-            </Typography>
-            <Box
-              sx={{
-                borderRadius: "50%",
-                width: "40px",
-                height: "40px",
-                overflow: "hidden",
-              }}
-            >
-              <a
-                href="https://t.me/ridge_crm"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <img
-                  src={telegramIcon}
-                  alt="Telegram"
-                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                />
-              </a>
-            </Box>
-          </Box>
           <Typography
             variant="h5"
             sx={{
@@ -118,11 +69,40 @@ const Main = React.memo(() => {
               padding: "5px 10px",
             }}
           >
-            Или напишите на почту: ridge-crm@mail.ru
+            Свяжитесь с нами в Телеграм
           </Typography>
+          <Box
+            sx={{
+              borderRadius: "50%",
+              width: "40px",
+              height: "40px",
+              overflow: "hidden",
+            }}
+          >
+            <a
+              href="https://t.me/ridge_crm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img
+                src={telegramIcon}
+                alt="Telegram"
+                style={{ width: "100%", height: "100%", objectFit: "cover" }}
+              />
+            </a>
+          </Box>
         </Box>
+        <Typography
+          variant="h5"
+          sx={{
+            background: "fireBrick",
+            color: "white",
+            padding: "5px 10px",
+          }}
+        >
+          Или напишите на почту: ridge-crm@mail.ru
+        </Typography>
       </Box>
-      <PageDialogs state={state} setState={setState} />
     </Box>
   );
 });

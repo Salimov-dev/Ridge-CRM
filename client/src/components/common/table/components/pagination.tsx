@@ -7,7 +7,7 @@ import ChevronLeftOutlinedIcon from "@mui/icons-material/ChevronLeftOutlined";
 import { Box, Typography, Select, MenuItem } from "@mui/material";
 // styles
 import {
-  ButtonStyled,
+  PaginationButton,
   PageBlock,
   PaginationBlock,
   PaginationContainer,
@@ -29,7 +29,7 @@ const Pagination = ({ table, quantity }) => {
 
       <PaginationBlock>
         <PaginationPageNavigation>
-          <ButtonStyled
+          <PaginationButton
             variant="outlined"
             onClick={() => table.setPageIndex(0)}
             disabled={!table.getCanPreviousPage()}
@@ -46,8 +46,8 @@ const Pagination = ({ table, quantity }) => {
                   : colors.grey[100],
               }}
             />
-          </ButtonStyled>
-          <ButtonStyled
+          </PaginationButton>
+          <PaginationButton
             variant="outlined"
             onClick={() => table.previousPage()}
             disabled={!table.getCanPreviousPage()}
@@ -64,8 +64,8 @@ const Pagination = ({ table, quantity }) => {
                   : colors.grey[100],
               }}
             />
-          </ButtonStyled>
-          <ButtonStyled
+          </PaginationButton>
+          <PaginationButton
             variant="outlined"
             onClick={() => table.nextPage()}
             disabled={!table.getCanNextPage()}
@@ -80,8 +80,8 @@ const Pagination = ({ table, quantity }) => {
                 color: !table.getCanNextPage() ? "inherit" : colors.grey[100],
               }}
             />
-          </ButtonStyled>
-          <ButtonStyled
+          </PaginationButton>
+          <PaginationButton
             variant="outlined"
             onClick={() => table.setPageIndex(table.getPageCount() - 1)}
             disabled={!table.getCanNextPage()}
@@ -96,7 +96,7 @@ const Pagination = ({ table, quantity }) => {
                 color: !table.getCanNextPage() ? "inherit" : colors.grey[100],
               }}
             />
-          </ButtonStyled>
+          </PaginationButton>
         </PaginationPageNavigation>
 
         <PageBlock>

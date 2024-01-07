@@ -28,7 +28,7 @@ export const PageBlock = styled(Box)`
   display: flex;
 `;
 
-export const ButtonStyled = styled(Button)`
+export const PaginationButton = styled(Button)`
   color: inherit;
   border-color: inherit;
 `;
