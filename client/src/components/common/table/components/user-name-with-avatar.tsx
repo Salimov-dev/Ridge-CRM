@@ -4,6 +4,7 @@ import { Box, Typography, styled } from "@mui/material";
 import AvatarImage from "../../../../layouts/profile/components/avatar-image";
 
 const Component = styled(Box)`
+  width: 100%;
   display: flex;
   gap: 6px;
   align-items: center;
@@ -20,7 +21,7 @@ const UserNameWithAvatar = React.memo(
           avatarSrc={avatarSrc}
           isLoading={isLoading}
         />
-        <Typography sx={{ fontStyle: fontStyle }}>
+        <Typography sx={{ width: "100%", fontStyle: fontStyle }}>
           {FormatManagerName(userId)}
         </Typography>
       </Component>

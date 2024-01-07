@@ -17,7 +17,6 @@ import target_cluster from "@assets/map/target_cluster.png";
 import "./styles.css";
 
 const MapContainer = styled(Box)`
-  width: 100%;
   height: 350px;
   display: flex;
   background: gray;
@@ -33,10 +32,15 @@ const ItemsOnMap = ({
   targetCluster = target_cluster,
 }) => {
   const [activePortal, setActivePortal] = useState(false);
+  const [isFullscreen, setIsFullscreen] = useState(false);
 
   const center = [59.930320630519155, 30.32906024941998];
   const mapZoom = 11;
   const clustererInstanceRef = useRef(null);
+
+  const handleFullscreenClick = () => {
+    setIsFullscreen(!isFullscreen);
+  };
 
   const Portal = ({ children, getHTMLElementId }) => {
     const mount = document.getElementById(getHTMLElementId);
@@ -53,7 +57,7 @@ const ItemsOnMap = ({
   };
 
   return (
-    <MapContainer>
+    <MapContainer sx={{ width: !isFullscreen ? "100%" : "calc(100% - 86px)" }}>
       {!isLoading ? (
         <Map
           width="100%"
@@ -71,7 +75,12 @@ const ItemsOnMap = ({
             "clusterer.addon.balloon",
           ]}
         >
-          <FullscreenControl />
+          <FullscreenControl
+            options={{
+              float: "right",
+            }}
+            onClick={handleFullscreenClick}
+          />
           <Clusterer
             instanceRef={(ref) => (clustererInstanceRef.current = ref)}
             options={{
