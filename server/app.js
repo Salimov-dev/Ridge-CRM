@@ -33,7 +33,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use("/api", routes);
 app.use("/api/uploads", express.static(path.join(__dirname, "uploads")));
 
-cron.schedule("0 * * * *", () => backupMongoDB());
+// cron.schedule("0 * * * *", () => backupMongoDB());
 
 if (process.env.NODE_ENV === "production") {
   app.use("/", express.static(path.join(__dirname, "client")));

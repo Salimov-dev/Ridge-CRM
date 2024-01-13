@@ -18,7 +18,7 @@ const Sockets = (server) => {
   });
 
   io.on("connection", (socket) => {
-    console.log(chalk.blue("A user connected"));
+    // console.log(chalk.blue("A user connected"));
 
     SocketUser(io, socket);
     SocketObject(io, socket);
@@ -29,7 +29,7 @@ const Sockets = (server) => {
     SocketAvatar(io, socket);
 
     socket.on("disconnect", () => {
-      console.log(chalk.red("User disconnected"));
+      // console.log(chalk.red("User disconnected"));
     });
   });
 };
