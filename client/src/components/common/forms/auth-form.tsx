@@ -23,7 +23,6 @@ const AuthForm = ({ data, startPage = "", register, errors }) => {
   ) => {
     event.preventDefault();
   };
-  console.log("startPage", startPage);
 
   return (
     <Form noValidate>

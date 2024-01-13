@@ -5,7 +5,7 @@ const Component = styled(Box)`
   width: 100%;
   display: flex;
   padding: 0 10px;
-  justify-content: start;
+  justify-content: center;
 `;
 
 const Subtitle = ({ title, onClick }) => {
