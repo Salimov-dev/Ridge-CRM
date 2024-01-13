@@ -3,7 +3,11 @@ import routes from "./routes/index.js";
 import { corsOptions } from "./utils/cors-options.js";
 import backupMongoDB from "./utils/backup-mongo-db.js";
 import mongooseConnection from "./utils/mongoose-conection.js";
+import postgreConnection from "./utils/postgre-conection.js";
+// sockets
+import Sockets from "./sockets/sockets.js";
 // modules
+import chalk from "chalk";
 import { dirname } from "path";
 import { fileURLToPath } from "url";
 import cookieParser from "cookie-parser";
@@ -11,14 +15,19 @@ import express from "express";
 import cron from "node-cron";
 import cors from "cors";
 import path from "path";
+import http from "http";
+import config from "config";
 
-const app = express();
-
+const PORT = config.get("port") ?? 8080;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
+const app = express();
+const server = http.createServer(app);
+Sockets(server);
+
 app.use(cors(corsOptions));
-app.use(express.json({ limit: "50mb" }))
+app.use(express.json({ limit: "50mb" }));
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: false }));
 app.use("/api", routes);
@@ -35,4 +44,9 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
-mongooseConnection({ app });
+server.listen(PORT, () =>
+  console.log(chalk.green(`Server has been started on port ${PORT}`))
+);
+
+mongooseConnection({ server });
+postgreConnection();
