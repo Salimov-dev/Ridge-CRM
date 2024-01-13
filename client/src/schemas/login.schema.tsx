@@ -4,9 +4,13 @@ export const loginSchema = yup.object().shape({
   email: yup
     .string()
     .email("Введите email корректно")
-    .required("Email обязателен для заполнения"),
+    .required("Логин обязателен для заполнения"),
   password: yup
     .string()
     .min(8, "Слишком короткий пароль - введите не менее 8 символов")
     .required("Пароль обязателен для заполнения"),
+  passwordRepeat: yup
+    .string()
+    .min(8, "Слишком короткий пароль - введите не менее 8 символов")
+    .required("Повторный пароль обязателен для заполнения"),
 });

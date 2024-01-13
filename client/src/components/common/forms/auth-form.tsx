@@ -5,8 +5,9 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { FieldsContainer, Form } from "./styled/styled";
 import TextFieldStyled from "../inputs/text-field-styled";
 
-const LoginForm = ({ data, register, errors }) => {
+const AuthForm = ({ data, startPage = "", register, errors }) => {
   const [showPassword, setShowPassword] = useState(false);
+  const [showPasswordRepeat, setShowPasswordRepeat] = useState(false);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const handleMouseDownPassword = (
@@ -14,12 +15,22 @@ const LoginForm = ({ data, register, errors }) => {
   ) => {
     event.preventDefault();
   };
+
+  const handleClickShowPasswordRepeat = () =>
+    setShowPasswordRepeat((show) => !show);
+  const handleMouseDownPasswordRepeat = (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    event.preventDefault();
+  };
+  console.log("startPage", startPage);
+
   return (
     <Form noValidate>
       <FieldsContainer sx={{ flexDirection: "column" }}>
         <TextFieldStyled
           register={register}
-          label="Логин"
+          label="Почта"
           type="text"
           name="email"
           errors={errors?.email}
@@ -31,6 +42,8 @@ const LoginForm = ({ data, register, errors }) => {
           label="Пароль"
           type={showPassword ? "text" : "password"}
           name="password"
+          value={data?.password}
+          onInputQuantities={8}
           errors={errors?.password}
           InputProps={{
             endAdornment: (
@@ -47,9 +60,34 @@ const LoginForm = ({ data, register, errors }) => {
             ),
           }}
         />
+        {startPage === "register" && (
+          <TextFieldStyled
+            register={register}
+            label="Повторите пароль"
+            type={showPasswordRepeat ? "text" : "password"}
+            name="passwordRepeat"
+            onInputQuantities={8}
+            value={data?.passwordRepeat}
+            errors={errors?.passwordRepeat}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={handleClickShowPasswordRepeat}
+                    onMouseDown={handleMouseDownPasswordRepeat}
+                    edge="end"
+                  >
+                    {showPasswordRepeat ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+          />
+        )}
       </FieldsContainer>
     </Form>
   );
 };
 
-export default LoginForm;
+export default AuthForm;

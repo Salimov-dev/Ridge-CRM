@@ -177,21 +177,24 @@ const useDialogHandlers = (setState) => {
     }));
   };
 
-  // обновление стейта при открытии окна логина
-  const handleOpenLoginPage = () => {
+  // обновление стейта при открытии окна страницы авторизации
+  const handleOpenAuthPage = (startPage) => {
     setState((prevState) => ({
       ...prevState,
-      loginPage: true,
+      authPage: true,
+      startPage: startPage
     }));
   };
-  const handleCloseLoginPage = () => {
+  const handleCloseAuthPage = () => {
     setState((prevState) => ({
       ...prevState,
-      loginPage: false,
+      authPage: false,
     }));
   };
 
   return {
+    handleOpenAuthPage,
+    handleCloseAuthPage,
     handleOpenCreateObjectPage,
     handleCloseCreateObjectPage,
     handleOpenUpdateObjectPage,
@@ -222,8 +225,6 @@ const useDialogHandlers = (setState) => {
     handleCloseUpdateMeetingPage,
     handleOpenUpdateUserAvatarPage,
     handleCloseUpdateUserAvatarPage,
-    handleOpenLoginPage,
-    handleCloseLoginPage,
   };
 };
 

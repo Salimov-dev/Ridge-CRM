@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Box, styled } from "@mui/material";
 import { useSelector } from "react-redux";
 // components
+import UserMenu from "./user-menu";
 import Loader from "@common/loader/loader";
 import ButtonStyled from "@components/common/buttons/button-styled.button";
 import PageDialogs from "@components/common/dialog/page-dialogs";
@@ -12,10 +13,8 @@ import {
   getCurrentUserData,
   getUsersLoadingStatus,
 } from "@store/user/users.store";
-import UserMenu from "./user-menu";
 
 const Component = styled(Box)`
-  width: 100%;
   display: flex;
   justify-content: end;
   padding-top: 10px;
@@ -24,10 +23,13 @@ const Component = styled(Box)`
 const TopBarRightSide = () => {
   const [state, setState] = useState({
     loginPage: false,
+    registerPage: false,
+    authPage: false,
+    startPage: "",
   });
 
   const currentUser = useSelector(getCurrentUserData());
-  const { handleOpenLoginPage } = useDialogHandlers(setState);
+  const { handleOpenAuthPage } = useDialogHandlers(setState);
 
   const isLoading = useSelector(getUsersLoadingStatus());
 
@@ -37,18 +39,18 @@ const TopBarRightSide = () => {
         currentUser ? (
           <UserMenu currentUser={currentUser} />
         ) : (
-          <Box sx={{ display: "flex", gap: "4px" }}>
+          <Box sx={{ width: "100%", display: "flex", gap: "4px" }}>
             <ButtonStyled
               title="Регистрация"
               style="MY_TASK"
               variant="contained"
-              onClick={handleOpenLoginPage}
+              onClick={() => handleOpenAuthPage("register")}
             />
             <ButtonStyled
               title="Войти"
               style="MANAGER_TASK"
               variant="contained"
-              onClick={handleOpenLoginPage}
+              onClick={() => handleOpenAuthPage("login")}
             />
           </Box>
         )

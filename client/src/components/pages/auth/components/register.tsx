@@ -12,11 +12,14 @@ import { useLocation, useNavigate } from "react-router-dom";
 import ButtonStyled from "@components/common/buttons/button-styled.button";
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
 import HeaderWithCloseButton from "@components/common/page-headers/header-with-close-button";
-import LoginForm from "@common/forms/login-form";
+import LoginForm from "@components/common/forms/auth-form";
 // schema
 import { loginSchema } from "@schemas/login.schema";
 // store
 import { login } from "@store/user/users.store";
+import AuthForm from "@components/common/forms/auth-form";
+import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
+import PageDialogs from "@components/common/dialog/page-dialogs";
 
 const Component = styled(Box)`
   height: 100%;
@@ -28,7 +31,7 @@ const Component = styled(Box)`
   gap: 20px;
 `;
 
-const AuthForm = styled(Box)`
+const FormContainer = styled(Box)`
   height: 100%;
   width: 350px;
   display: flex;
@@ -47,13 +50,17 @@ const Subtitle = styled(Box)`
 const initialState = {
   email: "",
   password: "",
+  passwordRepeat: "",
 };
 
-const Login = React.memo(({ onClose }) => {
+const Register = React.memo(({ page, onClose }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
   const [isLoading, setIsLoading] = useState(false);
+  const [state, setState] = useState({
+    loginPage: false,
+  });
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -64,7 +71,7 @@ const Login = React.memo(({ onClose }) => {
     formState: { errors },
   } = useForm({
     defaultValues: initialState,
-    mode: "onBlur",
+    mode: "onSubmit",
     resolver: yupResolver(loginSchema),
   });
 
@@ -74,47 +81,43 @@ const Login = React.memo(({ onClose }) => {
   const isFormValid = !Object.keys(errors).length;
 
   const onSubmit = () => {
-    setIsLoading(true);
-    dispatch<any>(login({ payload: data }))
-      .then(() => {
-        setIsLoading(false);
-        navigate(redirectPath, { replace: true });
-        onClose();
-      })
-      .catch((error) => {
-        const { message } = error.response.data.error;
-        toast.error(message);
-        setIsLoading(false);
-      });
+    // setIsLoading(true);
+    // dispatch<any>(login({ payload: data }))
+    //   .then(() => {
+    //     setIsLoading(false);
+    //     navigate(redirectPath, { replace: true });
+    //     onClose();
+    //   })
+    //   .catch((error) => {
+    //     const { message } = error.response.data.error;
+    //     toast.error(message);
+    //     setIsLoading(false);
+    //   });
   };
 
   return (
     <Component>
       <HeaderWithCloseButton
-        title="Авторизация"
+        title="Регистрация"
         color="white"
         margin="0 0 20px 0"
-        background={colors.cancel["fireBrick"]}
+        background={colors.green["green"]}
         onClose={onClose}
       />
       <LoaderFullWindow isLoading={isLoading} />
 
-      <AuthForm>
-        <LoginForm data={data} errors={errors} register={register} />
-        <Subtitle>
-          <Typography sx={{ marginBottom: "10px" }}>
-            Нет логина? Нажмите, чтобы получить доступ
-          </Typography>
-        </Subtitle>
+      <FormContainer>
+        <AuthForm data={data} errors={errors} register={register} startPage={page}/>
         <ButtonStyled
-          title="Войти"
+          title="Регистрация"
           style="SUCCESS"
           onClick={handleSubmit(onSubmit)}
           disabled={!isFormValid}
         />
-      </AuthForm>
+      </FormContainer>
+      <PageDialogs state={state} setState={setState} />
     </Component>
   );
 });
 
-export default Login;
+export default Register;
