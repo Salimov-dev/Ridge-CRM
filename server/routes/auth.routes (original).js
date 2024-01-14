@@ -11,11 +11,9 @@ router.post("/signUp", [
   check("password", "Минимальная длина пароля 8 символов").isLength({ min: 8 }),
   async (req, res) => {
     try {
-      // console.log("req", req.errors);
+      console.log("req", req.body);
       const errors = validationResult(req);
 
-      console.log("errors", errors);
-      console.log("req.body", req.body);
       if (!errors.isEmpty()) {
         return res.status(400).json({
           error: {
@@ -26,11 +24,8 @@ router.post("/signUp", [
       }
 
       const { email, password } = req.body;
-      console.log("email", email);
-      console.log("password", password);
 
-      // Check if the user with the provided email already exists
-      const existingUser = await User.findOne({ where: { email } });
+      const existingUser = await User.findOne({ email });
 
       if (existingUser) {
         return res.status(400).json({
@@ -41,24 +36,19 @@ router.post("/signUp", [
         });
       }
 
-      // Hash the password
       const hashedPassword = await bcrypt.hash(password, 12);
 
-      // Create a new user with Sequelize
       const newUser = await User.create({
-        email,
+        ...req.body,
         password: hashedPassword,
-        role: ["MANAGER"], // Assuming role is an array based on your model
+        role: "MANAGER",
       });
 
-      // Generate tokens and save the refresh token
       const tokens = tokenService.generate({ _id: newUser._id });
       await tokenService.save(newUser._id, tokens.refreshToken);
 
-      // Send the response with tokens and user ID
       res.status(201).send({ ...tokens, userId: newUser._id });
     } catch (e) {
-      console.error(e);
       res.status(500).json({
         message: "На сервере произошла ошибка. Попробуйте позже",
       });

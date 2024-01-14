@@ -16,7 +16,7 @@ import LoginForm from "@components/common/forms/auth-form";
 // schema
 import { loginSchema } from "@schemas/login.schema";
 // store
-import { login } from "@store/user/users.store";
+import { createNewUser, login, signUp } from "@store/user/users.store";
 import AuthForm from "@components/common/forms/auth-form";
 import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
 import PageDialogs from "@components/common/dialog/page-dialogs";
@@ -82,17 +82,19 @@ const Register = React.memo(({ page, onClose }) => {
 
   const onSubmit = () => {
     // setIsLoading(true);
-    // dispatch<any>(login({ payload: data }))
-    //   .then(() => {
-    //     setIsLoading(false);
-    //     navigate(redirectPath, { replace: true });
-    //     onClose();
-    //   })
-    //   .catch((error) => {
-    //     const { message } = error.response.data.error;
-    //     toast.error(message);
-    //     setIsLoading(false);
-    //   });
+    const newData = { email: data.email, password: data.password };
+    // dispatch<any>(signUp({ payload: data }))
+    dispatch<any>(createNewUser(newData))
+      // .then(() => {
+      //   setIsLoading(false);
+      //   navigate(redirectPath, { replace: true });
+      //   onClose();
+      // })
+      .catch((error) => {
+        const { message } = error.response.data.error;
+        toast.error(message);
+        setIsLoading(false);
+      });
   };
 
   return (
@@ -107,7 +109,12 @@ const Register = React.memo(({ page, onClose }) => {
       <LoaderFullWindow isLoading={isLoading} />
 
       <FormContainer>
-        <AuthForm data={data} errors={errors} register={register} startPage={page}/>
+        <AuthForm
+          data={data}
+          errors={errors}
+          register={register}
+          startPage={page}
+        />
         <ButtonStyled
           title="Регистрация"
           style="SUCCESS"

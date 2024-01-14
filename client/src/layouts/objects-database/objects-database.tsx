@@ -100,7 +100,7 @@ const ObjectsDatabase = React.memo(() => {
   }, []);
 
   return (
-    <Box>
+    <>
       <HeaderLayout title="Проработка базы объектов" />
       <ObjectsDatabaseFiltersPanel
         data={data}
@@ -185,7 +185,7 @@ const ObjectsDatabase = React.memo(() => {
       )}
 
       <PageDialogs state={state} setState={setState} />
-    </Box>
+    </>
   );
 });
 

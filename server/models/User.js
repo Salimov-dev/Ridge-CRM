@@ -1,38 +1,46 @@
-import { Schema, model } from "mongoose";
+import { DataTypes } from "sequelize";
+import { sequelize } from "../utils/postgre-conection.js";
 
-const schema = new Schema(
+const User = sequelize.define(
+  "User",
   {
+    _id: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+      primaryKey: true,
+    },
     email: {
-      type: String,
-      required: true,
+      type: DataTypes.STRING,
+      allowNull: false,
       unique: true,
     },
-    password: String,
-    curatorId: String,
-    image: String,
-    gender: String,
-    birthday: String,
-    status: String,
-    role: String,
-    name: {
-      firstName: String,
-      surName: String,
-      lastName: String,
+    password: DataTypes.STRING,
+    curatorId: { type: DataTypes.ARRAY(DataTypes.STRING), defaultValue: null },
+    gender: { type: DataTypes.STRING, defaultValue: null },
+    birthday: { type: DataTypes.STRING, defaultValue: null },
+    status: { type: DataTypes.STRING, defaultValue: null },
+    role: {
+      type: DataTypes.ARRAY(DataTypes.STRING),
+      defaultValue: ["CURATOR"],
     },
-    contacts: {
-      phone: Number,
+    firstName: { type: DataTypes.STRING, defaultValue: null },
+    surName: { type: DataTypes.STRING, defaultValue: null },
+    lastName: { type: DataTypes.STRING, defaultValue: null },
+    phone: { type: DataTypes.INTEGER, defaultValue: null },
+    isActive: { type: DataTypes.BOOLEAN, defaultValue: null },
+    created_at: {
+      type: DataTypes.DATE,
+      defaultValue: DataTypes.NOW,
     },
-    contract: {
-      startDate: String,
-      endDate: String,
-      trialPeriod: String,
+    updated_at: {
+      type: DataTypes.DATE,
+      defaultValue: DataTypes.NOW,
     },
-    company: { type: Schema.Types.ObjectId, ref: "Company" },
-    isActive: Boolean,
   },
   {
-    timestamps: { createdAt: "created_at", updatedAt: "updated_at" },
+    timestamps: false,
+    tableName: "users", // Set your preferred table name
   }
 );
 
-export default model("User", schema);
+export default User;

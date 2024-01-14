@@ -42,35 +42,35 @@ const AppLoader = ({ children }: AppLoaderProps) => {
   useEffect(() => {
     if (isLoggedIn) {
       // objects
-      dispatch<any>(loadObjectsList());
-      dispatch<any>(loadObjectStatusList());
-      dispatch<any>(loadObjectConditionsList());
-      dispatch<any>(loadObjectTypesList());
+      // dispatch<any>(loadObjectsList());
+      // dispatch<any>(loadObjectStatusList());
+      // dispatch<any>(loadObjectConditionsList());
+      // dispatch<any>(loadObjectTypesList());
       // objects params
-      dispatch<any>(loadMetroList());
-      dispatch<any>(loadDistrictsList());
-      dispatch<any>(loadWorkingPositionList());
-      dispatch<any>(loadCurrentRentersList());
-      dispatch<any>(loadRentTypesList());
-      dispatch<any>(loadEstateTypesList());
-      dispatch<any>(loadObjectPropertiesList());
-      dispatch<any>(loadTradeAreaList());
+      // dispatch<any>(loadMetroList());
+      // dispatch<any>(loadDistrictsList());
+      // dispatch<any>(loadWorkingPositionList());
+      // dispatch<any>(loadCurrentRentersList());
+      // dispatch<any>(loadRentTypesList());
+      // dispatch<any>(loadEstateTypesList());
+      // dispatch<any>(loadObjectPropertiesList());
+      // dispatch<any>(loadTradeAreaList());
       // users
       dispatch<any>(loadUsersList());
       dispatch<any>(loadUserStatusesList());
       // meetings
-      dispatch<any>(loadMeetingsList());
-      dispatch<any>(loadMeetingStatusesList());
-      dispatch<any>(loadMeetingTypesList());
+      // dispatch<any>(loadMeetingsList());
+      // dispatch<any>(loadMeetingStatusesList());
+      // dispatch<any>(loadMeetingTypesList());
       // tasks
-      dispatch<any>(loadTasksList());
+      // dispatch<any>(loadTasksList());
       // last contact
-      dispatch<any>(loadLastContactsList());
+      // dispatch<any>(loadLastContactsList());
       // presentations
-      dispatch<any>(loadPresentationsList());
-      dispatch<any>(loadPresentationStatusList());
+      // dispatch<any>(loadPresentationsList());
+      // dispatch<any>(loadPresentationStatusList());
 
-      dispatch<any>(loadAvatarList());
+      // dispatch<any>(loadAvatarList());
     }
   }, [isLoggedIn, dispatch]);
 
