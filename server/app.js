@@ -24,6 +24,7 @@ const __dirname = dirname(__filename);
 
 const app = express();
 const server = http.createServer(app);
+
 Sockets(server);
 
 app.use(cors(corsOptions));

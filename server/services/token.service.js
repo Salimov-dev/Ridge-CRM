@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import config from "config";
-import Token from "../models/Tokens.js";
+import Token from "../models/Token.js";
 
 class TokenService {
   // return: accessToken, refreshToken, expiresIn

@@ -14,8 +14,8 @@ router.post("/signUp", [
       // console.log("req", req.errors);
       const errors = validationResult(req);
 
-      console.log("errors", errors);
-      console.log("req.body", req.body);
+      // console.log("errors", errors);
+      // console.log("req.body", req.body);
       if (!errors.isEmpty()) {
         return res.status(400).json({
           error: {
@@ -26,8 +26,8 @@ router.post("/signUp", [
       }
 
       const { email, password } = req.body;
-      console.log("email", email);
-      console.log("password", password);
+      // console.log("email", email);
+      // console.log("password", password);
 
       // Check if the user with the provided email already exists
       const existingUser = await User.findOne({ where: { email } });
@@ -71,6 +71,7 @@ router.post("/signInWithPassword", [
   check("password", "Пароль не может быть пустым").exists().trim(),
   async (req, res) => {
     try {
+      console.log("req", req.body);
       const errors = validationResult(req);
 
       if (!errors.isEmpty()) {
@@ -84,7 +85,8 @@ router.post("/signInWithPassword", [
 
       const { email, password } = req.body;
 
-      const existingUser = await User.findOne({ email });
+      // Find the user with the provided email
+      const existingUser = await User.findOne({ where: { email } });
 
       if (!existingUser) {
         return res.status(400).send({
@@ -95,7 +97,8 @@ router.post("/signInWithPassword", [
         });
       }
 
-      const isPasswordEqual = await bcrypt.compareSync(
+      // Compare the hashed password
+      const isPasswordEqual = await bcrypt.compare(
         password,
         existingUser.password
       );
@@ -108,12 +111,15 @@ router.post("/signInWithPassword", [
           },
         });
       }
-      const tokens = tokenService.generate({ _id: existingUser._id });
 
+      // Generate tokens and save the refresh token
+      const tokens = tokenService.generate({ _id: existingUser._id });
       await tokenService.save(existingUser._id, tokens.refreshToken);
 
+      // Send the response with tokens and user ID
       res.status(200).send({ ...tokens, userId: existingUser._id });
     } catch (e) {
+      console.error(e);
       res.status(500).json({
         message: "На сервере произошла ошибка. Попробуйте позже",
       });
