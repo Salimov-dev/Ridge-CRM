@@ -8,10 +8,10 @@ const router = express.Router();
 router.get("/", auth, async (req, res) => {
   try {
     const userId = req.user._id;
-    console.log("userId", userId);
+    // console.log("userId", userId);
 
     const user = await User.findByPk(userId); // Find user by primary key (_id)
-    console.log("user.dataValues", user.dataValues);
+    // console.log("user.dataValues", user.dataValues);
 
     if (!user) {
       return res.status(404).json({ message: "Пользователь не найден" });

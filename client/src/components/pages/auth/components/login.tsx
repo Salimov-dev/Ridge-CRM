@@ -69,13 +69,13 @@ const Login = React.memo(({ page, onClose }) => {
   const redirectPath = location.state?.path || "/";
 
   const onSubmit = () => {
-    // setIsLoading(true);
+    setIsLoading(true);
     dispatch<any>(login({ payload: data }))
-      // .then(() => {
-      //   setIsLoading(false);
-      //   navigate(redirectPath, { replace: true });
-      //   onClose();
-      // })
+      .then(() => {
+        setIsLoading(false);
+        navigate(redirectPath, { replace: true });
+        onClose();
+      })
       .catch((error) => {
         const { message } = error.response.data.error;
         toast.error(message);

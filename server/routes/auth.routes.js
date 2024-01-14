@@ -48,7 +48,6 @@ router.post("/signUp", [
       const newUser = await User.create({
         email,
         password: hashedPassword,
-        role: ["MANAGER"], // Assuming role is an array based on your model
       });
 
       // Generate tokens and save the refresh token
