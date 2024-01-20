@@ -10,6 +10,7 @@ import DatePickerStyled from "../inputs/date-picker";
 import AutocompleteStyled from "../inputs/autocomplete-styled";
 import TextFieldStyled from "../inputs/text-field-styled";
 import SimpleSwitch from "../inputs/simple-switch";
+// utils
 import { capitalizeFirstLetter } from "@utils/data/capitalize-first-letter";
 
 const MeetingForm = ({
@@ -88,8 +89,9 @@ const MeetingForm = ({
 
           <TextFieldStyled
             register={register}
-            label="Комментарий *"
+            label="Комментарий"
             name="comment"
+            required={true}
             errors={errors?.comment}
             value={capitalizeFirstLetter(data?.comment)}
             onInputQuantities={150}

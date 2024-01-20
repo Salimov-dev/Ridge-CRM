@@ -41,7 +41,7 @@ const initialState = {
 };
 
 const CreateMeeting = React.memo(
-  ({ objectPageId = "", onClose, dateCreate }) => {
+  ({ objectPageId = "", onClose, dateCreate, isObjectPage }) => {
     const dispatch = useDispatch();
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
@@ -79,27 +79,21 @@ const CreateMeeting = React.memo(
     const data = watch();
     // console.log("data", data);
 
-    const isEmptyFindedObject = Boolean(Object.keys(findedObject)?.length);
+    const isEmptyFindedObject = !!Object.keys(findedObject)?.length;
 
     const onSubmit = (data) => {
-      // setIsLoading(true);
+      setIsLoading(true);
 
-      const newData = {
-        ...data,
-        // zoom: 16,
-      };
-
-      console.log("data", data);
       dispatch<any>(createMeeting(data))
         .then(() => {
-          // onClose();
+          onClose();
           toast.success("Встреча успешно создана!");
         })
         .catch((error) => {
           toast.error(error);
         })
         .finally(() => {
-          // setIsLoading(false);
+          setIsLoading(false);
         });
     };
 
@@ -147,6 +141,7 @@ const CreateMeeting = React.memo(
           errors={errors}
           register={register}
           setValue={setValue}
+          isObjectPage={isObjectPage}
         />
         <SuccessCancelFormButtons
           onSuccess={handleSubmit(onSubmit)}

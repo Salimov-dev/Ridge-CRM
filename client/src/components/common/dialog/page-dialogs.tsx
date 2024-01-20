@@ -199,6 +199,7 @@ const PageDialogs = ({
           <CreateMeeting
             onClose={handleCloseCreateMeetingPage}
             objectPageId={state.objectId}
+            isObjectPage={!state?.objectId}
             dateCreate={state.dateCreate}
           />
         }
