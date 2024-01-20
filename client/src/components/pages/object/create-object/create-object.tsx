@@ -24,50 +24,37 @@ import { capitalizeFirstLetter } from "@utils/data/capitalize-first-letter";
 import { capitalizeAllFirstLetters } from "@utils/data/capitalize-all-first-letters";
 
 const initialState = {
-  status: "",
-  contact: {
-    phone: "",
-    name: "",
-    position: "",
-    email: "",
-  },
-  location: {
-    city: "",
-    address: "",
-    district: "",
-    metro: "",
-    identifier: "",
-  },
-  commercialTerms: {
-    rentPrice: "",
-    priceForMetr: "",
-    securityDeposit: "",
-    advanseDeposit: "",
-    agentComission: "",
-    rentSquare: "",
-    rentalHolidays: "",
-    indexingAnnual: "",
-    rentTypes: "",
-  },
-  estateOptions: {
-    currentRenters: "",
-    objectConditions: "",
-    estateTypes: "",
-    objectTypes: "",
-    tradeArea: "",
-    premisesHeight: "",
-    premisesFloor: "",
-    parkingQuantity: "",
-    electricityKw: "",
-    waterSuply: "",
-    cadastralNumber: "",
-    loadingArea: "",
-    objectProperties: "",
-  },
-  description: {
-    fullDescription: "",
-  },
-  cloudLink: "",
+  status: null,
+  contact: null,
+  fullDescription: null,
+  city: null,
+  address: null,
+  district: null,
+  metro: null,
+  identifier: null,
+  rentPrice: null,
+  priceForMetr: null,
+  securityDeposit: null,
+  advanseDeposit: null,
+  agentComission: null,
+  rentSquare: null,
+  rentalHolidays: null,
+  indexingAnnual: null,
+  rentTypes: null,
+  currentRenters: null,
+  objectConditions: null,
+  estateTypes: null,
+  objectTypes: null,
+  tradeArea: null,
+  premisesHeight: null,
+  premisesFloor: null,
+  parkingQuantity: null,
+  electricityKw: null,
+  waterSuply: null,
+  cadastralNumber: null,
+  loadingArea: null,
+  objectProperties: null,
+  cloudLink: null,
 };
 
 const CreateObject = React.memo(({ onClose }) => {
@@ -103,61 +90,51 @@ const CreateObject = React.memo(({ onClose }) => {
   } = useFindObject();
 
   const data = watch();
+  console.log("data", data);
+  console.log("errors", errors);
 
   const objects = useSelector(getObjectsList());
 
-  const watchAddress = watch<any>("location.address", "");
-  const watchCity = watch<any>("location.city", "");
+  const watchAddress = watch<any>("address", "");
+  const watchCity = watch<any>("city", "");
 
   const isFindedObject = Boolean(Object.keys(findedObject)?.length);
   const findedObjectFullAddress = `${watchCity}, ${watchAddress}`;
 
   const onSubmit = (data) => {
-    setIsLoading(true);
+    // setIsLoading(true);
 
     const newData = {
       ...data,
-      contact: {
-        ...data.contact,
-        name: capitalizeAllFirstLetters(data.contact.name),
-      },
-      estateOptions: {
-        ...data.estateOptions,
-        premisesFloor: capitalizeFirstLetter(data.estateOptions.premisesFloor),
-      },
-      location: {
-        ...data.location,
-        city: capitalizeFirstLetter(data.location.city),
-        address: capitalizeFirstLetter(data.location.address),
-        zoom: 16,
-      },
-      description: {
-        ...data.description,
-        fullDescription: capitalizeFirstLetter(
-          data.description.fullDescription
-        ),
-      },
+      name: capitalizeAllFirstLetters(data.name),
+      premisesFloor: capitalizeFirstLetter(data.premisesFloor),
+      city: capitalizeFirstLetter(data.city),
+      address: capitalizeFirstLetter(data.address),
+      zoom: 16,
+      fullDescription: capitalizeFirstLetter(data.fullDescription),
     };
+    console.log("newData", newData);
 
     dispatch<any>(createObject(newData))
       .then(() => {
-        setIsLoading(false);
         onClose();
       })
       .catch((error) => {
-        setIsLoading(false);
         toast.error(error);
-      });
+      })
+      .finally(()=>{
+        setIsLoading(false);
+      })
   };
 
   // устаналиваю значения для объекта
   useEffect(() => {
     setSelectedArea(getDistrict());
-    setValue("location.district", "");
-    setValue<any>("location.city", getCity());
-    setValue<any>("location.address", getAddress());
-    setValue<any>("location.latitude", getLatitudeCoordinates());
-    setValue<any>("location.longitude", getLongitudeCoordinates());
+    setValue("district", "");
+    setValue<any>("city", getCity());
+    setValue<any>("address", getAddress());
+    setValue<any>("latitude", getLatitudeCoordinates());
+    setValue<any>("longitude", getLongitudeCoordinates());
   }, [findedObject]);
 
   useEffect(() => {
@@ -166,18 +143,16 @@ const CreateObject = React.memo(({ onClose }) => {
       selectedArea?.includes("Москва")
     ) {
       // setIsCityHasMetro(true);
-      setValue("location.district", "");
+      setValue("district", "");
     } else {
       // setIsCityHasMetro(false);
-      setValue("location.district", selectedArea);
+      setValue("district", selectedArea);
     }
   }, [selectedArea]);
 
   useEffect(() => {
     const objectInDatabase = objects?.filter(
-      (obj) =>
-        `${obj.location.city}, ${obj.location.address}`.trim() ===
-        findedObjectFullAddress
+      (obj) => `${obj.city}, ${obj.address}`.trim() === findedObjectFullAddress
     );
     const isObjectInDatabase = Boolean(objectInDatabase?.length);
 
@@ -212,9 +187,7 @@ const CreateObject = React.memo(({ onClose }) => {
         onSuccess={handleSubmit(onSubmit)}
         onCancel={onClose}
       />
-      <LoaderFullWindow
-        isLoading={isLoading}
-      />
+      <LoaderFullWindow isLoading={isLoading} />
     </>
   );
 });

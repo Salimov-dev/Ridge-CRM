@@ -37,64 +37,60 @@ const useModifyObjectToExportExel = (objects) => {
       );
 
       const user = users?.find((user) => user._id === object?.userId);
-      const userName = `${user?.name.lastName} ${user?.name.firstName} ${user?.name.surName}`;
-      const userPhone = user?.contacts.phone;
+      const userName = `${user?.lastName} ${user?.firstName} ${user?.surName}`;
+      const userPhone = user?.phone;
 
-      const city = object?.location.city;
-      const address = object?.location.address;
-      const district = districts?.find(
-        (dist) => dist._id === object?.location.district
-      );
-      const metro = metros?.find(
-        (metro) => metro._id === object?.location.metro
-      );
-      const latitude = object?.location.latitude;
-      const longitude = object?.location.longitude;
-      const identifier = object?.location.identifier;
-      const zoom = object?.location.zoom;
+      const city = object?.city;
+      const address = object?.address;
+      const district = districts?.find((dist) => dist._id === object?.district);
+      const metro = metros?.find((metro) => metro._id === object?.metro);
+      const latitude = object?.latitude;
+      const longitude = object?.ongitude;
+      const identifier = object?.identifier;
+      const zoom = object?.zoom;
 
-      const contactName = object?.contact.name;
-      const contactPhone = object?.contact.phone;
+      const contactName = object?.name;
+      const contactPhone = object?.phone;
       const contactPosition = workingPositions?.find(
-        (pos) => pos._id === object?.contact.position
+        (pos) => pos._id === object?.position
       );
-      const contactEmail = object?.contact.email;
+      const contactEmail = object?.email;
 
-      const description = object?.description.fullDescription;
+      const description = object?.fullDescription;
 
-      const rentPrice = object?.commercialTerms.rentPrice;
-      const securityDeposit = object?.commercialTerms.securityDeposit;
-      const rentSquare = object?.commercialTerms.rentSquare;
-      const rentalHolidays = object?.commercialTerms.rentalHolidays;
-      const indexingAnnual = object?.commercialTerms.indexingAnnual;
+      const rentPrice = object?.rentPrice;
+      const securityDeposit = object?.securityDeposit;
+      const rentSquare = object?.rentSquare;
+      const rentalHolidays = object?.rentalHolidays;
+      const indexingAnnual = object?.indexingAnnual;
       const rentType = rentTypes?.find(
-        (type) => type._id === object?.commercialTerms.rentTypes
+        (type) => type._id === object?.rentTypes
       );
-      const advanseDeposit = object?.commercialTerms.advanseDeposit;
+      const advanseDeposit = object?.advanseDeposit;
 
       const currentRenter = currentRenters?.find(
-        (renter) => renter._id === object?.estateOptions.currentRenters
+        (renter) => renter._id === object?.currentRenters
       );
       const objectCondition = objectConditions?.find(
-        (cond) => cond._id === object?.estateOptions.objectConditions
+        (cond) => cond._id === object?.objectConditions
       );
       const estateType = estateTypes?.find(
-        (type) => type._id === object?.estateOptions.estateTypes
+        (type) => type._id === object?.estateTypes
       );
       const objectType = objectTypes?.find(
-        (type) => type._id === object?.estateOptions.objectTypes
+        (type) => type._id === object?.objectTypes
       );
       const objectProperty = objectProperties?.find(
-        (prop) => prop._id === object?.estateOptions.objectProperties
+        (prop) => prop._id === object?.objectProperties
       );
 
-      const loadingArea = object?.estateOptions.loadingArea;
-      const premisesHeight = object?.estateOptions.premisesHeight;
-      const parkingQuantity = object?.estateOptions.parkingQuantity;
-      const electricityKw = object?.estateOptions.electricityKw;
-      const waterSuply = object?.estateOptions.waterSuply;
-      const premisesFloor = object?.estateOptions.premisesFloor;
-      const cadastralNumber = object?.estateOptions.cadastralNumber;
+      const loadingArea = object?.loadingArea;
+      const premisesHeight = object?.premisesHeight;
+      const parkingQuantity = object?.parkingQuantity;
+      const electricityKw = object?.electricityKw;
+      const waterSuply = object?.waterSuply;
+      const premisesFloor = object?.premisesFloor;
+      const cadastralNumber = object?.cadastralNumber;
 
       const result = {
         Дата: date,

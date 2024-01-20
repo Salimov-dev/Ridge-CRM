@@ -95,7 +95,7 @@ export const objectsColumns = (handleOpenObjectPage, isCurator) => {
     header: "Расположение объекта",
     columns: [
       {
-        accessorKey: "location.city",
+        accessorKey: "city",
         header: "Город",
         cell: (info) => {
           const city = info.getValue();
@@ -103,7 +103,7 @@ export const objectsColumns = (handleOpenObjectPage, isCurator) => {
         },
       },
       {
-        accessorKey: "location.district",
+        accessorKey: "district",
         header: "Район",
         cell: (info) => {
           const district = info.getValue();
@@ -113,7 +113,7 @@ export const objectsColumns = (handleOpenObjectPage, isCurator) => {
         },
       },
       {
-        accessorKey: "location.metro",
+        accessorKey: "metro",
         header: "Метро",
         cell: (info) => {
           const metro = info.getValue();
@@ -148,7 +148,7 @@ export const objectsColumns = (handleOpenObjectPage, isCurator) => {
                   gap: "12px",
                 }}
               >
-                <Typography>{object?.location?.address}</Typography>
+                <Typography>{object?.address}</Typography>
                 <Flags
                   meetings={meetings}
                   tasks={tasks}
@@ -167,7 +167,7 @@ export const objectsColumns = (handleOpenObjectPage, isCurator) => {
     header: "Контактная информация",
     columns: [
       {
-        accessorKey: "contact.phone",
+        accessorKey: "phone",
         header: "Телефон",
         cell: (info) => {
           const phone = info.getValue();
@@ -183,7 +183,7 @@ export const objectsColumns = (handleOpenObjectPage, isCurator) => {
         },
       },
       {
-        accessorKey: "contact.name",
+        accessorKey: "name",
         header: "Имя",
         cell: (info) => {
           const name = info.getValue();

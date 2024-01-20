@@ -1,5 +1,5 @@
 import { io } from "socket.io-client";
-import configFile from "../config.json";
+import configFile from "@config/config.json";
 // actions
 import handleLastContactSocket from "./actions/handle-last-contact-socket";
 import handleMeetingSocket from "./actions/handle-meeting-socket";

@@ -2,12 +2,12 @@ import dayjs from "dayjs";
 import { io } from "socket.io-client";
 import { createAction, createSlice } from "@reduxjs/toolkit";
 // config
-import configFile from "../../config.json";
+import configFile from "@config/config.json";
 // utils
-import isOutDated from "../../utils/auth/is-out-date";
+import isOutDated from "@utils/auth/is-out-date";
 // services
-import objectService from "../../services/object/object.service";
-import localStorageService from "../../services/user/local.storage-service";
+import objectService from "@services/object/object.service";
+import localStorageService from "@services/user/local.storage-service";
 import { useSelector } from "react-redux";
 import {
   getCurrentUserData,

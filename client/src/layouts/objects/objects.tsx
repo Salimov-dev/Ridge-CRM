@@ -79,7 +79,7 @@ const Objects = React.memo(() => {
   };
 
   const { register, watch, setValue, reset } = useForm({
-    defaultValues: Boolean(localStorageState) ? formatedState : initialState,
+    defaultValues: !!localStorageState ? formatedState : initialState,
     mode: "onChange",
   });
 
@@ -92,6 +92,8 @@ const Objects = React.memo(() => {
   const isCurator = useSelector(getIsUserCurator(currentUserId));
 
   const objects = useSelector(getObjectsList());
+  console.log("objects", objects);
+
   const selectedObject = useSelector(getObjectById(state.selectedBaloon));
   const searchedObjects = useSearchObject(objects, data);
   const sortedObjects = useMemo(() => {
@@ -160,13 +162,13 @@ const Objects = React.memo(() => {
         items={searchedObjects}
         onClick={handleSelectedBaloon}
         isLoading={isLoading}
-        baloon={
-          <ObjectBaloon
-            object={selectedObject}
-            onOpenObjectPage={handleOpenObjectPage}
-            isLoading={isLoading}
-          />
-        }
+        // baloon={
+        //   <ObjectBaloon
+        //     object={selectedObject}
+        //     onOpenObjectPage={handleOpenObjectPage}
+        //     isLoading={isLoading}
+        //   />
+        // }
       />
       <ObjectsFiltersPanel
         data={data}

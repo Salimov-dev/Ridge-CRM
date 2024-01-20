@@ -1,13 +1,13 @@
 import { io } from "socket.io-client";
 import { createAction, createSlice } from "@reduxjs/toolkit";
 // config
-import configFile from "../../config.json";
+import configFile from "@config/config.json";
 // utils
-import { generetaAuthError } from "../../utils/auth/generate-auth-error";
+import { generetaAuthError } from "@utils/auth/generate-auth-error";
 // service
-import authService from "../../services/user/auth-service";
-import userService from "../../services/user/user.service";
-import localStorageService from "../../services/user/local.storage-service";
+import authService from "@services/user/auth-service";
+import userService from "@services/user/user.service";
+import localStorageService from "@services/user/local.storage-service";
 
 const socket = io(configFile.ioEndPoint);
 
@@ -135,7 +135,6 @@ export const loadUsersList = () => async (dispatch) => {
   dispatch(usersRequested());
   try {
     const { content } = await userService.get();
-    console.log("content", content);
 
     dispatch(usersReceived(content));
   } catch (error) {

@@ -39,7 +39,7 @@ const User = sequelize.define(
   },
   {
     timestamps: false,
-    tableName: "users", // Set your preferred table name
+    tableName: "users",
   }
 );
 

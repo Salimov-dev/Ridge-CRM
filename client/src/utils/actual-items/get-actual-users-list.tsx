@@ -15,7 +15,7 @@ export const getActualUsersList = (items) => {
     return foundObject
       ? {
           _id: foundObject._id,
-          name: `${foundObject.name.lastName} ${foundObject.name.firstName}`,
+          name: `${foundObject.lastName} ${foundObject.firstName}`,
         }
       : null;
   });

@@ -6,14 +6,14 @@ import { useNavigate } from "react-router-dom";
 // MUI
 import { Box, Button, Menu, MenuItem, Typography, styled } from "@mui/material";
 // store
-import { getCurrentUserId, logOut } from "../../../../store/user/users.store";
+import { getCurrentUserId, logOut } from "@store/user/users.store";
 // commponents
-import UserAvatar from "../../../common/avatar/user-avatar";
+import AvatarImage from "@layouts/profile/components/avatar-image";
+
 // hooks
-import useGetUserAvatar from "../../../../hooks/user/use-get-user-avatar";
+import useGetUserAvatar from "@hooks/user/use-get-user-avatar";
 // config
-import configFile from "../../../../config.json";
-import AvatarImage from "../../../../layouts/profile/components/avatar-image";
+import configFile from "@config/config.json";
 
 const Component = styled(Box)`
   display: flex;
@@ -86,7 +86,7 @@ const UserMenu = ({ currentUser }) => {
               marginLeft: "6px",
             }}
           >
-            {currentUser?.name?.firstName}
+            {currentUser?.firstName || "Новенький"}
           </UserName>
         </Box>
       </Button>

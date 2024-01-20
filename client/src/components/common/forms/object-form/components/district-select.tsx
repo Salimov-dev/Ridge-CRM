@@ -22,7 +22,7 @@ const DistrictName = styled(Box)(({ colors, errors }) => ({
   padding: "0 16px",
   alignItems: "center",
   border: "1px solid",
-  borderColor: errors?.location?.district?.message
+  borderColor: errors?.district?.message
     ? colors.error["red"]
     : colors.grey[400],
   borderRadius: "4px",
@@ -63,7 +63,7 @@ const DistrictSelect = ({
             ) : (
               <Typography
                 sx={{
-                  color: errors?.location?.district?.message
+                  color: errors?.district?.message
                     ? colors.error["gold"]
                     : colors.grey[400],
                 }}
@@ -76,19 +76,19 @@ const DistrictSelect = ({
           <SimpleSelectField
             label="Район"
             register={register}
-            name="location.district"
-            labelId="location.district"
+            name="district"
+            labelId="district"
             required={true}
             itemsList={getDistrictsList()}
             value={watchDistrict}
-            errors={errors?.location?.district}
+            errors={errors?.district}
           />
         )}
         {!selectedArea && (
           <FormHelperText
             sx={{ color: colors.error["gold"], paddingLeft: "14px" }}
           >
-            {errors?.location?.district?.message}
+            {errors?.district?.message}
           </FormHelperText>
         )}
       </Container>

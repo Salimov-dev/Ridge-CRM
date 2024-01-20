@@ -49,5 +49,5 @@ server.listen(PORT, () =>
   console.log(chalk.green(`Server has been started on port ${PORT}`))
 );
 
-mongooseConnection({ server });
+// mongooseConnection({ server });
 postgreConnection();

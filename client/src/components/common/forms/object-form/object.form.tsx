@@ -61,16 +61,16 @@ const ObjectForm = ({
   const sortedEstateTypes = orderBy(estateTypes, ["name"], ["asc"]);
 
   const watchStatus = watch("status");
-  const watchWorkingPosition = watch("contact.position");
-  const watchDistrict = watch("location.district");
-  const watchMetro = watch("location.metro");
-  const watchRentTypes = watch("commercialTerms.rentTypes");
-  const watchObjectTypes = watch("estateOptions.objectTypes");
-  const watchEstateTypes = watch("estateOptions.estateTypes");
-  const watchCurrentRenters = watch("estateOptions.currentRenters");
-  const watchobjectConditions = watch("estateOptions.objectConditions");
-  const watchObjectProperties = watch("estateOptions.objectProperties");
-  const watchObjectTradeArea = watch("estateOptions.tradeArea");
+  const watchWorkingPosition = watch("position");
+  const watchDistrict = watch("district");
+  const watchMetro = watch("metro");
+  const watchRentTypes = watch("rentTypes");
+  const watchObjectTypes = watch("objectTypes");
+  const watchEstateTypes = watch("estateTypes");
+  const watchCurrentRenters = watch("currentRenters");
+  const watchobjectConditions = watch("objectConditions");
+  const watchObjectProperties = watch("objectProperties");
+  const watchObjectTradeArea = watch("tradeArea");
   const watchCloudLink = watch("cloudLink");
 
   return (
@@ -88,8 +88,8 @@ const ObjectForm = ({
           <SelectFieldStyled
             label="Метро"
             register={register}
-            name="location.metro"
-            labelId="location.metro"
+            name="metro"
+            labelId="metro"
             required={true}
             itemsList={sortedMetros}
             value={watchMetro ?? ""}
@@ -108,64 +108,64 @@ const ObjectForm = ({
           <SelectFieldStyled
             label="Текущий арендатор"
             register={register}
-            name="estateOptions.currentRenters"
-            labelId="estateOptions.currentRenters"
+            name="currentRenters"
+            labelId="currentRenters"
             required={true}
             itemsList={sortedCurrentRenters}
             value={watchCurrentRenters ?? ""}
-            errors={errors?.estateOptions?.currentRenters}
+            errors={errors?.currentRenters}
           />
         </FieldsContainer>
         <FieldsContainer sx={{ gap: "3px" }}>
           <SelectFieldStyled
             label="Тип объекта"
             register={register}
-            name="estateOptions.objectTypes"
-            labelId="estateOptions.objectTypes"
+            name="objectTypes"
+            labelId="objectTypes"
             required={true}
             itemsList={sortedObjectTypes}
             value={watchObjectTypes ?? ""}
-            errors={errors?.estateOptions?.objectTypes}
+            errors={errors?.objectTypes}
           />
           <SelectFieldStyled
             label="Тип недвижимости"
             register={register}
-            name="estateOptions.estateTypes"
-            labelId="estateOptions.estateTypes"
+            name="estateTypes"
+            labelId="estateTypes"
             required={true}
             itemsList={sortedEstateTypes}
             value={watchEstateTypes ?? ""}
-            errors={errors?.estateOptions?.estateTypes}
+            errors={errors?.estateTypes}
           />
           <SelectFieldStyled
             label="Расположение объекта"
             register={register}
-            name="estateOptions.objectProperties"
-            labelId="estateOptions.objectProperties"
+            name="objectProperties"
+            labelId="objectProperties"
             required={true}
             itemsList={sortedObjectProperties}
             value={watchObjectProperties ?? ""}
-            errors={errors?.estateOptions?.objectProperties}
+            errors={errors?.objectProperties}
           />
           <SelectFieldStyled
             label="Тип торговой площади"
             register={register}
-            name="estateOptions.tradeArea"
-            labelId="estateOptions.tradeArea"
+            name="tradeArea"
+            labelId="tradeArea"
             required={true}
             itemsList={sortedObjectTradeArea}
             value={watchObjectTradeArea ?? ""}
-            errors={errors?.estateOptions?.tradeArea}
+            errors={errors?.tradeArea}
           />
         </FieldsContainer>
         <FieldsContainer>
           <TextFieldStyled
             register={register}
             label="Идентификатор объекта"
-            name="location.identifier"
-            errors={errors?.location?.identifier}
+            name="identifier"
+            errors={errors?.identifier}
             onInputQuantities={260}
-            value={data?.location?.identifier || ""}
+            value={data?.identifier || ""}
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
@@ -180,9 +180,9 @@ const ObjectForm = ({
           <TextFieldStyled
             register={register}
             label="Контактное лицо"
-            name="contact.name"
-            errors={errors?.contact?.name}
-            value={data?.contact?.name ?? ""}
+            name="name"
+            errors={name}
+            value={data?.name ?? ""}
             onInputQuantities={50}
             InputProps={{
               endAdornment: (
@@ -195,8 +195,8 @@ const ObjectForm = ({
           <SelectFieldStyled
             label="Позиция"
             register={register}
-            name="contact.position"
-            labelId="contact.position"
+            name="position"
+            labelId="position"
             itemsList={sortedWorkingPositions}
             value={watchWorkingPosition ?? ""}
           />
@@ -204,9 +204,9 @@ const ObjectForm = ({
             register={register}
             label="Телефон"
             type="number"
-            name="contact.phone"
-            value={data?.contact?.phone || ""}
-            errors={errors?.contact?.phone}
+            name="phone"
+            value={data?.phone || ""}
+            errors={errors?.phone}
             onInputQuantities={12}
             isHelperText={true}
             subtitle="Вводите в формате 79045554433, 78129998877, 9995544"
@@ -221,10 +221,10 @@ const ObjectForm = ({
           <TextFieldStyled
             register={register}
             label="Email"
-            name="contact.email"
-            errors={errors?.contact?.email}
+            name="email"
+            errors={errors?.email}
             onInputQuantities={100}
-            value={data?.contact?.email || ""}
+            value={data?.email || ""}
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
@@ -241,11 +241,11 @@ const ObjectForm = ({
             <TextFieldStyled
               register={register}
               label="Площадь аренды"
-              name="commercialTerms.rentSquare"
+              name="rentSquare"
               valueAsNumber={true}
               onInputQuantities={8}
-              errors={errors?.commercialTerms?.rentSquare}
-              value={data?.commercialTerms?.rentSquare || ""}
+              errors={errors?.rentSquare}
+              value={data?.rentSquare || ""}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">м²</InputAdornment>
@@ -255,10 +255,10 @@ const ObjectForm = ({
             <TextFieldStyled
               register={register}
               label="Общая стоимость арендной платы"
-              name="commercialTerms.rentPrice"
+              name="rentPrice"
               onInputQuantities={12}
               valueAsNumber={true}
-              value={data?.commercialTerms?.rentPrice || ""}
+              value={data?.rentPrice || ""}
               InputProps={{
                 endAdornment: <InputAdornment position="end">₽</InputAdornment>,
               }}
@@ -267,9 +267,9 @@ const ObjectForm = ({
               register={register}
               label="Комиссия агента"
               type="number"
-              name="commercialTerms.agentComission"
+              name="agentComission"
               onInputQuantities={3}
-              value={data?.commercialTerms?.agentComission || ""}
+              value={data?.agentComission || ""}
               InputProps={{
                 endAdornment: <InputAdornment position="end">%</InputAdornment>,
               }}
@@ -278,9 +278,9 @@ const ObjectForm = ({
               register={register}
               label="Индексация"
               type="number"
-              name="commercialTerms.indexingAnnual"
+              name="indexingAnnual"
               onInputQuantities={3}
-              value={data?.commercialTerms?.indexingAnnual || ""}
+              value={data?.indexingAnnual || ""}
               InputProps={{
                 endAdornment: <InputAdornment position="end">%</InputAdornment>,
               }}
@@ -290,9 +290,9 @@ const ObjectForm = ({
             <TextFieldStyled
               register={register}
               label="Каникулы"
-              name="commercialTerms.rentalHolidays"
+              name="rentalHolidays"
               onInputQuantities={3}
-              value={data?.commercialTerms?.rentalHolidays || ""}
+              value={data?.rentalHolidays || ""}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">дней</InputAdornment>
@@ -302,10 +302,10 @@ const ObjectForm = ({
             <TextFieldStyled
               register={register}
               label="Обеспечительный платёж"
-              name="commercialTerms.securityDeposit"
+              name="securityDeposit"
               onInputQuantities={12}
               valueAsNumber={true}
-              value={data?.commercialTerms?.securityDeposit || ""}
+              value={data?.securityDeposit || ""}
               InputProps={{
                 endAdornment: <InputAdornment position="end">₽</InputAdornment>,
               }}
@@ -313,17 +313,17 @@ const ObjectForm = ({
             <TextFieldStyled
               register={register}
               label="Авансовый платёж"
-              name="commercialTerms.advanseDeposit"
+              name="advanseDeposit"
               onInputQuantities={12}
               valueAsNumber={true}
-              value={data?.commercialTerms?.advanseDeposit || ""}
+              value={data?.advanseDeposit || ""}
               InputProps={{
                 endAdornment: <InputAdornment position="end">₽</InputAdornment>,
               }}
             />
             <SelectFieldStyled
               register={register}
-              name="commercialTerms.rentTypes"
+              name="rentTypes"
               labelId="rentTypes"
               label="Тип договора"
               itemsList={sortedRentTypes}
@@ -337,7 +337,7 @@ const ObjectForm = ({
           <FieldsContainer>
             <SelectFieldStyled
               register={register}
-              name="estateOptions.objectConditions"
+              name="objectConditions"
               labelId="objectConditions "
               label="Состояние помещения"
               itemsList={sortedObjectConditions}
@@ -346,9 +346,9 @@ const ObjectForm = ({
             <TextFieldStyled
               register={register}
               label="Кадастровый номер"
-              name="estateOptions.cadastralNumber"
+              name="cadastralNumber"
               onInputQuantities={24}
-              value={data?.estateOptions?.cadastralNumber || ""}
+              value={data?.cadastralNumber || ""}
               InputProps={{
                 endAdornment: <InputAdornment position="end">№</InputAdornment>,
               }}
@@ -357,9 +357,9 @@ const ObjectForm = ({
               register={register}
               label="Электричество"
               type="number"
-              name="estateOptions.electricityKw"
+              name="electricityKw"
               onInputQuantities={5}
-              value={data?.estateOptions?.electricityKw || ""}
+              value={data?.electricityKw || ""}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
@@ -371,9 +371,9 @@ const ObjectForm = ({
             <TextFieldStyled
               register={register}
               label="Состояние полов"
-              name="estateOptions.premisesFloor"
+              name="premisesFloor"
               onInputQuantities={100}
-              value={data?.estateOptions?.premisesFloor || ""}
+              value={data?.premisesFloor || ""}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
@@ -388,9 +388,9 @@ const ObjectForm = ({
               register={register}
               label="Водоснабжение"
               type="text"
-              name="estateOptions.waterSuply"
+              name="waterSuply"
               onInputQuantities={20}
-              value={data?.estateOptions?.waterSuply || ""}
+              value={data?.waterSuply || ""}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
@@ -403,9 +403,9 @@ const ObjectForm = ({
               register={register}
               label="Высота потолков"
               type="number"
-              name="estateOptions.premisesHeight"
+              name="premisesHeight"
               onInputQuantities={3}
-              value={data?.estateOptions?.premisesHeight || ""}
+              value={data?.premisesHeight || ""}
               InputProps={{
                 endAdornment: <InputAdornment position="end">м</InputAdornment>,
               }}
@@ -414,9 +414,9 @@ const ObjectForm = ({
               register={register}
               label="Парковочных мест"
               type="number"
-              name="estateOptions.parkingQuantity"
+              name="parkingQuantity"
               onInputQuantities={4}
-              value={data?.estateOptions?.parkingQuantity || ""}
+              value={data?.parkingQuantity || ""}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
@@ -428,9 +428,9 @@ const ObjectForm = ({
             <TextFieldStyled
               register={register}
               label="Зона погрузки"
-              name="estateOptions.loadingArea"
+              name="loadingArea"
               onInputQuantities={60}
-              value={data?.estateOptions?.loadingArea ?? ""}
+              value={data?.loadingArea ?? ""}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
@@ -446,11 +446,11 @@ const ObjectForm = ({
         <TextFieldStyled
           register={register}
           label="Опишите объект"
-          name="description.fullDescription"
-          value={data?.description?.fullDescription ?? ""}
+          name="fullDescription"
+          value={data?.fullDescription ?? ""}
           rows="6"
           multiline={true}
-          errors={errors?.description?.fullDescription}
+          errors={errors?.fullDescription}
           onInputQuantities={20000}
         />
         <FieldsContainer>

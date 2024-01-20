@@ -44,33 +44,31 @@ const useSearchObject = (objects, data) => {
 
     // object contacts
     if (data?.phone?.length) {
-      array = array?.filter((obj) =>
-        String(obj.contact.phone).includes(data?.phone)
-      );
+      array = array?.filter((obj) => String(obj.phone).includes(data?.phone));
     }
 
     if (data?.name?.length) {
       array = array?.filter((obj) =>
-        obj?.contact.name.toLowerCase().includes(data?.name.toLowerCase())
+        obj?.name.toLowerCase().includes(data?.toLowerCase())
       );
     }
 
     if (data?.address?.length) {
       array = array?.filter((obj) =>
-        obj.location.address.toLowerCase().includes(data.address.toLowerCase())
+        obj.address.toLowerCase().includes(data.toLowerCase())
       );
     }
 
     if (data?.cadastralNumber?.length) {
       array = array?.filter((obj) =>
-        obj.estateOptions.cadastralNumber.includes(data.cadastralNumber)
+        obj.cadastralNumber.includes(data.cadastralNumber)
       );
     }
 
     if (data?.fullDescription?.length) {
       const searchTerm = data.fullDescription.toLowerCase();
       array = array?.filter((obj) =>
-        obj.description.fullDescription.toLowerCase().includes(searchTerm)
+        obj.fullDescription.toLowerCase().includes(searchTerm)
       );
     }
 
@@ -91,38 +89,40 @@ const useSearchObject = (objects, data) => {
     // Текущий арендатор
     if (data.selectedCurrentRenters?.length) {
       array = array?.filter((obj) =>
-        data.selectedCurrentRenters?.includes(obj?.estateOptions.currentRenters)
+        data.selectedCurrentRenters?.includes(obj?.currentRenters)
       );
     }
     // Тип недвижимости
     if (data.selectedEstateTypes?.length) {
       array = array?.filter((obj) =>
-        data.selectedEstateTypes?.includes(obj?.estateOptions.estateTypes)
+        data.selectedEstateTypes?.includes(obj?.estateTypes)
       );
     }
     // Тип объекта
     if (data.selectedObjectTypes?.length) {
       array = array?.filter((obj) =>
-        data.selectedObjectTypes?.includes(obj?.estateOptions.objectTypes)
+        data.selectedObjectTypes?.includes(obj?.objectTypes)
       );
     }
-     // Расположение объекта
+    // Расположение объекта
     if (data.selectedObjectProperties?.length) {
       array = array?.filter((obj) =>
-        data.selectedObjectProperties?.includes(obj?.estateOptions.objectProperties || "undefined")
+        data.selectedObjectProperties?.includes(
+          obj?.objectProperties || "undefined"
+        )
       );
     }
     // Тип торговой площади
     if (data.selectedTradeArea?.length) {
       array = array?.filter((obj) =>
-        data.selectedTradeArea?.includes(obj?.estateOptions.tradeArea || "undefined")
+        data.selectedTradeArea?.includes(obj?.tradeArea || "undefined")
       );
     }
 
     // Фильтр для выбранных районов и городов
     if (data.selectedDistricts?.length) {
       array = array?.filter((obj) =>
-        data.selectedDistricts.includes(obj.location.district)
+        data.selectedDistricts.includes(obj.district)
       );
 
       // Обновляем список выбранных городов на основе отфильтрованных районов
@@ -130,8 +130,8 @@ const useSearchObject = (objects, data) => {
         (cities, district) => {
           return cities.concat(
             array
-              ?.filter((obj) => obj.location?.district === district)
-              .map((obj) => obj.location?.city)
+              ?.filter((obj) => obj.district === district)
+              .map((obj) => obj.city)
           );
         },
         []
@@ -139,18 +139,14 @@ const useSearchObject = (objects, data) => {
 
       // Фильтруем города исходя из списка отфильтрованных городов
       if (data.selectedCities?.length) {
-        array = array?.filter((obj) =>
-          filteredCities?.includes(obj.location.city)
-        );
+        array = array?.filter((obj) => filteredCities?.includes(obj.city));
       } else {
         array = array?.filter((obj) =>
-          data.selectedDistricts?.includes(obj.location.district)
+          data.selectedDistricts?.includes(obj.district)
         );
       }
     } else if (data.selectedCities?.length) {
-      array = array?.filter((obj) =>
-        data.selectedCities?.includes(obj.location?.city)
-      );
+      array = array?.filter((obj) => data.selectedCities?.includes(obj.city));
     }
 
     // objects data and time pickers
@@ -172,11 +168,11 @@ const useSearchObject = (objects, data) => {
 
     // c номером телефона
     if (data.objectActivity === "534gdfsg2356hgd213mnbv") {
-      array = array?.filter((obj) => obj?.contact.phone);
+      array = array?.filter((obj) => obj?.phone);
     }
     // без номера телефона
     if (data.objectActivity === "976hd324gfdsg324534543") {
-      array = array?.filter((obj) => !obj?.contact.phone);
+      array = array?.filter((obj) => !obj?.phone);
     }
     // с задачами
     if (data.objectActivity === "gf87634gdsfgsdf345tgdf") {
@@ -211,13 +207,13 @@ const useSearchObject = (objects, data) => {
     // дублирующиеся адреса
     if (data.objectActivity === "01df84jgfdh2349gj39999") {
       const countList = array?.reduce(function (p, c) {
-        const fullAddress = `${c.location.city}, ${c.location.address}`;
+        const fullAddress = `${c.city}, ${c.address}`;
         p[fullAddress] = (p[fullAddress] || 0) + 1;
         return p;
       }, {});
 
       const result = array?.filter(function (obj) {
-        const fullAddress = `${obj.location.city}, ${obj.location.address}`;
+        const fullAddress = `${obj.city}, ${obj.address}`;
         return countList[fullAddress] > 1;
       });
 

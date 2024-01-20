@@ -1,7 +1,7 @@
 import { io } from "socket.io-client";
 import { createAction, createSlice } from "@reduxjs/toolkit";
 // config
-import configFile from "../../config.json";
+import configFile from "@config/config.json";
 // services
 import localStorageService from "../../services/user/local.storage-service";
 import avatarService from "../../services/avatar/avatar.service";

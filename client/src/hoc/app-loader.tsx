@@ -42,19 +42,19 @@ const AppLoader = ({ children }: AppLoaderProps) => {
   useEffect(() => {
     if (isLoggedIn) {
       // objects
-      // dispatch<any>(loadObjectsList());
-      // dispatch<any>(loadObjectStatusList());
-      // dispatch<any>(loadObjectConditionsList());
-      // dispatch<any>(loadObjectTypesList());
+      dispatch<any>(loadObjectsList());
+      dispatch<any>(loadObjectStatusList());
+      dispatch<any>(loadObjectConditionsList());
+      dispatch<any>(loadObjectTypesList());
       // objects params
-      // dispatch<any>(loadMetroList());
-      // dispatch<any>(loadDistrictsList());
-      // dispatch<any>(loadWorkingPositionList());
-      // dispatch<any>(loadCurrentRentersList());
-      // dispatch<any>(loadRentTypesList());
-      // dispatch<any>(loadEstateTypesList());
-      // dispatch<any>(loadObjectPropertiesList());
-      // dispatch<any>(loadTradeAreaList());
+      dispatch<any>(loadMetroList());
+      dispatch<any>(loadDistrictsList());
+      dispatch<any>(loadWorkingPositionList());
+      dispatch<any>(loadCurrentRentersList());
+      dispatch<any>(loadRentTypesList());
+      dispatch<any>(loadEstateTypesList());
+      dispatch<any>(loadObjectPropertiesList());
+      dispatch<any>(loadTradeAreaList());
       // users
       dispatch<any>(loadUsersList());
       dispatch<any>(loadUserStatusesList());

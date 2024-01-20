@@ -27,6 +27,7 @@
       "@routes/*": ["src/routes/*"],
       "@theme/*": ["src/theme/*"],
       "@assets/*": ["src/assets/*"],
+      "@config/*": ["src/config/*"]
     },
     "allowImportingTsExtensions": true,
     "resolveJsonModule": true,

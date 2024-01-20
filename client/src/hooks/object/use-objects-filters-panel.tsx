@@ -18,7 +18,7 @@ const useObjectsFiltersPanel = (objects) => {
   const estateTypes = useSelector(getEstateTypesList());
 
   const getActualCitiesList = () => {
-    const filteredCities = objects?.map((dist) => dist.location.city);
+    const filteredCities = objects?.map((dist) => dist.city);
     const uniqueCities = [...new Set(filteredCities)];
     const sortedCities = orderBy(uniqueCities, ["name"], ["asc"]);
 
@@ -26,7 +26,7 @@ const useObjectsFiltersPanel = (objects) => {
   };
 
   const getActualDistrictsList = () => {
-    const filteredDistricts = objects?.map((dist) => dist.location.district);
+    const filteredDistricts = objects?.map((dist) => dist.district);
     const uniqueDistricts = [...new Set(filteredDistricts)];
 
     const actualDistrictsArray = uniqueDistricts?.map((id) => {
@@ -58,7 +58,7 @@ const useObjectsFiltersPanel = (objects) => {
   };
 
   const getActualMetroList = () => {
-    const filteredMetro = objects?.map((dist) => dist?.location?.metro);
+    const filteredMetro = objects?.map((dist) => dist?.metro);
     const formatedMetroArray = filteredMetro?.filter((m) => m !== "");
 
     const uniqueMetro = [...new Set(formatedMetroArray)];
@@ -77,7 +77,7 @@ const useObjectsFiltersPanel = (objects) => {
 
   const getActualCurrentRentersList = () => {
     const filteredRenters = objects?.map(
-      (renter) => renter?.estateOptions?.currentRenters
+      (renter) => renter?.currentRenters
     );
     const formateRentersArray = filteredRenters?.filter((m) => m !== "");
 
@@ -98,7 +98,7 @@ const useObjectsFiltersPanel = (objects) => {
   // Тип недвижимости
   const getActualEstateTypesList = () => {
     const filteredType = objects?.map(
-      (renter) => renter?.estateOptions?.estateTypes
+      (renter) => renter?.estateTypes
     );
     const formateTypeArray = filteredType?.filter((m) => m !== "");
 
@@ -119,7 +119,7 @@ const useObjectsFiltersPanel = (objects) => {
   // Тип объекта
   const getActualObjectTypesList = () => {
     const filteredType = objects?.map(
-      (renter) => renter?.estateOptions?.objectTypes
+      (renter) => renter?.objectTypes
     );
     const formateTypeArray = filteredType?.filter((m) => m !== "");
 
@@ -140,7 +140,7 @@ const useObjectsFiltersPanel = (objects) => {
   // Расположение объекта
   const getActualObjectProperties= () => {
     const filteredProperties = objects?.map(
-      (renter) => renter?.estateOptions?.objectProperties
+      (renter) => renter?.objectProperties
       
     );
     const formateTypeArray = filteredProperties?.filter((m) => m !== "");
@@ -163,7 +163,7 @@ const useObjectsFiltersPanel = (objects) => {
   // Тип торговой площади
   const getActualObjectTradeArea= () => {
     const filteredProperties = objects?.map(
-      (renter) => renter?.estateOptions?.tradeArea
+      (renter) => renter?.tradeArea
       
     );
     const formateTypeArray = filteredProperties?.filter((m) => m !== "");

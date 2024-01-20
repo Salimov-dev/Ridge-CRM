@@ -44,23 +44,23 @@ const ObjectBaloon = React.memo(({ object, onOpenObjectPage, isLoading }) => {
   const currentUserId = useSelector(getCurrentUserId());
   const isCurator = useSelector(getIsUserCurator(currentUserId));
 
-  const district = useSelector(getDistrictName(object?.location?.district));
-  const address = object?.location?.address;
-  const name = object?.contact?.name;
-  const phone = object?.contact?.phone;
-  const email = object?.contact?.email;
-  const rentSquare = object?.commercialTerms?.rentSquare;
-  const rentPrice = object?.commercialTerms?.rentPrice;
-  const rentTypes = object?.commercialTerms?.rentTypes;
+  const district = useSelector(getDistrictName(object?.district));
+  const address = object?.address;
+  const name = object?.name;
+  const phone = object?.phone;
+  const email = object?.email;
+  const rentSquare = object?.rentSquare;
+  const rentPrice = object?.rentPrice;
+  const rentTypes = object?.rentTypes;
 
   const objectType = useSelector(
-    getObjectTypeNameById(object?.estateOptions?.objectTypes)
+    getObjectTypeNameById(object?.objectTypes)
   );
   const estateType = useSelector(
-    getEstateTypeNameById(object?.estateOptions?.estateTypes)
+    getEstateTypeNameById(object?.estateTypes)
   );
   const renter = useSelector(
-    getCurrentRenterNameById(object?.estateOptions?.currentRenters)
+    getCurrentRenterNameById(object?.currentRenters)
   );
 
   return !isLoading ? (

@@ -1,6 +1,6 @@
 import { Box, styled } from "@mui/material";
-import basicAva from "../../../assets/basic-ava.jpg";
-import Loader from "../../../components/common/loader/loader";
+import basicAva from "@assets/basic-ava.jpg";
+import Loader from "@components/common/loader/loader";
 
 const Component = styled(Box)`
   display: flex;
@@ -16,7 +16,6 @@ const AvatarImage = ({
   height = "150px",
   isLoading,
 }) => {
-
   return !isLoading ? (
     <Component>
       {avatarSrc ? (
@@ -26,7 +25,7 @@ const AvatarImage = ({
       )}
     </Component>
   ) : (
-    <Loader height={height} width={width} padding="0" size={20}/>
+    <Loader height={height} width={width} padding="0" size={20} />
   );
 };
 

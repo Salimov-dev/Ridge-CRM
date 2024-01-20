@@ -1,12 +1,12 @@
 import { io } from "socket.io-client";
 import { createAction, createSelector, createSlice } from "@reduxjs/toolkit";
 // utils
-import isOutDated from "../../utils/auth/is-out-date";
+import isOutDated from "@utils/auth/is-out-date";
 // services
-import localStorageService from "../../services/user/local.storage-service";
-import tasksService from "../../services/tasks/tasks.service";
+import localStorageService from "@services/user/local.storage-service";
+import tasksService from "@services/tasks/tasks.service";
 // config
-import configFile from "../../config.json";
+import configFile from "@config/config.json";
 
 const socket = io(configFile.ioEndPoint);
 

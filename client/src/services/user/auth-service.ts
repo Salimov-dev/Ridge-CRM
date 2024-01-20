@@ -1,6 +1,6 @@
 import axios from "axios";
 import localStorageService from "./local.storage-service";
-import config from "../../config.json";
+import config from "@config/config.json";
 
 const httpAuth = axios.create({
   baseURL: config.apiEndpoint + "auth/",
