@@ -65,13 +65,13 @@ export const meetingsColumns = (
       },
     },
     {
-      accessorKey: "location",
+      accessorFn: (row) => row,
       header: "Адрес встречи",
       cell: (info) => {
-        const location = info.getValue();
+        const meeting = info.getValue();
         return (
           <Typography>
-            {location.city}, {location.address}
+            {meeting.city}, {meeting.address}
           </Typography>
         );
       },

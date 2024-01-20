@@ -88,7 +88,7 @@ router.get("/:objectId?", auth, async (req, res) => {
         message: "Необходимо указать идентификатор объекта (objectId).",
       });
     }
-
+    
     const editedObject = await Object.findByPk(objectId);
 
     if (!editedObject) {

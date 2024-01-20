@@ -1,5 +1,5 @@
 export function capitalizeFirstLetter(symbol) {
-  if (typeof symbol !== "string" || symbol.length === 0) {
+  if (symbol === null || typeof symbol !== "string" || symbol.length === 0) {
     return symbol;
   }
 

@@ -29,11 +29,9 @@ const MeetingBaloon = React.memo(
     const object = useSelector(getObjectById(meeting?.objectId));
     const objectId = meeting?.objectId;
     const meetingId = meeting?._id;
-    const objectAddress = `${object?.location.city}, ${object?.location.address}`;
+    const objectAddress = `${object?.city}, ${object?.address}`;
 
-    const meetingType = useSelector(
-      getMeetingTypeNameById(meeting?.meetingType)
-    );
+    const meetingType = useSelector(getMeetingTypeNameById(meeting?.type));
     const status = useSelector(getMeetingStatusNameById(meeting?.status));
     const manager = useSelector(getUserNameById(meeting?.userId));
 
@@ -44,14 +42,11 @@ const MeetingBaloon = React.memo(
       <BaloonContainer>
         <Attribute title="Дата встречи:" subTitle={date} />
         <Attribute title="Время встречи:" subTitle={time} />
-        <Attribute title="Повод:" subTitle={meetingType} />
+        <Attribute title="Тип:" subTitle={meetingType} />
         <Typography>
           <b>Адрес:</b>
         </Typography>
-        <Attribute
-          gap="0"
-          subTitle={`${meeting?.location?.city}, ${meeting?.location?.address}`}
-        />
+        <Attribute gap="0" subTitle={`${meeting?.city}, ${meeting?.address}`} />
         <Typography>
           <b>Коммент:</b>
         </Typography>

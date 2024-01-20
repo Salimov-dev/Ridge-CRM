@@ -10,12 +10,13 @@ import DatePickerStyled from "../inputs/date-picker";
 import AutocompleteStyled from "../inputs/autocomplete-styled";
 import TextFieldStyled from "../inputs/text-field-styled";
 import SimpleSwitch from "../inputs/simple-switch";
+import { capitalizeFirstLetter } from "@utils/data/capitalize-first-letter";
 
 const MeetingForm = ({
   data,
   objects,
   statuses,
-  meetingTypes,
+  types,
   watch,
   register,
   errors,
@@ -26,7 +27,7 @@ const MeetingForm = ({
 }) => {
   const watchStatus = watch("status");
   const watchObjectId = watch("objectId");
-  const watchTypeMeeting = watch("meetingType");
+  const watchTypeMeeting = watch("type");
   const watchIsDone = watch("isDone", false);
 
   return (
@@ -53,12 +54,12 @@ const MeetingForm = ({
           <SelectFieldStyled
             label="Тип встречи"
             register={register}
-            name="meetingType"
-            labelId="meetingType"
+            name="type"
+            labelId="type"
             required={true}
-            itemsList={meetingTypes}
+            itemsList={types}
             value={watchTypeMeeting ?? ""}
-            errors={errors?.meetingType}
+            errors={errors?.type}
           />
           <SelectFieldStyled
             label="Статус"
@@ -82,9 +83,7 @@ const MeetingForm = ({
             setValue={setValue}
             watchItemId={watchObjectId}
             disabled={!isObjectPage}
-            optionLabel={(option) =>
-              `${option?.location?.city}, ${option?.location?.address}`
-            }
+            optionLabel={(option) => `${option?.city}, ${option?.address}`}
           />
 
           <TextFieldStyled
@@ -92,7 +91,7 @@ const MeetingForm = ({
             label="Комментарий *"
             name="comment"
             errors={errors?.comment}
-            value={data?.comment}
+            value={capitalizeFirstLetter(data?.comment)}
             onInputQuantities={150}
             InputProps={{
               endAdornment: (
@@ -106,9 +105,9 @@ const MeetingForm = ({
         {isEditMode ? (
           <TextFieldStyled
             register={register}
-            label="Результат *"
+            label="Результат"
             name="result"
-            value={data?.result}
+            value={capitalizeFirstLetter(data?.result)}
             rows="2"
             multiline={true}
             onInputQuantities={100}

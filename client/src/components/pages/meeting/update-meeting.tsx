@@ -68,10 +68,10 @@ const UpdateMeeting = React.memo(({ meetingId, onClose, isObjectPage }) => {
   const meetingTypes = useSelector(getMeetingTypesList());
   const statuses = useSelector(getMeetingStatusesList());
 
-  const address = `${meeting?.location?.city}, ${meeting?.location?.address}`;
-  const latitude = meeting?.location?.latitude || null;
-  const longitude = meeting?.location?.longitude || null;
-  const mapZoom = meeting?.location?.zoom || null;
+  const address = `${meeting?.city}, ${meeting?.address}`;
+  const latitude = meeting?.latitude || null;
+  const longitude = meeting?.longitude || null;
+  const mapZoom = meeting?.zoom || null;
   const center = [latitude, longitude];
 
   const onSubmit = (data) => {
@@ -83,13 +83,14 @@ const UpdateMeeting = React.memo(({ meetingId, onClose, isObjectPage }) => {
 
     dispatch<any>(updateMeeting(newData))
       .then(() => {
-        setIsLoading(false);
         onClose();
         toast.success("Встреча успешно изменена!");
       })
       .catch((error) => {
-        setIsLoading(false);
         toast.error(error);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   };
 
@@ -123,7 +124,7 @@ const UpdateMeeting = React.memo(({ meetingId, onClose, isObjectPage }) => {
       <MeetingForm
         data={data}
         objects={currentUserObjects}
-        meetingTypes={meetingTypes}
+        types={meetingTypes}
         statuses={statuses}
         register={register}
         watch={watch}

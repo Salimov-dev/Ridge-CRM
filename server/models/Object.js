@@ -9,9 +9,6 @@ const Object = sequelize.define(
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
     },
-    status: {
-      type: DataTypes.STRING,
-    },
     userId: {
       type: DataTypes.UUID,
       references: {
@@ -19,6 +16,9 @@ const Object = sequelize.define(
         key: "_id",
       },
       allowNull: false,
+    },
+    status: {
+      type: DataTypes.STRING,
     },
 
     city: { type: DataTypes.STRING },
@@ -28,7 +28,7 @@ const Object = sequelize.define(
     identifier: { type: DataTypes.STRING, defaultValue: null },
     latitude: { type: DataTypes.DOUBLE },
     longitude: { type: DataTypes.DOUBLE },
-    zoom: { type: DataTypes.INTEGER },
+    zoom: { type: DataTypes.INTEGER, defaultValue: 16 },
 
     contact: { type: DataTypes.STRING, defaultValue: null },
     fullDescription: { type: DataTypes.STRING, defaultValue: null },

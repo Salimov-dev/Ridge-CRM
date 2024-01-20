@@ -107,8 +107,6 @@ const CreateObject = React.memo(({ onClose }) => {
 
     const newData = {
       ...data,
-      address: capitalizeFirstLetter(data.address),
-      zoom: 16,
       advanseDeposit: removeSpacesAndConvertToNumber(data.advanseDeposit),
       agentComission: removeSpacesAndConvertToNumber(data.agentComission),
       electricityKw: removeSpacesAndConvertToNumber(data.electricityKw),
@@ -129,9 +127,9 @@ const CreateObject = React.memo(({ onClose }) => {
       .catch((error) => {
         toast.error(error);
       })
-      .finally(()=>{
+      .finally(() => {
         setIsLoading(false);
-      })
+      });
   };
 
   // устаналиваю значения для объекта

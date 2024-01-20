@@ -9,21 +9,21 @@ const router = express.Router({ mergeParams: true });
 router.get("/", auth, async (req, res) => {
   try {
     const userId = req.user._id;
-    const user = await User.findOne({ _id: userId });
-    const userRole = user.role;
+    // const user = await User.findByPk(userId);
+    // const userRole = user.role;
 
-    if (userRole === "MANAGER") {
-      const meetings = await Meeting.find({ userId });
-      return res.status(200).send(meetings);
-    }
+    // if (userRole === "MANAGER") {
+    //   const meetings = await Meeting.find({ userId });
+    //   return res.status(200).send(meetings);
+    // }
 
-    const meetings = await Meeting.find({ userId });
-    const managers = await User.find({ curatorId: userId });
-    const managerIds = managers.map((manager) => manager._id);
-    const managerMeetings = await Meeting.find({ userId: { $in: managerIds } });
-    const allMeetings = [...meetings, ...managerMeetings];
+    const meetings = await Meeting.findAll({ where: { userId } });
+    // const managers = await User.find({ curatorId: userId });
+    // const managerIds = managers.map((manager) => manager._id);
+    // const managerMeetings = await Meeting.find({ userId: { $in: managerIds } });
+    // const allMeetings = [...meetings, ...managerMeetings];
 
-    return res.status(200).send(allMeetings);
+    return res.status(200).send(meetings);
   } catch (e) {
     res.status(500).json({
       message: "На сервере произошла ошибка, попробуйте позже",
@@ -34,15 +34,15 @@ router.get("/", auth, async (req, res) => {
 router.post("/create", auth, async (req, res) => {
   try {
     const userId = req.user._id;
-    const company = await Company.findOne({
-      $or: [{ managers: userId }, { curators: userId }],
-    });
+    // const company = await Company.findOne({
+    //   $or: [{ managers: userId }, { curators: userId }],
+    // });
 
     const newMeeting = await Meeting.create({
       ...req.body,
       userId,
-      company: company._id,
     });
+
     res.status(201).send(newMeeting);
   } catch (e) {
     res.status(500).json({
@@ -54,8 +54,27 @@ router.post("/create", auth, async (req, res) => {
 router.patch("/:meetingId?/edit", auth, async (req, res) => {
   try {
     const { meetingId } = req.params;
-    const updatedMeeting = await Meeting.findByIdAndUpdate(meetingId, req.body);
-    res.send(updatedMeeting);
+    console.log("meetingId", meetingId);
+    if (!meetingId) {
+      return res.status(400).json({
+        message: "Необходимо указать идентификатор встречи (meetingId).",
+      });
+    }
+
+    console.log("!!! UPDATE !!!!");
+    const existingMeeting = await Meeting.findByPk(meetingId);
+    console.log("existingMeeting", existingMeeting);
+
+    if (!existingMeeting) {
+      return res.status(404).json({
+        message: "Встреча не найдена.",
+      });
+    }
+
+    const updatedMeeting = await existingMeeting.update(req.body);
+    console.log("updatedMeeting", updatedMeeting);
+
+    res.status(200).json(updatedMeeting);
   } catch (e) {
     res.status(500).json({
       message: "На сервере произошла ошибка, попробуйте позже",
@@ -66,9 +85,24 @@ router.patch("/:meetingId?/edit", auth, async (req, res) => {
 router.delete("/:meetingId?", auth, async (req, res) => {
   try {
     const { meetingId } = req.params;
-    await Meeting.findByIdAndRemove(meetingId);
 
-    return res.send(null);
+    if (!meetingId) {
+      return res.status(400).json({
+        message: "Необходимо указать идентификатор объекта (objectId).",
+      });
+    }
+
+    const deletedMeeting = await Meeting.findByPk(meetingId);
+
+    if (!deletedMeeting) {
+      return res.status(404).json({
+        message: "Объект не найден.",
+      });
+    }
+
+    await deletedMeeting.destroy();
+
+    res.status(204).send();
   } catch (e) {
     res.status(500).json({
       message: "На сервере произошла ошибка, попробуйте позже",

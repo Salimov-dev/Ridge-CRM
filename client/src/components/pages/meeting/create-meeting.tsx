@@ -27,25 +27,21 @@ import { getMeetingStatusesList } from "@store/meeting/meeting-status.store";
 
 const initialState = {
   status: "",
-  meetingType: "",
+  type: "",
   date: null,
   time: null,
   comment: "",
   objectId: null,
-  result: "",
-  location: {
-    city: "",
-    address: "",
-    latitude: null,
-    longitude: null,
-    zoom: null,
-  },
+  // result: "",
+  city: "",
+  address: "",
+  latitude: null,
+  longitude: null,
+  // zoom: null,
 };
 
 const CreateMeeting = React.memo(
   ({ objectPageId = "", onClose, dateCreate }) => {
-    console.log("objectPageId", objectPageId);
-    
     const dispatch = useDispatch();
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
@@ -81,38 +77,37 @@ const CreateMeeting = React.memo(
     } = useFindObject();
 
     const data = watch();
+    // console.log("data", data);
+
     const isEmptyFindedObject = Boolean(Object.keys(findedObject)?.length);
 
     const onSubmit = (data) => {
-      setIsLoading(true);
+      // setIsLoading(true);
 
       const newData = {
         ...data,
-        comment: capitalizeFirstLetter(data.comment),
-        result: capitalizeFirstLetter(data.result),
-        location: {
-          ...data.location,
-          zoom: 16,
-        },
+        // zoom: 16,
       };
 
-      dispatch<any>(createMeeting(newData))
+      console.log("data", data);
+      dispatch<any>(createMeeting(data))
         .then(() => {
-          setIsLoading(false);
-          onClose();
+          // onClose();
           toast.success("Встреча успешно создана!");
         })
         .catch((error) => {
-          setIsLoading(false);
           toast.error(error);
+        })
+        .finally(() => {
+          // setIsLoading(false);
         });
     };
 
     useEffect(() => {
-      setValue<any>("location.city", getCity());
-      setValue<any>("location.address", getAddress());
-      setValue<any>("location.latitude", getLatitudeCoordinates());
-      setValue<any>("location.longitude", getLongitudeCoordinates());
+      setValue<any>("city", getCity());
+      setValue<any>("address", getAddress());
+      setValue<any>("latitude", getLatitudeCoordinates());
+      setValue<any>("longitude", getLongitudeCoordinates());
     }, [findedObject]);
 
     useEffect(() => {
@@ -147,7 +142,7 @@ const CreateMeeting = React.memo(
           data={data}
           objects={currentUserObjects}
           statuses={statuses}
-          meetingTypes={meetingTypes}
+          types={meetingTypes}
           watch={watch}
           errors={errors}
           register={register}
