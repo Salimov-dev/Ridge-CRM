@@ -24,8 +24,8 @@ const Header = ({
   isEdit,
   isAuthorEntity = true,
 }) => {
-  const city = object?.location.city;
-  const address = object?.location.address;
+  const city = object?.city;
+  const address = object?.address;
 
   return !isLoading ? (
     <HeaderContainer>

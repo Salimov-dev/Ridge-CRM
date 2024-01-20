@@ -162,13 +162,13 @@ const Objects = React.memo(() => {
         items={searchedObjects}
         onClick={handleSelectedBaloon}
         isLoading={isLoading}
-        // baloon={
-        //   <ObjectBaloon
-        //     object={selectedObject}
-        //     onOpenObjectPage={handleOpenObjectPage}
-        //     isLoading={isLoading}
-        //   />
-        // }
+        baloon={
+          <ObjectBaloon
+            object={selectedObject}
+            onOpenObjectPage={handleOpenObjectPage}
+            isLoading={isLoading}
+          />
+        }
       />
       <ObjectsFiltersPanel
         data={data}

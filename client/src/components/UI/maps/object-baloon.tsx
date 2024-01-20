@@ -39,7 +39,7 @@ const ObjectBaloon = React.memo(({ object, onOpenObjectPage, isLoading }) => {
 
   const objectId = object?._id;
   const manager = useSelector(getUserNameById(object?.userId));
-  const city = object?.location?.city;
+  const city = object?.city;
 
   const currentUserId = useSelector(getCurrentUserId());
   const isCurator = useSelector(getIsUserCurator(currentUserId));

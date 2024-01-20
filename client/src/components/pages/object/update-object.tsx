@@ -15,6 +15,7 @@ import { capitalizeFirstLetter } from "@utils/data/capitalize-first-letter";
 import { objectSchema } from "@schemas/object.schema";
 // store
 import { getObjectById, updateObject } from "@store/object/objects.store";
+import { removeSpacesAndConvertToNumber } from "@utils/data/remove-spaces-and-convert-to-number";
 
 const UpdateObject = React.memo(({ onClose, objectId }) => {
   const dispatch = useDispatch();
@@ -40,27 +41,9 @@ const UpdateObject = React.memo(({ onClose, objectId }) => {
 
     const newData = {
       ...data,
-      contact: {
-        ...data.contact,
-        name: capitalizeFirstLetter(data.contact.name),
-      },
-      description: {
-        ...data.description,
-        fullDescription: capitalizeFirstLetter(
-          data.description.fullDescription
-        ),
-      },
-      estateOptions: {
-        ...data.estateOptions,
-        loadingArea: capitalizeFirstLetter(data.estateOptions.loadingArea),
-        premisesFloor: capitalizeFirstLetter(data.estateOptions.premisesFloor),
-      },
-      location: {
-        ...data.location,
-        city: capitalizeFirstLetter(data.location.city),
-        address: capitalizeFirstLetter(data.location.address),
-      },
+      address: capitalizeFirstLetter(data.address),
     };
+    console.log("newData", newData);
 
     dispatch<any>(updateObject(newData))
       .then(() => {
@@ -79,7 +62,7 @@ const UpdateObject = React.memo(({ onClose, objectId }) => {
       <HeaderWithBackButton
         onClose={onClose}
         title="Изменить объект:"
-        subtitle={`${object.location.city}, ${object.location.address}`}
+        subtitle={`${object.city}, ${object.address}`}
       />
       <ObjectForm
         data={data}

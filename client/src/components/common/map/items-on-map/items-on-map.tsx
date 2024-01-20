@@ -107,12 +107,12 @@ const ItemsOnMap = ({
                   iconImageOffset: [-20, -40],
                 }}
                 geometry={
-                  item.location?.latitude && item.location?.longitude
-                    ? [item.location.latitude, item.location.longitude]
+                  item.latitude && item.longitude
+                    ? [item.latitude, item.longitude]
                     : null
                 }
                 properties={{
-                  hintContent: `${item?.location?.city}, ${item?.location?.address}`,
+                  hintContent: `${item?.city}, ${item?.address}`,
                   balloonContentBody: '<div id="baloon" class="baloon"></div>',
                   clusterCaption: dayjs(item?.created_at).format("DD.MM.YY"),
                 }}

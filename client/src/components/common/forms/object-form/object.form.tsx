@@ -29,6 +29,8 @@ import { getCurrentRentersList } from "@store/object-params/current-renter.store
 import { getWorkingPositionsList } from "@store/user-params/working-position.store";
 import { getObjectConditionsList } from "@store/object-params/object-conditions.store";
 import { getTradeAreaList } from "@store/object-params/object-trade-area";
+import { makeDigitSeparator } from "@utils/data/make-digit-separator";
+import { capitalizeFirstLetter } from "@utils/data/capitalize-first-letter";
 
 const ObjectForm = ({
   data,
@@ -90,7 +92,6 @@ const ObjectForm = ({
             register={register}
             name="metro"
             labelId="metro"
-            required={true}
             itemsList={sortedMetros}
             value={watchMetro ?? ""}
             disabled={!watchDistrict}
@@ -165,7 +166,7 @@ const ObjectForm = ({
             name="identifier"
             errors={errors?.identifier}
             onInputQuantities={260}
-            value={data?.identifier || ""}
+            value={capitalizeFirstLetter(data?.identifier) || ""}
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
@@ -245,7 +246,7 @@ const ObjectForm = ({
               valueAsNumber={true}
               onInputQuantities={8}
               errors={errors?.rentSquare}
-              value={data?.rentSquare || ""}
+              value={makeDigitSeparator(data?.rentSquare) || ""}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">м²</InputAdornment>
@@ -258,7 +259,7 @@ const ObjectForm = ({
               name="rentPrice"
               onInputQuantities={12}
               valueAsNumber={true}
-              value={data?.rentPrice || ""}
+              value={makeDigitSeparator(data?.rentPrice) || ""}
               InputProps={{
                 endAdornment: <InputAdornment position="end">₽</InputAdornment>,
               }}
@@ -279,7 +280,8 @@ const ObjectForm = ({
               label="Индексация"
               type="number"
               name="indexingAnnual"
-              onInputQuantities={3}
+              onInputQuantities={6}
+              valueAsNumber={true}
               value={data?.indexingAnnual || ""}
               InputProps={{
                 endAdornment: <InputAdornment position="end">%</InputAdornment>,
@@ -305,7 +307,7 @@ const ObjectForm = ({
               name="securityDeposit"
               onInputQuantities={12}
               valueAsNumber={true}
-              value={data?.securityDeposit || ""}
+              value={makeDigitSeparator(data?.securityDeposit) || ""}
               InputProps={{
                 endAdornment: <InputAdornment position="end">₽</InputAdornment>,
               }}
@@ -316,7 +318,7 @@ const ObjectForm = ({
               name="advanseDeposit"
               onInputQuantities={12}
               valueAsNumber={true}
-              value={data?.advanseDeposit || ""}
+              value={makeDigitSeparator(data?.advanseDeposit) || ""}
               InputProps={{
                 endAdornment: <InputAdornment position="end">₽</InputAdornment>,
               }}
@@ -359,7 +361,7 @@ const ObjectForm = ({
               type="number"
               name="electricityKw"
               onInputQuantities={5}
-              value={data?.electricityKw || ""}
+              value={capitalizeFirstLetter(data?.electricityKw) || ""}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
@@ -373,7 +375,7 @@ const ObjectForm = ({
               label="Состояние полов"
               name="premisesFloor"
               onInputQuantities={100}
-              value={data?.premisesFloor || ""}
+              value={capitalizeFirstLetter(data?.premisesFloor) || ""}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
@@ -390,7 +392,7 @@ const ObjectForm = ({
               type="text"
               name="waterSuply"
               onInputQuantities={20}
-              value={data?.waterSuply || ""}
+              value={capitalizeFirstLetter(data?.waterSuply) || ""}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
@@ -404,7 +406,7 @@ const ObjectForm = ({
               label="Высота потолков"
               type="number"
               name="premisesHeight"
-              onInputQuantities={3}
+              onInputQuantities={6}
               value={data?.premisesHeight || ""}
               InputProps={{
                 endAdornment: <InputAdornment position="end">м</InputAdornment>,
@@ -430,7 +432,7 @@ const ObjectForm = ({
               label="Зона погрузки"
               name="loadingArea"
               onInputQuantities={60}
-              value={data?.loadingArea ?? ""}
+              value={capitalizeFirstLetter(data?.loadingArea) ?? ""}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
@@ -447,7 +449,7 @@ const ObjectForm = ({
           register={register}
           label="Опишите объект"
           name="fullDescription"
-          value={data?.fullDescription ?? ""}
+          value={capitalizeFirstLetter(data?.fullDescription) ?? ""}
           rows="6"
           multiline={true}
           errors={errors?.fullDescription}

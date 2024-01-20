@@ -1,10 +1,9 @@
 import express from "express";
 import { Op } from "sequelize";
+// models
 import Object from "../models/Object.js";
-import Company from "../models/Company.js";
 import User from "../models/User.js";
 import auth from "../middleware/auth.middleware.js";
-import mongoose from "mongoose";
 
 const router = express.Router({ mergeParams: true });
 
@@ -107,7 +106,6 @@ router.get("/:objectId?", auth, async (req, res) => {
   }
 });
 
-
 router.patch("/:objectId?/edit", auth, async (req, res) => {
   try {
     const { objectId } = req.params;
@@ -137,14 +135,14 @@ router.patch("/:objectId?/edit", auth, async (req, res) => {
   }
 });
 
-
 router.patch("/update-multiple", auth, async (req, res) => {
   try {
     const { objectIds, userId } = req.body;
 
     if (!objectIds || !Array.isArray(objectIds) || objectIds.length === 0) {
       return res.status(400).json({
-        message: "Необходимо предоставить действительные идентификаторы объектов (objectIds).",
+        message:
+          "Необходимо предоставить действительные идентификаторы объектов (objectIds).",
       });
     }
 
@@ -200,7 +198,5 @@ router.delete("/:objectId?", auth, async (req, res) => {
     });
   }
 });
-
-
 
 export default router;

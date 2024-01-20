@@ -22,6 +22,7 @@ import { objectSchema } from "@schemas/object.schema";
 // utils
 import { capitalizeFirstLetter } from "@utils/data/capitalize-first-letter";
 import { capitalizeAllFirstLetters } from "@utils/data/capitalize-all-first-letters";
+import { removeSpacesAndConvertToNumber } from "@utils/data/remove-spaces-and-convert-to-number";
 
 const initialState = {
   status: null,
@@ -102,16 +103,22 @@ const CreateObject = React.memo(({ onClose }) => {
   const findedObjectFullAddress = `${watchCity}, ${watchAddress}`;
 
   const onSubmit = (data) => {
-    // setIsLoading(true);
+    setIsLoading(true);
 
     const newData = {
       ...data,
-      name: capitalizeAllFirstLetters(data.name),
-      premisesFloor: capitalizeFirstLetter(data.premisesFloor),
-      city: capitalizeFirstLetter(data.city),
       address: capitalizeFirstLetter(data.address),
       zoom: 16,
-      fullDescription: capitalizeFirstLetter(data.fullDescription),
+      advanseDeposit: removeSpacesAndConvertToNumber(data.advanseDeposit),
+      agentComission: removeSpacesAndConvertToNumber(data.agentComission),
+      electricityKw: removeSpacesAndConvertToNumber(data.electricityKw),
+      parkingQuantity: removeSpacesAndConvertToNumber(data.parkingQuantity),
+      indexingAnnual: removeSpacesAndConvertToNumber(data.indexingAnnual),
+      premisesHeight: removeSpacesAndConvertToNumber(data.premisesHeight),
+      rentPrice: removeSpacesAndConvertToNumber(data.rentPrice),
+      rentSquare: removeSpacesAndConvertToNumber(data.rentSquare),
+      rentalHolidays: removeSpacesAndConvertToNumber(data.rentalHolidays),
+      securityDeposit: removeSpacesAndConvertToNumber(data.securityDeposit),
     };
     console.log("newData", newData);
 

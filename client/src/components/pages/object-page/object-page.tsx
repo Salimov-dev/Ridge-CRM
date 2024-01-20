@@ -25,10 +25,10 @@ const ObjectPage = React.memo(
       getIsUserAuthorThisEntity(currentUserId, object)
     );
 
-    const address = `${object?.location?.city}, ${object?.location?.address}`;
-    const latitude = object?.location?.latitude || null;
-    const longitude = object?.location?.longitude || null;
-    const mapZoom = object?.location?.zoom || null;
+    const address = `${object?.city}, ${object?.address}`;
+    const latitude = object?.latitude || null;
+    const longitude = object?.longitude || null;
+    const mapZoom = object?.zoom || null;
     const center = [latitude, longitude];
 
     return (

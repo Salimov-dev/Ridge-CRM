@@ -76,9 +76,9 @@ export const locationColumns = [
     enableSorting: false,
     cell: (info) => {
       const object = info.getValue();
-      const location = object?.identifier;
-      if (location && location.identifier) {
-        return <AlignCenter>{location.identifier}</AlignCenter>;
+      const identifier = object?.identifier;
+      if (identifier) {
+        return <AlignCenter>{identifier}</AlignCenter>;
       } else {
         return <EmptyTd />;
       }

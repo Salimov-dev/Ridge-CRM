@@ -77,7 +77,7 @@ const TextFieldStyled = ({
         subtitle={errors?.message}
         disabled={disabled}
         required={required}
-        onInput={(e) => handleInput(e)}
+        // onInput={(e) => handleInput(e)}
         onWheel={(e) => e.target.blur()}
         colors={colors}
       />
