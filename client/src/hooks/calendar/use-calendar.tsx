@@ -26,7 +26,6 @@ const useCalendar = (data, setState) => {
 
   const meetings = useSelector(getMeetingsList());
   const tasks = useSelector(getTasksList());
-  console.log("tasks", tasks);
 
   // сортируем встречи
   const currentWeeklyMeetings = meetings?.filter((meet) =>

@@ -65,7 +65,6 @@ router.post("/signInWithPassword", [
   check("password", "Пароль не может быть пустым").exists().trim(),
   async (req, res) => {
     try {
-      console.log("req", req.body);
       const errors = validationResult(req);
 
       if (!errors.isEmpty()) {

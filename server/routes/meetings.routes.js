@@ -84,7 +84,7 @@ router.delete("/:meetingId?", auth, async (req, res) => {
 
     if (!meetingId) {
       return res.status(400).json({
-        message: "Необходимо указать идентификатор объекта (objectId).",
+        message: "Необходимо указать идентификатор встречи (meetingId).",
       });
     }
 
@@ -92,7 +92,7 @@ router.delete("/:meetingId?", auth, async (req, res) => {
 
     if (!deletedMeeting) {
       return res.status(404).json({
-        message: "Объект не найден.",
+        message: "Встреча не найдена.",
       });
     }
 

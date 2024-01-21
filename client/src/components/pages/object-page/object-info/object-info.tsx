@@ -74,7 +74,7 @@ const ObjectInfo = ({ object, objectId, isLoading, isAuthorEntity = true }) => {
           handleOpenUpdateMyTaskPage,
           handleOpenUpdateManagerTaskPage,
           () => {},
-          isDialogPage
+          isDialogPage,
         )}
       />
       <ObjectMeetings
@@ -84,7 +84,8 @@ const ObjectInfo = ({ object, objectId, isLoading, isAuthorEntity = true }) => {
         columns={meetingsColumns(
           handleOpenUpdateMeetingPage,
           () => {},
-          isDialogPage
+          isDialogPage,
+          isCurator
         )}
         isAuthorEntity={isAuthorEntity}
       />

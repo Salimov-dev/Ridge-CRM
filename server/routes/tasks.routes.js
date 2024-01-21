@@ -40,17 +40,14 @@ router.get("/", auth, async (req, res) => {
 router.post("/create", auth, async (req, res) => {
   try {
     const userId = req.user._id;
-    console.log("userId", userId);
     // const company = await Company.findOne({
     //   $or: [{ managers: userId }, { curators: userId }],
     // });
 
-    console.log("req.body", req.body);
     const newTask = await Task.create({
       ...req.body,
       userId,
     });
-    console.log("newTask", newTask);
 
     res.status(201).send(newTask);
   } catch (e) {

@@ -59,11 +59,10 @@ const CreateMyTask = React.memo(
 
     const onSubmit = () => {
       setIsLoading(true);
-      console.log("data", data);
 
       dispatch<any>(createTask(data))
         .then(() => {
-          // onClose();
+          onClose();
           toast.success("Задача себе успешно создана!");
         })
         .catch((error) => {

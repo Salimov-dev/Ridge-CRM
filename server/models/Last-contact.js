@@ -1,16 +1,46 @@
-import { Schema, model } from "mongoose";
+import { DataTypes } from "sequelize";
+import { sequelize } from "../utils/postgre-conection.js";
 
-const schema = new Schema(
+const LastContact = sequelize.define(
+  "LastContact",
   {
-    date: String,
-    result: String,
-    objectId: String,
-    userId: { type: Schema.Types.ObjectId, ref: "User" },
-    company: { type: Schema.Types.ObjectId, ref: "Company" },
+    _id: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+      primaryKey: true,
+    },
+    userId: {
+      type: DataTypes.UUID,
+      references: {
+        model: "users", // Имя таблицы (модели) в базе данных
+        key: "_id",
+      },
+      allowNull: false,
+    },
+    objectId: {
+      type: DataTypes.UUID,
+      references: {
+        model: "objects", // Имя таблицы (модели) в базе данных
+        key: "_id",
+      },
+      defaultValue: null,
+    },
+    date: { type: DataTypes.DATE },
+    result: { type: DataTypes.STRING },
+    created_at: {
+      type: DataTypes.DATE,
+      defaultValue: DataTypes.NOW,
+    },
+    updated_at: {
+      type: DataTypes.DATE,
+      defaultValue: DataTypes.NOW,
+    },
   },
   {
-    timestamps: { createdAt: "created_at", updatedAt: "updated_at" },
+    timestamps: false,
+    tableName: "tasks",
   }
 );
 
-export default model("LastContact", schema);
+export default LastContact;
+

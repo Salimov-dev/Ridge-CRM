@@ -3,6 +3,7 @@ import TextFieldStyled from "../inputs/text-field-styled";
 import DatePickerStyled from "../inputs/date-picker";
 // styled
 import { FieldsContainer, Form } from "./styled/styled";
+import { capitalizeFirstLetter } from "@utils/data/capitalize-first-letter";
 
 const LastContactForm = ({ data, register, errors, setValue }) => {
   return (
@@ -20,7 +21,7 @@ const LastContactForm = ({ data, register, errors, setValue }) => {
           register={register}
           label="Результат"
           name="result"
-          value={data?.result}
+          value={capitalizeFirstLetter(data?.result)}
           errors={errors?.result}
           rows="2"
           multiline={true}

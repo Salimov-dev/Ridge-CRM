@@ -6,7 +6,6 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useDispatch, useSelector } from "react-redux";
 // components
-import TitleWithCloseButton from "../../common/page-headers/header-with-close-button";
 import LastContactForm from "../../common/forms/last-contact.form";
 // store
 import { createLastContact } from "../../../store/last-contact/last-contact.store";
@@ -18,16 +17,12 @@ import SuccessCancelFormButtons from "../../common/forms/buttons/success-cancel-
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
 import { useTheme } from "@emotion/react";
 import { tokens } from "@theme/theme";
-import HeaderWithBackButton from "@components/common/page-headers/header-with-back-button";
 import HeaderWithCloseButton from "../../common/page-headers/header-with-close-button";
 
 const initialState = {
   date: dayjs(),
   result: "",
   objectId: "",
-  dateMyTask: null,
-  timeMyTaks: null,
-  commentMyTask: "",
 };
 
 const CreateLastContact = React.memo(({ objectPageId, onClose }) => {
@@ -62,13 +57,14 @@ const CreateLastContact = React.memo(({ objectPageId, onClose }) => {
 
     dispatch<any>(createLastContact(lastContactData))
       .then(() => {
-        setIsLoading(false);
         onClose();
         toast.success("Последний контакт успешно создан!");
       })
       .catch((error) => {
-        setIsLoading(false);
         toast.error(error);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   };
 

@@ -3,13 +3,8 @@ import { Schema, model } from "mongoose";
 const schema = new Schema(
   {
     date: String,
-    objectId: String,
-    time: String,
-    comment: String,
-    managerId: String,
-    isDone: Boolean,
     result: String,
-    isCallTask: Boolean,
+    objectId: String,
     userId: { type: Schema.Types.ObjectId, ref: "User" },
     company: { type: Schema.Types.ObjectId, ref: "Company" },
   },
@@ -18,4 +13,4 @@ const schema = new Schema(
   }
 );
 
-export default model("Task", schema);
+export default model("LastContact", schema);

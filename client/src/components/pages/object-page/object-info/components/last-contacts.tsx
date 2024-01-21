@@ -25,14 +25,12 @@ const LastContacts = ({
   margin = "0",
   isAuthorEntity,
 }) => {
-  const theme = useTheme();
-  const colors = tokens(theme.palette.mode);
-
   const isLastContactsLoading = useSelector(getLastContactsLoadingStatus());
   const columns = lastContactColumns(onUpdate);
   const address = `${object?.city}, ${object?.address}`;
 
   const lastContactsList = useSelector(getLastContactsList());
+
   const lastContacts = lastContactsList?.filter(
     (contact) => contact.objectId === objectId
   );
@@ -49,7 +47,7 @@ const LastContacts = ({
           title="Добавить последний контакт"
           style="LAST_CONTACT"
           variant="contained"
-          onClick={onOpen}
+          onClick={() => onOpen(objectId)}
         />
       </Container>
 

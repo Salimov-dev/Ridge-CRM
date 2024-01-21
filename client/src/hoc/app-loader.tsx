@@ -65,7 +65,7 @@ const AppLoader = ({ children }: AppLoaderProps) => {
       // tasks
       dispatch<any>(loadTasksList());
       // last contact
-      // dispatch<any>(loadLastContactsList());
+      dispatch<any>(loadLastContactsList());
       // presentations
       // dispatch<any>(loadPresentationsList());
       dispatch<any>(loadPresentationStatusList());

@@ -19,7 +19,7 @@ const BasicTable = ({
   items,
   itemsColumns,
   rowSelection = [],
-  setRowSelection,
+  setRowSelection = () => {},
   hasFooter = false,
   isLoading = false,
   isPaginate = true,
