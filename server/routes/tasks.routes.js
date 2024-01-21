@@ -9,26 +9,27 @@ const router = express.Router({ mergeParams: true });
 router.get("/", auth, async (req, res) => {
   try {
     const userId = req.user._id;
-    const user = await User.findOne({ _id: userId });
-    const userRole = user.role;
-    
-    if (userRole === "MANAGER") {
-      const tasks = await Task.find({
-        $or: [
-          { userId: userId }, // Задачи, где userId равен текущему пользователю
-          { managerId: userId }, // Задачи, где managerId равен id текущего пользователя
-        ]
-      });
-      return res.status(200).send(tasks);
-    }
 
-    const tasks = await Task.find({ userId });
-    const managers = await User.find({ curatorId: userId });
-    const managerIds = managers.map((manager) => manager._id);
-    const managerTasks = await Task.find({ userId: { $in: managerIds } });
-    const alltasks = [...tasks, ...managerTasks];
+    // const user = await User.findOne({ _id: userId });
+    // const userRole = user.role;
 
-    return res.status(200).send(alltasks);
+    // if (userRole === "MANAGER") {
+    //   const tasks = await Task.find({
+    //     $or: [
+    //       { userId: userId }, // Задачи, где userId равен текущему пользователю
+    //       { managerId: userId }, // Задачи, где managerId равен id текущего пользователя
+    //     ]
+    //   });
+    //   return res.status(200).send(tasks);
+    // }
+
+    const tasks = await Task.findAll({ where: { userId } });
+    // const managers = await User.find({ curatorId: userId });
+    // const managerIds = managers.map((manager) => manager._id);
+    // const managerTasks = await Task.find({ userId: { $in: managerIds } });
+    // const alltasks = [...tasks, ...managerTasks];
+
+    return res.status(200).send(tasks);
   } catch (e) {
     res.status(500).json({
       message: "На сервере произошла ошибка, попробуйте позже",
@@ -39,15 +40,18 @@ router.get("/", auth, async (req, res) => {
 router.post("/create", auth, async (req, res) => {
   try {
     const userId = req.user._id;
-    const company = await Company.findOne({
-      $or: [{ managers: userId }, { curators: userId }],
-    });
+    console.log("userId", userId);
+    // const company = await Company.findOne({
+    //   $or: [{ managers: userId }, { curators: userId }],
+    // });
 
+    console.log("req.body", req.body);
     const newTask = await Task.create({
       ...req.body,
       userId,
-      company: company._id,
     });
+    console.log("newTask", newTask);
+
     res.status(201).send(newTask);
   } catch (e) {
     res.status(500).json({
@@ -59,7 +63,21 @@ router.post("/create", auth, async (req, res) => {
 router.patch("/:taskId?/edit", auth, async (req, res) => {
   try {
     const { taskId } = req.params;
-    const updatedTask = await Task.findByIdAndUpdate(taskId, req.body);
+    if (!taskId) {
+      return res.status(400).json({
+        message: "Необходимо указать идентификатор задачи (taskId).",
+      });
+    }
+
+    const existingTask = await Task.findByPk(taskId);
+
+    if (!existingTask) {
+      return res.status(404).json({
+        message: "Встреча не найдена.",
+      });
+    }
+
+    const updatedTask = await existingTask.update(req.body);
     res.send(updatedTask);
   } catch (e) {
     res.status(500).json({
@@ -71,8 +89,23 @@ router.patch("/:taskId?/edit", auth, async (req, res) => {
 router.delete("/:taskId?", auth, async (req, res) => {
   try {
     const { taskId } = req.params;
-    await Task.findByIdAndRemove(taskId);
-    return res.send(null);
+    if (!taskId) {
+      return res.status(400).json({
+        message: "Необходимо указать идентификатор объекта (objectId).",
+      });
+    }
+
+    const deletedTask = await Task.findByPk(taskId);
+
+    if (!deletedTask) {
+      return res.status(404).json({
+        message: "Объект не найден.",
+      });
+    }
+
+    await deletedTask.destroy();
+
+    res.status(204).send();
   } catch (e) {
     res.status(500).json({
       message: "На сервере произошла ошибка, попробуйте позже",

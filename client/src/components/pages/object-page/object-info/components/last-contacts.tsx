@@ -30,7 +30,7 @@ const LastContacts = ({
 
   const isLastContactsLoading = useSelector(getLastContactsLoadingStatus());
   const columns = lastContactColumns(onUpdate);
-  const address = `${object?.location?.city}, ${object?.location?.address}`;
+  const address = `${object?.city}, ${object?.address}`;
 
   const lastContactsList = useSelector(getLastContactsList());
   const lastContacts = lastContactsList?.filter(

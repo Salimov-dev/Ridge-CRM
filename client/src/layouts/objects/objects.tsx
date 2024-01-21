@@ -92,7 +92,6 @@ const Objects = React.memo(() => {
   const isCurator = useSelector(getIsUserCurator(currentUserId));
 
   const objects = useSelector(getObjectsList());
-  console.log("objects", objects);
 
   const selectedObject = useSelector(getObjectById(state.selectedBaloon));
   const searchedObjects = useSearchObject(objects, data);

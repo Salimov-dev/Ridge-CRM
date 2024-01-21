@@ -29,7 +29,7 @@ const MeetingForm = ({
   const watchStatus = watch("status");
   const watchObjectId = watch("objectId");
   const watchTypeMeeting = watch("type");
-  const watchIsDone = watch("isDone", false);
+  const watchIsDone = watch("isDone");
 
   return (
     <>

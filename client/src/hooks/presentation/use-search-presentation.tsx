@@ -12,9 +12,9 @@ const useSearchPresentation = (presentations, data) => {
 
     const searchObjectsByAddress = (objects, searchTerm) => {
       return objects.filter((obj) => {
-        const { location } = obj;
-        if (location) {
-          const fullAddress = `${location.city}, ${location.address}`;
+
+        if (obj) {
+          const fullAddress = `${obj.city}, ${obj.address}`;
           return fullAddress.toLowerCase().includes(searchTerm);
         }
         return false;

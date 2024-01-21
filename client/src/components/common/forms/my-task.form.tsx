@@ -4,6 +4,7 @@ import DatePickerStyled from "../inputs/date-picker";
 import TimePickerStyled from "../inputs/time-picker";
 import SimpleSwitch from "../inputs/simple-switch";
 import AutocompleteStyled from "../inputs/autocomplete-styled";
+import { capitalizeFirstLetter } from "@utils/data/capitalize-first-letter";
 
 const MyTaskForm = ({
   data,
@@ -62,9 +63,7 @@ const MyTaskForm = ({
         setValue={setValue}
         watchItemId={watchObjectId}
         disabled={isObjectPage}
-        optionLabel={(option) =>
-          `${option?.location?.city}, ${option?.location?.address}`
-        }
+        optionLabel={(option) => `${option?.city}, ${option?.address}`}
       />
       {isCurator && (
         <AutocompleteStyled
@@ -85,7 +84,7 @@ const MyTaskForm = ({
         register={register}
         label="Комментарий"
         name="comment"
-        value={data?.comment}
+        value={capitalizeFirstLetter(data?.comment)}
         rows="3"
         required={true}
         multiline={true}
@@ -97,7 +96,7 @@ const MyTaskForm = ({
           register={register}
           label="Результат"
           name="result"
-          value={data?.result}
+          value={capitalizeFirstLetter(data?.result)}
           rows="2"
           multiline={true}
           onInputQuantities={100}

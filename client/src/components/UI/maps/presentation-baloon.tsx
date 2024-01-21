@@ -33,7 +33,7 @@ const PresentationBaloon = React.memo(
 
     const object = useSelector(getObjectById(presentation?.objectId));
     const objectId = presentation?.objectId;
-    const objectAddress = `${object?.location.city}, ${object?.location.address}`;
+    const objectAddress = `${object?.city}, ${object?.address}`;
 
     const currentUserId = useSelector(getCurrentUserId());
     const isCurator = useSelector(getIsUserCurator(currentUserId));

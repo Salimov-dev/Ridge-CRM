@@ -200,7 +200,7 @@ export const getObjectAddressById = (objectId) => (state) => {
     const object = state?.objects?.entities?.find(
       (obj) => obj?._id === objectId
     );
-    const fullAddress = `${object?.location.city}, ${object?.location.address}`;
+    const fullAddress = `${object?.city}, ${object?.address}`;
     return fullAddress;
   }
 };

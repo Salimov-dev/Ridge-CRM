@@ -43,7 +43,6 @@ const UpdateObject = React.memo(({ onClose, objectId }) => {
       ...data,
       address: capitalizeFirstLetter(data.address),
     };
-    console.log("newData", newData);
 
     dispatch<any>(updateObject(newData))
       .then(() => {

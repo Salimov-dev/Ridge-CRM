@@ -134,10 +134,10 @@ const Presentations = React.memo(() => {
             return {
               ...presentation,
               location: {
-                city: matchingObject?.location.city,
-                address: matchingObject?.location.address,
-                latitude: matchingObject?.location.latitude,
-                longitude: matchingObject?.location.longitude,
+                city: matchingObject?.city,
+                address: matchingObject?.address,
+                latitude: matchingObject?.latitude,
+                longitude: matchingObject?.longitude,
               },
             };
           } else {

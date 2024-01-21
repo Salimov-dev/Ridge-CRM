@@ -44,7 +44,7 @@ export const presentationsColumns = (
     cell: (info) => {
       const objectId = info.getValue();
       const object = useSelector(getObjectById(objectId));
-      const fullAddress = `${object?.location.city}, ${object?.location.address}`;
+      const fullAddress = `${object?.city}, ${object?.address}`;
 
       return objectId ? (
         <Box

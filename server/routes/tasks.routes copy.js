@@ -1,7 +1,7 @@
 import express from "express";
-import Meeting from "../models/Meeting.js";
 import Company from "../models/Company.js";
 import auth from "../middleware/auth.middleware.js";
+import Task from "../models/Task.js";
 import User from "../models/User.js";
 
 const router = express.Router({ mergeParams: true });
@@ -11,19 +11,24 @@ router.get("/", auth, async (req, res) => {
     const userId = req.user._id;
     const user = await User.findOne({ _id: userId });
     const userRole = user.role;
-
+    
     if (userRole === "MANAGER") {
-      const meetings = await Meeting.find({ userId });
-      return res.status(200).send(meetings);
+      const tasks = await Task.find({
+        $or: [
+          { userId: userId }, // Задачи, где userId равен текущему пользователю
+          { managerId: userId }, // Задачи, где managerId равен id текущего пользователя
+        ]
+      });
+      return res.status(200).send(tasks);
     }
 
-    const meetings = await Meeting.find({ userId });
+    const tasks = await Task.find({ userId });
     const managers = await User.find({ curatorId: userId });
     const managerIds = managers.map((manager) => manager._id);
-    const managerMeetings = await Meeting.find({ userId: { $in: managerIds } });
-    const allMeetings = [...meetings, ...managerMeetings];
+    const managerTasks = await Task.find({ userId: { $in: managerIds } });
+    const alltasks = [...tasks, ...managerTasks];
 
-    return res.status(200).send(allMeetings);
+    return res.status(200).send(alltasks);
   } catch (e) {
     res.status(500).json({
       message: "На сервере произошла ошибка, попробуйте позже",
@@ -38,12 +43,12 @@ router.post("/create", auth, async (req, res) => {
       $or: [{ managers: userId }, { curators: userId }],
     });
 
-    const newMeeting = await Meeting.create({
+    const newTask = await Task.create({
       ...req.body,
       userId,
       company: company._id,
     });
-    res.status(201).send(newMeeting);
+    res.status(201).send(newTask);
   } catch (e) {
     res.status(500).json({
       message: "На сервере произошла ошибка, попробуйте позже",
@@ -51,11 +56,11 @@ router.post("/create", auth, async (req, res) => {
   }
 });
 
-router.patch("/:meetingId?/edit", auth, async (req, res) => {
+router.patch("/:taskId?/edit", auth, async (req, res) => {
   try {
-    const { meetingId } = req.params;
-    const updatedMeeting = await Meeting.findByIdAndUpdate(meetingId, req.body);
-    res.send(updatedMeeting);
+    const { taskId } = req.params;
+    const updatedTask = await Task.findByIdAndUpdate(taskId, req.body);
+    res.send(updatedTask);
   } catch (e) {
     res.status(500).json({
       message: "На сервере произошла ошибка, попробуйте позже",
@@ -63,11 +68,10 @@ router.patch("/:meetingId?/edit", auth, async (req, res) => {
   }
 });
 
-router.delete("/:meetingId?", auth, async (req, res) => {
+router.delete("/:taskId?", auth, async (req, res) => {
   try {
-    const { meetingId } = req.params;
-    await Meeting.findByIdAndRemove(meetingId);
-
+    const { taskId } = req.params;
+    await Task.findByIdAndRemove(taskId);
     return res.send(null);
   } catch (e) {
     res.status(500).json({

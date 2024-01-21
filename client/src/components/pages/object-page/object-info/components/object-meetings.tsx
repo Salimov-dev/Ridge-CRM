@@ -23,7 +23,7 @@ const ObjectMeetings = ({
   isAuthorEntity = true,
 }) => {
   const isMeetingsLoading = useSelector(getMeetingLoadingStatus());
-  const address = `${object?.location?.city}, ${object?.location?.address}`;
+  const address = `${object?.city}, ${object?.address}`;
 
   const meetings = useSelector(getObjectMeetingsList(objectId));
   const sortedMeetings = sortingByDateAndTime(meetings);

@@ -11,11 +11,8 @@ router.post("/signUp", [
   check("password", "Минимальная длина пароля 8 символов").isLength({ min: 8 }),
   async (req, res) => {
     try {
-      // console.log("req", req.errors);
       const errors = validationResult(req);
 
-      // console.log("errors", errors);
-      // console.log("req.body", req.body);
       if (!errors.isEmpty()) {
         return res.status(400).json({
           error: {
@@ -26,9 +23,7 @@ router.post("/signUp", [
       }
 
       const { email, password } = req.body;
-      // console.log("email", email);
-      // console.log("password", password);
-
+      
       // Check if the user with the provided email already exists
       const existingUser = await User.findOne({ where: { email } });
 

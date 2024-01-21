@@ -91,8 +91,6 @@ const CreateObject = React.memo(({ onClose }) => {
   } = useFindObject();
 
   const data = watch();
-  console.log("data", data);
-  console.log("errors", errors);
 
   const objects = useSelector(getObjectsList());
 
@@ -118,7 +116,6 @@ const CreateObject = React.memo(({ onClose }) => {
       rentalHolidays: removeSpacesAndConvertToNumber(data.rentalHolidays),
       securityDeposit: removeSpacesAndConvertToNumber(data.securityDeposit),
     };
-    console.log("newData", newData);
 
     dispatch<any>(createObject(newData))
       .then(() => {

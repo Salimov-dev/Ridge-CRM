@@ -21,10 +21,10 @@ import { capitalizeFirstLetter } from "@utils/data/capitalize-first-letter";
 const initialState = {
   date: null,
   time: null,
-  objectId: "",
-  managerId: "",
-  comment: "",
-  result: "",
+  objectId: null,
+  managerId: null,
+  comment: null,
+  result: null,
   isDone: false,
   isCallTask: true,
 };
@@ -59,22 +59,18 @@ const CreateMyTask = React.memo(
 
     const onSubmit = () => {
       setIsLoading(true);
+      console.log("data", data);
 
-      const newData = {
-        ...data,
-        comment: capitalizeFirstLetter(data.comment),
-        result: capitalizeFirstLetter(data.result),
-        managerId: null,
-      };
-      dispatch<any>(createTask(newData))
+      dispatch<any>(createTask(data))
         .then(() => {
-          setIsLoading(false);
-          onClose();
+          // onClose();
           toast.success("Задача себе успешно создана!");
         })
         .catch((error) => {
-          setIsLoading(false);
           toast.error(error);
+        })
+        .finally(() => {
+          setIsLoading(false);
         });
     };
 

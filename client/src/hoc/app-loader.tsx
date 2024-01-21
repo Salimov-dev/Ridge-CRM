@@ -63,7 +63,7 @@ const AppLoader = ({ children }: AppLoaderProps) => {
       dispatch<any>(loadMeetingStatusesList());
       dispatch<any>(loadMeetingTypesList());
       // tasks
-      // dispatch<any>(loadTasksList());
+      dispatch<any>(loadTasksList());
       // last contact
       // dispatch<any>(loadLastContactsList());
       // presentations

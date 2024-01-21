@@ -3,7 +3,7 @@ const transformObjectsForSelect = (objects) => {
   let addressCounts = {};
 
   objects?.forEach((obj) => {
-    const address = `${obj.location.city}, ${obj.location.address}`;
+    const address = `${obj.city}, ${obj.address}`;
 
     // Если это адрес уже встречался, увеличиваем счетчик и добавляем индекс
     if (addressCounts[address]) {

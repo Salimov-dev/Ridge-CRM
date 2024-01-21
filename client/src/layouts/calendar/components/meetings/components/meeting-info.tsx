@@ -40,7 +40,7 @@ const MeetingInfo = ({ meet }) => {
   return (
     <>
       <Typography>
-        <b>Адрес:</b> {meet.location?.city}, {meet.location?.address}
+        <b>Адрес:</b> {meet.city}, {meet.address}
       </Typography>
       <DividerStyled color={isMeetingDone ? "darkGray" : "gray"} margin="0" />
       <Typography>

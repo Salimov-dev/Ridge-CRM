@@ -77,7 +77,6 @@ const CreateMeeting = React.memo(
     } = useFindObject();
 
     const data = watch();
-    // console.log("data", data);
 
     const isEmptyFindedObject = !!Object.keys(findedObject)?.length;
 

@@ -23,7 +23,7 @@ const ObjectTasks = ({
   isAuthorEntity,
 }) => {
   const isTasksLoading = useSelector(getTaskLoadingStatus());
-  const address = `${object?.location?.city}, ${object?.location?.address}`;
+  const address = `${object?.city}, ${object?.address}`;
 
   const tasks = useSelector(getObjectTasksList(objectId));
   const sortedTasks = sortingByDateAndTime(tasks);

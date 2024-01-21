@@ -26,6 +26,7 @@ const useCalendar = (data, setState) => {
 
   const meetings = useSelector(getMeetingsList());
   const tasks = useSelector(getTasksList());
+  console.log("tasks", tasks);
 
   // сортируем встречи
   const currentWeeklyMeetings = meetings?.filter((meet) =>
@@ -76,13 +77,13 @@ const useCalendar = (data, setState) => {
     return sortedTasks;
   };
 
-    // обновление стейта при изменении даты текущего месяца календаря
-    const handleChangeCurrentMonth = (monthIndex) => {
-      setState((prevState) => ({
-        ...prevState,
-        currentMonth: getMonth(monthIndex),
-      }));
-    };
+  // обновление стейта при изменении даты текущего месяца календаря
+  const handleChangeCurrentMonth = (monthIndex) => {
+    setState((prevState) => ({
+      ...prevState,
+      currentMonth: getMonth(monthIndex),
+    }));
+  };
 
   return {
     sortedCurrentWeeklyMeetings,
@@ -90,7 +91,7 @@ const useCalendar = (data, setState) => {
     actualTasks,
     getMeeting,
     getTask,
-    handleChangeCurrentMonth
+    handleChangeCurrentMonth,
   };
 };
 

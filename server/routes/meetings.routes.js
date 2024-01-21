@@ -54,16 +54,13 @@ router.post("/create", auth, async (req, res) => {
 router.patch("/:meetingId?/edit", auth, async (req, res) => {
   try {
     const { meetingId } = req.params;
-    console.log("meetingId", meetingId);
     if (!meetingId) {
       return res.status(400).json({
         message: "Необходимо указать идентификатор встречи (meetingId).",
       });
     }
 
-    console.log("!!! UPDATE !!!!");
     const existingMeeting = await Meeting.findByPk(meetingId);
-    console.log("existingMeeting", existingMeeting);
 
     if (!existingMeeting) {
       return res.status(404).json({
@@ -72,7 +69,6 @@ router.patch("/:meetingId?/edit", auth, async (req, res) => {
     }
 
     const updatedMeeting = await existingMeeting.update(req.body);
-    console.log("updatedMeeting", updatedMeeting);
 
     res.status(200).json(updatedMeeting);
   } catch (e) {
