@@ -44,7 +44,7 @@ const generateMonthHeaders = () => {
         const presentationsQuantity = currentMonthPresentations;
 
         const objectsWithPhone = currentMonthObjects?.filter((obj) => {
-          const phoneNumber = obj?.contact?.phone;
+          const phoneNumber = obj?.phone;
           return phoneNumber !== null && String(phoneNumber)?.length > 0;
         });
         const objectsWithPhoneQuantity = objectsWithPhone;
@@ -81,6 +81,7 @@ export const staticticsColumns = [
           const currentMonth = dayjs();
           const sixMonthsAgo = currentMonth.subtract(6, "month");
           const objects = useSelector(getObjectsList());
+
           const presentations = useSelector(getPresentationsList());
 
           const currentMonthObjects = objects?.filter((object) => {
@@ -92,7 +93,7 @@ export const staticticsColumns = [
           });
 
           const objectsWithPhone = currentMonthObjects?.filter((obj) => {
-            const phoneNumber = obj?.contact?.phone;
+            const phoneNumber = obj?.phone;
             return phoneNumber !== null && String(phoneNumber)?.length > 0;
           });
 

@@ -35,6 +35,8 @@ const Profile = () => {
   const { handleOpenUpdateUserAvatarPage } = useDialogHandlers(setState);
 
   const user = useSelector(getCurrentUserData());
+  console.log("user", user);
+
   const isUserLoading = useSelector(getUserAvatarsLoadingStatus());
   const currentUserId = useSelector(getCurrentUserId());
 

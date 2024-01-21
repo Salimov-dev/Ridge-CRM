@@ -62,6 +62,7 @@ const Statictics = React.memo(() => {
   const withoutCurator = watch("withoutCurator");
 
   const usersList = useSelector(getUsersList());
+
   const usersWithoutCurrentUser = getUsersWithoutCurrentUser();
 
   const currentUserId = useSelector(getCurrentUserId());
@@ -74,6 +75,7 @@ const Statictics = React.memo(() => {
     : usersWithoutCurrentUser;
 
   const objectsList = useSelector(getObjectsList());
+
   const objectsWithoutCurrentUser = objectsList?.filter(
     (obj) => obj?.userId !== currentUserId
   );

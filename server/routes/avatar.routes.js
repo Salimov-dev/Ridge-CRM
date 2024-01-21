@@ -12,22 +12,22 @@ router.get("/:userId", auth, async (req, res) => {
   try {
     const { userId } = req.params;
 
-    const company = await Company.findOne({
-      $or: [{ managers: userId }, { curators: userId }],
-    });
+    // const company = await Company.findOne({
+    //   $or: [{ managers: userId }, { curators: userId }],
+    // });
 
-    if (!company) {
-      return res.status(404).json({ message: "Company not found" });
-    }
+    // if (!company) {
+    //   return res.status(404).json({ message: "Company not found" });
+    // }
 
-    const companyId = company._id.toString();
+    // const companyId = company._id.toString();
     const currentModuleUrl = import.meta.url;
     const currentModulePath = fileURLToPath(currentModuleUrl);
     const currentModuleDir = dirname(currentModulePath);
 
     const avatarFolderPath = path.join(
       currentModuleDir,
-      `../../server/uploads/${companyId}/avatars/${userId}`
+      `../../server/uploads/avatars/${userId}`
     );
 
     let files;
@@ -66,22 +66,22 @@ router.post("/update/:userId", auth, async (req, res) => {
   try {
     res.setHeader("Content-Type", "application/json");
     const userId = req.user._id;
-    const company = await Company.findOne({
-      $or: [{ managers: userId }, { curators: userId }],
-    });
+    // const company = await Company.findOne({
+    //   $or: [{ managers: userId }, { curators: userId }],
+    // });
 
-    if (!company) {
-      return res.status(404).json({ message: "Company not found" });
-    }
+    // if (!company) {
+    //   return res.status(404).json({ message: "Company not found" });
+    // }
 
-    const companyId = company._id;
+    // const companyId = company._id;
     const preview = req.body.src;
     const currentModuleUrl = import.meta.url;
     const currentModulePath = fileURLToPath(currentModuleUrl);
     const currentModuleDir = dirname(currentModulePath);
     const avatarFolderPath = path.join(
       currentModuleDir,
-      `../../server/uploads/${companyId}/avatars/${userId}`
+      `../../server/uploads/avatars/${userId}`
     );
 
     await fs.mkdir(avatarFolderPath, { recursive: true });
@@ -104,21 +104,21 @@ router.delete("/:userId", auth, async (req, res) => {
   try {
     const { userId } = req.params;
 
-    const company = await Company.findOne({
-      $or: [{ managers: userId }, { curators: userId }],
-    });
+    // const company = await Company.findOne({
+    //   $or: [{ managers: userId }, { curators: userId }],
+    // });
 
-    if (!company) {
-      return res.status(404).json({ message: "Company not found" });
-    }
+    // if (!company) {
+    //   return res.status(404).json({ message: "Company not found" });
+    // }
 
-    const companyId = company._id.toString();
+    // const companyId = company._id.toString();
     const currentModuleUrl = import.meta.url;
     const currentModulePath = fileURLToPath(currentModuleUrl);
     const currentModuleDir = dirname(currentModulePath);
     const avatarFolderPath = path.join(
       currentModuleDir,
-      `../../server/uploads/${companyId}/avatars/${userId}`
+      `../../server/uploads/avatars/${userId}`
     );
 
     try {

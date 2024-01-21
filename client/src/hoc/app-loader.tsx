@@ -67,10 +67,10 @@ const AppLoader = ({ children }: AppLoaderProps) => {
       // last contact
       dispatch<any>(loadLastContactsList());
       // presentations
-      // dispatch<any>(loadPresentationsList());
+      dispatch<any>(loadPresentationsList());
       dispatch<any>(loadPresentationStatusList());
 
-      // dispatch<any>(loadAvatarList());
+      dispatch<any>(loadAvatarList());
     }
   }, [isLoggedIn, dispatch]);
 

@@ -38,9 +38,8 @@ const LastContact = sequelize.define(
   },
   {
     timestamps: false,
-    tableName: "tasks",
+    tableName: "lastContacts",
   }
 );
 
 export default LastContact;
-

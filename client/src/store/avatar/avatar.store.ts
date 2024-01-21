@@ -37,10 +37,17 @@ const avatarSlice = createSlice({
       state.isLoading = false;
     },
     avatarUpdateSuccessed: (state, action) => {
-      state.entities[
-        state.entities.findIndex((item) => {
-          return item.userId === action.payload.userId})
-      ] = action.payload;
+      const index = state.entities.findIndex(
+        (item) => item.userId === action.payload.userId
+      );
+
+      if (index !== -1) {
+        state.entities[index] = action.payload;
+      } else {
+        // Если сущности с таким userId нет, добавляем новую
+        state.entities.push(action.payload);
+      }
+
       state.isLoading = false;
     },
     avatarRemoved: (state, action) => {
@@ -66,18 +73,17 @@ export const loadAvatarList = () => async (dispatch) => {
   try {
     const { content: userContent } = await userService.get();
 
-    const usersArray = await Promise.all(
-      userContent.map(async (user) => {
-        const { content: avatarUploadContent } = await avatarService.get(
-          user._id
-        );
-        const serializedSrc = btoa(
-          String.fromCharCode.apply(null, new Uint8Array(avatarUploadContent))
-        );
+    const usersArray = [];
+    for (const user of userContent) {
+      const { content: avatarUploadContent } = await avatarService.get(
+        user._id
+      );
+      const serializedSrc = btoa(
+        String.fromCharCode.apply(null, new Uint8Array(avatarUploadContent))
+      );
 
-        return { userId: user._id, src: serializedSrc };
-      })
-    );
+      usersArray.push({ userId: user._id, src: serializedSrc });
+    }
 
     dispatch(avatarReceived(usersArray));
   } catch (error) {
@@ -97,13 +103,17 @@ export const updateAvatar = (payload) => async (dispatch) => {
   }
 };
 
-export const updateAvatarUpdate = (payload) => async (dispatch) => {
-  try {
-    
-    dispatch(avatarUpdateSuccessed(payload));
-  } catch (error) {
-    dispatch(avatarUpdateFailed(error.message));
-    throw error;
+export const updateAvatarUpdate = (payload) => async (dispatch, getState) => {
+  const currentState = getState();
+  if (currentState.avatar.entities) {
+    const existingAvatar = currentState.avatar.entities.find(
+      (item) => item.userId === payload.userId
+    );
+
+    // Проверяем, нужно ли обновлять сущность
+    if (!existingAvatar || existingAvatar !== payload) {
+      dispatch(avatarUpdateSuccessed(payload));
+    }
   }
 };
 
@@ -117,17 +127,17 @@ export const removeAvatar = (userId) => async (dispatch) => {
   }
 };
 
-export const removeAvatartUpdate =
-  (userId) => async (dispatch) => {
-    dispatch(removeAvatarRequested());
-    try {
-      dispatch(avatarRemoved(userId));
-    } catch (error) {
-      dispatch(avatarUpdateFailed(error.message));
-    }
-  };
+export const removeAvatartUpdate = (userId) => async (dispatch) => {
+  dispatch(removeAvatarRequested());
+  try {
+    dispatch(avatarRemoved(userId));
+  } catch (error) {
+    dispatch(avatarUpdateFailed(error.message));
+  }
+};
 
 export const getUserAvatarsList = () => (state) => state.avatar.entities;
-export const getUserAvatarsLoadingStatus = () => (state) => state.avatar.isLoading;
+export const getUserAvatarsLoadingStatus = () => (state) =>
+  state.avatar.isLoading;
 
 export default avatarReducer;

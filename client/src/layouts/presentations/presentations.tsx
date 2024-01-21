@@ -80,6 +80,8 @@ const Presentations = React.memo(() => {
   const isInputEmpty = JSON.stringify(initialState) !== JSON.stringify(data);
 
   const presentationsList = useSelector(getPresentationsList());
+  console.log("presentationsList", presentationsList);
+
   const searchedPresentations = useSearchPresentation(presentationsList, data);
   const sortedPresentations = useMemo(() => {
     return orderBy(searchedPresentations, ["created_at"], ["desc"]);
