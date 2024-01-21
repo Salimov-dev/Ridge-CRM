@@ -10,8 +10,8 @@ import { getTradeAreaList } from "../../store/object-params/object-trade-area";
 
 const useObjectsFiltersPanel = (objects) => {
   const objectTypes = useSelector(getObjectTypesList());
-  const objectProperties = useSelector(getObjectPropertiesList())
-  const objectTradeArea = useSelector(getTradeAreaList())
+  const objectProperties = useSelector(getObjectPropertiesList());
+  const objectTradeArea = useSelector(getTradeAreaList());
   const districts = useSelector(getDistrictsList());
   const metro = useSelector(getMetroList());
   const currentRenters = useSelector(getCurrentRentersList());
@@ -76,9 +76,7 @@ const useObjectsFiltersPanel = (objects) => {
   };
 
   const getActualCurrentRentersList = () => {
-    const filteredRenters = objects?.map(
-      (renter) => renter?.currentRenters
-    );
+    const filteredRenters = objects?.map((renter) => renter?.currentRenters);
     const formateRentersArray = filteredRenters?.filter((m) => m !== "");
 
     const uniqueRenter = [...new Set(formateRentersArray)];
@@ -97,9 +95,7 @@ const useObjectsFiltersPanel = (objects) => {
 
   // Тип недвижимости
   const getActualEstateTypesList = () => {
-    const filteredType = objects?.map(
-      (renter) => renter?.estateTypes
-    );
+    const filteredType = objects?.map((renter) => renter?.estateTypes);
     const formateTypeArray = filteredType?.filter((m) => m !== "");
 
     const uniqueType = [...new Set(formateTypeArray)];
@@ -118,9 +114,7 @@ const useObjectsFiltersPanel = (objects) => {
 
   // Тип объекта
   const getActualObjectTypesList = () => {
-    const filteredType = objects?.map(
-      (renter) => renter?.objectTypes
-    );
+    const filteredType = objects?.map((renter) => renter?.objectTypes);
     const formateTypeArray = filteredType?.filter((m) => m !== "");
 
     const uniqueType = [...new Set(formateTypeArray)];
@@ -138,10 +132,9 @@ const useObjectsFiltersPanel = (objects) => {
   };
 
   // Расположение объекта
-  const getActualObjectProperties= () => {
+  const getActualObjectProperties = () => {
     const filteredProperties = objects?.map(
       (renter) => renter?.objectProperties
-      
     );
     const formateTypeArray = filteredProperties?.filter((m) => m !== "");
 
@@ -152,7 +145,6 @@ const useObjectsFiltersPanel = (objects) => {
       return foundObject
         ? { _id: foundObject._id, name: foundObject.name }
         : { _id: "undefined", name: "Не указано" };
-
     });
 
     const sortedType = orderBy(actuaTypeArray, ["name"], ["asc"]);
@@ -161,11 +153,8 @@ const useObjectsFiltersPanel = (objects) => {
   };
 
   // Тип торговой площади
-  const getActualObjectTradeArea= () => {
-    const filteredProperties = objects?.map(
-      (renter) => renter?.tradeArea
-      
-    );
+  const getActualObjectTradeArea = () => {
+    const filteredProperties = objects?.map((renter) => renter?.tradeArea);
     const formateTypeArray = filteredProperties?.filter((m) => m !== "");
 
     const uniqueType = [...new Set(formateTypeArray)];
@@ -182,7 +171,6 @@ const useObjectsFiltersPanel = (objects) => {
     return sortedType;
   };
 
-
   return {
     getActualCitiesList,
     getActualDistrictsList,
@@ -191,7 +179,7 @@ const useObjectsFiltersPanel = (objects) => {
     getActualEstateTypesList,
     getActualObjectTypesList,
     getActualObjectProperties,
-    getActualObjectTradeArea
+    getActualObjectTradeArea,
   };
 };
 

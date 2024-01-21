@@ -3,7 +3,7 @@ import {
   createLastContactUpdate,
   removeLastContactUpdate,
   updateLastContactUpdate,
-} from "../../store/last-contact/last-contact.store";
+} from "@store/last-contact/last-contact.store";
 
 const handleLastContactSocket = (socket) => {
   const dispatch = useDispatch();

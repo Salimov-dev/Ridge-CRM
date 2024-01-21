@@ -7,6 +7,7 @@ import {
   getUsersList,
   getCurrentUserId,
   getIsUserCurator,
+  getUserNameById,
 } from "@store/user/users.store";
 
 const MeetingInfo = ({ meet }) => {
@@ -20,7 +21,7 @@ const MeetingInfo = ({ meet }) => {
 
   const getManagerName = (id) => {
     const user = users?.find((user) => user._id === id);
-    const result = `${user?.name.lastName} ${user?.name.firstName}`;
+    const result = useSelector(getUserNameById(user?._id));
     return result;
   };
 

@@ -76,7 +76,7 @@ const MyTaskForm = ({
           watchItemId={watchManagerId}
           disabled={!!watchManagerId}
           optionLabel={(option) =>
-            `${option?.name?.lastName} ${option?.name?.firstName}`
+            `${option?.lastName} ${option?.firstName}`
           }
         />
       )}

@@ -42,7 +42,7 @@ const generateMonthHeaders = () => {
         });
 
         const objectsWithPhone = currentMonthObjects?.filter((obj) => {
-          const phoneNumber = obj?.contact?.phone;
+          const phoneNumber = obj?.phone;
           return phoneNumber !== null && String(phoneNumber)?.length > 0;
         });
 
@@ -78,7 +78,7 @@ const generateMonthHeaders = () => {
         });
 
         const objectsWithPhone = currentMonthObjects?.filter((obj) => {
-          const phoneNumber = obj?.contact?.phone;
+          const phoneNumber = obj?.phone;
           return phoneNumber !== null && String(phoneNumber)?.length > 0;
         });
 
@@ -157,7 +157,7 @@ export const staticticsColumnsCurator = [
           });
 
           const objectsWithPhone = objects?.filter((obj) => {
-            const phoneNumber = obj?.contact?.phone;
+            const phoneNumber = obj?.phone;
             return phoneNumber !== null && String(phoneNumber)?.length > 0;
           });
 
@@ -203,7 +203,7 @@ export const staticticsColumnsCurator = [
           });
 
           const objectsWithPhone = currentMonthObjects?.filter((obj) => {
-            const phoneNumber = obj?.contact?.phone;
+            const phoneNumber = obj?.phone;
             return phoneNumber !== null && String(phoneNumber)?.length > 0;
           });
 

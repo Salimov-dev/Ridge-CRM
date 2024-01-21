@@ -1,15 +1,13 @@
 import { useSelector } from "react-redux";
 import { Box, Typography, styled } from "@mui/material";
-import DividerStyled from "../../../../common/divider/divider-styled";
-import BasicTable from "../../../../common/table/basic-table";
+import DividerStyled from "@common/divider/divider-styled";
+import BasicTable from "@common/table/basic-table";
 import {
   getLastContactsList,
   getLastContactsLoadingStatus,
-} from "../../../../../store/last-contact/last-contact.store";
-import { lastContactColumns } from "../../../../../columns/last-contact.columns";
+} from "@store/last-contact/last-contact.store";
+import { lastContactColumns } from "@columns/last-contact.columns";
 import ButtonStyled from "@components/common/buttons/button-styled.button";
-import { useTheme } from "@emotion/react";
-import { tokens } from "@theme/theme";
 
 const Container = styled(Box)`
   display: flex;

@@ -14,7 +14,11 @@ import LoaderFullWindow from "@components/common/loader/loader-full-window";
 import ManagerForm from "@common/forms/manager/manager.form";
 // store
 import { getUserStatusesList } from "@store/user-params/user-statuses.store";
-import { getUserDataById, updateUser } from "@store/user/users.store";
+import {
+  getUserDataById,
+  getUserNameById,
+  updateUser,
+} from "@store/user/users.store";
 // schema
 import { managerSchema } from "@schemas/manager.schema";
 
@@ -78,7 +82,9 @@ const UpdateManager = ({ userId, onClose }) => {
   return (
     <>
       <HeaderWithCloseButton
-        title={`Редактировать менеджера: ${user?.name.lastName} ${user?.name.firstName} ${user?.name.surName}`}
+        title={`Редактировать менеджера: ${useSelector(
+          getUserNameById(user?._id)
+        )}`}
         color="black"
         margin="0 0 20px 0"
         background={colors.header["gold"]}

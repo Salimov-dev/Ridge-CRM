@@ -4,20 +4,20 @@ import { toast } from "react-toastify";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 // components
-import LastContactForm from "../../common/forms/last-contact.form";
+import LastContactForm from "@common/forms/last-contact.form";
 // store
-import { createLastContact } from "../../../store/last-contact/last-contact.store";
+import { createLastContact } from "@store/last-contact/last-contact.store";
 // schema
-import { lastContactSchema } from "../../../schemas/last-contact.schema";
+import { lastContactSchema } from "@schemas/last-contact.schema";
 // utils
-import { capitalizeFirstLetter } from "../../../utils/data/capitalize-first-letter";
-import SuccessCancelFormButtons from "../../common/forms/buttons/success-cancel-form-buttons";
+import { capitalizeFirstLetter } from "@utils/data/capitalize-first-letter";
+import SuccessCancelFormButtons from "@common/forms/buttons/success-cancel-form-buttons";
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
 import { useTheme } from "@emotion/react";
 import { tokens } from "@theme/theme";
-import HeaderWithCloseButton from "../../common/page-headers/header-with-close-button";
+import HeaderWithCloseButton from "@common/page-headers/header-with-close-button";
 
 const initialState = {
   date: dayjs(),

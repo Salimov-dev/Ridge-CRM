@@ -46,7 +46,7 @@ export const usersColumns = (handleOpenUpdatePresentationPage) => [
         },
       },
       {
-        accessorKey: "name.lastName",
+        accessorKey: "lastName",
         header: "Фамилия",
         cell: (info) => {
           const lastName = info.getValue();
@@ -54,7 +54,7 @@ export const usersColumns = (handleOpenUpdatePresentationPage) => [
         },
       },
       {
-        accessorKey: "name.firstName",
+        accessorKey: "firstName",
         header: "Имя",
         cell: (info) => {
           const firstName = info.getValue();
@@ -62,7 +62,7 @@ export const usersColumns = (handleOpenUpdatePresentationPage) => [
         },
       },
       {
-        accessorKey: "name.surName",
+        accessorKey: "surName",
         header: "Отчество",
         cell: (info) => {
           const surName = info.getValue();

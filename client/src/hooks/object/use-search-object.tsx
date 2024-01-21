@@ -49,7 +49,7 @@ const useSearchObject = (objects, data) => {
 
     if (data?.name?.length) {
       array = array?.filter((obj) =>
-        obj?.name.toLowerCase().includes(data?.toLowerCase())
+        obj?.toLowerCase().includes(data?.toLowerCase())
       );
     }
 

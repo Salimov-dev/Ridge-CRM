@@ -12,7 +12,7 @@ import Buttons from "./components/buttons";
 // hooks
 import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
 // store
-import { getCurrentUserData, getCurrentUserId } from "@store/user/users.store";
+import { getCurrentUserData, getCurrentUserId, getUserNameById } from "@store/user/users.store";
 import {
   getUserAvatarsLoadingStatus,
   removeAvatar,
@@ -60,7 +60,7 @@ const Profile = () => {
       <HeaderLayout
         title={`Мой профиль: ${
           !isUserLoading
-            ? `${user?.name?.firstName} ${user?.name?.lastName}`
+            ?  useSelector(getUserNameById(user?._id) )
             : "загрузка..."
         }`}
       />

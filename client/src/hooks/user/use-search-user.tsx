@@ -7,13 +7,13 @@ const useSearchUser = ({ users, data }) => {
 
     if (data?.lastName?.length) {
       array = array?.filter((user) =>
-        user.name.lastName.toLowerCase().includes(data.lastName.toLowerCase())
+        user.lastName.toLowerCase().includes(data.lastName.toLowerCase())
       );
     }
 
     if (data?.phone?.length) {
       array = array?.filter((user) =>
-        String(user.contacts.phone).includes(data?.phone)
+        String(user.phone).includes(data?.phone)
       );
     }
 
