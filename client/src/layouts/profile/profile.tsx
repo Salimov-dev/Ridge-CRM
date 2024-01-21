@@ -12,7 +12,11 @@ import Buttons from "./components/buttons";
 // hooks
 import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
 // store
-import { getCurrentUserData, getCurrentUserId, getUserNameById } from "@store/user/users.store";
+import {
+  getCurrentUserData,
+  getCurrentUserId,
+  getUserNameById,
+} from "@store/user/users.store";
 import {
   getUserAvatarsLoadingStatus,
   removeAvatar,
@@ -54,14 +58,13 @@ const Profile = () => {
       handleCloseConfirmDialog()
     );
   };
+  const userNameSelector = useSelector(getUserNameById(user?._id));
 
   return (
-    <Box>
+    <Box sx={{ height: "100vh" }}>
       <HeaderLayout
         title={`Мой профиль: ${
-          !isUserLoading
-            ?  useSelector(getUserNameById(user?._id) )
-            : "загрузка..."
+          !isUserLoading ? userNameSelector : "загрузка..."
         }`}
       />
       <AvatarContainer>

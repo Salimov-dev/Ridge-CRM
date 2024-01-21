@@ -37,17 +37,11 @@ const avatarSlice = createSlice({
       state.isLoading = false;
     },
     avatarUpdateSuccessed: (state, action) => {
-      const index = state.entities.findIndex(
-        (item) => item.userId === action.payload.userId
-      );
-
-      if (index !== -1) {
-        state.entities[index] = action.payload;
-      } else {
-        // Если сущности с таким userId нет, добавляем новую
-        state.entities.push(action.payload);
-      }
-
+      state.entities[
+        state.entities.findIndex((item) => {
+          return item.userId === action.payload.userId;
+        })
+      ] = action.payload;
       state.isLoading = false;
     },
     avatarRemoved: (state, action) => {
@@ -74,6 +68,7 @@ export const loadAvatarList = () => async (dispatch) => {
     const { content: userContent } = await userService.get();
 
     const usersArray = [];
+
     for (const user of userContent) {
       const { content: avatarUploadContent } = await avatarService.get(
         user._id
@@ -105,6 +100,8 @@ export const updateAvatar = (payload) => async (dispatch) => {
 
 export const updateAvatarUpdate = (payload) => async (dispatch, getState) => {
   const currentState = getState();
+  console.log("updateAvatarUpdate");
+
   if (currentState.avatar.entities) {
     const existingAvatar = currentState.avatar.entities.find(
       (item) => item.userId === payload.userId

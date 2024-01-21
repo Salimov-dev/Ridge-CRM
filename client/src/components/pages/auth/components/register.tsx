@@ -81,15 +81,15 @@ const Register = React.memo(({ page, onClose }) => {
   const isFormValid = !Object.keys(errors).length;
 
   const onSubmit = () => {
-    // setIsLoading(true);
+    setIsLoading(true);
     const newData = { email: data.email, password: data.password };
-    // dispatch<any>(signUp({ payload: data }))
+    dispatch<any>(signUp({ payload: data }))
     dispatch<any>(createNewUser(newData))
-      // .then(() => {
-      //   setIsLoading(false);
-      //   navigate(redirectPath, { replace: true });
-      //   onClose();
-      // })
+      .then(() => {
+        setIsLoading(false);
+        navigate(redirectPath, { replace: true });
+        onClose();
+      })
       .catch((error) => {
         const { message } = error.response.data.error;
         toast.error(message);

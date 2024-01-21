@@ -190,7 +190,7 @@ export const getCurrentUserData = () => (state) => {
 
 export const getUserNameById = (id) => (state) => {
   if (state?.users?.entities) {
-    const user = state.users.entities.find((user) => user._id === id);
+    const user = state?.users?.entities.find((user) => user._id === id);
     const isFullName = user?.lastName && user?.firstName;
     const result = `${user?.lastName} ${user?.firstName}`;
 
