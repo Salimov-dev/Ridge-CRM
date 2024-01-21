@@ -24,7 +24,7 @@ const DayContent = ({
   draggableDay,
   setDraggableDay,
   isSelectedDayDialog,
-  setState
+  setState,
 }) => {
   const isTasksLoading = useSelector(getTaskLoadingStatus());
   const isMeetingsLoading = useSelector(getMeetingLoadingStatus());

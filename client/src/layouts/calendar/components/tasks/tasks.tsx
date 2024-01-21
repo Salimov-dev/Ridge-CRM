@@ -2,8 +2,6 @@ import { Box, Typography } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 // styled
 import { ItemContainer, ItemsContainer } from "../styled";
-// utils
-import { getUserName } from "@utils/user/get-user-name";
 // components
 import Title from "./components/title";
 import TaskObject from "./components/task-object";
@@ -11,7 +9,7 @@ import TaskComment from "./components/task-comment";
 import Loader from "@components/common/loader/loader";
 import Result from "./components/result";
 // store
-import { getCurrentUserId } from "@store/user/users.store";
+import { getCurrentUserId, getUserNameById } from "@store/user/users.store";
 import { updateTask } from "@store/task/tasks.store";
 
 const Tasks = ({
@@ -73,7 +71,7 @@ const Tasks = ({
                 : "gray",
             }}
           >
-            <Title task={task} setState={setState}/>
+            <Title task={task} setState={setState} />
             <TaskComment comment={task?.comment} />
 
             {task?.managerId === currentUserId ? (
@@ -81,15 +79,17 @@ const Tasks = ({
                 <Typography>
                   <b>Задачу поставил:</b>
                 </Typography>
-                <Typography>{getUserName(task?.userId)}</Typography>
+                <Typography>
+                  {useSelector(getUserNameById(task?.userId))}
+                </Typography>
               </Box>
             ) : null}
             {isCurator && task?.managerId?.length ? (
               <Typography>
-                <b>Менеджер:</b> {getUserName(task?.managerId)}
+                <b>Менеджер:</b> {useSelector(getUserNameById(task?.managerId))}
               </Typography>
             ) : null}
-            <TaskObject task={task} setState={setState}/>
+            <TaskObject task={task} setState={setState} />
             {isSelectedDayDialog ? <Result task={task} /> : null}
           </ItemContainer>
         );

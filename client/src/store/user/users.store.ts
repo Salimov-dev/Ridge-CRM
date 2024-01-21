@@ -215,7 +215,9 @@ export const getIsUserManager = (userId) => (state) => {
 
 export const getIsUserCurator = (userId) => (state) => {
   const user = state.users.entities?.find((user) => user?._id === userId);
-  const isCurator = user?.role === "CURATOR";
+
+  const isCurator = user?.role?.includes("CURATOR") || false;
+
   return isCurator;
 };
 
