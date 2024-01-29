@@ -79,9 +79,6 @@ const Login = React.memo(({ page, onClose }) => {
         const errorMessage =
           error.response?.data?.error?.message || "An error occurred";
         toast.error(errorMessage);
-        // const { message } = error.response.data.error;
-        // toast.error(message);
-        // setIsLoading(false);
       })
       .finally(() => {
         setIsLoading(false);

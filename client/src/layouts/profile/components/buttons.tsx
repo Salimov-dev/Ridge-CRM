@@ -17,7 +17,7 @@ const Buttons = ({
   return (
     <Component>
       <ButtonStyled
-        title="ПРАВИТЬ"
+        title="Изменить "
         style="OBJECT"
         variant="contained"
         onClick={handleOpenUpdateUserAvatarPage}

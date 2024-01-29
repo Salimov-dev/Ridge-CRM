@@ -9,14 +9,23 @@ import localStorageService from "@services/user/local.storage-service";
 
 const socket = io(configFile.ioEndPoint);
 
-const initialState = {
-  entities: [],
-  isLoading: false,
-  error: null,
-  auth: null,
-  isLoggedIn: false,
-  dataLoaded: false,
-};
+const initialState = localStorageService.getAccessToken()
+  ? {
+      entities: [],
+      isLoading: true,
+      error: null,
+      auth: { userId: localStorageService.getUserId() },
+      isLoggedIn: true,
+      dataLoaded: false,
+    }
+  : {
+      entities: [],
+      isLoading: false,
+      error: null,
+      auth: null,
+      isLoggedIn: false,
+      dataLoaded: false,
+    };
 
 const usersListSlice = createSlice({
   name: "users",
