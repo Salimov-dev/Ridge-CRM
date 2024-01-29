@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { getUserAvatarsList } from "../../store/avatar/avatar.store";
+import { getUserAvatarsList } from "@store/avatar/avatar.store";
 
 const useGetUserAvatar = (userId) => {
   const [avatarSrc, setAvatarSrc] = useState(null);

@@ -70,15 +70,20 @@ const Login = React.memo(({ page, onClose }) => {
 
   const onSubmit = () => {
     setIsLoading(true);
-    dispatch<any>(login({ payload: data }))
+    dispatch<any>(login(data))
       .then(() => {
-        setIsLoading(false);
         navigate(redirectPath, { replace: true });
         onClose();
       })
       .catch((error) => {
-        const { message } = error.response.data.error;
-        toast.error(message);
+        const errorMessage =
+          error.response?.data?.error?.message || "An error occurred";
+        toast.error(errorMessage);
+        // const { message } = error.response.data.error;
+        // toast.error(message);
+        // setIsLoading(false);
+      })
+      .finally(() => {
         setIsLoading(false);
       });
   };

@@ -2,8 +2,6 @@ import { io } from "socket.io-client";
 import { createAction, createSlice } from "@reduxjs/toolkit";
 // config
 import configFile from "@config/config.json";
-// utils
-import { generetaAuthError } from "@utils/auth/generate-auth-error";
 // service
 import authService from "@services/user/auth-service";
 import userService from "@services/user/user.service";
@@ -11,23 +9,14 @@ import localStorageService from "@services/user/local.storage-service";
 
 const socket = io(configFile.ioEndPoint);
 
-const initialState = localStorageService.getAccessToken()
-  ? {
-      entities: [],
-      isLoading: true,
-      error: null,
-      auth: { userId: localStorageService.getUserId() },
-      isLoggedIn: true,
-      dataLoaded: false,
-    }
-  : {
-      entities: [],
-      isLoading: false,
-      error: null,
-      auth: null,
-      isLoggedIn: false,
-      dataLoaded: false,
-    };
+const initialState = {
+  entities: [],
+  isLoading: false,
+  error: null,
+  auth: null,
+  isLoggedIn: false,
+  dataLoaded: false,
+};
 
 const usersListSlice = createSlice({
   name: "users",
@@ -46,8 +35,8 @@ const usersListSlice = createSlice({
     },
     authRequestSuccess: (state, action) => {
       state.auth = action.payload;
-      state.entities.push(action.payload);
       state.isLoggedIn = true;
+      state.dataLoaded = true;
     },
     authRequestFailed: (state, action) => {
       state.error = action.payload;
@@ -91,29 +80,18 @@ const authRequested = createAction("users/authRequested");
 const userUpdateFailed = createAction("users/userUpdateFailed");
 const userUpdateRequested = createAction("users/userUpdateRequested");
 
-export const login =
-  ({ payload }) =>
-  async (dispatch) => {
-    const { email, password } = payload;
-    dispatch(authRequested());
+export const login = (payload) => async (dispatch) => {
+  dispatch(authRequested());
+  try {
+    const data = await authService.login(payload);
 
-    try {
-      const data = await authService.login({ email, password });
-      localStorageService.setTokens(data);
-
-      dispatch(authRequestSuccess({ userId: data.userId }));
-      dispatch(loadUsersList());
-    } catch (error) {
-      const { code, message } = error.response.data.error;
-      if (code === 400) {
-        const errorMessage = generetaAuthError(message);
-        dispatch(authRequestFailed(errorMessage));
-      } else {
-        dispatch(authRequestFailed(error.message));
-      }
-      throw error;
-    }
-  };
+    localStorageService.setTokens(data);
+    dispatch(authRequestSuccess({ userId: data.userId }));
+    dispatch(loadUsersList());
+  } catch (error) {
+    dispatch(authRequestFailed(error.message));
+  }
+};
 
 export const signUp = (payload) => async (dispatch) => {
   dispatch(authRequested());

@@ -6,20 +6,18 @@ import { toast } from "react-toastify";
 import { useTheme } from "@emotion/react";
 import { tokens } from "@theme/theme";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Box, Typography, styled } from "@mui/material";
+import { Box, styled } from "@mui/material";
 import { useLocation, useNavigate } from "react-router-dom";
 // components
 import ButtonStyled from "@components/common/buttons/button-styled.button";
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
 import HeaderWithCloseButton from "@components/common/page-headers/header-with-close-button";
-import LoginForm from "@components/common/forms/auth-form";
+import AuthForm from "@components/common/forms/auth-form";
+import PageDialogs from "@components/common/dialog/page-dialogs";
 // schema
 import { loginSchema } from "@schemas/login.schema";
 // store
-import { createNewUser, login, signUp } from "@store/user/users.store";
-import AuthForm from "@components/common/forms/auth-form";
-import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
-import PageDialogs from "@components/common/dialog/page-dialogs";
+import { signUp } from "@store/user/users.store";
 
 const Component = styled(Box)`
   height: 100%;
@@ -40,13 +38,6 @@ const FormContainer = styled(Box)`
   flex-direction: column;
 `;
 
-const Subtitle = styled(Box)`
-  width: 100%;
-  display: flex;
-  padding: 0 10px;
-  justify-content: start;
-`;
-
 const initialState = {
   email: "",
   password: "",
@@ -65,7 +56,6 @@ const Register = React.memo(({ page, onClose }) => {
 
   const {
     register,
-    handleSubmit,
     watch,
     formState: { errors },
   } = useForm({
@@ -94,18 +84,6 @@ const Register = React.memo(({ page, onClose }) => {
       .finally(() => {
         setIsLoading(false);
       });
-    // dispatch<any>(createNewUser(newData))
-    //   .then(() => {
-    //     navigate(redirectPath, { replace: true });
-    //     onClose();
-    //   })
-    //   .catch((error) => {
-    //     const { message } = error.response.data.error;
-    //     toast.error(message);
-    //   })
-    //   .finally(() => {
-    //     setIsLoading(false);
-    //   });
   };
 
   return (
