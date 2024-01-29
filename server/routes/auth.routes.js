@@ -7,11 +7,12 @@ import tokenService from "../services/token.service.js";
 const router = express.Router({ mergeParams: true });
 
 router.post("/signUp", [
-  check("email", "Некорректный email").isEmail(),
-  check("password", "Минимальная длина пароля 8 символов").isLength({ min: 8 }),
+  check("email", "Email некорректный").isEmail(),
+  check("password", "Пароль не может быть пустым").exists().trim(),
   async (req, res) => {
     try {
       const errors = validationResult(req);
+      console.log("errors", errors);
 
       if (!errors.isEmpty()) {
         return res.status(400).json({
@@ -23,7 +24,7 @@ router.post("/signUp", [
       }
 
       const { email, password } = req.body;
-      
+
       // Check if the user with the provided email already exists
       const existingUser = await User.findOne({ where: { email } });
 

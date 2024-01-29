@@ -100,7 +100,6 @@ export const updateAvatar = (payload) => async (dispatch) => {
 
 export const updateAvatarUpdate = (payload) => async (dispatch, getState) => {
   const currentState = getState();
-  console.log("updateAvatarUpdate");
 
   if (currentState.avatar.entities) {
     const existingAvatar = currentState.avatar.entities.find(

@@ -46,6 +46,7 @@ const usersListSlice = createSlice({
     },
     authRequestSuccess: (state, action) => {
       state.auth = action.payload;
+      state.entities.push(action.payload);
       state.isLoggedIn = true;
     },
     authRequestFailed: (state, action) => {
@@ -117,7 +118,10 @@ export const login =
 export const signUp = (payload) => async (dispatch) => {
   dispatch(authRequested());
   try {
-    const data = await authService.register(payload);
+    const registerData = await authService.register(payload);
+    dispatch(userCreated(registerData));
+    const data = await authService.login(payload);
+
     localStorageService.setTokens(data);
     dispatch(authRequestSuccess({ userId: data.userId }));
     dispatch(loadUsersList());
@@ -214,7 +218,7 @@ export const getIsUserManager = (userId) => (state) => {
 };
 
 export const getIsUserCurator = (userId) => (state) => {
-  const user = state.users.entities?.find((user) => user?._id === userId);
+  const user = state?.users?.entities?.find((user) => user?._id === userId);
 
   const isCurator = user?.role?.includes("CURATOR") || false;
 

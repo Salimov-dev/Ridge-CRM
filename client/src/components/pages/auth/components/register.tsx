@@ -50,7 +50,6 @@ const Subtitle = styled(Box)`
 const initialState = {
   email: "",
   password: "",
-  passwordRepeat: "",
 };
 
 const Register = React.memo(({ page, onClose }) => {
@@ -83,18 +82,30 @@ const Register = React.memo(({ page, onClose }) => {
   const onSubmit = () => {
     setIsLoading(true);
     const newData = { email: data.email, password: data.password };
-    dispatch<any>(signUp({ payload: data }))
-    dispatch<any>(createNewUser(newData))
+    dispatch<any>(signUp(newData))
       .then(() => {
-        setIsLoading(false);
         navigate(redirectPath, { replace: true });
         onClose();
       })
       .catch((error) => {
         const { message } = error.response.data.error;
         toast.error(message);
+      })
+      .finally(() => {
         setIsLoading(false);
       });
+    // dispatch<any>(createNewUser(newData))
+    //   .then(() => {
+    //     navigate(redirectPath, { replace: true });
+    //     onClose();
+    //   })
+    //   .catch((error) => {
+    //     const { message } = error.response.data.error;
+    //     toast.error(message);
+    //   })
+    //   .finally(() => {
+    //     setIsLoading(false);
+    //   });
   };
 
   return (
@@ -118,7 +129,7 @@ const Register = React.memo(({ page, onClose }) => {
         <ButtonStyled
           title="Регистрация"
           style="SUCCESS"
-          onClick={handleSubmit(onSubmit)}
+          onClick={onSubmit}
           disabled={!isFormValid}
         />
       </FormContainer>

@@ -7,18 +7,9 @@ import TextFieldStyled from "../inputs/text-field-styled";
 
 const AuthForm = ({ data, startPage = "", register, errors }) => {
   const [showPassword, setShowPassword] = useState(false);
-  const [showPasswordRepeat, setShowPasswordRepeat] = useState(false);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const handleMouseDownPassword = (
-    event: React.MouseEvent<HTMLButtonElement>
-  ) => {
-    event.preventDefault();
-  };
-
-  const handleClickShowPasswordRepeat = () =>
-    setShowPasswordRepeat((show) => !show);
-  const handleMouseDownPasswordRepeat = (
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
     event.preventDefault();
@@ -59,31 +50,6 @@ const AuthForm = ({ data, startPage = "", register, errors }) => {
             ),
           }}
         />
-        {startPage === "register" && (
-          <TextFieldStyled
-            register={register}
-            label="Повторите пароль"
-            type={showPasswordRepeat ? "text" : "password"}
-            name="passwordRepeat"
-            onInputQuantities={8}
-            value={data?.passwordRepeat}
-            errors={errors?.passwordRepeat}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton
-                    aria-label="toggle password visibility"
-                    onClick={handleClickShowPasswordRepeat}
-                    onMouseDown={handleMouseDownPasswordRepeat}
-                    edge="end"
-                  >
-                    {showPasswordRepeat ? <VisibilityOff /> : <Visibility />}
-                  </IconButton>
-                </InputAdornment>
-              ),
-            }}
-          />
-        )}
       </FieldsContainer>
     </Form>
   );
