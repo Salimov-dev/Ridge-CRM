@@ -17,11 +17,13 @@ import {
 import { getUserAvatarsLoadingStatus } from "@store/avatar/avatar.store";
 import Avatar from "./components/avatar";
 import ButtonStyled from "@components/common/buttons/button-styled.button";
+import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
 
 const Profile = () => {
   const [state, setState] = useState({
     avatarUpdatePage: false,
     openDialog: false,
+    updateProfilePage: false,
   });
 
   const user = useSelector(getCurrentUserData());
@@ -29,10 +31,11 @@ const Profile = () => {
 
   const isUserLoading = useSelector(getUserAvatarsLoadingStatus());
   const currentUserId = useSelector(getCurrentUserId());
-
   const userNameSelector = useSelector(getUserNameById(user?._id));
-
   const isUserActivated = user?.isActive;
+
+  const { handleOpenUpdateProfilePage } = useDialogHandlers(setState);
+
   const userDataArrayMain = [
     { name: "Почта", value: user?.email || "Не задано" },
     { name: "Статус", value: user?.status || "Не задано" },
@@ -43,8 +46,9 @@ const Profile = () => {
     { name: "Фамилия", value: user?.lastName || "Не задано" },
     { name: "Имя", value: user?.firstName || "Не задано" },
     { name: "Отчество", value: user?.surName || "Не задано" },
-    { name: "Дата рождения", value: user?.birthday || "Не задано" },
     { name: "Пол", value: user?.gender || "Не задано" },
+    { name: "Дата рождения", value: user?.birthday || "Не задано" },
+    { name: "Телефон", value: user?.phone || "Не задано" },
   ];
 
   return (
@@ -85,7 +89,7 @@ const Profile = () => {
             title="Подтвердить"
             style="MANAGER_TASK"
             variant="contained"
-            // onClick={handleOpenUpdateUserAvatarPage}
+            // onClick={handleOpenUpdateProfilePage}
           />
         </Box>
       )}
@@ -101,14 +105,14 @@ const Profile = () => {
         <Typography variant="h2">Мой профиль:</Typography>
         <Box>
           {userDataArrayMain.map((item) => (
-            <Typography variant="h5">
+            <Typography variant="h5" key={item.name}>
               {item.name}: {item.value}
             </Typography>
           ))}
         </Box>
         <Box>
           {userDataArraySecondary.map((item) => (
-            <Typography variant="h5">
+            <Typography variant="h5" key={item.name}>
               {item.name}: {item.value}
             </Typography>
           ))}
@@ -118,7 +122,7 @@ const Profile = () => {
         title="Править мой профиль"
         style="OBJECT"
         variant="contained"
-        // onClick={handleOpenUpdateUserAvatarPage}
+        onClick={handleOpenUpdateProfilePage}
       />
 
       <PageDialogs state={state} setState={setState} />

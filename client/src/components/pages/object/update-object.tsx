@@ -15,7 +15,6 @@ import { capitalizeFirstLetter } from "@utils/data/capitalize-first-letter";
 import { objectSchema } from "@schemas/object.schema";
 // store
 import { getObjectById, updateObject } from "@store/object/objects.store";
-import { removeSpacesAndConvertToNumber } from "@utils/data/remove-spaces-and-convert-to-number";
 
 const UpdateObject = React.memo(({ onClose, objectId }) => {
   const dispatch = useDispatch();

@@ -182,13 +182,27 @@ const useDialogHandlers = (setState) => {
     setState((prevState) => ({
       ...prevState,
       authPage: true,
-      startPage: startPage
+      startPage: startPage,
     }));
   };
   const handleCloseAuthPage = () => {
     setState((prevState) => ({
       ...prevState,
       authPage: false,
+    }));
+  };
+
+  // обновление стейта при обновлении данных в профиле
+  const handleOpenUpdateProfilePage = () => {
+    setState((prevState) => ({
+      ...prevState,
+      updateProfilePage: true,
+    }));
+  };
+  const handleCloseUpdateProfilePage = () => {
+    setState((prevState) => ({
+      ...prevState,
+      updateProfilePage: false,
     }));
   };
 
@@ -225,6 +239,8 @@ const useDialogHandlers = (setState) => {
     handleCloseUpdateMeetingPage,
     handleOpenUpdateUserAvatarPage,
     handleCloseUpdateUserAvatarPage,
+    handleOpenUpdateProfilePage,
+    handleCloseUpdateProfilePage,
   };
 };
 

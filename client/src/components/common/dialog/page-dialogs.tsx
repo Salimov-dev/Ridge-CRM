@@ -18,6 +18,7 @@ import CreateMyTask from "@components/pages/task/create-my-task";
 import UpdateAvatar from "@components/pages/user/update-avatar-user";
 import UpdatePresentation from "@components/pages/presentation/update-presentation";
 import AuthPage from "@components/pages/auth/auth.page";
+import UpdateProfile from "@components/pages/user/update-profile";
 
 const PageDialogs = ({
   state,
@@ -46,6 +47,7 @@ const PageDialogs = ({
     handleCloseUpdateMeetingPage,
     handleCloseUpdateUserAvatarPage,
     handleCloseAuthPage,
+    handleCloseUpdateProfilePage,
   } = useDialogHandlers(setState);
 
   return (
@@ -233,6 +235,12 @@ const PageDialogs = ({
         fullWidth={false}
         onClose={handleCloseAuthPage}
         open={state.authPage}
+      />
+      <DialogStyled
+        component={<UpdateProfile onClose={handleCloseUpdateProfilePage} />}
+        onClose={handleCloseUpdateProfilePage}
+        open={state.updateProfilePage}
+        maxWidth="sm"
       />
     </>
   );
