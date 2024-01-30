@@ -12,11 +12,16 @@ import LoaderFullWindow from "@components/common/loader/loader-full-window";
 // schemas
 import { userProfileSchema } from "@schemas/user-profile.schema";
 // store
-import { getCurrentUserData, updateUser } from "@store/user/users.store";
+import {
+  getCurrentUserData,
+  updatePassword,
+  updateUser,
+} from "@store/user/users.store";
 import UpdatePasswordForm from "@components/common/forms/update-password-form";
+import { passwordUpdateSchema } from "@schemas/password-update.schema";
 
 const initialState = {
-  prevPassword: "",
+  currentPassword: "",
   newPassword: "",
 };
 
@@ -34,25 +39,25 @@ const UpdatePassword = ({ onClose }) => {
   } = useForm({
     defaultValues: initialState,
     mode: "onChange",
-    resolver: yupResolver(userProfileSchema),
+    resolver: yupResolver(passwordUpdateSchema),
   });
   const data = watch();
 
   const onSubmit = () => {
-    // setIsLoading(true);
+    setIsLoading(true);
     console.log("data", data);
 
-    // dispatch<any>(updateUser(data))
-    //   .then(() => {
-    //     onClose();
-    //     toast.success("Данные профиля успешно изменены!");
-    //   })
-    //   .catch((error) => {
-    //     toast.error(error);
-    //   })
-    //   .finally(() => {
-    //     setIsLoading(false);
-    //   });
+    dispatch<any>(updatePassword(data))
+      .then(() => {
+        onClose();
+        toast.success("Пароль успешно измененен!");
+      })
+      .catch((error) => {
+        toast.error(error);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
 
   return (
@@ -63,12 +68,7 @@ const UpdatePassword = ({ onClose }) => {
         color="white"
         onClose={onClose}
       />
-      <UpdatePasswordForm
-        data={data}
-        register={register}
-        errors={errors}
-        setValue={setValue}
-      />
+      <UpdatePasswordForm data={data} register={register} errors={errors} />
       <SuccessCancelFormButtons
         onSuccess={handleSubmit(onSubmit)}
         onCancel={onClose}

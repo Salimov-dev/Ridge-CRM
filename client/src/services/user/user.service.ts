@@ -26,5 +26,21 @@ const userService = {
 
     return data;
   },
+  updatePassword: async (payload) => {
+    const { currentPassword, newPassword } = payload;
+    const userId = localStorageService.getUserId();
+
+    const requestData = {
+      currentPassword,
+      newPassword,
+    };
+
+    const { data } = await httpService.patch(
+      `${userEndpoint}${userId}/update-password`,
+      requestData
+    );
+
+    return data;
+  },
 };
 export default userService;

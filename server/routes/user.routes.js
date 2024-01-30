@@ -63,7 +63,7 @@ router.patch("/:userId/edit-manager", auth, async (req, res) => {
 });
 
 // Роут для обновления текущего пароля пользователя
-router.patch("/update-password", auth, async (req, res) => {
+router.patch("/:userId/update-password", auth, async (req, res) => {
   try {
     const userId = req.user._id; // Получаем идентификатор пользователя из токена аутентификации
     const { currentPassword, newPassword } = req.body;
