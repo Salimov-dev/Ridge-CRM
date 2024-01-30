@@ -45,7 +45,6 @@ const UpdatePassword = ({ onClose }) => {
 
   const onSubmit = () => {
     setIsLoading(true);
-    console.log("data", data);
 
     dispatch<any>(updatePassword(data))
       .then(() => {

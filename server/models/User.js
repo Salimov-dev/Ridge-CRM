@@ -26,7 +26,7 @@ const User = sequelize.define(
     firstName: { type: DataTypes.STRING, defaultValue: null },
     surName: { type: DataTypes.STRING, defaultValue: null },
     lastName: { type: DataTypes.STRING, defaultValue: null },
-    phone: { type: DataTypes.INTEGER, defaultValue: null },
+    phone: { type: DataTypes.STRING, defaultValue: null },
     isActive: { type: DataTypes.BOOLEAN, defaultValue: null },
     created_at: {
       type: DataTypes.DATE,

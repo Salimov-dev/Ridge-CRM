@@ -68,7 +68,7 @@ const UserProfileInfo = ({ user, setState }) => {
           onClick={handleOpenUpdateProfilePage}
         />
         <ButtonStyled
-          title="Изменить пароль"
+          title="Изменить мой пароль"
           style="MY_TASK"
           variant="contained"
           onClick={handleOpenUpdatePasswordPage}
