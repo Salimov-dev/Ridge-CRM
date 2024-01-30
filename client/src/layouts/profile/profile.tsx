@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { Box, Typography } from "@mui/material";
 import { useSelector } from "react-redux";
-// hooks
 // components
 import HeaderLayout from "@components/common/page-headers/header-layout";
 import PageDialogs from "@components/common/dialog/page-dialogs";
 // hooks
+// icons
+import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";
+import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
 // store
 import {
   getCurrentUserData,
@@ -30,6 +32,7 @@ const Profile = () => {
 
   const userNameSelector = useSelector(getUserNameById(user?._id));
 
+  const isUserActivated = user?.isActive;
   const userDataArrayMain = [
     { name: "Почта", value: user?.email || "Не задано" },
     { name: "Статус", value: user?.status || "Не задано" },
@@ -51,6 +54,41 @@ const Profile = () => {
           !isUserLoading ? userNameSelector : "загрузка..."
         }`}
       />
+      {isUserActivated ? (
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            gap: "4px",
+            margin: "10px 0",
+          }}
+        >
+          <CheckCircleOutlineOutlinedIcon
+            sx={{ width: "30px", height: "30px", color: "green" }}
+          />
+          <Typography variant="h4">Почта подтверждена</Typography>
+        </Box>
+      ) : (
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            gap: "4px",
+            margin: "10px 0",
+          }}
+        >
+          <CancelOutlinedIcon
+            sx={{ width: "30px", height: "30px", color: "red" }}
+          />
+          <Typography variant="h4">Почта не подтверждена</Typography>
+          <ButtonStyled
+            title="Подтвердить"
+            style="MANAGER_TASK"
+            variant="contained"
+            // onClick={handleOpenUpdateUserAvatarPage}
+          />
+        </Box>
+      )}
       <Avatar state={state} setState={setState} />
       <Box
         sx={{
