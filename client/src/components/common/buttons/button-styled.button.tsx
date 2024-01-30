@@ -9,6 +9,7 @@ const ButtonStyled = ({
   size = "medium",
   disabled = false,
   variant = "outlined",
+  width = "min-content",
 }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -99,6 +100,7 @@ const ButtonStyled = ({
         borderColor: borderColor,
         background: background,
         whiteSpace: "nowrap",
+        width: width,
         "&:hover": {
           color: colorHover,
           background: backgroundHover,
