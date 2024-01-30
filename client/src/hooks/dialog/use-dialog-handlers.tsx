@@ -206,6 +206,20 @@ const useDialogHandlers = (setState) => {
     }));
   };
 
+  // обновление стейта при обновлении пароля
+  const handleOpenUpdatePasswordPage = () => {
+    setState((prevState) => ({
+      ...prevState,
+      updatePasswordPage: true,
+    }));
+  };
+  const handleCloseUpdatePasswordPage = () => {
+    setState((prevState) => ({
+      ...prevState,
+      updatePasswordPage: false,
+    }));
+  };
+
   return {
     handleOpenAuthPage,
     handleCloseAuthPage,
@@ -241,6 +255,8 @@ const useDialogHandlers = (setState) => {
     handleCloseUpdateUserAvatarPage,
     handleOpenUpdateProfilePage,
     handleCloseUpdateProfilePage,
+    handleOpenUpdatePasswordPage,
+    handleCloseUpdatePasswordPage,
   };
 };
 

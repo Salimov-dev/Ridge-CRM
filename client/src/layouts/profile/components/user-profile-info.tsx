@@ -17,7 +17,8 @@ const ButtonsContainer = styled(Box)`
 `;
 
 const UserProfileInfo = ({ user, setState }) => {
-  const { handleOpenUpdateProfilePage } = useDialogHandlers(setState);
+  const { handleOpenUpdateProfilePage, handleOpenUpdatePasswordPage } =
+    useDialogHandlers(setState);
 
   const userDataArrayMain = [
     { name: "Почта", value: user?.email || "Не задано" },
@@ -70,7 +71,7 @@ const UserProfileInfo = ({ user, setState }) => {
           title="Изменить пароль"
           style="MY_TASK"
           variant="contained"
-          // onClick={handleOpenUpdateProfilePage}
+          onClick={handleOpenUpdatePasswordPage}
         />
       </ButtonsContainer>
     </Component>

@@ -21,6 +21,7 @@ const Profile = () => {
     avatarUpdatePage: false,
     openDialog: false,
     updateProfilePage: false,
+    updatePasswordPage: false,
   });
 
   const user = useSelector(getCurrentUserData());

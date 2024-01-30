@@ -19,6 +19,7 @@ import UpdateAvatar from "@components/pages/user/update-avatar-user";
 import UpdatePresentation from "@components/pages/presentation/update-presentation";
 import AuthPage from "@components/pages/auth/auth.page";
 import UpdateProfile from "@components/pages/user/update-profile";
+import UpdatePassword from "@components/pages/user/update-password";
 
 const PageDialogs = ({
   state,
@@ -48,6 +49,7 @@ const PageDialogs = ({
     handleCloseUpdateUserAvatarPage,
     handleCloseAuthPage,
     handleCloseUpdateProfilePage,
+    handleCloseUpdatePasswordPage,
   } = useDialogHandlers(setState);
 
   return (
@@ -240,6 +242,12 @@ const PageDialogs = ({
         component={<UpdateProfile onClose={handleCloseUpdateProfilePage} />}
         onClose={handleCloseUpdateProfilePage}
         open={state.updateProfilePage}
+        maxWidth="sm"
+      />
+      <DialogStyled
+        component={<UpdatePassword onClose={handleCloseUpdatePasswordPage} />}
+        onClose={handleCloseUpdatePasswordPage}
+        open={state.updatePasswordPage}
         maxWidth="sm"
       />
     </>
