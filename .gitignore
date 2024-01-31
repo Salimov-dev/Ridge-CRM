@@ -7,8 +7,6 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-server/config/default.json
-server/config/production.json
 server/db
 vercel.json
 default.json
@@ -17,7 +15,6 @@ dist
 dist-ssr
 *.local
 .default.json
-config/default.json
 
 # Editor directories and files
 .vscode/*

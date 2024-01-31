@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, styled } from "@mui/material";
+import { Box, Typography, styled } from "@mui/material";
 import { useSelector } from "react-redux";
 // components
 import TopBarDataContainter from "./topbar-data-container";
@@ -16,7 +16,7 @@ import { getMeetingLoadingStatus } from "../../../../store/meeting/meetings.stor
 import { getTaskLoadingStatus } from "../../../../store/task/tasks.store";
 import {
   getCurrentUserId,
-  getIsUserCurator,
+  getIsUserCurator
 } from "../../../../store/user/users.store";
 
 const ResultComponent = styled(Box)`
@@ -38,7 +38,7 @@ const TopBarWeeklyResults = React.memo(() => {
   const objects = getCurrentWeekObjects();
   const isObjectLoading = useSelector(getObjectsLoadingStatus());
   const objectsWithPhone = getCurrentWeekObjectsWithPhone();
-  
+
   const presentations = getCurrentWeekPresentations();
   const isPresentationsLoading = useSelector(getPresentationsLoadingStatus());
 
@@ -63,8 +63,9 @@ const TopBarWeeklyResults = React.memo(() => {
 
   return (
     <ResultComponent>
+      <Typography variant="h5">ТЕКУЩАЯ НЕДЕЛЯ</Typography>
       <TopBarDataContainter
-        title="Объектов за неделю:"
+        title="Объектов:"
         elements={objects}
         path="/objects"
         backgroundColor="Gold"

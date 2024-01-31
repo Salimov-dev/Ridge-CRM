@@ -12,16 +12,14 @@ import { getCurrentUserData, getUserNameById } from "@store/user/users.store";
 import { getUserAvatarsLoadingStatus } from "@store/avatar/avatar.store";
 import styled from "@emotion/styled";
 
-const Component = styled(Box)`
-  height: 100vh;
-`;
+const Component = styled(Box)``;
 
 const Profile = () => {
   const [state, setState] = useState({
     avatarUpdatePage: false,
     openDialog: false,
     updateProfilePage: false,
-    updatePasswordPage: false,
+    updatePasswordPage: false
   });
 
   const user = useSelector(getCurrentUserData());
