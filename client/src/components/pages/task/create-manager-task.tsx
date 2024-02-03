@@ -9,7 +9,7 @@ import React, { useEffect, useState } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 // components
 import HeaderWithCloseButton from "@components/common/page-headers/header-with-close-button";
-import SuccessCancelFormButtons from "@components/common/forms/buttons/success-cancel-form-buttons";
+import SuccessCancelFormButtons from "@components/common/buttons/success-cancel-form-buttons";
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
 import MyTaskForm from "@components/common/forms/my-task.form";
 // schema
@@ -28,7 +28,7 @@ const initialState = {
   managerId: "",
   result: "",
   isDone: false,
-  isCallTask: true,
+  isCallTask: true
 };
 
 const CreateManagerTask = React.memo(
@@ -44,11 +44,11 @@ const CreateManagerTask = React.memo(
       watch,
       handleSubmit,
       setValue,
-      formState: { errors },
+      formState: { errors }
     } = useForm({
       defaultValues: initialState,
       mode: "onChange",
-      resolver: yupResolver(taskSchema),
+      resolver: yupResolver(taskSchema)
     });
     const data = watch();
     const objects = useSelector(getObjectsList());
@@ -60,7 +60,7 @@ const CreateManagerTask = React.memo(
 
       const newData = {
         ...data,
-        comment: capitalizeFirstLetter(data.comment),
+        comment: capitalizeFirstLetter(data.comment)
       };
       dispatch<any>(createTask(newData))
         .then(() => {

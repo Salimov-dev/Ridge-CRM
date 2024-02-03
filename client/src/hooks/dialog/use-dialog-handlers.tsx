@@ -14,7 +14,7 @@ const useDialogHandlers = (setState) => {
     setState((prevState) => ({
       ...prevState,
       objectPage: true,
-      objectId: objectId,
+      objectId: objectId
     }));
   };
   const handleCloseObjectPage = () => {
@@ -41,7 +41,7 @@ const useDialogHandlers = (setState) => {
     setState((prevState) => ({
       ...prevState,
       updatePresentationPage: true,
-      presentationId: presentationId,
+      presentationId: presentationId
     }));
   };
   const handleCloseUpdatePresentationPage = () => {
@@ -61,7 +61,7 @@ const useDialogHandlers = (setState) => {
     setState((prevState) => ({
       ...prevState,
       createMyTaskPage: true,
-      dateCreate: day instanceof dayjs ? day : null,
+      dateCreate: day instanceof dayjs ? day : null
     }));
   };
   const handleCloseCreateMyTaskPage = () => {
@@ -73,7 +73,7 @@ const useDialogHandlers = (setState) => {
     setState((prevState) => ({
       ...prevState,
       updateMyTaskPage: true,
-      taskId: taskId,
+      taskId: taskId
     }));
   };
   const handleCloseUpdateMyTaskPage = () => {
@@ -85,7 +85,7 @@ const useDialogHandlers = (setState) => {
     setState((prevState) => ({
       ...prevState,
       createManagerTaskPage: true,
-      dateCreate: day instanceof dayjs ? day : null,
+      dateCreate: day instanceof dayjs ? day : null
     }));
   };
   const handleCloseCreateManagerTaskPage = () => {
@@ -97,7 +97,7 @@ const useDialogHandlers = (setState) => {
     setState((prevState) => ({
       ...prevState,
       updateManagerTaskPage: true,
-      taskId: taskId,
+      taskId: taskId
     }));
   };
   const handleCloseUpdateManagerTaskPage = () => {
@@ -108,13 +108,13 @@ const useDialogHandlers = (setState) => {
   const handleOpenCreateLastContactPage = () => {
     setState((prevState) => ({
       ...prevState,
-      createLastContactPage: true,
+      createLastContactPage: true
     }));
   };
   const handleCloseCreateLastContactPage = () => {
     setState((prevState) => ({
       ...prevState,
-      createLastContactPage: false,
+      createLastContactPage: false
     }));
   };
 
@@ -123,13 +123,13 @@ const useDialogHandlers = (setState) => {
     setState((prevState) => ({
       ...prevState,
       updateLastContactPage: true,
-      lastContactId: lastContactId,
+      lastContactId: lastContactId
     }));
   };
   const handleCloseUpdateLastContactPage = () => {
     setState((prevState) => ({
       ...prevState,
-      updateLastContactPage: false,
+      updateLastContactPage: false
     }));
   };
 
@@ -138,13 +138,13 @@ const useDialogHandlers = (setState) => {
     setState((prevState) => ({
       ...prevState,
       createMeetingPage: true,
-      dateCreate: day instanceof dayjs ? day : null,
+      dateCreate: day instanceof dayjs ? day : null
     }));
   };
   const handleCloseCreateMeetingPage = () => {
     setState((prevState) => ({
       ...prevState,
-      createMeetingPage: false,
+      createMeetingPage: false
     }));
   };
 
@@ -153,13 +153,13 @@ const useDialogHandlers = (setState) => {
     setState((prevState) => ({
       ...prevState,
       updateMeetingPage: true,
-      meetingId: meetingId,
+      meetingId: meetingId
     }));
   };
   const handleCloseUpdateMeetingPage = () => {
     setState((prevState) => ({
       ...prevState,
-      updateMeetingPage: false,
+      updateMeetingPage: false
     }));
   };
 
@@ -167,13 +167,13 @@ const useDialogHandlers = (setState) => {
   const handleOpenUpdateUserAvatarPage = () => {
     setState((prevState) => ({
       ...prevState,
-      avatarUpdatePage: true,
+      avatarUpdatePage: true
     }));
   };
   const handleCloseUpdateUserAvatarPage = () => {
     setState((prevState) => ({
       ...prevState,
-      avatarUpdatePage: false,
+      avatarUpdatePage: false
     }));
   };
 
@@ -182,13 +182,13 @@ const useDialogHandlers = (setState) => {
     setState((prevState) => ({
       ...prevState,
       authPage: true,
-      startPage: startPage,
+      startPage: startPage
     }));
   };
   const handleCloseAuthPage = () => {
     setState((prevState) => ({
       ...prevState,
-      authPage: false,
+      authPage: false
     }));
   };
 
@@ -196,13 +196,13 @@ const useDialogHandlers = (setState) => {
   const handleOpenUpdateProfilePage = () => {
     setState((prevState) => ({
       ...prevState,
-      updateProfilePage: true,
+      updateProfilePage: true
     }));
   };
   const handleCloseUpdateProfilePage = () => {
     setState((prevState) => ({
       ...prevState,
-      updateProfilePage: false,
+      updateProfilePage: false
     }));
   };
 
@@ -210,13 +210,27 @@ const useDialogHandlers = (setState) => {
   const handleOpenUpdatePasswordPage = () => {
     setState((prevState) => ({
       ...prevState,
-      updatePasswordPage: true,
+      updatePasswordPage: true
     }));
   };
   const handleCloseUpdatePasswordPage = () => {
     setState((prevState) => ({
       ...prevState,
-      updatePasswordPage: false,
+      updatePasswordPage: false
+    }));
+  };
+
+  // обновление стейта при создании менеджера
+  const handleOpenCreateUserPage = () => {
+    setState((prevState) => ({
+      ...prevState,
+      createManagerPage: true
+    }));
+  };
+  const handleCloseCreateUserPage = () => {
+    setState((prevState) => ({
+      ...prevState,
+      createManagerPage: false
     }));
   };
 
@@ -257,6 +271,8 @@ const useDialogHandlers = (setState) => {
     handleCloseUpdateProfilePage,
     handleOpenUpdatePasswordPage,
     handleCloseUpdatePasswordPage,
+    handleCloseCreateUserPage,
+    handleOpenCreateUserPage
   };
 };
 

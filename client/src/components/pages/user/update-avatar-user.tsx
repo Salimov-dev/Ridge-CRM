@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 // components
 import HeaderWithCloseButton from "@components/common/page-headers/header-with-close-button";
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
-import SuccessCancelFormButtons from "@components/common/forms/buttons/success-cancel-form-buttons";
+import SuccessCancelFormButtons from "@components/common/buttons/success-cancel-form-buttons";
 // store
 import { getCurrentUserId } from "@store/user/users.store";
 import { updateAvatar } from "@store/avatar/avatar.store";

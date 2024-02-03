@@ -9,7 +9,7 @@ import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 // components
 import HeaderWithCloseButton from "@components/common/page-headers/header-with-close-button";
-import SuccessCancelFormButtons from "@components/common/forms/buttons/success-cancel-form-buttons";
+import SuccessCancelFormButtons from "@components/common/buttons/success-cancel-form-buttons";
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
 import ManagerForm from "@common/forms/manager/manager.form";
 // store
@@ -17,7 +17,7 @@ import { getUserStatusesList } from "@store/user-params/user-statuses.store";
 import {
   getUserDataById,
   getUserNameById,
-  updateUser,
+  updateUser
 } from "@store/user/users.store";
 // schema
 import { managerSchema } from "@schemas/manager.schema";
@@ -40,9 +40,9 @@ const UpdateManager = ({ userId, onClose }) => {
       endDate: user?.contract.endDate ? dayjs(user?.contract.endDate) : null,
       trialPeriod: user?.contract.trialPeriod
         ? dayjs(user?.contract.trialPeriod)
-        : null,
+        : null
     },
-    birthday: user?.birthday ? dayjs(user?.birthday) : null,
+    birthday: user?.birthday ? dayjs(user?.birthday) : null
   };
 
   const {
@@ -50,11 +50,11 @@ const UpdateManager = ({ userId, onClose }) => {
     watch,
     handleSubmit,
     formState: { errors, isValid },
-    setValue,
+    setValue
   } = useForm({
     defaultValues: formatedUser,
     mode: "onBlur",
-    resolver: yupResolver(managerSchema),
+    resolver: yupResolver(managerSchema)
   });
 
   const data = watch();

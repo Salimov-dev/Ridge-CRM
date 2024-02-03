@@ -9,7 +9,7 @@ import Header from "./components/header";
 import ManagerPresentationForm from "@components/common/forms/presentation-manager.form";
 import CuratorPresentationForm from "@components/common/forms/presentation-curator.form";
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
-import SuccessCancelFormButtons from "@components/common/forms/buttons/success-cancel-form-buttons";
+import SuccessCancelFormButtons from "@components/common/buttons/success-cancel-form-buttons";
 import DialogConfirm from "@components/common/dialog/dialog-confirm";
 // schema
 import { presentationSchema } from "@schemas/presentation.schema";
@@ -20,12 +20,12 @@ import { getObjectsList } from "@store/object/objects.store";
 import {
   getCurrentUserId,
   getIsUserAuthorThisEntity,
-  getIsUserCurator,
+  getIsUserCurator
 } from "@store/user/users.store";
 import {
   getPresentationById,
   removePresentation,
-  updatePresentation,
+  updatePresentation
 } from "@store/presentation/presentations.store";
 import { useTheme } from "@emotion/react";
 import { tokens } from "@theme/theme";
@@ -46,11 +46,11 @@ const UpdatePresentation = React.memo(({ presentationId, onClose }) => {
     watch,
     handleSubmit,
     formState: { errors },
-    setValue,
+    setValue
   } = useForm({
     defaultValues: presentation,
     mode: "onBlur",
-    resolver: yupResolver(presentationSchema),
+    resolver: yupResolver(presentationSchema)
   });
 
   const data = watch();
@@ -73,7 +73,7 @@ const UpdatePresentation = React.memo(({ presentationId, onClose }) => {
     setIsLoading(true);
 
     const newData = {
-      ...data,
+      ...data
     };
 
     dispatch<any>(updatePresentation(newData))

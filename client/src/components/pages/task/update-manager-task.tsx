@@ -9,7 +9,7 @@ import { tokens } from "@theme/theme";
 import { useDispatch, useSelector } from "react-redux";
 // components
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
-import SuccessCancelFormButtons from "@components/common/forms/buttons/success-cancel-form-buttons";
+import SuccessCancelFormButtons from "@components/common/buttons/success-cancel-form-buttons";
 import MyTaskForm from "@components/common/forms/my-task.form";
 import DialogConfirm from "@components/common/dialog/dialog-confirm";
 import HeaderWithCloseButton from "@components/common/page-headers/header-with-close-button";
@@ -32,7 +32,7 @@ const UpdateManagerTask = React.memo(({ title, onClose, taskId, users }) => {
   const formatedTask = {
     ...task,
     date: task?.date ? dayjs(task?.date) : null,
-    time: task?.time ? dayjs(task?.time) : null,
+    time: task?.time ? dayjs(task?.time) : null
   };
 
   const {
@@ -40,11 +40,11 @@ const UpdateManagerTask = React.memo(({ title, onClose, taskId, users }) => {
     watch,
     handleSubmit,
     formState: { errors },
-    setValue,
+    setValue
   } = useForm({
     defaultValues: formatedTask,
     mode: "onChange",
-    resolver: yupResolver(taskSchema),
+    resolver: yupResolver(taskSchema)
   });
 
   const data = watch();

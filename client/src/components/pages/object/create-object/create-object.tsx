@@ -12,7 +12,7 @@ import FindObjectOnMap from "@common/find-object-on-map/find-object-on-map";
 import AlertObjectInDatabase from "./components/alert-object-in-database";
 import HeaderWithCloseButton from "@components/common/page-headers/header-with-close-button";
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
-import SuccessCancelFormButtons from "@components/common/forms/buttons/success-cancel-form-buttons";
+import SuccessCancelFormButtons from "@components/common/buttons/success-cancel-form-buttons";
 // store
 import { createObject, getObjectsList } from "@store/object/objects.store";
 // hooks
@@ -55,7 +55,7 @@ const initialState = {
   cadastralNumber: null,
   loadingArea: null,
   objectProperties: null,
-  cloudLink: null,
+  cloudLink: null
 };
 
 const CreateObject = React.memo(({ onClose }) => {
@@ -74,11 +74,11 @@ const CreateObject = React.memo(({ onClose }) => {
     watch,
     handleSubmit,
     setValue,
-    formState: { errors },
+    formState: { errors }
   } = useForm({
     defaultValues: initialState,
     mode: "onChange",
-    resolver: yupResolver(objectSchema),
+    resolver: yupResolver(objectSchema)
   });
 
   const {
@@ -87,7 +87,7 @@ const CreateObject = React.memo(({ onClose }) => {
     getAddress,
     getLatitudeCoordinates,
     getLongitudeCoordinates,
-    findedObject,
+    findedObject
   } = useFindObject();
 
   const data = watch();
@@ -114,7 +114,7 @@ const CreateObject = React.memo(({ onClose }) => {
       rentPrice: removeSpacesAndConvertToNumber(data.rentPrice),
       rentSquare: removeSpacesAndConvertToNumber(data.rentSquare),
       rentalHolidays: removeSpacesAndConvertToNumber(data.rentalHolidays),
-      securityDeposit: removeSpacesAndConvertToNumber(data.securityDeposit),
+      securityDeposit: removeSpacesAndConvertToNumber(data.securityDeposit)
     };
 
     dispatch<any>(createObject(newData))

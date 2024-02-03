@@ -1,5 +1,4 @@
 import ButtonStyled from "@components/common/buttons/button-styled.button";
-import ClearFilterButton from "@components/common/buttons/clear-filter.button";
 import styled from "@emotion/styled";
 import { Box } from "@mui/material";
 
@@ -12,7 +11,7 @@ const Component = styled(Box)`
 const Buttons = ({
   handleOpenUpdateUserAvatarPage,
   handleClickOpenConfirmDialog,
-  avatarSrc,
+  avatarSrc
 }) => {
   return (
     <Component>
@@ -26,7 +25,7 @@ const Buttons = ({
         title="УДАЛИТЬ"
         style="CANCEL"
         variant="contained"
-        disabled={!avatarSrc}
+        // disabled={!avatarSrc}
         onClick={handleClickOpenConfirmDialog}
       />
     </Component>

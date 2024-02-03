@@ -1,16 +1,19 @@
+import { useDispatch, useSelector } from "react-redux";
 import styled from "@emotion/styled";
+import { Box, Typography } from "@mui/material";
+// hooks
 import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
 import useGetUserAvatar from "@hooks/user/use-get-user-avatar";
-import { Box, Typography } from "@mui/material";
-import {
-  getUserAvatarsLoadingStatus,
-  removeAvatar,
-} from "@store/avatar/avatar.store";
-import { getCurrentUserId } from "@store/user/users.store";
-import { useDispatch, useSelector } from "react-redux";
+// components
 import AvatarImage from "./avatar-image";
 import DialogConfirm from "@components/common/dialog/dialog-confirm";
 import Buttons from "./buttons";
+// store
+import { getCurrentUserId } from "@store/user/users.store";
+import {
+  getUserAvatarsLoadingStatus,
+  removeAvatar
+} from "@store/avatar/avatar.store";
 
 const AvatarContainer = styled(Box)`
   width: 250px;

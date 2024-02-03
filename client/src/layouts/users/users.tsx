@@ -1,45 +1,48 @@
 // libraries
 import { useEffect, useState } from "react";
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 // components
-import { usersColumns } from "../../columns/users.columns";
-import UsersFiltersPanel from "../../components/UI/filters-panels/users-filters-panel";
-import BasicTable from "../../components/common/table/basic-table";
+import { usersColumns } from "@columns/users.columns";
+import UsersFiltersPanel from "@components/UI/filters-panels/users-filters-panel";
+import BasicTable from "@components/common/table/basic-table";
+import Buttons from "./components/buttons";
+import PageDialogs from "@components/common/dialog/page-dialogs";
+import HeaderLayout from "@components/common/page-headers/header-layout";
+import TeamTitle from "./components/team-title";
 // hooks
-import useUsers from "../../hooks/user/use-users";
-import useSearchUser from "../../hooks/user/use-search-user";
-import HeaderLayout from "../../components/common/page-headers/header-layout";
+import useUsers from "@hooks/user/use-users";
+import useSearchUser from "@hooks/user/use-search-user";
+import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
 // store
 import {
+  getCurrentUserData,
   getCurrentUserId,
   getUsersList,
-  getUsersLoadingStatus,
-} from "../../store/user/users.store";
-import Buttons from "./components/buttons";
-import CreateManager from "@components/pages/user/create-manager";
-import UpdateManager from "@components/pages/user/update-manager";
-import DialogStyled from "@components/common/dialog/dialog-styled";
+  getUsersLoadingStatus
+} from "@store/user/users.store";
 
 const initialState = {
   lastName: "",
   phone: "",
   email: "",
-  contract: {
-    startDate: "",
-    endDate: "",
-  },
   gender: "",
   selectedUsers: [],
-  selectedStatuses: [],
+  selectedStatuses: []
 };
 
 const Users = () => {
-  // const columns = usersColumns;
   const isLoading = useSelector(getUsersLoadingStatus());
   const users = useSelector(getUsersList());
+
   const currentUserId = useSelector(getCurrentUserId());
+  const currentUserData = useSelector(getCurrentUserData());
+  const currentUserName = `${currentUserData?.lastName} ${currentUserData?.firstName} ${currentUserData?.surName}`;
+
+  const userRoleManager = "69gfoep3944jgjdso345002";
+  const userRoleObserver = "69dgp34954igfj345043001";
+
   const usersWithoutCurrentUser = users?.filter(
     (user) => user?._id !== currentUserId
   );
@@ -54,14 +57,22 @@ const Users = () => {
   );
   const { register, watch, setValue, reset } = useForm({
     defaultValues: localStorageState || initialState,
-    mode: "onBlur",
+    mode: "onBlur"
   });
+
   const data = watch();
   const isInputEmpty = JSON.stringify(initialState) !== JSON.stringify(data);
 
+  const observerUsersWithRole = usersWithoutCurrentUser.filter(
+    (user) => user.role && user.role.includes(userRoleObserver)
+  );
+  const managerUsersWithRole = usersWithoutCurrentUser.filter(
+    (user) => user.role && user.role.includes(userRoleManager)
+  );
+
   const searchedUsers = useSearchUser({
-    users: usersWithoutCurrentUser,
-    data,
+    users: managerUsersWithRole,
+    data
   });
 
   useEffect(() => {
@@ -74,85 +85,53 @@ const Users = () => {
 
   const [state, setState] = useState({
     createManagerPage: false,
-    updateManagerPage: false,
-    managerId: "",
+    createObserverPage: false
   });
 
-  // обновление стейта при создании менеджера
-  const handleOpenCreatePresentationPage = () => {
-    setState((prevState) => ({
-      ...prevState,
-      createManagerPage: true,
-    }));
-  };
-  const handleCloseCreatePresentationPage = () => {
-    setState((prevState) => ({
-      ...prevState,
-      createManagerPage: false,
-    }));
-  };
-
-  // обновление стейта при обновлении менеджера
-  const handleOpenUpdatePresentationPage = (userId) => {
-    setState((prevState) => ({
-      ...prevState,
-      updateManagerPage: true,
-      managerId: userId,
-    }));
-  };
-  const handleCloseUpdatePresentationPage = () => {
-    setState((prevState) => ({
-      ...prevState,
-      updateManagerPage: false,
-    }));
-  };
+  const { handleOpenCreateUserPage } = useDialogHandlers(setState);
 
   return (
     <Box
       sx={{
-        height: "100%",
+        height: "100%"
       }}
     >
-      <HeaderLayout title="Менеджеры" />
+      <HeaderLayout title="Моя команда" />
       <Buttons
         initialState={initialState}
         reset={reset}
-        handleOpenCreatePresentationPage={handleOpenCreatePresentationPage}
+        onOpenCreateUserPage={handleOpenCreateUserPage}
         isInputEmpty={isInputEmpty}
       />
-      <UsersFiltersPanel
-        data={data}
-        users={getActualUsersList()}
-        statuses={getActualStatusesList()}
-        register={register}
-        setValue={setValue}
-        isLoading={isLoading}
-      />
-      <BasicTable
-        items={searchedUsers}
-        itemsColumns={usersColumns(handleOpenUpdatePresentationPage)}
-        isLoading={isLoading}
-      />
 
-      <DialogStyled
-        component={
-          <CreateManager onClose={handleCloseCreatePresentationPage} />
-        }
-        onClose={handleCloseCreatePresentationPage}
-        open={state.createManagerPage}
-        maxWidth="xl"
-      />
-      <DialogStyled
-        component={
-          <UpdateManager
-            userId={state.managerId}
-            onClose={handleCloseUpdatePresentationPage}
-          />
-        }
-        onClose={handleCloseUpdatePresentationPage}
-        open={state.updateManagerPage}
-        maxWidth="xl"
-      />
+      <Box sx={{ marginTop: "20px" }}>
+        <TeamTitle title="Куратор" background="red" />
+        <Typography variant="h4">{currentUserName}</Typography>
+
+        <TeamTitle title="Мои Наблюдатели" background="red" />
+        <BasicTable
+          items={observerUsersWithRole}
+          itemsColumns={usersColumns()}
+          isLoading={isLoading}
+        />
+
+        <TeamTitle title="Мои Менеджеры" background="red" />
+        <UsersFiltersPanel
+          data={data}
+          users={getActualUsersList()}
+          statuses={getActualStatusesList()}
+          register={register}
+          setValue={setValue}
+          isLoading={isLoading}
+        />
+        <BasicTable
+          items={searchedUsers}
+          itemsColumns={usersColumns()}
+          isLoading={isLoading}
+        />
+      </Box>
+
+      <PageDialogs state={state} setState={setState} />
     </Box>
   );
 };

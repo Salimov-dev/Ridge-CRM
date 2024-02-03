@@ -8,7 +8,7 @@ import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { yupResolver } from "@hookform/resolvers/yup";
 // components
-import SuccessCancelFormButtons from "@components/common/forms/buttons/success-cancel-form-buttons";
+import SuccessCancelFormButtons from "@components/common/buttons/success-cancel-form-buttons";
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
 import HeaderWithCloseButton from "@components/common/page-headers/header-with-close-button";
 import MeetingForm from "@components/common/forms/meeting.form";
@@ -25,7 +25,7 @@ import {
   getMeetingById,
   getMeetingLoadingStatus,
   removeMeeting,
-  updateMeeting,
+  updateMeeting
 } from "@store/meeting/meetings.store";
 
 const UpdateMeeting = React.memo(({ meetingId, onClose, isObjectPage }) => {
@@ -40,7 +40,7 @@ const UpdateMeeting = React.memo(({ meetingId, onClose, isObjectPage }) => {
   const formatedMeeting = {
     ...meeting,
     date: meeting?.date ? dayjs(meeting?.date) : null,
-    time: meeting?.time ? dayjs(meeting?.time) : null,
+    time: meeting?.time ? dayjs(meeting?.time) : null
   };
 
   const {
@@ -48,11 +48,11 @@ const UpdateMeeting = React.memo(({ meetingId, onClose, isObjectPage }) => {
     watch,
     handleSubmit,
     formState: { errors },
-    setValue,
+    setValue
   } = useForm({
     defaultValues: formatedMeeting,
     mode: "onChange",
-    resolver: yupResolver(meetingSchema),
+    resolver: yupResolver(meetingSchema)
   });
 
   const data = watch();

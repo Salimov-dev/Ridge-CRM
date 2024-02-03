@@ -14,7 +14,7 @@ import FingerprintIcon from "@mui/icons-material/Fingerprint";
 // styled
 import { FieldsContainer, Form } from "../styled/styled";
 // components
-import Title from "../manager/components/title";
+import Title from "../components/title";
 import TextFieldStyled from "../../inputs/text-field-styled";
 import DistrictSelect from "./components/district-select";
 import SelectFieldStyled from "@components/common/inputs/select-field-styled";
@@ -38,7 +38,7 @@ const ObjectForm = ({
   errors,
   selectedArea = "",
   watch,
-  isUpdate = false,
+  isUpdate = false
 }) => {
   const workingPositions = useSelector(getWorkingPositionsList());
   const sortedWorkingPositions = orderBy(workingPositions, ["name"], ["asc"]);
@@ -172,7 +172,7 @@ const ObjectForm = ({
                 <InputAdornment position="end">
                   <FingerprintIcon />
                 </InputAdornment>
-              ),
+              )
             }}
           />
         </FieldsContainer>
@@ -190,7 +190,7 @@ const ObjectForm = ({
                 <InputAdornment position="end">
                   <AccountCircleOutlinedIcon />
                 </InputAdornment>
-              ),
+              )
             }}
           />
           <SelectFieldStyled
@@ -216,7 +216,7 @@ const ObjectForm = ({
                 <InputAdornment position="end">
                   <PhoneIphoneOutlinedIcon />
                 </InputAdornment>
-              ),
+              )
             }}
           />
           <TextFieldStyled
@@ -231,7 +231,7 @@ const ObjectForm = ({
                 <InputAdornment position="end">
                   <AlternateEmailOutlinedIcon />
                 </InputAdornment>
-              ),
+              )
             }}
           />
         </FieldsContainer>
@@ -248,9 +248,7 @@ const ObjectForm = ({
               errors={errors?.rentSquare}
               value={makeDigitSeparator(data?.rentSquare) || ""}
               InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">м²</InputAdornment>
-                ),
+                endAdornment: <InputAdornment position="end">м²</InputAdornment>
               }}
             />
             <TextFieldStyled
@@ -261,7 +259,7 @@ const ObjectForm = ({
               valueAsNumber={true}
               value={makeDigitSeparator(data?.rentPrice) || ""}
               InputProps={{
-                endAdornment: <InputAdornment position="end">₽</InputAdornment>,
+                endAdornment: <InputAdornment position="end">₽</InputAdornment>
               }}
             />
             <TextFieldStyled
@@ -272,7 +270,7 @@ const ObjectForm = ({
               onInputQuantities={3}
               value={data?.agentComission || ""}
               InputProps={{
-                endAdornment: <InputAdornment position="end">%</InputAdornment>,
+                endAdornment: <InputAdornment position="end">%</InputAdornment>
               }}
             />
             <TextFieldStyled
@@ -284,7 +282,7 @@ const ObjectForm = ({
               valueAsNumber={true}
               value={data?.indexingAnnual || ""}
               InputProps={{
-                endAdornment: <InputAdornment position="end">%</InputAdornment>,
+                endAdornment: <InputAdornment position="end">%</InputAdornment>
               }}
             />
           </FieldsContainer>
@@ -298,7 +296,7 @@ const ObjectForm = ({
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">дней</InputAdornment>
-                ),
+                )
               }}
             />
             <TextFieldStyled
@@ -309,7 +307,7 @@ const ObjectForm = ({
               valueAsNumber={true}
               value={makeDigitSeparator(data?.securityDeposit) || ""}
               InputProps={{
-                endAdornment: <InputAdornment position="end">₽</InputAdornment>,
+                endAdornment: <InputAdornment position="end">₽</InputAdornment>
               }}
             />
             <TextFieldStyled
@@ -320,7 +318,7 @@ const ObjectForm = ({
               valueAsNumber={true}
               value={makeDigitSeparator(data?.advanseDeposit) || ""}
               InputProps={{
-                endAdornment: <InputAdornment position="end">₽</InputAdornment>,
+                endAdornment: <InputAdornment position="end">₽</InputAdornment>
               }}
             />
             <SelectFieldStyled
@@ -352,7 +350,7 @@ const ObjectForm = ({
               onInputQuantities={24}
               value={data?.cadastralNumber || ""}
               InputProps={{
-                endAdornment: <InputAdornment position="end">№</InputAdornment>,
+                endAdornment: <InputAdornment position="end">№</InputAdornment>
               }}
             />
             <TextFieldStyled
@@ -367,7 +365,7 @@ const ObjectForm = ({
                   <InputAdornment position="end">
                     <ElectricBoltIcon />
                   </InputAdornment>
-                ),
+                )
               }}
             />
             <TextFieldStyled
@@ -381,7 +379,7 @@ const ObjectForm = ({
                   <InputAdornment position="end">
                     <VerticalAlignBottomOutlinedIcon />
                   </InputAdornment>
-                ),
+                )
               }}
             />
           </FieldsContainer>
@@ -398,7 +396,7 @@ const ObjectForm = ({
                   <InputAdornment position="end">
                     <WaterIcon />
                   </InputAdornment>
-                ),
+                )
               }}
             />
             <TextFieldStyled
@@ -409,7 +407,7 @@ const ObjectForm = ({
               onInputQuantities={6}
               value={data?.premisesHeight || ""}
               InputProps={{
-                endAdornment: <InputAdornment position="end">м</InputAdornment>,
+                endAdornment: <InputAdornment position="end">м</InputAdornment>
               }}
             />
             <TextFieldStyled
@@ -424,7 +422,7 @@ const ObjectForm = ({
                   <InputAdornment position="end">
                     <DirectionsCarIcon />
                   </InputAdornment>
-                ),
+                )
               }}
             />
             <TextFieldStyled
@@ -438,7 +436,7 @@ const ObjectForm = ({
                   <InputAdornment position="end">
                     <LocalShippingIcon />
                   </InputAdornment>
-                ),
+                )
               }}
             />
           </FieldsContainer>

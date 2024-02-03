@@ -40,7 +40,7 @@ const FormContainer = styled(Box)`
 
 const initialState = {
   email: "",
-  password: "",
+  password: ""
 };
 
 const Register = React.memo(({ page, onClose }) => {
@@ -49,7 +49,7 @@ const Register = React.memo(({ page, onClose }) => {
 
   const [isLoading, setIsLoading] = useState(false);
   const [state, setState] = useState({
-    loginPage: false,
+    loginPage: false
   });
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -57,11 +57,11 @@ const Register = React.memo(({ page, onClose }) => {
   const {
     register,
     watch,
-    formState: { errors },
+    formState: { errors }
   } = useForm({
     defaultValues: initialState,
     mode: "onSubmit",
-    resolver: yupResolver(loginSchema),
+    resolver: yupResolver(loginSchema)
   });
 
   const data = watch();
@@ -72,6 +72,7 @@ const Register = React.memo(({ page, onClose }) => {
   const onSubmit = () => {
     setIsLoading(true);
     const newData = { email: data.email, password: data.password };
+
     dispatch<any>(signUp(newData))
       .then(() => {
         navigate(redirectPath, { replace: true });

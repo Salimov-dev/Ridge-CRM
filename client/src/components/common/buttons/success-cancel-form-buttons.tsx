@@ -14,14 +14,15 @@ const Container = styled(Box)`
 `;
 
 const SuccessCancelFormButtons = ({
+  successTitle = "Сохранить",
   onSuccess,
   onCancel,
   onRemove = () => {},
-  isUpdate = false,
+  isUpdate = false
 }) => {
   return (
     <ButtonsContainer>
-      <ButtonStyled title="Сохранить" style="SUCCESS" onClick={onSuccess} />
+      <ButtonStyled title={successTitle} style="SUCCESS" onClick={onSuccess} />
       <Container>
         {isUpdate && (
           <ButtonStyled title="Удалить" style="DELETE" onClick={onRemove} />

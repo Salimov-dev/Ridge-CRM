@@ -7,14 +7,14 @@ const useSearchUser = ({ users, data }) => {
 
     if (data?.lastName?.length) {
       array = array?.filter((user) =>
-        user.lastName.toLowerCase().includes(data.lastName.toLowerCase())
+        user.lastName && data.lastName
+          ? user.lastName.toLowerCase().includes(data.lastName.toLowerCase())
+          : false
       );
     }
 
     if (data?.phone?.length) {
-      array = array?.filter((user) =>
-        String(user.phone).includes(data?.phone)
-      );
+      array = array?.filter((user) => String(user.phone).includes(data?.phone));
     }
 
     if (data?.email?.length) {
@@ -24,17 +24,7 @@ const useSearchUser = ({ users, data }) => {
     }
 
     if (data?.gender?.length) {
-      array = array?.filter((user) => user.gender.includes(data.gender));
-    }
-
-    if (data.selectedUsers?.length) {
-      array = array?.filter((user) => data.selectedUsers.includes(user._id));
-    }
-
-    if (data.selectedStatuses?.length) {
-      array = array?.filter((user) =>
-        data.selectedStatuses?.includes(user?.status)
-      );
+      array = array?.filter((user) => user.gender === data.gender);
     }
 
     return array;

@@ -8,11 +8,11 @@ const Component = styled(Box)`
   display: flex;
   gap: 6px;
   align-items: center;
-  justify-content: start;
+  justify-content: center;
 `;
 
 const UserNameWithAvatar = React.memo(
-  ({ userId, avatarSrc, isLoading, fontStyle = "normal" }) => {
+  ({ userId, avatarSrc, isLoading, fontStyle = "normal", withName = true }) => {
     return (
       <Component>
         <AvatarImage
@@ -21,9 +21,11 @@ const UserNameWithAvatar = React.memo(
           avatarSrc={avatarSrc}
           isLoading={isLoading}
         />
-        <Typography sx={{ width: "100%", fontStyle: fontStyle }}>
-          {FormatManagerName(userId)}
-        </Typography>
+        {withName && (
+          <Typography sx={{ width: "100%", fontStyle: fontStyle }}>
+            {FormatManagerName(userId)}
+          </Typography>
+        )}
       </Component>
     );
   }

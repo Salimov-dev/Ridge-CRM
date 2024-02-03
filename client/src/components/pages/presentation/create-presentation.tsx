@@ -8,7 +8,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useDispatch, useSelector } from "react-redux";
 // components
 import ManagerPresentationForm from "../../common/forms/presentation-manager.form";
-import SuccessCancelFormButtons from "@common/forms/buttons/success-cancel-form-buttons";
+import SuccessCancelFormButtons from "@components/common/buttons/success-cancel-form-buttons";
 import HeaderWithCloseButton from "@common/page-headers/header-with-close-button";
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
 // schema
@@ -20,14 +20,14 @@ import { createPresentation } from "@store/presentation/presentations.store";
 import { getCurrentUserId, getIsUserCurator } from "@store/user/users.store";
 import {
   getObjectAddressById,
-  getObjectsList,
+  getObjectsList
 } from "@store/object/objects.store";
 
 const initialState = {
   objectId: "",
   status: "",
   cloudLink: "",
-  curatorComment: "",
+  curatorComment: ""
 };
 
 const CreatePresentation = React.memo(({ objectId, onClose }) => {
@@ -52,11 +52,11 @@ const CreatePresentation = React.memo(({ objectId, onClose }) => {
     watch,
     handleSubmit,
     setValue,
-    formState: { errors },
+    formState: { errors }
   } = useForm({
     defaultValues: initialState,
     mode: "onChange",
-    resolver: yupResolver(presentationSchema),
+    resolver: yupResolver(presentationSchema)
   });
 
   const data = watch();
@@ -74,7 +74,7 @@ const CreatePresentation = React.memo(({ objectId, onClose }) => {
         ...data,
         cloudLink: data.cloudLink,
         objectId: data.objectId,
-        status: statusToBeAgreedId,
+        status: statusToBeAgreedId
       };
 
       dispatch<any>(createPresentation(presentationNewData))

@@ -7,21 +7,21 @@ const User = sequelize.define(
     _id: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
-      primaryKey: true,
+      primaryKey: true
     },
     email: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: true,
+      unique: true
     },
     password: DataTypes.STRING,
-    curatorId: { type: DataTypes.ARRAY(DataTypes.STRING), defaultValue: null },
+    curatorId: { type: DataTypes.STRING, defaultValue: null },
     gender: { type: DataTypes.STRING, defaultValue: null },
     birthday: { type: DataTypes.STRING, defaultValue: null },
     status: { type: DataTypes.STRING, defaultValue: null },
     role: {
       type: DataTypes.ARRAY(DataTypes.STRING),
-      defaultValue: ["CURATOR"],
+      defaultValue: ["CURATOR"]
     },
     firstName: { type: DataTypes.STRING, defaultValue: null },
     surName: { type: DataTypes.STRING, defaultValue: null },
@@ -30,16 +30,16 @@ const User = sequelize.define(
     isActive: { type: DataTypes.BOOLEAN, defaultValue: null },
     created_at: {
       type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW,
+      defaultValue: DataTypes.NOW
     },
     updated_at: {
       type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW,
-    },
+      defaultValue: DataTypes.NOW
+    }
   },
   {
     timestamps: false,
-    tableName: "users",
+    tableName: "users"
   }
 );
 

@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 // components
 import MeetingForm from "@components/common/forms/meeting.form";
 import FindObjectOnMap from "@common/find-object-on-map/find-object-on-map";
-import SuccessCancelFormButtons from "@components/common/forms/buttons/success-cancel-form-buttons";
+import SuccessCancelFormButtons from "@components/common/buttons/success-cancel-form-buttons";
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
 import HeaderWithCloseButton from "@components/common/page-headers/header-with-close-button";
 // schema
@@ -36,7 +36,7 @@ const initialState = {
   city: "",
   address: "",
   latitude: null,
-  longitude: null,
+  longitude: null
   // zoom: null,
 };
 
@@ -61,11 +61,11 @@ const CreateMeeting = React.memo(
       watch,
       handleSubmit,
       setValue,
-      formState: { errors },
+      formState: { errors }
     } = useForm({
       defaultValues: initialState,
       mode: "onChange",
-      resolver: yupResolver(meetingSchema),
+      resolver: yupResolver(meetingSchema)
     });
 
     const {
@@ -73,7 +73,7 @@ const CreateMeeting = React.memo(
       getAddress,
       getLatitudeCoordinates,
       getLongitudeCoordinates,
-      findedObject,
+      findedObject
     } = useFindObject();
 
     const data = watch();

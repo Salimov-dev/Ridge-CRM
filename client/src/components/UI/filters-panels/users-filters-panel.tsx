@@ -36,24 +36,6 @@ const UsersFiltersPanel = React.memo(
             inputProps={{ maxLength: 30 }}
             disabled={isLoading ? true : false}
           />
-          <MultiSelectField
-            name="users"
-            labelId="users-label"
-            label="Выбор по менеджеру"
-            itemsList={users}
-            selectedItems={data.selectedUsers}
-            onChange={(e) => setValue("selectedUsers", e.target.value)}
-            disabled={isLoading ? true : false}
-          />
-          <MultiSelectField
-            name="selectedStatuses"
-            labelId="selectedStatuses-label"
-            label="Выбор по статусу"
-            itemsList={statuses}
-            selectedItems={data.selectedStatuses}
-            onChange={(e) => setValue("selectedStatuses", e.target.value)}
-            disabled={isLoading ? true : false}
-          />
           <SearchSelectField
             register={register}
             name="gender"

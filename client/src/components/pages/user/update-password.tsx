@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 // components
 import TitleWithCloseButton from "@components/common/page-headers/header-with-close-button";
 import UserProfileForm from "@components/common/forms/user-profile.form";
-import SuccessCancelFormButtons from "@components/common/forms/buttons/success-cancel-form-buttons";
+import SuccessCancelFormButtons from "@components/common/buttons/success-cancel-form-buttons";
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
 // schemas
 import { userProfileSchema } from "@schemas/user-profile.schema";
@@ -15,14 +15,14 @@ import { userProfileSchema } from "@schemas/user-profile.schema";
 import {
   getCurrentUserData,
   updatePassword,
-  updateUser,
+  updateUser
 } from "@store/user/users.store";
 import UpdatePasswordForm from "@components/common/forms/update-password-form";
 import { passwordUpdateSchema } from "@schemas/password-update.schema";
 
 const initialState = {
   currentPassword: "",
-  newPassword: "",
+  newPassword: ""
 };
 
 const UpdatePassword = ({ onClose }) => {
@@ -35,11 +35,11 @@ const UpdatePassword = ({ onClose }) => {
     watch,
     handleSubmit,
     formState: { errors },
-    setValue,
+    setValue
   } = useForm({
     defaultValues: initialState,
     mode: "onChange",
-    resolver: yupResolver(passwordUpdateSchema),
+    resolver: yupResolver(passwordUpdateSchema)
   });
   const data = watch();
 

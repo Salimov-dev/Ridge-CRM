@@ -9,7 +9,7 @@ import { useTheme } from "@emotion/react";
 import { tokens } from "@theme/theme";
 // components
 import LastContactForm from "@components/common/forms/last-contact.form";
-import SuccessCancelFormButtons from "@components/common/forms/buttons/success-cancel-form-buttons";
+import SuccessCancelFormButtons from "@components/common/buttons/success-cancel-form-buttons";
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
 import HeaderWithCloseButton from "@components/common/page-headers/header-with-close-button";
 import DialogConfirm from "@components/common/dialog/dialog-confirm";
@@ -19,7 +19,7 @@ import { lastContactSchema } from "@schemas/last-contact.schema";
 import {
   getLastContactsById,
   removeLastContact,
-  updateLastContact,
+  updateLastContact
 } from "@store/last-contact/last-contact.store";
 
 const UpdateLastContact = React.memo(({ lastContactId, onClose }) => {
@@ -37,7 +37,7 @@ const UpdateLastContact = React.memo(({ lastContactId, onClose }) => {
     date: lastContact?.date ? dayjs(lastContact?.date) : null,
     dateMyTask: null,
     timeMyTaks: null,
-    commentMyTask: "",
+    commentMyTask: ""
   };
 
   const {
@@ -45,11 +45,11 @@ const UpdateLastContact = React.memo(({ lastContactId, onClose }) => {
     watch,
     handleSubmit,
     formState: { errors },
-    setValue,
+    setValue
   } = useForm({
     defaultValues: formatedLastContact,
     mode: "onChange",
-    resolver: yupResolver(lastContactSchema),
+    resolver: yupResolver(lastContactSchema)
   });
 
   const data = watch();

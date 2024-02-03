@@ -8,7 +8,7 @@ import { tokens } from "@theme/theme";
 import { yupResolver } from "@hookform/resolvers/yup";
 // components
 import MyTaskForm from "@components/common/forms/my-task.form";
-import SuccessCancelFormButtons from "@components/common/forms/buttons/success-cancel-form-buttons";
+import SuccessCancelFormButtons from "@components/common/buttons/success-cancel-form-buttons";
 import HeaderWithCloseButton from "@components/common/page-headers/header-with-close-button";
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
 // store
@@ -26,7 +26,7 @@ const initialState = {
   comment: null,
   result: null,
   isDone: false,
-  isCallTask: true,
+  isCallTask: true
 };
 
 const CreateMyTask = React.memo(
@@ -36,7 +36,7 @@ const CreateMyTask = React.memo(
     onClose,
     objects,
     objectId = "",
-    isObjectPage = false,
+    isObjectPage = false
   }) => {
     const dispatch = useDispatch();
     const theme = useTheme();
@@ -49,11 +49,11 @@ const CreateMyTask = React.memo(
       watch,
       handleSubmit,
       setValue,
-      formState: { errors },
+      formState: { errors }
     } = useForm({
       defaultValues: initialState,
       mode: "onChange",
-      resolver: yupResolver(taskSchema),
+      resolver: yupResolver(taskSchema)
     });
     const data = watch();
 

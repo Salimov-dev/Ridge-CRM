@@ -3,9 +3,9 @@ import { createAction, createSlice } from "@reduxjs/toolkit";
 // config
 import configFile from "@config/config.json";
 // services
-import localStorageService from "../../services/user/local.storage-service";
-import avatarService from "../../services/avatar/avatar.service";
-import userService from "../../services/user/user.service";
+import localStorageService from "@services/user/local.storage-service";
+import avatarService from "@services/avatar/avatar.service";
+import userService from "@services/user/user.service";
 
 const socket = io(configFile.ioEndPoint);
 
@@ -13,12 +13,12 @@ const initialState = localStorageService.getAccessToken()
   ? {
       entities: null,
       isLoading: true,
-      error: null,
+      error: null
     }
   : {
       entities: null,
       isLoading: false,
-      error: null,
+      error: null
     };
 
 const avatarSlice = createSlice({
@@ -48,8 +48,8 @@ const avatarSlice = createSlice({
       state.entities = state.entities.filter(
         (item) => item.userId !== action.payload
       );
-    },
-  },
+    }
+  }
 });
 
 const avatarUploadRequested = createAction("avatar/avatarUploadRequested");

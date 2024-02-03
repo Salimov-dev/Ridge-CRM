@@ -13,7 +13,7 @@ import { createLastContact } from "@store/last-contact/last-contact.store";
 import { lastContactSchema } from "@schemas/last-contact.schema";
 // utils
 import { capitalizeFirstLetter } from "@utils/data/capitalize-first-letter";
-import SuccessCancelFormButtons from "@common/forms/buttons/success-cancel-form-buttons";
+import SuccessCancelFormButtons from "@components/common/buttons/success-cancel-form-buttons";
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
 import { useTheme } from "@emotion/react";
 import { tokens } from "@theme/theme";
@@ -22,7 +22,7 @@ import HeaderWithCloseButton from "@common/page-headers/header-with-close-button
 const initialState = {
   date: dayjs(),
   result: "",
-  objectId: "",
+  objectId: ""
 };
 
 const CreateLastContact = React.memo(({ objectPageId, onClose }) => {
@@ -37,11 +37,11 @@ const CreateLastContact = React.memo(({ objectPageId, onClose }) => {
     watch,
     handleSubmit,
     setValue,
-    formState: { errors },
+    formState: { errors }
   } = useForm({
     defaultValues: initialState,
     mode: "onChange",
-    resolver: yupResolver(lastContactSchema),
+    resolver: yupResolver(lastContactSchema)
   });
 
   const data = watch();
@@ -52,7 +52,7 @@ const CreateLastContact = React.memo(({ objectPageId, onClose }) => {
     const lastContactData = {
       date: data.date,
       objectId: data.objectId,
-      result: capitalizeFirstLetter(data.result).trim(),
+      result: capitalizeFirstLetter(data.result).trim()
     };
 
     dispatch<any>(createLastContact(lastContactData))

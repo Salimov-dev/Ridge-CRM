@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 // components
 import MyTaskForm from "@components/common/forms/my-task.form";
 import TitleWithCloseButton from "@components/common/page-headers/header-with-close-button";
-import SuccessCancelFormButtons from "@components/common/forms/buttons/success-cancel-form-buttons";
+import SuccessCancelFormButtons from "@components/common/buttons/success-cancel-form-buttons";
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
 // schema
 import { taskSchema } from "@schemas/task.shema";
@@ -32,7 +32,7 @@ const UpdateMyTask = React.memo(
     const formatedTask = {
       ...task,
       date: task?.date ? dayjs(task?.date) : null,
-      time: task?.time ? dayjs(task?.time) : null,
+      time: task?.time ? dayjs(task?.time) : null
     };
 
     const {
@@ -40,11 +40,11 @@ const UpdateMyTask = React.memo(
       watch,
       handleSubmit,
       formState: { errors },
-      setValue,
+      setValue
     } = useForm({
       defaultValues: formatedTask,
       mode: "onChange",
-      resolver: yupResolver(taskSchema),
+      resolver: yupResolver(taskSchema)
     });
 
     const data = watch();
@@ -68,13 +68,13 @@ const UpdateMyTask = React.memo(
       const newData = {
         ...data,
         date: transformedDate,
-        time: transformedTime,
+        time: transformedTime
       };
 
       const lastContactData = {
         date: data.date,
         objectId: data.objectId,
-        result: capitalizeFirstLetter(data.result).trim(),
+        result: capitalizeFirstLetter(data.result).trim()
       };
 
       dispatch<any>(updateTask(newData))

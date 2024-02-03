@@ -8,7 +8,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
 import ObjectForm from "@common/forms/object-form/object.form";
 import HeaderWithBackButton from "@common/page-headers/header-with-back-button";
-import SuccessCancelFormButtons from "@components/common/forms/buttons/success-cancel-form-buttons";
+import SuccessCancelFormButtons from "@components/common/buttons/success-cancel-form-buttons";
 // utils
 import { capitalizeFirstLetter } from "@utils/data/capitalize-first-letter";
 // schemas
@@ -26,11 +26,11 @@ const UpdateObject = React.memo(({ onClose, objectId }) => {
     register,
     watch,
     handleSubmit,
-    formState: { errors },
+    formState: { errors }
   } = useForm({
     defaultValues: object,
     mode: "onChange",
-    resolver: yupResolver(objectSchema),
+    resolver: yupResolver(objectSchema)
   });
 
   const data = watch();
@@ -40,7 +40,7 @@ const UpdateObject = React.memo(({ onClose, objectId }) => {
 
     const newData = {
       ...data,
-      address: capitalizeFirstLetter(data.address),
+      address: capitalizeFirstLetter(data.address)
     };
 
     dispatch<any>(updateObject(newData))

@@ -20,6 +20,7 @@ import UpdatePresentation from "@components/pages/presentation/update-presentati
 import AuthPage from "@components/pages/auth/auth.page";
 import UpdateProfile from "@components/pages/user/update-profile";
 import UpdatePassword from "@components/pages/user/update-password";
+import CreateUser from "@components/pages/user/create-user";
 
 const PageDialogs = ({
   state,
@@ -27,7 +28,7 @@ const PageDialogs = ({
   objects = [],
   users = [],
   selectedObjects = [],
-  setRowSelection = () => {},
+  setRowSelection = () => {}
 }) => {
   const {
     handleCloseCreateObjectPage,
@@ -50,6 +51,7 @@ const PageDialogs = ({
     handleCloseAuthPage,
     handleCloseUpdateProfilePage,
     handleCloseUpdatePasswordPage,
+    handleCloseCreateUserPage
   } = useDialogHandlers(setState);
 
   return (
@@ -248,6 +250,12 @@ const PageDialogs = ({
         component={<UpdatePassword onClose={handleCloseUpdatePasswordPage} />}
         onClose={handleCloseUpdatePasswordPage}
         open={state.updatePasswordPage}
+        maxWidth="sm"
+      />
+      <DialogStyled
+        component={<CreateUser onClose={handleCloseCreateUserPage} />}
+        onClose={handleCloseCreateUserPage}
+        open={state.createManagerPage}
         maxWidth="sm"
       />
     </>

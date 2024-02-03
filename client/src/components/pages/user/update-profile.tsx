@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 // components
 import TitleWithCloseButton from "@components/common/page-headers/header-with-close-button";
 import UserProfileForm from "@components/common/forms/user-profile.form";
-import SuccessCancelFormButtons from "@components/common/forms/buttons/success-cancel-form-buttons";
+import SuccessCancelFormButtons from "@components/common/buttons/success-cancel-form-buttons";
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
 // schemas
 import { userProfileSchema } from "@schemas/user-profile.schema";
@@ -21,7 +21,7 @@ const UpdateProfile = ({ onClose }) => {
 
   const formatedUserData = {
     ...user,
-    birthday: user?.birthday ? dayjs(user?.birthday) : null,
+    birthday: user?.birthday ? dayjs(user?.birthday) : null
   };
 
   const {
@@ -29,11 +29,11 @@ const UpdateProfile = ({ onClose }) => {
     watch,
     handleSubmit,
     formState: { errors },
-    setValue,
+    setValue
   } = useForm({
     defaultValues: formatedUserData,
     mode: "onChange",
-    resolver: yupResolver(userProfileSchema),
+    resolver: yupResolver(userProfileSchema)
   });
   const data = watch();
 

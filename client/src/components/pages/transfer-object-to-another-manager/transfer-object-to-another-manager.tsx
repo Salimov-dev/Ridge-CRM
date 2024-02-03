@@ -11,7 +11,7 @@ import { useForm } from "react-hook-form";
 import Titles from "./components/titles";
 import SelectedError from "./components/selected-error";
 import TransferObjectToAnotherManagerForm from "@components/common/forms/transfer-object-to-another-manager.form";
-import SuccessCancelFormButtons from "@components/common/forms/buttons/success-cancel-form-buttons";
+import SuccessCancelFormButtons from "@components/common/buttons/success-cancel-form-buttons";
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
 import HeaderWithCloseButton from "@components/common/page-headers/header-with-close-button";
 import DialogConfirm from "@components/common/dialog/dialog-confirm";
@@ -30,14 +30,14 @@ const TitlesContainer = styled(Box)`
 `;
 
 const initialState = {
-  managerId: "",
+  managerId: ""
 };
 
 const TransferObjectToAnotherManager = React.memo(
   ({
     objectsToTransfer = [],
     onClose = () => {},
-    setRowSelection = () => {},
+    setRowSelection = () => {}
   }) => {
     const dispatch = useDispatch();
     const theme = useTheme();
@@ -49,11 +49,11 @@ const TransferObjectToAnotherManager = React.memo(
     const {
       register,
       watch,
-      formState: { errors },
+      formState: { errors }
     } = useForm({
       defaultValues: initialState,
       mode: "onChange",
-      resolver: yupResolver(transferObjectToAnotherManagerSchema),
+      resolver: yupResolver(transferObjectToAnotherManagerSchema)
     });
     const watchManagerId = watch("managerId", "");
 

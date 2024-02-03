@@ -16,7 +16,7 @@ const initialState = localStorageService.getAccessToken()
       error: null,
       auth: { userId: localStorageService.getUserId() },
       isLoggedIn: true,
-      dataLoaded: false,
+      dataLoaded: false
     }
   : {
       entities: [],
@@ -24,7 +24,7 @@ const initialState = localStorageService.getAccessToken()
       error: null,
       auth: null,
       isLoggedIn: false,
-      dataLoaded: false,
+      dataLoaded: false
     };
 
 const usersListSlice = createSlice({
@@ -69,8 +69,8 @@ const usersListSlice = createSlice({
     },
     authRequested: (state) => {
       state.error = null;
-    },
-  },
+    }
+  }
 });
 
 const { reducer: usersListReducer, actions } = usersListSlice;
@@ -82,7 +82,7 @@ const {
   authRequestSuccess,
   userLoggedOut,
   userUpdateSuccessed,
-  userCreated,
+  userCreated
 } = actions;
 
 const authRequested = createAction("users/authRequested");
@@ -136,7 +136,7 @@ export const loadUsersList = () => async (dispatch) => {
 export const createNewUser = (payload) => async (dispatch) => {
   dispatch(authRequested());
   try {
-    await authService.register(payload);
+    await authService.create(payload);
     socket.emit("userCreated", payload);
   } catch (error) {
     dispatch(authRequestFailed(error.message));
