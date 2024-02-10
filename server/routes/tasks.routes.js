@@ -1,38 +1,68 @@
 import express from "express";
-import Company from "../models/Company.js";
 import auth from "../middleware/auth.middleware.js";
 import Task from "../models/Task.js";
 import User from "../models/User.js";
+import { roleCurator, roleManager, roleObserver } from "../utils/user-roles.js";
 
 const router = express.Router({ mergeParams: true });
 
 router.get("/", auth, async (req, res) => {
   try {
     const userId = req.user._id;
+    const user = await User.findByPk(userId);
 
-    // const user = await User.findOne({ _id: userId });
-    // const userRole = user.role;
+    if (!userId) {
+      return res.status(404).json({ message: "Пользователь не найден" });
+    }
 
-    // if (userRole === "MANAGER") {
-    //   const tasks = await Task.find({
-    //     $or: [
-    //       { userId: userId }, // Задачи, где userId равен текущему пользователю
-    //       { managerId: userId }, // Задачи, где managerId равен id текущего пользователя
-    //     ]
-    //   });
-    //   return res.status(200).send(tasks);
-    // }
+    const userRole = user.role;
 
-    const tasks = await Task.findAll({ where: { userId } });
-    // const managers = await User.find({ curatorId: userId });
-    // const managerIds = managers.map((manager) => manager._id);
-    // const managerTasks = await Task.find({ userId: { $in: managerIds } });
-    // const alltasks = [...tasks, ...managerTasks];
+    if (userRole === roleManager) {
+      const tasks = await Task.findAll({ where: { userId } });
+      return res.status(200).send(tasks);
+    }
 
-    return res.status(200).send(tasks);
+    if (userRole === roleCurator || userRole === roleObserver) {
+      const curatorTasks = await Task.findAll({ where: { userId } });
+      if (!curatorTasks.length) {
+        return res
+          .status(404)
+          .json({ message: "Задачи для куратора или наблюдателя не найдены" });
+      }
+
+      const curatorUsers = await User.findAll({ where: { curatorId: userId } });
+      if (!curatorUsers.length) {
+        return res
+          .status(404)
+          .json({ message: "Менеджеры у Куратора не найдены" });
+      }
+
+      // Получаем идентификаторы всех менеджеров, связанных с кураторами или наблюдателями
+      const managerIds = curatorUsers.map((user) => user._id);
+
+      // Получаем задачи для всех менеджеров
+      const managerTasks = await Task.findAll({
+        where: { userId: managerIds }
+      });
+
+      // Объединяем задачи кураторов и наблюдателей с задачами соответствующих менеджеров
+      const curatorUsersTasks = [...curatorTasks, ...managerTasks];
+
+      if (userRole === roleCurator) {
+        return res.status(200).send([user, curatorUsers, curatorUsersTasks]);
+      } else {
+        const curatorId = user.curatorId;
+        const curatorUser = await User.findByPk(curatorId);
+        return res
+          .status(200)
+          .send([user, curatorUser, curatorUsers, curatorUsersTasks]);
+      }
+    }
+
+    return res.status(200).send([]);
   } catch (e) {
     res.status(500).json({
-      message: "На сервере произошла ошибка, попробуйте позже",
+      message: "На сервере произошла ошибка, попробуйте позже"
     });
   }
 });
@@ -40,19 +70,16 @@ router.get("/", auth, async (req, res) => {
 router.post("/create", auth, async (req, res) => {
   try {
     const userId = req.user._id;
-    // const company = await Company.findOne({
-    //   $or: [{ managers: userId }, { curators: userId }],
-    // });
 
     const newTask = await Task.create({
       ...req.body,
-      userId,
+      userId
     });
 
     res.status(201).send(newTask);
   } catch (e) {
     res.status(500).json({
-      message: "На сервере произошла ошибка, попробуйте позже",
+      message: "На сервере произошла ошибка, попробуйте позже"
     });
   }
 });
@@ -62,7 +89,7 @@ router.patch("/:taskId?/edit", auth, async (req, res) => {
     const { taskId } = req.params;
     if (!taskId) {
       return res.status(400).json({
-        message: "Необходимо указать идентификатор задачи (taskId).",
+        message: "Необходимо указать идентификатор задачи (taskId)."
       });
     }
 
@@ -70,7 +97,7 @@ router.patch("/:taskId?/edit", auth, async (req, res) => {
 
     if (!existingTask) {
       return res.status(404).json({
-        message: "Встреча не найдена.",
+        message: "Встреча не найдена."
       });
     }
 
@@ -78,7 +105,7 @@ router.patch("/:taskId?/edit", auth, async (req, res) => {
     res.send(updatedTask);
   } catch (e) {
     res.status(500).json({
-      message: "На сервере произошла ошибка, попробуйте позже",
+      message: "На сервере произошла ошибка, попробуйте позже"
     });
   }
 });
@@ -88,7 +115,7 @@ router.delete("/:taskId?", auth, async (req, res) => {
     const { taskId } = req.params;
     if (!taskId) {
       return res.status(400).json({
-        message: "Необходимо указать идентификатор объекта (objectId).",
+        message: "Необходимо указать идентификатор объекта (objectId)."
       });
     }
 
@@ -96,7 +123,7 @@ router.delete("/:taskId?", auth, async (req, res) => {
 
     if (!deletedTask) {
       return res.status(404).json({
-        message: "Объект не найден.",
+        message: "Объект не найден."
       });
     }
 
@@ -105,7 +132,7 @@ router.delete("/:taskId?", auth, async (req, res) => {
     res.status(204).send();
   } catch (e) {
     res.status(500).json({
-      message: "На сервере произошла ошибка, попробуйте позже",
+      message: "На сервере произошла ошибка, попробуйте позже"
     });
   }
 });

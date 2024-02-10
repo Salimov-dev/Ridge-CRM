@@ -1,47 +1,49 @@
 import express from "express";
 import { Op } from "sequelize";
-// models
 import Object from "../models/Object.js";
 import User from "../models/User.js";
 import auth from "../middleware/auth.middleware.js";
+import { roleCurator, roleManager, roleObserver } from "../utils/user-roles.js";
 
 const router = express.Router({ mergeParams: true });
 
 router.get("/", auth, async (req, res) => {
   try {
     const userId = req.user._id;
-
     const user = await User.findByPk(userId);
-    // const userRole = user.role;
 
-    // if (userRole === "MANAGER") {
-    //   // Если пользователь - менеджер, то показать только его объекты
-    //   const objects = await ObjectModel.findAll({ where: { userId } });
-    //   return res.status(200).json(objects);
-    // }
+    if (!user) {
+      return res.status(404).json({ message: "Пользователь не найден" });
+    }
+    const userRole = user.role;
 
-    // Найти объекты, принадлежащие текущему пользователю
-    const userObjects = await Object.findAll({ where: { userId } });
+    if (userRole.includes(roleManager)) {
+      const objects = await Object.findAll({ where: { userId } });
+      return res.status(200).send(objects);
+    }
 
-    // Найти менеджеров текущего пользователя
-    // const managers = await User.findAll({ where: { curatorId: userId } });
+    if (userRole.includes(roleCurator) || userRole.includes(roleObserver)) {
+      const objects = await Object.findAll({ where: { userId } });
 
-    // Создать массив идентификаторов менеджеров
-    // const managerIds = managers.map((manager) => manager._id);
+      const curatorUsers = await User.findAll({ where: { curatorId: userId } });
+      const curatorManagerIds = curatorUsers.map((user) => user._id);
 
-    // Найти объекты, принадлежащие менеджерам
-    // const managerObjects = await Object.findAll({
-    //   where: { userId: { [Op.in]: managerIds } },
-    // });
+      const curatorManagersObjects = await Object.findAll({
+        where: { userId: curatorManagerIds }
+      });
 
-    // Объединить объекты текущего пользователя и объекты менеджеров
-    // const allObjects = [...userObjects, ...managerObjects];
+      const usersObjects = [
+        ...objects,
+        ...curatorManagersObjects.map((obj) => obj.dataValues)
+      ];
 
-    return res.status(200).json(userObjects);
+      return res.status(200).send(usersObjects);
+    }
+
+    return res.status(200).send([]);
   } catch (e) {
-    console.error(e);
-    return res.status(500).json({
-      message: "На сервере произошла ошибка, попробуйте позже",
+    res.status(500).json({
+      message: "На сервере произошла ошибка, попробуйте позже"
     });
   }
 });
@@ -49,32 +51,17 @@ router.get("/", auth, async (req, res) => {
 router.post("/create", auth, async (req, res) => {
   try {
     const userId = req.user._id;
-    // const companies = await CompanyModel.findAll({
-    //   where: {
-    //     [Op.or]: [
-    //       { managers: { [Op.contains]: [userId] } },
-    //       { curators: { [Op.contains]: [userId] } },
-    //     ],
-    //   },
-    // });
-
-    // if (!companies || companies.length === 0) {
-    //   return res.status(403).json({
-    //     message: "У вас нет прав доступа к созданию объекта для компании.",
-    //   });
-    // }
 
     const newObject = await Object.create({
       ...req.body,
-      userId,
-      // companyId: companies[0]._id,
+      userId
     });
 
     res.status(201).json(newObject);
   } catch (e) {
     console.error(e);
     res.status(500).json({
-      message: "Ошибка на сервере, попробуйте позже",
+      message: "Ошибка на сервере, попробуйте позже"
     });
   }
 });
@@ -85,15 +72,15 @@ router.get("/:objectId?", auth, async (req, res) => {
 
     if (!objectId) {
       return res.status(400).json({
-        message: "Необходимо указать идентификатор объекта (objectId).",
+        message: "Необходимо указать идентификатор объекта (objectId)."
       });
     }
-    
+
     const editedObject = await Object.findByPk(objectId);
 
     if (!editedObject) {
       return res.status(404).json({
-        message: "Объект не найден.",
+        message: "Объект не найден."
       });
     }
 
@@ -101,7 +88,7 @@ router.get("/:objectId?", auth, async (req, res) => {
   } catch (e) {
     console.error(e);
     res.status(500).json({
-      message: "На сервере произошла ошибка, попробуйте позже",
+      message: "На сервере произошла ошибка, попробуйте позже"
     });
   }
 });
@@ -112,7 +99,7 @@ router.patch("/:objectId?/edit", auth, async (req, res) => {
 
     if (!objectId) {
       return res.status(400).json({
-        message: "Необходимо указать идентификатор объекта (objectId).",
+        message: "Необходимо указать идентификатор объекта (objectId)."
       });
     }
 
@@ -120,7 +107,7 @@ router.patch("/:objectId?/edit", auth, async (req, res) => {
 
     if (!existingObject) {
       return res.status(404).json({
-        message: "Объект не найден.",
+        message: "Объект не найден."
       });
     }
 
@@ -130,7 +117,7 @@ router.patch("/:objectId?/edit", auth, async (req, res) => {
   } catch (e) {
     console.error(e);
     res.status(500).json({
-      message: "На сервере произошла ошибка, попробуйте позже",
+      message: "На сервере произошла ошибка, попробуйте позже"
     });
   }
 });
@@ -142,7 +129,7 @@ router.patch("/update-multiple", auth, async (req, res) => {
     if (!objectIds || !Array.isArray(objectIds) || objectIds.length === 0) {
       return res.status(400).json({
         message:
-          "Необходимо предоставить действительные идентификаторы объектов (objectIds).",
+          "Необходимо предоставить действительные идентификаторы объектов (objectIds)."
       });
     }
 
@@ -152,20 +139,20 @@ router.patch("/update-multiple", auth, async (req, res) => {
       { _id: { [Op.in]: objectIds } },
       {
         userId,
-        status: toConnectObjectStatus,
+        status: toConnectObjectStatus
       }
     );
 
     // Найти и вернуть обновленные объекты
     const updatedObjects = await Object.findAll({
-      where: { _id: { [Op.in]: objectIds } },
+      where: { _id: { [Op.in]: objectIds } }
     });
 
     res.status(200).json(updatedObjects);
   } catch (e) {
     console.error(e);
     res.status(500).json({
-      message: "На сервере произошла ошибка, попробуйте позже",
+      message: "На сервере произошла ошибка, попробуйте позже"
     });
   }
 });
@@ -176,7 +163,7 @@ router.delete("/:objectId?", auth, async (req, res) => {
 
     if (!objectId) {
       return res.status(400).json({
-        message: "Необходимо указать идентификатор объекта (objectId).",
+        message: "Необходимо указать идентификатор объекта (objectId)."
       });
     }
 
@@ -184,7 +171,7 @@ router.delete("/:objectId?", auth, async (req, res) => {
 
     if (!deletedObject) {
       return res.status(404).json({
-        message: "Объект не найден.",
+        message: "Объект не найден."
       });
     }
 
@@ -194,7 +181,7 @@ router.delete("/:objectId?", auth, async (req, res) => {
   } catch (e) {
     console.error(e);
     res.status(500).json({
-      message: "На сервере произошла ошибка, попробуйте позже",
+      message: "На сервере произошла ошибка, попробуйте позже"
     });
   }
 });

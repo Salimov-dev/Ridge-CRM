@@ -6,6 +6,7 @@ import configFile from "@config/config.json";
 import authService from "@services/user/auth-service";
 import userService from "@services/user/user.service";
 import localStorageService from "@services/user/local.storage-service";
+import { userRolesArray } from "@data/users/user-roles";
 
 const socket = io(configFile.ioEndPoint);
 
@@ -217,7 +218,8 @@ export const getIsUserManager = (userId) => (state) => {
 export const getIsUserCurator = (userId) => (state) => {
   const user = state?.users?.entities?.find((user) => user?._id === userId);
 
-  const isCurator = user?.role?.includes("CURATOR") || false;
+  const roleCurator = "69gfoep3944jgjdso345003";
+  const isCurator = user?.role?.includes(roleCurator) || false;
 
   return isCurator;
 };

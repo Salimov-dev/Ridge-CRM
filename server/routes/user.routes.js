@@ -1,47 +1,40 @@
 import express from "express";
-import { Op } from "sequelize";
 import User from "../models/User.js";
 import auth from "../middleware/auth.middleware.js";
 import bcrypt from "bcryptjs";
+import { roleCurator, roleManager, roleObserver } from "../utils/user-roles.js";
 
 const router = express.Router();
 
 router.get("/", auth, async (req, res) => {
   try {
     const userId = req.user._id;
-
     const user = await User.findByPk(userId);
 
     if (!user) {
       return res.status(404).json({ message: "Пользователь не найден" });
     }
-
     const userRole = user.role;
 
-    const roleCurator = "69gfoep3944jgjdso345003";
-    const roleManager = "69gfoep3944jgjdso345002";
-    const roleObserver = "69dgp34954igfj345043001";
-
-    if (userRole === roleManager) {
-      const managerId = user.curatorId;
-
-      const manager = await User.findByPk(managerId);
-      if (!manager) {
-        return res.status(404).json({ message: "Менеджер не найден" });
-      }
-
-      return res.status(200).send([user, manager]);
+    if (userRole.includes(roleManager)) {
+      return res.status(200).send([user.dataValues]);
     }
 
-    const managerUsers = await User.findAll({ where: { curatorId: userId } });
-    const allUsers = [user, ...managerUsers];
+    if (userRole.includes(roleCurator) || userRole.includes(roleObserver)) {
+      const curatorUsers = await User.findAll({ where: { curatorId: userId } });
+      const usersData = [
+        user.dataValues,
+        ...curatorUsers.map((curatorUser) => curatorUser.dataValues)
+      ];
+      return res.status(200).send(usersData);
+    }
 
-    return res.status(200).send(allUsers);
-  } catch (e) {
-    console.error(e);
-    res.status(500).json({
-      message: "На сервере произошла ошибка. Попробуйте позже"
-    });
+    return res.status(200).send([]);
+  } catch (error) {
+    console.error(error);
+    return res
+      .status(500)
+      .json({ message: "На сервере произошла ошибка. Попробуйте позже" });
   }
 });
 

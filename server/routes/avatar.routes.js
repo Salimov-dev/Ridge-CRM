@@ -12,15 +12,6 @@ router.get("/:userId", auth, async (req, res) => {
   try {
     const { userId } = req.params;
 
-    // const company = await Company.findOne({
-    //   $or: [{ managers: userId }, { curators: userId }],
-    // });
-
-    // if (!company) {
-    //   return res.status(404).json({ message: "Company not found" });
-    // }
-
-    // const companyId = company._id.toString();
     const currentModuleUrl = import.meta.url;
     const currentModulePath = fileURLToPath(currentModuleUrl);
     const currentModuleDir = dirname(currentModulePath);
@@ -52,12 +43,12 @@ router.get("/:userId", auth, async (req, res) => {
     if (fileExtension === ".png") {
       const avatarPathPNG = path.join(avatarFolderPath, "ava.png");
       res.sendFile(avatarPathPNG);
-    }  else {
+    } else {
       return res.status(404).json({ message: "Invalid avatar file format" });
     }
   } catch (e) {
     res.status(500).json({
-      message: e.message || "На сервере произошла ошибка, попробуйте позже",
+      message: e.message || "На сервере произошла ошибка, попробуйте позже"
     });
   }
 });
@@ -66,15 +57,7 @@ router.post("/update/:userId", auth, async (req, res) => {
   try {
     res.setHeader("Content-Type", "application/json");
     const userId = req.user._id;
-    // const company = await Company.findOne({
-    //   $or: [{ managers: userId }, { curators: userId }],
-    // });
 
-    // if (!company) {
-    //   return res.status(404).json({ message: "Company not found" });
-    // }
-
-    // const companyId = company._id;
     const preview = req.body.src;
     const currentModuleUrl = import.meta.url;
     const currentModulePath = fileURLToPath(currentModuleUrl);
@@ -95,7 +78,7 @@ router.post("/update/:userId", auth, async (req, res) => {
     res.status(200).json({ message: "Avatar updated successfully" });
   } catch (e) {
     res.status(500).json({
-      message: e.message || "На сервере произошла ошибка, попробуйте позже",
+      message: e.message || "На сервере произошла ошибка, попробуйте позже"
     });
   }
 });
@@ -104,15 +87,6 @@ router.delete("/:userId", auth, async (req, res) => {
   try {
     const { userId } = req.params;
 
-    // const company = await Company.findOne({
-    //   $or: [{ managers: userId }, { curators: userId }],
-    // });
-
-    // if (!company) {
-    //   return res.status(404).json({ message: "Company not found" });
-    // }
-
-    // const companyId = company._id.toString();
     const currentModuleUrl = import.meta.url;
     const currentModulePath = fileURLToPath(currentModuleUrl);
     const currentModuleDir = dirname(currentModulePath);
@@ -139,10 +113,9 @@ router.delete("/:userId", auth, async (req, res) => {
     }
   } catch (e) {
     res.status(500).json({
-      message: e.message || "На сервере произошла ошибка, попробуйте позже",
+      message: e.message || "На сервере произошла ошибка, попробуйте позже"
     });
   }
 });
-
 
 export default router;

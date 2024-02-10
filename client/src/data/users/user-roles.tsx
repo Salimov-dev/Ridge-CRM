@@ -6,7 +6,7 @@ const userRolesArray = [
   {
     _id: "69gfoep3944jgjdso345002",
     name: "Менеджер"
-  }
+  },
   {
     _id: "69gfoep3944jgjdso345003",
     name: "Куратор"

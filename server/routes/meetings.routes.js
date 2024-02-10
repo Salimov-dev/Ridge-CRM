@@ -1,32 +1,48 @@
 import express from "express";
 import Meeting from "../models/Meeting.js";
-import Company from "../models/Company.js";
 import auth from "../middleware/auth.middleware.js";
 import User from "../models/User.js";
+import { roleCurator, roleManager, roleObserver } from "../utils/user-roles.js";
 
 const router = express.Router({ mergeParams: true });
 
 router.get("/", auth, async (req, res) => {
   try {
     const userId = req.user._id;
-    // const user = await User.findByPk(userId);
-    // const userRole = user.role;
+    const user = await User.findByPk(userId);
 
-    // if (userRole === "MANAGER") {
-    //   const meetings = await Meeting.find({ userId });
-    //   return res.status(200).send(meetings);
-    // }
+    if (!user) {
+      return res.status(404).json({ message: "Пользователь не найден" });
+    }
+    const userRole = user.role;
 
-    const meetings = await Meeting.findAll({ where: { userId } });
-    // const managers = await User.find({ curatorId: userId });
-    // const managerIds = managers.map((manager) => manager._id);
-    // const managerMeetings = await Meeting.find({ userId: { $in: managerIds } });
-    // const allMeetings = [...meetings, ...managerMeetings];
+    if (userRole.includes(roleManager)) {
+      const meetings = await Meeting.findAll({ where: { userId } });
+      return res.status(200).send(meetings);
+    }
 
-    return res.status(200).send(meetings);
+    if (userRole.includes(roleCurator) || userRole.includes(roleObserver)) {
+      const meetings = await Meeting.findAll({ where: { userId } });
+
+      const curatorUsers = await User.findAll({ where: { curatorId: userId } });
+      const curatorManagerIds = curatorUsers.map((user) => user._id);
+
+      const curatorManagersMeetings = await Meeting.findAll({
+        where: { userId: curatorManagerIds }
+      });
+
+      const usersMeetings = [
+        ...meetings,
+        ...curatorManagersMeetings.map((meet) => meet.dataValues)
+      ];
+
+      return res.status(200).send(usersMeetings);
+    }
+
+    return res.status(200).send([]);
   } catch (e) {
     res.status(500).json({
-      message: "На сервере произошла ошибка, попробуйте позже",
+      message: "На сервере произошла ошибка, попробуйте позже"
     });
   }
 });
@@ -34,19 +50,15 @@ router.get("/", auth, async (req, res) => {
 router.post("/create", auth, async (req, res) => {
   try {
     const userId = req.user._id;
-    // const company = await Company.findOne({
-    //   $or: [{ managers: userId }, { curators: userId }],
-    // });
-
     const newMeeting = await Meeting.create({
       ...req.body,
-      userId,
+      userId
     });
 
     res.status(201).send(newMeeting);
   } catch (e) {
     res.status(500).json({
-      message: "На сервере произошла ошибка, попробуйте позже",
+      message: "На сервере произошла ошибка, попробуйте позже"
     });
   }
 });
@@ -56,7 +68,7 @@ router.patch("/:meetingId?/edit", auth, async (req, res) => {
     const { meetingId } = req.params;
     if (!meetingId) {
       return res.status(400).json({
-        message: "Необходимо указать идентификатор встречи (meetingId).",
+        message: "Необходимо указать идентификатор встречи (meetingId)."
       });
     }
 
@@ -64,7 +76,7 @@ router.patch("/:meetingId?/edit", auth, async (req, res) => {
 
     if (!existingMeeting) {
       return res.status(404).json({
-        message: "Встреча не найдена.",
+        message: "Встреча не найдена."
       });
     }
 
@@ -73,7 +85,7 @@ router.patch("/:meetingId?/edit", auth, async (req, res) => {
     res.status(200).json(updatedMeeting);
   } catch (e) {
     res.status(500).json({
-      message: "На сервере произошла ошибка, попробуйте позже",
+      message: "На сервере произошла ошибка, попробуйте позже"
     });
   }
 });
@@ -84,7 +96,7 @@ router.delete("/:meetingId?", auth, async (req, res) => {
 
     if (!meetingId) {
       return res.status(400).json({
-        message: "Необходимо указать идентификатор встречи (meetingId).",
+        message: "Необходимо указать идентификатор встречи (meetingId)."
       });
     }
 
@@ -92,7 +104,7 @@ router.delete("/:meetingId?", auth, async (req, res) => {
 
     if (!deletedMeeting) {
       return res.status(404).json({
-        message: "Встреча не найдена.",
+        message: "Встреча не найдена."
       });
     }
 
@@ -101,7 +113,7 @@ router.delete("/:meetingId?", auth, async (req, res) => {
     res.status(204).send();
   } catch (e) {
     res.status(500).json({
-      message: "На сервере произошла ошибка, попробуйте позже",
+      message: "На сервере произошла ошибка, попробуйте позже"
     });
   }
 });
