@@ -1,4 +1,5 @@
 {
   "apiEndpoint": "http://localhost:8080/api/",
-  "ioEndPoint": "localhost:8080"
+  "ioEndPoint": "localhost:8080",
+  "licenseCost": 25
 }

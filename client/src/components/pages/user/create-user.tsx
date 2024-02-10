@@ -79,6 +79,20 @@ const CreateUser = React.memo(({ onClose }) => {
           padding: "0 10px"
         }}
       >
+        <Box
+          sx={{
+            width: "100%",
+            display: "flex",
+            justifyContent: "center",
+            backgroundColor: "red",
+            padding: "5px"
+          }}
+        >
+          <Typography variant="h4" sx={{ textAlign: "center" }}>
+            Пароль для каждого нового пользователя задаётся по умолчанию
+            "Qwer1234"
+          </Typography>
+        </Box>
         <Typography>
           1. Введите почту будущего Пользователя (она же будет служить Логином
           для доступа в систему)

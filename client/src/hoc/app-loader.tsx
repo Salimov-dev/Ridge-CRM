@@ -30,6 +30,7 @@ import { loadPresentationsList } from "@store/presentation/presentations.store";
 import { loadPresentationStatusList } from "@store/presentation/presentation-status.store";
 // avatar
 import { loadAvatarList } from "@store/avatar/avatar.store";
+import { loadUserLicensesList } from "@store/user/user-license.store";
 
 interface AppLoaderProps {
   children: React.ReactNode;
@@ -58,6 +59,7 @@ const AppLoader = ({ children }: AppLoaderProps) => {
       // users
       dispatch<any>(loadUsersList());
       dispatch<any>(loadUserStatusesList());
+      dispatch<any>(loadUserLicensesList());
       // meetings
       dispatch<any>(loadMeetingsList());
       dispatch<any>(loadMeetingStatusesList());

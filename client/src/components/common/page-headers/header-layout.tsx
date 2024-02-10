@@ -13,12 +13,21 @@ const HeaderLayout = ({
   background = "yellow",
   color = "black",
   margin = "0 0 20px 0",
+  justifyContent = "start",
+  width = "inherit"
 }) => {
   return (
-    <Component sx={{ margin: margin }}>
+    <Component sx={{ margin: margin, justifyContent: justifyContent }}>
       <Typography
         variant="h2"
-        sx={{ background: background, color: color, padding: "0 10px" }}
+        sx={{
+          width: width,
+          background: background,
+          color: color,
+          padding: "0 10px",
+          textAlign: "center",
+          borderRadius: "4px"
+        }}
       >
         {title}
       </Typography>

@@ -3,6 +3,7 @@ import bcrypt from "bcryptjs";
 import { check, validationResult } from "express-validator";
 import User from "../models/User.js";
 import tokenService from "../services/token.service.js";
+import UserLicense from "../models/UserLicense.js";
 
 const router = express.Router({ mergeParams: true });
 
@@ -49,6 +50,10 @@ router.post("/signUp", [
       // Generate tokens and save the refresh token
       const tokens = tokenService.generate({ _id: newUser._id });
       await tokenService.save(newUser._id, tokens.refreshToken);
+
+      await UserLicense.create({
+        userId: newUser._id
+      });
 
       // Send the response with tokens and user ID
       res.status(201).send({ ...tokens, userId: newUser._id });
@@ -118,6 +123,10 @@ router.post("/create", [
         password: hashedPassword,
         role: addRoleToUser(existingUser?.role, role),
         curatorId: curatorId
+      });
+
+      await UserLicense.create({
+        userId: newUser._id
       });
 
       // Send the response with tokens and user ID

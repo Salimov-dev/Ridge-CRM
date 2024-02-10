@@ -224,13 +224,28 @@ const useDialogHandlers = (setState) => {
   const handleOpenCreateUserPage = () => {
     setState((prevState) => ({
       ...prevState,
-      createManagerPage: true
+      createUserPage: true
     }));
   };
   const handleCloseCreateUserPage = () => {
     setState((prevState) => ({
       ...prevState,
-      createManagerPage: false
+      createUserPage: false
+    }));
+  };
+
+  // обновление стейта при пополении баланса
+  const handleOpenMakePaymentPage = () => {
+    setState((prevState) => ({
+      ...prevState,
+      makePaymentPage: true
+    }));
+  };
+
+  const handleCloseMakePaymentPage = () => {
+    setState((prevState) => ({
+      ...prevState,
+      makePaymentPage: false
     }));
   };
 
@@ -272,7 +287,9 @@ const useDialogHandlers = (setState) => {
     handleOpenUpdatePasswordPage,
     handleCloseUpdatePasswordPage,
     handleCloseCreateUserPage,
-    handleOpenCreateUserPage
+    handleOpenCreateUserPage,
+    handleOpenMakePaymentPage,
+    handleCloseMakePaymentPage
   };
 };
 

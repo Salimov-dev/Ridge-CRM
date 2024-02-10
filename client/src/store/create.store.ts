@@ -33,6 +33,7 @@ import staticticPositionsReducer from "./statictics/statictics-positions.store";
 import monthIndexReducer from "./month-index.store";
 import currrentPathReducer from "./current-path.store";
 import avatarReducer from "./avatar/avatar.store";
+import userLicensesReducer from "./user/user-license.store";
 
 const rootReducer = combineReducers({
   // objects
@@ -52,6 +53,7 @@ const rootReducer = combineReducers({
   // users
   users: usersListReducer,
   userStatuses: userStatusesReducer,
+  userLicenses: userLicensesReducer,
   // meetings
   meetings: meetingsReducer,
   meetingStatuses: meetingStatusesReducer,
@@ -70,11 +72,11 @@ const rootReducer = combineReducers({
   //statictic
   staticticPositions: staticticPositionsReducer,
   // avatar
-  avatar: avatarReducer,
+  avatar: avatarReducer
 });
 
 export function createStore() {
   return configureStore({
-    reducer: rootReducer,
+    reducer: rootReducer
   });
 }

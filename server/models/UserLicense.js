@@ -21,15 +21,15 @@ const UserLicense = sequelize.define(
       onDelete: "CASCADE",
       onUpdate: "CASCADE"
     },
-    managers: { type: DataTypes.ARRAY(DataTypes.STRING) },
-    observers: { type: DataTypes.ARRAY(DataTypes.STRING) },
-    balance: { type: DataTypes.DECIMAL },
+    managers: { type: DataTypes.ARRAY(DataTypes.STRING), defaultValue: [] },
+    observers: { type: DataTypes.ARRAY(DataTypes.STRING), defaultValue: [] },
+    balance: { type: DataTypes.DECIMAL, defaultValue: 0 },
     dateStart: { type: DataTypes.DATE, defaultValue: DataTypes.NOW },
     dateEnd: {
       type: DataTypes.DATE,
-      defaultValue: () => dayjs().add(14, "day").toDate()
+      defaultValue: () => dayjs().add(15, "day").toDate()
     },
-    accountType: { type: DataTypes.STRING, defaultValue: "DEMO ID" },
+    accountType: { type: DataTypes.STRING, defaultValue: "DEMO" },
     created_at: {
       type: DataTypes.DATE,
       defaultValue: DataTypes.NOW

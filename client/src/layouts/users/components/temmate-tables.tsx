@@ -1,45 +1,36 @@
-import UsersFiltersPanel from "@components/UI/filters-panels/users-filters-panel";
+import { useSelector } from "react-redux";
 import { Box, Typography } from "@mui/material";
+import UsersFiltersPanel from "@components/UI/filters-panels/users-filters-panel";
 import TeamTitle from "./team-title";
 import BasicTable from "@components/common/table/basic-table";
 import { usersColumns } from "@columns/users.columns";
-import { useSelector } from "react-redux";
 import { getCurrentUserData } from "@store/user/users.store";
-import Buttons from "./buttons";
 
 const TeamMateTables = ({
   searchedUsers,
   observerUsersWithRole,
   data,
-  initialState,
   register,
-  reset,
   setValue,
-  isLoading,
-  isInputEmpty,
-  onOpenCreateUserPage
+  isLoading
 }) => {
   const currentUserData = useSelector(getCurrentUserData());
   const currentUserName = `${currentUserData?.lastName} ${currentUserData?.firstName} ${currentUserData?.surName}`;
   return (
-    <Box sx={{ marginTop: "20px" }}>
-      <Buttons
-        initialState={initialState}
-        reset={reset}
-        onOpenCreateUserPage={onOpenCreateUserPage}
-        isInputEmpty={isInputEmpty}
-      />
-      <TeamTitle title="Куратор" background="red" />
-      <Typography variant="h4">{currentUserName}</Typography>
+    <Box sx={{ marginTop: "10px" }}>
+      <Box sx={{ marginBottom: "20px" }}>
+        <TeamTitle title="Куратор команды" background="red" />
+        <Typography variant="h4">{currentUserName}</Typography>
+      </Box>
 
-      <TeamTitle title="Мои Наблюдатели" background="red" />
+      <TeamTitle title="Мои Наблюдатели" background="blue" />
       <BasicTable
         items={observerUsersWithRole}
         itemsColumns={usersColumns()}
         isLoading={isLoading}
       />
 
-      <TeamTitle title="Мои Менеджеры" background="red" />
+      <TeamTitle title="Мои Менеджеры" background="green" />
       <UsersFiltersPanel
         data={data}
         register={register}

@@ -21,6 +21,7 @@ import AuthPage from "@components/pages/auth/auth.page";
 import UpdateProfile from "@components/pages/user/update-profile";
 import UpdatePassword from "@components/pages/user/update-password";
 import CreateUser from "@components/pages/user/create-user";
+import MakePaymentPage from "@components/pages/payment/make-payment";
 
 const PageDialogs = ({
   state,
@@ -51,7 +52,8 @@ const PageDialogs = ({
     handleCloseAuthPage,
     handleCloseUpdateProfilePage,
     handleCloseUpdatePasswordPage,
-    handleCloseCreateUserPage
+    handleCloseCreateUserPage,
+    handleCloseMakePaymentPage
   } = useDialogHandlers(setState);
 
   return (
@@ -255,7 +257,13 @@ const PageDialogs = ({
       <DialogStyled
         component={<CreateUser onClose={handleCloseCreateUserPage} />}
         onClose={handleCloseCreateUserPage}
-        open={state.createManagerPage}
+        open={state.createUserPage}
+        maxWidth="sm"
+      />
+      <DialogStyled
+        component={<MakePaymentPage onClose={handleCloseMakePaymentPage} />}
+        onClose={handleCloseMakePaymentPage}
+        open={state.makePaymentPage}
         maxWidth="sm"
       />
     </>
