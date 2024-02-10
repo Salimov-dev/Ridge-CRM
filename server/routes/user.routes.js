@@ -17,9 +17,12 @@ router.get("/", auth, async (req, res) => {
     }
 
     const userRole = user.role;
-    const userRoleManager = "69gfoep3944jgjdso345002";
 
-    if (userRole === userRoleManager) {
+    const roleCurator = "69gfoep3944jgjdso345003";
+    const roleManager = "69gfoep3944jgjdso345002";
+    const roleObserver = "69dgp34954igfj345043001";
+
+    if (userRole === roleManager) {
       const managerId = user.curatorId;
 
       const manager = await User.findByPk(managerId);

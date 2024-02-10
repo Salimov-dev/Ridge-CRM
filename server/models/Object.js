@@ -1,5 +1,6 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../utils/postgre-conection.js";
+import User from "./User.js";
 
 const Object = sequelize.define(
   "Object",
@@ -7,18 +8,20 @@ const Object = sequelize.define(
     _id: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
-      primaryKey: true,
+      primaryKey: true
     },
     userId: {
       type: DataTypes.UUID,
       references: {
-        model: "users", // Имя таблицы (модели) в базе данных
-        key: "_id",
+        model: User,
+        key: "_id"
       },
       allowNull: false,
+      onDelete: "CASCADE",
+      onUpdate: "CASCADE"
     },
     status: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING
     },
 
     city: { type: DataTypes.STRING },
@@ -32,10 +35,9 @@ const Object = sequelize.define(
 
     contact: { type: DataTypes.STRING, defaultValue: null },
     fullDescription: { type: DataTypes.STRING, defaultValue: null },
-    rentPrice: { type: DataTypes.INTEGER, defaultValue: null },
-    priceForMetr: { type: DataTypes.INTEGER, defaultValue: null },
-    securityDeposit: { type: DataTypes.INTEGER, defaultValue: null },
-    advanseDeposit: { type: DataTypes.INTEGER, defaultValue: null },
+    rentPrice: { type: DataTypes.DECIMAL, defaultValue: null },
+    securityDeposit: { type: DataTypes.DECIMAL, defaultValue: null },
+    advanseDeposit: { type: DataTypes.DECIMAL, defaultValue: null },
     agentComission: { type: DataTypes.INTEGER, defaultValue: null },
     rentSquare: { type: DataTypes.INTEGER, defaultValue: null },
     rentalHolidays: { type: DataTypes.INTEGER, defaultValue: null },
@@ -60,16 +62,16 @@ const Object = sequelize.define(
 
     created_at: {
       type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW,
+      defaultValue: DataTypes.NOW
     },
     updated_at: {
       type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW,
-    },
+      defaultValue: DataTypes.NOW
+    }
   },
   {
     timestamps: false,
-    tableName: "objects",
+    tableName: "objects"
   }
 );
 

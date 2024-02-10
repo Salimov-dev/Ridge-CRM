@@ -1,5 +1,7 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../utils/postgre-conection.js";
+import User from "./User.js";
+import Object from "./Object.js";
 
 const Presentation = sequelize.define(
   "Presentation",
@@ -7,23 +9,23 @@ const Presentation = sequelize.define(
     _id: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
-      primaryKey: true,
+      primaryKey: true
     },
     userId: {
       type: DataTypes.UUID,
       references: {
-        model: "users", // Имя таблицы (модели) в базе данных
-        key: "_id",
+        model: User,
+        key: "_id"
       },
-      allowNull: false,
+      allowNull: false
     },
     objectId: {
       type: DataTypes.UUID,
       references: {
-        model: "objects", // Имя таблицы (модели) в базе данных
-        key: "_id",
+        model: Object,
+        key: "_id"
       },
-      defaultValue: null,
+      defaultValue: null
     },
     status: { type: DataTypes.STRING },
     result: { type: DataTypes.STRING },
@@ -32,16 +34,16 @@ const Presentation = sequelize.define(
 
     created_at: {
       type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW,
+      defaultValue: DataTypes.NOW
     },
     updated_at: {
       type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW,
-    },
+      defaultValue: DataTypes.NOW
+    }
   },
   {
     timestamps: false,
-    tableName: "presentations",
+    tableName: "presentations"
   }
 );
 

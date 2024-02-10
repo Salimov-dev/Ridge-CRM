@@ -1,28 +1,25 @@
 import React from "react";
-import { Box, Typography, styled } from "@mui/material";
+import { Box, Tooltip, Typography, styled } from "@mui/material";
 import { useSelector } from "react-redux";
 // components
 import TopBarDataContainter from "./topbar-data-container";
 // utils
-import { getCurrentWeekObjects } from "../../../../utils/objects/get-current-week-objects";
-import { getCurrentWeekPresentations } from "../../../../utils/presentations/get-current-week-presentations";
-import { getCurrentWeekMeetings } from "../../../../utils/meetings/get-current-week-meetings";
-import { getCurrentWeekTasks } from "../../../../utils/tasks/get-current-week-tasks";
-import { getCurrentWeekObjectsWithPhone } from "../../../../utils/objects/get-current-week-objects-wtih-phone";
+import { getCurrentWeekObjects } from "@utils/objects/get-current-week-objects";
+import { getCurrentWeekPresentations } from "@utils/presentations/get-current-week-presentations";
+import { getCurrentWeekMeetings } from "@utils/meetings/get-current-week-meetings";
+import { getCurrentWeekTasks } from "@utils/tasks/get-current-week-tasks";
+import { getCurrentWeekObjectsWithPhone } from "@utils/objects/get-current-week-objects-wtih-phone";
 // store
-import { getObjectsLoadingStatus } from "../../../../store/object/objects.store";
-import { getPresentationsLoadingStatus } from "../../../../store/presentation/presentations.store";
-import { getMeetingLoadingStatus } from "../../../../store/meeting/meetings.store";
-import { getTaskLoadingStatus } from "../../../../store/task/tasks.store";
-import {
-  getCurrentUserId,
-  getIsUserCurator
-} from "../../../../store/user/users.store";
+import { getObjectsLoadingStatus } from "@store/object/objects.store";
+import { getPresentationsLoadingStatus } from "@store/presentation/presentations.store";
+import { getMeetingLoadingStatus } from "@store/meeting/meetings.store";
+import { getTaskLoadingStatus } from "@store/task/tasks.store";
+import { getCurrentUserId, getIsUserCurator } from "@store/user/users.store";
 
 const ResultComponent = styled(Box)`
   display: flex;
   height: 50px;
-  padding: 0 30px;
+  padding: 0 15px;
   gap: 8px;
   justify-content: center;
   align-items: center;
@@ -62,64 +59,65 @@ const TopBarWeeklyResults = React.memo(() => {
   );
 
   return (
-    <ResultComponent>
-      <Typography variant="h5">ТЕКУЩАЯ НЕДЕЛЯ</Typography>
-      <TopBarDataContainter
-        title="Объектов:"
-        elements={objects}
-        path="/objects"
-        backgroundColor="Gold"
-        fontColor="black"
-        isLoading={isObjectLoading}
-      />
-      <TopBarDataContainter
-        title="С контактами:"
-        elements={objectsWithPhone}
-        path="/objects"
-        backgroundColor="OrangeRed"
-        isLoading={isObjectLoading}
-      />
-      <TopBarDataContainter
-        title="Презентаций:"
-        elements={presentations}
-        path="/presentations"
-        backgroundColor="SaddleBrown"
-        isLoading={isPresentationsLoading}
-      />
-      <TopBarDataContainter
-        title="Провести встреч:"
-        elements={meetings}
-        path="/meetings"
-        backgroundColor="RoyalBlue"
-        isLoading={isMeetingsLoading}
-      />
-      <TopBarDataContainter
-        title="Выполнить задач:"
-        elements={
-          isCurator ? currentUserTaskWithoutManagerTasks : currentUserTasks
-        }
-        path="/calendar"
-        backgroundColor="Sienna"
-        isLoading={isTasksLoading}
-      />
-      {isCurator ? (
+    <Tooltip title="Результаты текущей недели" placement="top-start" arrow>
+      <ResultComponent>
         <TopBarDataContainter
-          title="Задач Менеджерам:"
-          elements={tasksFromCurator}
+          title="Объектов:"
+          elements={objects}
+          path="/objects"
+          backgroundColor="Gold"
+          fontColor="black"
+          isLoading={isObjectLoading}
+        />
+        <TopBarDataContainter
+          title="С контактами:"
+          elements={objectsWithPhone}
+          path="/objects"
+          backgroundColor="OrangeRed"
+          isLoading={isObjectLoading}
+        />
+        <TopBarDataContainter
+          title="Презентаций:"
+          elements={presentations}
+          path="/presentations"
+          backgroundColor="SaddleBrown"
+          isLoading={isPresentationsLoading}
+        />
+        <TopBarDataContainter
+          title="Провести встреч:"
+          elements={meetings}
+          path="/meetings"
+          backgroundColor="RoyalBlue"
+          isLoading={isMeetingsLoading}
+        />
+        <TopBarDataContainter
+          title="Выполнить задач:"
+          elements={
+            isCurator ? currentUserTaskWithoutManagerTasks : currentUserTasks
+          }
           path="/calendar"
-          backgroundColor="FireBrick"
+          backgroundColor="Sienna"
           isLoading={isTasksLoading}
         />
-      ) : (
-        <TopBarDataContainter
-          title="Задач от Куратора:"
-          elements={tasksFromCurator}
-          path="/calendar"
-          backgroundColor="FireBrick"
-          isLoading={isTasksLoading}
-        />
-      )}
-    </ResultComponent>
+        {isCurator ? (
+          <TopBarDataContainter
+            title="Задач Менеджерам:"
+            elements={tasksFromCurator}
+            path="/calendar"
+            backgroundColor="FireBrick"
+            isLoading={isTasksLoading}
+          />
+        ) : (
+          <TopBarDataContainter
+            title="Задач от Куратора:"
+            elements={tasksFromCurator}
+            path="/calendar"
+            backgroundColor="FireBrick"
+            isLoading={isTasksLoading}
+          />
+        )}
+      </ResultComponent>
+    </Tooltip>
   );
 });
 

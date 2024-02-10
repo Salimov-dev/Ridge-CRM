@@ -174,14 +174,8 @@ export const updateUserUpdate = (payload) => async (dispatch) => {
 export const updatePassword = (payload) => async (dispatch) => {
   dispatch(authRequested());
   try {
-    // Предполагается, что payload содержит текущий пароль и новый пароль
     const { currentPassword, newPassword } = payload;
-
-    // Вызов метода API (userService.updatePassword - замените его на ваш метод API)
     await userService.updatePassword({ currentPassword, newPassword });
-
-    // dispatch(authRequestSuccess({ userId: payload.userId }));
-    // dispatch(loadUsersList());
   } catch (error) {
     dispatch(authRequestFailed(error.message));
   }

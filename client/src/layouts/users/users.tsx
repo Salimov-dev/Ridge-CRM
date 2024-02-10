@@ -4,20 +4,15 @@ import { Box, Typography } from "@mui/material";
 import { useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 // components
-import { usersColumns } from "@columns/users.columns";
-import UsersFiltersPanel from "@components/UI/filters-panels/users-filters-panel";
-import BasicTable from "@components/common/table/basic-table";
 import Buttons from "./components/buttons";
 import PageDialogs from "@components/common/dialog/page-dialogs";
 import HeaderLayout from "@components/common/page-headers/header-layout";
-import TeamTitle from "./components/team-title";
+import TeamMateTables from "./components/temmate-tables";
 // hooks
-import useUsers from "@hooks/user/use-users";
 import useSearchUser from "@hooks/user/use-search-user";
 import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
 // store
 import {
-  getCurrentUserData,
   getCurrentUserId,
   getUsersList,
   getUsersLoadingStatus
@@ -37,19 +32,12 @@ const Users = () => {
   const users = useSelector(getUsersList());
 
   const currentUserId = useSelector(getCurrentUserId());
-  const currentUserData = useSelector(getCurrentUserData());
-  const currentUserName = `${currentUserData?.lastName} ${currentUserData?.firstName} ${currentUserData?.surName}`;
 
   const userRoleManager = "69gfoep3944jgjdso345002";
   const userRoleObserver = "69dgp34954igfj345043001";
 
   const usersWithoutCurrentUser = users?.filter(
     (user) => user?._id !== currentUserId
-  );
-
-  const { getActualUsersList, getActualStatusesList } = useUsers(
-    users,
-    usersWithoutCurrentUser
   );
 
   const localStorageState = JSON.parse(
@@ -97,39 +85,35 @@ const Users = () => {
       }}
     >
       <HeaderLayout title="Моя команда" />
-      <Buttons
+      <Typography>Баланс: 550руб</Typography>
+
+      <Typography>Тип аккаунта: Демо-доступ</Typography>
+      <Typography>Дата блокировки: 22.03.24</Typography>
+      <Typography>Дней до блокировки: 14 дней</Typography>
+      <Typography>Количество активных пользователей: 4шт</Typography>
+      <Typography>
+        Стоимость пользования за 1 сутки (за все лицензии): 100руб (25руб за 1
+        пользователя)
+      </Typography>
+
+      {/* <Buttons
         initialState={initialState}
         reset={reset}
         onOpenCreateUserPage={handleOpenCreateUserPage}
         isInputEmpty={isInputEmpty}
+      /> */}
+      <TeamMateTables
+        searchedUsers={searchedUsers}
+        observerUsersWithRole={observerUsersWithRole}
+        data={data}
+        initialState={initialState}
+        register={register}
+        reset={reset}
+        setValue={setValue}
+        isLoading={isLoading}
+        isInputEmpty={isInputEmpty}
+        onOpenCreateUserPage={handleOpenCreateUserPage}
       />
-
-      <Box sx={{ marginTop: "20px" }}>
-        <TeamTitle title="Куратор" background="red" />
-        <Typography variant="h4">{currentUserName}</Typography>
-
-        <TeamTitle title="Мои Наблюдатели" background="red" />
-        <BasicTable
-          items={observerUsersWithRole}
-          itemsColumns={usersColumns()}
-          isLoading={isLoading}
-        />
-
-        <TeamTitle title="Мои Менеджеры" background="red" />
-        <UsersFiltersPanel
-          data={data}
-          users={getActualUsersList()}
-          statuses={getActualStatusesList()}
-          register={register}
-          setValue={setValue}
-          isLoading={isLoading}
-        />
-        <BasicTable
-          items={searchedUsers}
-          itemsColumns={usersColumns()}
-          isLoading={isLoading}
-        />
-      </Box>
 
       <PageDialogs state={state} setState={setState} />
     </Box>

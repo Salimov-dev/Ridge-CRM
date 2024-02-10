@@ -11,20 +11,22 @@ const Token = sequelize.define(
       references: {
         model: User,
         key: "_id",
-      },
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE"
+      }
     },
     refreshToken: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: false
     },
     created_at: {
       type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW,
-    },
+      defaultValue: DataTypes.NOW
+    }
   },
   {
     timestamps: false,
-    tableName: "tokens",
+    tableName: "tokens"
   }
 );
 

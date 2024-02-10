@@ -1,10 +1,10 @@
 import { DataTypes } from "sequelize";
+import dayjs from "dayjs";
 import { sequelize } from "../utils/postgre-conection.js";
 import User from "./User.js";
-import Object from "./Object.js";
 
-const LastContact = sequelize.define(
-  "LastContact",
+const UserLicense = sequelize.define(
+  "UserLicense",
   {
     _id: {
       type: DataTypes.UUID,
@@ -21,18 +21,15 @@ const LastContact = sequelize.define(
       onDelete: "CASCADE",
       onUpdate: "CASCADE"
     },
-    objectId: {
-      type: DataTypes.UUID,
-      references: {
-        model: Object,
-        key: "_id"
-      },
-      defaultValue: null,
-      onDelete: "CASCADE",
-      onUpdate: "CASCADE"
+    managers: { type: DataTypes.ARRAY(DataTypes.STRING) },
+    observers: { type: DataTypes.ARRAY(DataTypes.STRING) },
+    balance: { type: DataTypes.DECIMAL },
+    dateStart: { type: DataTypes.DATE, defaultValue: DataTypes.NOW },
+    dateEnd: {
+      type: DataTypes.DATE,
+      defaultValue: () => dayjs().add(14, "day").toDate()
     },
-    date: { type: DataTypes.DATE },
-    result: { type: DataTypes.STRING },
+    accountType: { type: DataTypes.STRING, defaultValue: "DEMO ID" },
     created_at: {
       type: DataTypes.DATE,
       defaultValue: DataTypes.NOW
@@ -44,8 +41,8 @@ const LastContact = sequelize.define(
   },
   {
     timestamps: false,
-    tableName: "lastContacts"
+    tableName: "userLicenses"
   }
 );
 
-export default LastContact;
+export default UserLicense;
