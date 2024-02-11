@@ -12,7 +12,7 @@ const CurrentLicenseInfo = ({
         Количество пользователей: {totalUsersLength}шт
       </Typography>
       <Typography variant="h4">
-        Общая стоимость подписок: {totalLicensesCost}₽/день
+        Общая стоимость подписок: {totalLicensesCost} ₽/день
       </Typography>
     </>
   );

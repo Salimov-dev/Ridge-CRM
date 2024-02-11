@@ -14,6 +14,7 @@ import cors from "cors";
 import path from "path";
 import http from "http";
 import config from "config";
+import cron from "node-cron";
 
 const PORT = config.get("port") ?? 8080;
 const __filename = fileURLToPath(import.meta.url);
@@ -30,6 +31,8 @@ app.use(cookieParser());
 app.use(express.urlencoded({ extended: false }));
 app.use("/api", routes);
 app.use("/api/uploads", express.static(path.join(__dirname, "uploads")));
+
+// cron.schedule("0 * * * *", () => backupMongoDB());
 
 if (process.env.NODE_ENV === "production") {
   app.use("/", express.static(path.join(__dirname, "client")));

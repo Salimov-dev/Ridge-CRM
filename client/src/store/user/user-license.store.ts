@@ -53,7 +53,9 @@ const userLicensesSlice = createSlice({
     },
     userLicenseUpdateSuccessed: (state, action) => {
       state.entities[
-        state.entities.findIndex((m) => m._id === action.payload._id)
+        state.entities.findIndex(
+          (license) => license._id === action.payload._id
+        )
       ] = action.payload;
     },
     userLicenseRemoved: (state, action) => {
@@ -95,8 +97,8 @@ export const loadUserLicensesList = () => async (dispatch, getState) => {
 export const updateUserLicense = (payload) => async (dispatch) => {
   dispatch(userLicenseUpdateRequested());
   try {
-    await userLicenseService.update(payload);
-    socket.emit("userLicenseUpdated", payload);
+    const { content } = await userLicenseService.update(payload);
+    socket.emit("userLicenseUpdated", content);
   } catch (error) {
     dispatch(userLicenseUpdateFailed(error.message));
   }

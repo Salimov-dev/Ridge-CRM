@@ -18,7 +18,10 @@ import EnoughLicenseDays from "./components/enough-license-days";
 import EnoughLicenseDate from "./components/enough-license-date";
 // store
 import { getCurrentUserId } from "@store/user/users.store";
-import { getUserLicensesByUserId } from "@store/user/user-license.store";
+import {
+  getUserLicensesByUserId,
+  updateUserLicense
+} from "@store/user/user-license.store";
 // schema
 import { paymentAmounySchema } from "@schemas/payment-amount.schema";
 // utils
@@ -46,6 +49,7 @@ const MakePaymentPage = React.memo(({ onClose }) => {
   const data = watch();
   const currentUserId = useSelector(getCurrentUserId());
   const userLicense = useSelector(getUserLicensesByUserId(currentUserId));
+
   const paymentAmount = watch("amount");
 
   const managersLength = userLicense?.managers.length;
@@ -62,26 +66,23 @@ const MakePaymentPage = React.memo(({ onClose }) => {
   const newLicenseDate = FormatDate(licenseDateEnd.add(newDaysQuantity, "day"));
 
   const onSubmit = () => {
-    // setIsLoading(true);
-    console.log("data", data);
+    setIsLoading(true);
 
-    // const newData = {
-    //   ...data,
-    //   password: "Qwer1234",
-    //   curatorId: currentUserId
-    // };
+    const newData = {
+      ...userLicense,
+      balance: Number(paymentAmount)
+    };
 
-    // dispatch<any>(createNewUser(newData))
-    //   .then(() => {
-    //     onClose();
-    //     toast.success("Новый пользователь успешно создан");
-    //   })
-    //   .catch((error) => {
-    //     toast.error(error);
-    //   })
-    //   .finally(() => {
-    //     setIsLoading(false);
-    //   });
+    dispatch<any>(updateUserLicense(newData))
+      .then(() => {
+        onClose();
+      })
+      .catch((error) => {
+        toast.error(error);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
 
   return (
@@ -101,7 +102,7 @@ const MakePaymentPage = React.memo(({ onClose }) => {
       <EnoughLicenseDays newDaysQuantity={newDaysQuantity} />
       <EnoughLicenseDate newLicenseDate={newLicenseDate} />
       <SuccessCancelFormButtons
-        successTitle="Добавить"
+        successTitle="Оплатить"
         onSuccess={handleSubmit(onSubmit)}
         onCancel={onClose}
       />

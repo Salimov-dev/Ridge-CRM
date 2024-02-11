@@ -14,7 +14,7 @@ const Component = styled(Box)`
 
 const Container = styled(Box)`
   display: flex;
-  gap: 2px;
+  gap: 4px;
 `;
 
 const StyledTypography = styled(Typography)`
@@ -28,8 +28,12 @@ const InformItem = ({ title, subtitle, unit = null }) => {
         {title}
       </StyledTypography>
       <Container>
-        <StyledTypography variant="h3">{subtitle}</StyledTypography>
-        <StyledTypography variant="h3">{unit}</StyledTypography>
+        <StyledTypography variant="h3" sx={{ color: "yellow" }}>
+          {subtitle}
+        </StyledTypography>
+        <StyledTypography variant="h3" sx={{ color: "yellow" }}>
+          {unit}
+        </StyledTypography>
       </Container>
     </Component>
   );

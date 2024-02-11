@@ -1,12 +1,16 @@
-import styled from "@emotion/styled";
-import { Box } from "@mui/material";
-import InformItem from "./inform-item";
-import { FormatDate } from "@utils/date/format-date";
-import { useSelector } from "react-redux";
-import { getCurrentUserId } from "@store/user/users.store";
-import { getUserLicensesByUserId } from "@store/user/user-license.store";
 import dayjs from "dayjs";
 import config from "@config/config.json";
+import styled from "@emotion/styled";
+import { Box } from "@mui/material";
+import { useSelector } from "react-redux";
+// components
+import InformItem from "./inform-item";
+// utils
+import { FormatDate } from "@utils/date/format-date";
+// store
+import { getCurrentUserId } from "@store/user/users.store";
+import { getUserLicensesByUserId } from "@store/user/user-license.store";
+import { makeDigitSeparator } from "@utils/data/make-digit-separator";
 
 const InformItemsContainer = styled(Box)`
   width: 100%;
@@ -27,8 +31,8 @@ const InformItems = () => {
     if (accountType === "BLOCK") return "Заблокированный";
   };
 
-  const managersLength = userLicense?.managers.length;
-  const observersLength = userLicense?.observers.length;
+  const managersLength = userLicense?.managers.length || 0;
+  const observersLength = userLicense?.observers.length || 0;
   const totalUsersLength = managersLength + observersLength + 1; // 1 добавляю в качестве лицензии текущего пользователя Куратора
 
   const licenseCost = config.licenseCost;
@@ -40,7 +44,11 @@ const InformItems = () => {
 
   return (
     <InformItemsContainer>
-      <InformItem title="Баланс" subtitle={userLicense?.balance} unit="₽" />
+      <InformItem
+        title="Баланс"
+        subtitle={makeDigitSeparator(userLicense?.balance)}
+        unit="₽"
+      />
       <InformItem title="Тип аккаунта" subtitle={getAccountType()} />
       <InformItem
         title="Дата активации подписки"
@@ -50,7 +58,7 @@ const InformItems = () => {
         title="Дата окончания подписки"
         subtitle={FormatDate(dateEnd)}
       />
-      <InformItem title="Осталось дней работы" subtitle={daysDifference} />
+      <InformItem title="Дней доступа к системе" subtitle={daysDifference} />
       <InformItem
         title="Активных пользователей"
         subtitle={totalUsersLength}

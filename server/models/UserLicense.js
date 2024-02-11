@@ -29,7 +29,10 @@ const UserLicense = sequelize.define(
       type: DataTypes.DATE,
       defaultValue: () => dayjs().add(15, "day").toDate()
     },
-    accountType: { type: DataTypes.STRING, defaultValue: "DEMO" },
+    accountType: {
+      type: DataTypes.STRING,
+      defaultValue: "71pbfi4954itj045tloop001"
+    },
     created_at: {
       type: DataTypes.DATE,
       defaultValue: DataTypes.NOW

@@ -8,6 +8,10 @@ const router = express.Router();
 
 router.get("/", auth, async (req, res) => {
   try {
+    if (!req.user || !req.user._id) {
+      return res.status(401).json({ message: "Пользователь не авторизован" });
+    }
+
     const userId = req.user._id;
     const user = await User.findByPk(userId);
 

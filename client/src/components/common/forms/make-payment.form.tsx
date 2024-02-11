@@ -9,6 +9,7 @@ const MakePaymentForm = ({ data, register, errors }) => {
           register={register}
           label="Сумма для пополнения"
           type="number"
+          valueAsNumber={true}
           name="amount"
           required={true}
           errors={errors?.amount}

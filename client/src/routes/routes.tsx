@@ -23,28 +23,33 @@ export default function AppRoutes() {
   const isCurator = useSelector(getIsUserCurator(currentUserId));
 
   const routes = [
-    { id: 0, path: "*", element: <NoMatchRoute /> },
-    { id: 1, path: "/", element: <Main /> },
-    { id: 3, path: "auth/*", element: <Main /> },
-    { id: 4, path: "objects/*", element: <RequireAuth><Objects /></RequireAuth> },
-    { id: 5, path: "objectsdatabase/*", element: <RequireAuth><ObjectsDatabase /></RequireAuth>},
-    { id: 6, path: "statictics/*", element: <RequireAuth><Statictics /></RequireAuth>},
-    { id: 7, path: "meetings/*", element: <RequireAuth><Meetings /></RequireAuth>},
-    { id: 8, path: "calendar/*", element: <RequireAuth><Calendar /></RequireAuth>},
-    { id: 9, path: "deals/*", element: <RequireAuth><Deals /></RequireAuth>},
-    { id: 10, path: "users/*", element: isCurator ? <RequireAuth><Users /></RequireAuth> : <NoMatchRoute />},
-    { id: 11, path: "profile/*", element: <RequireAuth><Profile /></RequireAuth>},
-    { id: 12, path: ":userId?/presentations", element: <RequireAuth><Presentations /></RequireAuth>},
-    { id: 13, path: ":userId?/profileUpdate", element: <RequireAuth><UpdateProfile /></RequireAuth>},
+    { id: 1, path: "objects/*", element: <Objects /> },
+    { id: 2, path: "objectsdatabase/*", element: <ObjectsDatabase /> },
+    { id: 3, path: "statictics/*", element: <Statictics /> },
+    { id: 4, path: "meetings/*", element: <Meetings /> },
+    { id: 5, path: "calendar/*", element: <Calendar /> },
+    { id: 6, path: "deals/*", element: <Deals /> },
+    {
+      id: 7,
+      path: "users/*",
+      element: isCurator ? <Users /> : <NoMatchRoute />
+    },
+    { id: 8, path: "profile/*", element: <Profile /> },
+    { id: 9, path: ":userId?/presentations", element: <Presentations /> },
+    { id: 10, path: ":userId?/profileUpdate", element: <UpdateProfile /> }
   ];
 
   return (
     <Routes>
-      {routes.map((rout) => (
+      <Route path="*" element={<NoMatchRoute />} />
+      <Route path="/" element={<Main />} />
+      <Route path="auth/*" element={<Main />} />
+
+      {routes.map((route) => (
         <Route
-          key={rout.id}
-          path={rout.path}
-          element={rout.element}
+          key={route.id}
+          path={route.path}
+          element={<RequireAuth>{route.element}</RequireAuth>}
         />
       ))}
     </Routes>

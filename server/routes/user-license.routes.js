@@ -52,7 +52,7 @@ router.patch("/:UserLicenseId?/edit", auth, async (req, res) => {
     const { UserLicenseId } = req.params;
     if (!UserLicenseId) {
       return res.status(400).json({
-        message: "Необходимо указать идентификатор встречи (UserLicenseId)."
+        message: "Необходимо указать идентификатор лицензии (UserLicenseId)."
       });
     }
 
@@ -64,14 +64,74 @@ router.patch("/:UserLicenseId?/edit", auth, async (req, res) => {
       });
     }
 
-    const updatedUserLicense = await existingUserLicense.update(req.body);
+    // Обновляем поле balance в существующей лицензии
+    existingUserLicense.balance = parseFloat(existingUserLicense.balance);
+    // existingUserLicense.balance = req.body.balance;
+    // existingUserLicense.balance += req.body.balance;
+    existingUserLicense.balance += parseInt(req.body.balance);
+    console.log("existingUserLicense.balance", existingUserLicense.balance);
+    console.log("req.body.balance", req.body.balance);
 
-    res.status(200).json(updatedUserLicense);
+    // Получаем текущую дату и время
+    const currentDate = new Date();
+
+    // Обновляем поле dateStart на текущую дату и время
+    existingUserLicense.dateStart = currentDate;
+
+    // Получаем количество пользователей (менеджеров и наблюдателей) и добавляем 1 за текущего пользователя
+    const managersCount = existingUserLicense.managers.length;
+    const observersCount = existingUserLicense.observers.length;
+    const totalUsersCount = managersCount + observersCount + 1;
+
+    // Вычисляем количество дней, на которое хватит баланса
+    const subscriptionCostPerUser = 25; // Стоимость подписки за одного пользователя
+    const daysLeft = Math.floor(
+      existingUserLicense.balance / (subscriptionCostPerUser * totalUsersCount)
+    );
+
+    // Вычисляем дату окончания лицензии на основе текущей даты и количества дней, на которое хватит баланса
+    const endDate = new Date(
+      currentDate.getTime() + daysLeft * 24 * 60 * 60 * 1000
+    );
+    existingUserLicense.dateEnd = endDate;
+
+    // Сохраняем обновленную лицензию
+    await existingUserLicense.save();
+
+    res.status(200).json(existingUserLicense);
   } catch (e) {
+    console.error(e);
     res.status(500).json({
       message: "На сервере произошла ошибка, попробуйте позже"
     });
   }
 });
+
+// router.patch("/:UserLicenseId?/edit", auth, async (req, res) => {
+//   try {
+//     const { UserLicenseId } = req.params;
+//     if (!UserLicenseId) {
+//       return res.status(400).json({
+//         message: "Необходимо указать идентификатор встречи (UserLicenseId)."
+//       });
+//     }
+
+//     const existingUserLicense = await UserLicense.findByPk(UserLicenseId);
+
+//     if (!existingUserLicense) {
+//       return res.status(404).json({
+//         message: "Лицензия не найдена."
+//       });
+//     }
+
+//     const updatedUserLicense = await existingUserLicense.update(req.body);
+
+//     res.status(200).json(updatedUserLicense);
+//   } catch (e) {
+//     res.status(500).json({
+//       message: "На сервере произошла ошибка, попробуйте позже"
+//     });
+//   }
+// });
 
 export default router;

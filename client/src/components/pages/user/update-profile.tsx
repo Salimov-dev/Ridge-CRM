@@ -14,7 +14,7 @@ import { userProfileSchema } from "@schemas/user-profile.schema";
 // store
 import { getCurrentUserData, updateUser } from "@store/user/users.store";
 
-const UpdateProfile = ({ onClose }) => {
+const UpdateProfile = ({ onClose = () => {} }) => {
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
   const user = useSelector(getCurrentUserData());
