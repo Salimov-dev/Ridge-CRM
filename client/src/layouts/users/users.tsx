@@ -64,11 +64,11 @@ const Users = () => {
     (user) => user?._id !== currentUserId
   );
 
-  const observerUsersWithRole = usersWithoutCurrentUser.filter(
-    (user) => user.role && user.role.includes(userRoleObserver)
+  const observerUsersWithRole = usersWithoutCurrentUser?.filter(
+    (user) => user?.role && user?.role.includes(userRoleObserver)
   );
-  const managerUsersWithRole = usersWithoutCurrentUser.filter(
-    (user) => user.role && user.role.includes(userRoleManager)
+  const managerUsersWithRole = usersWithoutCurrentUser?.filter(
+    (user) => user?.role && user?.role.includes(userRoleManager)
   );
 
   const searchedUsers = useSearchUser({

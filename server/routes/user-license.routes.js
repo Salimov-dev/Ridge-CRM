@@ -66,11 +66,19 @@ router.patch("/:UserLicenseId?/edit", auth, async (req, res) => {
 
     // Обновляем поле balance в существующей лицензии
     existingUserLicense.balance = parseFloat(existingUserLicense.balance);
-    // existingUserLicense.balance = req.body.balance;
-    // existingUserLicense.balance += req.body.balance;
     existingUserLicense.balance += parseInt(req.body.balance);
-    console.log("existingUserLicense.balance", existingUserLicense.balance);
-    console.log("req.body.balance", req.body.balance);
+    const newBalance = existingUserLicense.balance;
+
+    // id для статуса "Действующий"
+    const activetedId = "718gkgdbn48jgfo3kktjt002";
+
+    // Если баланс равен 0 меняем accountType
+    if (
+      existingUserLicense._previousDataValues.balance === 0 &&
+      req.body.balance > 49
+    ) {
+      existingUserLicense.accountType = activetedId;
+    }
 
     // Получаем текущую дату и время
     const currentDate = new Date();
@@ -106,32 +114,5 @@ router.patch("/:UserLicenseId?/edit", auth, async (req, res) => {
     });
   }
 });
-
-// router.patch("/:UserLicenseId?/edit", auth, async (req, res) => {
-//   try {
-//     const { UserLicenseId } = req.params;
-//     if (!UserLicenseId) {
-//       return res.status(400).json({
-//         message: "Необходимо указать идентификатор встречи (UserLicenseId)."
-//       });
-//     }
-
-//     const existingUserLicense = await UserLicense.findByPk(UserLicenseId);
-
-//     if (!existingUserLicense) {
-//       return res.status(404).json({
-//         message: "Лицензия не найдена."
-//       });
-//     }
-
-//     const updatedUserLicense = await existingUserLicense.update(req.body);
-
-//     res.status(200).json(updatedUserLicense);
-//   } catch (e) {
-//     res.status(500).json({
-//       message: "На сервере произошла ошибка, попробуйте позже"
-//     });
-//   }
-// });
 
 export default router;

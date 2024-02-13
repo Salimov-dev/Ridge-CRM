@@ -19,6 +19,7 @@ export const usersColumns = () => [
         header: "Дата",
         cell: (info) => {
           const date = info.getValue();
+
           return <AlignCenter>{FormatDate(date)}</AlignCenter>;
         }
       },
@@ -48,7 +49,7 @@ export const usersColumns = () => [
         header: "Фамилия",
         cell: (info) => {
           const lastName = info.getValue();
-          return <AlignCenter>{lastName || ""}</AlignCenter>;
+          return <AlignCenter>{lastName || "-"}</AlignCenter>;
         }
       },
       {
@@ -56,7 +57,7 @@ export const usersColumns = () => [
         header: "Имя",
         cell: (info) => {
           const firstName = info.getValue();
-          return <AlignCenter>{firstName || ""}</AlignCenter>;
+          return <AlignCenter>{firstName || "-"}</AlignCenter>;
         }
       },
       {
@@ -64,7 +65,7 @@ export const usersColumns = () => [
         header: "Отчество",
         cell: (info) => {
           const surName = info.getValue();
-          return <AlignCenter>{surName || ""}</AlignCenter>;
+          return <AlignCenter>{surName || "-"}</AlignCenter>;
         }
       },
       {
@@ -72,12 +73,9 @@ export const usersColumns = () => [
         header: "Пол",
         cell: (info) => {
           const gender = info.getValue();
-          const result =
-            gender !== null
-              ? gendersArray?.find((gen) => gen?._id === gender).name
-              : "";
+          const result = gendersArray?.find((gen) => gen?._id === gender)?.name;
 
-          return <AlignCenter>{result}</AlignCenter>;
+          return <AlignCenter>{gender !== null ? result : "-"}</AlignCenter>;
         }
       },
       {
@@ -85,11 +83,7 @@ export const usersColumns = () => [
         header: "ДР",
         cell: (info) => {
           const birthday = info.getValue();
-          return (
-            <AlignCenter>
-              {birthday !== null ? FormatDate(birthday) : ""}
-            </AlignCenter>
-          );
+          return <AlignCenter>{FormatDate(birthday)}</AlignCenter>;
         }
       }
     ]
@@ -102,9 +96,10 @@ export const usersColumns = () => [
         header: "Телефон",
         cell: (info) => {
           const phone = info.getValue();
+
           return (
             <AlignCenter>
-              {phone !== undefined ? FormatPhone(phone) : ""}
+              {phone !== null ? FormatPhone(phone) : "-"}
             </AlignCenter>
           );
         }

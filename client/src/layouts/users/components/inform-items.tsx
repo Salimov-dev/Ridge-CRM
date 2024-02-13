@@ -11,6 +11,8 @@ import { FormatDate } from "@utils/date/format-date";
 import { getCurrentUserId } from "@store/user/users.store";
 import { getUserLicensesByUserId } from "@store/user/user-license.store";
 import { makeDigitSeparator } from "@utils/data/make-digit-separator";
+import { userRolesArray } from "@data/users/user-roles";
+import { userLicenseStatusesArray } from "@data/users/user-license-statuses";
 
 const InformItemsContainer = styled(Box)`
   width: 100%;
@@ -26,9 +28,11 @@ const InformItems = () => {
 
   const getAccountType = () => {
     const accountType = userLicense?.accountType;
-    if (accountType === "DEMO") return "Бесплатный";
-    if (accountType === "REAL") return "Активированный";
-    if (accountType === "BLOCK") return "Заблокированный";
+
+    const result = userLicenseStatusesArray.find(
+      (role) => role._id === accountType
+    )?.name;
+    return result;
   };
 
   const managersLength = userLicense?.managers.length || 0;

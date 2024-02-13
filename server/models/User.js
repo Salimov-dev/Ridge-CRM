@@ -21,7 +21,7 @@ const User = sequelize.define(
     status: { type: DataTypes.STRING, defaultValue: null },
     role: {
       type: DataTypes.ARRAY(DataTypes.STRING),
-      defaultValue: ["69gfoep3944jgjdso345003"]
+      defaultValue: ["69gfoep3944jgjdso345003"] // статус по умолчанию "Ознакомительный"
     },
     firstName: { type: DataTypes.STRING, defaultValue: null },
     surName: { type: DataTypes.STRING, defaultValue: null },

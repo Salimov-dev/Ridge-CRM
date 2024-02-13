@@ -21,7 +21,7 @@ const EnoughLicenseDays = ({ newDaysQuantity }) => {
   return (
     <Component>
       <Typography variant="h4" sx={{ textAlign: "center", marginRight: "4px" }}>
-        Введенного баланса хватит на:
+        Введенного баланса ДОПОЛНИТЕЛЬНО хватит на:
       </Typography>
       <Typography
         variant="h4"

@@ -2,5 +2,9 @@ import dayjs from "dayjs";
 import "dayjs/locale/ru";
 
 export const FormatDate = (date) => {
-  return dayjs(date).format("DD.MM.YY");
+  if (date !== null && date !== undefined) {
+    return dayjs(date)?.format("DD.MM.YY");
+  } else {
+    return "-";
+  }
 };

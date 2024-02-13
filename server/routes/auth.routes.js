@@ -4,6 +4,7 @@ import { check, validationResult } from "express-validator";
 import User from "../models/User.js";
 import tokenService from "../services/token.service.js";
 import UserLicense from "../models/UserLicense.js";
+import { sequelize } from "../utils/postgre-conection.js";
 
 const router = express.Router({ mergeParams: true });
 
@@ -66,7 +67,7 @@ router.post("/signUp", [
   }
 ]);
 
-// создание нового члена команды
+// Создание нового члена команды
 router.post("/create", [
   check("email", "Email некорректный").isEmail(),
   check("password", "Пароль не может быть пустым").exists().trim(),
@@ -125,9 +126,37 @@ router.post("/create", [
         curatorId: curatorId
       });
 
+      // Create a user license for the new user
       await UserLicense.create({
         userId: newUser._id
       });
+
+      // Определяем массив, в который нужно добавить _id нового пользователя
+      let roleNewUser = "";
+      if (newUser?.role.includes("69gfoep3944jgjdso345002")) {
+        // Если роль нового пользователя Менеджер
+        roleNewUser = "managers";
+      } else if (newUser?.role.includes("69dgp34954igfj345043001")) {
+        // Если роль нового пользователя Наблюдатель
+        roleNewUser = "observers";
+      }
+      console.log("newUser", newUser);
+      console.log("roleNewUser", roleNewUser);
+
+      // Обновляем лицензию текущего пользователя, добавляя _id нового пользователя в соответствующий массив
+      if (roleNewUser) {
+        // Используем userId нового пользователя для обновления лицензии текущего пользователя
+        await UserLicense.update(
+          {
+            [roleNewUser]: sequelize.literal(
+              `array_append("${roleNewUser}", '${newUser._id}')`
+            )
+          },
+          {
+            where: { userId: curatorId } // Обновляем лицензию текущего пользователя, который создает нового члена команды
+          }
+        );
+      }
 
       // Send the response with tokens and user ID
       res.status(201).send(newUser);

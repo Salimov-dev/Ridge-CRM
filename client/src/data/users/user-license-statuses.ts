@@ -1,4 +1,4 @@
-const userRolesArray = [
+const userLicenseStatusesArray = [
   {
     _id: "71pbfi4954itj045tloop001",
     name: "Ознакомительный"
@@ -13,4 +13,4 @@ const userRolesArray = [
   }
 ];
 
-export { userRolesArray };
+export { userLicenseStatusesArray };

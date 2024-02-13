@@ -24,14 +24,14 @@ const StyledTypography = styled(Typography)`
 const InformItem = ({ title, subtitle, unit = null }) => {
   return (
     <Component>
-      <StyledTypography variant="h4" sx={{ fontWeight: "bold" }}>
+      <StyledTypography variant="h5" sx={{ fontWeight: "bold" }}>
         {title}
       </StyledTypography>
       <Container>
-        <StyledTypography variant="h3" sx={{ color: "yellow" }}>
+        <StyledTypography variant="h4" sx={{ color: "yellow" }}>
           {subtitle}
         </StyledTypography>
-        <StyledTypography variant="h3" sx={{ color: "yellow" }}>
+        <StyledTypography variant="h4" sx={{ color: "yellow" }}>
           {unit}
         </StyledTypography>
       </Container>

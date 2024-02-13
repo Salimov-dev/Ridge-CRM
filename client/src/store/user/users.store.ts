@@ -137,8 +137,9 @@ export const loadUsersList = () => async (dispatch) => {
 export const createNewUser = (payload) => async (dispatch) => {
   dispatch(authRequested());
   try {
-    await authService.create(payload);
-    socket.emit("userCreated", payload);
+    const data = await authService.create(payload);
+
+    socket.emit("userCreated", data);
   } catch (error) {
     dispatch(authRequestFailed(error.message));
   }

@@ -12,7 +12,7 @@ const EnoughLicenseDate = ({ newLicenseDate }) => {
   return (
     <Component>
       <Typography variant="h4" sx={{ textAlign: "center", marginRight: "4px" }}>
-        Можно пользоваться до:
+        Можно будет пользоваться до:
       </Typography>
       <Typography
         variant="h4"
