@@ -4,12 +4,16 @@ import { tokens } from "@theme/theme";
 
 const ButtonStyled = ({
   title = "title",
+  height = "auto",
   onClick = () => {},
   style,
   size = "medium",
   disabled = false,
   variant = "outlined",
   width = "min-content",
+  icon = null,
+  fontSize = "auto",
+  padding = "auto"
 }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -89,13 +93,23 @@ const ButtonStyled = ({
     backgroundHover = colors.green["darkGreen"];
   }
 
+  if (style === "TRY_DEMO") {
+    background = "ForestGreen";
+    colorHover = "white";
+    backgroundHover = colors.green["darkGreen"];
+  }
+
   return (
     <Button
       variant={variant}
       onClick={onClick}
       disabled={disabled}
       size={size}
+      startIcon={icon}
       sx={{
+        padding: padding,
+        fontSize: fontSize,
+        height: height,
         color: color,
         borderColor: borderColor,
         background: background,
@@ -104,8 +118,8 @@ const ButtonStyled = ({
         "&:hover": {
           color: colorHover,
           background: backgroundHover,
-          borderColor: borderColor,
-        },
+          borderColor: borderColor
+        }
       }}
     >
       {title}

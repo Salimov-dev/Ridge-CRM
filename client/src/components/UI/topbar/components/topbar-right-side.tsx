@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { Box, styled } from "@mui/material";
+import { Box, Button, styled } from "@mui/material";
 import { useSelector } from "react-redux";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 // components
 import UserMenu from "./user-menu";
 import Loader from "@common/loader/loader";
@@ -11,7 +12,7 @@ import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
 // store
 import {
   getCurrentUserData,
-  getUsersLoadingStatus,
+  getUsersLoadingStatus
 } from "@store/user/users.store";
 
 const Component = styled(Box)`
@@ -25,7 +26,7 @@ const TopBarRightSide = () => {
     loginPage: false,
     registerPage: false,
     authPage: false,
-    startPage: "",
+    startPage: ""
   });
 
   const currentUser = useSelector(getCurrentUserData());
@@ -46,11 +47,13 @@ const TopBarRightSide = () => {
               variant="contained"
               onClick={() => handleOpenAuthPage("register")}
             />
+
             <ButtonStyled
               title="Войти"
               style="MANAGER_TASK"
               variant="contained"
               onClick={() => handleOpenAuthPage("login")}
+              icon={<LockOutlinedIcon />}
             />
           </Box>
         )

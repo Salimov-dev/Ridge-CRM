@@ -11,7 +11,7 @@ import { FormatDate } from "@utils/date/format-date";
 import { getCurrentUserId } from "@store/user/users.store";
 import { getUserLicensesByUserId } from "@store/user/user-license.store";
 import { makeDigitSeparator } from "@utils/data/make-digit-separator";
-import { userRolesArray } from "@data/users/user-roles";
+// data
 import { userLicenseStatusesArray } from "@data/users/user-license-statuses";
 
 const InformItemsContainer = styled(Box)`
