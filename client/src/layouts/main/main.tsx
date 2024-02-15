@@ -4,6 +4,7 @@ import { Box, Typography, styled } from "@mui/material";
 import telegramIcon from "@assets/telegram.png";
 import ButtonStyled from "@components/common/buttons/button-styled.button";
 import ThumbUpAltOutlinedIcon from "@mui/icons-material/ThumbUpAltOutlined";
+import backgroundImage from "@assets/main-background.png";
 
 const Logo = styled(Box)`
   display: flex;
@@ -39,22 +40,20 @@ const Main = React.memo(() => {
       <Box
         sx={{
           height: "100%",
-          width: "50%",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "start",
-          gap: "50px",
-          padding: "0 2%"
+          width: "100%",
+          display: "flex"
         }}
       >
         <Box
           sx={{
+            height: "100%",
+            width: "50%",
             display: "flex",
             flexDirection: "column",
-            justifyContent: "center",
+            justifyContent: "space-between",
             alignItems: "start",
-            gap: "30px"
+            padding: "2% 2% 5% 2%",
+            gap: "20px"
           }}
         >
           <Typography
@@ -91,19 +90,31 @@ const Main = React.memo(() => {
           >
             Стоимость подписки 25руб/день
           </Typography>
-        </Box>
 
-        <ButtonStyled
-          title="ПОПРОБОВАТЬ БЕСПЛАТНО НА 14 ДНЕЙ"
-          style="LAST_CONTACT"
-          icon={<ThumbUpAltOutlinedIcon />}
-          height="70px"
-          style="TRY_DEMO"
-          fontSize="18px"
-          padding="0 30px"
-          // disabled={!isAuthorEntity}
-          // onClick={() => onUpdate(lastContactId)}
-        />
+          <ButtonStyled
+            title="ПОПРОБОВАТЬ БЕСПЛАТНО НА 14 ДНЕЙ"
+            style="LAST_CONTACT"
+            icon={<ThumbUpAltOutlinedIcon />}
+            height="70px"
+            style="TRY_DEMO"
+            fontSize="18px"
+            padding="0 30px"
+            // disabled={!isAuthorEntity}
+            // onClick={() => onUpdate(lastContactId)}
+          />
+        </Box>
+        <Box
+          sx={{
+            margin: "20px 0 0 0",
+            height: "100% - 20px",
+            width: "50%",
+            display: "flex",
+            backgroundImage: `url(${backgroundImage})`,
+            backgroundSize: "auto 100%",
+            backgroundRepeat: "no-repeat",
+            backgroundPosition: "left"
+          }}
+        ></Box>
       </Box>
     </Box>
   );

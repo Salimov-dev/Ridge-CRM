@@ -1,6 +1,7 @@
 // libraries
 import { Box, CssBaseline, ThemeProvider } from "@mui/material";
 import { ToastContainer } from "react-toastify";
+import { useLocation } from "react-router-dom";
 // styled
 import "./styles.css";
 import styled from "@emotion/styled";
@@ -31,7 +32,6 @@ export const RightSide = styled(Box)`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 0 20px 50px 20px;
   width: 100%;
   background-image: url(${grassImage});
   background-repeat: repeat-x;
@@ -41,6 +41,11 @@ export const RightSide = styled(Box)`
 
 function App() {
   const [theme, colorMode] = useMode();
+  const location = useLocation();
+
+  const currentPath = location.pathname;
+  const isHomePage = currentPath === "/";
+
   return (
     <ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={theme}>
@@ -50,7 +55,7 @@ function App() {
           <ScrollToTop />
           <AppStyled>
             <Sidebar />
-            <RightSide>
+            <RightSide sx={{ padding: isHomePage ? "0" : "0 20px 50px 20px" }}>
               <TopBar />
               <AppRoutes />
               <Footer />
