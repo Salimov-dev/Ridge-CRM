@@ -57,6 +57,7 @@ const Register = React.memo(({ page, onClose }) => {
   const {
     register,
     watch,
+    handleSubmit,
     formState: { errors }
   } = useForm({
     defaultValues: initialState,
@@ -67,7 +68,6 @@ const Register = React.memo(({ page, onClose }) => {
   const data = watch();
   const location = useLocation();
   const redirectPath = location.state?.path || "/";
-  const isFormValid = !Object.keys(errors).length;
 
   const onSubmit = () => {
     setIsLoading(true);
@@ -79,8 +79,7 @@ const Register = React.memo(({ page, onClose }) => {
         onClose();
       })
       .catch((error) => {
-        const { message } = error.response.data.error;
-        toast.error(message);
+        toast.error(error);
       })
       .finally(() => {
         setIsLoading(false);
@@ -108,8 +107,7 @@ const Register = React.memo(({ page, onClose }) => {
         <ButtonStyled
           title="Регистрация"
           style="SUCCESS"
-          onClick={onSubmit}
-          disabled={!isFormValid}
+          onClick={handleSubmit(onSubmit)}
         />
       </FormContainer>
       <PageDialogs state={state} setState={setState} />

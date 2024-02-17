@@ -16,8 +16,6 @@ import HeaderWithCloseButton from "@components/common/page-headers/header-with-c
 import { meetingSchema } from "@schemas/meeting.schema";
 // hooks
 import useFindObject from "@hooks/object/use-find-object";
-// utils
-import { capitalizeFirstLetter } from "@utils/data/capitalize-first-letter";
 // store
 import { getCurrentUserId } from "@store/user/users.store";
 import { createMeeting } from "@store/meeting/meetings.store";

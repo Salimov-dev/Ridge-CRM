@@ -11,12 +11,54 @@ const router = express.Router({ mergeParams: true });
 // регистрация пользователя
 router.post("/signUp", [
   check("email", "Email некорректный").isEmail(),
-  check("password", "Пароль не может быть пустым").exists().trim(),
+  check(
+    "password",
+    "Пароль не может быть пустым и должен содержать минимум 8 символов, одну заглавную букву и одну цифру"
+  )
+    .notEmpty()
+    .withMessage("Пароль не может быть пустым")
+    .isLength({ min: 8 })
+    .withMessage("Пароль должен содержать минимум 8 символов")
+    .matches(/^(?=.*\d)(?=.*[A-Z])/)
+    .withMessage(
+      "Пароль должен содержать как минимум одну заглавную букву и одну цифру"
+    )
+    .trim(),
+
   async (req, res) => {
     try {
       const errors = validationResult(req);
 
       if (!errors.isEmpty()) {
+        // Проверяем наличие ошибок для поля "password"
+        const passwordError = errors.errors.find(
+          (error) => error.path === "password"
+        );
+        if (passwordError) {
+          const passwordMessage = passwordError.msg;
+          return res.status(400).json({
+            error: {
+              message: passwordMessage,
+              code: 400
+            }
+          });
+        }
+
+        // Проверяем наличие ошибок для поля "email"
+        const emailError = errors.errors.find(
+          (error) => error.path === "email"
+        );
+        if (emailError) {
+          const emailMessage = emailError.msg;
+          return res.status(400).json({
+            error: {
+              message: emailMessage,
+              code: 400
+            }
+          });
+        }
+
+        // Если найдены только ошибки валидации, но нет конкретных для email и password, возвращаем общее сообщение
         return res.status(400).json({
           error: {
             message: "INVALID_DATA",
@@ -33,7 +75,8 @@ router.post("/signUp", [
       if (existingUser) {
         return res.status(400).json({
           error: {
-            message: "EMAIL_EXISTS",
+            message:
+              "Пользователь с таким e-mail уже зарегистрирован! Выберите другой e-mail",
             code: 400
           }
         });

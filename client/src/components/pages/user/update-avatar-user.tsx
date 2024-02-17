@@ -28,7 +28,6 @@ const UpdateAvatar = React.memo(({ onClose }) => {
   const [compressedPreview, setCompressedPreview] = useState([]);
 
   const currentUserId = useSelector(getCurrentUserId());
-  const newPreview = preview?.replace(/^data:image\/\w+;base64,/, "");
 
   const onClosePreview = () => {
     setPreview(null);

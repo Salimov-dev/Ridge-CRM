@@ -66,7 +66,7 @@ function App() {
       <ToastContainer
         position="top-center"
         className="toast-container"
-        autoClose={1500}
+        autoClose={2000}
       />
     </ColorModeContext.Provider>
   );

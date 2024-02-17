@@ -40,7 +40,7 @@ const FormContainer = styled(Box)`
 
 const initialState = {
   email: "",
-  password: "",
+  password: ""
 };
 
 const Login = React.memo(({ page, onClose }) => {
@@ -49,7 +49,7 @@ const Login = React.memo(({ page, onClose }) => {
 
   const [isLoading, setIsLoading] = useState(false);
   const [state, setState] = useState({
-    registerPage: false,
+    registerPage: false
   });
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -57,11 +57,12 @@ const Login = React.memo(({ page, onClose }) => {
   const {
     register,
     watch,
-    formState: { errors },
+    handleSubmit,
+    formState: { errors }
   } = useForm({
     defaultValues: initialState,
     mode: "onSubmit",
-    resolver: yupResolver(loginSchema),
+    resolver: yupResolver(loginSchema)
   });
 
   const data = watch();
@@ -76,9 +77,7 @@ const Login = React.memo(({ page, onClose }) => {
         onClose();
       })
       .catch((error) => {
-        const errorMessage =
-          error.response?.data?.error?.message || "An error occurred";
-        toast.error(errorMessage);
+        toast.error(error);
       })
       .finally(() => {
         setIsLoading(false);
@@ -101,7 +100,11 @@ const Login = React.memo(({ page, onClose }) => {
           errors={errors}
           register={register}
         />
-        <ButtonStyled title="Войти" style="SUCCESS" onClick={onSubmit} />
+        <ButtonStyled
+          title="Войти"
+          style="SUCCESS"
+          onClick={handleSubmit(onSubmit)}
+        />
       </FormContainer>
 
       <LoaderFullWindow isLoading={isLoading} />

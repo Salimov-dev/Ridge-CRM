@@ -99,7 +99,10 @@ export const login = (payload) => async (dispatch) => {
     dispatch(authRequestSuccess({ userId: data.userId }));
     dispatch(loadUsersList());
   } catch (error) {
-    dispatch(authRequestFailed(error.message));
+    const errorMessage = error.response.data.error.message;
+
+    dispatch(authRequestFailed(errorMessage));
+    throw errorMessage;
   }
 };
 
@@ -114,7 +117,10 @@ export const signUp = (payload) => async (dispatch) => {
     dispatch(authRequestSuccess({ userId: data.userId }));
     dispatch(loadUsersList());
   } catch (error) {
-    dispatch(authRequestFailed(error.message));
+    const errorMessage = error.response.data.error.message;
+
+    dispatch(authRequestFailed(errorMessage));
+    throw errorMessage;
   }
 };
 
