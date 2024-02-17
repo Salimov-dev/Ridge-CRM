@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import {
   getCurrentUserId,
   getIsLoggedIn,
-  getIsUserCurator,
+  getIsUserCurator
 } from "@store/user/users.store";
 
 const Component = styled(Box)`
@@ -43,6 +43,8 @@ const Footer = () => {
         <Item title="Сделки" path="/deals" />
         <Divider orientation="vertical" flexItem />
         <Item title="Встречи" path="/meetings" />
+        <Divider orientation="vertical" flexItem />
+        <Item title="Контакты" path="/contacts" />
         <Divider orientation="vertical" flexItem />
         <Item title="Календарь" path="/calendar" />
         <Divider orientation="vertical" flexItem />

@@ -28,7 +28,7 @@ const CalendarHeader = ({ setState, isCurator }) => {
   const {
     handleOpenCreateMyTaskPage,
     handleOpenCreateManagerTaskPage,
-    handleOpenCreateMeetingPage,
+    handleOpenCreateMeetingPage
   } = useDialogHandlers(setState);
 
   return (

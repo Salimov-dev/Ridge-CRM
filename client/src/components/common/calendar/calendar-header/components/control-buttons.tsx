@@ -28,13 +28,14 @@ const ControlButtons = ({ isLoading }) => {
         onClick={handleTogglePrevMonth}
         disabled={!isLoading}
       >
-        <ArrowBackIosIcon />
+        <ArrowBackIosIcon sx={{ color: "white " }} />
       </Button>
       <Button
         variant="outlined"
         color="success"
         onClick={handleToggleTodayMonth}
         disabled={!isLoading}
+        sx={{ color: "white " }}
       >
         Сегодня
       </Button>
@@ -43,8 +44,9 @@ const ControlButtons = ({ isLoading }) => {
         color="success"
         onClick={handleToggleNextMonth}
         disabled={!isLoading}
+        sx={{ color: "white " }}
       >
-        <ArrowForwardIosIcon />
+        <ArrowForwardIosIcon sx={{ color: "white !important" }} />
       </Button>
     </Box>
   );

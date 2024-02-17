@@ -4,7 +4,7 @@ import { capitalizeFirstLetter } from "@utils/data/capitalize-first-letter";
 
 const MonthToday = ({ monthIndex }) => {
   return (
-    <Typography variant="h2">
+    <Typography variant="h2" sx={{ color: "white" }}>
       {capitalizeFirstLetter(
         dayjs(new Date(dayjs().year(), monthIndex))
           .locale("ru")

@@ -25,7 +25,7 @@ import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
 const initialState = {
   task: "",
   result: "",
-  selectedTaskTypes: [],
+  selectedTaskTypes: []
 };
 
 const Calendar = React.memo(() => {
@@ -45,7 +45,7 @@ const Calendar = React.memo(() => {
     lastContactId: "",
     meetingId: "",
     currentMonth: getMonth(),
-    dateCreate: null,
+    dateCreate: null
   });
 
   const localStorageState = JSON.parse(
@@ -54,7 +54,7 @@ const Calendar = React.memo(() => {
 
   const { register, watch, setValue } = useForm({
     defaultValues: !!localStorageState ? localStorageState : initialState,
-    mode: "onChange",
+    mode: "onChange"
   });
 
   const data = watch();
@@ -74,14 +74,14 @@ const Calendar = React.memo(() => {
     sortedTasks,
     getMeeting,
     getTask,
-    handleChangeCurrentMonth,
+    handleChangeCurrentMonth
   } = useCalendar(data, setState);
 
   const {
     handleOpenUpdateMyTaskPage,
     handleOpenUpdateManagerTaskPage,
     handleOpenObjectPage,
-    handleOpenUpdateMeetingPage,
+    handleOpenUpdateMeetingPage
   } = useDialogHandlers(setState);
 
   useEffect(() => {
