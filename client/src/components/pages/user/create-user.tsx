@@ -75,7 +75,7 @@ const CreateUser = React.memo(({ onClose }) => {
         sx={{
           display: "flex",
           flexDirection: "column",
-          gap: "4px",
+          gap: "8px",
           padding: "0 10px"
         }}
       >
@@ -85,7 +85,8 @@ const CreateUser = React.memo(({ onClose }) => {
             display: "flex",
             justifyContent: "center",
             backgroundColor: "red",
-            padding: "5px"
+            padding: "5px",
+            marginBottom: "10px"
           }}
         >
           <Typography variant="h4" sx={{ textAlign: "center" }}>

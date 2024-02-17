@@ -17,6 +17,7 @@ import UpdateProfile from "@components/pages/user/update-profile";
 import NoMatchRoute from "@components/common/rout/no-match";
 // store
 import { getCurrentUserId, getIsUserCurator } from "@store/user/users.store";
+import Contacts from "@layouts/contacts/contacts";
 
 export default function AppRoutes() {
   const currentUserId = useSelector(getCurrentUserId());
@@ -36,7 +37,8 @@ export default function AppRoutes() {
     },
     { id: 8, path: "profile/*", element: <Profile /> },
     { id: 9, path: ":userId?/presentations", element: <Presentations /> },
-    { id: 10, path: ":userId?/profileUpdate", element: <UpdateProfile /> }
+    { id: 10, path: ":userId?/profileUpdate", element: <UpdateProfile /> },
+    { id: 11, path: "contacts/", element: <Contacts /> }
   ];
 
   return (

@@ -1,6 +1,5 @@
-import { Icon, Tooltip } from "@mui/material";
-import Item from "./item";
 // components
+import Item from "./item";
 import ItemsTitle from "./items-title";
 // icons
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
@@ -12,13 +11,14 @@ import BusinessOutlinedIcon from "@mui/icons-material/BusinessOutlined";
 import AssignmentOutlinedIcon from "@mui/icons-material/AssignmentOutlined";
 import DonutSmallOutlinedIcon from "@mui/icons-material/DonutSmallOutlined";
 import DatasetOutlinedIcon from "@mui/icons-material/DatasetOutlined";
+import ContactPhoneOutlinedIcon from "@mui/icons-material/ContactPhoneOutlined";
 
 const ItemsList = ({
   selected,
   setSelected,
   colors,
   isCurator,
-  isCollapsed,
+  isCollapsed
 }) => {
   return (
     <>
@@ -66,6 +66,13 @@ const ItemsList = ({
         title="Встречи"
         to="/meetings"
         icon={<GroupsOutlinedIcon />}
+        selected={selected}
+        setSelected={setSelected}
+      />
+      <Item
+        title="Контакты"
+        to="/contacts"
+        icon={<ContactPhoneOutlinedIcon />}
         selected={selected}
         setSelected={setSelected}
       />

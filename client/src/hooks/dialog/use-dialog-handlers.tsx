@@ -249,6 +249,28 @@ const useDialogHandlers = (setState) => {
     }));
   };
 
+  // обновление стейта при открытии окна создания контакта
+  const handleOpenCreateContactPage = () => {
+    setState((prevState) => ({ ...prevState, createContactPage: true }));
+  };
+  const handleCloseCreateContactPage = () => {
+    setState((prevState) => ({ ...prevState, createContactPage: false }));
+  };
+
+  // обновление стейта при обновлении контакта
+  const handleOpenUpdateContactPage = (contactId) => {
+    setState((prevState) => ({
+      ...prevState,
+      updateContactPage: true,
+      contactId: contactId
+    }));
+  };
+  const handleCloseUpdateContactPage = () => {
+    setState((prevState) => ({
+      ...prevState,
+      updateContactPage: false
+    }));
+  };
   return {
     handleOpenAuthPage,
     handleCloseAuthPage,
@@ -289,7 +311,11 @@ const useDialogHandlers = (setState) => {
     handleCloseCreateUserPage,
     handleOpenCreateUserPage,
     handleOpenMakePaymentPage,
-    handleCloseMakePaymentPage
+    handleCloseMakePaymentPage,
+    handleOpenCreateContactPage,
+    handleCloseCreateContactPage,
+    handleOpenUpdateContactPage,
+    handleCloseUpdateContactPage
   };
 };
 

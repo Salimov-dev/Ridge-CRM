@@ -21,8 +21,9 @@ import { getObjectsStatusList } from "@store/object-params/object-status.store";
 import { getCurrentUserId, getIsUserCurator } from "@store/user/users.store";
 import {
   getObjectsList,
-  getObjectsLoadingStatus,
+  getObjectsLoadingStatus
 } from "@store/object/objects.store";
+import { ContainerStyled } from "@components/common/container/container-styled";
 
 const ChangePeriodsContainer = styled(Box)`
   width: 100%;
@@ -35,7 +36,7 @@ const ChangePeriodsContainer = styled(Box)`
 
 const initialState = {
   selectedUsers: [],
-  selectedStatuses: [],
+  selectedStatuses: []
 };
 
 const ObjectsDatabase = React.memo(() => {
@@ -43,7 +44,7 @@ const ObjectsDatabase = React.memo(() => {
     objectPage: false,
     createPage: false,
     updatePage: false,
-    objectId: null,
+    objectId: null
   });
 
   const { handleOpenObjectPage } = useDialogHandlers(setState);
@@ -56,7 +57,7 @@ const ObjectsDatabase = React.memo(() => {
     defaultValues: Boolean(localStorageState)
       ? localStorageState
       : initialState,
-    mode: "onBlur",
+    mode: "onBlur"
   });
 
   const data = watch();
@@ -100,7 +101,7 @@ const ObjectsDatabase = React.memo(() => {
   }, []);
 
   return (
-    <>
+    <ContainerStyled>
       <HeaderLayout title="Проработка базы объектов" />
       <ObjectsDatabaseFiltersPanel
         data={data}
@@ -185,7 +186,7 @@ const ObjectsDatabase = React.memo(() => {
       )}
 
       <PageDialogs state={state} setState={setState} />
-    </>
+    </ContainerStyled>
   );
 });
 

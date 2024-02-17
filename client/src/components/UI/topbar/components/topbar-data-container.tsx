@@ -9,6 +9,7 @@ const DataContainer = styled(Box)`
   gap: 4px;
   justify-content: center;
   align-items: center;
+  color: grey !important;
 `;
 
 const ResultContainer = styled(Box)`
@@ -17,6 +18,7 @@ const ResultContainer = styled(Box)`
   border: 1px solid white;
   border-radius: 4px;
   cursor: pointer;
+  opacity: 0.8;
 `;
 
 const TopBarDataContainter = ({
@@ -24,8 +26,8 @@ const TopBarDataContainter = ({
   elements,
   path,
   backgroundColor,
-  isLoading=true,
-  fontColor = "white",
+  isLoading = true,
+  fontColor = "white"
 }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -40,7 +42,11 @@ const TopBarDataContainter = ({
           dispatch<any>(setCurrrentPathState(window.location.pathname));
         }}
       >
-        {!isLoading ? <Typography variant="h5">{elements?.length}шт</Typography> : <Loader size={16} padding="6px"/>}
+        {!isLoading ? (
+          <Typography variant="h5">{elements?.length}шт</Typography>
+        ) : (
+          <Loader size={16} padding="6px" />
+        )}
       </ResultContainer>
     </DataContainer>
   );

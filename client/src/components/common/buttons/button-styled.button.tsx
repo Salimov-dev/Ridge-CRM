@@ -99,6 +99,12 @@ const ButtonStyled = ({
     backgroundHover = colors.green["darkGreen"];
   }
 
+  if (style === "CONTACT") {
+    background = "MidnightBlue";
+    colorHover = "white";
+    backgroundHover = "DarkBlue";
+  }
+
   return (
     <Button
       variant={variant}
