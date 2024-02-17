@@ -7,22 +7,22 @@ const Component = styled(Box)`
 `;
 
 const Avatar = styled("img")({
-  borderRadius: "50%",
+  borderRadius: "50%"
 });
 
 const AvatarImage = ({
   avatarSrc,
   width = "150px",
   height = "150px",
-  isLoading,
+  isLoading
 }) => {
   return !isLoading ? (
     <Component>
-      {avatarSrc ? (
-        <Avatar src={avatarSrc} alt="User Avatar" sx={{ width, height }} />
-      ) : (
-        <Avatar src={basicAva} alt="User Avatar" sx={{ width, height }} />
-      )}
+      <Avatar
+        src={avatarSrc ? avatarSrc : basicAva}
+        alt="User Avatar"
+        sx={{ width, height }}
+      />
     </Component>
   ) : (
     <Loader height={height} width={width} padding="0" size={20} />

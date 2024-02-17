@@ -90,7 +90,7 @@ const CreateUser = React.memo(({ onClose }) => {
         >
           <Typography variant="h4" sx={{ textAlign: "center" }}>
             Пароль для каждого нового пользователя задаётся по умолчанию
-            "Qwer1234"
+            "Qwer1234", смените при первом входе
           </Typography>
         </Box>
         <Typography>

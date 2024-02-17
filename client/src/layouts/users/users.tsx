@@ -1,5 +1,5 @@
 // libraries
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Box } from "@mui/material";
 import { useSelector } from "react-redux";
 import styled from "@emotion/styled";
@@ -33,7 +33,7 @@ const initialState = {
   selectedStatuses: []
 };
 
-const Users = () => {
+const Users = React.memo(() => {
   const [state, setState] = useState({
     createUserPage: false,
     makePaymentPage: false
@@ -49,6 +49,8 @@ const Users = () => {
   const data = watch();
 
   const users = useSelector(getUsersList());
+  console.log("users", users);
+
   const currentUserId = useSelector(getCurrentUserId());
 
   const isLoading = useSelector(getUsersLoadingStatus());
@@ -108,6 +110,6 @@ const Users = () => {
       <PageDialogs state={state} setState={setState} />
     </Component>
   );
-};
+});
 
 export default Users;

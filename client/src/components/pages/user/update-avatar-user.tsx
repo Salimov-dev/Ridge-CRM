@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import Avatar from "react-avatar-edit";
 import { Box, styled } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
+import compress from "compress-base64";
 // components
 import HeaderWithCloseButton from "@components/common/page-headers/header-with-close-button";
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
@@ -24,6 +25,7 @@ const UpdateAvatar = React.memo(({ onClose }) => {
 
   const [preview, setPreview] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [compressedPreview, setCompressedPreview] = useState([]);
 
   const currentUserId = useSelector(getCurrentUserId());
   const newPreview = preview?.replace(/^data:image\/\w+;base64,/, "");
@@ -36,9 +38,28 @@ const UpdateAvatar = React.memo(({ onClose }) => {
     setPreview(view);
   };
 
+  const compressedBase64 = () => {
+    return compress(preview, {
+      width: 100,
+      type: "image/png",
+      max: 130,
+      min: 20,
+      quality: 0.6
+    }).then((res) => {
+      const result = res?.replace(/^data:image\/\w+;base64,/, "");
+      return setCompressedPreview(result);
+    });
+  };
+
   const handleUploadImage = () => {
     setIsLoading(true);
-    dispatch<any>(updateAvatar({ userId: currentUserId, src: newPreview }))
+
+    dispatch<any>(
+      updateAvatar({
+        userId: currentUserId,
+        src: compressedPreview
+      })
+    )
       .then(() => {
         setIsLoading(false);
         onClose();
@@ -49,6 +70,10 @@ const UpdateAvatar = React.memo(({ onClose }) => {
         console.log("err", err);
       });
   };
+
+  useEffect(() => {
+    compressedBase64();
+  }, [preview]);
 
   return (
     <>

@@ -24,8 +24,6 @@ import {
 } from "@store/user/user-license.store";
 // schema
 import { paymentAmounySchema } from "@schemas/payment-amount.schema";
-// utils
-import { FormatDate } from "@utils/date/format-date";
 
 const initialState = {
   amount: 0
@@ -63,14 +61,15 @@ const MakePaymentPage = React.memo(({ onClose }) => {
   const newDaysQuantity = Math.floor(paymentAmount / totalLicensesCost);
 
   const licenseDateEnd = dayjs(userLicense?.dateEnd);
-  const newLicenseDate = FormatDate(licenseDateEnd.add(newDaysQuantity, "day"));
+  const newLicenseDate = licenseDateEnd.add(newDaysQuantity, "day");
 
   const onSubmit = () => {
     setIsLoading(true);
 
     const newData = {
       ...userLicense,
-      balance: Number(paymentAmount)
+      balance: Number(paymentAmount),
+      dateEnd: newLicenseDate
     };
 
     dispatch<any>(updateUserLicense(newData))

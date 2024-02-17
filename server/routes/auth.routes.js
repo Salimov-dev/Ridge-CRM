@@ -140,8 +140,6 @@ router.post("/create", [
         // Если роль нового пользователя Наблюдатель
         roleNewUser = "observers";
       }
-      console.log("newUser", newUser);
-      console.log("roleNewUser", roleNewUser);
 
       // Обновляем лицензию текущего пользователя, добавляя _id нового пользователя в соответствующий массив
       if (roleNewUser) {

@@ -16,7 +16,7 @@ import ButtonStyled from "@components/common/buttons/button-styled.button";
 import {
   FormatMetro,
   FormatObjectStatus,
-  FormatPhone,
+  FormatPhone
 } from "@components/common/table/helpers/helpers";
 // hooks
 import useGetUserAvatar from "@hooks/user/use-get-user-avatar";
@@ -27,7 +27,7 @@ import { getUserDataById } from "@store/user/users.store";
 import { getTasksList } from "@store/task/tasks.store";
 import {
   getMeetingsList,
-  getObjectMeetingsList,
+  getObjectMeetingsList
 } from "@store/meeting/meetings.store";
 
 function IndeterminateCheckbox({
@@ -63,7 +63,7 @@ export const objectsColumns = (handleOpenObjectPage, isCurator) => {
         {...{
           checked: table.getIsAllRowsSelected(),
           indeterminate: table.getIsSomeRowsSelected(),
-          onChange: table.getToggleAllRowsSelectedHandler(),
+          onChange: table.getToggleAllRowsSelectedHandler()
         }}
       />
     ),
@@ -74,11 +74,11 @@ export const objectsColumns = (handleOpenObjectPage, isCurator) => {
             checked: row.getIsSelected(),
             disabled: !row.getCanSelect(),
             indeterminate: row.getIsSomeSelected(),
-            onChange: row.getToggleSelectedHandler(),
+            onChange: row.getToggleSelectedHandler()
           }}
         />
       </div>
-    ),
+    )
   };
 
   const dateColumn = {
@@ -88,7 +88,7 @@ export const objectsColumns = (handleOpenObjectPage, isCurator) => {
     cell: (info) => {
       const date = info.getValue();
       return <AlignCenter>{FormatDate(date)}</AlignCenter>;
-    },
+    }
   };
 
   const locationColumn = {
@@ -100,7 +100,7 @@ export const objectsColumns = (handleOpenObjectPage, isCurator) => {
         cell: (info) => {
           const city = info.getValue();
           return city;
-        },
+        }
       },
       {
         accessorKey: "district",
@@ -110,7 +110,7 @@ export const objectsColumns = (handleOpenObjectPage, isCurator) => {
           const distName = useSelector(getDistrictName(district));
 
           return <AlignCenter>{distName}</AlignCenter>;
-        },
+        }
       },
       {
         accessorKey: "metro",
@@ -122,7 +122,7 @@ export const objectsColumns = (handleOpenObjectPage, isCurator) => {
           ) : (
             <EmptyTd />
           );
-        },
+        }
       },
       {
         accessorFn: (row) => row,
@@ -145,7 +145,7 @@ export const objectsColumns = (handleOpenObjectPage, isCurator) => {
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "space-between",
-                  gap: "12px",
+                  gap: "12px"
                 }}
               >
                 <Typography>{object?.address}</Typography>
@@ -158,9 +158,9 @@ export const objectsColumns = (handleOpenObjectPage, isCurator) => {
               </Box>
             );
           } else return null;
-        },
-      },
-    ],
+        }
+      }
+    ]
   };
 
   const contactsColumn = {
@@ -180,7 +180,7 @@ export const objectsColumns = (handleOpenObjectPage, isCurator) => {
           ) : (
             <EmptyTd />
           );
-        },
+        }
       },
       {
         accessorKey: "name",
@@ -188,9 +188,9 @@ export const objectsColumns = (handleOpenObjectPage, isCurator) => {
         cell: (info) => {
           const name = info.getValue();
           return name ? <AlignCenter>{name}</AlignCenter> : <EmptyTd />;
-        },
-      },
-    ],
+        }
+      }
+    ]
   };
 
   const lastContactsColumn = {
@@ -221,7 +221,7 @@ export const objectsColumns = (handleOpenObjectPage, isCurator) => {
           ) : (
             <AlignCenter>-</AlignCenter>
           );
-        },
+        }
       },
       {
         accessorFn: (row) => row,
@@ -250,9 +250,9 @@ export const objectsColumns = (handleOpenObjectPage, isCurator) => {
           ) : (
             <EmptyTd />
           );
-        },
-      },
-    ],
+        }
+      }
+    ]
   };
 
   const managerColumn = {
@@ -264,10 +264,8 @@ export const objectsColumns = (handleOpenObjectPage, isCurator) => {
         cell: (info) => {
           const userId = info.getValue();
           const user = useSelector(getUserDataById(userId));
-          const { avatarSrc, isLoading } = useGetUserAvatar(user?._id);
-          const getAvatarSrc = () => {
-            return isLoading ? null : avatarSrc;
-          };
+          const { getAvatarSrc, isLoading } = useGetUserAvatar(user?._id);
+
           return (
             <AlignCenter>
               <UserNameWithAvatar
@@ -277,9 +275,9 @@ export const objectsColumns = (handleOpenObjectPage, isCurator) => {
               />
             </AlignCenter>
           );
-        },
-      },
-    ],
+        }
+      }
+    ]
   };
 
   const otherColumn = {
@@ -291,7 +289,7 @@ export const objectsColumns = (handleOpenObjectPage, isCurator) => {
         cell: (info) => {
           const status = info.getValue();
           return <AlignCenter>{FormatObjectStatus(status)}</AlignCenter>;
-        },
+        }
       },
       {
         accessorKey: "cloudLink",
@@ -321,7 +319,7 @@ export const objectsColumns = (handleOpenObjectPage, isCurator) => {
               </Tooltip>
             </AlignCenter>
           );
-        },
+        }
       },
       {
         accessorKey: "_id",
@@ -341,9 +339,9 @@ export const objectsColumns = (handleOpenObjectPage, isCurator) => {
               />
             </AlignCenter>
           );
-        },
-      },
-    ],
+        }
+      }
+    ]
   };
 
   if (isCurator) {
@@ -354,7 +352,7 @@ export const objectsColumns = (handleOpenObjectPage, isCurator) => {
       contactsColumn,
       managerColumn,
       lastContactsColumn,
-      otherColumn,
+      otherColumn
     ];
   } else {
     columns = [
@@ -362,7 +360,7 @@ export const objectsColumns = (handleOpenObjectPage, isCurator) => {
       locationColumn,
       contactsColumn,
       lastContactsColumn,
-      otherColumn,
+      otherColumn
     ];
   }
 

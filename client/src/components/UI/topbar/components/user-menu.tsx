@@ -1,6 +1,5 @@
 // libraries
 import { useState } from "react";
-import { io } from "socket.io-client";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 // MUI
@@ -8,12 +7,9 @@ import { Box, Button, Menu, MenuItem, Typography, styled } from "@mui/material";
 // store
 import { getCurrentUserId, logOut } from "@store/user/users.store";
 // commponents
-import AvatarImage from "@layouts/profile/components/avatar-image";
-
+import UserNameWithAvatar from "@components/common/table/components/user-name-with-avatar";
 // hooks
 import useGetUserAvatar from "@hooks/user/use-get-user-avatar";
-// config
-import configFile from "@config/config.json";
 
 const Component = styled(Box)`
   display: flex;
@@ -21,25 +17,15 @@ const Component = styled(Box)`
   margin-left: 0px;
 `;
 
-const UserName = styled(Typography)`
-  color: gray;
-`;
-
-const UserMenu = ({ currentUser }) => {
+const UserMenu = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
-  const socket = io(configFile.ioEndPoint);
 
   const currentUserId = useSelector(getCurrentUserId());
-  const { avatarSrc, isLoading, refreshAvatar } =
-    useGetUserAvatar(currentUserId);
-
-  socket.on("updateAvatar", async () => {
-    refreshAvatar();
-  });
+  const { isLoading, getAvatarSrc } = useGetUserAvatar(currentUserId);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -69,26 +55,15 @@ const UserMenu = ({ currentUser }) => {
         onClick={handleClick}
         sx={{
           "&:hover *": {
-            color: "white",
-          },
+            color: "white"
+          }
         }}
       >
-        <Box sx={{ display: "flex", alignItems: "center" }}>
-          <AvatarImage
-            width="30px"
-            height="30px"
-            avatarSrc={avatarSrc}
-            isLoading={isLoading}
-          />
-          <UserName
-            sx={{
-              color: open ? "white !important" : "gray",
-              marginLeft: "6px",
-            }}
-          >
-            {currentUser?.firstName || "Новенький"}
-          </UserName>
-        </Box>
+        <UserNameWithAvatar
+          userId={currentUserId}
+          avatarSrc={getAvatarSrc()}
+          isLoading={isLoading}
+        />
       </Button>
       <Menu
         id="basic-menu"
@@ -96,7 +71,7 @@ const UserMenu = ({ currentUser }) => {
         open={open}
         onClose={handleClose}
         MenuListProps={{
-          "aria-labelledby": "basic-button",
+          "aria-labelledby": "basic-button"
         }}
       >
         <MenuItem onClick={handleOpenProfile}>Профиль</MenuItem>

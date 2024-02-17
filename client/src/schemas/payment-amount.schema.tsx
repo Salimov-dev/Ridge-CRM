@@ -7,6 +7,6 @@ export const paymentAmounySchema = yup.object().shape({
     .test(
       "is-greater-than-50",
       "Минимальная сумма пополнения 50 рублей",
-      (value) => value > 50
+      (value) => value > 49
     )
 });

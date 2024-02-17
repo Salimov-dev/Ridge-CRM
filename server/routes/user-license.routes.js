@@ -97,11 +97,9 @@ router.patch("/:UserLicenseId?/edit", auth, async (req, res) => {
       existingUserLicense.balance / (subscriptionCostPerUser * totalUsersCount)
     );
 
-    // Вычисляем дату окончания лицензии на основе текущей даты и количества дней, на которое хватит баланса
-    const endDate = new Date(
-      currentDate.getTime() + daysLeft * 24 * 60 * 60 * 1000
-    );
-    existingUserLicense.dateEnd = endDate;
+    // Ставим дату окончания лицензии на основе текущей даты и количества дней, на которое хватит баланса
+    const newDateEnd = req.body.dateEnd;
+    existingUserLicense.dateEnd = newDateEnd;
 
     // Сохраняем обновленную лицензию
     await existingUserLicense.save();

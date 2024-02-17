@@ -15,7 +15,7 @@ import { getTaskById } from "@store/task/tasks.store";
 import {
   getCurrentUserId,
   getIsUserAuthorThisEntity,
-  getUsersLoadingStatus,
+  getUsersLoadingStatus
 } from "@store/user/users.store";
 // utils
 import { FormatDate } from "@utils/date/format-date";
@@ -36,7 +36,7 @@ export const tasksColumns = (
     cell: (info) => {
       const isDone = info.getValue();
       return <DoneStatusIcon isDone={isDone} />;
-    },
+    }
   },
   {
     accessorKey: "date",
@@ -52,7 +52,7 @@ export const tasksColumns = (
           <Typography>{dayOfWeek}</Typography>{" "}
         </Box>
       );
-    },
+    }
   },
   {
     accessorKey: "time",
@@ -61,7 +61,7 @@ export const tasksColumns = (
     cell: (info) => {
       const time = info.getValue();
       return <AlignCenter>{FormatTime(time)}</AlignCenter>;
-    },
+    }
   },
   {
     accessorKey: "objectId",
@@ -76,7 +76,7 @@ export const tasksColumns = (
           sx={{
             display: "flex",
             alignItems: "center",
-            justifyContent: "space-between",
+            justifyContent: "space-between"
           }}
         >
           {objectId ? (
@@ -97,17 +97,15 @@ export const tasksColumns = (
           )}
         </Box>
       );
-    },
+    }
   },
   {
     accessorKey: "userId",
     header: "Задачу поставил",
     cell: (info) => {
       const userId = info.getValue();
-      const { avatarSrc, isLoading } = useGetUserAvatar(userId);
-      const getAvatarSrc = () => {
-        return isLoading ? null : avatarSrc;
-      };
+      const { getAvatarSrc, isLoading } = useGetUserAvatar(userId);
+
       return (
         <AlignCenter>
           <UserNameWithAvatar
@@ -117,15 +115,14 @@ export const tasksColumns = (
           />
         </AlignCenter>
       );
-    },
+    }
   },
   {
     accessorKey: "managerId",
     header: "Ответственный",
     cell: (info) => {
       const managerId = info.getValue();
-      const isLoading = useSelector(getUsersLoadingStatus());
-      const getAvatarSrc = () => useGetUserAvatar(managerId);
+      const { getAvatarSrc, isLoading } = useGetUserAvatar(managerId);
       return (
         <AlignCenter>
           {managerId ? (
@@ -139,7 +136,7 @@ export const tasksColumns = (
           )}
         </AlignCenter>
       );
-    },
+    }
   },
   {
     accessorKey: "comment",
@@ -147,7 +144,7 @@ export const tasksColumns = (
     cell: (info) => {
       const comment = info.getValue();
       return comment;
-    },
+    }
   },
   {
     accessorKey: "result",
@@ -155,7 +152,7 @@ export const tasksColumns = (
     cell: (info) => {
       const comment = info.getValue();
       return comment ? comment : <EmptyTd />;
-    },
+    }
   },
   {
     accessorKey: "created_at",
@@ -163,7 +160,7 @@ export const tasksColumns = (
     cell: (info) => {
       const date = info?.getValue();
       return <AlignCenter>{FormatDate(date)}</AlignCenter>;
-    },
+    }
   },
   {
     accessorKey: "_id",
@@ -199,6 +196,6 @@ export const tasksColumns = (
           />
         </AlignCenter>
       );
-    },
-  },
+    }
+  }
 ];

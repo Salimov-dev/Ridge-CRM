@@ -1,7 +1,7 @@
 import React from "react";
 import { FormatManagerName } from "../helpers/helpers";
 import { Box, Typography, styled } from "@mui/material";
-import AvatarImage from "../../../../layouts/profile/components/avatar-image";
+import AvatarImage from "@layouts/profile/components/avatar-image";
 
 const Component = styled(Box)`
   width: 100%;
@@ -22,7 +22,9 @@ const UserNameWithAvatar = React.memo(
           isLoading={isLoading}
         />
         {withName && (
-          <Typography sx={{ width: "100%", fontStyle: fontStyle }}>
+          <Typography
+            sx={{ width: "100%", fontStyle: fontStyle, color: "white" }}
+          >
             {FormatManagerName(userId)}
           </Typography>
         )}

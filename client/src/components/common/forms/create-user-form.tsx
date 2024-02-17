@@ -4,6 +4,13 @@ import SelectFieldStyled from "../inputs/select-field-styled";
 import { userRolesArray } from "@data/users/user-roles";
 
 const CreateUserForm = ({ data, register, errors }) => {
+  const roleManager = "69gfoep3944jgjdso345002";
+  const roleObserver = "69dgp34954igfj345043001";
+
+  const transformedRoles = userRolesArray.filter((role) => {
+    return role._id === roleManager || role._id === roleObserver;
+  });
+
   return (
     <Form noValidate>
       <FieldsContainer sx={{ flexDirection: "column" }}>
@@ -23,7 +30,7 @@ const CreateUserForm = ({ data, register, errors }) => {
           name="role"
           labelId="role"
           required={true}
-          itemsList={userRolesArray}
+          itemsList={transformedRoles}
           value={data.role ?? ""}
           errors={errors?.role}
         />

@@ -18,7 +18,7 @@ import { getPresentationStatusNameById } from "@store/presentation/presentation-
 import { getPresentationById } from "@store/presentation/presentations.store";
 import {
   getCurrentUserId,
-  getIsUserAuthorThisEntity,
+  getIsUserAuthorThisEntity
 } from "@store/user/users.store";
 
 export const presentationsColumns = (
@@ -35,7 +35,7 @@ export const presentationsColumns = (
     cell: (info) => {
       const date = info.getValue();
       return <AlignCenter>{FormatDate(date)}</AlignCenter>;
-    },
+    }
   };
 
   const objectColumn = {
@@ -51,7 +51,7 @@ export const presentationsColumns = (
           sx={{
             display: "flex",
             alignItems: "center",
-            justifyContent: "space-between",
+            justifyContent: "space-between"
           }}
         >
           {fullAddress}
@@ -66,7 +66,7 @@ export const presentationsColumns = (
       ) : (
         <AlignCenter>-</AlignCenter>
       );
-    },
+    }
   };
 
   const managerColumns = {
@@ -74,10 +74,8 @@ export const presentationsColumns = (
     header: "Менеджер",
     cell: (info) => {
       const userId = info.getValue();
-      const { avatarSrc, isLoading } = useGetUserAvatar(userId);
-      const getAvatarSrc = () => {
-        return isLoading ? null : avatarSrc;
-      };
+      const { getAvatarSrc, isLoading } = useGetUserAvatar(userId);
+
       return (
         <UserNameWithAvatar
           userId={userId}
@@ -85,7 +83,7 @@ export const presentationsColumns = (
           isLoading={isLoading}
         />
       );
-    },
+    }
   };
 
   const otherColumn = [
@@ -96,7 +94,7 @@ export const presentationsColumns = (
         const status = info.getValue();
         const name = useSelector(getPresentationStatusNameById(status));
         return <AlignCenter>{name}</AlignCenter>;
-      },
+      }
     },
     {
       accessorKey: "curatorComment",
@@ -110,7 +108,7 @@ export const presentationsColumns = (
             Дождитесь итогов согласования
           </Typography>
         );
-      },
+      }
     },
     {
       accessorKey: "cloudLink",
@@ -140,7 +138,7 @@ export const presentationsColumns = (
             </Tooltip>
           </AlignCenter>
         );
-      },
+      }
     },
     {
       accessorKey: "_id",
@@ -164,8 +162,8 @@ export const presentationsColumns = (
             />
           </AlignCenter>
         );
-      },
-    },
+      }
+    }
   ];
 
   if (isCurator) {

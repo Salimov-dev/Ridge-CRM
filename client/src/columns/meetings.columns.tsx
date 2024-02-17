@@ -20,7 +20,7 @@ import { getMeetingById } from "@store/meeting/meetings.store";
 import {
   getCurrentUserId,
   getIsUserAuthorThisEntity,
-  getUserDataById,
+  getUserDataById
 } from "@store/user/users.store";
 
 export const meetingsColumns = (
@@ -37,7 +37,7 @@ export const meetingsColumns = (
       cell: (info) => {
         const isDone = info.getValue();
         return <DoneStatusIcon isDone={isDone} />;
-      },
+      }
     },
     {
       accessorKey: "date",
@@ -53,7 +53,7 @@ export const meetingsColumns = (
             <Typography>{dayOfWeek}</Typography>
           </Box>
         );
-      },
+      }
     },
     {
       accessorKey: "time",
@@ -62,7 +62,7 @@ export const meetingsColumns = (
       cell: (info) => {
         const time = info.getValue();
         return <AlignCenter>{FormatTime(time)}</AlignCenter>;
-      },
+      }
     },
     {
       accessorFn: (row) => row,
@@ -74,7 +74,7 @@ export const meetingsColumns = (
             {meeting.city}, {meeting.address}
           </Typography>
         );
-      },
+      }
     },
     {
       accessorKey: "meetingType",
@@ -83,7 +83,7 @@ export const meetingsColumns = (
         const type = info.getValue();
         const name = useSelector(getMeetingTypeNameById(type));
         return <AlignCenter>{name}</AlignCenter>;
-      },
+      }
     },
     {
       accessorKey: "objectId",
@@ -98,7 +98,7 @@ export const meetingsColumns = (
             sx={{
               display: "flex",
               alignItems: "center",
-              justifyContent: "space-between",
+              justifyContent: "space-between"
             }}
           >
             {fullAddress}
@@ -113,7 +113,7 @@ export const meetingsColumns = (
         ) : (
           <AlignCenter>-</AlignCenter>
         );
-      },
+      }
     },
     {
       accessorKey: "status",
@@ -122,7 +122,7 @@ export const meetingsColumns = (
         const status = info.getValue();
         const name = useSelector(getMeetingStatusNameById(status));
         return <AlignCenter>{name}</AlignCenter>;
-      },
+      }
     },
     {
       accessorKey: "comment",
@@ -130,7 +130,7 @@ export const meetingsColumns = (
       cell: (info) => {
         const comment = info.getValue();
         return comment;
-      },
+      }
     },
     {
       accessorKey: "result",
@@ -138,7 +138,7 @@ export const meetingsColumns = (
       cell: (info) => {
         const result = info.getValue();
         return result ? result : <AlignCenter>-</AlignCenter>;
-      },
+      }
     },
     {
       accessorKey: "created_at",
@@ -146,7 +146,7 @@ export const meetingsColumns = (
       cell: (info) => {
         const date = info.getValue();
         return <AlignCenter>{FormatDate(date)}</AlignCenter>;
-      },
+      }
     },
     {
       accessorKey: "_id",
@@ -169,8 +169,8 @@ export const meetingsColumns = (
             />
           </AlignCenter>
         );
-      },
-    },
+      }
+    }
   ];
 
   if (isCurator) {
@@ -180,10 +180,8 @@ export const meetingsColumns = (
       cell: (info) => {
         const userId = info.getValue();
         const user = useSelector(getUserDataById(userId));
-        const { avatarSrc, isLoading } = useGetUserAvatar(user?._id);
-        const getAvatarSrc = () => {
-          return isLoading ? null : avatarSrc;
-        };
+        const { isLoading, getAvatarSrc } = useGetUserAvatar(user?._id);
+
         return (
           <AlignCenter>
             <UserNameWithAvatar
@@ -193,7 +191,7 @@ export const meetingsColumns = (
             />
           </AlignCenter>
         );
-      },
+      }
     });
   }
   return columns;

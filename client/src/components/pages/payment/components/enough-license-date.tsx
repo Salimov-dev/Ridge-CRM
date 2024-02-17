@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import { Typography, Box } from "@mui/material";
+import { FormatDate } from "@utils/date/format-date";
 
 const Component = styled(Box)`
   width: 100%;
@@ -11,14 +12,14 @@ const Component = styled(Box)`
 const EnoughLicenseDate = ({ newLicenseDate }) => {
   return (
     <Component>
-      <Typography variant="h4" sx={{ textAlign: "center", marginRight: "4px" }}>
+      <Typography variant="h5" sx={{ textAlign: "center", marginRight: "4px" }}>
         Можно будет пользоваться до:
       </Typography>
       <Typography
-        variant="h4"
+        variant="h5"
         sx={{ textAlign: "center", color: "red", fontWeight: "bold" }}
       >
-        {newLicenseDate}
+        {FormatDate(newLicenseDate)}
       </Typography>
     </Component>
   );

@@ -20,15 +20,23 @@ router.get("/", auth, async (req, res) => {
     }
     const userRole = user.role;
 
+    // если пользователь Менеджер
     if (userRole.includes(roleManager)) {
-      return res.status(200).send([user.dataValues]);
+      const userToSend = { ...user.dataValues };
+      delete userToSend.password; // удаляем пароль
+      return res.status(200).send([userToSend]);
     }
 
+    // если пользователь Куратор или Наблюдатель
     if (userRole.includes(roleCurator) || userRole.includes(roleObserver)) {
       const curatorUsers = await User.findAll({ where: { curatorId: userId } });
       const usersData = [
-        user.dataValues,
-        ...curatorUsers.map((curatorUser) => curatorUser.dataValues)
+        { ...user.dataValues, password: undefined },
+        ...curatorUsers.map((curatorUser) => {
+          const userToSend = { ...curatorUser.dataValues };
+          delete userToSend.password; // удаляем пароль
+          return userToSend;
+        })
       ];
       return res.status(200).send(usersData);
     }

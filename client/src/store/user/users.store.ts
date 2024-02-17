@@ -6,7 +6,7 @@ import configFile from "@config/config.json";
 import authService from "@services/user/auth-service";
 import userService from "@services/user/user.service";
 import localStorageService from "@services/user/local.storage-service";
-import { userRolesArray } from "@data/users/user-roles";
+import { loadUserLicensesList } from "./user-license.store";
 
 const socket = io(configFile.ioEndPoint);
 
@@ -138,17 +138,8 @@ export const createNewUser = (payload) => async (dispatch) => {
   dispatch(authRequested());
   try {
     const data = await authService.create(payload);
-
-    socket.emit("userCreated", data);
-  } catch (error) {
-    dispatch(authRequestFailed(error.message));
-  }
-};
-
-export const createNewUserUpdate = (payload) => async (dispatch) => {
-  dispatch(authRequested());
-  try {
-    dispatch(userCreated(payload));
+    dispatch(userCreated(data));
+    dispatch(loadUserLicensesList());
   } catch (error) {
     dispatch(authRequestFailed(error.message));
   }

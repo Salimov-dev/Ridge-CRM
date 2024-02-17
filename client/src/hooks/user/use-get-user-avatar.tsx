@@ -5,7 +5,6 @@ import { getUserAvatarsList } from "@store/avatar/avatar.store";
 const useGetUserAvatar = (userId) => {
   const [avatarSrc, setAvatarSrc] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-
   const userAvatarsList = useSelector(getUserAvatarsList());
 
   const usersArray = Array.isArray(userAvatarsList) ? userAvatarsList : [];
@@ -33,11 +32,15 @@ const useGetUserAvatar = (userId) => {
     getUserAvatar();
   };
 
+  const getAvatarSrc = () => {
+    return isLoading ? null : avatarSrc;
+  };
+
   useEffect(() => {
     getUserAvatar();
-  });
+  }, [userSrc, JSON.stringify(userAvatarsList)]);
 
-  return { avatarSrc, isLoading, refreshAvatar };
+  return { avatarSrc, isLoading, refreshAvatar, getAvatarSrc };
 };
 
 export default useGetUserAvatar;

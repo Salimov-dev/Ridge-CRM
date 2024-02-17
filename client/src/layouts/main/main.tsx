@@ -1,10 +1,11 @@
 import "dayjs/locale/ru";
-import React from "react";
+import React, { useState } from "react";
 import { Box, Typography, styled } from "@mui/material";
-import telegramIcon from "@assets/telegram.png";
 import ButtonStyled from "@components/common/buttons/button-styled.button";
 import ThumbUpAltOutlinedIcon from "@mui/icons-material/ThumbUpAltOutlined";
 import backgroundImage from "@assets/main-background.png";
+import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
+import PageDialogs from "@components/common/dialog/page-dialogs";
 
 const Logo = styled(Box)`
   display: flex;
@@ -16,6 +17,11 @@ const Logo = styled(Box)`
 `;
 
 const Main = React.memo(() => {
+  const [state, setState] = useState({
+    loginPage: false,
+    registerPage: false
+  });
+  const { handleOpenAuthPage } = useDialogHandlers(setState);
   return (
     <Box
       sx={{
@@ -100,7 +106,7 @@ const Main = React.memo(() => {
             fontSize="18px"
             padding="0 30px"
             // disabled={!isAuthorEntity}
-            // onClick={() => onUpdate(lastContactId)}
+            onClick={() => handleOpenAuthPage("register")}
           />
         </Box>
         <Box
@@ -116,6 +122,7 @@ const Main = React.memo(() => {
           }}
         ></Box>
       </Box>
+      <PageDialogs state={state} setState={setState} />
     </Box>
   );
 });

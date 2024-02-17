@@ -13,7 +13,7 @@ import { FormatDate } from "@utils/date/format-date";
 import { getLastContactsById } from "@store/last-contact/last-contact.store";
 import {
   getCurrentUserId,
-  getIsUserAuthorThisEntity,
+  getIsUserAuthorThisEntity
 } from "@store/user/users.store";
 // hooks
 import useGetUserAvatar from "@hooks/user/use-get-user-avatar";
@@ -34,17 +34,15 @@ export const lastContactColumns = (onUpdate) => [
           <Typography>{dayOfWeek}</Typography>{" "}
         </Box>
       );
-    },
+    }
   },
   {
     accessorKey: "userId",
     header: "Менеджер",
     cell: (info) => {
       const userId = info.getValue();
-      const { avatarSrc, isLoading } = useGetUserAvatar(userId);
-      const getAvatarSrc = () => {
-        return isLoading ? null : avatarSrc;
-      };
+      const { getAvatarSrc, isLoading } = useGetUserAvatar(userId);
+
       return (
         <AlignCenter>
           <UserNameWithAvatar
@@ -54,7 +52,7 @@ export const lastContactColumns = (onUpdate) => [
           />
         </AlignCenter>
       );
-    },
+    }
   },
   {
     accessorKey: "result",
@@ -62,7 +60,7 @@ export const lastContactColumns = (onUpdate) => [
     cell: (info) => {
       const result = info.getValue();
       return result ? result : <EmptyTd />;
-    },
+    }
   },
   {
     accessorKey: "_id",
@@ -88,6 +86,6 @@ export const lastContactColumns = (onUpdate) => [
           />
         </AlignCenter>
       );
-    },
-  },
+    }
+  }
 ];
