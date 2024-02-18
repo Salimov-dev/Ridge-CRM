@@ -3,7 +3,7 @@ import { useTheme } from "@emotion/react";
 import { tokens } from "@theme/theme";
 import { toast } from "react-toastify";
 import React, { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import { useFieldArray, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useDispatch, useSelector } from "react-redux";
 // components
@@ -18,18 +18,20 @@ import HeaderWithCloseButton from "@components/common/page-headers/header-with-c
 // import useFindcontact from "@hooks/contact/use-find-contact";
 // store
 import { getCurrentUserId } from "@store/user/users.store";
+import ContactForm from "@components/common/forms/contact.form";
 // import { createcontact } from "@store/contact/contacts.store";
 // import { getcontactsList } from "@store/contact/contacts.store";
 // import { getContactTypesList } from "@store/Contact/contact-types.store";
 // import { getContactStatusesList } from "@store/Contact/contact-status.store";
 
 const initialState = {
-  status: "",
-  type: "",
-  date: null,
-  time: null,
+  name: "",
+  company: "",
+  position: "",
   comment: "",
-  contactPageId: null
+  emails: [{ email: "" }],
+  phones: [{ phone: "", isDefault: true }],
+  objects: [{ objectId: "" }]
 };
 
 const CreateContact = React.memo(
@@ -53,6 +55,7 @@ const CreateContact = React.memo(
       watch,
       handleSubmit,
       setValue,
+      control,
       formState: { errors }
     } = useForm({
       defaultValues: initialState,
@@ -61,6 +64,7 @@ const CreateContact = React.memo(
     });
 
     const data = watch();
+    console.log("data", data);
 
     const onSubmit = (data) => {
       setIsLoading(true);
@@ -90,17 +94,18 @@ const CreateContact = React.memo(
           background="MidnightBlue"
           onClose={onClose}
         />
-        {/* <ContactForm
+        <ContactForm
           data={data}
-          contacts={currentUsercontacts}
-          statuses={statuses}
-          types={contactTypes}
+          // contacts={currentUsercontacts}
+          // statuses={statuses}
+          // types={contactTypes}
           watch={watch}
+          control={control}
           errors={errors}
           register={register}
           setValue={setValue}
-          iscontactPage={iscontactPage}
-        /> */}
+          // iscontactPage={iscontactPage}
+        />
         <SuccessCancelFormButtons
           onSuccess={handleSubmit(onSubmit)}
           onCancel={onClose}

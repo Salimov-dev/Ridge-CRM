@@ -49,7 +49,6 @@ const Users = React.memo(() => {
   const data = watch();
 
   const users = useSelector(getUsersList());
-  console.log("users", users);
 
   const currentUserId = useSelector(getCurrentUserId());
 

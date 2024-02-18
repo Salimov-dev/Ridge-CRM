@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 // components
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
-import ObjectForm from "@common/forms/object-form/object.form";
+import ObjectForm from "@components/common/forms/object.form";
 import HeaderWithBackButton from "@common/page-headers/header-with-back-button";
 import SuccessCancelFormButtons from "@components/common/buttons/success-cancel-form-buttons";
 // utils

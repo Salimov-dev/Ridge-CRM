@@ -53,7 +53,7 @@ const Footer = () => {
         {isCurator ? (
           <>
             <Divider orientation="vertical" flexItem />
-            <Item title="Менеджеры" path="/users" />
+            <Item title="Команда" path="/users" />
           </>
         ) : null}
       </Menu>

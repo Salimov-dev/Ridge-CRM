@@ -9,19 +9,19 @@ const StyledTextField = styled(TextField)(({ colors }) => ({
   width: "100%",
   "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
     borderColor: colors.green["green"],
-    color: "white",
+    color: "white"
   },
   "& .MuiInputLabel-root": {
     color: colors.grey[400],
     "&.Mui-focused": {
-      color: "white",
-    },
+      color: "white"
+    }
   },
   "& .MuiInputLabel-outlined.MuiInputLabel-shrink": {
     transform: "translate(14px, -6px) scale(0.75)",
     backgroundColor: "transparent",
-    padding: "0 5px",
-  },
+    padding: "0 5px"
+  }
 }));
 
 const TextFieldStyled = ({
@@ -40,7 +40,8 @@ const TextFieldStyled = ({
   disabled = false,
   isHelperText = false,
   subtitle = "",
-  required = false,
+  required = false
+  // onChange = () => {}
 }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -74,6 +75,7 @@ const TextFieldStyled = ({
         inputProps={inputProps}
         multiline={multiline}
         error={!!errors}
+        // onChange={onChange}
         subtitle={errors?.message}
         disabled={disabled}
         required={required}

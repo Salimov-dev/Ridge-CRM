@@ -279,7 +279,7 @@ const PageDialogs = ({
             isObjectPage={!state?.contactId}
           />
         }
-        maxWidth="md"
+        maxWidth="sm"
         onClose={handleCloseCreateContactPage}
         open={state.createContactPage}
       />
@@ -292,7 +292,7 @@ const PageDialogs = ({
           />
         }
         onClose={handleCloseUpdateContactPage}
-        maxWidth="md"
+        maxWidth="sm"
         open={state.updateContactPage}
       />
     </>

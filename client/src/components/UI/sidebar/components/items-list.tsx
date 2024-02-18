@@ -30,28 +30,14 @@ const ItemsList = ({
         setSelected={setSelected}
       />
       <ItemsTitle
-        title="Активность"
+        title="Меню"
         colors={colors.grey[300]}
         isCollapsed={isCollapsed}
-      />
-      <Item
-        title="Статистика"
-        to="/statictics"
-        icon={<DonutSmallOutlinedIcon />}
-        selected={selected}
-        setSelected={setSelected}
       />
       <Item
         title="Объекты"
         to="/objects"
         icon={<BusinessOutlinedIcon />}
-        selected={selected}
-        setSelected={setSelected}
-      />
-      <Item
-        title="Проработка базы объектов"
-        to="/objectsdatabase"
-        icon={<DatasetOutlinedIcon />}
         selected={selected}
         setSelected={setSelected}
       />
@@ -76,6 +62,27 @@ const ItemsList = ({
         selected={selected}
         setSelected={setSelected}
       />
+      <ItemsTitle
+        title="Активность"
+        colors={colors.grey[300]}
+        isCollapsed={isCollapsed}
+      />
+      <Item
+        title="Статистика"
+        to="/statictics"
+        icon={<DonutSmallOutlinedIcon />}
+        selected={selected}
+        setSelected={setSelected}
+      />
+
+      <Item
+        title="Проработка базы объектов"
+        to="/objectsdatabase"
+        icon={<DatasetOutlinedIcon />}
+        selected={selected}
+        setSelected={setSelected}
+      />
+
       <Item
         title="Календарь"
         to="/calendar"
@@ -99,7 +106,7 @@ const ItemsList = ({
             isCollapsed={isCollapsed}
           />
           <Item
-            title="Менеджеры"
+            title="Команда"
             to="/users"
             icon={<PeopleOutlinedIcon />}
             selected={selected}

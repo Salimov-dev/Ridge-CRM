@@ -13,7 +13,8 @@ const ButtonStyled = ({
   width = "min-content",
   icon = null,
   fontSize = "auto",
-  padding = "auto"
+  padding = "auto",
+  border = null
 }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -105,6 +106,22 @@ const ButtonStyled = ({
     backgroundHover = "DarkBlue";
   }
 
+  if (style === "ADD_SOME_NEW") {
+    background = null;
+    color = "ForestGreen";
+    colorHover = "white";
+    backgroundHover = "DarkGreen";
+    border = "1px dashed ForestGreen !important";
+  }
+
+  if (style === "REMOVE_SOME_NEW") {
+    background = null;
+    color = "Tomato";
+    colorHover = "white";
+    backgroundHover = "OrangeRed";
+    border = "1px dashed Tomato !important";
+  }
+
   return (
     <Button
       variant={variant}
@@ -117,6 +134,7 @@ const ButtonStyled = ({
         fontSize: fontSize,
         height: height,
         color: color,
+        border: border,
         borderColor: borderColor,
         background: background,
         whiteSpace: "nowrap",

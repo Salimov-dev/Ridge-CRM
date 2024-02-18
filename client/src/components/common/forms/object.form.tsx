@@ -12,11 +12,11 @@ import VerticalAlignBottomOutlinedIcon from "@mui/icons-material/VerticalAlignBo
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import FingerprintIcon from "@mui/icons-material/Fingerprint";
 // styled
-import { FieldsContainer, Form } from "../styled/styled";
+import { FieldsContainer, Form } from "./styled/styled";
 // components
-import Title from "../components/title";
-import TextFieldStyled from "../../inputs/text-field-styled";
-import DistrictSelect from "./components/district-select";
+import Title from "./components/title";
+import TextFieldStyled from "../inputs/text-field-styled";
+import DistrictSelect from "../inputs/district-select";
 import SelectFieldStyled from "@components/common/inputs/select-field-styled";
 // store
 import { getMetroList } from "@store/object-params/metro.store";
