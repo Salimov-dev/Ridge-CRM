@@ -56,6 +56,7 @@ const CreateMyTask = React.memo(
       resolver: yupResolver(taskSchema)
     });
     const data = watch();
+    const watchIsCallTask = watch("isCallTask");
 
     const onSubmit = () => {
       setIsLoading(true);
@@ -90,8 +91,8 @@ const CreateMyTask = React.memo(
     return (
       <>
         <HeaderWithCloseButton
-          title={title}
-          background={colors.task["myTask"]}
+          title={watchIsCallTask ? "Нужно совершить звонок" : title}
+          background={watchIsCallTask ? "ForestGreen" : colors.task["myTask"]}
           onClose={onClose}
         />
         <MyTaskForm

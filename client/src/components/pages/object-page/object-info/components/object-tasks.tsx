@@ -5,7 +5,7 @@ import ButtonStyled from "@components/common/buttons/button-styled.button";
 import sortingByDateAndTime from "@utils/other/sorting-by-date-and-time";
 import {
   getObjectTasksList,
-  getTaskLoadingStatus,
+  getTaskLoadingStatus
 } from "@store/task/tasks.store";
 
 const Container = styled(Box)`
@@ -20,7 +20,7 @@ const ObjectTasks = ({
   object,
   onOpenCreateMyTask,
   onOpenCreateManagerTask,
-  isAuthorEntity,
+  isAuthorEntity
 }) => {
   const isTasksLoading = useSelector(getTaskLoadingStatus());
   const address = `${object?.city}, ${object?.address}`;
@@ -34,8 +34,8 @@ const ObjectTasks = ({
         <Typography variant="h3">Задачи по объекту: {address}</Typography>
         {isAuthorEntity ? (
           <ButtonStyled
-            title="Поставить себе задачу"
-            style="MY_TASK"
+            title="Поставить себе задачу или звонок"
+            style="MY_TASK_CALL"
             variant="contained"
             onClick={() => onOpenCreateMyTask(objectId)}
           />

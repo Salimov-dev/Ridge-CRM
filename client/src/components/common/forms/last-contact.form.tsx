@@ -21,6 +21,7 @@ const LastContactForm = ({ data, register, errors, setValue }) => {
           register={register}
           label="Результат"
           name="result"
+          required={true}
           value={capitalizeFirstLetter(data?.result)}
           errors={errors?.result}
           rows="2"

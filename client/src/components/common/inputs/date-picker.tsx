@@ -23,11 +23,12 @@ const DatePickerStyled = ({
   label,
   value,
   onChange,
+  required = false,
   errors = null,
   disabled = false,
   minDate = today,
   maxDate = null,
-  isEditMode = false,
+  isEditMode = false
 }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -41,6 +42,7 @@ const DatePickerStyled = ({
           value={value}
           onChange={onChange}
           error={!!errors}
+          required={required}
           minDate={!isEditMode ? minDate : null}
           maxDate={maxDate}
           disabled={disabled}
@@ -48,21 +50,21 @@ const DatePickerStyled = ({
             width: "100%",
             "& .MuiOutlinedInput-root": {
               "& fieldset": {
-                borderColor: errors ? colors.error["red"] : "gray",
+                borderColor: errors ? colors.error["red"] : "gray"
               },
               "&.Mui-focused fieldset": {
-                borderColor: errors ? "red" : "green",
-              },
+                borderColor: errors ? "red" : "green"
+              }
             },
             "& .MuiInputLabel-root": {
-              color: "gray",
+              color: "gray"
             },
             "& label.Mui-focused": {
-              color: "white",
+              color: "white"
             },
             "& .MuiButtonBase-root": {
-              color: value ? "white" : "gray",
-            },
+              color: value ? "white" : "gray"
+            }
           }}
         />
       </LocalizationProvider>

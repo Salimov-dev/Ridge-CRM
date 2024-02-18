@@ -43,7 +43,8 @@ const UserProfileForm = ({ data, register, errors, setValue }) => {
           <DatePickerStyled
             register={register}
             name="birthday"
-            label="Дата рождения"
+            label="Дата рождения *"
+            required={true}
             value={data?.birthday}
             errors={errors?.birthday}
             onChange={(value) => setValue("birthday", value)}
@@ -54,6 +55,7 @@ const UserProfileForm = ({ data, register, errors, setValue }) => {
             label="Телефон"
             type="number"
             name="phone"
+            required={true}
             errors={errors?.phone}
             value={data?.phone || ""}
             onInputQuantities={12}
@@ -66,6 +68,7 @@ const UserProfileForm = ({ data, register, errors, setValue }) => {
             itemsList={gendersArray}
             name="gender"
             labelId="gender"
+            required={true}
             label="Пол"
             value={data?.gender}
             errors={errors?.gender}

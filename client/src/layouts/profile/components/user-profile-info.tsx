@@ -1,6 +1,10 @@
 import { Box, Typography } from "@mui/material";
 import styled from "@emotion/styled";
+// hooks
 import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
+// icons
+import InsertEmoticonIcon from "@mui/icons-material/InsertEmoticon";
+import HttpsIcon from "@mui/icons-material/Https";
 // components
 import ButtonStyled from "@components/common/buttons/button-styled.button";
 // utils
@@ -79,12 +83,16 @@ const UserProfileInfo = ({ user, setState }) => {
         <ButtonStyled
           title="Править мой профиль"
           style="OBJECT"
+          height="60px"
           variant="contained"
+          icon={<InsertEmoticonIcon />}
           onClick={handleOpenUpdateProfilePage}
         />
         <ButtonStyled
           title="Изменить мой пароль"
+          height="60px"
           style="MY_TASK"
+          icon={<HttpsIcon />}
           variant="contained"
           onClick={handleOpenUpdatePasswordPage}
         />

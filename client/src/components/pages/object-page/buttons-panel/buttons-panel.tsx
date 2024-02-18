@@ -14,7 +14,7 @@ const ButtonsPanel = ({
   isEdit,
   isAuthorEntity = true,
   onOpenCreatePresentationPage,
-  isTopButtonsPanel = false,
+  isTopButtonsPanel = false
 }) => {
   const hasCloud = !!object?.cloudLink?.length;
 

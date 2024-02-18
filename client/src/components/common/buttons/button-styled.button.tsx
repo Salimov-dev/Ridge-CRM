@@ -58,6 +58,12 @@ const ButtonStyled = ({
     backgroundHover = colors.task["myTaskHover"];
   }
 
+  if (style === "MY_TASK_CALL") {
+    background = "linear-gradient(to right, #FF8C00, ForestGreen)";
+    colorHover = "white";
+    backgroundHover = "linear-gradient(to right, SaddleBrown, DarkGreen)";
+  }
+
   if (style === "MANAGER_TASK") {
     background = colors.task["managerTask"];
     colorHover = "white";
@@ -108,10 +114,10 @@ const ButtonStyled = ({
 
   if (style === "ADD_SOME_NEW") {
     background = null;
-    color = "ForestGreen";
+    color = "LimeGreen";
     colorHover = "white";
     backgroundHover = "DarkGreen";
-    border = "1px dashed ForestGreen !important";
+    border = "1px dashed LimeGreen !important";
   }
 
   if (style === "REMOVE_SOME_NEW") {
@@ -128,6 +134,13 @@ const ButtonStyled = ({
     colorHover = "white";
     backgroundHover = "DarkOrange";
     border = "1px dashed orange !important";
+  }
+  if (style === "ADD_NEW_OBJECT") {
+    background = null;
+    color = "SteelBlue";
+    colorHover = "white";
+    backgroundHover = "RoyalBlue";
+    border = "1px dashed SteelBlue !important";
   }
 
   return (

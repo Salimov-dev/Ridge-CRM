@@ -16,7 +16,7 @@ import {
 } from "@store/avatar/avatar.store";
 
 const AvatarContainer = styled(Box)`
-  width: 250px;
+  width: 350px;
   display: flex;
   flex-direction: column;
   gap: 6px;
@@ -44,7 +44,7 @@ const Avatar = ({ state, setState }) => {
   return (
     <>
       <AvatarContainer>
-        <Typography variant="h2">Моя аватарка:</Typography>
+        <Typography variant="h2">Моё изображение:</Typography>
         <AvatarImage avatarSrc={avatarSrc} isLoading={isUserLoading} />
         <Buttons
           handleOpenUpdateUserAvatarPage={handleOpenUpdateUserAvatarPage}

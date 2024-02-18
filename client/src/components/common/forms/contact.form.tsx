@@ -236,7 +236,7 @@ const ContactForm = ({
                   <FormControlLabel
                     label="Bottom"
                     labelPlacement="bottom"
-                    sx={{ width: "80px" }}
+                    sx={{ width: "80px", margin: "0" }}
                     control={
                       <Switch
                         checked={field.isDefault || false}
@@ -246,12 +246,12 @@ const ContactForm = ({
                         }
                         inputProps={{ "aria-label": "controlled" }}
                         sx={{
-                          marginTop: "-14px",
+                          marginTop: "-28px",
                           "& .Mui-checked": {
-                            color: "ForestGreen" // Задаем кастомный цвет для свитча в состоянии "включено"
+                            color: "LimeGreen" // Задаем кастомный цвет для свитча в состоянии "включено"
                           },
                           "& .Mui-checked + .MuiSwitch-track": {
-                            backgroundColor: "ForestGreen" // Задаем кастомный цвет для фона свитча в состоянии "включено"
+                            backgroundColor: "LimeGreen" // Задаем кастомный цвет для фона свитча в состоянии "включено"
                           }
                         }}
                       />
@@ -285,7 +285,7 @@ const ContactForm = ({
 
           <RowTitle
             title="Электронная почта"
-            background="Orange"
+            background="DarkOrange"
             margin="14px 0 0 0"
           />
           {fieldEmails?.map((field, index) => {
@@ -319,7 +319,7 @@ const ContactForm = ({
                   <FormControlLabel
                     label="Bottom"
                     labelPlacement="bottom"
-                    sx={{ width: "80px" }}
+                    sx={{ width: "80px", margin: "0" }}
                     control={
                       <Switch
                         checked={field.isDefault || false}
@@ -329,7 +329,7 @@ const ContactForm = ({
                         }
                         inputProps={{ "aria-label": "controlled" }}
                         sx={{
-                          marginTop: "-14px",
+                          marginTop: "-10px",
                           "& .Mui-checked": {
                             color: "orange" // Задаем кастомный цвет для свитча в состоянии "включено"
                           },
@@ -368,7 +368,7 @@ const ContactForm = ({
 
           <RowTitle
             title="Объекты недвижимости"
-            background="green"
+            background="SteelBlue"
             margin="14px 0 0 0"
           />
           {/* <AutocompleteStyled
@@ -382,14 +382,24 @@ const ContactForm = ({
             // disabled={!isObjectPage}
             // optionLabel={(option) => `${option?.city}, ${option?.address}`}
           /> */}
-          <ButtonStyled
-            title="Добавить объект"
-            style="ADD_SOME_NEW"
-            width="100%"
-            size="small"
-            icon={<ControlPointOutlinedIcon />}
-            //  onClick={onSuccess}
-          />
+          <Box sx={{ width: "100%", display: "flex", gap: "4px" }}>
+            <ButtonStyled
+              title="Добавить объект"
+              style="ADD_NEW_OBJECT"
+              width="100%"
+              size="small"
+              icon={<ControlPointOutlinedIcon />}
+              //  onClick={onSuccess}
+            />
+            <ButtonStyled
+              title="Удалить объект"
+              style="REMOVE_SOME_NEW"
+              width="100%"
+              size="small"
+              icon={<DoNotDisturbOnOutlinedIcon />}
+              onClick={() => handleRemoveEmail(lastEmailIndex)} // передаем функцию removePhone с аргументом
+            />
+          </Box>
         </FieldsContainer>
       </Form>
     </>
