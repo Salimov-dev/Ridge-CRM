@@ -29,7 +29,7 @@ const initialState = {
   company: "",
   position: "",
   comment: "",
-  emails: [{ email: "" }],
+  emails: [{ email: "", isDefault: true }],
   phones: [{ phone: "", isDefault: true }],
   objects: [{ objectId: "" }]
 };

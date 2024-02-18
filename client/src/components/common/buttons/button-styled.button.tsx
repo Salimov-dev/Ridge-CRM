@@ -122,6 +122,14 @@ const ButtonStyled = ({
     border = "1px dashed Tomato !important";
   }
 
+  if (style === "ADD_NEW_EMAIL") {
+    background = null;
+    color = "orange";
+    colorHover = "white";
+    backgroundHover = "DarkOrange";
+    border = "1px dashed orange !important";
+  }
+
   return (
     <Button
       variant={variant}

@@ -72,9 +72,10 @@ const ContactForm = ({
     name: "objects",
     control
   });
-  // console.log("fieldEmails", fieldEmails);
+  const lastPhoneIndex = fieldPhones.length - 1;
+  const lastEmailIndex = fieldEmails.length - 1;
 
-  const handleChange = (phoneIndex, currentState) => {
+  const handleChangePhone = (phoneIndex, currentState) => {
     const updatedPhones = data.phones.map((phone, index) => {
       if (index === phoneIndex) {
         return { ...phone, isDefault: !currentState }; // Инвертируем состояние текущего объекта
@@ -86,7 +87,62 @@ const ContactForm = ({
 
     setValue("phones", updatedPhones);
   };
-  const lastIndex = fieldPhones.length - 1;
+
+  const handleChangeEmail = (emailIndex, currentState) => {
+    const updatedEmails = data.emails.map((email, index) => {
+      if (index === emailIndex) {
+        return { ...email, isDefault: !currentState }; // Инвертируем состояние текущего объекта
+      } else if (email.isDefault) {
+        return { ...email, isDefault: false }; // Если у другого объекта isDefault был true, устанавливаем его в false
+      }
+      return email;
+    });
+
+    setValue("emails", updatedEmails);
+  };
+
+  const handleRemovePhone = (index) => {
+    removePhone(index);
+
+    const isDefaultBeforeRemoval = fieldPhones[index].isDefault;
+    const lastPhone = fieldPhones[index];
+    const filterePhones = fieldPhones.filter(
+      (phone) => phone.id !== lastPhone.id
+    );
+
+    if (isDefaultBeforeRemoval && fieldPhones.length > 0) {
+      const hasAnotherDefault = filterePhones.some((phone) => phone.isDefault);
+
+      if (!hasAnotherDefault) {
+        const firstPhoneIndex = 0;
+
+        handleChangePhone(firstPhoneIndex, false);
+        removePhone(index);
+      }
+    }
+  };
+
+  const handleRemoveEmail = (index) => {
+    removeEmail(index);
+
+    const isDefaultBeforeRemoval = fieldEmails[index].isDefault;
+    const lastEmail = fieldEmails[index];
+    const filtereEmails = fieldEmails.filter(
+      (email) => email.id !== lastEmail.id
+    );
+
+    if (isDefaultBeforeRemoval && fieldEmails.length > 0) {
+      const hasAnotherDefault = filtereEmails.some((email) => email.isDefault);
+
+      if (!hasAnotherDefault) {
+        const firstEmailIndex = 0;
+
+        handleChangeEmail(firstEmailIndex, false);
+        removeEmail(index);
+      }
+    }
+  };
+
   return (
     <>
       <Form noValidate>
@@ -147,9 +203,6 @@ const ContactForm = ({
 
           <RowTitle title="Телефон" background="green" margin="14px 0 0 0" />
           {fieldPhones?.map((field, index) => {
-            // console.log("field", field);
-            console.log("data.phones", data.phones);
-
             if (field.id) {
               return (
                 <Box
@@ -165,6 +218,7 @@ const ContactForm = ({
                   <TextFieldStyled
                     register={register}
                     label="Телефон"
+                    type="number"
                     name={`phones.${index}.phone`}
                     value={data.phones?.[index].phone}
                     errors={errors?.phones?.[index]?.phone}
@@ -182,15 +236,24 @@ const ContactForm = ({
                   <FormControlLabel
                     label="Bottom"
                     labelPlacement="bottom"
+                    sx={{ width: "80px" }}
                     control={
                       <Switch
                         checked={field.isDefault || false}
                         color="default"
-                        onChange={() => handleChange(index, field.isDefault)} // Передаем индекс и текущее состояние isDefault
+                        onChange={() =>
+                          handleChangePhone(index, field.isDefault)
+                        }
                         inputProps={{ "aria-label": "controlled" }}
-                        sx={{ marginTop: "-28px" }}
-                        color="warning"
-                        label="Gilad Gray"
+                        sx={{
+                          marginTop: "-14px",
+                          "& .Mui-checked": {
+                            color: "ForestGreen" // Задаем кастомный цвет для свитча в состоянии "включено"
+                          },
+                          "& .Mui-checked + .MuiSwitch-track": {
+                            backgroundColor: "ForestGreen" // Задаем кастомный цвет для фона свитча в состоянии "включено"
+                          }
+                        }}
                       />
                     }
                     label={field.isDefault ? "Основной" : null}
@@ -216,38 +279,92 @@ const ContactForm = ({
               width="100%"
               size="small"
               icon={<DoNotDisturbOnOutlinedIcon />}
-              onClick={() => removePhone(lastIndex)} // передаем функцию removePhone с аргументом
+              onClick={() => handleRemovePhone(lastPhoneIndex)} // передаем функцию removePhone с аргументом
             />
           </Box>
 
           <RowTitle
             title="Электронная почта"
-            background="green"
+            background="Orange"
             margin="14px 0 0 0"
           />
-          <TextFieldStyled
-            register={register}
-            label="Email"
-            name="email"
-            errors={errors?.email}
-            onInputQuantities={100}
-            value={data?.email || ""}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <AlternateEmailOutlinedIcon />
-                </InputAdornment>
-              )
-            }}
-          />
-          <ButtonStyled
-            title="Добавить почту"
-            style="ADD_SOME_NEW"
-            width="100%"
-            size="small"
-            icon={<ControlPointOutlinedIcon />}
-            //  onClick={onSuccess}
-          />
+          {fieldEmails?.map((field, index) => {
+            if (field.id) {
+              return (
+                <Box
+                  key={field.id}
+                  sx={{
+                    width: "100%",
+                    height: "100%",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "4px"
+                  }}
+                >
+                  <TextFieldStyled
+                    register={register}
+                    label="Почта"
+                    name={`emails.${index}.email`}
+                    value={data.emails?.[index].email}
+                    errors={errors?.emails?.[index]?.email}
+                    onInputQuantities={12}
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <AlternateEmailOutlinedIcon />
+                        </InputAdornment>
+                      )
+                    }}
+                  />
+                  <FormControlLabel
+                    label="Bottom"
+                    labelPlacement="bottom"
+                    sx={{ width: "80px" }}
+                    control={
+                      <Switch
+                        checked={field.isDefault || false}
+                        color="default"
+                        onChange={() =>
+                          handleChangeEmail(index, field.isDefault)
+                        }
+                        inputProps={{ "aria-label": "controlled" }}
+                        sx={{
+                          marginTop: "-14px",
+                          "& .Mui-checked": {
+                            color: "orange" // Задаем кастомный цвет для свитча в состоянии "включено"
+                          },
+                          "& .Mui-checked + .MuiSwitch-track": {
+                            backgroundColor: "orange" // Задаем кастомный цвет для фона свитча в состоянии "включено"
+                          }
+                        }}
+                      />
+                    }
+                    label={field.isDefault ? "Основная" : null}
+                  />
+                </Box>
+              );
+            } else {
+              return null;
+            }
+          })}
+          <Box sx={{ width: "100%", display: "flex", gap: "4px" }}>
+            <ButtonStyled
+              title="Добавить почту"
+              style="ADD_NEW_EMAIL"
+              width="100%"
+              size="small"
+              icon={<ControlPointOutlinedIcon />}
+              onClick={() => appendEmail({ email: "", isDefault: false })}
+            />
+            <ButtonStyled
+              title="Удалить почту"
+              style="REMOVE_SOME_NEW"
+              width="100%"
+              size="small"
+              icon={<DoNotDisturbOnOutlinedIcon />}
+              onClick={() => handleRemoveEmail(lastEmailIndex)} // передаем функцию removePhone с аргументом
+            />
+          </Box>
 
           <RowTitle
             title="Объекты недвижимости"
