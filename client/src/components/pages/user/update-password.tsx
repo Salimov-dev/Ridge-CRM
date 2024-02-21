@@ -6,7 +6,7 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 // components
 import TitleWithCloseButton from "@components/common/page-headers/header-with-close-button";
-import UserProfileForm from "@components/common/forms/user-profile.form";
+import UserProfileForm from "@forms/user-profile.form";
 import SuccessCancelFormButtons from "@components/common/buttons/success-cancel-form-buttons";
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
 // schemas
@@ -17,7 +17,7 @@ import {
   updatePassword,
   updateUser
 } from "@store/user/users.store";
-import UpdatePasswordForm from "@components/common/forms/update-password-form";
+import UpdatePasswordForm from "@forms/update-password-form";
 import { passwordUpdateSchema } from "@schemas/password-update.schema";
 
 const initialState = {

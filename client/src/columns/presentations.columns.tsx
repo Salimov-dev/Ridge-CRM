@@ -4,7 +4,7 @@ import { Box, Button, Tooltip, Typography } from "@mui/material";
 // components
 import { AlignCenter } from "@components/common/columns/styled";
 import ButtonStyled from "@components/common/buttons/button-styled.button";
-import UserNameWithAvatar from "@components/common/table/components/user-name-with-avatar";
+import UserNameWithAvatar from "@components/common/user-name-with-avatar";
 // hooks
 import useGetUserAvatar from "@hooks/user/use-get-user-avatar";
 // icons

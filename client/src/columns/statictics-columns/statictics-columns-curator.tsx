@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 // components
 import TableCell from "./components/table-cell";
-import UserNameWithAvatar from "../../components/common/table/components/user-name-with-avatar";
+import UserNameWithAvatar from "../../components/common/user-name-with-avatar";
 // hooks
 import { useTableHeader } from "./hooks/use-table-header";
 // utils
@@ -95,7 +95,7 @@ const generateMonthHeaders = () => {
             presentations={currentMonthPresentations}
           />
         );
-      },
+      }
     });
   }
 
@@ -124,7 +124,7 @@ export const staticticsColumnsCurator = [
               isLoading={isLoading}
             />
           );
-        },
+        }
       },
       {
         accessorFn: (row) => row,
@@ -135,7 +135,7 @@ export const staticticsColumnsCurator = [
         },
         cell: () => {
           return <TableCell onlyTitle={true} />;
-        },
+        }
       },
       {
         accessorFn: (row) => row,
@@ -224,9 +224,9 @@ export const staticticsColumnsCurator = [
               presentations={currentMonthPresentations}
             />
           );
-        },
-      },
-    ],
+        }
+      }
+    ]
   },
 
   {
@@ -320,7 +320,7 @@ export const staticticsColumnsCurator = [
               presentations={weeklyPresentations}
             />
           );
-        },
+        }
       },
       {
         // 3 неделя
@@ -411,7 +411,7 @@ export const staticticsColumnsCurator = [
               presentations={weeklyPresentations}
             />
           );
-        },
+        }
       },
       {
         // предыдущая неделя
@@ -502,7 +502,7 @@ export const staticticsColumnsCurator = [
               presentations={weeklyPresentations}
             />
           );
-        },
+        }
       },
       {
         // текущая неделя
@@ -591,12 +591,12 @@ export const staticticsColumnsCurator = [
               isLastWeek={true}
             />
           );
-        },
-      },
-    ],
+        }
+      }
+    ]
   },
   {
     header: "ПОСЛЕДНИЕ 6 МЕСЯЦЕВ",
-    columns: generateMonthHeaders(),
-  },
+    columns: generateMonthHeaders()
+  }
 ];

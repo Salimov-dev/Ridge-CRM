@@ -3,7 +3,7 @@ import React from "react";
 import SearchField from "@common/inputs/search-field";
 import SearchDatePicker from "@common/inputs/search-date-picker";
 import MultiSelectField from "@common/inputs/multi-select-field";
-import { FieldsContainer, Form } from "@common/forms/styled/styled";
+import { FieldsContainer, Form } from "@components/common/forms/styled";
 import SearchSelectField from "@common/inputs/search-select-field";
 // hooks
 import useObjectsFiltersPanel from "@hooks/object/use-objects-filters-panel";
@@ -22,7 +22,7 @@ const ObjectsFiltersPanel = React.memo(
       getActualEstateTypesList,
       getActualObjectTypesList,
       getActualObjectProperties,
-      getActualObjectTradeArea,
+      getActualObjectTradeArea
     } = useObjectsFiltersPanel(objects);
 
     const usersList = getActualUsersList(objects);

@@ -1,5 +1,5 @@
 // components
-import { FieldsContainer, Form } from "../../common/forms/styled/styled";
+import { FieldsContainer, Form } from "../../common/forms/styled";
 import MultiSelectField from "../../common/inputs/multi-select-field";
 // utils
 import { getActualUsersList } from "../../../utils/actual-items/get-actual-users-list";
@@ -15,7 +15,7 @@ const DealsFiltersPanel = React.memo(
     setValue,
     initialState,
     isInputEmpty,
-    isLoading,
+    isLoading
   }) => {
     const usersList = getActualUsersList(deals);
 

@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useDispatch } from "react-redux";
 // components
-import LastContactForm from "@common/forms/last-contact.form";
+import LastContactForm from "@forms/last-contact.form";
 // store
 import { createLastContact } from "@store/last-contact/last-contact.store";
 // schema

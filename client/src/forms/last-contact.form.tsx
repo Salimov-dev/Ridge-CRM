@@ -1,8 +1,8 @@
 // components
-import TextFieldStyled from "../inputs/text-field-styled";
-import DatePickerStyled from "../inputs/date-picker";
+import TextFieldStyled from "../components/common/inputs/text-field-styled";
+import DatePickerStyled from "../components/common/inputs/date-picker";
 // styled
-import { FieldsContainer, Form } from "./styled/styled";
+import { FieldsContainer, Form } from "../components/common/forms/styled";
 import { capitalizeFirstLetter } from "@utils/data/capitalize-first-letter";
 
 const LastContactForm = ({ data, register, errors, setValue }) => {

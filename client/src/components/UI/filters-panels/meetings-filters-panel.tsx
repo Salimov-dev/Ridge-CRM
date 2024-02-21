@@ -1,7 +1,7 @@
 import { orderBy } from "lodash";
 // components
 import SearchField from "@common/inputs/search-field";
-import { FieldsContainer, Form } from "@common/forms/styled/styled";
+import { FieldsContainer, Form } from "@components/common/forms/styled";
 import MultiSelectField from "@common/inputs/multi-select-field";
 import SearchDatePicker from "@common/inputs/search-date-picker";
 import SearchSelectField from "@common/inputs/search-select-field";
@@ -21,7 +21,7 @@ const MeetingsFiltersPanel = React.memo(
     register,
     setValue,
     isCurator,
-    isLoading,
+    isLoading
   }) => {
     const usersList = getActualUsersList(meetings);
     const statusesList = getActualStatusesList(meetings, statuses);
@@ -36,7 +36,7 @@ const MeetingsFiltersPanel = React.memo(
         return foundObject
           ? {
               _id: foundObject._id,
-              name: foundObject.name,
+              name: foundObject.name
             }
           : null;
       });

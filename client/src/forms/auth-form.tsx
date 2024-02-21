@@ -2,8 +2,8 @@ import { useState } from "react";
 import { InputAdornment, IconButton } from "@mui/material";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import { FieldsContainer, Form } from "./styled/styled";
-import TextFieldStyled from "../inputs/text-field-styled";
+import { FieldsContainer, Form } from "../components/common/forms/styled";
+import TextFieldStyled from "../components/common/inputs/text-field-styled";
 
 const AuthForm = ({ data, startPage = "", register, errors }) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -47,7 +47,7 @@ const AuthForm = ({ data, startPage = "", register, errors }) => {
                   {showPassword ? <VisibilityOff /> : <Visibility />}
                 </IconButton>
               </InputAdornment>
-            ),
+            )
           }}
         />
       </FieldsContainer>

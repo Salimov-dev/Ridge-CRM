@@ -6,7 +6,7 @@ import { Box, Typography } from "@mui/material";
 // components
 import EmptyTd from "@components/common/columns/empty-td";
 import { AlignCenter } from "@components/common/columns/styled";
-import UserNameWithAvatar from "@components/common/table/components/user-name-with-avatar";
+import UserNameWithAvatar from "@components/common/user-name-with-avatar";
 import ButtonStyled from "@components/common/buttons/button-styled.button";
 import DoneStatusIcon from "@components/common/columns/done-status-icon";
 // store

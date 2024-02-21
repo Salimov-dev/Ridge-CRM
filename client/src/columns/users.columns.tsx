@@ -4,7 +4,7 @@ import { AlignCenter } from "@components/common/columns/styled";
 // data
 import { gendersArray } from "../data/genders";
 // components
-import UserNameWithAvatar from "@components/common/table/components/user-name-with-avatar";
+import UserNameWithAvatar from "@components/common/user-name-with-avatar";
 // utils
 import { FormatDate } from "@utils/date/format-date";
 // hooks

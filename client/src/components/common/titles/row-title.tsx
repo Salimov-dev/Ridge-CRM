@@ -11,8 +11,8 @@ const RowTitle = ({
   title,
   background,
   variant = "h4",
-  padding = "6px 12px",
-  margin = "inherit"
+  padding = "0 12px 0 12px",
+  margin = "auto"
 }) => {
   return (
     <Box sx={{ width: "fit-content", margin: margin }}>

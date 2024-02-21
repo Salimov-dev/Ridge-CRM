@@ -7,7 +7,7 @@ import { useForm } from "react-hook-form";
 import { tokens } from "@theme/theme";
 import { yupResolver } from "@hookform/resolvers/yup";
 // components
-import MyTaskForm from "@components/common/forms/my-task.form";
+import MyTaskForm from "@forms/my-task.form";
 import SuccessCancelFormButtons from "@components/common/buttons/success-cancel-form-buttons";
 import HeaderWithCloseButton from "@components/common/page-headers/header-with-close-button";
 import LoaderFullWindow from "@components/common/loader/loader-full-window";

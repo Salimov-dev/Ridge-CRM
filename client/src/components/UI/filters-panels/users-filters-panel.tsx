@@ -1,7 +1,7 @@
 // components
 import SearchField from "@common/inputs/search-field";
 import MultiSelectField from "@common/inputs/multi-select-field";
-import { FieldsContainer, Form } from "@common/forms/styled/styled";
+import { FieldsContainer, Form } from "@components/common/forms/styled";
 import SearchSelectField from "@common/inputs/search-select-field";
 // data
 import { gendersArray } from "@data/genders";

@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Box, Paper, styled } from "@mui/material";
 // components
 import ObjectAddress from "./object-address";
-import UserNameWithAvatar from "@components/common/table/components/user-name-with-avatar";
+import UserNameWithAvatar from "@components/common/user-name-with-avatar";
 // data
 import { dealStagesArray } from "@data/deals/deals-stages";
 // store
@@ -10,7 +10,7 @@ import { updateObject } from "@store/object/objects.store";
 import {
   getCurrentUserId,
   getIsUserAuthorThisEntity,
-  getUsersList,
+  getUsersList
 } from "@store/user/users.store";
 // hooks
 import useGetUserAvatar from "@hooks/user/use-get-user-avatar";
@@ -45,7 +45,7 @@ const Objects = ({
   setState,
   draggableStageId,
   setDraggableStageId,
-  isCurator,
+  isCurator
 }) => {
   const dispatch = useDispatch();
   const users = useSelector(getUsersList());
@@ -63,7 +63,7 @@ const Objects = ({
     if (stage?._id !== draggableStageId) {
       const updatedObject = {
         ...obj,
-        status: getNewDealStage(draggableStageId),
+        status: getNewDealStage(draggableStageId)
       };
       dispatch<any>(updateObject(updatedObject));
 

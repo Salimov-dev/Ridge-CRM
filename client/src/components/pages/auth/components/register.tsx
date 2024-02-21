@@ -12,7 +12,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import ButtonStyled from "@components/common/buttons/button-styled.button";
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
 import HeaderWithCloseButton from "@components/common/page-headers/header-with-close-button";
-import AuthForm from "@components/common/forms/auth-form";
+import AuthForm from "@forms/auth-form";
 import PageDialogs from "@components/common/dialog/page-dialogs";
 // schema
 import { loginSchema } from "@schemas/login.schema";

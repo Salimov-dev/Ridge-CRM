@@ -8,7 +8,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useTheme } from "@emotion/react";
 import { tokens } from "@theme/theme";
 // components
-import LastContactForm from "@components/common/forms/last-contact.form";
+import LastContactForm from "@forms/last-contact.form";
 import SuccessCancelFormButtons from "@components/common/buttons/success-cancel-form-buttons";
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
 import HeaderWithCloseButton from "@components/common/page-headers/header-with-close-button";

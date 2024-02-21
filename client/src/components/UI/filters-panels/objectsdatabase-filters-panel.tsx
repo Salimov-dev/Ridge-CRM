@@ -1,6 +1,6 @@
 import React from "react";
 // components
-import { FieldsContainer, Form } from "../../common/forms/styled/styled";
+import { FieldsContainer, Form } from "../../common/forms/styled";
 import MultiSelectField from "../../common/inputs/multi-select-field";
 import ClearFilterButton from "../../common/buttons/clear-filter.button";
 // utils
@@ -18,7 +18,7 @@ const ObjectsDatabaseFiltersPanel = React.memo(
     initialState,
     isInputEmpty,
     isCurator,
-    isLoading,
+    isLoading
   }) => {
     const usersList = getActualUsersList(objects);
     const statusesList = getActualStatusesList(objects, statuses);

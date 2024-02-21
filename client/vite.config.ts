@@ -12,10 +12,8 @@ export default defineConfig({
   plugins: [
     react(),
     replace({
-      __YANDEX_API_KEY__: JSON.stringify(
-        "fe7c4f02-9876-404c-91b2-c6816e373307"
-      ),
-    }),
+      __YANDEX_API_KEY__: JSON.stringify("fe7c4f02-9876-404c-91b2-c6816e373307")
+    })
   ],
   resolve: {
     alias: {
@@ -24,6 +22,7 @@ export default defineConfig({
       "@ui": path.resolve(__dirname, "./src/components/ui"),
       "@pages": path.resolve(__dirname, "./src/components/pages"),
       "@columns": path.resolve(__dirname, "./src/columns"),
+      "@forms": path.resolve(__dirname, "./src/forms"),
       "@hooks": path.resolve(__dirname, "./src/hooks"),
       "@store": path.resolve(__dirname, "./src/store"),
       "@layouts": path.resolve(__dirname, "./src/layouts"),
@@ -36,7 +35,7 @@ export default defineConfig({
       "@routes": path.resolve(__dirname, "./src/routes"),
       "@theme": path.resolve(__dirname, "./src/theme"),
       "@assets": path.resolve(__dirname, "./src/assets"),
-      "@config": path.resolve(__dirname, "./src/config"),
-    },
-  },
+      "@config": path.resolve(__dirname, "./src/config")
+    }
+  }
 });

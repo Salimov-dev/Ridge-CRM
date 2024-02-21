@@ -7,7 +7,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useDispatch, useSelector } from "react-redux";
 // components
-import MeetingForm from "@components/common/forms/meeting.form";
+import MeetingForm from "@forms/meeting.form";
 import FindObjectOnMap from "@common/find-object-on-map/find-object-on-map";
 import SuccessCancelFormButtons from "@components/common/buttons/success-cancel-form-buttons";
 import LoaderFullWindow from "@components/common/loader/loader-full-window";

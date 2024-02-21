@@ -11,7 +11,7 @@ import { FormatDate } from "@utils/date/format-date";
 import Flags from "@components/common/columns/flags";
 import { AlignCenter } from "@components/common/columns/styled";
 import EmptyTd from "@components/common/columns/empty-td";
-import UserNameWithAvatar from "@components/common/table/components/user-name-with-avatar";
+import UserNameWithAvatar from "@components/common/user-name-with-avatar";
 import ButtonStyled from "@components/common/buttons/button-styled.button";
 import {
   FormatMetro,

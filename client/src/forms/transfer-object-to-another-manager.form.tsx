@@ -1,14 +1,14 @@
 // styled
-import { FieldsContainer, Form } from "./styled/styled";
+import { FieldsContainer, Form } from "../components/common/forms/styled";
 // components
-import SimpleSelectField from "../inputs/simple-select-field";
+import SimpleSelectField from "../components/common/inputs/simple-select-field";
 
 const TransferObjectToAnotherManagerForm = ({
   users,
   objects,
   register,
   errors,
-  watch,
+  watch
 }) => {
   const watchManagerId = watch("managerId", "");
 

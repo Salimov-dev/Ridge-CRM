@@ -1,18 +1,18 @@
 import { useSelector } from "react-redux";
 // components
-import TextFieldStyled from "../inputs/text-field-styled";
-import AutocompleteStyled from "../inputs/autocomplete-styled";
+import TextFieldStyled from "../components/common/inputs/text-field-styled";
+import AutocompleteStyled from "../components/common/inputs/autocomplete-styled";
 // styled
-import { FieldsContainer, Form } from "./styled/styled";
+import { FieldsContainer, Form } from "../components/common/forms/styled";
 // store
-import { getPresentationStatusList } from "../../../store/presentation/presentation-status.store";
+import { getPresentationStatusList } from "../store/presentation/presentation-status.store";
 
 const CuratorPresentationForm = ({
   data,
   register,
   errors,
   setValue,
-  watch,
+  watch
 }) => {
   const watchStatus = watch("status");
   const presentationStatuses = useSelector(getPresentationStatusList());

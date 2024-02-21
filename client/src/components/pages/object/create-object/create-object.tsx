@@ -7,7 +7,7 @@ import { useTheme } from "@emotion/react";
 import { tokens } from "@theme/theme";
 import { yupResolver } from "@hookform/resolvers/yup";
 // components
-import ObjectForm from "@components/common/forms/object.form";
+import ObjectForm from "@forms/object.form";
 import FindObjectOnMap from "@common/find-object-on-map/find-object-on-map";
 import AlertObjectInDatabase from "./components/alert-object-in-database";
 import HeaderWithCloseButton from "@components/common/page-headers/header-with-close-button";

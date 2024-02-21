@@ -7,7 +7,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import React, { useState } from "react";
 // components
 import TitleWithCloseButton from "@common/page-headers/header-with-close-button";
-import CreateUserForm from "@components/common/forms/create-user-form";
+import CreateUserForm from "@forms/create-user-form";
 import SuccessCancelFormButtons from "@components/common/buttons/success-cancel-form-buttons";
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
 // store

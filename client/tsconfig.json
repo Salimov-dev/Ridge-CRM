@@ -16,6 +16,7 @@
       "@ui/*": ["src/components/ui/*"],
       "@pages/*": ["src/components/pages/*"],
       "@columns/*": ["src/columns/*"],
+      "@forms/*": ["src/forms/*"],
       "@hooks/*": ["src/hooks/*"],
       "@store/*": ["src/store/*"],
       "@layouts/*": ["src/layouts/*"],

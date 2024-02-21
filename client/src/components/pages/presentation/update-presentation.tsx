@@ -6,8 +6,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { yupResolver } from "@hookform/resolvers/yup";
 // components
 import Header from "./components/header";
-import ManagerPresentationForm from "@components/common/forms/presentation-manager.form";
-import CuratorPresentationForm from "@components/common/forms/presentation-curator.form";
+import ManagerPresentationForm from "@forms/presentation-manager.form";
+import CuratorPresentationForm from "@forms/presentation-curator.form";
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
 import SuccessCancelFormButtons from "@components/common/buttons/success-cancel-form-buttons";
 import DialogConfirm from "@components/common/dialog/dialog-confirm";

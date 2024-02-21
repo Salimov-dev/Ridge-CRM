@@ -1,9 +1,9 @@
-import { FieldsContainer, Form } from "./styled/styled";
-import TextFieldStyled from "../inputs/text-field-styled";
-import DatePickerStyled from "../inputs/date-picker";
-import TimePickerStyled from "../inputs/time-picker";
-import SimpleSwitch from "../inputs/simple-switch";
-import AutocompleteStyled from "../inputs/autocomplete-styled";
+import { FieldsContainer, Form } from "../components/common/forms/styled";
+import TextFieldStyled from "../components/common/inputs/text-field-styled";
+import DatePickerStyled from "../components/common/inputs/date-picker";
+import TimePickerStyled from "../components/common/inputs/time-picker";
+import SimpleSwitch from "../components/common/inputs/simple-switch";
+import AutocompleteStyled from "../components/common/inputs/autocomplete-styled";
 import { capitalizeFirstLetter } from "@utils/data/capitalize-first-letter";
 
 const MyTaskForm = ({
@@ -16,7 +16,7 @@ const MyTaskForm = ({
   isCurator = false,
   isEditMode = false,
   users = [],
-  isObjectPage = false,
+  isObjectPage = false
 }) => {
   const watchObjectId = watch("objectId");
   const watchIsDone = watch("isDone", false);
@@ -75,9 +75,7 @@ const MyTaskForm = ({
           setValue={setValue}
           watchItemId={watchManagerId}
           disabled={!!watchManagerId}
-          optionLabel={(option) =>
-            `${option?.lastName} ${option?.firstName}`
-          }
+          optionLabel={(option) => `${option?.lastName} ${option?.firstName}`}
         />
       )}
       <TextFieldStyled

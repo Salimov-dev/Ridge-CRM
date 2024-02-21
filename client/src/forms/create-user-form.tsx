@@ -1,6 +1,6 @@
-import { FieldsContainer, Form } from "./styled/styled";
-import TextFieldStyled from "../inputs/text-field-styled";
-import SelectFieldStyled from "../inputs/select-field-styled";
+import { FieldsContainer, Form } from "../components/common/forms/styled";
+import TextFieldStyled from "../components/common/inputs/text-field-styled";
+import SelectFieldStyled from "../components/common/inputs/select-field-styled";
 import { userRolesArray } from "@data/users/user-roles";
 
 const CreateUserForm = ({ data, register, errors }) => {

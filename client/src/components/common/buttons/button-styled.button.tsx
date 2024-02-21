@@ -135,12 +135,21 @@ const ButtonStyled = ({
     backgroundHover = "DarkOrange";
     border = "1px dashed orange !important";
   }
+
   if (style === "ADD_NEW_OBJECT") {
     background = null;
     color = "SteelBlue";
     colorHover = "white";
     backgroundHover = "RoyalBlue";
     border = "1px dashed SteelBlue !important";
+  }
+
+  if (style === "CREATE_NEW_OBJECT") {
+    background = null;
+    color = "Aquamarine";
+    colorHover = "white";
+    backgroundHover = "CadetBlue";
+    border = "1px dashed Aquamarine !important";
   }
 
   return (

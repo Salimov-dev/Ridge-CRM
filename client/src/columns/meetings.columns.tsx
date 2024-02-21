@@ -6,7 +6,7 @@ import { Box, Typography } from "@mui/material";
 import DoneStatusIcon from "@components/common/columns/done-status-icon";
 import { AlignCenter } from "@components/common/columns/styled";
 import ButtonStyled from "@components/common/buttons/button-styled.button";
-import UserNameWithAvatar from "@components/common/table/components/user-name-with-avatar";
+import UserNameWithAvatar from "@components/common/user-name-with-avatar";
 // utils
 import { FormatDate } from "@utils/date/format-date";
 import { FormatTime } from "@utils/date/format-time";

@@ -6,13 +6,13 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 // components
 import TitleWithCloseButton from "@components/common/page-headers/header-with-close-button";
-import UserProfileForm from "@components/common/forms/user-profile.form";
 import SuccessCancelFormButtons from "@components/common/buttons/success-cancel-form-buttons";
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
 // schemas
 import { userProfileSchema } from "@schemas/user-profile.schema";
 // store
 import { getCurrentUserData, updateUser } from "@store/user/users.store";
+import UserProfileForm from "@forms/user-profile.form";
 
 const UpdateProfile = ({ onClose = () => {} }) => {
   const dispatch = useDispatch();

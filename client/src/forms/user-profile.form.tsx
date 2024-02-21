@@ -1,10 +1,10 @@
 // data
 import { gendersArray } from "@data/genders";
 // components
-import { FieldsContainer, Form } from "./styled/styled";
-import DatePickerStyled from "../inputs/date-picker";
-import TextFieldStyled from "../inputs/text-field-styled";
-import SimpleSelectField from "../inputs/simple-select-field";
+import { FieldsContainer, Form } from "../components/common/forms/styled";
+import DatePickerStyled from "../components/common/inputs/date-picker";
+import TextFieldStyled from "../components/common/inputs/text-field-styled";
+import SimpleSelectField from "../components/common/inputs/simple-select-field";
 // utils
 import { capitalizeFirstLetter } from "@utils/data/capitalize-first-letter";
 

@@ -1,7 +1,7 @@
 // components
 import SearchField from "@common/inputs/search-field";
 import SearchSwitch from "@common/inputs/search-switch";
-import { FieldsContainer, Form } from "@common/forms/styled/styled";
+import { FieldsContainer, Form } from "@components/common/forms/styled";
 import SearchSelectField from "@common/inputs/search-select-field";
 // data
 import { taskDoneTypes } from "@data/tasks/task-done-status";
