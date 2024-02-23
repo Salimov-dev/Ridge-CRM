@@ -21,7 +21,7 @@ const companyProfilesArray = [
   },
   {
     _id: "77958439gfdgd8843g8fd006",
-    name: "Продукты"
+    name: "Продукты и розница"
   },
   {
     _id: "77gfo83jgfnp324ufjogr007",
@@ -30,6 +30,14 @@ const companyProfilesArray = [
   {
     _id: "77hp483ugfjkdf343pppp008",
     name: "Складирование"
+  },
+  {
+    _id: "77gf934jgfpwjvnc43ikg009",
+    name: "Алкоголь и табак"
+  },
+  {
+    _id: "77gfgohto04ogpp34ogo010",
+    name: "Кафе и пекарни"
   }
 ];
 

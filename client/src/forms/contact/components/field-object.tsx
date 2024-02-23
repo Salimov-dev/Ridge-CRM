@@ -31,7 +31,7 @@ const FieldsObject = ({
 }) => {
   const [openObject, setOpenObject] = useState({
     objectPage: false,
-    objectId: false
+    object: false
   });
 
   const currentUserId = useSelector(getCurrentUserId());

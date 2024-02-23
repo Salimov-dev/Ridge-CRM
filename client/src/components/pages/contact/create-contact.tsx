@@ -17,10 +17,10 @@ import { contactSchema } from "@schemas/contact.schema";
 
 const initialState = {
   name: "",
-  company: "",
   position: "",
   comment: "",
   emails: [{ email: "", isDefault: true }],
+  companies: [{ company: "" }],
   phones: [{ phone: "", isDefault: true }],
   objects: [{ objectId: "" }]
 };
@@ -53,10 +53,10 @@ const CreateContact = React.memo(({ onClose }) => {
   });
 
   const data = watch();
+  console.log("data", data);
 
   const onSubmit = (data) => {
-    setIsLoading(true);
-
+    // setIsLoading(true);
     // dispatch<any>(createContact(data))
     // .then(() => {
     //   onClose();

@@ -10,13 +10,13 @@ import { useDispatch, useSelector } from "react-redux";
 import SuccessCancelFormButtons from "@components/common/buttons/success-cancel-form-buttons";
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
 import HeaderWithCloseButton from "@components/common/page-headers/header-with-close-button";
-// import CompanyForm from "@forms/Company/Company.form";
 import PageDialogs from "@components/common/dialog/page-dialogs";
-// schema
-import { CompanySchema } from "@schemas/Company.schema";
+// forms
 import CompanyForm from "@forms/company.form";
-import { companySchema } from "@schemas/company.shema";
+// store
 import { createcompany, getCompaniesList } from "@store/company/company.store";
+// schema
+import { companySchema } from "@schemas/company.shema";
 
 const initialState = {
   name: "",
@@ -35,9 +35,6 @@ const CreateCompany = React.memo(({ onClose }) => {
   const dispatch = useDispatch();
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-
-  const companiesList = useSelector(getCompaniesList());
-  console.log("companiesList", companiesList);
 
   const {
     register,
