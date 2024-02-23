@@ -20,9 +20,14 @@ import Buttons from "./components/buttons";
 // import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
 // store
 import { getObjectsList } from "@store/object/objects.store";
-import { getCurrentUserId, getIsUserCurator } from "@store/user/users.store";
+import { getCurrentUserId } from "@store/user/users.store";
 import { ContainerStyled } from "@components/common/container/container-styled";
 import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
+import ContactsFiltersPanel from "@components/UI/filters-panels/contacts.filters-panel";
+import BasicTable from "@components/common/table/basic-table";
+import { contactsColumns } from "@columns/contacts.columns";
+import { getContactsList } from "@store/contact/contact.store";
+import { getLastContactsLoadingStatus } from "@store/last-contact/last-contact.store";
 
 // import { getContactstatusList } from "@store/Contact/Contact-status.store";
 // import {
@@ -69,11 +74,14 @@ const Contacts = React.memo(() => {
   const data = watch();
   const objects = useSelector(getObjectsList());
   const currentUserId = useSelector(getCurrentUserId());
+  const contactsList = useSelector(getContactsList());
+  const isLoading = useSelector(getLastContactsLoadingStatus());
+  console.log("contactsList", contactsList);
+
   // const contactsStatuses = useSelector(getContactstatusList());
 
   // const isDialogPage = true;
   // const isCurator = useSelector(getIsUserCurator(currentUserId));
-  // const isLoading = useSelector(getContactsLoadingStatus());
   const isInputEmpty = JSON.stringify(initialState) !== JSON.stringify(data);
 
   // const contactsList = useSelector(getContactsList());
@@ -109,25 +117,20 @@ const Contacts = React.memo(() => {
         onOpenCreateContactPage={handleOpenCreateContactPage}
         isInputEmpty={isInputEmpty}
       />
-      {/* <ContactsFiltersPanel
+      <ContactsFiltersPanel
         data={data}
-        contacts={contactsList}
-        statuses={contactsStatuses}
+        // contacts={contactsList}
+        // statuses={contactsStatuses}
         register={register}
         setValue={setValue}
-        isCurator={isCurator}
+        // isCurator={isCurator}
+        // isLoading={isLoading}
+      />
+      <BasicTable
+        items={contactsList}
+        itemsColumns={contactsColumns()}
         isLoading={isLoading}
-      /> */}
-      {/* <BasicTable
-        items={sortedContacts}
-        itemsColumns={ContactsColumns(
-          handleOpenContactPage,
-          handleOpenUpdateContactPage,
-          isDialogPage,
-          isCurator
-        )}
-        isLoading={isLoading}
-      /> */}
+      />
       <PageDialogs state={state} setState={setState} />
     </ContainerStyled>
   );

@@ -81,7 +81,7 @@ const {
   contactRemoved
 } = actions;
 
-export const loadCcontactsList = () => async (dispatch, getState) => {
+export const loadContactsList = () => async (dispatch, getState) => {
   const { lastFetch } = getState().contacts;
   if (isOutDated(lastFetch)) {
     dispatch(contactsRequested());
