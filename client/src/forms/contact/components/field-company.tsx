@@ -86,6 +86,7 @@ const FieldsCompany = ({
                 optionLabel={(option) => option.name}
               />
               <OpenPageObjectIconButton
+                containerWidth="70px"
                 title={null}
                 disabled={!data.companies?.[index].company}
                 onClick={() =>

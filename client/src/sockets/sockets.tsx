@@ -10,6 +10,7 @@ import handleUserSocket from "./actions/handle-user-socket";
 import handleAvatarSocket from "./actions/handle-avatar-socket";
 import handleUserLicenseSocket from "./actions/handle-user-license-socket";
 import handleCompanySocket from "./actions/handle-company-socket";
+import handleContactSocket from "./actions/handle-contact-socket";
 
 const Sockets = () => {
   const socket = io(configFile.ioEndPoint);
@@ -23,6 +24,7 @@ const Sockets = () => {
   handleAvatarSocket(socket);
   handleUserLicenseSocket(socket);
   handleCompanySocket(socket);
+  handleContactSocket(socket);
 
   return null;
 };

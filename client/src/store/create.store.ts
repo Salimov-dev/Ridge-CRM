@@ -35,6 +35,7 @@ import currrentPathReducer from "./current-path.store";
 import avatarReducer from "./avatar/avatar.store";
 import userLicensesReducer from "./user/user-license.store";
 import companiesReducer from "./company/company.store";
+import contactsReducer from "./contact/contact.store";
 
 const rootReducer = combineReducers({
   // objects
@@ -75,7 +76,9 @@ const rootReducer = combineReducers({
   // avatar
   avatar: avatarReducer,
   // companies
-  companies: companiesReducer
+  companies: companiesReducer,
+  // contacts
+  contacts: contactsReducer
 });
 
 export function createStore() {

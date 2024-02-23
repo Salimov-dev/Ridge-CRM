@@ -14,6 +14,7 @@ import ContactForm from "@forms/contact/contact.form";
 import PageDialogs from "@components/common/dialog/page-dialogs";
 // schema
 import { contactSchema } from "@schemas/contact.schema";
+import { createContact } from "@store/contact/contact.store";
 
 const initialState = {
   name: "",
@@ -48,26 +49,25 @@ const CreateContact = React.memo(({ onClose }) => {
     formState: { errors }
   } = useForm({
     defaultValues: initialState,
-    mode: "onChange"
-    // resolver: yupResolver(contactSchema)
+    mode: "onChange",
+    resolver: yupResolver(contactSchema)
   });
 
   const data = watch();
-  console.log("data", data);
 
   const onSubmit = (data) => {
-    // setIsLoading(true);
-    // dispatch<any>(createContact(data))
-    // .then(() => {
-    //   onClose();
-    //   toast.success("Контакт успешно создан!");
-    // })
-    // .catch((error) => {
-    //   toast.error(error);
-    // })
-    // .finally(() => {
-    //   setIsLoading(false);
-    // });
+    setIsLoading(true);
+    dispatch<any>(createContact(data))
+      .then(() => {
+        onClose();
+        toast.success("Контакт успешно создан!");
+      })
+      .catch((error) => {
+        toast.error(error);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
 
   return (

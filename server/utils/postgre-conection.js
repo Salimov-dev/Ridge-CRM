@@ -8,7 +8,7 @@ export const sequelize = new Sequelize(
   config.get("DB_PASSWORD"),
   {
     host: config.get("DB_HOST"),
-    dialect: "postgres",
+    dialect: "postgres"
   }
 );
 

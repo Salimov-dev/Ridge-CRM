@@ -80,6 +80,7 @@ const FieldsPhone = ({ data, register, setValue, errors, control }) => {
                 register={register}
                 label="Телефон"
                 type="number"
+                required={true}
                 name={`phones.${index}.phone`}
                 value={data.phones?.[index].phone}
                 errors={errors?.phones?.[index]?.phone}
