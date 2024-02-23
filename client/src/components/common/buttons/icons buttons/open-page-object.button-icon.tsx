@@ -5,21 +5,27 @@ const Components = styled(Box)`
   display: flex;
   gap: 8px;
   cursor: pointer;
+  justify-content: center;
+  align-items: center;
 `;
 
 const OpenPageObjectIconButton = ({
   onClick,
   disabled = false,
-  title = "Открыть объект"
+  title = "Открыть объект",
+  width = "24px",
+  height = "24px",
+  containerWidth = "auto"
 }) => {
   return (
-    <Components onClick={onClick}>
+    <Components onClick={onClick} sx={{ width: containerWidth }}>
       <IconButton
         onClick={onClick}
         disabled={disabled}
         sx={{
           "&:disabled": {
             // стили для неактивной иконки
+
             color: "rgba(0, 0, 0, 0.26)", // изменяем цвет на серый
             pointerEvents: "none" // отключаем события указателя, чтобы иконка не реагировала на нажатия
           },
@@ -32,6 +38,8 @@ const OpenPageObjectIconButton = ({
         <Tooltip title={title} placement="top-start" arrow>
           <OpenInNewOutlinedIcon
             sx={{
+              width: width,
+              height: height,
               opacity: disabled ? "0.5" : "1" // устанавливаем прозрачность
             }}
           />

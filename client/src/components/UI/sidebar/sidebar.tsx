@@ -12,27 +12,27 @@ import ItemsList from "./components/items-list";
 import { getCurrentUserId, getIsUserCurator } from "@store/user/users.store";
 import {
   getCurrrentPathState,
-  setCurrrentPathState,
+  setCurrrentPathState
 } from "@store/current-path.store";
 
 const Component = styled(Box)(({ colors }) => ({
   display: "flex",
   "& .ps-sidebar-container": {
-    background: `${colors.primary[400]} !important`,
+    background: `${colors.primary[400]} !important`
   },
   "& .ps-sidebar-root": {
-    border: "none",
+    border: "none"
   },
   "& .pro-icon-wrapper": {
-    backgroundColor: "transparent !important",
+    backgroundColor: "transparent !important"
   },
   "& .ps-menu-button:hover": {
     color: `${colors.sidebar["menuItemActive"]} !important`,
-    backgroundColor: "inherit !important",
+    backgroundColor: "inherit !important"
   },
   "& .ps-menu-button.ps-active": {
-    color: `${colors.sidebar["menuItemActive"]} !important`,
-  },
+    color: `${colors.sidebar["menuItemActive"]} !important`
+  }
 }));
 
 const RidgeName = styled(Box)`

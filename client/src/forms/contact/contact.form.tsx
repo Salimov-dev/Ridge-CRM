@@ -15,6 +15,7 @@ import FieldsEmail from "./components/fields-email";
 import FieldsObject from "./components/field-object";
 // store
 import { getWorkingPositionsList } from "@store/user-params/working-position.store";
+import FieldsCompany from "./components/field-company";
 
 const ContactForm = ({
   data,
@@ -48,7 +49,7 @@ const ContactForm = ({
               )
             }}
           />
-          <TextFieldStyled
+          {/* <TextFieldStyled
             register={register}
             label="Компания"
             name="company"
@@ -62,7 +63,7 @@ const ContactForm = ({
                 </InputAdornment>
               )
             }}
-          />
+          /> */}
           <SelectFieldStyled
             label="Позиция"
             register={register}
@@ -87,6 +88,15 @@ const ContactForm = ({
             }}
           />
 
+          <FieldsCompany
+            data={data}
+            register={register}
+            errors={errors}
+            setValue={setValue}
+            control={control}
+            watch={watch}
+            setState={setState}
+          />
           <FieldsPhone
             data={data}
             register={register}

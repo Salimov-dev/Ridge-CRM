@@ -11,15 +11,14 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
     <MenuItem
       active={selected === title}
       style={{
-        color: colors.grey[100],
+        color: colors.grey[100]
       }}
       onClick={() => setSelected(to)}
       icon={
         <Tooltip title={title} placement="top-start" arrow>
           <Box
             sx={{
-              color:
-                selected === to ? colors.sidebar["menuItemActive"] : "inherit",
+              color: selected === to ? colors.sidebar["menuItemActive"] : null
             }}
           >
             {icon}

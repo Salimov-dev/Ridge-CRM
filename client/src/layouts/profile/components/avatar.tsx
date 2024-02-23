@@ -7,7 +7,7 @@ import useGetUserAvatar from "@hooks/user/use-get-user-avatar";
 // components
 import AvatarImage from "./avatar-image";
 import DialogConfirm from "@components/common/dialog/dialog-confirm";
-import Buttons from "./buttons";
+import AvatarButtons from "./avatar-buttons";
 // store
 import { getCurrentUserId } from "@store/user/users.store";
 import {
@@ -16,7 +16,7 @@ import {
 } from "@store/avatar/avatar.store";
 
 const AvatarContainer = styled(Box)`
-  width: 350px;
+  width: min-content;
   display: flex;
   flex-direction: column;
   gap: 6px;
@@ -44,9 +44,8 @@ const Avatar = ({ state, setState }) => {
   return (
     <>
       <AvatarContainer>
-        <Typography variant="h2">Моё изображение:</Typography>
         <AvatarImage avatarSrc={avatarSrc} isLoading={isUserLoading} />
-        <Buttons
+        <AvatarButtons
           handleOpenUpdateUserAvatarPage={handleOpenUpdateUserAvatarPage}
           handleClickOpenConfirmDialog={handleClickOpenConfirmDialog}
           avatarSrc={avatarSrc}

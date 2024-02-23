@@ -14,7 +14,8 @@ import PageDialogs from "@components/common/dialog/page-dialogs";
 // hooks
 import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
 // store
-import { getObjectsList } from "@store/object/objects.store";
+import { getObjectsByUserId } from "@store/object/objects.store";
+import { getCurrentUserId } from "@store/user/users.store";
 
 const FieldsObject = ({
   data,
@@ -30,7 +31,8 @@ const FieldsObject = ({
     objectId: false
   });
 
-  const objectsList = useSelector(getObjectsList());
+  const currentUserId = useSelector(getCurrentUserId());
+  const objectsList = useSelector(getObjectsByUserId(currentUserId));
   const watchObjectId = watch("objectId");
 
   const { handleOpenCreateObjectPage } = useDialogHandlers(setState);
@@ -62,16 +64,13 @@ const FieldsObject = ({
   };
 
   const handleRemoveObject = (index) => {
-    removeObject(index);
-
     handleChangeObject(index, false);
     removeObject(index);
   };
   return (
     <>
-      {" "}
       <RowTitle
-        title="Объекты недвижимости"
+        title="Связан с объектами"
         background="SteelBlue"
         margin="14px 0 -6px 0"
       />
@@ -99,6 +98,7 @@ const FieldsObject = ({
                 optionLabel={(option) => `${option?.city}, ${option?.address}`}
               />
               <OpenPageObjectIconButton
+                containerWidth="70px"
                 title={null}
                 disabled={!data.objects?.[index].object}
                 onClick={() =>

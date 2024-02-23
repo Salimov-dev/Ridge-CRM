@@ -138,7 +138,7 @@ const ButtonStyled = ({
 
   if (style === "ADD_NEW_OBJECT") {
     background = null;
-    color = "SteelBlue";
+    color = "SkyBlue";
     colorHover = "white";
     backgroundHover = "RoyalBlue";
     border = "1px dashed SteelBlue !important";
@@ -149,7 +149,23 @@ const ButtonStyled = ({
     color = "Aquamarine";
     colorHover = "white";
     backgroundHover = "CadetBlue";
-    border = "1px dashed Aquamarine !important";
+    border = "1px dashed CadetBlue !important";
+  }
+
+  if (style === "ADD_NEW_COMPANY") {
+    background = null;
+    color = "Gold";
+    colorHover = "white";
+    backgroundHover = "Tomato";
+    border = "1px dashed DarkOrange !important";
+  }
+
+  if (style === "CREATE_NEW_COMPANY") {
+    background = null;
+    color = "Gainsboro";
+    colorHover = "white";
+    backgroundHover = "SaddleBrown";
+    border = "1px dashed Peru !important";
   }
 
   return (

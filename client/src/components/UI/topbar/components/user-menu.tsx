@@ -3,13 +3,14 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 // MUI
-import { Box, Button, Menu, MenuItem, Typography, styled } from "@mui/material";
+import { Box, Button, Menu, MenuItem, styled } from "@mui/material";
 // store
 import { getCurrentUserId, logOut } from "@store/user/users.store";
 // commponents
 import UserNameWithAvatar from "@components/common/user-name-with-avatar";
 // hooks
 import useGetUserAvatar from "@hooks/user/use-get-user-avatar";
+import { setCurrrentPathState } from "@store/current-path.store";
 
 const Component = styled(Box)`
   display: flex;
@@ -38,6 +39,7 @@ const UserMenu = () => {
   const handleOpenProfile = () => {
     setAnchorEl(null);
     navigate("profile");
+    dispatch<any>(setCurrrentPathState(window.location.pathname));
   };
 
   const handleLogOut = () => {

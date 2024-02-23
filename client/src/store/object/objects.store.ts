@@ -13,7 +13,7 @@ import {
   getCurrentUserData,
   getCurrentUserId,
   getIsUserCurator,
-  getIsUserManager,
+  getIsUserManager
 } from "../user/users.store";
 
 const socket = io(configFile.ioEndPoint);
@@ -26,7 +26,7 @@ const initialState = localStorageService.getAccessToken()
       isLoggedIn: true,
       dataLoaded: false,
       lastFetch: null,
-      auth: { userId: localStorageService.getUserId() },
+      auth: { userId: localStorageService.getUserId() }
     }
   : {
       entities: null,
@@ -34,7 +34,7 @@ const initialState = localStorageService.getAccessToken()
       error: null,
       isLoggedIn: false,
       dataLoaded: false,
-      lastFetch: null,
+      lastFetch: null
     };
 
 const objectsSlice = createSlice({
@@ -68,8 +68,8 @@ const objectsSlice = createSlice({
       state.entities = state.entities.filter(
         (obj) => obj._id !== action.payload
       );
-    },
-  },
+    }
+  }
 });
 
 const objectCreateRequested = createAction("objects/objectCreateRequested");
@@ -92,7 +92,7 @@ const {
   objectsFailed,
   objectCreated,
   objectUpdateSuccessed,
-  objectRemoved,
+  objectRemoved
 } = actions;
 
 export const loadObjectsList = () => async (dispatch, getState) => {
@@ -202,6 +202,16 @@ export const getObjectAddressById = (objectId) => (state) => {
     );
     const fullAddress = `${object?.city}, ${object?.address}`;
     return fullAddress;
+  }
+};
+
+export const getObjectsByUserId = (userId) => (state) => {
+  if (state?.objects?.entities) {
+    const objects = state?.objects?.entities?.filter(
+      (obj) => obj?.userId === userId
+    );
+
+    return objects;
   }
 };
 
