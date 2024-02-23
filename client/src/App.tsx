@@ -64,9 +64,9 @@ function App() {
         </AppLoader>
       </ThemeProvider>
       <ToastContainer
-        position="top-center"
+        position="bottom-left"
         className="toast-container"
-        autoClose={2000}
+        autoClose={2200}
       />
     </ColorModeContext.Provider>
   );

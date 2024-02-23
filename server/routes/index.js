@@ -9,6 +9,7 @@ import avatarRoutes from "./avatar.routes.js";
 import lastContactRoutes from "./last-contact.routes.js";
 import presentationsRoutes from "./presentations.routes.js";
 import userLicenseRoutes from "./user-license.routes.js";
+import companyRoutes from "./company.routes.js";
 
 const router = express.Router({ mergeParams: true });
 
@@ -21,5 +22,6 @@ router.use("/avatar", avatarRoutes);
 router.use("/lastContact", lastContactRoutes);
 router.use("/presentations", presentationsRoutes);
 router.use("/userLicense", userLicenseRoutes);
+router.use("/company", companyRoutes);
 
 export default router;

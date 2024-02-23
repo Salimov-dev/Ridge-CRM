@@ -1,5 +1,8 @@
 import { useDispatch } from "react-redux";
-import { removeAvatartUpdate, updateAvatarUpdate } from "../../store/avatar/avatar.store";
+import {
+  removeAvatartUpdate,
+  updateAvatarUpdate
+} from "@store/avatar/avatar.store";
 
 const handleAvatarSocket = (socket) => {
   const dispatch = useDispatch();

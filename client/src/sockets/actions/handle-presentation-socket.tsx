@@ -2,8 +2,8 @@ import { useDispatch } from "react-redux";
 import {
   createPresentationUpdate,
   removePresentationUpdate,
-  updatePresentationUpdate,
-} from "../../store/presentation/presentations.store";
+  updatePresentationUpdate
+} from "@store/presentation/presentations.store";
 
 const handlePresentationSocket = (socket) => {
   const dispatch = useDispatch();

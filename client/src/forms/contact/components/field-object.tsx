@@ -14,7 +14,10 @@ import PageDialogs from "@components/common/dialog/page-dialogs";
 // hooks
 import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
 // store
-import { getObjectsByUserId } from "@store/object/objects.store";
+import {
+  getObjectsByUserId,
+  getObjectsList
+} from "@store/object/objects.store";
 import { getCurrentUserId } from "@store/user/users.store";
 
 const FieldsObject = ({
@@ -32,11 +35,13 @@ const FieldsObject = ({
   });
 
   const currentUserId = useSelector(getCurrentUserId());
-  const objectsList = useSelector(getObjectsByUserId(currentUserId));
+  const objectsList = useSelector(getObjectsList());
+  const currentUserObjects = objectsList?.filter(
+    (obj) => obj.userId === currentUserId
+  );
   const watchObjectId = watch("objectId");
 
   const { handleOpenCreateObjectPage } = useDialogHandlers(setState);
-
   const { handleOpenObjectPage } = useDialogHandlers(setOpenObject);
 
   const {
@@ -90,7 +95,7 @@ const FieldsObject = ({
                 label="Объект"
                 register={register}
                 name={`objects.${index}.object`}
-                options={objectsList}
+                options={currentUserObjects}
                 value={data.objects?.[index].object}
                 errors={errors?.objects?.[index]?.object}
                 setValue={setValue}

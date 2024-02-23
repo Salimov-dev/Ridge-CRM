@@ -35,8 +35,7 @@ const FieldsCompany = ({
   // const CompaniesList = useSelector(getCompaniesByUserId(currentUserId));
   const watchCompanyId = watch("companyId");
 
-  // const { handleOpenCreateCompanyPage } = useDialogHandlers(setState);
-
+  const { handleOpenCreateCompanyPage } = useDialogHandlers(setState);
   // const { handleOpenCompanyPage } = useDialogHandlers(setOpenCompany);
 
   const {
@@ -117,7 +116,7 @@ const FieldsCompany = ({
           width="100%"
           size="small"
           icon={<AddCircleIcon />}
-          // onClick={handleOpenCreateObjectPage}
+          onClick={handleOpenCreateCompanyPage}
         />
         <ButtonStyled
           title="Добавить компанию"

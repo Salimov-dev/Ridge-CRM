@@ -257,6 +257,14 @@ const useDialogHandlers = (setState) => {
     setState((prevState) => ({ ...prevState, createContactPage: false }));
   };
 
+  // обновление стейта при открытии окна создания компании
+  const handleOpenCreateCompanyPage = () => {
+    setState((prevState) => ({ ...prevState, createCompanyPage: true }));
+  };
+  const handleCloseCreateCompanyPage = () => {
+    setState((prevState) => ({ ...prevState, createCompanyPage: false }));
+  };
+
   // обновление стейта при обновлении контакта
   const handleOpenUpdateContactPage = (contactId) => {
     setState((prevState) => ({
@@ -315,7 +323,9 @@ const useDialogHandlers = (setState) => {
     handleOpenCreateContactPage,
     handleCloseCreateContactPage,
     handleOpenUpdateContactPage,
-    handleCloseUpdateContactPage
+    handleCloseUpdateContactPage,
+    handleOpenCreateCompanyPage,
+    handleCloseCreateCompanyPage
   };
 };
 

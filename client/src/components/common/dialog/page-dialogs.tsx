@@ -24,6 +24,7 @@ import CreateUser from "@components/pages/user/create-user";
 import MakePaymentPage from "@components/pages/payment/make-payment";
 import CreateContact from "@components/pages/contact/create-contact";
 import UpdateContact from "@components/pages/contact/update-contact";
+import CreateCompany from "@components/pages/company/create-company";
 
 const PageDialogs = ({
   state,
@@ -57,7 +58,9 @@ const PageDialogs = ({
     handleCloseCreateUserPage,
     handleCloseMakePaymentPage,
     handleCloseCreateContactPage,
-    handleCloseUpdateContactPage
+    handleCloseUpdateContactPage,
+    handleOpenCreateCompanyPage,
+    handleCloseCreateCompanyPage
   } = useDialogHandlers(setState);
 
   return (
@@ -256,7 +259,7 @@ const PageDialogs = ({
         component={<UpdatePassword onClose={handleCloseUpdatePasswordPage} />}
         onClose={handleCloseUpdatePasswordPage}
         open={state.updatePasswordPage}
-        maxWidth="sm"
+        maxWidth="xs"
       />
       <DialogStyled
         component={<CreateUser onClose={handleCloseCreateUserPage} />}
@@ -294,6 +297,12 @@ const PageDialogs = ({
         onClose={handleCloseUpdateContactPage}
         maxWidth="sm"
         open={state.updateContactPage}
+      />
+      <DialogStyled
+        component={<CreateCompany onClose={handleCloseCreateCompanyPage} />}
+        maxWidth="sm"
+        onClose={handleCloseCreateCompanyPage}
+        open={state.createCompanyPage}
       />
     </>
   );

@@ -205,16 +205,6 @@ export const getObjectAddressById = (objectId) => (state) => {
   }
 };
 
-export const getObjectsByUserId = (userId) => (state) => {
-  if (state?.objects?.entities) {
-    const objects = state?.objects?.entities?.filter(
-      (obj) => obj?.userId === userId
-    );
-
-    return objects;
-  }
-};
-
 export const getObjectsWeeklyList = () => (state) => {
   const currentDate = dayjs();
   const objects = state.objects.entities;

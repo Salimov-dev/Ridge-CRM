@@ -34,6 +34,7 @@ import monthIndexReducer from "./month-index.store";
 import currrentPathReducer from "./current-path.store";
 import avatarReducer from "./avatar/avatar.store";
 import userLicensesReducer from "./user/user-license.store";
+import companiesReducer from "./company/company.store";
 
 const rootReducer = combineReducers({
   // objects
@@ -72,7 +73,9 @@ const rootReducer = combineReducers({
   //statictic
   staticticPositions: staticticPositionsReducer,
   // avatar
-  avatar: avatarReducer
+  avatar: avatarReducer,
+  // companies
+  companies: companiesReducer
 });
 
 export function createStore() {

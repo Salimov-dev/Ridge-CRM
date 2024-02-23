@@ -2,8 +2,8 @@ import { useDispatch } from "react-redux";
 import {
   createTaskUpdate,
   removeTaskUpdate,
-  updateTaskUpdate,
-} from "../../store/task/tasks.store";
+  updateTaskUpdate
+} from "@store/task/tasks.store";
 
 const handleTaskSocket = (socket) => {
   const dispatch = useDispatch();

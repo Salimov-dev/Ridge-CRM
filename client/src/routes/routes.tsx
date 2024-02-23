@@ -16,11 +16,17 @@ import Profile from "@layouts/profile/profile";
 import UpdateProfile from "@components/pages/user/update-profile";
 import NoMatchRoute from "@components/common/rout/no-match";
 // store
-import { getCurrentUserId, getIsUserCurator } from "@store/user/users.store";
+import {
+  getCurrentUserId,
+  getIsUserCurator,
+  getUsersLoadingStatus
+} from "@store/user/users.store";
 import Contacts from "@layouts/contacts/contacts";
+import Loader from "@components/common/loader/loader";
 
 export default function AppRoutes() {
   const currentUserId = useSelector(getCurrentUserId());
+  const isUserLoading = useSelector(getUsersLoadingStatus());
   const isCurator = useSelector(getIsUserCurator(currentUserId));
 
   const routes = [
@@ -33,7 +39,15 @@ export default function AppRoutes() {
     {
       id: 7,
       path: "users/*",
-      element: isCurator ? <Users /> : <NoMatchRoute />
+      element: !isUserLoading ? (
+        isCurator ? (
+          <Users />
+        ) : (
+          <NoMatchRoute />
+        )
+      ) : (
+        <Loader size={50} />
+      )
     },
     { id: 8, path: "profile/*", element: <Profile /> },
     { id: 9, path: ":userId?/presentations", element: <Presentations /> },

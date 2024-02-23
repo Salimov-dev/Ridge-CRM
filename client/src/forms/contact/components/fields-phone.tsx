@@ -1,5 +1,11 @@
 import { useFieldArray } from "react-hook-form";
-import { Box, FormControlLabel, InputAdornment, Switch } from "@mui/material";
+import {
+  Box,
+  FormControlLabel,
+  FormHelperText,
+  InputAdornment,
+  Switch
+} from "@mui/material";
 // icons
 import PhoneIphoneOutlinedIcon from "@mui/icons-material/PhoneIphoneOutlined";
 import ControlPointOutlinedIcon from "@mui/icons-material/ControlPointOutlined";
@@ -79,7 +85,6 @@ const FieldsPhone = ({ data, register, setValue, errors, control }) => {
                 errors={errors?.phones?.[index]?.phone}
                 onInputQuantities={12}
                 isHelperText={true}
-                subtitle="Вводите в формате 79045554433, 78129998877, 9995544"
                 InputProps={{
                   endAdornment: (
                     <InputAdornment position="end">
@@ -99,7 +104,7 @@ const FieldsPhone = ({ data, register, setValue, errors, control }) => {
                     onChange={() => handleChangePhone(index, field.isDefault)}
                     inputProps={{ "aria-label": "controlled" }}
                     sx={{
-                      marginTop: "-28px",
+                      marginTop: "-10px",
                       "& .Mui-checked": {
                         color: "LimeGreen" // Задаем кастомный цвет для свитча в состоянии "включено"
                       },
@@ -117,6 +122,10 @@ const FieldsPhone = ({ data, register, setValue, errors, control }) => {
           return null;
         }
       })}
+      <FormHelperText sx={{ marginTop: "-4px" }}>
+        Вводите номер телефона только в форматах 79045554433, 78129998877,
+        9995544
+      </FormHelperText>
       <Box sx={{ width: "100%", display: "flex", gap: "4px" }}>
         <ButtonStyled
           title="Добавить телефон"

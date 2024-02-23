@@ -10,22 +10,21 @@ import { useDispatch, useSelector } from "react-redux";
 import SuccessCancelFormButtons from "@components/common/buttons/success-cancel-form-buttons";
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
 import HeaderWithCloseButton from "@components/common/page-headers/header-with-close-button";
-import ContactForm from "@forms/contact/contact.form";
+// import CompanyForm from "@forms/Company/Company.form";
 import PageDialogs from "@components/common/dialog/page-dialogs";
 // schema
-import { contactSchema } from "@schemas/contact.schema";
+import { CompanySchema } from "@schemas/Company.schema";
+import CompanyForm from "@forms/company.form";
+import { companySchema } from "@schemas/company.shema";
+import { createcompany, getCompaniesList } from "@store/company/company.store";
 
 const initialState = {
   name: "",
-  company: "",
-  position: "",
-  comment: "",
-  emails: [{ email: "", isDefault: true }],
-  phones: [{ phone: "", isDefault: true }],
-  objects: [{ objectId: "" }]
+  profile: ""
 };
 
-const CreateContact = React.memo(({ onClose }) => {
+const CreateCompany = React.memo(({ onClose }) => {
+  const [isLoading, setIsLoading] = useState(false);
   const [state, setState] = useState({
     objectPage: false,
     createPage: false,
@@ -37,19 +36,18 @@ const CreateContact = React.memo(({ onClose }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
-  const [isLoading, setIsLoading] = useState(false);
+  const companiesList = useSelector(getCompaniesList());
+  console.log("companiesList", companiesList);
 
   const {
     register,
     watch,
     handleSubmit,
-    setValue,
-    control,
     formState: { errors }
   } = useForm({
     defaultValues: initialState,
-    mode: "onChange"
-    // resolver: yupResolver(contactSchema)
+    mode: "onChange",
+    resolver: yupResolver(companySchema)
   });
 
   const data = watch();
@@ -57,36 +55,28 @@ const CreateContact = React.memo(({ onClose }) => {
   const onSubmit = (data) => {
     setIsLoading(true);
 
-    // dispatch<any>(createContact(data))
-    // .then(() => {
-    //   onClose();
-    //   toast.success("Контакт успешно создан!");
-    // })
-    // .catch((error) => {
-    //   toast.error(error);
-    // })
-    // .finally(() => {
-    //   setIsLoading(false);
-    // });
+    dispatch<any>(createcompany(data))
+      .then(() => {
+        onClose();
+        toast.success("Компания успешно создана!");
+      })
+      .catch((error) => {
+        toast.error(error);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
 
   return (
     <>
       <HeaderWithCloseButton
-        title="Создать контакт"
+        title="Создать компанию"
         margin="0 0 20px 0"
-        background="Indigo"
+        background="FireBrick"
         onClose={onClose}
       />
-      <ContactForm
-        data={data}
-        watch={watch}
-        setState={setState}
-        control={control}
-        errors={errors}
-        register={register}
-        setValue={setValue}
-      />
+      <CompanyForm data={data} errors={errors} register={register} />
       <SuccessCancelFormButtons
         onSuccess={handleSubmit(onSubmit)}
         onCancel={onClose}
@@ -101,4 +91,4 @@ const CreateContact = React.memo(({ onClose }) => {
   );
 });
 
-export default CreateContact;
+export default CreateCompany;

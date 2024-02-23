@@ -1,24 +1,18 @@
-import dayjs from "dayjs";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useState } from "react";
 import { toast } from "react-toastify";
 // components
 import TitleWithCloseButton from "@components/common/page-headers/header-with-close-button";
-import UserProfileForm from "@forms/user-profile.form";
 import SuccessCancelFormButtons from "@components/common/buttons/success-cancel-form-buttons";
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
 // schemas
-import { userProfileSchema } from "@schemas/user-profile.schema";
-// store
-import {
-  getCurrentUserData,
-  updatePassword,
-  updateUser
-} from "@store/user/users.store";
-import UpdatePasswordForm from "@forms/update-password-form";
 import { passwordUpdateSchema } from "@schemas/password-update.schema";
+// store
+import { updatePassword } from "@store/user/users.store";
+// forms
+import UpdatePasswordForm from "@forms/update-password-form";
 
 const initialState = {
   currentPassword: "",
@@ -28,14 +22,12 @@ const initialState = {
 const UpdatePassword = ({ onClose }) => {
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
-  const user = useSelector(getCurrentUserData());
 
   const {
     register,
     watch,
     handleSubmit,
-    formState: { errors },
-    setValue
+    formState: { errors }
   } = useForm({
     defaultValues: initialState,
     mode: "onChange",
