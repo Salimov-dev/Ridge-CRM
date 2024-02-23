@@ -117,7 +117,7 @@ const FieldsCompany = ({
           onClick={() => appendCompany({})}
         />
         <ButtonStyled
-          title="Удалить почту"
+          title="Удалить компанию"
           style="REMOVE_SOME_NEW"
           width="100%"
           size="small"

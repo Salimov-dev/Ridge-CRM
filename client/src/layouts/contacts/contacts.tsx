@@ -20,7 +20,7 @@ import Buttons from "./components/buttons";
 // import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
 // store
 import { getObjectsList } from "@store/object/objects.store";
-import { getCurrentUserId } from "@store/user/users.store";
+import { getCurrentUserId, getIsUserCurator } from "@store/user/users.store";
 import { ContainerStyled } from "@components/common/container/container-styled";
 import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
 import ContactsFiltersPanel from "@components/UI/filters-panels/contacts.filters-panel";
@@ -48,7 +48,7 @@ const Contacts = React.memo(() => {
   const [state, setState] = useState({
     contactPage: false,
     createContactPage: false,
-    updateContactPage: false,
+    openContactPage: false,
     contactId: null
   });
 
@@ -76,12 +76,12 @@ const Contacts = React.memo(() => {
   const currentUserId = useSelector(getCurrentUserId());
   const contactsList = useSelector(getContactsList());
   const isLoading = useSelector(getLastContactsLoadingStatus());
-  console.log("contactsList", contactsList);
+  // console.log("contactsList", contactsList);
 
   // const contactsStatuses = useSelector(getContactstatusList());
 
   // const isDialogPage = true;
-  // const isCurator = useSelector(getIsUserCurator(currentUserId));
+  const isCurator = useSelector(getIsUserCurator(currentUserId));
   const isInputEmpty = JSON.stringify(initialState) !== JSON.stringify(data);
 
   // const contactsList = useSelector(getContactsList());
@@ -91,7 +91,8 @@ const Contacts = React.memo(() => {
   //   return orderBy(searchedContacts, ["created_at"], ["desc"]);
   // }, [searchedContacts]);
 
-  const { handleOpenCreateContactPage } = useDialogHandlers(setState);
+  const { handleOpenCreateContactPage, handleOpenContactPage } =
+    useDialogHandlers(setState);
 
   useEffect(() => {
     localStorage.setItem("search-contacts-data", JSON.stringify(data));
@@ -117,7 +118,7 @@ const Contacts = React.memo(() => {
         onOpenCreateContactPage={handleOpenCreateContactPage}
         isInputEmpty={isInputEmpty}
       />
-      <ContactsFiltersPanel
+      {/* <ContactsFiltersPanel
         data={data}
         // contacts={contactsList}
         // statuses={contactsStatuses}
@@ -125,10 +126,10 @@ const Contacts = React.memo(() => {
         setValue={setValue}
         // isCurator={isCurator}
         // isLoading={isLoading}
-      />
+      /> */}
       <BasicTable
         items={contactsList}
-        itemsColumns={contactsColumns()}
+        itemsColumns={contactsColumns(handleOpenContactPage, isCurator)}
         isLoading={isLoading}
       />
       <PageDialogs state={state} setState={setState} />

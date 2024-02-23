@@ -257,6 +257,21 @@ const useDialogHandlers = (setState) => {
     setState((prevState) => ({ ...prevState, createContactPage: false }));
   };
 
+  // обновление стейта при обновлении контакта
+  const handleOpenContactPage = (contactId) => {
+    setState((prevState) => ({
+      ...prevState,
+      openContactPage: true,
+      contactId: contactId
+    }));
+  };
+  const handleCloseContactPage = () => {
+    setState((prevState) => ({
+      ...prevState,
+      openContactPage: false
+    }));
+  };
+
   // обновление стейта при открытии окна создания компании
   const handleOpenCreateCompanyPage = () => {
     setState((prevState) => ({ ...prevState, createCompanyPage: true }));
@@ -274,20 +289,6 @@ const useDialogHandlers = (setState) => {
     }));
   };
 
-  // обновление стейта при обновлении контакта
-  const handleOpenUpdateContactPage = (contactId) => {
-    setState((prevState) => ({
-      ...prevState,
-      updateContactPage: true,
-      contactId: contactId
-    }));
-  };
-  const handleCloseUpdateContactPage = () => {
-    setState((prevState) => ({
-      ...prevState,
-      updateContactPage: false
-    }));
-  };
   return {
     handleOpenAuthPage,
     handleCloseAuthPage,
@@ -331,8 +332,8 @@ const useDialogHandlers = (setState) => {
     handleCloseMakePaymentPage,
     handleOpenCreateContactPage,
     handleCloseCreateContactPage,
-    handleOpenUpdateContactPage,
-    handleCloseUpdateContactPage,
+    handleOpenContactPage,
+    handleCloseContactPage,
     handleOpenCreateCompanyPage,
     handleCloseCreateCompanyPage,
     handleOpenCompanyPage

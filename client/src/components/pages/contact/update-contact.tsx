@@ -2,79 +2,53 @@
 import { useTheme } from "@emotion/react";
 import { tokens } from "@theme/theme";
 import React, { useState } from "react";
-import dayjs from "dayjs";
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-// import { yupResolver } from "@hookform/resolvers/yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 // components
 import SuccessCancelFormButtons from "@components/common/buttons/success-cancel-form-buttons";
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
 import HeaderWithCloseButton from "@components/common/page-headers/header-with-close-button";
-// import ContactForm from "@components/common/forms/Contact.form";
 import DialogConfirm from "@components/common/dialog/dialog-confirm";
+import ContactForm from "@forms/contact/contact.form";
 // schema
-// import { ContactSchema } from "@schemas/Contact.schema";
-// store
-// import { getContactsList } from "@store/Contact/Contacts.store";
-import { getCurrentUserId } from "@store/user/users.store";
-// import { getContactTypesList } from "@store/Contact/Contact-types.store";
-// import { getContactStatusesList } from "@store/Contact/Contact-status.store";
-// import {
-//   getContactById,
-//   getContactLoadingStatus,
-//   removeContact,
-//   updateContact
-// } from "@store/contact/contacts.store";
+import { contactSchema } from "@schemas/contact.schema";
+import {
+  getContactById,
+  removeContact,
+  updateContact
+} from "@store/contact/contact.store";
 
-const UpdateContact = React.memo(({ contactId, onClose, isContactPage }) => {
+const UpdateContact = React.memo(({ contactId, onClose }) => {
   const dispatch = useDispatch();
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
   const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  // const contact = useSelector(getContactById(contactId));
-
-  // const formatedContact = {
-  //   ...contact,
-  //   date: contact?.date ? dayjs(contact?.date) : null,
-  //   time: contact?.time ? dayjs(contact?.time) : null
-  // };
+  const contact = useSelector(getContactById(contactId));
 
   const {
     register,
     watch,
     handleSubmit,
-    formState: { errors },
-    setValue
+    setValue,
+    control,
+    formState: { errors }
   } = useForm({
-    // defaultValues: formatedContact,
-    mode: "onChange"
-    // resolver: yupResolver(contactSchema)
+    defaultValues: contact,
+    mode: "onChange",
+    resolver: yupResolver(contactSchema)
   });
 
   const data = watch();
 
-  const isEditMode = contactId ? true : false;
-
-  const contacts = useSelector(getContactsList());
-  const currentUserId = useSelector(getCurrentUserId());
-  // const currentUserContacts = contacts?.filter(
-  //   (obj) => obj?.userId === currentUserId
-  // );
-  // const isContactsLoading = useSelector(getContactLoadingStatus());
-  // const contactTypes = useSelector(getContactTypesList());
-  // const statuses = useSelector(getContactStatusesList());
-
   const onSubmit = (data) => {
     setIsLoading(true);
+    console.log("data", data);
 
-    const transformedDate = dayjs(data.date).format("YYYY-MM-DDTHH:mm:ss.SSSZ");
-    const transformedTime = dayjs(data.time).format("YYYY-MM-DDTHH:mm:ss.SSSZ");
-    const newData = { ...data, date: transformedDate, time: transformedTime };
-
-    dispatch<any>(updateContact(newData))
+    dispatch<any>(updateContact(data))
       .then(() => {
         onClose();
         toast.success("Контакт успешно изменен!");
@@ -102,25 +76,20 @@ const UpdateContact = React.memo(({ contactId, onClose, isContactPage }) => {
   return (
     <>
       <HeaderWithCloseButton
-        title="Изменить встречу"
+        title="Править контакт"
         color="white"
         margin="0 0 20px 0"
-        // background={colors.contact["primary"]}
+        background="Navy"
         onClose={onClose}
       />
-      {/* <ContactForm
+      <ContactForm
         data={data}
-        Contacts={currentUserContacts}
-        types={ContactTypes}
-        statuses={statuses}
-        register={register}
         watch={watch}
+        control={control}
+        register={register}
         errors={errors}
         setValue={setValue}
-        isEditMode={isEditMode}
-        isContactsLoading={isContactsLoading}
-        isContactPage={isContactPage}
-      /> */}
+      />
       <SuccessCancelFormButtons
         onSuccess={handleSubmit(onSubmit)}
         onCancel={onClose}

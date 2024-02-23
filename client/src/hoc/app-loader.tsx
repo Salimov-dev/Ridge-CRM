@@ -33,6 +33,7 @@ import { loadAvatarList } from "@store/avatar/avatar.store";
 import { loadUserLicensesList } from "@store/user/user-license.store";
 import { loadCompaniesList } from "@store/company/company.store";
 import { loadContactsList } from "@store/contact/contact.store";
+import { loadContactPositionsList } from "@store/contact/contact-positions.store";
 
 interface AppLoaderProps {
   children: React.ReactNode;
@@ -79,6 +80,7 @@ const AppLoader = ({ children }: AppLoaderProps) => {
       dispatch<any>(loadCompaniesList());
       // contacts
       dispatch<any>(loadContactsList());
+      dispatch<any>(loadContactPositionsList());
     }
   }, [isLoggedIn, dispatch]);
 

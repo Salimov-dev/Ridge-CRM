@@ -1,23 +1,23 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { workingPositionsArray } from "../../data/users/working-positions";
+import { contactPositionsArray } from "../../data/users/contact-positions";
 
 const workingPositionSlice = createSlice({
   name: "workingPosition",
   initialState: {
-    entities: null,
+    entities: null
   },
   reducers: {
     workingPositionLoaded: (state, action) => {
       state.entities = action.payload;
-    },
-  },
+    }
+  }
 });
 
 const { reducer: workingPositionReducer, actions } = workingPositionSlice;
 const { workingPositionLoaded } = actions;
 
 export const loadWorkingPositionList = () => async (dispatch) => {
-  dispatch(workingPositionLoaded(workingPositionsArray));
+  dispatch(workingPositionLoaded(contactPositionsArray));
 };
 
 export const getWorkingPositionsList = () => (state) =>

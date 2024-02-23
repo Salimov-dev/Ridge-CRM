@@ -9,7 +9,7 @@ import MainFields from "./components/main-fields";
 
 const ContactForm = ({
   data,
-  setState,
+  setState = () => {},
   watch,
   control,
   register,

@@ -58,8 +58,7 @@ const PageDialogs = ({
     handleCloseCreateUserPage,
     handleCloseMakePaymentPage,
     handleCloseCreateContactPage,
-    handleCloseUpdateContactPage,
-    handleOpenCreateCompanyPage,
+    handleCloseContactPage,
     handleCloseCreateCompanyPage
   } = useDialogHandlers(setState);
 
@@ -290,13 +289,12 @@ const PageDialogs = ({
         component={
           <UpdateContact
             contactId={state.contactId}
-            onClose={handleCloseUpdateContactPage}
-            isContactPage={!state?.contactId}
+            onClose={handleCloseContactPage}
           />
         }
-        onClose={handleCloseUpdateContactPage}
+        onClose={handleCloseContactPage}
         maxWidth="sm"
-        open={state.updateContactPage}
+        open={state.openContactPage}
       />
       <DialogStyled
         component={<CreateCompany onClose={handleCloseCreateCompanyPage} />}
