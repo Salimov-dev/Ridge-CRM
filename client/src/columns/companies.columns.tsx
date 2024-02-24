@@ -5,16 +5,10 @@ import { FormatDate } from "@utils/date/format-date";
 // components
 import { AlignCenter } from "@components/common/columns/styled";
 import EmptyTd from "@components/common/columns/empty-td";
-import { FormatPhone } from "@components/common/table/helpers/helpers";
 import ButtonStyled from "@components/common/buttons/button-styled.button";
 // store
-// import { getPositionNameById } from "@store/companies/companies.store";
 import { getObjectAddressById } from "@store/object/objects.store";
-import {
-  getCompanyById,
-  getCompanyNameById
-} from "@store/company/company.store";
-import { getPositionNameById } from "@store/contact/contact-positions.store";
+import { getUserNameById } from "@store/user/users.store";
 
 function IndeterminateCheckbox({
   indeterminate,
@@ -39,7 +33,7 @@ function IndeterminateCheckbox({
   );
 }
 
-export const companiesColumns = (handleOpenCompaniesPage, isCurator) => {
+export const companiesColumns = (handleUpdateCompanyPage, isCurator) => {
   let columns = [];
 
   const selectColumn = {
@@ -104,104 +98,93 @@ export const companiesColumns = (handleOpenCompaniesPage, isCurator) => {
   //   }
   // };
 
-  // const objectsColumn = {
-  //   accessorKey: "objects",
-  //   header: "Объект",
-  //   enableSorting: false,
-  //   cell: (info) => {
-  //     const objects = info.getValue();
-  //     const objectIds = [...new Set(objects?.map((obj) => obj.object))];
+  const objectsColumn = {
+    accessorKey: "objects",
+    header: "Объект",
+    enableSorting: false,
+    cell: (info) => {
+      const objects = info.getValue();
+      const objectIds = [...new Set(objects?.map((obj) => obj.object))];
 
-  //     const result = objectIds?.map((obj) => (
-  //       <AlignCenter>{useSelector(getObjectAddressById(obj))}</AlignCenter>
-  //     ));
+      const result = objectIds?.map((obj) => (
+        <AlignCenter>{useSelector(getObjectAddressById(obj))}</AlignCenter>
+      ));
 
-  //     return result.length ? result : <EmptyTd />;
-  //   }
-  // };
+      return result.length ? result : <EmptyTd />;
+    }
+  };
 
-  // const commentColumn = {
-  //   accessorKey: "comment",
-  //   header: "Комментарий",
-  //   enableSorting: false,
-  //   cell: (info) => {
-  //     const comment = info.getValue();
-  //     return <AlignCenter>{comment}</AlignCenter>;
-  //   }
-  // };
+  const contactsColumn = {
+    accessorKey: "contacts",
+    header: "Контакты",
+    enableSorting: false,
+    cell: (info) => {
+      const contacts = info.getValue();
+      const contactIds = [...new Set(contacts?.map((cont) => cont.contact))];
 
-  // const opencompaniesColumn = {
-  //   accessorKey: "_id",
-  //   header: "Контакт",
-  //   enableSorting: false,
-  //   cell: (info) => {
-  //     const companiesId = info.getValue();
+      const result = contactIds?.map((cont) => (
+        <AlignCenter>{useSelector(getUserNameById(cont))}</AlignCenter>
+      ));
 
-  //     return (
-  //       <AlignCenter>
-  //         <ButtonStyled
-  //           title="Открыть"
-  //           style="companies"
-  //           size="small"
-  //           // onClick={() => handleOpencompaniesPage(companiesId)}
-  //         />
-  //       </AlignCenter>
-  //     );
-  //   }
-  // };
+      return result.length ? result : <EmptyTd />;
+    }
+  };
 
-  // const contactsColumn = {
-  //   header: "Контакты",
-  //   columns: [
-  //     {
-  //       accessorFn: (row) => row,
-  //       header: "Почта",
-  //       cell: (info) => {
-  //         const row = info.getValue();
-  //         const email = row?.emails.find(
-  //           (email) => email?.isDefault === true
-  //         )?.email;
-  //         return email ? <AlignCenter>{email}</AlignCenter> : <EmptyTd />;
-  //       }
-  //     },
-  //     {
-  //       accessorFn: (row) => row,
-  //       header: "Телефон",
-  //       cell: (info) => {
-  //         const row = info.getValue();
-  //         const phone = row.phones.find(
-  //           (phone) => phone.isDefault === true
-  //         ).phone;
-  //         return phone ? (
-  //           <AlignCenter>{FormatPhone(phone)}</AlignCenter>
-  //         ) : (
-  //           <EmptyTd />
-  //         );
-  //       }
-  //     }
-  //   ]
-  // };
+  const usersColumn = {
+    accessorFn: (row) => row,
+    header: "Менеджеры",
+    enableSorting: false,
+    cell: (info) => {
+      const row = info.getValue();
+      // const contactIds = [...new Set(contacts?.map((cont) => cont.contact))];
+
+      // const result = contactIds?.map((cont) => (
+      //   <AlignCenter>{useSelector(getUserNameById(cont))}</AlignCenter>
+      // ));
+
+      // return result.length ? result : <EmptyTd />;
+      return <AlignCenter>Менеджер</AlignCenter>;
+    }
+  };
+
+  const openCompanyColumn = {
+    accessorKey: "_id",
+    header: "Компания",
+    enableSorting: false,
+    cell: (info) => {
+      const companyId = info.getValue();
+
+      return (
+        <AlignCenter>
+          <ButtonStyled
+            title="Открыть"
+            style="COMPANY"
+            size="small"
+            onClick={() => handleUpdateCompanyPage(companyId)}
+          />
+        </AlignCenter>
+      );
+    }
+  };
 
   if (isCurator) {
     columns = [
       selectColumn,
       dateColumn,
-      companyNameColumn
-      // contactsColumn
-      // positionColumn,
-      // objectsColumn,
-      // commentColumn,
-      // opencompaniesColumn
+      companyNameColumn,
+      contactsColumn,
+      objectsColumn,
+      usersColumn,
+      openCompanyColumn
     ];
   } else {
     columns = [
       dateColumn,
-      companyNameColumn
-      // contactsColumn
-      // positionColumn,
-      // objectsColumn,
-      // commentColumn,
-      // opencompaniesColumn
+      companyNameColumn,
+      contactsColumn,
+      objectsColumn,
+      usersColumn,
+      openCompanyColumn
     ];
   }
 

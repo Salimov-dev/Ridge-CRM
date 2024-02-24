@@ -25,6 +25,7 @@ import MakePaymentPage from "@components/pages/payment/make-payment";
 import CreateContact from "@components/pages/contact/create-contact";
 import UpdateContact from "@components/pages/contact/update-contact";
 import CreateCompany from "@components/pages/company/create-company";
+import UpdateCompany from "@components/pages/company/update-company";
 
 const PageDialogs = ({
   state,
@@ -59,7 +60,8 @@ const PageDialogs = ({
     handleCloseMakePaymentPage,
     handleCloseCreateContactPage,
     handleCloseContactPage,
-    handleCloseCreateCompanyPage
+    handleCloseCreateCompanyPage,
+    handleCloseUpdateCompanyPage
   } = useDialogHandlers(setState);
 
   return (
@@ -303,17 +305,17 @@ const PageDialogs = ({
         onClose={handleCloseCreateCompanyPage}
         open={state.createCompanyPage}
       />{" "}
-      {/* Окна для Контакта */}
+      {/* Окна для Компании обновления */}
       <DialogStyled
         component={
-          <UpdateContact
-            contactId={state.contactId}
-            onClose={handleCloseContactPage}
+          <UpdateCompany
+            companyId={state.companyId}
+            onClose={handleCloseUpdateCompanyPage}
           />
         }
-        onClose={handleCloseContactPage}
+        onClose={handleCloseUpdateCompanyPage}
         maxWidth="sm"
-        open={state.openContactPage}
+        open={state.updateCompanyPage}
       />
     </>
   );

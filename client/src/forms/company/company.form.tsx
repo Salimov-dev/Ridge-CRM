@@ -12,7 +12,7 @@ const CompanyForm = ({
   setValue,
   control,
   watch,
-  setState
+  setState = () => {}
 }) => {
   return (
     <Form noValidate>

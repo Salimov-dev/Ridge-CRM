@@ -280,12 +280,18 @@ const useDialogHandlers = (setState) => {
     setState((prevState) => ({ ...prevState, createCompanyPage: false }));
   };
 
-  // обновление стейта при открытии страницы компании
-  const handleOpenCompanyPage = (companyId) => {
+  // обновление стейта при открытии  страницы правки компании
+  const handleUpdateCompanyPage = (companyId) => {
     setState((prevState) => ({
       ...prevState,
-      companyPage: true,
+      updateCompanyPage: true,
       companyId: companyId
+    }));
+  };
+  const handleCloseUpdateCompanyPage = () => {
+    setState((prevState) => ({
+      ...prevState,
+      updateCompanyPage: false
     }));
   };
 
@@ -336,7 +342,8 @@ const useDialogHandlers = (setState) => {
     handleCloseContactPage,
     handleOpenCreateCompanyPage,
     handleCloseCreateCompanyPage,
-    handleOpenCompanyPage
+    handleUpdateCompanyPage,
+    handleCloseUpdateCompanyPage
   };
 };
 

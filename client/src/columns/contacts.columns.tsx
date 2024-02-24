@@ -118,26 +118,6 @@ export const contactsColumns = (handleOpenContactPage, isCurator) => {
     }
   };
 
-  const openContactColumn = {
-    accessorKey: "_id",
-    header: "Контакт",
-    enableSorting: false,
-    cell: (info) => {
-      const contactId = info.getValue();
-
-      return (
-        <AlignCenter>
-          <ButtonStyled
-            title="Открыть"
-            style="CONTACT"
-            size="small"
-            onClick={() => handleOpenContactPage(contactId)}
-          />
-        </AlignCenter>
-      );
-    }
-  };
-
   const contactsColumn = {
     header: "Контакты",
     columns: [
@@ -193,6 +173,26 @@ export const contactsColumns = (handleOpenContactPage, isCurator) => {
         }
       }
     ]
+  };
+
+  const openContactColumn = {
+    accessorKey: "_id",
+    header: "Контакт",
+    enableSorting: false,
+    cell: (info) => {
+      const contactId = info.getValue();
+
+      return (
+        <AlignCenter>
+          <ButtonStyled
+            title="Открыть"
+            style="CONTACT"
+            size="small"
+            onClick={() => handleOpenContactPage(contactId)}
+          />
+        </AlignCenter>
+      );
+    }
   };
 
   if (isCurator) {

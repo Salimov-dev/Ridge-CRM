@@ -57,8 +57,9 @@ const Companies = React.memo(() => {
     contactPage: false,
     createContactPage: false,
     openContactPage: false,
-    contactId: null,
-    createCompanyPage: false
+    companyId: null,
+    createCompanyPage: false,
+    updateCompanyPage: false
   });
 
   const localStorageState = JSON.parse(
@@ -84,10 +85,10 @@ const Companies = React.memo(() => {
   const objects = useSelector(getObjectsList());
   const currentUserId = useSelector(getCurrentUserId());
 
-  const { handleOpenCreateCompanyPage } = useDialogHandlers(setState);
+  const { handleOpenCreateCompanyPage, handleUpdateCompanyPage } =
+    useDialogHandlers(setState);
 
   const companiesList = useSelector(getCompaniesList());
-  console.log("companiesList", companiesList);
 
   const isLoading = useSelector(getCompaniesLoadingStatus());
 
@@ -142,7 +143,7 @@ const Companies = React.memo(() => {
       />
       <BasicTable
         items={companiesList}
-        itemsColumns={companiesColumns(() => {}, isCurator)}
+        itemsColumns={companiesColumns(handleUpdateCompanyPage, isCurator)}
         isLoading={isLoading}
         rowSelection={rowSelection}
         setRowSelection={setRowSelection}

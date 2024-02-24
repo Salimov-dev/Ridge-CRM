@@ -5,22 +5,48 @@
     <link rel="icon" type="image/png" href="./src/assets/favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Грядка</title>
+    <meta property="og:title" content="Грядка" />
+    <meta
+      property="og:description"
+      content="Наша система автоматизации для отделов развития"
+    />
+    <meta property="og:url" content="http://ridge-crm.ru/" />
+    <meta property="og:type" content="website" />
     <script
       src="https://api-maps.yandex.ru/2.1/?apikey=%VITE_YANDEX_API_KEY%&lang=ru_RU"
       type="text/javascript"
     ></script>
     <!-- Yandex.Metrika counter -->
-    <script type="text/javascript" >
-      (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-      m[i].l=1*new Date();
-      for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
-      k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
-      (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
-    
+    <script type="text/javascript">
+      (function (m, e, t, r, i, k, a) {
+        m[i] =
+          m[i] ||
+          function () {
+            (m[i].a = m[i].a || []).push(arguments);
+          };
+        m[i].l = 1 * new Date();
+        for (var j = 0; j < document.scripts.length; j++) {
+          if (document.scripts[j].src === r) {
+            return;
+          }
+        }
+        (k = e.createElement(t)),
+          (a = e.getElementsByTagName(t)[0]),
+          (k.async = 1),
+          (k.src = r),
+          a.parentNode.insertBefore(k, a);
+      })(
+        window,
+        document,
+        "script",
+        "https://mc.yandex.ru/metrika/tag.js",
+        "ym"
+      );
+
       ym(95441706, "init", {
-           clickmap:true,
-           trackLinks:true,
-           accurateTrackBounce:true
+        clickmap: true,
+        trackLinks: true,
+        accurateTrackBounce: true
       });
     </script>
     <!-- /Yandex.Metrika counter -->
@@ -28,10 +54,16 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
-    
+
     <!-- Move the <noscript> block here -->
     <noscript>
-      <div><img src="https://mc.yandex.ru/watch/95441706" style="position:absolute; left:-9999px;" alt="" /></div>
+      <div>
+        <img
+          src="https://mc.yandex.ru/watch/95441706"
+          style="position: absolute; left: -9999px"
+          alt=""
+        />
+      </div>
     </noscript>
   </body>
 </html>
