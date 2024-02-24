@@ -46,10 +46,10 @@ const contactsSlice = createSlice({
       state.isLoading = false;
     },
     contactCreated: (state, action) => {
-      if (!Array.isArray(state.entities)) {
-        state.entities = [];
+      const newContact = action.payload;
+      if (!state.entities.some((contact) => contact._id === newContact._id)) {
+        state.entities.push(newContact);
       }
-      state.entities.push(action.payload);
     },
     contactUpdateSuccessed: (state, action) => {
       state.entities[

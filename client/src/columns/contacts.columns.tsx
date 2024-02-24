@@ -100,8 +100,10 @@ export const contactsColumns = (handleOpenContactPage, isCurator) => {
       const objects = info.getValue();
       const objectIds = [...new Set(objects?.map((obj) => obj.object))];
 
-      const result = objectIds?.map((obj) => (
-        <AlignCenter>{useSelector(getObjectAddressById(obj))}</AlignCenter>
+      const result = objectIds?.map((obj, index) => (
+        <AlignCenter key={obj[index]}>
+          {useSelector(getObjectAddressById(obj))}
+        </AlignCenter>
       ));
 
       return result.length ? result : <EmptyTd />;
@@ -139,9 +141,9 @@ export const contactsColumns = (handleOpenContactPage, isCurator) => {
           const companyIds = [
             ...new Set(companies?.map((comp) => comp.company))
           ];
-          const result = companyIds?.map((comp) => {
+          const result = companyIds?.map((comp, index) => {
             const companyName = useSelector(getCompanyNameById(comp));
-            return <AlignCenter>{companyName}</AlignCenter>;
+            return <AlignCenter key={comp[index]}>{companyName}</AlignCenter>;
           });
           return result.length ? result : <EmptyTd />;
         }

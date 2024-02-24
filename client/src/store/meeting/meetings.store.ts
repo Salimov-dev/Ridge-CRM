@@ -18,7 +18,7 @@ const initialState = localStorageService.getAccessToken()
       error: null,
       isLoggedIn: true,
       dataLoaded: false,
-      lastFetch: null,
+      lastFetch: null
     }
   : {
       entities: null,
@@ -26,7 +26,7 @@ const initialState = localStorageService.getAccessToken()
       error: null,
       isLoggedIn: false,
       dataLoaded: false,
-      lastFetch: null,
+      lastFetch: null
     };
 
 const meetingsSlice = createSlice({
@@ -46,10 +46,10 @@ const meetingsSlice = createSlice({
       state.isLoading = false;
     },
     meetingCreated: (state, action) => {
-      if (!Array.isArray(state.entities)) {
-        state.entities = [];
+      const newMeeting = action.payload;
+      if (!state.entities.some((meeting) => meeting._id === newMeeting._id)) {
+        state.entities.push(newMeeting);
       }
-      state.entities.push(action.payload);
     },
     meetingUpdateSuccessed: (state, action) => {
       state.entities[
@@ -60,8 +60,8 @@ const meetingsSlice = createSlice({
       state.entities = state.entities.filter(
         (meet) => meet._id !== action.payload
       );
-    },
-  },
+    }
+  }
 });
 
 const meetingCreateRequested = createAction("meetings/meetingCreateRequested");
@@ -78,7 +78,7 @@ const {
   meetingsFailed,
   meetingCreated,
   meetingUpdateSuccessed,
-  meetingRemoved,
+  meetingRemoved
 } = actions;
 
 export const loadMeetingsList = () => async (dispatch, getState) => {
@@ -99,6 +99,8 @@ export function createMeeting(payload) {
     dispatch(meetingCreateRequested());
     try {
       const { content } = await meetingsService.create(payload);
+      console.log("content", content);
+
       socket.emit("meetingCreated", content);
     } catch (error) {
       dispatch(createMeetingFailed(error.message));

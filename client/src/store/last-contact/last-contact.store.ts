@@ -18,7 +18,7 @@ const initialState = localStorageService.getAccessToken()
       error: null,
       isLoggedIn: true,
       dataLoaded: false,
-      lastFetch: null,
+      lastFetch: null
     }
   : {
       entities: null,
@@ -26,7 +26,7 @@ const initialState = localStorageService.getAccessToken()
       error: null,
       isLoggedIn: false,
       dataLoaded: false,
-      lastFetch: null,
+      lastFetch: null
     };
 
 const lastContactSlice = createSlice({
@@ -46,10 +46,14 @@ const lastContactSlice = createSlice({
       state.isLoading = false;
     },
     lastContactCreated: (state, action) => {
-      if (!Array.isArray(state.entities)) {
-        state.entities = [];
+      const newLastContact = action.payload;
+      if (
+        !state.entities.some(
+          (lastContact) => lastContact._id === newLastContact._id
+        )
+      ) {
+        state.entities.push(newLastContact);
       }
-      state.entities.push(action.payload);
     },
     lastContactUpdateSuccessed: (state, action) => {
       state.entities[
@@ -60,8 +64,8 @@ const lastContactSlice = createSlice({
       state.entities = state.entities.filter(
         (contact) => contact._id !== action.payload
       );
-    },
-  },
+    }
+  }
 });
 
 const lastContactCreateRequested = createAction(
@@ -90,7 +94,7 @@ const {
   lastContactFailed,
   lastContactCreated,
   lastContactUpdateSuccessed,
-  lastContactRemoved,
+  lastContactRemoved
 } = actions;
 
 export const loadLastContactsList = () => async (dispatch, getState) => {

@@ -17,7 +17,7 @@ const initialState = localStorageService.getAccessToken()
       error: null,
       isLoggedIn: true,
       dataLoaded: false,
-      lastFetch: null,
+      lastFetch: null
     }
   : {
       entities: null,
@@ -25,7 +25,7 @@ const initialState = localStorageService.getAccessToken()
       error: null,
       isLoggedIn: false,
       dataLoaded: false,
-      lastFetch: null,
+      lastFetch: null
     };
 
 const tasksSlice = createSlice({
@@ -45,10 +45,10 @@ const tasksSlice = createSlice({
       state.isLoading = false;
     },
     taskCreated: (state, action) => {
-      if (!Array.isArray(state.entities)) {
-        state.entities = [];
+      const newTask = action.payload;
+      if (!state.entities.some((task) => task._id === newTask._id)) {
+        state.entities.push(newTask);
       }
-      state.entities.push(action.payload);
     },
     taskUpdateSuccessed: (state, action) => {
       state.entities[
@@ -59,8 +59,8 @@ const tasksSlice = createSlice({
       state.entities = state.entities.filter(
         (meet) => meet._id !== action.payload
       );
-    },
-  },
+    }
+  }
 });
 
 const taskCreateRequested = createAction("tasks/taskCreateRequested");
@@ -77,7 +77,7 @@ const {
   tasksFailed,
   taskCreated,
   taskUpdateSuccessed,
-  taskRemoved,
+  taskRemoved
 } = actions;
 
 export const loadTasksList = () => async (dispatch, getState) => {

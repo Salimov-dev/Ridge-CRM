@@ -52,10 +52,10 @@ const usersListSlice = createSlice({
       state.error = action.payload;
     },
     userCreated: (state, action) => {
-      if (!Array.isArray(state.entities)) {
-        state.entities = [];
+      const newUser = action.payload;
+      if (!state.entities.some((user) => user._id === newUser._id)) {
+        state.entities.push(newUser);
       }
-      state.entities.push(action.payload);
     },
     userLoggedOut: (state) => {
       state.entities = null;

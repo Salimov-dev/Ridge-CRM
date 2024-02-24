@@ -36,9 +36,7 @@ export const contactSchema = yup.object().shape({
     .array()
     .of(
       yup.object().shape({
-        object: yup
-          .string()
-          .required("Идентификатор объекта обязателен для заполнения")
+        object: yup.string().required("Не может быть пустым")
       })
     )
     .required("Необходимо указать хотя бы один объект")

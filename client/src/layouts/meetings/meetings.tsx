@@ -29,7 +29,7 @@ import { getMeetingTypesList } from "@store/meeting/meeting-types.store";
 import {
   getMeetingById,
   getMeetingLoadingStatus,
-  getMeetingsList,
+  getMeetingsList
 } from "@store/meeting/meetings.store";
 
 const initialState = {
@@ -40,7 +40,7 @@ const initialState = {
   selectedTypes: [],
   startDate: null,
   endDate: null,
-  hiddenColumns: ["isDone"],
+  hiddenColumns: ["isDone"]
 };
 
 const Meetings = React.memo(() => {
@@ -51,7 +51,7 @@ const Meetings = React.memo(() => {
     createMeetingPage: false,
     updateMeetingPage: false,
     objectId: null,
-    meetingId: "",
+    meetingId: ""
   });
 
   const localStorageState = JSON.parse(
@@ -65,12 +65,12 @@ const Meetings = React.memo(() => {
       : null,
     endDate: localStorageState?.endDate
       ? dayjs(localStorageState?.endDate)
-      : null,
+      : null
   };
 
   const { register, watch, setValue, reset } = useForm({
     defaultValues: !!localStorageState ? formatedState : initialState,
-    mode: "onChange",
+    mode: "onChange"
   });
 
   const data = watch();
@@ -78,6 +78,8 @@ const Meetings = React.memo(() => {
   const isCurator = useSelector(getIsUserCurator(currentUserId));
 
   const meetings = useSelector(getMeetingsList());
+  console.log("meetings", meetings);
+
   const meetingStatuses = useSelector(getMeetingStatusesList());
   const meetingsTypes = useSelector(getMeetingTypesList());
   const selectedMeeting = useSelector(
@@ -93,13 +95,13 @@ const Meetings = React.memo(() => {
   const {
     handleOpenCreateMeetingPage,
     handleOpenUpdateMeetingPage,
-    handleOpenObjectPage,
+    handleOpenObjectPage
   } = useDialogHandlers(setState);
 
   const handleChangeSelectedMeetingBaloon = (meetingId) => {
     setState((prevState) => ({
       ...prevState,
-      selectedMeetingBaloon: meetingId,
+      selectedMeetingBaloon: meetingId
     }));
   };
 

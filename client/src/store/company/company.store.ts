@@ -46,10 +46,10 @@ const companiesSlice = createSlice({
       state.isLoading = false;
     },
     companyCreated: (state, action) => {
-      if (!Array.isArray(state.entities)) {
-        state.entities = [];
+      const newCompany = action.payload;
+      if (!state.entities.some((company) => company._id === newCompany._id)) {
+        state.entities.push(newCompany);
       }
-      state.entities.push(action.payload);
     },
     companyUpdateSuccessed: (state, action) => {
       state.entities[

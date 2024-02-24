@@ -5,6 +5,7 @@ import HeaderLayout from "@components/common/page-headers/header-layout";
 import PageDialogs from "@components/common/dialog/page-dialogs";
 import Avatar from "./components/avatar";
 import UserProfileInfo from "./components/user-profile-info";
+import { ContainerStyled } from "@components/common/container/container-styled";
 // store
 import { getCurrentUserData, getUserNameById } from "@store/user/users.store";
 import { getUserAvatarsLoadingStatus } from "@store/avatar/avatar.store";
@@ -24,7 +25,7 @@ const Profile = () => {
   const userNameSelector = useSelector(getUserNameById(user?._id));
 
   return (
-    <>
+    <ContainerStyled>
       <HeaderLayout
         title={`Мой профиль: ${
           !isUserLoading ? userNameSelector : "загрузка..."
@@ -36,7 +37,7 @@ const Profile = () => {
       <UserProfileInfo user={user} setState={setState} />
 
       <PageDialogs state={state} setState={setState} />
-    </>
+    </ContainerStyled>
   );
 };
 

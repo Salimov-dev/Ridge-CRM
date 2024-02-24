@@ -54,10 +54,10 @@ const objectsSlice = createSlice({
       state.isLoading = false;
     },
     objectCreated: (state, action) => {
-      if (!Array.isArray(state.entities)) {
-        state.entities = [];
+      const newObject = action.payload;
+      if (!state.entities.some((object) => object._id === newObject._id)) {
+        state.entities.push(newObject);
       }
-      state.entities.push(action.payload);
     },
     objectUpdateSuccessed: (state, action) => {
       state.entities[
@@ -109,7 +109,7 @@ export const loadObjectsList = () => async (dispatch, getState) => {
 };
 
 export const createObject = (payload) => async (dispatch) => {
-  dispatch(objectCreateRequested);
+  dispatch(objectCreateRequested());
   try {
     const { content } = await objectService.create(payload);
     socket.emit("objectCreated", content);
@@ -119,7 +119,7 @@ export const createObject = (payload) => async (dispatch) => {
 };
 
 export const createObjectUpdate = (payload) => async (dispatch) => {
-  dispatch(objectCreateRequested);
+  dispatch(objectCreateRequested());
   try {
     dispatch(objectCreated(payload));
   } catch (error) {

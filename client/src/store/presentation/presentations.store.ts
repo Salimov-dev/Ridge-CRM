@@ -17,7 +17,7 @@ const initialState = localStorageService.getAccessToken()
       error: null,
       isLoggedIn: true,
       dataLoaded: false,
-      lastFetch: null,
+      lastFetch: null
     }
   : {
       entities: null,
@@ -25,7 +25,7 @@ const initialState = localStorageService.getAccessToken()
       error: null,
       isLoggedIn: false,
       dataLoaded: false,
-      lastFetch: null,
+      lastFetch: null
     };
 
 const presentationsSlice = createSlice({
@@ -45,10 +45,14 @@ const presentationsSlice = createSlice({
       state.isLoading = false;
     },
     presentationCreated: (state, action) => {
-      if (!Array.isArray(state.entities)) {
-        state.entities = [];
+      const newPresentation = action.payload;
+      if (
+        !state.entities.some(
+          (presentation) => presentation._id === newPresentation._id
+        )
+      ) {
+        state.entities.push(newPresentation);
       }
-      state.entities.push(action.payload);
     },
     presentationUpdateSuccessed: (state, action) => {
       state.entities[
@@ -59,8 +63,8 @@ const presentationsSlice = createSlice({
       state.entities = state.entities.filter(
         (contact) => contact._id !== action.payload
       );
-    },
-  },
+    }
+  }
 });
 
 const presentationCreateRequested = createAction(
@@ -89,7 +93,7 @@ const {
   presentationsFailed,
   presentationCreated,
   presentationUpdateSuccessed,
-  presentationRemoved,
+  presentationRemoved
 } = actions;
 
 export const loadPresentationsList = () => async (dispatch, getState) => {
@@ -158,14 +162,15 @@ export const removePresentation = (presentationsId) => async (dispatch) => {
   }
 };
 
-export const removePresentationUpdate = (presentationsId) => async (dispatch) => {
-  dispatch(removePresentationRequested());
-  try {
-    dispatch(presentationRemoved(presentationsId));
-  } catch (error) {
-    dispatch(removePresentationFailed(error.message));
-  }
-};
+export const removePresentationUpdate =
+  (presentationsId) => async (dispatch) => {
+    dispatch(removePresentationRequested());
+    try {
+      dispatch(presentationRemoved(presentationsId));
+    } catch (error) {
+      dispatch(removePresentationFailed(error.message));
+    }
+  };
 
 export const getPresentationById = (id) => (state) => {
   if (state.presentations.entities) {
