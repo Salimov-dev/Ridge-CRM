@@ -9,6 +9,10 @@ import ButtonStyled from "@components/common/buttons/button-styled.button";
 // store
 import { getObjectAddressById } from "@store/object/objects.store";
 import { getUserNameById } from "@store/user/users.store";
+import {
+  getContactById,
+  getContactsBycontactId
+} from "@store/contact/contact.store";
 
 function IndeterminateCheckbox({
   indeterminate,
@@ -86,18 +90,6 @@ export const companiesColumns = (handleUpdateCompanyPage, isCurator) => {
     }
   };
 
-  // const positionColumn = {
-  //   accessorKey: "position",
-  //   header: "Позиция",
-  //   enableSorting: false,
-  //   cell: (info) => {
-  //     const positionId = info.getValue();
-  //     const positionName = useSelector(getPositionNameById(positionId));
-
-  //     return <AlignCenter>{positionName}</AlignCenter>;
-  //   }
-  // };
-
   const objectsColumn = {
     accessorKey: "objects",
     header: "Объект",
@@ -106,8 +98,10 @@ export const companiesColumns = (handleUpdateCompanyPage, isCurator) => {
       const objects = info.getValue();
       const objectIds = [...new Set(objects?.map((obj) => obj.object))];
 
-      const result = objectIds?.map((obj) => (
-        <AlignCenter>{useSelector(getObjectAddressById(obj))}</AlignCenter>
+      const result = objectIds?.map((obj, index) => (
+        <AlignCenter key={obj[index]}>
+          {useSelector(getObjectAddressById(obj))}
+        </AlignCenter>
       ));
 
       return result.length ? result : <EmptyTd />;
@@ -122,9 +116,11 @@ export const companiesColumns = (handleUpdateCompanyPage, isCurator) => {
       const contacts = info.getValue();
       const contactIds = [...new Set(contacts?.map((cont) => cont.contact))];
 
-      const result = contactIds?.map((cont) => (
-        <AlignCenter>{useSelector(getUserNameById(cont))}</AlignCenter>
-      ));
+      const result = contactIds?.map((cont, index) => {
+        const contact = useSelector(getContactById(cont));
+
+        return <AlignCenter key={cont[index]}>{contact?.name}</AlignCenter>;
+      });
 
       return result.length ? result : <EmptyTd />;
     }

@@ -79,7 +79,7 @@ const UpdateCompany = React.memo(({ companyId, onClose }) => {
     <>
       <HeaderWithCloseButton
         title="Изменить компанию"
-        color="white"
+        color="black"
         margin="0 0 20px 0"
         onClose={onClose}
       />
