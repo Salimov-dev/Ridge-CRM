@@ -196,6 +196,9 @@ export const getObjectById = (objectId) => (state) => {
 };
 
 export const getObjectAddressById = (objectId) => (state) => {
+  if (!objectId) {
+    return null;
+  }
   if (state?.objects?.entities) {
     const object = state?.objects?.entities?.find(
       (obj) => obj?._id === objectId

@@ -20,7 +20,7 @@ export const loadContactPositionsList = () => async (dispatch) => {
   dispatch(contactPositionsLoaded(contactPositionsArray));
 };
 
-export const getcontactPositionsList = () => (state) =>
+export const getContactPositionsList = () => (state) =>
   state.contactPositions.entities;
 
 export const getPositionNameById = (id) => (state) => {

@@ -152,12 +152,18 @@ const ButtonStyled = ({
     border = "1px dashed CadetBlue !important";
   }
 
+  if (style === "COMPANY") {
+    background = "Crimson";
+    colorHover = "white";
+    backgroundHover = "FireBrick";
+  }
+
   if (style === "ADD_NEW_COMPANY") {
     background = null;
     color = "Gold";
     colorHover = "white";
     backgroundHover = "Tomato";
-    border = "1px dashed DarkOrange !important";
+    border = "1px dashed Crimson !important";
   }
 
   if (style === "CREATE_NEW_COMPANY") {
@@ -166,6 +172,22 @@ const ButtonStyled = ({
     colorHover = "white";
     backgroundHover = "SaddleBrown";
     border = "1px dashed Peru !important";
+  }
+
+  if (style === "CREATE_NEW_Contact") {
+    background = null;
+    color = "GreenYellow";
+    colorHover = "white";
+    backgroundHover = "ForestGreen";
+    border = "1px dashed GreenYellow !important";
+  }
+
+  if (style === "ADD_NEW_Contact") {
+    background = null;
+    color = "OrangeRed";
+    colorHover = "white";
+    backgroundHover = "DarkOrange";
+    border = "1px dashed OrangeRed !important";
   }
 
   return (

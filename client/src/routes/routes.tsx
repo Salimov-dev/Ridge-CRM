@@ -23,6 +23,7 @@ import {
 } from "@store/user/users.store";
 import Contacts from "@layouts/contacts/contacts";
 import Loader from "@components/common/loader/loader";
+import Companies from "@layouts/companies/companies";
 
 export default function AppRoutes() {
   const currentUserId = useSelector(getCurrentUserId());
@@ -52,7 +53,8 @@ export default function AppRoutes() {
     { id: 8, path: "profile/*", element: <Profile /> },
     { id: 9, path: ":userId?/presentations", element: <Presentations /> },
     { id: 10, path: ":userId?/profileUpdate", element: <UpdateProfile /> },
-    { id: 11, path: "contacts/", element: <Contacts /> }
+    { id: 11, path: "contacts/", element: <Contacts /> },
+    { id: 12, path: "companies/", element: <Companies /> }
   ];
 
   return (

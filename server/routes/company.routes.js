@@ -1,5 +1,5 @@
 import express from "express";
-import Company from "../models/Company.js";
+import Company from "../models/company/Company.js";
 import auth from "../middleware/auth.middleware.js";
 import User from "../models/User.js";
 import { roleCurator, roleManager, roleObserver } from "../utils/user-roles.js";

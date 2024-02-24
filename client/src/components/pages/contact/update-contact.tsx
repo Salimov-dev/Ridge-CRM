@@ -46,7 +46,6 @@ const UpdateContact = React.memo(({ contactId, onClose }) => {
 
   const onSubmit = (data) => {
     setIsLoading(true);
-    console.log("data", data);
 
     dispatch<any>(updateContact(data))
       .then(() => {

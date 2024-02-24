@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 // components
 import SuccessCancelFormButtons from "@components/common/buttons/success-cancel-form-buttons";
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
@@ -14,16 +14,17 @@ import ContactForm from "@forms/contact/contact.form";
 import PageDialogs from "@components/common/dialog/page-dialogs";
 // schema
 import { contactSchema } from "@schemas/contact.schema";
+// store
 import { createContact } from "@store/contact/contact.store";
 
 const initialState = {
   name: "",
   position: "",
   comment: "",
-  emails: [{ email: "", isDefault: true }],
-  companies: [{ company: "" }],
+  emails: [],
+  companies: [],
   phones: [{ phone: "", isDefault: true }],
-  objects: [{ objectId: "" }]
+  objects: []
 };
 
 const CreateContact = React.memo(({ onClose }) => {
@@ -57,6 +58,7 @@ const CreateContact = React.memo(({ onClose }) => {
 
   const onSubmit = (data) => {
     setIsLoading(true);
+
     dispatch<any>(createContact(data))
       .then(() => {
         onClose();

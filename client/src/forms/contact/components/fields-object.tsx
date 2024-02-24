@@ -55,27 +55,13 @@ const FieldsObject = ({
 
   const lastObjectIndex = fieldObjects.length - 1;
 
-  const handleChangeObject = (objectIndex, currentState) => {
-    const updatedObjects = data.objects.map((object, index) => {
-      if (index === objectIndex) {
-        return { ...object, isDefault: !currentState }; // Инвертируем состояние текущего объекта
-      } else if (object.isDefault) {
-        return { ...object, isDefault: false }; // Если у другого объекта isDefault был true, устанавливаем его в false
-      }
-      return object;
-    });
-
-    setValue("objects", updatedObjects);
-  };
-
   const handleRemoveObject = (index) => {
-    handleChangeObject(index, false);
     removeObject(index);
   };
   return (
     <>
       <RowTitle
-        title="Связан с объектами"
+        title="Связь с объектами"
         background="SteelBlue"
         margin="14px 0 -6px 0"
       />

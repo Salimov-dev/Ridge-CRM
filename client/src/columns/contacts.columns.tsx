@@ -6,9 +6,14 @@ import { FormatDate } from "@utils/date/format-date";
 import { AlignCenter } from "@components/common/columns/styled";
 import EmptyTd from "@components/common/columns/empty-td";
 import { FormatPhone } from "@components/common/table/helpers/helpers";
-
-import { getPositionNameById } from "@store/contact/contact-positions.store";
 import ButtonStyled from "@components/common/buttons/button-styled.button";
+// store
+import { getPositionNameById } from "@store/contact/contact-positions.store";
+import { getObjectAddressById } from "@store/object/objects.store";
+import {
+  getCompanyById,
+  getCompanyNameById
+} from "@store/company/company.store";
 
 function IndeterminateCheckbox({
   indeterminate,
@@ -87,6 +92,22 @@ export const contactsColumns = (handleOpenContactPage, isCurator) => {
     }
   };
 
+  const objectsColumn = {
+    accessorKey: "objects",
+    header: "Объект",
+    enableSorting: false,
+    cell: (info) => {
+      const objects = info.getValue();
+      const objectIds = [...new Set(objects?.map((obj) => obj.object))];
+
+      const result = objectIds?.map((obj) => (
+        <AlignCenter>{useSelector(getObjectAddressById(obj))}</AlignCenter>
+      ));
+
+      return result.length ? result : <EmptyTd />;
+    }
+  };
+
   const commentColumn = {
     accessorKey: "comment",
     header: "Комментарий",
@@ -110,7 +131,6 @@ export const contactsColumns = (handleOpenContactPage, isCurator) => {
             title="Открыть"
             style="CONTACT"
             size="small"
-            // variant="contained"
             onClick={() => handleOpenContactPage(contactId)}
           />
         </AlignCenter>
@@ -123,7 +143,7 @@ export const contactsColumns = (handleOpenContactPage, isCurator) => {
     columns: [
       {
         accessorFn: (row) => row,
-        header: "Компания",
+        header: "Имя",
         cell: (info) => {
           const row = info.getValue();
           const name = row?.name;
@@ -132,13 +152,28 @@ export const contactsColumns = (handleOpenContactPage, isCurator) => {
         }
       },
       {
+        accessorKey: "companies",
+        header: "Компания",
+        cell: (info) => {
+          const companies = info.getValue();
+          const companyIds = [
+            ...new Set(companies?.map((comp) => comp.company))
+          ];
+          const result = companyIds?.map((comp) => {
+            const companyName = useSelector(getCompanyNameById(comp));
+            return <AlignCenter>{companyName}</AlignCenter>;
+          });
+          return result.length ? result : <EmptyTd />;
+        }
+      },
+      {
         accessorFn: (row) => row,
         header: "Почта",
         cell: (info) => {
           const row = info.getValue();
-          const email = row.emails.find(
-            (email) => email.isDefault === true
-          ).email;
+          const email = row?.emails.find(
+            (email) => email?.isDefault === true
+          )?.email;
           return email ? <AlignCenter>{email}</AlignCenter> : <EmptyTd />;
         }
       },
@@ -166,6 +201,7 @@ export const contactsColumns = (handleOpenContactPage, isCurator) => {
       dateColumn,
       contactsColumn,
       positionColumn,
+      objectsColumn,
       commentColumn,
       openContactColumn
     ];
@@ -174,6 +210,7 @@ export const contactsColumns = (handleOpenContactPage, isCurator) => {
       dateColumn,
       contactsColumn,
       positionColumn,
+      objectsColumn,
       commentColumn,
       openContactColumn
     ];

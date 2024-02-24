@@ -1,5 +1,5 @@
 import express from "express";
-import Company from "../models/Company.js";
+import Company from "../models/company/Company.js";
 import User from "../models/User.js";
 import auth from "../middleware/auth.middleware.js";
 import Presentation from "../models/Presentation.js";
@@ -26,7 +26,7 @@ router.get("/", auth, async (req, res) => {
     return res.status(200).send(presentations);
   } catch (e) {
     res.status(500).json({
-      message: "На сервере произошла ошибка, попробуйте позже",
+      message: "На сервере произошла ошибка, попробуйте позже"
     });
   }
 });
@@ -40,13 +40,13 @@ router.post("/create", auth, async (req, res) => {
 
     const newPresentation = await Presentation.create({
       ...req.body,
-      userId,
+      userId
     });
 
     res.status(201).send(newPresentation);
   } catch (e) {
     res.status(500).json({
-      message: "На сервере произошла ошибка, попробуйте позже",
+      message: "На сервере произошла ошибка, попробуйте позже"
     });
   }
 });
@@ -57,7 +57,7 @@ router.patch("/:presentationId?/edit", auth, async (req, res) => {
     if (!presentationId) {
       return res.status(400).json({
         message:
-          "Необходимо указать идентификатор презентации (presentationId).",
+          "Необходимо указать идентификатор презентации (presentationId)."
       });
     }
 
@@ -65,7 +65,7 @@ router.patch("/:presentationId?/edit", auth, async (req, res) => {
 
     if (!existingPresentation) {
       return res.status(404).json({
-        message: "Презентация не найдена.",
+        message: "Презентация не найдена."
       });
     }
 
@@ -74,7 +74,7 @@ router.patch("/:presentationId?/edit", auth, async (req, res) => {
     res.status(200).json(updatedPresentation);
   } catch (e) {
     res.status(500).json({
-      message: "На сервере произошла ошибка, попробуйте позже",
+      message: "На сервере произошла ошибка, попробуйте позже"
     });
   }
 });
@@ -85,7 +85,7 @@ router.delete("/:presentationId?", auth, async (req, res) => {
     if (!presentationId) {
       return res.status(400).json({
         message:
-          "Необходимо указать идентификатор презентации (presentationId).",
+          "Необходимо указать идентификатор презентации (presentationId)."
       });
     }
 
@@ -93,7 +93,7 @@ router.delete("/:presentationId?", auth, async (req, res) => {
 
     if (!deletedPresentation) {
       return res.status(404).json({
-        message: "Презентация не найдена.",
+        message: "Презентация не найдена."
       });
     }
 
@@ -102,7 +102,7 @@ router.delete("/:presentationId?", auth, async (req, res) => {
     res.status(204).send();
   } catch (e) {
     res.status(500).json({
-      message: "На сервере произошла ошибка, попробуйте позже",
+      message: "На сервере произошла ошибка, попробуйте позже"
     });
   }
 });

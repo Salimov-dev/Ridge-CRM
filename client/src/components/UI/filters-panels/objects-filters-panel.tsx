@@ -9,8 +9,9 @@ import SearchSelectField from "@common/inputs/search-select-field";
 import useObjectsFiltersPanel from "@hooks/object/use-objects-filters-panel";
 // data
 import { objectActivityVariants } from "@data/object/object-activity-variants";
-import { getActualUsersList } from "@utils/actual-items/get-actual-users-list";
+
 import { getActualStatusesList } from "@utils/actual-items/get-actual-statuses-list";
+import { getActualUsersList } from "@utils/actual-items/get-actual-users-list";
 
 const ObjectsFiltersPanel = React.memo(
   ({ setValue, objects, statuses, data, register, isCurator, isLoading }) => {

@@ -94,7 +94,7 @@ export const loadCompaniesList = () => async (dispatch, getState) => {
   }
 };
 
-export function createcompany(payload) {
+export function createCompany(payload) {
   return async function (dispatch) {
     dispatch(companyCreateRequested());
     try {
@@ -167,17 +167,21 @@ export const getCompanyById = (id) => (state) => {
   }
 };
 
-export const getCompaniesBycompanyId = (companyId) => (state) => {
-  if (state.companies.entities) {
-    return state.companies.entities.filter(
-      (comp) => comp.companyId === companyId
-    );
+export const getCompanyNameById = (id) => (state) => {
+  if (!id) {
+    return "";
   }
+  if (state.companies.entities) {
+    const company = state?.companies?.entities.find((comp) => comp?._id === id);
+
+    return company.name || ""; // в случае отсутствия имени вернуть пустую строку
+  }
+  return ""; // вернуть пустую строку, если нет компании в state
 };
 
 export const getCompaniesList = () => (state) => state.companies.entities;
 
-export const getCompanyLoadingStatus = () => (state) =>
+export const getCompaniesLoadingStatus = () => (state) =>
   state.companies.isLoading;
 
 export const getDatacCompaniesStatus = () => (state) =>

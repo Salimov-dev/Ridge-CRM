@@ -12,6 +12,7 @@ import AssignmentOutlinedIcon from "@mui/icons-material/AssignmentOutlined";
 import DonutSmallOutlinedIcon from "@mui/icons-material/DonutSmallOutlined";
 import DatasetOutlinedIcon from "@mui/icons-material/DatasetOutlined";
 import ContactPhoneOutlinedIcon from "@mui/icons-material/ContactPhoneOutlined";
+import HandshakeOutlinedIcon from "@mui/icons-material/HandshakeOutlined";
 
 const ItemsList = ({
   selected,
@@ -59,6 +60,13 @@ const ItemsList = ({
         title="Контакты"
         to="/contacts"
         icon={<ContactPhoneOutlinedIcon />}
+        selected={selected}
+        setSelected={setSelected}
+      />
+      <Item
+        title="Компании"
+        to="/companies"
+        icon={<HandshakeOutlinedIcon />}
         selected={selected}
         setSelected={setSelected}
       />

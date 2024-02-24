@@ -12,15 +12,17 @@ import LoaderFullWindow from "@components/common/loader/loader-full-window";
 import HeaderWithCloseButton from "@components/common/page-headers/header-with-close-button";
 import PageDialogs from "@components/common/dialog/page-dialogs";
 // forms
-import CompanyForm from "@forms/company.form";
+import CompanyForm from "@forms/company/company.form";
 // store
-import { createcompany, getCompaniesList } from "@store/company/company.store";
+import { createCompany } from "@store/company/company.store";
 // schema
 import { companySchema } from "@schemas/company.shema";
 
 const initialState = {
   name: "",
-  profile: ""
+  profile: "",
+  contacts: [],
+  objects: []
 };
 
 const CreateCompany = React.memo(({ onClose }) => {
@@ -29,7 +31,8 @@ const CreateCompany = React.memo(({ onClose }) => {
     objectPage: false,
     createPage: false,
     updatePage: false,
-    createCompanyPage: false
+    createCompanyPage: false,
+    contactId: null
   });
 
   const dispatch = useDispatch();
@@ -40,6 +43,8 @@ const CreateCompany = React.memo(({ onClose }) => {
     register,
     watch,
     handleSubmit,
+    control,
+    setValue,
     formState: { errors }
   } = useForm({
     defaultValues: initialState,
@@ -50,11 +55,11 @@ const CreateCompany = React.memo(({ onClose }) => {
   const data = watch();
 
   const onSubmit = (data) => {
-    setIsLoading(true);
+    // setIsLoading(true);
 
-    dispatch<any>(createcompany(data))
+    dispatch<any>(createCompany(data))
       .then(() => {
-        onClose();
+        // onClose();
         toast.success("Компания успешно создана!");
       })
       .catch((error) => {
@@ -70,10 +75,18 @@ const CreateCompany = React.memo(({ onClose }) => {
       <HeaderWithCloseButton
         title="Создать компанию"
         margin="0 0 20px 0"
-        background="FireBrick"
+        background="Crimson"
         onClose={onClose}
       />
-      <CompanyForm data={data} errors={errors} register={register} />
+      <CompanyForm
+        data={data}
+        watch={watch}
+        setState={setState}
+        control={control}
+        errors={errors}
+        register={register}
+        setValue={setValue}
+      />
       <SuccessCancelFormButtons
         onSuccess={handleSubmit(onSubmit)}
         onCancel={onClose}

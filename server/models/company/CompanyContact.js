@@ -1,9 +1,9 @@
 import { DataTypes } from "sequelize";
-import { sequelize } from "../utils/postgre-conection.js";
-import User from "./User.js";
+import { sequelize } from "../../utils/postgre-conection.js";
+import User from "../User.js";
 
-const Company = sequelize.define(
-  "Company",
+const CompanyContact = sequelize.define(
+  "CompanyContact",
   {
     _id: {
       type: DataTypes.UUID,
@@ -20,13 +20,11 @@ const Company = sequelize.define(
       onDelete: "CASCADE",
       onUpdate: "CASCADE"
     },
-    name: {
-      type: DataTypes.STRING
+    companyId: {
+      type: DataTypes.UUID,
+      allowNull: false
     },
-    profile: {
-      type: DataTypes.STRING
-    },
-    contacts: { type: DataTypes.ARRAY(DataTypes.STRING), defaultValue: [] },
+    contact: { type: DataTypes.STRING },
     created_at: {
       type: DataTypes.DATE,
       defaultValue: DataTypes.NOW
@@ -38,8 +36,8 @@ const Company = sequelize.define(
   },
   {
     timestamps: false,
-    tableName: "companies"
+    tableName: "companyContacts"
   }
 );
 
-export default Company;
+export default CompanyContact;

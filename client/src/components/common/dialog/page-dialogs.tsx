@@ -272,7 +272,7 @@ const PageDialogs = ({
         open={state.makePaymentPage}
         maxWidth="sm"
       />
-
+      {/* Окна для Контакта */}
       <DialogStyled
         component={
           <CreateContact
@@ -296,11 +296,24 @@ const PageDialogs = ({
         maxWidth="sm"
         open={state.openContactPage}
       />
+      {/* Окна для Компании */}
       <DialogStyled
         component={<CreateCompany onClose={handleCloseCreateCompanyPage} />}
         maxWidth="sm"
         onClose={handleCloseCreateCompanyPage}
         open={state.createCompanyPage}
+      />{" "}
+      {/* Окна для Контакта */}
+      <DialogStyled
+        component={
+          <UpdateContact
+            contactId={state.contactId}
+            onClose={handleCloseContactPage}
+          />
+        }
+        onClose={handleCloseContactPage}
+        maxWidth="sm"
+        open={state.openContactPage}
       />
     </>
   );

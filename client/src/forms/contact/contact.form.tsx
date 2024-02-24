@@ -3,8 +3,8 @@ import { FieldsContainer, Form } from "@components/common/forms/styled";
 // components
 import FieldsPhone from "./components/fields-phone";
 import FieldsEmail from "./components/fields-email";
-import FieldsCompany from "./components/field-company";
-import FieldsObject from "./components/field-object";
+import FieldsCompany from "./components/fields-company";
+import FieldsObject from "./components/fields-object";
 import MainFields from "./components/main-fields";
 
 const ContactForm = ({

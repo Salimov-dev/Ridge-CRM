@@ -9,14 +9,14 @@ import MultiSelectField from "@components/common/inputs/multi-select-field";
 import { getActualContactPositionList } from "@utils/actual-items/get-actual-contact-position-list";
 // store
 import { getContactPositionsList } from "@store/contact/contact-positions.store";
-import { getContactsList } from "@store/contact/contact.store";
+import { getCompaniesList } from "@store/company/company.store";
 
-const ContactsFiltersPanel = React.memo(
+const CompaniesFiltersPanel = React.memo(
   ({ data, register, setValue, isLoading }) => {
-    const contacts = useSelector(getContactsList());
+    const companies = useSelector(getCompaniesList());
     const contactPositions = useSelector(getContactPositionsList());
     const actualContactPositions = getActualContactPositionList(
-      contacts,
+      companies,
       contactPositions
     );
 
@@ -88,4 +88,4 @@ const ContactsFiltersPanel = React.memo(
   }
 );
 
-export default ContactsFiltersPanel;
+export default CompaniesFiltersPanel;

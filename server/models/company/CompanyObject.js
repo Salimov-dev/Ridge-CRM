@@ -2,8 +2,8 @@ import { DataTypes } from "sequelize";
 import { sequelize } from "../../utils/postgre-conection.js";
 import User from "../User.js";
 
-const ContactObject = sequelize.define(
-  "ContactObject",
+const CompanyObject = sequelize.define(
+  "CompanyObject",
   {
     _id: {
       type: DataTypes.UUID,
@@ -20,7 +20,7 @@ const ContactObject = sequelize.define(
       onDelete: "CASCADE",
       onUpdate: "CASCADE"
     },
-    contactId: {
+    companyId: {
       type: DataTypes.UUID,
       allowNull: false
     },
@@ -37,8 +37,8 @@ const ContactObject = sequelize.define(
   },
   {
     timestamps: false,
-    tableName: "contactObjects"
+    tableName: "companyObjects"
   }
 );
 
-export default ContactObject;
+export default CompanyObject;

@@ -58,8 +58,8 @@ const FieldsCompany = ({
   return (
     <>
       <RowTitle
-        title="Связан с компаниями"
-        background="OrangeRed"
+        title="Связь с компаниями"
+        background="Crimson"
         margin="14px 0 -6px 0"
       />
       {fieldCompanies?.map((field, index) => {

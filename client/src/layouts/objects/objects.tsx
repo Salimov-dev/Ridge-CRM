@@ -25,7 +25,7 @@ import { getCurrentUserId, getIsUserCurator } from "@store/user/users.store";
 import {
   getObjectById,
   getObjectsList,
-  getObjectsLoadingStatus,
+  getObjectsLoadingStatus
 } from "@store/object/objects.store";
 
 const initialState = {
@@ -46,7 +46,7 @@ const initialState = {
   selectedTradeArea: [],
   selectedObjectProperties: [],
   selectedObjectTypes: [],
-  selectedMetro: [],
+  selectedMetro: []
 };
 
 const Objects = React.memo(() => {
@@ -61,7 +61,7 @@ const Objects = React.memo(() => {
     updatePage: false,
     objectId: null,
     presentationPage: false,
-    transferObjectPage: false,
+    transferObjectPage: false
   });
 
   const localStorageState = JSON.parse(
@@ -75,12 +75,12 @@ const Objects = React.memo(() => {
       : null,
     endDate: localStorageState?.endDate
       ? dayjs(localStorageState?.endDate)
-      : null,
+      : null
   };
 
   const { register, watch, setValue, reset } = useForm({
     defaultValues: !!localStorageState ? formatedState : initialState,
-    mode: "onChange",
+    mode: "onChange"
   });
 
   const data = watch();
@@ -103,7 +103,7 @@ const Objects = React.memo(() => {
   const {
     handleOpenCreateObjectPage,
     handleOpenObjectPage,
-    handleOpenTransferObjectPage,
+    handleOpenTransferObjectPage
   } = useDialogHandlers(setState);
 
   const handleSelectedBaloon = (item) => {
@@ -187,7 +187,7 @@ const Objects = React.memo(() => {
       />
       {isCurator && (
         <ExportToExelButton
-          title="Скачать все объекты в EXEL"
+          title="Скачать объекты в EXCEL"
           data={modifiedObjectsData}
         />
       )}
