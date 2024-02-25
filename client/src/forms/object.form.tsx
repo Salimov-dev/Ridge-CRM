@@ -2,9 +2,6 @@ import { useSelector } from "react-redux";
 import { orderBy } from "lodash";
 // MUI
 import { InputAdornment } from "@mui/material";
-import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
-import PhoneIphoneOutlinedIcon from "@mui/icons-material/PhoneIphoneOutlined";
-import AlternateEmailOutlinedIcon from "@mui/icons-material/AlternateEmailOutlined";
 import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
 import WaterIcon from "@mui/icons-material/Water";
 import ElectricBoltIcon from "@mui/icons-material/ElectricBolt";
@@ -14,10 +11,12 @@ import FingerprintIcon from "@mui/icons-material/Fingerprint";
 // styled
 import { FieldsContainer, Form } from "@components/common/forms/styled";
 // components
-import Title from "../components/common/forms/title";
 import TextFieldStyled from "@components/common/inputs/text-field-styled";
 import DistrictSelect from "@components/common/inputs/district-select";
 import SelectFieldStyled from "@components/common/inputs/select-field-styled";
+import RowTitle from "@components/common/titles/row-title";
+// utils
+import { capitalizeFirstLetter } from "@utils/data/capitalize-first-letter";
 // store
 import { getMetroList } from "@store/object-params/metro.store";
 import { getRentTypesList } from "@store/object-params/rent-types.store";
@@ -26,11 +25,8 @@ import { getEstateTypesList } from "@store/object-params/estate-types.store";
 import { getObjectsStatusList } from "@store/object-params/object-status.store";
 import { getObjectPropertiesList } from "@store/object-params/object-properties";
 import { getCurrentRentersList } from "@store/object-params/current-renter.store";
-import { getWorkingPositionsList } from "@store/user-params/working-position.store";
 import { getObjectConditionsList } from "@store/object-params/object-conditions.store";
 import { getTradeAreaList } from "@store/object-params/object-trade-area";
-import { makeDigitSeparator } from "@utils/data/make-digit-separator";
-import { capitalizeFirstLetter } from "@utils/data/capitalize-first-letter";
 
 const ObjectForm = ({
   data,
@@ -40,8 +36,6 @@ const ObjectForm = ({
   watch,
   isUpdate = false
 }) => {
-  const workingPositions = useSelector(getWorkingPositionsList());
-  const sortedWorkingPositions = orderBy(workingPositions, ["name"], ["asc"]);
   const objectStatuses = useSelector(getObjectsStatusList());
   const sortedObjectStatuses = orderBy(objectStatuses, ["name"], ["asc"]);
   const currentRenters = useSelector(getCurrentRentersList());
@@ -63,7 +57,6 @@ const ObjectForm = ({
   const sortedEstateTypes = orderBy(estateTypes, ["name"], ["asc"]);
 
   const watchStatus = watch("status");
-  const watchWorkingPosition = watch("position");
   const watchDistrict = watch("district");
   const watchMetro = watch("metro");
   const watchRentTypes = watch("rentTypes");
@@ -78,8 +71,12 @@ const ObjectForm = ({
   return (
     <>
       <Form noValidate>
-        <Title title="Объект" />
-        <FieldsContainer sx={{ gap: "3px" }}>
+        <RowTitle
+          title="Объект"
+          background="ForestGreen"
+          margin="14px 0 -2px 0"
+        />
+        <FieldsContainer>
           <DistrictSelect
             register={register}
             selectedArea={selectedArea}
@@ -117,7 +114,8 @@ const ObjectForm = ({
             errors={errors?.currentRenters}
           />
         </FieldsContainer>
-        <FieldsContainer sx={{ gap: "3px" }}>
+
+        <FieldsContainer>
           <SelectFieldStyled
             label="Тип объекта"
             register={register}
@@ -158,15 +156,14 @@ const ObjectForm = ({
             value={watchObjectTradeArea ?? ""}
             errors={errors?.tradeArea}
           />
-        </FieldsContainer>
-        <FieldsContainer>
           <TextFieldStyled
             register={register}
             label="Идентификатор объекта"
             name="identifier"
             errors={errors?.identifier}
-            onInputQuantities={260}
-            value={capitalizeFirstLetter(data?.identifier) || ""}
+            isCapitalize={true}
+            inputProps={{ maxLength: 200 }}
+            value={data?.identifier}
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
@@ -176,8 +173,13 @@ const ObjectForm = ({
             }}
           />
         </FieldsContainer>
-        <Title title="Контактная информация" />
-        <FieldsContainer>
+
+        <RowTitle
+          title="Контактная информация"
+          background="RoyalBlue"
+          margin="14px 0 -2px 0"
+        />
+        {/* <FieldsContainer>
           <TextFieldStyled
             register={register}
             label="Контактное лицо"
@@ -234,9 +236,13 @@ const ObjectForm = ({
               )
             }}
           />
-        </FieldsContainer>
+        </FieldsContainer> */}
 
-        <Title title="Коммерческие условия" />
+        <RowTitle
+          title="Коммерческие условия"
+          background="OrangeRed"
+          margin="14px 0 -2px 0"
+        />
         <FieldsContainer sx={{ flexDirection: "column", gap: "8px" }}>
           <FieldsContainer>
             <TextFieldStyled
@@ -244,9 +250,9 @@ const ObjectForm = ({
               label="Площадь аренды"
               name="rentSquare"
               valueAsNumber={true}
-              onInputQuantities={8}
+              value={data?.rentSquare || null}
               errors={errors?.rentSquare}
-              value={makeDigitSeparator(data?.rentSquare) || ""}
+              inputProps={{ maxLength: 10 }}
               InputProps={{
                 endAdornment: <InputAdornment position="end">м²</InputAdornment>
               }}
@@ -255,9 +261,10 @@ const ObjectForm = ({
               register={register}
               label="Общая стоимость арендной платы"
               name="rentPrice"
-              onInputQuantities={12}
               valueAsNumber={true}
-              value={makeDigitSeparator(data?.rentPrice) || ""}
+              value={data?.rentPrice || null}
+              errors={errors?.rentPrice}
+              inputProps={{ maxLength: 11 }}
               InputProps={{
                 endAdornment: <InputAdornment position="end">₽</InputAdornment>
               }}
@@ -265,10 +272,11 @@ const ObjectForm = ({
             <TextFieldStyled
               register={register}
               label="Комиссия агента"
-              type="number"
               name="agentComission"
-              onInputQuantities={3}
-              value={data?.agentComission || ""}
+              valueAsNumber={true}
+              value={data?.agentComission || null}
+              errors={errors?.agentComission}
+              inputProps={{ maxLength: 3 }}
               InputProps={{
                 endAdornment: <InputAdornment position="end">%</InputAdornment>
               }}
@@ -276,23 +284,26 @@ const ObjectForm = ({
             <TextFieldStyled
               register={register}
               label="Индексация"
-              type="number"
               name="indexingAnnual"
-              onInputQuantities={6}
               valueAsNumber={true}
-              value={data?.indexingAnnual || ""}
+              value={data?.indexingAnnual || null}
+              errors={errors?.indexingAnnual}
+              inputProps={{ maxLength: 3 }}
               InputProps={{
                 endAdornment: <InputAdornment position="end">%</InputAdornment>
               }}
             />
           </FieldsContainer>
+
           <FieldsContainer>
             <TextFieldStyled
               register={register}
               label="Каникулы"
               name="rentalHolidays"
-              onInputQuantities={3}
-              value={data?.rentalHolidays || ""}
+              value={data?.rentalHolidays}
+              isHelperText={true}
+              subtitle="Допишите к количеству рабочих или календарных дней"
+              inputProps={{ maxLength: 20 }}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">дней</InputAdornment>
@@ -303,9 +314,10 @@ const ObjectForm = ({
               register={register}
               label="Обеспечительный платёж"
               name="securityDeposit"
-              onInputQuantities={12}
               valueAsNumber={true}
-              value={makeDigitSeparator(data?.securityDeposit) || ""}
+              value={data?.securityDeposit || null}
+              errors={errors?.securityDeposit}
+              inputProps={{ maxLength: 11 }}
               InputProps={{
                 endAdornment: <InputAdornment position="end">₽</InputAdornment>
               }}
@@ -314,9 +326,10 @@ const ObjectForm = ({
               register={register}
               label="Авансовый платёж"
               name="advanseDeposit"
-              onInputQuantities={12}
               valueAsNumber={true}
-              value={makeDigitSeparator(data?.advanseDeposit) || ""}
+              value={data?.advanseDeposit || null}
+              errors={errors?.advanseDeposit}
+              inputProps={{ maxLength: 11 }}
               InputProps={{
                 endAdornment: <InputAdornment position="end">₽</InputAdornment>
               }}
@@ -332,7 +345,11 @@ const ObjectForm = ({
           </FieldsContainer>
         </FieldsContainer>
 
-        <Title title="Параметры помещения" />
+        <RowTitle
+          title="Параметры помещения"
+          background="MediumVioletRed"
+          margin="14px 0 -2px 0"
+        />
         <FieldsContainer sx={{ flexDirection: "column" }}>
           <FieldsContainer>
             <SelectFieldStyled
@@ -347,8 +364,9 @@ const ObjectForm = ({
               register={register}
               label="Кадастровый номер"
               name="cadastralNumber"
-              onInputQuantities={24}
-              value={data?.cadastralNumber || ""}
+              value={data?.cadastralNumber}
+              errors={errors?.cadastralNumber}
+              inputProps={{ maxLength: 26 }}
               InputProps={{
                 endAdornment: <InputAdornment position="end">№</InputAdornment>
               }}
@@ -356,10 +374,11 @@ const ObjectForm = ({
             <TextFieldStyled
               register={register}
               label="Электричество"
-              type="number"
               name="electricityKw"
-              onInputQuantities={5}
-              value={capitalizeFirstLetter(data?.electricityKw) || ""}
+              valueAsNumber={true}
+              value={data?.electricityKw || null}
+              errors={errors?.electricityKw}
+              inputProps={{ maxLength: 6 }}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
@@ -368,12 +387,15 @@ const ObjectForm = ({
                 )
               }}
             />
+
             <TextFieldStyled
               register={register}
               label="Состояние полов"
               name="premisesFloor"
-              onInputQuantities={100}
-              value={capitalizeFirstLetter(data?.premisesFloor) || ""}
+              value={data?.premisesFloor}
+              errors={errors?.premisesFloor}
+              isCapitalize={true}
+              inputProps={{ maxLength: 50 }}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
@@ -389,8 +411,9 @@ const ObjectForm = ({
               label="Водоснабжение"
               type="text"
               name="waterSuply"
-              onInputQuantities={20}
-              value={capitalizeFirstLetter(data?.waterSuply) || ""}
+              isCapitalize={true}
+              inputProps={{ maxLength: 50 }}
+              value={data?.waterSuply}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
@@ -402,10 +425,11 @@ const ObjectForm = ({
             <TextFieldStyled
               register={register}
               label="Высота потолков"
-              type="number"
               name="premisesHeight"
-              onInputQuantities={6}
-              value={data?.premisesHeight || ""}
+              valueAsNumber={true}
+              value={data?.premisesHeight || null}
+              errors={errors?.premisesHeight}
+              inputProps={{ maxLength: 2 }}
               InputProps={{
                 endAdornment: <InputAdornment position="end">м</InputAdornment>
               }}
@@ -413,10 +437,11 @@ const ObjectForm = ({
             <TextFieldStyled
               register={register}
               label="Парковочных мест"
-              type="number"
               name="parkingQuantity"
-              onInputQuantities={4}
-              value={data?.parkingQuantity || ""}
+              valueAsNumber={true}
+              value={data?.parkingQuantity || null}
+              errors={errors?.parkingQuantity}
+              inputProps={{ maxLength: 5 }}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
@@ -429,7 +454,8 @@ const ObjectForm = ({
               register={register}
               label="Зона погрузки"
               name="loadingArea"
-              onInputQuantities={60}
+              isCapitalize={true}
+              inputProps={{ maxLength: 50 }}
               value={capitalizeFirstLetter(data?.loadingArea) ?? ""}
               InputProps={{
                 endAdornment: (
@@ -442,16 +468,21 @@ const ObjectForm = ({
           </FieldsContainer>
         </FieldsContainer>
 
-        <Title title="Описание объекта" />
+        <RowTitle
+          title="Описание объекта"
+          background="Chocolate"
+          margin="14px 0 -2px 0"
+        />
         <TextFieldStyled
           register={register}
           label="Опишите объект"
           name="fullDescription"
-          value={capitalizeFirstLetter(data?.fullDescription) ?? ""}
-          rows="6"
+          value={data?.fullDescription}
+          rows="3"
           multiline={true}
+          isCapitalize={true}
           errors={errors?.fullDescription}
-          onInputQuantities={20000}
+          inputProps={{ maxLength: 1550 }}
         />
         <FieldsContainer>
           <TextFieldStyled
@@ -459,7 +490,7 @@ const ObjectForm = ({
             label="Ссылка на папку в облако"
             name="cloudLink"
             value={watchCloudLink ?? ""}
-            onInputQuantities={200}
+            inputProps={{ maxLength: 200 }}
             errors={errors?.cloudLink}
           />
         </FieldsContainer>

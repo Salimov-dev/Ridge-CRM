@@ -6,7 +6,7 @@ export const Form = styled(`form`)({
   alignItems: "center",
   flexDirection: "column",
   marginBottom: "10px",
-  gap: "12px",
+  gap: "6px"
 });
 
 export const FieldsContainer = styled(Box)`

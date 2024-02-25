@@ -27,19 +27,19 @@ import { removeSpacesAndConvertToNumber } from "@utils/data/remove-spaces-and-co
 const initialState = {
   status: null,
   contact: null,
-  fullDescription: null,
+  fullDescription: "",
   city: null,
   address: null,
   district: null,
   metro: null,
-  identifier: null,
+  identifier: "",
   rentPrice: null,
   priceForMetr: null,
   securityDeposit: null,
   advanseDeposit: null,
   agentComission: null,
   rentSquare: null,
-  rentalHolidays: null,
+  rentalHolidays: "",
   indexingAnnual: null,
   rentTypes: null,
   currentRenters: null,
@@ -48,11 +48,11 @@ const initialState = {
   objectTypes: null,
   tradeArea: null,
   premisesHeight: null,
-  premisesFloor: null,
+  premisesFloor: "",
   parkingQuantity: null,
   electricityKw: null,
-  waterSuply: null,
-  cadastralNumber: null,
+  waterSuply: "",
+  cadastralNumber: "",
   loadingArea: null,
   objectProperties: null,
   cloudLink: null
@@ -101,7 +101,7 @@ const CreateObject = React.memo(({ onClose }) => {
   const findedObjectFullAddress = `${watchCity}, ${watchAddress}`;
 
   const onSubmit = (data) => {
-    setIsLoading(true);
+    // setIsLoading(true);
 
     const newData = {
       ...data,
@@ -116,17 +116,18 @@ const CreateObject = React.memo(({ onClose }) => {
       rentalHolidays: removeSpacesAndConvertToNumber(data.rentalHolidays),
       securityDeposit: removeSpacesAndConvertToNumber(data.securityDeposit)
     };
+    console.log("data", data);
 
-    dispatch<any>(createObject(newData))
-      .then(() => {
-        onClose();
-      })
-      .catch((error) => {
-        toast.error(error);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
+    // dispatch<any>(createObject(newData))
+    //   .then(() => {
+    //     onClose();
+    //   })
+    //   .catch((error) => {
+    //     toast.error(error);
+    //   })
+    //   .finally(() => {
+    //     setIsLoading(false);
+    //   });
   };
 
   // устаналиваю значения для объекта

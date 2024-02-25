@@ -12,18 +12,113 @@ const isValidPhone = (phone) => {
 };
 
 export const objectSchema = yup.object().shape({
+  // Объект
   status: yup.string().required("Статус обязателен для заполнения"),
-  name: yup.string().matches(/^([^0-9]*$)/, "Имя не должно содержать цифры"),
-  email: yup.string().email("Некорректный адрес электронной почты"),
-  // phone: yup
-  //   .string()
-  //   .test("is-valid-phone", "Некорректный номер телефона", isValidPhone)
-  //   .nullable(),
-  district: yup.string().required("Район обязателен для заполнения"),
-  cloudLink: yup.string().url("Введите корректный URL адрес").nullable(),
   currentRenters: yup.string().required("Выберите арендатора"),
-  estateTypes: yup.string().required("Выберите тип"),
   objectTypes: yup.string().required("Выберите тип"),
-  tradeArea: yup.string().required("Выберите тип"),
+  estateTypes: yup.string().required("Выберите тип"),
   objectProperties: yup.string().required("Выберите расположение объекта"),
+  tradeArea: yup.string().required("Выберите тип"),
+  district: yup.string().required("Район обязателен для заполнения"),
+  // Коммерческие условия
+  rentSquare: yup
+    .mixed()
+    .test("is-valid-number", "Площадь должна быть числом", function (value) {
+      if (value === null) {
+        return true; // Пропускаем проверку, если значение равно null
+      }
+      return !isNaN(value);
+    })
+    .nullable(),
+  rentPrice: yup
+    .mixed()
+    .test("is-valid-number", "Стоимость должна быть числом", function (value) {
+      if (value === null) {
+        return true; // Пропускаем проверку, если значение равно null
+      }
+      return !isNaN(value);
+    })
+    .nullable(),
+  agentComission: yup
+    .mixed()
+    .test(
+      "is-valid-number",
+      "Комиссия должна быть числом и не превышать 100%",
+      function (value) {
+        if (value === null) {
+          return true; // Пропускаем проверку, если значение равно null
+        }
+        return !isNaN(value) && value <= 100; // Возвращаем true, если значение является числом и не превышает 100
+      }
+    )
+    .nullable(),
+  indexingAnnual: yup
+    .mixed()
+    .test(
+      "is-valid-number",
+      "Индексация должна быть числом и не превышать 100%",
+      function (value) {
+        if (value === null) {
+          return true; // Пропускаем проверку, если значение равно null
+        }
+        return !isNaN(value) && value <= 100; // Возвращаем true, если значение является числом и не превышает 100
+      }
+    )
+    .nullable(),
+  securityDeposit: yup
+    .mixed()
+    .test("is-valid-number", "Депозит должнен быть числом", function (value) {
+      if (value === null) {
+        return true; // Пропускаем проверку, если значение равно null
+      }
+      return !isNaN(value);
+    })
+    .nullable(),
+  advanseDeposit: yup
+    .mixed()
+    .test("is-valid-number", "Депозит должнен быть числом", function (value) {
+      if (value === null) {
+        return true; // Пропускаем проверку, если значение равно null
+      }
+      return !isNaN(value);
+    })
+    .nullable(),
+  // Параметры помещения
+  electricityKw: yup
+    .mixed()
+    .test(
+      "is-valid-number",
+      "Электричество должно быть числом",
+      function (value) {
+        if (value === null) {
+          return true; // Пропускаем проверку, если значение равно null
+        }
+        return !isNaN(value);
+      }
+    )
+    .nullable(),
+  premisesHeight: yup
+    .mixed()
+    .test(
+      "is-valid-number",
+      "Высота должна быть числом и не превышать 30м",
+      function (value) {
+        if (value === null) {
+          return true; // Пропускаем проверку, если значение равно null
+        }
+        return !isNaN(value) && value <= 30; // Возвращаем true, если значение является числом и не превышает 100
+      }
+    )
+    .nullable(),
+  parkingQuantity: yup
+    .mixed()
+    .test("is-valid-number", "Количество должно быть числом", function (value) {
+      if (value === null) {
+        return true; // Пропускаем проверку, если значение равно null
+      }
+      return !isNaN(value);
+    })
+    .nullable(),
+  // Облако
+  cloudLink: yup.string().url("Введите корректный URL адрес").nullable()
 });

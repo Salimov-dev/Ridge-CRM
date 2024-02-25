@@ -6,7 +6,7 @@ import {
   Select,
   MenuItem,
   OutlinedInput,
-  ListItemText,
+  ListItemText
 } from "@mui/material";
 import { useTheme } from "@emotion/react";
 import { tokens } from "@theme/theme";
@@ -15,28 +15,28 @@ import Errors from "./components/errors";
 const StyledSelect = styled(Select)(({ theme, colors, items }) => ({
   "&.Mui-focused": {
     "& .MuiOutlinedInput-notchedOutline": {
-      borderColor: colors.green["green"],
-    },
+      borderColor: colors.green["green"]
+    }
   },
   "& .MuiSelect-select": {
     marginTop: "-5px",
-    height: "24px !important",
+    height: "24px !important"
   },
   "& .MuiOutlinedInput-notchedOutline": {
-    borderColor: items ? colors.green["green"] : colors.grey[400],
+    borderColor: items ? colors.green["green"] : colors.grey[400]
   },
   "& .MuiInputLabel-root": {
-    color: items ? "white" : colors.grey[400],
+    color: items ? "white" : colors.grey[400]
   },
-  zIndex: theme.zIndex.modal + 1,
+  zIndex: theme.zIndex.modal + 1
 }));
 
-const StyledInputLabel = styled(InputLabel)(({ theme }) => ({
+const StyledInputLabel = styled(InputLabel)(({ theme, colors }) => ({
   color: "gray !important",
   "&.Mui-focused": {
-    color: "white !important",
+    color: "white !important"
   },
-  zIndex: theme.zIndex.modal + 1,
+  zIndex: theme.zIndex.modal + 1
 }));
 
 const SelectFieldStyled = ({
@@ -49,7 +49,7 @@ const SelectFieldStyled = ({
   value,
   disabled = false,
   errors = null,
-  selectedItems = null,
+  selectedItems = null
 }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -57,7 +57,7 @@ const SelectFieldStyled = ({
 
   return (
     <FormControl sx={{ minWidth: "200px", width: "100%" }}>
-      <StyledInputLabel required={required} id={labelId}>
+      <StyledInputLabel required={required} id={labelId} colors={colors}>
         {label}
       </StyledInputLabel>
 

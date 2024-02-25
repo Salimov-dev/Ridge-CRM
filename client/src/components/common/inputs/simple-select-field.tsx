@@ -7,7 +7,7 @@ import {
   MenuItem,
   OutlinedInput,
   ListItemText,
-  FormHelperText,
+  FormHelperText
 } from "@mui/material";
 import { useTheme } from "@emotion/react";
 import { tokens } from "@theme/theme";
@@ -15,14 +15,14 @@ import { tokens } from "@theme/theme";
 const StyledSelect = styled(Select)(({ theme }) => ({
   "&.Mui-focused": {
     "& .MuiOutlinedInput-notchedOutline": {
-      borderColor: "green",
-    },
+      borderColor: "green"
+    }
   },
   "& .MuiSelect-select": {
     marginTop: "-5px",
-    height: "24px !important",
+    height: "24px !important"
   },
-  zIndex: theme.zIndex.modal + 1,
+  zIndex: theme.zIndex.modal + 1
 }));
 
 const SimpleSelectField = ({
@@ -35,7 +35,7 @@ const SimpleSelectField = ({
   value,
   disabled = false,
   errors = null,
-  selectedItems = null,
+  selectedItems = null
 }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -49,8 +49,8 @@ const SimpleSelectField = ({
         sx={{
           color: "gray !important",
           "&.Mui-focused": {
-            color: "white !important",
-          },
+            color: "white !important"
+          }
         }}
       >
         {label}
@@ -68,11 +68,11 @@ const SimpleSelectField = ({
         error={!!errors}
         sx={{
           "& .MuiOutlinedInput-notchedOutline": {
-            borderColor: selectedItems ? "green" : "gray",
+            borderColor: selectedItems ? "green" : "gray"
           },
           "& .MuiInputLabel-root": {
-            color: selectedItems ? "white" : "gray",
-          },
+            color: selectedItems ? "white" : "gray"
+          }
         }}
       >
         <MenuItem value="">

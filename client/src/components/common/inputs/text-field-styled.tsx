@@ -3,6 +3,7 @@ import { Box, TextField, styled, FormHelperText } from "@mui/material";
 import { tokens } from "@theme/theme";
 import { makeDigitSeparator } from "@utils/data/make-digit-separator";
 import Errors from "./components/errors";
+import { capitalizeFirstLetter } from "@utils/data/capitalize-first-letter";
 
 const StyledTextField = styled(TextField)(({ colors }) => ({
   minWidth: "30px",
@@ -32,7 +33,6 @@ const TextFieldStyled = ({
   rows = "1",
   multiline = false,
   errors = null,
-  onInputQuantities = 50,
   InputProps = {},
   inputProps = {},
   type = "text",
@@ -40,26 +40,18 @@ const TextFieldStyled = ({
   disabled = false,
   isHelperText = false,
   subtitle = "",
-  required = false
-  // onChange = () => {}
+  required = false,
+  isCapitalize = false
 }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-
-  const handleInput = (e) => {
-    const maxLength = onInputQuantities;
-    let inputValue = e.target.value;
-
-    if (valueAsNumber) {
-      inputValue = makeDigitSeparator(inputValue);
-    }
-
-    if (inputValue.length > maxLength) {
-      inputValue = inputValue.slice(0, maxLength);
-    }
-
-    e.target.value = inputValue;
-  };
+  const newValue = valueAsNumber
+    ? value !== undefined && value !== null
+      ? parseFloat(value.replace(/\s/g, "").replace(/,/g, ""))?.toLocaleString()
+      : ""
+    : isCapitalize && value !== undefined && value !== null
+    ? capitalizeFirstLetter(value)
+    : value;
 
   return (
     <Box sx={{ width: "100%" }}>
@@ -68,18 +60,16 @@ const TextFieldStyled = ({
         variant="outlined"
         type={type}
         id={name}
-        value={value}
+        value={newValue}
         label={label}
         rows={rows}
         InputProps={InputProps}
         inputProps={inputProps}
         multiline={multiline}
         error={!!errors}
-        // onChange={onChange}
         subtitle={errors?.message}
         disabled={disabled}
         required={required}
-        // onInput={(e) => handleInput(e)}
         onWheel={(e) => e.target.blur()}
         colors={colors}
       />

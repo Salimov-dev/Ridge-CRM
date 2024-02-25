@@ -22,10 +22,8 @@ const DistrictName = styled(Box)(({ colors, errors }) => ({
   padding: "0 16px",
   alignItems: "center",
   border: "1px solid",
-  borderColor: errors?.district?.message
-    ? colors.error["red"]
-    : colors.grey[400],
-  borderRadius: "4px",
+  borderColor: errors?.district?.message ? colors.error["red"] : "Tomato",
+  borderRadius: "4px"
 }));
 
 const DistrictSelect = ({
@@ -33,7 +31,7 @@ const DistrictSelect = ({
   errors,
   watchDistrict,
   selectedArea,
-  isUpdate = false,
+  isUpdate = false
 }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -65,10 +63,10 @@ const DistrictSelect = ({
                 sx={{
                   color: errors?.district?.message
                     ? colors.error["gold"]
-                    : colors.grey[400],
+                    : "Tomato"
                 }}
               >
-                Выберите адрес на карте
+                Выберите объект на карте
               </Typography>
             )}
           </DistrictName>
