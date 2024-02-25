@@ -25,7 +25,7 @@ const initialState = {
   objects: []
 };
 
-const CreateCompany = React.memo(({ onClose }) => {
+const CreateCompany = React.memo(({ onClose, isHideElement }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [state, setState] = useState({
     objectPage: false,
@@ -86,6 +86,7 @@ const CreateCompany = React.memo(({ onClose }) => {
         errors={errors}
         register={register}
         setValue={setValue}
+        isHideElement={isHideElement}
       />
       <SuccessCancelFormButtons
         onSuccess={handleSubmit(onSubmit)}

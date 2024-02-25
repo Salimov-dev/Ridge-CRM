@@ -1,6 +1,8 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../utils/postgre-conection.js";
 import User from "./User.js";
+import ContactCompany from "./contact/ContactCompany.js";
+import CompanyContact from "./company/CompanyContact.js";
 
 const Object = sequelize.define(
   "Object",
@@ -26,39 +28,100 @@ const Object = sequelize.define(
 
     city: { type: DataTypes.STRING },
     district: { type: DataTypes.STRING },
-    metro: { type: DataTypes.STRING, defaultValue: null },
+    metro: { type: DataTypes.STRING, defaultValue: null, allowNull: true },
     address: { type: DataTypes.STRING },
-    identifier: { type: DataTypes.STRING, defaultValue: null },
+    identifier: { type: DataTypes.STRING, defaultValue: null, allowNull: true },
     latitude: { type: DataTypes.DOUBLE },
     longitude: { type: DataTypes.DOUBLE },
     zoom: { type: DataTypes.INTEGER, defaultValue: 16 },
 
-    contact: { type: DataTypes.STRING, defaultValue: null },
-    fullDescription: { type: DataTypes.STRING, defaultValue: null },
-    rentPrice: { type: DataTypes.DECIMAL, defaultValue: null },
-    securityDeposit: { type: DataTypes.DECIMAL, defaultValue: null },
-    advanseDeposit: { type: DataTypes.DECIMAL, defaultValue: null },
-    agentComission: { type: DataTypes.INTEGER, defaultValue: null },
-    rentSquare: { type: DataTypes.INTEGER, defaultValue: null },
-    rentalHolidays: { type: DataTypes.INTEGER, defaultValue: null },
-    indexingAnnual: { type: DataTypes.INTEGER, defaultValue: null },
-    rentTypes: { type: DataTypes.STRING, defaultValue: null },
+    companies: { type: DataTypes.JSONB, defaultValue: [] },
+    contacts: { type: DataTypes.JSONB, defaultValue: [] },
+    fullDescription: {
+      type: DataTypes.STRING,
+      defaultValue: null,
+      allowNull: true
+    },
+    rentPrice: { type: DataTypes.DOUBLE, defaultValue: null, allowNull: true },
+    securityDeposit: {
+      type: DataTypes.DOUBLE,
+      defaultValue: null,
+      allowNull: true
+    },
+    advanseDeposit: {
+      type: DataTypes.DOUBLE,
+      defaultValue: null,
+      allowNull: true
+    },
+    agentComission: {
+      type: DataTypes.DOUBLE,
+      defaultValue: null,
+      allowNull: true
+    },
+    rentSquare: {
+      type: DataTypes.DOUBLE,
+      defaultValue: null,
+      allowNull: true
+    },
+    rentalHolidays: {
+      type: DataTypes.STRING,
+      defaultValue: null,
+      allowNull: true
+    },
+    indexingAnnual: {
+      type: DataTypes.DOUBLE,
+      defaultValue: null,
+      allowNull: true
+    },
+    rentTypes: { type: DataTypes.STRING, defaultValue: null, allowNull: true },
 
     currentRenters: { type: DataTypes.STRING },
-    objectConditions: { type: DataTypes.STRING, defaultValue: null },
+    objectConditions: {
+      type: DataTypes.STRING,
+      defaultValue: null,
+      allowNull: true
+    },
     estateTypes: { type: DataTypes.STRING },
     tradeArea: { type: DataTypes.STRING },
     objectTypes: { type: DataTypes.STRING },
-    loadingArea: { type: DataTypes.STRING, defaultValue: null },
-    premisesHeight: { type: DataTypes.DOUBLE, defaultValue: null },
-    parkingQuantity: { type: DataTypes.INTEGER, defaultValue: null },
-    electricityKw: { type: DataTypes.INTEGER, defaultValue: null },
-    waterSuply: { type: DataTypes.STRING, defaultValue: null },
-    premisesFloor: { type: DataTypes.STRING, defaultValue: null },
-    cadastralNumber: { type: DataTypes.STRING, defaultValue: null },
-    objectProperties: { type: DataTypes.STRING, defaultValue: null },
+    loadingArea: {
+      type: DataTypes.STRING,
+      defaultValue: null,
+      allowNull: true
+    },
+    premisesHeight: {
+      type: DataTypes.DOUBLE,
+      defaultValue: null,
+      allowNull: true
+    },
+    parkingQuantity: {
+      type: DataTypes.INTEGER,
+      defaultValue: null,
+      allowNull: true
+    },
+    electricityKw: {
+      type: DataTypes.DOUBLE,
+      defaultValue: null,
+      allowNull: true
+    },
+    waterSuply: { type: DataTypes.STRING, defaultValue: null, allowNull: true },
+    premisesFloor: {
+      type: DataTypes.STRING,
+      defaultValue: null,
+      allowNull: true
+    },
+    cadastralNumber: {
+      type: DataTypes.STRING,
+      defaultValue: null,
+      allowNull: true
+    },
+    objectProperties: {
+      type: DataTypes.STRING,
+      defaultValue: null,
+      allowNull: true
+    },
 
-    cloudLink: { type: DataTypes.STRING, defaultValue: null },
+    cloudLink: { type: DataTypes.STRING, defaultValue: null, allowNull: true },
 
     created_at: {
       type: DataTypes.DATE,
@@ -74,5 +137,17 @@ const Object = sequelize.define(
     tableName: "objects"
   }
 );
+
+Object.hasMany(CompanyContact, {
+  foreignKey: "objectId",
+  onDelete: "CASCADE",
+  onUpdate: "CASCADE"
+});
+
+Object.hasMany(ContactCompany, {
+  foreignKey: "objectId",
+  onDelete: "CASCADE",
+  onUpdate: "CASCADE"
+});
 
 export default Object;

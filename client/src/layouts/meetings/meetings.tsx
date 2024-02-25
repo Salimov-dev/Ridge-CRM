@@ -78,7 +78,6 @@ const Meetings = React.memo(() => {
   const isCurator = useSelector(getIsUserCurator(currentUserId));
 
   const meetings = useSelector(getMeetingsList());
-  console.log("meetings", meetings);
 
   const meetingStatuses = useSelector(getMeetingStatusesList());
   const meetingsTypes = useSelector(getMeetingTypesList());

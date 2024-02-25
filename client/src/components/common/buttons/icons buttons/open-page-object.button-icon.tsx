@@ -3,7 +3,6 @@ import OpenInNewOutlinedIcon from "@mui/icons-material/OpenInNewOutlined";
 
 const Components = styled(Box)`
   display: flex;
-  gap: 8px;
   cursor: pointer;
   justify-content: center;
   align-items: center;
@@ -18,7 +17,10 @@ const OpenPageObjectIconButton = ({
   containerWidth = "auto"
 }) => {
   return (
-    <Components onClick={onClick} sx={{ width: containerWidth }}>
+    <Components
+      onClick={onClick}
+      sx={{ width: containerWidth, margin: "-10px 0 0 0" }}
+    >
       <IconButton
         onClick={onClick}
         disabled={disabled}

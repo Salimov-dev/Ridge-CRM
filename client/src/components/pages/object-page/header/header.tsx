@@ -22,7 +22,7 @@ const Header = ({
   onEdit,
   onClose,
   isEdit,
-  isAuthorEntity = true,
+  isAuthorEntity = true
 }) => {
   const city = object?.city;
   const address = object?.address;
@@ -40,6 +40,7 @@ const Header = ({
         isEdit={isEdit}
         isTopButtonsPanel={true}
         isAuthorEntity={isAuthorEntity}
+        isCloud={false}
       />
     </HeaderContainer>
   ) : (

@@ -281,7 +281,7 @@ const useDialogHandlers = (setState) => {
   };
 
   // обновление стейта при открытии  страницы правки компании
-  const handleUpdateCompanyPage = (companyId) => {
+  const handleOpenUpdateCompanyPage = (companyId) => {
     setState((prevState) => ({
       ...prevState,
       updateCompanyPage: true,
@@ -342,7 +342,7 @@ const useDialogHandlers = (setState) => {
     handleCloseContactPage,
     handleOpenCreateCompanyPage,
     handleCloseCreateCompanyPage,
-    handleUpdateCompanyPage,
+    handleOpenUpdateCompanyPage,
     handleCloseUpdateCompanyPage
   };
 };

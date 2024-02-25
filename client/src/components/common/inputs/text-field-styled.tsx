@@ -1,7 +1,6 @@
 import { useTheme } from "@emotion/react";
 import { Box, TextField, styled, FormHelperText } from "@mui/material";
 import { tokens } from "@theme/theme";
-import { makeDigitSeparator } from "@utils/data/make-digit-separator";
 import Errors from "./components/errors";
 import { capitalizeFirstLetter } from "@utils/data/capitalize-first-letter";
 
@@ -45,11 +44,15 @@ const TextFieldStyled = ({
 }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+
   const newValue = valueAsNumber
-    ? value !== undefined && value !== null
+    ? value !== undefined && value !== null && typeof value === "string" // Добавляем проверку на тип строки
       ? parseFloat(value.replace(/\s/g, "").replace(/,/g, ""))?.toLocaleString()
       : ""
-    : isCapitalize && value !== undefined && value !== null
+    : isCapitalize &&
+      value !== undefined &&
+      value !== null &&
+      typeof value === "string" // Добавляем проверку на тип строки
     ? capitalizeFirstLetter(value)
     : value;
 

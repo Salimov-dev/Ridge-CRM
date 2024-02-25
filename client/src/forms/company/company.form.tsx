@@ -2,7 +2,7 @@ import { FieldsContainer, Form } from "../../components/common/forms/styled";
 import TextFieldStyled from "../../components/common/inputs/text-field-styled";
 import SelectFieldStyled from "../../components/common/inputs/select-field-styled";
 import { companyProfilesArray } from "@data/company-profiles";
-import FieldsObject from "../contact/components/fields-object";
+import FieldsObject from "../../components/common/forms/dynamic-fields/fields-object";
 import FieldsContact from "./components/fields-contact";
 
 const CompanyForm = ({
@@ -20,12 +20,12 @@ const CompanyForm = ({
         <TextFieldStyled
           register={register}
           label="Название компании"
-          type="text"
           name="name"
+          isCapitalize={true}
           required={true}
           errors={errors?.name}
           value={data?.name}
-          onInputQuantities={125}
+          inputProps={{ maxLength: 150 }}
         />
         <SelectFieldStyled
           label="Профиль деятельности"

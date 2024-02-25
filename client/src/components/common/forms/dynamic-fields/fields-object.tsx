@@ -14,10 +14,7 @@ import PageDialogs from "@components/common/dialog/page-dialogs";
 // hooks
 import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
 // store
-import {
-  getObjectsByUserId,
-  getObjectsList
-} from "@store/object/objects.store";
+import { getObjectsList } from "@store/object/objects.store";
 import { getCurrentUserId } from "@store/user/users.store";
 
 const FieldsObject = ({
@@ -111,6 +108,7 @@ const FieldsObject = ({
           icon={<AddCircleIcon />}
           onClick={handleOpenCreateObjectPage}
         />
+
         <ButtonStyled
           title="Добавить объект"
           style="ADD_NEW_OBJECT"

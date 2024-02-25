@@ -31,6 +31,7 @@ const UpdateCompany = React.memo(({ companyId, onClose }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const company = useSelector(getCompanyById(companyId));
+  console.log("company", company);
 
   const {
     register,

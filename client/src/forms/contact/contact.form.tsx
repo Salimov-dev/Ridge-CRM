@@ -1,10 +1,10 @@
 // styled
 import { FieldsContainer, Form } from "@components/common/forms/styled";
 // components
-import FieldsPhone from "./components/fields-phone";
-import FieldsEmail from "./components/fields-email";
-import FieldsCompany from "./components/fields-company";
-import FieldsObject from "./components/fields-object";
+import FieldsPhone from "@components/common/forms/dynamic-fields/fields-phone";
+import FieldsEmail from "@components/common/forms/dynamic-fields/fields-email";
+import FieldsCompany from "@components/common/forms/dynamic-fields/fields-company";
+import FieldsObject from "@components/common/forms/dynamic-fields/fields-object";
 import MainFields from "./components/main-fields";
 
 const ContactForm = ({
@@ -14,7 +14,8 @@ const ContactForm = ({
   control,
   register,
   errors,
-  setValue
+  setValue,
+  isHideElement
 }) => {
   return (
     <>
@@ -35,6 +36,7 @@ const ContactForm = ({
             control={control}
             watch={watch}
             setState={setState}
+            isHideElement={isHideElement}
           />
           <FieldsPhone
             data={data}
@@ -58,6 +60,7 @@ const ContactForm = ({
             control={control}
             watch={watch}
             setState={setState}
+            isHideElement={isHideElement}
           />
         </FieldsContainer>
       </Form>

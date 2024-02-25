@@ -23,8 +23,9 @@ const MainFields = ({ register, data, errors, watch }) => {
         name="name"
         required={true}
         errors={errors.name}
-        value={data?.name ?? ""}
-        onInputQuantities={50}
+        value={data.name}
+        isCapitalize={true}
+        inputProps={{ maxLength: 50 }}
         InputProps={{
           endAdornment: (
             <InputAdornment position="end">
@@ -48,8 +49,9 @@ const MainFields = ({ register, data, errors, watch }) => {
         label="Комментарий"
         name="comment"
         errors={errors.comment}
-        value={data?.comment ?? ""}
-        onInputQuantities={50}
+        value={data.comment}
+        isCapitalize={true}
+        inputProps={{ maxLength: 50 }}
         InputProps={{
           endAdornment: (
             <InputAdornment position="end">

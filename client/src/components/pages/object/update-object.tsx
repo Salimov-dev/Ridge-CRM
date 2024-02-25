@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 // components
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
-import ObjectForm from "@forms/object.form";
+import ObjectForm from "@forms/object/object.form";
 import HeaderWithBackButton from "@common/page-headers/header-with-back-button";
 import SuccessCancelFormButtons from "@components/common/buttons/success-cancel-form-buttons";
 // utils
@@ -15,20 +15,38 @@ import { capitalizeFirstLetter } from "@utils/data/capitalize-first-letter";
 import { objectSchema } from "@schemas/object.schema";
 // store
 import { getObjectById, updateObject } from "@store/object/objects.store";
+import { removeSpacesAndConvertToNumber } from "@utils/data/remove-spaces-and-convert-to-number";
 
 const UpdateObject = React.memo(({ onClose, objectId }) => {
   const dispatch = useDispatch();
 
   const [isLoading, setIsLoading] = useState(false);
   const object = useSelector(getObjectById(objectId));
+  console.log("object", object);
+
+  const transformedObject = {
+    ...object,
+    advanseDeposit: object.advanseDeposit?.toString(),
+    agentComission: object.agentComission?.toString(),
+    electricityKw: object.electricityKw?.toString(),
+    parkingQuantity: object.parkingQuantity?.toString(),
+    indexingAnnual: object.indexingAnnual?.toString(),
+    premisesHeight: object.premisesHeight?.toString(),
+    rentPrice: object.rentPrice?.toString(),
+    rentSquare: object.rentSquare?.toString(),
+    rentalHolidays: object?.rentalHolidays,
+    securityDeposit: object.securityDeposit?.toString()
+  };
 
   const {
     register,
     watch,
     handleSubmit,
+    control,
+    setValue,
     formState: { errors }
   } = useForm({
-    defaultValues: object,
+    defaultValues: transformedObject,
     mode: "onChange",
     resolver: yupResolver(objectSchema)
   });
@@ -40,7 +58,16 @@ const UpdateObject = React.memo(({ onClose, objectId }) => {
 
     const newData = {
       ...data,
-      address: capitalizeFirstLetter(data.address)
+      advanseDeposit: removeSpacesAndConvertToNumber(data.advanseDeposit),
+      agentComission: removeSpacesAndConvertToNumber(data.agentComission),
+      electricityKw: removeSpacesAndConvertToNumber(data.electricityKw),
+      parkingQuantity: removeSpacesAndConvertToNumber(data.parkingQuantity),
+      indexingAnnual: removeSpacesAndConvertToNumber(data.indexingAnnual),
+      premisesHeight: removeSpacesAndConvertToNumber(data.premisesHeight),
+      rentPrice: removeSpacesAndConvertToNumber(data.rentPrice),
+      rentSquare: removeSpacesAndConvertToNumber(data.rentSquare),
+      rentalHolidays: data.rentalHolidays,
+      securityDeposit: removeSpacesAndConvertToNumber(data.securityDeposit)
     };
 
     dispatch<any>(updateObject(newData))
@@ -50,8 +77,10 @@ const UpdateObject = React.memo(({ onClose, objectId }) => {
         toast.success("Объект успешно изменен!");
       })
       .catch((error) => {
-        setIsLoading(false);
         toast.error(error);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   };
 
@@ -59,7 +88,7 @@ const UpdateObject = React.memo(({ onClose, objectId }) => {
     <>
       <HeaderWithBackButton
         onClose={onClose}
-        title="Изменить объект:"
+        title="Править:"
         subtitle={`${object.city}, ${object.address}`}
       />
       <ObjectForm
@@ -67,6 +96,9 @@ const UpdateObject = React.memo(({ onClose, objectId }) => {
         register={register}
         errors={errors}
         watch={watch}
+        // setState={setState}
+        control={control}
+        setValue={setValue}
         isUpdate={true}
       />
       <SuccessCancelFormButtons

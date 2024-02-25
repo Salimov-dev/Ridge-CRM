@@ -276,13 +276,7 @@ const PageDialogs = ({
       />
       {/* Окна для Контакта */}
       <DialogStyled
-        component={
-          <CreateContact
-            onClose={handleCloseCreateContactPage}
-            contactPageId={state.contactId}
-            isObjectPage={!state?.contactId}
-          />
-        }
+        component={<CreateContact onClose={handleCloseCreateContactPage} />}
         maxWidth="sm"
         onClose={handleCloseCreateContactPage}
         open={state.createContactPage}
@@ -300,7 +294,12 @@ const PageDialogs = ({
       />
       {/* Окна для Компании */}
       <DialogStyled
-        component={<CreateCompany onClose={handleCloseCreateCompanyPage} />}
+        component={
+          <CreateCompany
+            onClose={handleCloseCreateCompanyPage}
+            isHideElement={state.isHideElement}
+          />
+        }
         maxWidth="sm"
         onClose={handleCloseCreateCompanyPage}
         open={state.createCompanyPage}

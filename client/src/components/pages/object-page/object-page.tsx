@@ -9,16 +9,18 @@ import ItemOnMap from "@common/map/item-on-map/item-on-map";
 // store
 import {
   getObjectById,
-  getObjectsLoadingStatus,
+  getObjectsLoadingStatus
 } from "@store/object/objects.store";
 import {
   getCurrentUserId,
-  getIsUserAuthorThisEntity,
+  getIsUserAuthorThisEntity
 } from "@store/user/users.store";
 
 const ObjectPage = React.memo(
   ({ objectId, onClose, onEdit, onOpenCreatePresentationPage }) => {
     const object = useSelector(getObjectById(objectId));
+    console.log("object ObjectPage", object);
+
     const currentUserId = useSelector(getCurrentUserId());
     const isLoading = useSelector(getObjectsLoadingStatus());
     const isAuthorEntity = useSelector(

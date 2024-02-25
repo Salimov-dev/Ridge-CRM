@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Box } from "@mui/material";
 import { useSelector } from "react-redux";
 import { useFieldArray } from "react-hook-form";
-import ControlPointOutlinedIcon from "@mui/icons-material/ControlPointOutlined";
 import DoNotDisturbOnOutlinedIcon from "@mui/icons-material/DoNotDisturbOnOutlined";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 // components
@@ -14,8 +13,6 @@ import PageDialogs from "@components/common/dialog/page-dialogs";
 // hooks
 import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
 // store
-import { getCompaniesByUserId } from "@store/company/Companies.store";
-import { getCurrentUserId } from "@store/user/users.store";
 import { getCompaniesList } from "@store/company/company.store";
 
 const FieldsCompany = ({
@@ -25,19 +22,18 @@ const FieldsCompany = ({
   watch,
   errors,
   setState,
-  control
+  control,
+  isHideElement = false
 }) => {
   const [openCompany, setOpenCompany] = useState({
     companyPage: false,
     companyId: false
   });
 
-  const currentUserId = useSelector(getCurrentUserId());
-  // const CompaniesList = useSelector(getCompaniesByUserId(currentUserId));
   const watchCompanyId = watch("companyId");
 
   const { handleOpenCreateCompanyPage } = useDialogHandlers(setState);
-  const { handleOpenCompanyPage } = useDialogHandlers(setOpenCompany);
+  const { handleOpenUpdateCompanyPage } = useDialogHandlers(setOpenCompany);
 
   const {
     fields: fieldCompanies,
@@ -90,7 +86,7 @@ const FieldsCompany = ({
                 title={null}
                 disabled={!data.companies?.[index].company}
                 onClick={() =>
-                  handleOpenCompanyPage(data.companies?.[index].company)
+                  handleOpenUpdateCompanyPage(data.companies?.[index].company)
                 }
               />
             </Box>
@@ -100,14 +96,16 @@ const FieldsCompany = ({
         }
       })}
       <Box sx={{ width: "100%", display: "flex", gap: "4px" }}>
-        <ButtonStyled
-          title="Создать компанию"
-          style="CREATE_NEW_COMPANY"
-          width="100%"
-          size="small"
-          icon={<AddCircleIcon />}
-          onClick={handleOpenCreateCompanyPage}
-        />
+        {!isHideElement && (
+          <ButtonStyled
+            title="Создать компанию"
+            style="CREATE_NEW_COMPANY"
+            width="100%"
+            size="small"
+            icon={<AddCircleIcon />}
+            onClick={handleOpenCreateCompanyPage}
+          />
+        )}
         <ButtonStyled
           title="Добавить компанию"
           style="ADD_NEW_COMPANY"

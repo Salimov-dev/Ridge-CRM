@@ -16,6 +16,8 @@ import useObjectInfo from "@hooks/object-info/use-object-info.hook";
 // store
 import { getObjectsList } from "@store/object/objects.store";
 import { getCurrentUserId, getIsUserCurator } from "@store/user/users.store";
+import FieldsCompany from "@components/common/forms/dynamic-fields/fields-company";
+import FieldsContact from "@forms/company/components/fields-contact";
 
 const Component = styled(Box)`
   display: flex;
@@ -37,10 +39,11 @@ const ObjectInfo = ({ object, objectId, isLoading, isAuthorEntity = true }) => {
     taskId: "",
     objectId: "",
     lastContactId: "",
-    meetingId: "",
+    meetingId: ""
   });
 
   const objects = useSelector(getObjectsList());
+
   const currentUserId = useSelector(getCurrentUserId());
   const isCurator = useSelector(getIsUserCurator(currentUserId));
   const currentUserObjects = objects?.filter(
@@ -56,7 +59,7 @@ const ObjectInfo = ({ object, objectId, isLoading, isAuthorEntity = true }) => {
     handleOpenCreateLastContactPage,
     handleOpenUpdateLastContactPage,
     handleOpenCreateMeetingPage,
-    handleOpenUpdateMeetingPage,
+    handleOpenUpdateMeetingPage
   } = useObjectInfo(setState);
 
   const isDialogPage = true;
@@ -64,6 +67,7 @@ const ObjectInfo = ({ object, objectId, isLoading, isAuthorEntity = true }) => {
   return (
     <Component>
       <ObjectsParams object={object} isLoading={isLoading} />
+
       <ObjectTasks
         object={object}
         objectId={objectId}
@@ -74,7 +78,7 @@ const ObjectInfo = ({ object, objectId, isLoading, isAuthorEntity = true }) => {
           handleOpenUpdateMyTaskPage,
           handleOpenUpdateManagerTaskPage,
           () => {},
-          isDialogPage,
+          isDialogPage
         )}
       />
       <ObjectMeetings

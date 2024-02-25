@@ -27,7 +27,7 @@ const initialState = {
   objects: []
 };
 
-const CreateContact = React.memo(({ onClose }) => {
+const CreateContact = React.memo(({ onClose, isHideElement }) => {
   const [state, setState] = useState({
     objectPage: false,
     createPage: false,
@@ -88,6 +88,7 @@ const CreateContact = React.memo(({ onClose }) => {
         errors={errors}
         register={register}
         setValue={setValue}
+        isHideElement={isHideElement}
       />
       <SuccessCancelFormButtons
         onSuccess={handleSubmit(onSubmit)}

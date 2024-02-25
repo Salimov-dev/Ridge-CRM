@@ -7,7 +7,7 @@ import { useTheme } from "@emotion/react";
 import { tokens } from "@theme/theme";
 import { yupResolver } from "@hookform/resolvers/yup";
 // components
-import ObjectForm from "@forms/object.form";
+import ObjectForm from "@forms/object/object.form";
 import FindObjectOnMap from "@common/find-object-on-map/find-object-on-map";
 import AlertObjectInDatabase from "./components/alert-object-in-database";
 import HeaderWithCloseButton from "@components/common/page-headers/header-with-close-button";
@@ -23,6 +23,7 @@ import { objectSchema } from "@schemas/object.schema";
 import { capitalizeFirstLetter } from "@utils/data/capitalize-first-letter";
 import { capitalizeAllFirstLetters } from "@utils/data/capitalize-all-first-letters";
 import { removeSpacesAndConvertToNumber } from "@utils/data/remove-spaces-and-convert-to-number";
+import PageDialogs from "@components/common/dialog/page-dialogs";
 
 const initialState = {
   status: null,
@@ -34,7 +35,6 @@ const initialState = {
   metro: null,
   identifier: "",
   rentPrice: null,
-  priceForMetr: null,
   securityDeposit: null,
   advanseDeposit: null,
   agentComission: null,
@@ -64,6 +64,9 @@ const CreateObject = React.memo(({ onClose }) => {
   const colors = tokens(theme.palette.mode);
 
   const [selectedArea, setSelectedArea] = useState("");
+  const [state, setState] = useState({
+    createCompanyPage: false
+  });
   // const [isCityHasMetro, setIsCityHasMetro] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isObjectAlreadyInDatabase, setObjectAlreadyInDatabase] =
@@ -73,6 +76,7 @@ const CreateObject = React.memo(({ onClose }) => {
     register,
     watch,
     handleSubmit,
+    control,
     setValue,
     formState: { errors }
   } = useForm({
@@ -101,7 +105,7 @@ const CreateObject = React.memo(({ onClose }) => {
   const findedObjectFullAddress = `${watchCity}, ${watchAddress}`;
 
   const onSubmit = (data) => {
-    // setIsLoading(true);
+    setIsLoading(true);
 
     const newData = {
       ...data,
@@ -113,21 +117,20 @@ const CreateObject = React.memo(({ onClose }) => {
       premisesHeight: removeSpacesAndConvertToNumber(data.premisesHeight),
       rentPrice: removeSpacesAndConvertToNumber(data.rentPrice),
       rentSquare: removeSpacesAndConvertToNumber(data.rentSquare),
-      rentalHolidays: removeSpacesAndConvertToNumber(data.rentalHolidays),
+      rentalHolidays: data.rentalHolidays,
       securityDeposit: removeSpacesAndConvertToNumber(data.securityDeposit)
     };
-    console.log("data", data);
 
-    // dispatch<any>(createObject(newData))
-    //   .then(() => {
-    //     onClose();
-    //   })
-    //   .catch((error) => {
-    //     toast.error(error);
-    //   })
-    //   .finally(() => {
-    //     setIsLoading(false);
-    //   });
+    dispatch<any>(createObject(newData))
+      .then(() => {
+        onClose();
+      })
+      .catch((error) => {
+        toast.error(error);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
 
   // устаналиваю значения для объекта
@@ -185,12 +188,16 @@ const CreateObject = React.memo(({ onClose }) => {
         errors={errors}
         watch={watch}
         selectedArea={selectedArea}
+        setState={setState}
+        control={control}
+        setValue={setValue}
       />
       <SuccessCancelFormButtons
         onSuccess={handleSubmit(onSubmit)}
         onCancel={onClose}
       />
       <LoaderFullWindow isLoading={isLoading} />
+      <PageDialogs state={state} setState={setState} />
     </>
   );
 });

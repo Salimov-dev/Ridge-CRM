@@ -184,10 +184,10 @@ const ButtonStyled = ({
 
   if (style === "ADD_NEW_Contact") {
     background = null;
-    color = "OrangeRed";
+    color = "Orange";
     colorHover = "white";
     backgroundHover = "DarkOrange";
-    border = "1px dashed OrangeRed !important";
+    border = "1px dashed Orange !important";
   }
 
   return (

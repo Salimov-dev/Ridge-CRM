@@ -37,7 +37,7 @@ function IndeterminateCheckbox({
   );
 }
 
-export const companiesColumns = (handleUpdateCompanyPage, isCurator) => {
+export const companiesColumns = (handleOpenUpdateCompanyPage, isCurator) => {
   let columns = [];
 
   const selectColumn = {
@@ -99,7 +99,7 @@ export const companiesColumns = (handleUpdateCompanyPage, isCurator) => {
       const objectIds = [...new Set(objects?.map((obj) => obj.object))];
 
       const result = objectIds?.map((obj, index) => (
-        <AlignCenter key={obj[index]}>
+        <AlignCenter key={`${obj}-${index}`}>
           {useSelector(getObjectAddressById(obj))}
         </AlignCenter>
       ));
@@ -156,7 +156,7 @@ export const companiesColumns = (handleUpdateCompanyPage, isCurator) => {
             title="Открыть"
             style="COMPANY"
             size="small"
-            onClick={() => handleUpdateCompanyPage(companyId)}
+            onClick={() => handleOpenUpdateCompanyPage(companyId)}
           />
         </AlignCenter>
       );

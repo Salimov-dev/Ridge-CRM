@@ -85,7 +85,7 @@ const Companies = React.memo(() => {
   const objects = useSelector(getObjectsList());
   const currentUserId = useSelector(getCurrentUserId());
 
-  const { handleOpenCreateCompanyPage, handleUpdateCompanyPage } =
+  const { handleOpenCreateCompanyPage, handleOpenUpdateCompanyPage } =
     useDialogHandlers(setState);
 
   const companiesList = useSelector(getCompaniesList());
@@ -132,7 +132,7 @@ const Companies = React.memo(() => {
         onOpenCreateCompanyPage={handleOpenCreateCompanyPage}
         isInputEmpty={isInputEmpty}
       />
-      <CompaniesFiltersPanel
+      {/* <CompaniesFiltersPanel
         data={data}
         // Companies={CompaniesList}
         // statuses={CompaniesStatuses}
@@ -140,10 +140,10 @@ const Companies = React.memo(() => {
         setValue={setValue}
         // isCurator={isCurator}
         // isLoading={isLoading}
-      />
+      /> */}
       <BasicTable
         items={companiesList}
-        itemsColumns={companiesColumns(handleUpdateCompanyPage, isCurator)}
+        itemsColumns={companiesColumns(handleOpenUpdateCompanyPage, isCurator)}
         isLoading={isLoading}
         rowSelection={rowSelection}
         setRowSelection={setRowSelection}

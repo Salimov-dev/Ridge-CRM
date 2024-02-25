@@ -27,6 +27,8 @@ import { getObjectPropertiesList } from "@store/object-params/object-properties"
 import { getCurrentRentersList } from "@store/object-params/current-renter.store";
 import { getObjectConditionsList } from "@store/object-params/object-conditions.store";
 import { getTradeAreaList } from "@store/object-params/object-trade-area";
+import FieldsCompany from "@components/common/forms/dynamic-fields/fields-company";
+import FieldsContact from "@forms/company/components/fields-contact";
 
 const ObjectForm = ({
   data,
@@ -34,7 +36,10 @@ const ObjectForm = ({
   errors,
   selectedArea = "",
   watch,
-  isUpdate = false
+  isUpdate = false,
+  setState,
+  control,
+  setValue
 }) => {
   const objectStatuses = useSelector(getObjectsStatusList());
   const sortedObjectStatuses = orderBy(objectStatuses, ["name"], ["asc"]);
@@ -175,70 +180,6 @@ const ObjectForm = ({
         </FieldsContainer>
 
         <RowTitle
-          title="Контактная информация"
-          background="RoyalBlue"
-          margin="14px 0 -2px 0"
-        />
-        {/* <FieldsContainer>
-          <TextFieldStyled
-            register={register}
-            label="Контактное лицо"
-            name="name"
-            errors={name}
-            value={data?.name ?? ""}
-            onInputQuantities={50}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <AccountCircleOutlinedIcon />
-                </InputAdornment>
-              )
-            }}
-          />
-          <SelectFieldStyled
-            label="Позиция"
-            register={register}
-            name="position"
-            labelId="position"
-            itemsList={sortedWorkingPositions}
-            value={watchWorkingPosition ?? ""}
-          />
-          <TextFieldStyled
-            register={register}
-            label="Телефон"
-            type="number"
-            name="phone"
-            value={data?.phone || ""}
-            errors={errors?.phone}
-            onInputQuantities={12}
-            isHelperText={true}
-            subtitle="Вводите в формате 79045554433, 78129998877, 9995544"
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <PhoneIphoneOutlinedIcon />
-                </InputAdornment>
-              )
-            }}
-          />
-          <TextFieldStyled
-            register={register}
-            label="Email"
-            name="email"
-            errors={errors?.email}
-            onInputQuantities={100}
-            value={data?.email || ""}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <AlternateEmailOutlinedIcon />
-                </InputAdornment>
-              )
-            }}
-          />
-        </FieldsContainer> */}
-
-        <RowTitle
           title="Коммерческие условия"
           background="OrangeRed"
           margin="14px 0 -2px 0"
@@ -250,7 +191,7 @@ const ObjectForm = ({
               label="Площадь аренды"
               name="rentSquare"
               valueAsNumber={true}
-              value={data?.rentSquare || null}
+              value={data?.rentSquare ?? null}
               errors={errors?.rentSquare}
               inputProps={{ maxLength: 10 }}
               InputProps={{
@@ -302,7 +243,8 @@ const ObjectForm = ({
               name="rentalHolidays"
               value={data?.rentalHolidays}
               isHelperText={true}
-              subtitle="Допишите к количеству рабочих или календарных дней"
+              isCapitalize={true}
+              subtitle="Допишите рабочих или календарных дней"
               inputProps={{ maxLength: 20 }}
               InputProps={{
                 endAdornment: (
@@ -468,11 +410,6 @@ const ObjectForm = ({
           </FieldsContainer>
         </FieldsContainer>
 
-        <RowTitle
-          title="Описание объекта"
-          background="Chocolate"
-          margin="14px 0 -2px 0"
-        />
         <TextFieldStyled
           register={register}
           label="Опишите объект"
@@ -494,6 +431,25 @@ const ObjectForm = ({
             errors={errors?.cloudLink}
           />
         </FieldsContainer>
+
+        <FieldsCompany
+          data={data}
+          register={register}
+          errors={errors}
+          setValue={setValue}
+          control={control}
+          watch={watch}
+          setState={setState}
+        />
+        <FieldsContact
+          data={data}
+          register={register}
+          errors={errors}
+          setValue={setValue}
+          control={control}
+          watch={watch}
+          setState={setState}
+        />
       </Form>
     </>
   );

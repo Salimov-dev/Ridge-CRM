@@ -1,3 +1,4 @@
+import { removeSpacesAndConvertToNumber } from "@utils/data/remove-spaces-and-convert-to-number";
 import * as yup from "yup";
 
 const isValidPhone = (phone) => {
@@ -27,7 +28,7 @@ export const objectSchema = yup.object().shape({
       if (value === null) {
         return true; // Пропускаем проверку, если значение равно null
       }
-      return !isNaN(value);
+      return !isNaN(removeSpacesAndConvertToNumber(value));
     })
     .nullable(),
   rentPrice: yup
@@ -36,7 +37,7 @@ export const objectSchema = yup.object().shape({
       if (value === null) {
         return true; // Пропускаем проверку, если значение равно null
       }
-      return !isNaN(value);
+      return !isNaN(removeSpacesAndConvertToNumber(value));
     })
     .nullable(),
   agentComission: yup
@@ -48,7 +49,10 @@ export const objectSchema = yup.object().shape({
         if (value === null) {
           return true; // Пропускаем проверку, если значение равно null
         }
-        return !isNaN(value) && value <= 100; // Возвращаем true, если значение является числом и не превышает 100
+        return (
+          !isNaN(removeSpacesAndConvertToNumber(value)) &&
+          removeSpacesAndConvertToNumber(value) <= 100
+        ); // Возвращаем true, если значение является числом и не превышает 100
       }
     )
     .nullable(),
@@ -61,7 +65,10 @@ export const objectSchema = yup.object().shape({
         if (value === null) {
           return true; // Пропускаем проверку, если значение равно null
         }
-        return !isNaN(value) && value <= 100; // Возвращаем true, если значение является числом и не превышает 100
+        return (
+          !isNaN(removeSpacesAndConvertToNumber(value)) &&
+          removeSpacesAndConvertToNumber(value) <= 100
+        ); // Возвращаем true, если значение является числом и не превышает 100
       }
     )
     .nullable(),
@@ -71,7 +78,7 @@ export const objectSchema = yup.object().shape({
       if (value === null) {
         return true; // Пропускаем проверку, если значение равно null
       }
-      return !isNaN(value);
+      return !isNaN(removeSpacesAndConvertToNumber(value));
     })
     .nullable(),
   advanseDeposit: yup
@@ -80,7 +87,7 @@ export const objectSchema = yup.object().shape({
       if (value === null) {
         return true; // Пропускаем проверку, если значение равно null
       }
-      return !isNaN(value);
+      return !isNaN(removeSpacesAndConvertToNumber(value));
     })
     .nullable(),
   // Параметры помещения
@@ -93,7 +100,7 @@ export const objectSchema = yup.object().shape({
         if (value === null) {
           return true; // Пропускаем проверку, если значение равно null
         }
-        return !isNaN(value);
+        return !isNaN(removeSpacesAndConvertToNumber(value));
       }
     )
     .nullable(),
@@ -106,7 +113,10 @@ export const objectSchema = yup.object().shape({
         if (value === null) {
           return true; // Пропускаем проверку, если значение равно null
         }
-        return !isNaN(value) && value <= 30; // Возвращаем true, если значение является числом и не превышает 100
+        return (
+          !isNaN(removeSpacesAndConvertToNumber(value)) &&
+          removeSpacesAndConvertToNumber(value) <= 30
+        ); // Возвращаем true, если значение является числом и не превышает 100
       }
     )
     .nullable(),
@@ -116,7 +126,7 @@ export const objectSchema = yup.object().shape({
       if (value === null) {
         return true; // Пропускаем проверку, если значение равно null
       }
-      return !isNaN(value);
+      return !isNaN(removeSpacesAndConvertToNumber(value));
     })
     .nullable(),
   // Облако

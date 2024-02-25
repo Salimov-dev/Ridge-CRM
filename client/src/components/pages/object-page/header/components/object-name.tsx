@@ -4,6 +4,7 @@ const Title = styled(Typography)`
   background: yellow;
   color: black;
   padding: 0 4px;
+  border-radius: 4px;
 `;
 
 const ObjectName = ({ city, address }) => {
