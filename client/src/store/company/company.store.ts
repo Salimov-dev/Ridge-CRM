@@ -151,7 +151,6 @@ export const updateCompanyUpdate = (payload) => async (dispatch) => {
 export const updateCompanies = (payload) => async (dispatch) => {
   dispatch(companyUpdateRequested());
   try {
-    console.log("payload updateCompanies", payload);
     dispatch(companiesUpdateSuccessed(payload));
   } catch (error) {
     dispatch(companyUpdateFailed(error.message));

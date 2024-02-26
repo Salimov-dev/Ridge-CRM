@@ -178,7 +178,10 @@ export const updateMultipleObjectsUpdate = () => async (dispatch) => {
 export const removeObject = (objectId) => async (dispatch) => {
   dispatch(objectRemoveRequested());
   try {
-    await objectService.remove(objectId);
+    const { content } = await objectService.remove(objectId);
+    const updatedCompanies = content?.updatedCompanies;
+
+    dispatch(updateCompanies(updatedCompanies));
     socket.emit("objectDeleted", objectId);
   } catch (error) {
     dispatch(objectRemoveFailed(error.message));

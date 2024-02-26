@@ -10,16 +10,11 @@ import ObjectForm from "@forms/object/object.form";
 import HeaderWithBackButton from "@common/page-headers/header-with-back-button";
 import SuccessCancelFormButtons from "@components/common/buttons/success-cancel-form-buttons";
 // utils
-import { capitalizeFirstLetter } from "@utils/data/capitalize-first-letter";
+import { removeSpacesAndConvertToNumber } from "@utils/data/remove-spaces-and-convert-to-number";
 // schemas
 import { objectSchema } from "@schemas/object.schema";
 // store
 import { getObjectById, updateObject } from "@store/object/objects.store";
-import { removeSpacesAndConvertToNumber } from "@utils/data/remove-spaces-and-convert-to-number";
-import {
-  getCompaniesList,
-  updateCompanies
-} from "@store/company/company.store";
 
 const UpdateObject = React.memo(({ onClose, objectId }) => {
   const dispatch = useDispatch();
@@ -55,9 +50,11 @@ const UpdateObject = React.memo(({ onClose, objectId }) => {
   });
 
   const data = watch();
-  const companies = data.companies.map((comp) => comp.company);
-  // console.log("companies", companies);
-  const companiesList = useSelector(getCompaniesList());
+  const newCompanies = watch("companies");
+  const objectCompanies = object?.companies;
+  const differentCompanies = objectCompanies.filter(
+    (obj) => !newCompanies.some((item) => item.company === obj.company)
+  );
 
   const onSubmit = (data) => {
     setIsLoading(true);
