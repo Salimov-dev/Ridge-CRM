@@ -17,7 +17,7 @@ const objectService = {
   },
   update: async (payload) => {
     const { data } = await httpService.patch(
-      objectEndpoint + payload._id + "/edit",
+      objectEndpoint + payload.newData._id + "/edit",
       payload
     );
     return data;
@@ -25,7 +25,7 @@ const objectService = {
   updateMultiple: async (objectIds, userId) => {
     const data = {
       objectIds,
-      userId,
+      userId
     };
 
     const { data: updatedObjects } = await httpService.patch(
@@ -34,6 +34,6 @@ const objectService = {
     );
 
     return updatedObjects;
-  },
+  }
 };
 export default objectService;

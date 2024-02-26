@@ -5,6 +5,7 @@ import User from "../models/User.js";
 import auth from "../middleware/auth.middleware.js";
 import { roleCurator, roleManager, roleObserver } from "../utils/user-roles.js";
 import Company from "../models/company/Company.js";
+import { sequelize } from "../utils/postgre-conection.js";
 
 const router = express.Router({ mergeParams: true });
 
@@ -241,7 +242,21 @@ router.get("/:objectId?", auth, async (req, res) => {
 router.patch("/:objectId?/edit", auth, async (req, res) => {
   try {
     const { objectId } = req.params;
-    const { companies } = req.body;
+    const { newData } = req.body;
+
+    const companies = newData.companies;
+
+    const differentCompanies = req.body.differentCompanies;
+    const differentCompanyIds = differentCompanies.map(
+      (company) => company.company
+    );
+
+    // Находим все компании, которые есть в массиве differentCompanyIds
+    const companiesInDifferentCompanies = await Company.findAll({
+      where: {
+        _id: differentCompanyIds
+      }
+    });
 
     if (!objectId) {
       return res.status(400).json({
@@ -294,15 +309,22 @@ router.patch("/:objectId?/edit", auth, async (req, res) => {
     // Выполняем все обновления компаний одновременно
     await Promise.all(companyUpdates);
 
-    // Получаем обновленный список компаний
-    const updatedCompanies = await Company.findAll({
-      where: {
-        _id: companies.map((comp) => comp.company)
-      }
+    // Обход каждой компании в массиве companiesInDifferentCompanies
+    const updatedCompanies = companiesInDifferentCompanies.map((company) => {
+      // Фильтрация массива объектов каждой компании
+      const updatedObjects = company.objects.filter(
+        (obj) => obj.object !== objectId
+      );
+
+      // Возвращаем обновленную компанию с новым списком объектов
+      return company.update({ objects: updatedObjects });
     });
 
+    // Ожидаем выполнения всех обновлений компаний
+    await Promise.all(updatedCompanies);
+
     // Обновляем объект и возвращаем результат
-    const updatedObjectArray = await existingObject.update(req.body);
+    await existingObject.update(newData);
 
     res.status(200).json(updatedCompanies);
   } catch (e) {
@@ -422,34 +444,5 @@ router.delete("/:objectId?", auth, async (req, res) => {
     });
   }
 });
-
-// router.delete("/:objectId?", auth, async (req, res) => {
-//   try {
-//     const { objectId } = req.params;
-
-//     if (!objectId) {
-//       return res.status(400).json({
-//         message: "Необходимо указать идентификатор объекта (objectId)."
-//       });
-//     }
-
-//     const deletedObject = await Object.findByPk(objectId);
-
-//     if (!deletedObject) {
-//       return res.status(404).json({
-//         message: "Объект не найден."
-//       });
-//     }
-
-//     await deletedObject.destroy();
-
-//     res.status(204).send();
-//   } catch (e) {
-//     console.error(e);
-//     res.status(500).json({
-//       message: "На сервере произошла ошибка, попробуйте позже"
-//     });
-//   }
-// });
 
 export default router;

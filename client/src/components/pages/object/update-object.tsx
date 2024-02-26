@@ -72,8 +72,9 @@ const UpdateObject = React.memo(({ onClose, objectId }) => {
       rentalHolidays: data.rentalHolidays,
       securityDeposit: removeSpacesAndConvertToNumber(data.securityDeposit)
     };
+    console.log("differentCompanies", differentCompanies);
 
-    dispatch<any>(updateObject(newData))
+    dispatch<any>(updateObject({ newData, differentCompanies }))
       .then(() => {
         onClose();
         toast.success("Объект успешно изменен!");

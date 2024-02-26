@@ -136,7 +136,7 @@ export const updateObject = (payload) => async (dispatch) => {
   try {
     const { content: updatedCompanies } = await objectService.update(payload);
     dispatch(updateCompanies(updatedCompanies));
-    socket.emit("objectUpdated", payload);
+    socket.emit("objectUpdated", payload.newData);
   } catch (error) {
     dispatch(objectUpdateFailed(error.message));
   }
