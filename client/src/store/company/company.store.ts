@@ -53,8 +53,19 @@ const companiesSlice = createSlice({
     },
     companyUpdateSuccessed: (state, action) => {
       state.entities[
-        state.entities.findIndex((m) => m._id === action.payload._id)
+        state.entities.findIndex((comp) => comp._id === action.payload._id)
       ] = action.payload;
+    },
+    companiesUpdateSuccessed: (state, action) => {
+      state.entities = state.entities.map((comp) => {
+        const updatedCompany = action.payload.find(
+          (updatedComp) => updatedComp._id === comp._id
+        );
+        if (updatedCompany) {
+          return updatedCompany;
+        }
+        return comp;
+      });
     },
     companyRemoved: (state, action) => {
       state.entities = state.entities.filter(
@@ -78,6 +89,7 @@ const {
   companiesFailed,
   companyCreated,
   companyUpdateSuccessed,
+  companiesUpdateSuccessed,
   companyRemoved
 } = actions;
 
@@ -135,6 +147,27 @@ export const updateCompanyUpdate = (payload) => async (dispatch) => {
     dispatch(companyUpdateFailed(error.message));
   }
 };
+
+export const updateCompanies = (payload) => async (dispatch) => {
+  dispatch(companyUpdateRequested());
+  try {
+    console.log("payload updateCompanies", payload);
+    dispatch(companiesUpdateSuccessed(payload));
+  } catch (error) {
+    dispatch(companyUpdateFailed(error.message));
+  }
+};
+
+// export const updateCompaniesUpdate = (payload) => async (dispatch) => {
+//   dispatch(companyUpdateRequested());
+//   try {
+//     console.log("payload updateCompaniesUpdate", payload);
+
+//     dispatch(companiesUpdateSuccessed(payload));
+//   } catch (error) {
+//     dispatch(companyUpdateFailed(error.message));
+//   }
+// };
 
 export const removeCompany = (companyId) => async (dispatch) => {
   dispatch(removeCompanyRequested());

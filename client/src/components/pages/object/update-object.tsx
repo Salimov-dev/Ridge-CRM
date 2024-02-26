@@ -16,13 +16,16 @@ import { objectSchema } from "@schemas/object.schema";
 // store
 import { getObjectById, updateObject } from "@store/object/objects.store";
 import { removeSpacesAndConvertToNumber } from "@utils/data/remove-spaces-and-convert-to-number";
+import {
+  getCompaniesList,
+  updateCompanies
+} from "@store/company/company.store";
 
 const UpdateObject = React.memo(({ onClose, objectId }) => {
   const dispatch = useDispatch();
 
   const [isLoading, setIsLoading] = useState(false);
   const object = useSelector(getObjectById(objectId));
-  console.log("object", object);
 
   const transformedObject = {
     ...object,
@@ -52,6 +55,9 @@ const UpdateObject = React.memo(({ onClose, objectId }) => {
   });
 
   const data = watch();
+  const companies = data.companies.map((comp) => comp.company);
+  // console.log("companies", companies);
+  const companiesList = useSelector(getCompaniesList());
 
   const onSubmit = (data) => {
     setIsLoading(true);
@@ -72,7 +78,6 @@ const UpdateObject = React.memo(({ onClose, objectId }) => {
 
     dispatch<any>(updateObject(newData))
       .then(() => {
-        setIsLoading(false);
         onClose();
         toast.success("Объект успешно изменен!");
       })

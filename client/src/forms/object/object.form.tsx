@@ -289,7 +289,7 @@ const ObjectForm = ({
 
         <RowTitle
           title="Параметры помещения"
-          background="MediumVioletRed"
+          background="MediumBlue"
           margin="14px 0 -2px 0"
         />
         <FieldsContainer sx={{ flexDirection: "column" }}>

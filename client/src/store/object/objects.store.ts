@@ -1,3 +1,4 @@
+import { updateCompanies } from "./../company/company.store";
 import dayjs from "dayjs";
 import { io } from "socket.io-client";
 import { createAction, createSlice } from "@reduxjs/toolkit";
@@ -64,6 +65,7 @@ const objectsSlice = createSlice({
         state.entities.findIndex((obj) => obj._id === action.payload._id)
       ] = action.payload;
     },
+
     objectRemoved: (state, action) => {
       state.entities = state.entities.filter(
         (obj) => obj._id !== action.payload
@@ -112,7 +114,9 @@ export const createObject = (payload) => async (dispatch) => {
   dispatch(objectCreateRequested());
   try {
     const { content } = await objectService.create(payload);
-    socket.emit("objectCreated", content);
+
+    dispatch(updateCompanies(content.updatedCompanies));
+    socket.emit("objectCreated", content.newObject);
   } catch (error) {
     dispatch(createObjectFailed(error.message));
   }
@@ -130,7 +134,8 @@ export const createObjectUpdate = (payload) => async (dispatch) => {
 export const updateObject = (payload) => async (dispatch) => {
   dispatch(objectUpdateRequested());
   try {
-    await objectService.update(payload);
+    const { content: updatedCompanies } = await objectService.update(payload);
+    dispatch(updateCompanies(updatedCompanies));
     socket.emit("objectUpdated", payload);
   } catch (error) {
     dispatch(objectUpdateFailed(error.message));

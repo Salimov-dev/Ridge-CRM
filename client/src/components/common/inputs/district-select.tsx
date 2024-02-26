@@ -22,7 +22,7 @@ const DistrictName = styled(Box)(({ colors, errors }) => ({
   padding: "0 16px",
   alignItems: "center",
   border: "1px solid",
-  borderColor: errors?.district?.message ? colors.error["red"] : "Tomato",
+  borderColor: errors?.district?.message ? colors.error["red"] : "grey",
   borderRadius: "4px"
 }));
 

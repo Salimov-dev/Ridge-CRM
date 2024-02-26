@@ -59,7 +59,7 @@ const TopBarWeeklyResults = React.memo(() => {
   );
 
   return (
-    <Tooltip title="Результаты текущей недели" placement="top-start" arrow>
+    <Tooltip title="Результаты текущей недели" placement="bottom" arrow>
       <ResultComponent>
         <TopBarDataContainter
           title="Объектов:"
