@@ -1,4 +1,3 @@
-// libraries
 import { Box, styled } from "@mui/material";
 import { toast } from "react-toastify";
 import { useTheme } from "@emotion/react";
@@ -7,19 +6,15 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
-// components
+import DialogConfirm from "@components/common/dialog/dialog-confirm";
 import Titles from "./components/titles";
 import SelectedError from "./components/selected-error";
 import TransferObjectToAnotherManagerForm from "@forms/transfer-object-to-another-manager.form";
 import SuccessCancelFormButtons from "@components/common/buttons/success-cancel-form-buttons";
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
 import HeaderWithCloseButton from "@components/common/page-headers/header-with-close-button";
-import DialogConfirm from "@components/common/dialog/dialog-confirm";
-// schemas
 import { transferObjectToAnotherManagerSchema } from "@schemas/transfer-object-to-aother-manager.schema";
-// utils
 import transformUsersForSelect from "@utils/objects/transform-users-for-select";
-// store
 import { updateMultipleObjects } from "@store/object/objects.store";
 import { getUsersList } from "@store/user/users.store";
 
@@ -49,7 +44,9 @@ const TransferObjectToAnotherManager = React.memo(
     const {
       register,
       watch,
-      formState: { errors }
+      handleSubmit,
+      formState: { errors },
+      trigger // Добавляем trigger из react-hook-form
     } = useForm({
       defaultValues: initialState,
       mode: "onChange",
@@ -79,7 +76,10 @@ const TransferObjectToAnotherManager = React.memo(
     };
 
     const handleClickOpen = () => {
-      setOpen(true);
+      trigger(); // Запускаем валидацию перед открытием окна подтверждения
+      if (watchManagerId && !Object.keys(errors).length) {
+        setOpen(true);
+      }
     };
 
     const handleClose = () => {
@@ -90,9 +90,9 @@ const TransferObjectToAnotherManager = React.memo(
       <>
         <HeaderWithCloseButton
           title="Передать объекты"
-          color="black"
+          color="white"
           margin="0 0 20px 0"
-          background={colors.header["gold"]}
+          background="DarkBlue"
           onClose={onClose}
         />
 
@@ -113,6 +113,7 @@ const TransferObjectToAnotherManager = React.memo(
         <SuccessCancelFormButtons
           onSuccess={handleClickOpen}
           onCancel={onClose}
+          // disabledSuccess={!watchManagerId}
         />
         <LoaderFullWindow
           color={colors.grey[600]}
@@ -122,7 +123,7 @@ const TransferObjectToAnotherManager = React.memo(
         <DialogConfirm
           question="Вы уверены, что хотите передать объекты другому Менеджеру?"
           open={open}
-          onSuccessClick={() => onSubmit()}
+          onSuccessClick={handleSubmit(onSubmit)}
           onClose={handleClose}
         />
       </>

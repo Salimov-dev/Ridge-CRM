@@ -18,11 +18,17 @@ const SuccessCancelFormButtons = ({
   onSuccess,
   onCancel,
   onRemove = () => {},
-  isUpdate = false
+  isUpdate = false,
+  disabledSuccess = false
 }) => {
   return (
     <ButtonsContainer>
-      <ButtonStyled title={successTitle} style="SUCCESS" onClick={onSuccess} />
+      <ButtonStyled
+        title={successTitle}
+        style="SUCCESS"
+        onClick={onSuccess}
+        disabled={disabledSuccess}
+      />
       <Container>
         {isUpdate && (
           <ButtonStyled title="Удалить" style="DELETE" onClick={onRemove} />

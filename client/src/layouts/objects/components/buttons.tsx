@@ -2,6 +2,8 @@ import ButtonStyled from "@components/common/buttons/button-styled.button";
 import ClearFilterButton from "@components/common/buttons/clear-filter.button";
 import styled from "@emotion/styled";
 import { Box } from "@mui/material";
+import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
+import SyncAltOutlinedIcon from "@mui/icons-material/SyncAltOutlined";
 
 const Component = styled(Box)`
   display: flex;
@@ -15,7 +17,7 @@ const Buttons = ({
   onOpenCreateObjectPage,
   onOpenTransferObjectPage,
   isCurator,
-  isInputEmpty,
+  isInputEmpty
 }) => {
   return (
     <Component>
@@ -23,6 +25,7 @@ const Buttons = ({
         title="Создать объект"
         style="OBJECT"
         variant="contained"
+        icon={<AddCircleOutlineOutlinedIcon />}
         onClick={onOpenCreateObjectPage}
       />
       {isCurator && (
@@ -30,6 +33,7 @@ const Buttons = ({
           title="Передать объекты"
           style="TRANSFER_OJECTS"
           variant="contained"
+          icon={<SyncAltOutlinedIcon />}
           onClick={onOpenTransferObjectPage}
         />
       )}

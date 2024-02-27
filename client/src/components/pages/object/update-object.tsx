@@ -22,20 +22,6 @@ const UpdateObject = React.memo(({ onClose, objectId }) => {
   const [isLoading, setIsLoading] = useState(false);
   const object = useSelector(getObjectById(objectId));
 
-  const transformedObject = {
-    ...object,
-    advanseDeposit: object.advanseDeposit?.toString(),
-    agentComission: object.agentComission?.toString(),
-    electricityKw: object.electricityKw?.toString(),
-    parkingQuantity: object.parkingQuantity?.toString(),
-    indexingAnnual: object.indexingAnnual?.toString(),
-    premisesHeight: object.premisesHeight?.toString(),
-    rentPrice: object.rentPrice?.toString(),
-    rentSquare: object.rentSquare?.toString(),
-    rentalHolidays: object?.rentalHolidays,
-    securityDeposit: object.securityDeposit?.toString()
-  };
-
   const {
     register,
     watch,
@@ -44,12 +30,14 @@ const UpdateObject = React.memo(({ onClose, objectId }) => {
     setValue,
     formState: { errors }
   } = useForm({
-    defaultValues: transformedObject,
+    defaultValues: object,
     mode: "onChange",
     resolver: yupResolver(objectSchema)
   });
 
   const data = watch();
+  console.log("data", data);
+
   const newCompanies = watch("companies");
   const previousCompanies = object?.companies;
   const objectCompanies = object?.companies;

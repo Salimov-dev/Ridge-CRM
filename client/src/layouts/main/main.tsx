@@ -82,7 +82,7 @@ const Main = React.memo(() => {
               msTextFillColor: "transparent"
             }}
           >
-            ЗАБУДЬТЕ ПРО EXCEL, В ГРЯДКЕ ВСЁ ЕСТЬ
+            ЗАБУДЬТЕ ПРО EXCEL, В ГРЯДКЕ ВСЁ ЕСТЬ ДЛЯ РАЗВИТИЯ
           </Typography>
 
           <Typography sx={{ fontSize: "20px", lineHeight: "1.4" }}>

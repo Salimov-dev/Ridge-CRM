@@ -57,12 +57,7 @@ const companiesSlice = createSlice({
       ] = action.payload;
     },
     companiesUpdateSuccessed: (state, action) => {
-      const { updatedCompanies, previousCompanies } = action.payload;
-      console.log("action.payload companiesUpdateSuccessed", action.payload);
-      console.log(
-        "updatedCompanies companiesUpdateSuccessed",
-        updatedCompanies
-      );
+      const { updatedCompanies } = action.payload;
 
       state.entities = state.entities.map((comp) => {
         const updatedCompany = updatedCompanies.find(
@@ -158,7 +153,6 @@ export const updateCompanyUpdate = (payload) => async (dispatch) => {
 export const updateCompanies = (payload) => async (dispatch) => {
   dispatch(companyUpdateRequested());
   try {
-    console.log("payload updateCompanies", payload);
     dispatch(companiesUpdateSuccessed(payload));
   } catch (error) {
     dispatch(companyUpdateFailed(error.message));
