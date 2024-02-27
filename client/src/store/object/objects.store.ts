@@ -64,12 +64,6 @@ const objectsSlice = createSlice({
       state.entities[
         state.entities.findIndex((obj) => obj._id === action.payload._id)
       ] = action.payload;
-    },
-
-    objectRemoved: (state, action) => {
-      state.entities = state.entities.filter(
-        (obj) => obj._id !== action.payload
-      );
     }
   }
 });
@@ -134,8 +128,9 @@ export const createObjectUpdate = (payload) => async (dispatch) => {
 export const updateObject = (payload) => async (dispatch) => {
   dispatch(objectUpdateRequested());
   try {
-    const { content: updatedCompanies } = await objectService.update(payload);
-    dispatch(updateCompanies(updatedCompanies));
+    const { content } = await objectService.update(payload);
+
+    dispatch(updateCompanies(content));
     socket.emit("objectUpdated", payload.newData);
   } catch (error) {
     dispatch(objectUpdateFailed(error.message));

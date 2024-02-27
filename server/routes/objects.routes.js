@@ -246,15 +246,17 @@ router.patch("/:objectId?/edit", auth, async (req, res) => {
 
     const companies = newData.companies;
 
-    const differentCompanies = req.body.differentCompanies;
-    const differentCompanyIds = differentCompanies.map(
+    const previousCompanies = req.body.previousCompanies;
+    const removedCompanies = req.body.removedCompanies;
+    const addedCompanies = req.body.addedCompanies;
+    const removedCompanyIds = removedCompanies.map(
       (company) => company.company
     );
 
-    // Находим все компании, которые есть в массиве differentCompanyIds
-    const companiesInDifferentCompanies = await Company.findAll({
+    // Находим все компании, которые есть в массиве removedCompanyIds
+    const companiesRemovedCompanies = await Company.findAll({
       where: {
-        _id: differentCompanyIds
+        _id: removedCompanyIds
       }
     });
 
@@ -280,20 +282,14 @@ router.patch("/:objectId?/edit", auth, async (req, res) => {
       }
     });
 
-    // Собираем все обновления в массив
-    let companyUpdates = [];
-    // console.log("companyUpdates", companyUpdates);
-
     // Обновляем список объектов в каждой компании
     for (const company of companiesToUpdate) {
       let objects = company.dataValues.objects || [];
-      // console.log("objects", objects);
 
       // Проверяем, есть ли уже такой объект у компании
       const foundObjectIndex = objects.findIndex(
         (obj) => obj.object === objectId
       );
-      // console.log("foundObjectIndex", foundObjectIndex);
 
       if (foundObjectIndex === -1) {
         // Если объект не найден, добавляем новый объект в массив
@@ -301,32 +297,58 @@ router.patch("/:objectId?/edit", auth, async (req, res) => {
       }
 
       // Сохраняем обновление для данной компании в массив
-      companyUpdates.push(
-        Company.update({ objects }, { where: { _id: company._id } })
-      );
+      await Company.update({ objects }, { where: { _id: company._id } });
     }
 
-    // Выполняем все обновления компаний одновременно
-    await Promise.all(companyUpdates);
-
-    // Обход каждой компании в массиве companiesInDifferentCompanies
-    const updatedCompanies = companiesInDifferentCompanies.map((company) => {
+    // Удаление объекта из списков объектов в удаленных компаниях
+    for (const company of companiesRemovedCompanies) {
       // Фильтрация массива объектов каждой компании
       const updatedObjects = company.objects.filter(
         (obj) => obj.object !== objectId
       );
 
-      // Возвращаем обновленную компанию с новым списком объектов
-      return company.update({ objects: updatedObjects });
-    });
+      // Обновляем компанию с новым списком объектов
+      await company.update({ objects: updatedObjects });
+    }
 
-    // Ожидаем выполнения всех обновлений компаний
-    await Promise.all(updatedCompanies);
-
-    // Обновляем объект и возвращаем результат
+    // Обновляем объект
     await existingObject.update(newData);
 
-    res.status(200).json(updatedCompanies);
+    // Получаем обновленный список компаний после обновления
+    const updatedCompanies = await Company.findAll({
+      where: {
+        _id: companiesToUpdate.map((company) => company._id)
+      }
+    });
+
+    // Добавляем в обновленные компании добавленные компании
+    addedCompanies.forEach((addedCompany) => {
+      const foundCompany = updatedCompanies.find(
+        (company) => company._id === addedCompany.company
+      );
+      if (foundCompany) updatedCompanies.push(foundCompany);
+    });
+
+    const removedCompaniesList = await Company.findAll({
+      where: {
+        _id: removedCompanies.map((company) => company.company)
+      }
+    });
+
+    // Добавляем удаленную компанию, если она была удалена из updatedCompanies
+    removedCompaniesList.forEach((removedCompany) => {
+      const foundCompany = updatedCompanies.find(
+        (company) => company._id === removedCompany.company
+      );
+      if (!foundCompany) {
+        updatedCompanies.push(removedCompany);
+      }
+    });
+
+    res.status(200).json({
+      updatedCompanies,
+      previousCompanies
+    });
   } catch (e) {
     console.error(e);
     res.status(500).json({

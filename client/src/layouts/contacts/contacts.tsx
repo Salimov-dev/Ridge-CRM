@@ -61,6 +61,7 @@ const Contacts = React.memo(() => {
   const objects = useSelector(getObjectsList());
   const currentUserId = useSelector(getCurrentUserId());
   const contactsList = useSelector(getContactsList());
+
   const isLoading = useSelector(getLastContactsLoadingStatus());
 
   const isCurator = useSelector(getIsUserCurator(currentUserId));

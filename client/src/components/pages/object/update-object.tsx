@@ -51,9 +51,14 @@ const UpdateObject = React.memo(({ onClose, objectId }) => {
 
   const data = watch();
   const newCompanies = watch("companies");
+  const previousCompanies = object?.companies;
   const objectCompanies = object?.companies;
-  const differentCompanies = objectCompanies.filter(
+  const removedCompanies = objectCompanies.filter(
     (obj) => !newCompanies.some((item) => item.company === obj.company)
+  );
+  const addedCompanies = newCompanies.filter(
+    (newCompany) =>
+      !objectCompanies.some((obj) => obj.company === newCompany.company)
   );
 
   const onSubmit = (data) => {
@@ -72,9 +77,15 @@ const UpdateObject = React.memo(({ onClose, objectId }) => {
       rentalHolidays: data.rentalHolidays,
       securityDeposit: removeSpacesAndConvertToNumber(data.securityDeposit)
     };
-    console.log("differentCompanies", differentCompanies);
 
-    dispatch<any>(updateObject({ newData, differentCompanies }))
+    dispatch<any>(
+      updateObject({
+        newData,
+        removedCompanies,
+        addedCompanies,
+        previousCompanies
+      })
+    )
       .then(() => {
         onClose();
         toast.success("Объект успешно изменен!");

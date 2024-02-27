@@ -89,7 +89,6 @@ const Companies = React.memo(() => {
     useDialogHandlers(setState);
 
   const companiesList = useSelector(getCompaniesList());
-
   const isLoading = useSelector(getCompaniesLoadingStatus());
 
   // const CompaniesStatuses = useSelector(getCompaniestatusList());
