@@ -21,7 +21,7 @@ const AutocompleteStyled = ({
   label,
   errors = null,
   width = "100%",
-  optionLabel = (option) => option.name,
+  optionLabel = (option) => option.name
 }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -55,44 +55,44 @@ const AutocompleteStyled = ({
         sx={{
           width: width,
           "& .MuiOutlinedInput-notchedOutline": {
-            borderColor: watchItemId ? "green" : "gray",
+            borderColor: watchItemId ? "green" : "gray"
           },
           "& .MuiInputLabel-root": {
-            color: watchItemId ? "white" : "gray",
+            color: watchItemId ? "white" : "gray"
           },
           "&:focus-within": {
             "& .MuiOutlinedInput-notchedOutline": {
-              borderColor: "green !important",
+              borderColor: "green !important"
             },
             "& .MuiInputLabel-root": {
               background: "inherit",
-              color: "white",
-            },
+              color: "white"
+            }
           },
           "&:not(:focus-within)": {
             "& .MuiOutlinedInput-notchedOutline": {
-              borderColor: errors ? "red !important" : "gray !important",
+              borderColor: errors ? "red !important" : "gray !important"
             },
             "& .MuiInputLabel-root": {
-              color: "gray",
-            },
+              color: "gray"
+            }
           },
           "& + .MuiAutocomplete-popper .MuiAutocomplete-option": {
             backgroundColor: "#2f2f2f",
             "&:hover": {
-              backgroundColor: "#3f3f3f",
-            },
+              backgroundColor: "#3f3f3f"
+            }
           },
           "& + .MuiAutocomplete-popper .MuiAutocomplete-option[aria-selected='true']":
             {
-              backgroundColor: "#2a2b2e",
+              backgroundColor: "#2a2b2e"
             },
           "& + .MuiAutocomplete-popper": {
-            zIndex: 999999999999,
-          },
+            zIndex: 999999999999
+          }
         }}
       />
-      <FormHelperText sx={{ color: "yellow" }}>
+      <FormHelperText sx={{ color: "yellow", paddingLeft: "10px" }}>
         {errors?.message}
       </FormHelperText>
     </Component>

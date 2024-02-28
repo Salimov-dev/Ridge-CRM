@@ -4,19 +4,19 @@ import { estateTypesArray } from "../../data/object/estate-types";
 const estateTypesSlice = createSlice({
   name: "estateTypes",
   initialState: {
-    entities: null,
+    entities: null
   },
   reducers: {
     estateTypesLoaded: (state, action) => {
       state.entities = action.payload;
-    },
-  },
+    }
+  }
 });
 
 const { reducer: estateTypesReducer, actions } = estateTypesSlice;
 const { estateTypesLoaded } = actions;
 
-export const loadEstateTypesList = () => async (dispatch) => {
+export const loadEstateTypesList = () => (dispatch) => {
   dispatch(estateTypesLoaded(estateTypesArray));
 };
 

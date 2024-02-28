@@ -10,11 +10,12 @@ import {
   Map,
   Placemark,
   Clusterer,
-  FullscreenControl,
+  FullscreenControl
 } from "@pbe/react-yandex-maps";
 import target_cluster from "@assets/map/target_cluster.png";
 // styles
 import "./styles.css";
+import { citiesArray } from "@data/cities";
 
 const MapContainer = styled(Box)`
   height: 350px;
@@ -29,12 +30,14 @@ const ItemsOnMap = ({
   isLoading,
   onClick,
   target = targetDefault,
-  targetCluster = target_cluster,
+  targetCluster = target_cluster
 }) => {
   const [activePortal, setActivePortal] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
 
-  const center = [59.930320630519155, 30.32906024941998];
+  const center = [citiesArray[1].longitude, citiesArray[1].latitude];
+  // const center = [55.755167662127775, 37.61892916430014];
+  // const center = [59.930320630519155, 30.32906024941998];
   const mapZoom = 11;
   const clustererInstanceRef = useRef(null);
 
@@ -65,19 +68,19 @@ const ItemsOnMap = ({
           defaultState={{
             center: center,
             zoom: mapZoom,
-            controls: ["zoomControl", "searchControl"],
+            controls: ["zoomControl", "searchControl"]
           }}
           modules={[
             "geoObject.addon.balloon",
             "geoObject.addon.hint",
             "control.ZoomControl",
             "control.SearchControl",
-            "clusterer.addon.balloon",
+            "clusterer.addon.balloon"
           ]}
         >
           <FullscreenControl
             options={{
-              float: "right",
+              float: "right"
             }}
             onClick={handleFullscreenClick}
           />
@@ -89,11 +92,11 @@ const ItemsOnMap = ({
                 {
                   href: targetCluster,
                   size: [50, 50],
-                  offset: [-25, -25],
-                },
+                  offset: [-25, -25]
+                }
               ],
               groupByCoordinates: false,
-              hasBalloon: true,
+              hasBalloon: true
             }}
           >
             {items?.map((item) => (
@@ -104,7 +107,7 @@ const ItemsOnMap = ({
                   iconLayout: "default#image",
                   iconImageHref: target,
                   iconImageSize: [40, 40],
-                  iconImageOffset: [-20, -40],
+                  iconImageOffset: [-20, -40]
                 }}
                 geometry={
                   item.latitude && item.longitude
@@ -114,7 +117,7 @@ const ItemsOnMap = ({
                 properties={{
                   hintContent: `${item?.city}, ${item?.address}`,
                   balloonContentBody: '<div id="baloon" class="baloon"></div>',
-                  clusterCaption: dayjs(item?.created_at).format("DD.MM.YY"),
+                  clusterCaption: dayjs(item?.created_at).format("DD.MM.YY")
                 }}
                 onClick={() => {
                   setTimeout(() => {

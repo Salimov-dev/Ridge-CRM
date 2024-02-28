@@ -34,6 +34,7 @@ import { loadUserLicensesList } from "@store/user/user-license.store";
 import { loadCompaniesList } from "@store/company/company.store";
 import { loadContactsList } from "@store/contact/contact.store";
 import { loadContactPositionsList } from "@store/contact/contact-positions.store";
+import { loadCitiesList } from "@store/city/citites.store";
 
 interface AppLoaderProps {
   children: React.ReactNode;
@@ -44,6 +45,8 @@ const AppLoader = ({ children }: AppLoaderProps) => {
   const isLoggedIn = useSelector(getIsLoggedIn());
 
   useEffect(() => {
+    // cities
+    dispatch<any>(loadCitiesList());
     if (isLoggedIn) {
       // objects
       dispatch<any>(loadObjectsList());

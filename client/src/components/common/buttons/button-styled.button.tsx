@@ -195,7 +195,6 @@ const ButtonStyled = ({
     color = "white";
     colorHover = "white";
     backgroundHover = "DarkGreen";
-    border = "1px dashed DarkGreen !important";
   }
 
   return (

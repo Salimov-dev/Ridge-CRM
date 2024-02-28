@@ -70,6 +70,8 @@ const Login = React.memo(({ page, onClose }) => {
   const redirectPath = location.state?.path || "/objects";
 
   const onSubmit = () => {
+    console.log("onSubmit");
+
     setIsLoading(true);
     dispatch<any>(login(data))
       .then(() => {
@@ -94,12 +96,7 @@ const Login = React.memo(({ page, onClose }) => {
         onClose={onClose}
       />
       <FormContainer>
-        <AuthForm
-          data={data}
-          startPage={page}
-          errors={errors}
-          register={register}
-        />
+        <AuthForm data={data} errors={errors} register={register} />
         <ButtonStyled
           title="Войти"
           style="SUCCESS"

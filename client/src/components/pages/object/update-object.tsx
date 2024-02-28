@@ -36,7 +36,6 @@ const UpdateObject = React.memo(({ onClose, objectId }) => {
   });
 
   const data = watch();
-  console.log("data", data);
 
   const newCompanies = watch("companies");
   const previousCompanies = object?.companies;

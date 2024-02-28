@@ -1,12 +1,17 @@
 import { useState } from "react";
+import { orderBy } from "lodash";
 import { InputAdornment, IconButton, Box, Typography } from "@mui/material";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { FieldsContainer, Form } from "../components/common/forms/styled";
 import TextFieldStyled from "../components/common/inputs/text-field-styled";
-import SelectFieldStyled from "@components/common/inputs/select-field-styled";
 import { CirclePicker } from "react-color";
 import styled from "@emotion/styled";
+import { citiesArray } from "@data/cities";
+import AutocompleteStyled from "@components/common/inputs/autocomplete-styled";
+import { useSelector } from "react-redux";
+import { getCititesList } from "@store/city/citites.store";
+import Errors from "@components/common/inputs/components/errors";
 
 const ColorPicker = styled(Box)`
   width: 100%;
@@ -14,7 +19,7 @@ const ColorPicker = styled(Box)`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 5px 0 25px 0;
+  margin: 5px 0 0px 0;
   gap: 14px;
 `;
 
@@ -23,10 +28,14 @@ const AuthForm = ({
   register,
   errors,
   color,
+  watch,
+  setValue,
   onColorChange,
   isRegister = false
 }) => {
   const [showPassword, setShowPassword] = useState(false);
+  const citiesList = useSelector(getCititesList());
+  const sortedLastContacts = orderBy(citiesList, "name", ["desc"]);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const handleMouseDownPassword = (
@@ -70,25 +79,26 @@ const AuthForm = ({
           }}
         />
         {isRegister && (
-          <SelectFieldStyled
-            label="Выберите город"
+          <AutocompleteStyled
+            label="Выберите свой город"
             register={register}
-            name="objectTypes"
-            labelId="objectTypes"
-            required={true}
-            // itemsList={sortedObjectTypes}
-            // value={watchObjectTypes ?? ""}
-            errors={errors?.objectTypes}
+            name="city"
+            options={sortedLastContacts}
+            value={watch.city ?? ""}
+            setValue={setValue}
+            watchItemId={watch.city}
+            errors={errors?.city}
           />
         )}
       </FieldsContainer>
 
       {isRegister && (
         <ColorPicker>
-          <Typography variant="h5" sx={{ color: "yellow" }}>
+          <Typography variant="h5" sx={{ color: "Aqua" }}>
             Выберите свой цвет в Грядке:
           </Typography>
           <CirclePicker color={color} onChangeComplete={onColorChange} />
+          <Errors errors={errors.color} color="LightCoral" fontSize="14px" />
         </ColorPicker>
       )}
     </Form>

@@ -250,7 +250,6 @@ const PageDialogs = ({
           <AuthPage onClose={handleCloseAuthPage} startPage={state.startPage} />
         }
         maxWidth="xs"
-        // fullWidth={false}
         onClose={handleCloseAuthPage}
         open={state.authPage}
       />

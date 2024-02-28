@@ -37,6 +37,7 @@ import userLicensesReducer from "./user/user-license.store";
 import companiesReducer from "./company/company.store";
 import contactsReducer from "./contact/contact.store";
 import contactPositionsReducer from "./contact/contact-positions.store";
+import citiesReducer from "./city/citites.store";
 
 const rootReducer = combineReducers({
   // objects
@@ -80,7 +81,9 @@ const rootReducer = combineReducers({
   companies: companiesReducer,
   // contacts
   contacts: contactsReducer,
-  contactPositions: contactPositionsReducer
+  contactPositions: contactPositionsReducer,
+  // cities
+  cities: citiesReducer
 });
 
 export function createStore() {

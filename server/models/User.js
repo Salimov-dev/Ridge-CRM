@@ -19,6 +19,8 @@ const User = sequelize.define(
     gender: { type: DataTypes.STRING, defaultValue: null },
     birthday: { type: DataTypes.STRING, defaultValue: null },
     status: { type: DataTypes.STRING, defaultValue: null },
+    city: { type: DataTypes.STRING, defaultValue: null },
+    color: { type: DataTypes.STRING, defaultValue: null },
     role: {
       type: DataTypes.ARRAY(DataTypes.STRING),
       defaultValue: ["69gfoep3944jgjdso345003"] // статус по умолчанию "Ознакомительный"
