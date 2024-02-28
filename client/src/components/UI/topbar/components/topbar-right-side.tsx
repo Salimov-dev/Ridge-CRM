@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Box, Button, styled } from "@mui/material";
+import { Box, styled } from "@mui/material";
 import { useSelector } from "react-redux";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 // components
@@ -7,6 +7,7 @@ import UserMenu from "./user-menu";
 import Loader from "@common/loader/loader";
 import ButtonStyled from "@components/common/buttons/button-styled.button";
 import PageDialogs from "@components/common/dialog/page-dialogs";
+import PersonAddAlt1OutlinedIcon from "@mui/icons-material/PersonAddAlt1Outlined";
 // hooks
 import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
 // store
@@ -43,9 +44,10 @@ const TopBarRightSide = () => {
           <Box sx={{ width: "100%", display: "flex", gap: "4px" }}>
             <ButtonStyled
               title="Регистрация"
-              style="MY_TASK"
+              style="REGISTER"
               variant="contained"
               onClick={() => handleOpenAuthPage("register")}
+              icon={<PersonAddAlt1OutlinedIcon />}
             />
 
             <ButtonStyled

@@ -26,6 +26,8 @@ import CreateContact from "@components/pages/contact/create-contact";
 import UpdateContact from "@components/pages/contact/update-contact";
 import CreateCompany from "@components/pages/company/create-company";
 import UpdateCompany from "@components/pages/company/update-company";
+import Agreement from "@components/pages/agreement/agreement";
+import PersonalPolicy from "@components/pages/agreement/personal-policy";
 
 const PageDialogs = ({
   state,
@@ -61,7 +63,9 @@ const PageDialogs = ({
     handleCloseCreateContactPage,
     handleCloseContactPage,
     handleCloseCreateCompanyPage,
-    handleCloseUpdateCompanyPage
+    handleCloseUpdateCompanyPage,
+    handleCloseAgreementPage,
+    handleClosePersonalPolicyPage
   } = useDialogHandlers(setState);
 
   return (
@@ -245,8 +249,8 @@ const PageDialogs = ({
         component={
           <AuthPage onClose={handleCloseAuthPage} startPage={state.startPage} />
         }
-        maxWidth="sm"
-        fullWidth={false}
+        maxWidth="xs"
+        // fullWidth={false}
         onClose={handleCloseAuthPage}
         open={state.authPage}
       />
@@ -304,7 +308,7 @@ const PageDialogs = ({
         onClose={handleCloseCreateCompanyPage}
         open={state.createCompanyPage}
       />{" "}
-      {/* Окна для Компании обновления */}
+      {/* Окна для обновления Компании  */}
       <DialogStyled
         component={
           <UpdateCompany
@@ -315,6 +319,19 @@ const PageDialogs = ({
         onClose={handleCloseUpdateCompanyPage}
         maxWidth="sm"
         open={state.updateCompanyPage}
+      />
+      {/* Окна для лицензии и персональных данных */}
+      <DialogStyled
+        component={<Agreement onClose={handleCloseAgreementPage} />}
+        onClose={handleCloseAgreementPage}
+        maxWidth="xl"
+        open={state.agreementPage}
+      />
+      <DialogStyled
+        component={<PersonalPolicy onClose={handleClosePersonalPolicyPage} />}
+        onClose={handleClosePersonalPolicyPage}
+        maxWidth="xl"
+        open={state.peresonalPolicyPage}
       />
     </>
   );

@@ -3,21 +3,25 @@ import { Box, Typography } from "@mui/material";
 
 const Component = styled(Box)`
   width: 100%;
+  height: 100%;
   display: flex;
-  padding: 0 10px;
   justify-content: center;
+  align-items: center;
 `;
 
-const Subtitle = ({ title, onClick }) => {
+const Subtitle = ({ title, backgroundColor, onClick }) => {
   return (
     <Component>
       <Typography
         sx={{
-          marginBottom: "10px",
+          backgroundColor: backgroundColor,
+          width: "100%",
+          padding: "10px 30px",
+          textAlign: "center",
           cursor: "pointer",
           "&:hover": {
-            textDecoration: "underline",
-          },
+            textDecoration: "underline"
+          }
         }}
         onClick={onClick}
       >

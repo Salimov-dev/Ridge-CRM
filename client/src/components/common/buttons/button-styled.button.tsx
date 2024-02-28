@@ -89,9 +89,9 @@ const ButtonStyled = ({
   }
 
   if (style === "TRANSFER_OJECTS") {
-    background = colors.presentation["primary"];
+    background = "RoyalBlue";
     colorHover = "white";
-    backgroundHover = colors.presentation["hover"];
+    backgroundHover = "MediumBlue";
   }
 
   if (style === "OPEN_OBJECT") {
@@ -188,6 +188,14 @@ const ButtonStyled = ({
     colorHover = "white";
     backgroundHover = "DarkOrange";
     border = "1px dashed Orange !important";
+  }
+
+  if (style === "REGISTER") {
+    background = "ForestGreen";
+    color = "white";
+    colorHover = "white";
+    backgroundHover = "DarkGreen";
+    border = "1px dashed DarkGreen !important";
   }
 
   return (

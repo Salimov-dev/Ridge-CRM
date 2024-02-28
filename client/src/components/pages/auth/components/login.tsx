@@ -31,7 +31,7 @@ const Component = styled(Box)`
 
 const FormContainer = styled(Box)`
   height: 100%;
-  width: 350px;
+  width: 100%;
   display: flex;
   justify-content: start;
   align-items: center;

@@ -295,6 +295,34 @@ const useDialogHandlers = (setState) => {
     }));
   };
 
+  // обновление стейта при открытии лицензия
+  const handleOpenAgreementPage = () => {
+    setState((prevState) => ({
+      ...prevState,
+      agreementPage: true
+    }));
+  };
+  const handleCloseAgreementPage = () => {
+    setState((prevState) => ({
+      ...prevState,
+      agreementPage: false
+    }));
+  };
+
+  // обновление стейта при открытии перс данные
+  const handleOpenPersonalPolicyPage = () => {
+    setState((prevState) => ({
+      ...prevState,
+      peresonalPolicyPage: true
+    }));
+  };
+  const handleClosePersonalPolicyPage = () => {
+    setState((prevState) => ({
+      ...prevState,
+      peresonalPolicyPage: false
+    }));
+  };
+
   return {
     handleOpenAuthPage,
     handleCloseAuthPage,
@@ -343,7 +371,11 @@ const useDialogHandlers = (setState) => {
     handleOpenCreateCompanyPage,
     handleCloseCreateCompanyPage,
     handleOpenUpdateCompanyPage,
-    handleCloseUpdateCompanyPage
+    handleCloseUpdateCompanyPage,
+    handleOpenAgreementPage,
+    handleCloseAgreementPage,
+    handleOpenPersonalPolicyPage,
+    handleClosePersonalPolicyPage
   };
 };
 
