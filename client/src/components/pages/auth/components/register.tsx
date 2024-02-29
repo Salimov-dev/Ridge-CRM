@@ -74,8 +74,7 @@ const Register = React.memo(({ page, onClose }) => {
   });
 
   const data = watch();
-  const location = useLocation();
-  const redirectPath = location.state?.path || "/objects";
+  const redirectPath = "/users";
 
   const handleColorChange = (color) => {
     setColor(color);
@@ -87,7 +86,7 @@ const Register = React.memo(({ page, onClose }) => {
 
     dispatch<any>(signUp(data))
       .then(() => {
-        navigate(redirectPath, { replace: true });
+        navigate(redirectPath);
         onClose();
       })
       .catch((error) => {

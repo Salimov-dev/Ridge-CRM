@@ -11,52 +11,32 @@ router.get("/", auth, async (req, res) => {
     const userId = req.user._id;
     const user = await User.findByPk(userId);
 
-    if (!userId) {
+    if (!user) {
       return res.status(404).json({ message: "Пользователь не найден" });
     }
-
     const userRole = user.role;
 
-    if (userRole === roleManager) {
+    if (userRole.includes(roleManager)) {
       const tasks = await Task.findAll({ where: { userId } });
       return res.status(200).send(tasks);
     }
 
-    if (userRole === roleCurator || userRole === roleObserver) {
-      const curatorTasks = await Task.findAll({ where: { userId } });
-      if (!curatorTasks.length) {
-        return res
-          .status(404)
-          .json({ message: "Задачи для куратора или наблюдателя не найдены" });
-      }
+    if (userRole.includes(roleCurator) || userRole.includes(roleObserver)) {
+      const tasks = await Task.findAll({ where: { userId } });
 
       const curatorUsers = await User.findAll({ where: { curatorId: userId } });
-      if (!curatorUsers.length) {
-        return res
-          .status(404)
-          .json({ message: "Менеджеры у Куратора не найдены" });
-      }
+      const curatorManagerIds = curatorUsers.map((user) => user._id);
 
-      // Получаем идентификаторы всех менеджеров, связанных с кураторами или наблюдателями
-      const managerIds = curatorUsers.map((user) => user._id);
-
-      // Получаем задачи для всех менеджеров
-      const managerTasks = await Task.findAll({
-        where: { userId: managerIds }
+      const curatorManagersTasks = await Task.findAll({
+        where: { userId: curatorManagerIds }
       });
 
-      // Объединяем задачи кураторов и наблюдателей с задачами соответствующих менеджеров
-      const curatorUsersTasks = [...curatorTasks, ...managerTasks];
+      const usersTasks = [
+        ...tasks,
+        ...curatorManagersTasks.map((obj) => obj.dataValues)
+      ];
 
-      if (userRole === roleCurator) {
-        return res.status(200).send([user, curatorUsers, curatorUsersTasks]);
-      } else {
-        const curatorId = user.curatorId;
-        const curatorUser = await User.findByPk(curatorId);
-        return res
-          .status(200)
-          .send([user, curatorUser, curatorUsers, curatorUsersTasks]);
-      }
+      return res.status(200).send(usersTasks);
     }
 
     return res.status(200).send([]);

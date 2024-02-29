@@ -39,7 +39,7 @@ const Stages = ({ objects, stages, setState, isCurator }) => {
             onDragOver={(e) => handleDragOver(e, stage._id)}
             sx={{
               border:
-                draggableStageId === stage?._id ? `1px dashed yellow` : null,
+                draggableStageId === stage?._id ? `1px dashed yellow` : null
             }}
           >
             <Title item={stage} objects={objects} />

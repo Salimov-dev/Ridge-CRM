@@ -23,7 +23,7 @@ const initialState = {
   time: null,
   objectId: null,
   managerId: null,
-  comment: null,
+  comment: "",
   result: null,
   isDone: false,
   isCallTask: true

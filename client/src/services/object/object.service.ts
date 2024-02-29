@@ -22,6 +22,13 @@ const objectService = {
     );
     return data;
   },
+  updateSingle: async (payload) => {
+    const { data } = await httpService.patch(
+      objectEndpoint + payload._id + "/edit",
+      payload
+    );
+    return data;
+  },
   updateMultiple: async (objectIds, userId) => {
     const data = {
       objectIds,

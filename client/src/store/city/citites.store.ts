@@ -22,6 +22,13 @@ export const loadCitiesList = () => (dispatch) => {
 
 export const getCititesList = () => (state) => state.cities.entities;
 
+export const getCityDataById = (id) => (state) => {
+  if (state?.cities.entities) {
+    const city = state.cities.entities.find((city) => city?._id === id);
+    return city;
+  }
+};
+
 export const getCityNameById = (id) => (state) => {
   if (state?.cities.entities) {
     const city = state.cities.entities.find((city) => city?._id === id);

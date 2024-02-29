@@ -26,6 +26,7 @@ const ObjectTasks = ({
   const address = `${object?.city}, ${object?.address}`;
 
   const tasks = useSelector(getObjectTasksList(objectId));
+
   const sortedTasks = sortingByDateAndTime(tasks);
 
   return (

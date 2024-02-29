@@ -14,7 +14,8 @@ const OpenPageObjectIconButton = ({
   title = "Открыть объект",
   width = "24px",
   height = "24px",
-  containerWidth = "auto"
+  containerWidth = "auto",
+  color = "white"
 }) => {
   return (
     <Components
@@ -25,6 +26,7 @@ const OpenPageObjectIconButton = ({
         onClick={onClick}
         disabled={disabled}
         sx={{
+          color: color,
           "&:disabled": {
             // стили для неактивной иконки
 

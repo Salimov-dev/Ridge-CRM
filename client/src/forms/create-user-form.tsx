@@ -22,7 +22,6 @@ const CreateUserForm = ({ data, register, errors }) => {
           required={true}
           errors={errors?.email}
           value={data?.email}
-          onInputQuantities={125}
         />
         <SelectFieldStyled
           label="Роль"

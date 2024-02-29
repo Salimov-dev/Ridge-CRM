@@ -23,13 +23,15 @@ const ItemsList = ({
 }) => {
   return (
     <>
-      <Item
-        title="Главная"
-        to="/"
-        icon={<HomeOutlinedIcon />}
-        selected={selected}
-        setSelected={setSelected}
-      />
+      {isCurator && (
+        <Item
+          title="Команда"
+          to="/users"
+          icon={<PeopleOutlinedIcon />}
+          selected={selected}
+          setSelected={setSelected}
+        />
+      )}
       <ItemsTitle
         title="Меню"
         colors={colors.grey[300]}
@@ -105,23 +107,6 @@ const ItemsList = ({
         selected={selected}
         setSelected={setSelected}
       />
-
-      {isCurator ? (
-        <>
-          <ItemsTitle
-            title="Команда"
-            colors={colors.grey[300]}
-            isCollapsed={isCollapsed}
-          />
-          <Item
-            title="Команда"
-            to="/users"
-            icon={<PeopleOutlinedIcon />}
-            selected={selected}
-            setSelected={setSelected}
-          />
-        </>
-      ) : null}
     </>
   );
 };

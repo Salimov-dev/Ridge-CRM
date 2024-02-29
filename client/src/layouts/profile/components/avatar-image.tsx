@@ -21,7 +21,7 @@ const AvatarImage = ({
       <Avatar
         src={avatarSrc ? avatarSrc : basicAva}
         alt="User Avatar"
-        sx={{ width, height }}
+        sx={{ width, height, border: "1px solid MidnightBlue" }}
       />
     </Component>
   ) : (

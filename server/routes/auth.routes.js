@@ -67,7 +67,8 @@ router.post("/signUp", [
         });
       }
 
-      const { email, password } = req.body;
+      const { email, password, color, city } = req.body;
+      console.log("req.body;", req.body);
 
       // Check if the user with the provided email already exists
       const existingUser = await User.findOne({ where: { email } });
@@ -88,7 +89,9 @@ router.post("/signUp", [
       // Create a new user with Sequelize
       const newUser = await User.create({
         email,
-        password: hashedPassword
+        password: hashedPassword,
+        color,
+        city
       });
 
       // Generate tokens and save the refresh token

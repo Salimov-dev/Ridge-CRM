@@ -65,7 +65,7 @@ const Objects = ({
         ...obj,
         status: getNewDealStage(draggableStageId)
       };
-      dispatch<any>(updateObject(updatedObject));
+      dispatch<any>(updateObject({ newData: updatedObject }));
 
       setDraggableStageId(null);
     } else {
@@ -99,6 +99,7 @@ const Objects = ({
             {isCurator && (
               <UserNameWithAvatar
                 userId={user._id}
+                color="black"
                 avatarSrc={getAvatarSrc()}
                 fontStyle="italic"
                 isLoading={isLoading}

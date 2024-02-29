@@ -23,7 +23,7 @@ const ResultComponent = styled(Box)`
   gap: 8px;
   justify-content: center;
   align-items: center;
-  border: 2px solid #1f2a40;
+  // border: 2px solid #1f2a40;
   border-top: 0px;
   border-radius: 0 0 6px 6px;
 `;

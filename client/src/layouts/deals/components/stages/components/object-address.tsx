@@ -15,7 +15,7 @@ const ObjectAddress = ({ obj, onClick }) => {
   return (
     <Component>
       <Typography variant="h6">{objectAddress}</Typography>
-      <OpenPageObjectIconButton onClick={onClick} />
+      <OpenPageObjectIconButton onClick={onClick} color="black" />
     </Component>
   );
 };

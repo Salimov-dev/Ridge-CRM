@@ -110,12 +110,13 @@ export const signUp = (payload) => async (dispatch) => {
   dispatch(authRequested());
   try {
     const registerData = await authService.register(payload);
+
     dispatch(userCreated(registerData));
     const data = await authService.login(payload);
 
     localStorageService.setTokens(data);
     dispatch(authRequestSuccess({ userId: data.userId }));
-    dispatch(loadUsersList());
+    // dispatch(loadUsersList());
   } catch (error) {
     const errorMessage = error.response.data.error.message;
 

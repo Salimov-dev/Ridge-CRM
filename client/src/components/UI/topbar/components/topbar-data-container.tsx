@@ -9,12 +9,12 @@ const DataContainer = styled(Box)`
   gap: 4px;
   justify-content: center;
   align-items: center;
-  color: grey !important;
+  color: grey;
 `;
 
 const ResultContainer = styled(Box)`
   display: flex;
-  padding: 0px 4px;
+  padding: 0px 3px;
   border: 1px solid white;
   border-radius: 4px;
   cursor: pointer;
@@ -34,7 +34,21 @@ const TopBarDataContainter = ({
 
   return (
     <DataContainer>
-      <Typography variant="h5">{title}</Typography>
+      <Typography
+        variant="h6"
+        sx={{
+          cursor: "pointer",
+          "&:hover": {
+            color: "white"
+          }
+        }}
+        onClick={() => {
+          navigate(path);
+          dispatch<any>(setCurrrentPathState(window.location.pathname));
+        }}
+      >
+        {title}
+      </Typography>
       <ResultContainer
         sx={{ background: backgroundColor, color: fontColor }}
         onClick={() => {
@@ -43,7 +57,7 @@ const TopBarDataContainter = ({
         }}
       >
         {!isLoading ? (
-          <Typography variant="h5">{elements?.length}шт</Typography>
+          <Typography variant="h6">{elements?.length}шт</Typography>
         ) : (
           <Loader size={16} padding="6px" />
         )}

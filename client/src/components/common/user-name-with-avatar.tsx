@@ -12,7 +12,14 @@ const Component = styled(Box)`
 `;
 
 const UserNameWithAvatar = React.memo(
-  ({ userId, avatarSrc, isLoading, fontStyle = "normal", withName = true }) => {
+  ({
+    userId,
+    avatarSrc,
+    isLoading,
+    fontStyle = "normal",
+    withName = true,
+    color = "white"
+  }) => {
     return (
       <Component>
         <AvatarImage
@@ -23,7 +30,7 @@ const UserNameWithAvatar = React.memo(
         />
         {withName && (
           <Typography
-            sx={{ width: "100%", fontStyle: fontStyle, color: "white" }}
+            sx={{ width: "100%", fontStyle: fontStyle, color: color }}
           >
             {FormatManagerName(userId)}
           </Typography>

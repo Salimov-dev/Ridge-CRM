@@ -72,18 +72,15 @@ router.post("/create", auth, async (req, res) => {
 
     // Собираем все обновления в массив
     let companyUpdates = [];
-    // console.log("companyUpdates", companyUpdates);
 
     // Обновляем список объектов в каждой компании
     for (const company of companiesToUpdate) {
       let objects = company.dataValues.objects || [];
-      // console.log("objects", objects);
 
       // Проверяем, есть ли уже такой объект у компании
       const foundObjectIndex = objects.findIndex(
         (obj) => obj.object === objectId
       );
-      // console.log("foundObjectIndex", foundObjectIndex);
 
       if (foundObjectIndex === -1) {
         // Если объект не найден, добавляем новый объект в массив
@@ -142,109 +139,24 @@ router.get("/:objectId?", auth, async (req, res) => {
   }
 });
 
-// router.patch("/:objectId?/edit", auth, async (req, res) => {
-//   try {
-//     const { objectId } = req.params;
-//     const { companies } = req.body;
-
-//     if (!objectId) {
-//       return res.status(400).json({
-//         message: "Необходимо указать идентификатор объекта (objectId)."
-//       });
-//     }
-
-//     const existingObject = await Object.findByPk(objectId);
-
-//     if (!existingObject) {
-//       return res.status(404).json({
-//         message: "Объект не найден."
-//       });
-//     }
-
-//     // Получаем связанные компании для обновления
-//     const companiesToUpdate = await Company.findAll({
-//       where: {
-//         // Проверяем, есть ли companyId из contacts в массиве компаний
-//         _id: companies.map((comp) => comp.company)
-//       }
-//     });
-
-//     // Собираем все обновления в массив
-//     let companyUpdates = [];
-//     // Массив для хранения id компаний, которые будут обновлены
-//     let updatedCompanyIds = [];
-
-//     // Обновляем список объектов в каждой компании
-//     for (const company of companiesToUpdate) {
-//       let objects = company.dataValues.objects || [];
-
-//       // Проверяем, есть ли уже такой объект у компании
-//       const foundObjectIndex = objects.findIndex(
-//         (obj) => obj.object === objectId
-//       );
-
-//       if (foundObjectIndex === -1) {
-//         // Если объект не найден, добавляем новый объект в массив
-//         objects.push({ object: objectId });
-//       }
-
-//       // Сохраняем обновление для данной компании в массив
-//       companyUpdates.push(
-//         Company.update({ objects }, { where: { _id: company._id } })
-//       );
-//       updatedCompanyIds.push(company._id);
-//     }
-
-//     // Получаем список id компаний до обновления
-//     const originalCompanyIds = companies.map((comp) => comp.company);
-//     console.log("originalCompanyIds", originalCompanyIds);
-
-//     // Находим id компаний, которые были удалены
-//     const deletedCompanyIds = originalCompanyIds.filter(
-//       (companyId) => !updatedCompanyIds.includes(companyId)
-//     );
-//     console.log("deletedCompanyIds", deletedCompanyIds);
-
-//     // Удаляем объект из списка объектов в удаленных компаниях
-//     if (deletedCompanyIds.length > 0) {
-//       await Company.update(
-//         {
-//           objects: Sequelize.literal(
-//             `array_remove(objects, '{"object":"${objectId}"}')`
-//           )
-//         },
-//         { where: { _id: deletedCompanyIds } }
-//       );
-//     }
-
-//     // Получаем обновленный список компаний
-//     const updatedCompanies = await Company.findAll({
-//       where: {
-//         _id: updatedCompanyIds
-//       }
-//     });
-//     // console.log("updatedCompanies", updatedCompanies);
-//     // Обновляем объект и возвращаем результат
-//     const updatedObjectArray = await existingObject.update(req.body);
-
-//     // Выполняем все обновления компаний одновременно
-//     await Promise.all(companyUpdates);
-
-//     res.status(200).json(updatedCompanies);
-//   } catch (e) {
-//     console.error(e);
-//     res.status(500).json({
-//       message: "На сервере произошла ошибка, попробуйте позже"
-//     });
-//   }
-// });
-
 router.patch("/:objectId?/edit", auth, async (req, res) => {
   try {
     const { objectId } = req.params;
+
     const { newData } = req.body;
+    console.log("newData", newData);
 
     const companies = newData.companies;
+    if (
+      !req.body.previousCompanies ||
+      !req.body.removedCompanies ||
+      !req.body.addedCompanies
+    ) {
+      const updatedObject = await Object.update(newData, {
+        where: { _id: objectId }
+      });
+      return res.send(updatedObject);
+    }
 
     const previousCompanies = req.body.previousCompanies;
     const removedCompanies = req.body.removedCompanies;

@@ -1,5 +1,5 @@
 import dayjs from "dayjs";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { Box, styled } from "@mui/material";
 // components
@@ -16,6 +16,9 @@ import target_cluster from "@assets/map/target_cluster.png";
 // styles
 import "./styles.css";
 import { citiesArray } from "@data/cities";
+import { useSelector } from "react-redux";
+import { getCurrentUserData } from "@store/user/users.store";
+import { getCityDataById } from "@store/city/citites.store";
 
 const MapContainer = styled(Box)`
   height: 350px;
@@ -35,9 +38,10 @@ const ItemsOnMap = ({
   const [activePortal, setActivePortal] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
 
-  const center = [citiesArray[1].longitude, citiesArray[1].latitude];
-  // const center = [55.755167662127775, 37.61892916430014];
-  // const center = [59.930320630519155, 30.32906024941998];
+  const currentUser = useSelector(getCurrentUserData());
+  const userCity = citiesArray.find((city) => city._id === currentUser?.city);
+
+  const center = [userCity?.longitude, userCity?.latitude];
   const mapZoom = 11;
   const clustererInstanceRef = useRef(null);
 
@@ -58,6 +62,18 @@ const ItemsOnMap = ({
 
     return createPortal(children, el);
   };
+
+  const userColor = currentUser?.color;
+
+  const iconImageHref = useMemo(() => {
+    // Преобразование компонента LocationIcon в base64
+    const svgString = `
+      <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="${userColor}" stroke="black" strokeWidth="2">
+        <path d="M12 2c-4.97 0-9 4.03-9 9s9 13 9 13s9-8.45 9-13S16.97 2 12 2zM12 15c-2.21 0-4-1.79-4-4s1.79-4 4-4s4 1.79 4 4S14.21 15 12 15z"/>
+      </svg>
+    `;
+    return `data:image/svg+xml;base64,${btoa(svgString)}`;
+  }, [userColor]);
 
   return (
     <MapContainer sx={{ width: !isFullscreen ? "100%" : "calc(100% - 86px)" }}>
@@ -105,7 +121,7 @@ const ItemsOnMap = ({
                 modules={["geoObject.addon.balloon", "geoObject.addon.hint"]}
                 options={{
                   iconLayout: "default#image",
-                  iconImageHref: target,
+                  iconImageHref: iconImageHref,
                   iconImageSize: [40, 40],
                   iconImageOffset: [-20, -40]
                 }}

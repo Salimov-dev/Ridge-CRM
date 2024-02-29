@@ -24,7 +24,7 @@ const Footer = ({
   isEdit,
   isLoading,
   onOpenCreatePresentationPage,
-  isAuthorEntity = true,
+  isAuthorEntity = true
 }) => {
   const dispatch = useDispatch();
   const objectStatuses = useSelector(getObjectsStatusList());
@@ -34,10 +34,10 @@ const Footer = ({
     register,
     watch,
     setValue,
-    formState: { errors },
+    formState: { errors }
   } = useForm({
     defaultValues: object,
-    mode: "onChange",
+    mode: "onChange"
   });
 
   const watchStatus = watch("status");
@@ -53,9 +53,15 @@ const Footer = ({
     }
   }, [watchStatus, objectStatus]);
 
+  let removedCompanie = [];
+  let addedCompanie = [];
+  let previousCompanie = [];
+
+  const newData = { ...object, status: watchStatus };
+
   useEffect(() => {
     if (statusChanged) {
-      dispatch<any>(updateObject({ ...object, status: watchStatus }));
+      dispatch<any>(updateObject({ newData: newData }));
     }
   }, [watchStatus, statusChanged]);
 
