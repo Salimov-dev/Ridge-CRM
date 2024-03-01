@@ -14,16 +14,19 @@ const ButtonStyled = ({
   icon = null,
   fontSize = "auto",
   padding = "auto",
-  border = null
+  border = null,
+  background = null,
+  backgroundHover = null,
+  colorHover = null
 }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
   let color = "white";
-  let colorHover = "black";
+  // let colorHover = "black";
   let borderColor = colors.grey[700];
-  let background = colors.grey[700];
-  let backgroundHover = colors.green["darkGreen"];
+  // let background = colors.grey[700];
+  // let backgroundHover = colors.green["darkGreen"];
 
   if (style === "OBJECT") {
     colorHover = "white";

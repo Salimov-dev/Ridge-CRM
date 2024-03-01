@@ -13,8 +13,6 @@ const handleObjectSocket = (socket) => {
     dispatch<any>(createObjectUpdate(newObject));
   });
   socket.on("updateObject", async (updatedObject) => {
-    console.log("updatedObject", updatedObject);
-
     dispatch<any>(updateObjectUpdate(updatedObject));
   });
   socket.on("updateMultipleObjects", async (updatedObjects) => {

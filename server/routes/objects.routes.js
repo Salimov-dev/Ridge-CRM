@@ -144,7 +144,6 @@ router.patch("/:objectId?/edit", auth, async (req, res) => {
     const { objectId } = req.params;
 
     const { newData } = req.body;
-    console.log("newData", newData);
 
     const companies = newData.companies;
     if (
@@ -334,18 +333,15 @@ router.delete("/:objectId?", auth, async (req, res) => {
 
     // Собираем все обновления в массив
     let companyUpdates = [];
-    // console.log("companyUpdates", companyUpdates);
 
     // Обновляем список объектов в каждой компании
     for (const company of companiesToUpdate) {
       let objects = company.dataValues.objects || [];
-      // console.log("objects", objects);
 
       // Проверяем, есть ли уже такой объект у компании
       const foundObjectIndex = objects.findIndex(
         (obj) => obj.object === objectId
       );
-      // console.log("foundObjectIndex", foundObjectIndex);
 
       if (foundObjectIndex === -1) {
         // Если объект не найден, добавляем новый объект в массив

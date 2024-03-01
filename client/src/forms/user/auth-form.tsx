@@ -1,27 +1,17 @@
 import { useState } from "react";
 import { orderBy } from "lodash";
-import { InputAdornment, IconButton, Box, Typography } from "@mui/material";
+import { useSelector } from "react-redux";
+import { InputAdornment, IconButton } from "@mui/material";
+import ColorPicker from "@components/common/color-picker/color-picker";
+// icons
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import { FieldsContainer, Form } from "../components/common/forms/styled";
-import TextFieldStyled from "../components/common/inputs/text-field-styled";
-import { CirclePicker } from "react-color";
-import styled from "@emotion/styled";
-import { citiesArray } from "@data/cities";
+// components
+import { FieldsContainer, Form } from "../../components/common/forms/styled";
+import TextFieldStyled from "../../components/common/inputs/text-field-styled";
 import AutocompleteStyled from "@components/common/inputs/autocomplete-styled";
-import { useSelector } from "react-redux";
+// store
 import { getCititesList } from "@store/city/citites.store";
-import Errors from "@components/common/inputs/components/errors";
-
-const ColorPicker = styled(Box)`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin: 5px 0 0px 0;
-  gap: 14px;
-`;
 
 const AuthForm = ({
   data,
@@ -93,13 +83,12 @@ const AuthForm = ({
       </FieldsContainer>
 
       {isRegister && (
-        <ColorPicker>
-          <Typography variant="h5" sx={{ color: "Aqua" }}>
-            Выберите свой цвет в Грядке:
-          </Typography>
-          <CirclePicker color={color} onChangeComplete={onColorChange} />
-          <Errors errors={errors.color} color="LightCoral" fontSize="14px" />
-        </ColorPicker>
+        <ColorPicker
+          title="Выберите свой цвет в Грядке"
+          color={color}
+          onColorChange={onColorChange}
+          errors={errors}
+        />
       )}
     </Form>
   );

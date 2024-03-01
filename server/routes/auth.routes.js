@@ -68,7 +68,6 @@ router.post("/signUp", [
       }
 
       const { email, password, color, city } = req.body;
-      console.log("req.body;", req.body);
 
       // Check if the user with the provided email already exists
       const existingUser = await User.findOne({ where: { email } });

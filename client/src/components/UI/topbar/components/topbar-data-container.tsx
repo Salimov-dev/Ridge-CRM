@@ -50,7 +50,13 @@ const TopBarDataContainter = ({
         {title}
       </Typography>
       <ResultContainer
-        sx={{ background: backgroundColor, color: fontColor }}
+        sx={{
+          background: backgroundColor,
+          color: fontColor,
+          "&:hover": {
+            border: "2px solid yellow"
+          }
+        }}
         onClick={() => {
           navigate(path);
           dispatch<any>(setCurrrentPathState(window.location.pathname));

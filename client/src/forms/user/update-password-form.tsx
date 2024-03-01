@@ -1,5 +1,5 @@
-import { FieldsContainer, Form } from "../components/common/forms/styled";
-import TextFieldStyled from "../components/common/inputs/text-field-styled";
+import { FieldsContainer, Form } from "../../components/common/forms/styled";
+import TextFieldStyled from "../../components/common/inputs/text-field-styled";
 
 const UpdatePasswordForm = ({ data, register, errors }) => {
   return (

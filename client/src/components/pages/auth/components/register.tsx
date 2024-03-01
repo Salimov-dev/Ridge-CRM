@@ -1,5 +1,5 @@
 // libraries
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
@@ -7,12 +7,12 @@ import { useTheme } from "@emotion/react";
 import { tokens } from "@theme/theme";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Box, styled } from "@mui/material";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 // components
 import ButtonStyled from "@components/common/buttons/button-styled.button";
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
 import HeaderWithCloseButton from "@components/common/page-headers/header-with-close-button";
-import AuthForm from "@forms/auth-form";
+import AuthForm from "@forms/user/auth-form";
 import PolisiesLinks from "./policies-links";
 import PageDialogs from "@components/common/dialog/page-dialogs";
 // schema

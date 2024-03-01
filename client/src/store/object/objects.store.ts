@@ -128,9 +128,7 @@ export const createObjectUpdate = (payload) => async (dispatch) => {
 export const updateObject = (payload) => async (dispatch) => {
   dispatch(objectUpdateRequested());
   try {
-    console.log("payload", payload);
     const { content } = await objectService.update(payload);
-    console.log("content", content);
 
     dispatch(updateCompanies(content));
     socket.emit("objectUpdated", payload.newData);

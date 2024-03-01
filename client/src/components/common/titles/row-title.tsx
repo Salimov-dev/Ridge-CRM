@@ -4,7 +4,7 @@ import { Box, Typography } from "@mui/material";
 const Component = styled(Typography)`
   margin: 0px 0 10px 0;
   padding: 6px 12px 28px 12px;
-  border-radius: 6px;
+  border-radius: 4px;
   height: 32px;
 `;
 

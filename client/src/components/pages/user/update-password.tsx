@@ -12,7 +12,7 @@ import { passwordUpdateSchema } from "@schemas/password-update.schema";
 // store
 import { updatePassword } from "@store/user/users.store";
 // forms
-import UpdatePasswordForm from "@forms/update-password-form";
+import UpdatePasswordForm from "@forms/user/update-password-form";
 
 const initialState = {
   currentPassword: "",

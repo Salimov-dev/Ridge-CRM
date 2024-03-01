@@ -24,6 +24,8 @@ import {
 } from "@store/user/user-license.store";
 // schema
 import { paymentAmounySchema } from "@schemas/payment-amount.schema";
+import { FormatDate } from "@utils/date/format-date";
+import { removeSpacesAndConvertToNumber } from "@utils/data/remove-spaces-and-convert-to-number";
 
 const initialState = {
   amount: 0
@@ -48,7 +50,7 @@ const MakePaymentPage = React.memo(({ onClose }) => {
   const currentUserId = useSelector(getCurrentUserId());
   const userLicense = useSelector(getUserLicensesByUserId(currentUserId));
 
-  const paymentAmount = watch("amount");
+  const paymentAmount = removeSpacesAndConvertToNumber(watch("amount"));
 
   const managersLength = userLicense?.managers.length;
   const observersLength = userLicense?.observers.length;

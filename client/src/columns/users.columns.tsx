@@ -9,6 +9,9 @@ import UserNameWithAvatar from "@components/common/user-name-with-avatar";
 import { FormatDate } from "@utils/date/format-date";
 // hooks
 import useGetUserAvatar from "@hooks/user/use-get-user-avatar";
+import ButtonStyled from "@components/common/buttons/button-styled.button";
+import { useSelector } from "react-redux";
+import { getCurrentUserData } from "@store/user/users.store";
 
 export const usersColumns = () => [
   {
@@ -86,6 +89,7 @@ export const usersColumns = () => [
       }
     ]
   },
+
   {
     header: "Контакты",
     columns: [
@@ -108,6 +112,43 @@ export const usersColumns = () => [
         cell: (info) => {
           const email = info.getValue();
           return <AlignCenter>{email}</AlignCenter>;
+        }
+      }
+    ]
+  },
+  {
+    header: "Пользователь",
+    columns: [
+      {
+        accessorFn: (row) => row,
+        header: "Открыть",
+        maxWidth: 70,
+        minWidth: 50,
+        width: 60,
+        cell: (info) => {
+          const row = info.getValue();
+          const userRoleManager = "69gfoep3944jgjdso345002";
+          const isRoleManager = row?.role.includes(userRoleManager);
+
+          // const lastContactId = info.getValue();
+          // const lastContact = useSelector(getLastContactsById(lastContactId));
+          // const currentUserId = useSelector(getCurrentUserId());
+          // const isAuthorEntity = useSelector(
+          //   getIsUserAuthorThisEntity(currentUserId, lastContact)
+          // );
+
+          return (
+            <AlignCenter>
+              <ButtonStyled
+                title="ПРАВИТЬ"
+                background={isRoleManager ? "green" : "blue"}
+                backgroundHover={isRoleManager ? "darkGreen" : "darkBlue"}
+                colorHover="white"
+                // disabled={!isAuthorEntity}
+                // onClick={() => onUpdate(lastContactId)}
+              />
+            </AlignCenter>
+          );
         }
       }
     ]

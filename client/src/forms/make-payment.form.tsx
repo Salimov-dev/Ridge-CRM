@@ -8,13 +8,11 @@ const MakePaymentForm = ({ data, register, errors }) => {
         <TextFieldStyled
           register={register}
           label="Сумма для пополнения"
-          type="number"
           valueAsNumber={true}
           name="amount"
           required={true}
           errors={errors?.amount}
           value={data?.amount}
-          onInputQuantities={25}
         />
       </FieldsContainer>
     </Form>

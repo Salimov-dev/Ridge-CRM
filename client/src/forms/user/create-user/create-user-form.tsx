@@ -1,9 +1,10 @@
-import { FieldsContainer, Form } from "../components/common/forms/styled";
-import TextFieldStyled from "../components/common/inputs/text-field-styled";
-import SelectFieldStyled from "../components/common/inputs/select-field-styled";
+import { FieldsContainer, Form } from "@components/common/forms/styled";
+import TextFieldStyled from "@components/common/inputs/text-field-styled";
+import SelectFieldStyled from "@components/common/inputs/select-field-styled";
+import ColorPicker from "@components/common/color-picker/color-picker";
 import { userRolesArray } from "@data/users/user-roles";
 
-const CreateUserForm = ({ data, register, errors }) => {
+const CreateUserForm = ({ data, register, errors, color, onColorChange }) => {
   const roleManager = "69gfoep3944jgjdso345002";
   const roleObserver = "69dgp34954igfj345043001";
 
@@ -32,6 +33,12 @@ const CreateUserForm = ({ data, register, errors }) => {
           itemsList={transformedRoles}
           value={data.role ?? ""}
           errors={errors?.role}
+        />
+        <ColorPicker
+          title="Выберите цвет нового пользователя в Грядке"
+          color={color}
+          onColorChange={onColorChange}
+          errors={errors}
         />
       </FieldsContainer>
     </Form>
