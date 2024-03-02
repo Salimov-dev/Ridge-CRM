@@ -81,8 +81,8 @@ const FieldsContact = ({
     <>
       <RowTitle
         title="Связь с контактами"
-        background="Indigo"
-        margin="14px 0 -6px 0"
+        background="linear-gradient(to right, SteelBlue , DarkSlateBlue)"
+        margin="14px 0 -4px 0"
       />
       {fieldContacts?.map((field, index) => {
         if (field.id) {
@@ -101,7 +101,11 @@ const FieldsContact = ({
                 label="Контакт"
                 register={register}
                 name={`contacts.${index}.contact`}
-                options={filteredContacts}
+                options={
+                  data.contacts?.[index].contact
+                    ? contactsList
+                    : filteredContacts
+                }
                 value={data.contacts?.[index].contact}
                 errors={errors?.contacts?.[index]?.contact}
                 setValue={setValue}

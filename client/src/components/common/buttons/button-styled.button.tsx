@@ -62,7 +62,7 @@ const ButtonStyled = ({
   }
 
   if (style === "MY_TASK_CALL") {
-    background = "linear-gradient(to right, #FF8C00, ForestGreen)";
+    background = "DarkOrange";
     colorHover = "white";
     backgroundHover = "linear-gradient(to right, SaddleBrown, DarkGreen)";
   }
@@ -110,9 +110,9 @@ const ButtonStyled = ({
   }
 
   if (style === "CONTACT") {
-    background = "MidnightBlue";
+    background = "SteelBlue";
     colorHover = "white";
-    backgroundHover = "DarkBlue";
+    backgroundHover = "MediumBlue";
   }
 
   if (style === "ADD_SOME_NEW") {

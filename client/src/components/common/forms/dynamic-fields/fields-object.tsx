@@ -65,8 +65,8 @@ const FieldsObject = ({
     <>
       <RowTitle
         title="Связь с объектами"
-        background="SteelBlue"
-        margin="14px 0 -6px 0"
+        background="linear-gradient(to right, Magenta , Indigo)"
+        margin="14px 0 -4px 0"
       />
       {fieldObjects?.map((field, index) => {
         if (field.id) {

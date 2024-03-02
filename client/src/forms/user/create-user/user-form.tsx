@@ -33,7 +33,6 @@ const UserForm = ({
 }) => {
   const roleManager = "69gfoep3944jgjdso345002";
   const roleObserver = "69dgp34954igfj345043001";
-  const watchIsActive = watch("isActive", true);
 
   const transformedRoles = userRolesArray.filter((role) => {
     return role._id === roleManager || role._id === roleObserver;
@@ -53,7 +52,7 @@ const UserForm = ({
             <SimpleSwitch
               title="Активирован"
               value={data.isActive}
-              // isLoading={isTasksLoading}
+              padding="0"
               onChange={(e) => {
                 setValue("isActive", e.target.checked);
               }}

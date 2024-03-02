@@ -153,7 +153,7 @@ export const objectsColumns = (handleOpenObjectPage, isCurator) => {
                   meetings={meetings}
                   tasks={tasks}
                   lastContacts={lastContacts}
-                  // onClick={handleClick}
+                  onClick={() => handleOpenObjectPage(objectId)}
                 />
               </Box>
             );

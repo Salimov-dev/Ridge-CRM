@@ -92,7 +92,7 @@ const TransferObjectToAnotherManager = React.memo(
           title="Передать объекты"
           color="white"
           margin="0 0 20px 0"
-          background="DarkBlue"
+          background="linear-gradient(to right, MediumBlue , Navy)"
           onClose={onClose}
         />
 

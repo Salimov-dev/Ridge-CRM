@@ -4,12 +4,12 @@ import { useNavigate } from "react-router-dom";
 import { Typography, Tooltip, Box } from "@mui/material";
 import { useSelector } from "react-redux";
 // utils
+import { capitalizeFirstLetter } from "@utils/data/capitalize-first-letter";
+import { pluralizeDays } from "@utils/date/pluralize-days";
 import { makeDigitSeparator } from "@utils/data/make-digit-separator";
 // store
 import { getUserLicensesByUserId } from "@store/user/user-license.store";
 import { getCurrentUserId } from "@store/user/users.store";
-import { capitalizeFirstLetter } from "@utils/data/capitalize-first-letter";
-import { pluralizeDays } from "@utils/date/pluralize-days";
 
 const Component = styled(Box)`
   width: 400px;
@@ -38,6 +38,8 @@ const TopBarCurrentDate = () => {
   const dateEnd = dayjs(userLicense?.dateEnd);
   const daysDifference = dateEnd?.diff(dayjs(), "day") + 1;
   const licenseBalance = makeDigitSeparator(userLicense?.balance);
+  const demoLicenseId = "71pbfi4954itj045tloop001";
+  const isDemoLicense = userLicense?.accountType === demoLicenseId;
 
   return (
     <Component>
@@ -45,7 +47,7 @@ const TopBarCurrentDate = () => {
         title="Текущая дата"
         placement="top-start"
         arrow
-        onClick={() => navigate("/users")}
+        onClick={() => navigate("/calendar")}
       >
         <Element variant="h5">{formattedDate} </Element>
       </Tooltip>
@@ -67,7 +69,9 @@ const TopBarCurrentDate = () => {
         arrow
         onClick={() => navigate("/users")}
       >
-        <Element variant="h5">{licenseBalance}₽</Element>
+        <Element variant="h5">
+          {!isDemoLicense ? `${licenseBalance}₽` : "демо"}
+        </Element>
       </Tooltip>
     </Component>
   );

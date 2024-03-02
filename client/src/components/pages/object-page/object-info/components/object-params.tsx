@@ -1,5 +1,7 @@
 import { Box } from "@mui/material";
+import { useState } from "react";
 import BasicTable from "@common/table/basic-table";
+import { useSelector } from "react-redux";
 import Title from "./title";
 import {
   commercialTermsColumns,
@@ -7,17 +9,18 @@ import {
   estateTypeColumns,
   locationColumns
 } from "@columns/object-page.columns";
-import { contactsColumns } from "@columns/contacts.columns";
+// components
 import RowTitle from "@components/common/titles/row-title";
-import { useSelector } from "react-redux";
-import { getCurrentUserId, getIsUserCurator } from "@store/user/users.store";
-import { getContactsList } from "@store/contact/contact.store";
-import { getLastContactsLoadingStatus } from "@store/last-contact/last-contact.store";
-import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
-import { useState } from "react";
 import { companiesColumns } from "@columns/companies.columns";
-import { getCompaniesList } from "@store/company/company.store";
 import PageDialogs from "@components/common/dialog/page-dialogs";
+// columns
+import { contactsColumns } from "@columns/contacts.columns";
+// hooks
+import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
+// store
+import { getCurrentUserId, getIsUserCurator } from "@store/user/users.store";
+import { getCompaniesList } from "@store/company/company.store";
+import { getContactsList } from "@store/contact/contact.store";
 
 const ObjectsParams = ({ object, isLoading }) => {
   const [state, setState] = useState({
@@ -31,12 +34,9 @@ const ObjectsParams = ({ object, isLoading }) => {
   });
 
   const description = object?.description?.fullDescription;
-
   const currentUserId = useSelector(getCurrentUserId());
-
   const objectContacts = object?.contacts.map((cont) => cont.contact);
   const contactsList = useSelector(getContactsList());
-
   const userContacts = contactsList.filter((cont) =>
     objectContacts.includes(cont._id)
   );
@@ -51,11 +51,12 @@ const ObjectsParams = ({ object, isLoading }) => {
 
   const { handleOpenContactPage, handleOpenUpdateCompanyPage } =
     useDialogHandlers(setState);
+
   return (
     <>
       <RowTitle
         title="Локация"
-        background="DarkGoldenRod"
+        background="linear-gradient(to right, DarkGoldenRod, OrangeRed)"
         margin="6px 0px -16px 0"
       />
       <BasicTable
@@ -65,10 +66,9 @@ const ObjectsParams = ({ object, isLoading }) => {
         isPaginate={false}
         isDialogMode={true}
       />
-
       <RowTitle
         title="Объект"
-        background="ForestGreen"
+        background="linear-gradient(to right, ForestGreen, DarkGreen)"
         margin="6px 0px -16px 0"
       />
       <BasicTable
@@ -81,7 +81,7 @@ const ObjectsParams = ({ object, isLoading }) => {
 
       <RowTitle
         title="Параметры"
-        background="OrangeRed"
+        background="linear-gradient(to right, OrangeRed , FireBrick)"
         margin="6px 0px -16px 0"
       />
       <BasicTable
@@ -94,7 +94,7 @@ const ObjectsParams = ({ object, isLoading }) => {
 
       <RowTitle
         title="Условия"
-        background="MediumVioletRed"
+        background="linear-gradient(to right, MediumVioletRed , DarkMagenta)"
         margin="6px 0px -16px 0"
       />
       <BasicTable
@@ -107,7 +107,7 @@ const ObjectsParams = ({ object, isLoading }) => {
 
       <RowTitle
         title="Связанные контакты"
-        background="Navy"
+        background="linear-gradient(to right, SteelBlue , DarkSlateBlue)"
         margin="6px 0px -16px 0"
       />
       <BasicTable
@@ -118,7 +118,7 @@ const ObjectsParams = ({ object, isLoading }) => {
       />
       <RowTitle
         title="Связанные компании"
-        background="Crimson"
+        background="linear-gradient(to right, Crimson , DarkRed)"
         margin="6px 0px -16px 0"
       />
       <BasicTable

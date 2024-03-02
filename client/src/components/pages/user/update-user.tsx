@@ -81,10 +81,21 @@ const UpdateUser = React.memo(({ userId, onClose }) => {
   return (
     <>
       <HeaderWithCloseButton
-        title="Изменить члена команды"
-        color="black"
+        title="Править члена команды"
+        background={data?.isActive ? "green" : "crimson"}
         margin="0 0 20px 0"
         onClose={onClose}
+      />
+
+      <UserForm
+        register={register}
+        data={data}
+        errors={errors}
+        color={color}
+        setValue={setValue}
+        watch={watch}
+        onColorChange={handleColorChange}
+        isUpdatePage={true}
       />
       {data?.isActive ? (
         <Message
@@ -97,17 +108,6 @@ const UpdateUser = React.memo(({ userId, onClose }) => {
           background="crimson"
         />
       )}
-
-      <UserForm
-        register={register}
-        data={data}
-        errors={errors}
-        color={color}
-        setValue={setValue}
-        watch={watch}
-        onColorChange={handleColorChange}
-        isUpdatePage={true}
-      />
       <SuccessCancelFormButtons
         onSuccess={handleSubmit(onSubmit)}
         onCancel={onClose}

@@ -49,9 +49,7 @@ const Users = React.memo(() => {
     mode: "onBlur"
   });
   const data = watch();
-
   const users = useSelector(getUsersList());
-
   const currentUserId = useSelector(getCurrentUserId());
 
   const isLoading = useSelector(getUsersLoadingStatus());

@@ -78,7 +78,7 @@ const ObjectForm = ({
       <Form noValidate>
         <RowTitle
           title="Объект"
-          background="ForestGreen"
+          background="linear-gradient(to right, ForestGreen, DarkGreen)"
           margin="14px 0 -2px 0"
         />
         <FieldsContainer>
@@ -192,7 +192,7 @@ const ObjectForm = ({
 
         <RowTitle
           title="Коммерческие условия"
-          background="OrangeRed"
+          background="linear-gradient(to right, DarkGoldenRod, OrangeRed)"
           margin="14px 0 -2px 0"
         />
         <FieldsContainer sx={{ flexDirection: "column", gap: "8px" }}>
@@ -300,7 +300,7 @@ const ObjectForm = ({
 
         <RowTitle
           title="Параметры помещения"
-          background="MediumBlue"
+          background="linear-gradient(to right, LightSlateGray , DarkSlateGray)"
           margin="14px 0 -2px 0"
         />
         <FieldsContainer sx={{ flexDirection: "column" }}>

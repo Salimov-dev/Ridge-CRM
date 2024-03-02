@@ -63,8 +63,8 @@ const FieldsCompany = ({
     <>
       <RowTitle
         title="Связь с компаниями"
-        background="Crimson"
-        margin="14px 0 -6px 0"
+        background="linear-gradient(to right, Crimson , DarkRed)"
+        margin="14px 0 -4px 0"
       />
       {fieldCompanies?.map((field, index) => {
         if (field.id) {

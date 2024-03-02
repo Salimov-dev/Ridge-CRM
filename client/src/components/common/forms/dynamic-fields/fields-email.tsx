@@ -67,8 +67,8 @@ const FieldsEmail = ({ data, register, setValue, errors, control }) => {
     <>
       <RowTitle
         title="Электронная почта"
-        background="DarkOrange"
-        margin="14px 0 -6px 0"
+        background="linear-gradient(to right, Orange , OrangeRed)"
+        margin="14px 0 -4px 0"
       />
       {fieldEmails?.map((field, index) => {
         if (field.id) {

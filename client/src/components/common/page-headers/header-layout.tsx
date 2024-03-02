@@ -10,8 +10,8 @@ const Component = styled(Box)`
 
 const HeaderLayout = ({
   title,
-  background = "yellow",
-  color = "black",
+  background = "linear-gradient(to right, DarkOrange , OrangeRed)",
+  color = "white",
   margin = "0 0 20px 0",
   justifyContent = "start",
   width = "inherit"
@@ -24,7 +24,7 @@ const HeaderLayout = ({
           width: width,
           background: background,
           color: color,
-          padding: "0 10px",
+          padding: "4px 14px",
           textAlign: "center",
           borderRadius: "4px"
         }}

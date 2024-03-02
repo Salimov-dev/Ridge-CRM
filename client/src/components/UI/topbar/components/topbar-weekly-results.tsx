@@ -65,8 +65,8 @@ const TopBarWeeklyResults = React.memo(() => {
           title="Объектов:"
           elements={objects}
           path="/objects"
-          backgroundColor="Gold"
-          fontColor="black"
+          backgroundColor="DarkOrange"
+          fontColor="white"
           isLoading={isObjectLoading}
         />
         <TopBarDataContainter

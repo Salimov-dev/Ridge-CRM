@@ -73,7 +73,11 @@ const FieldsPhone = ({ data, register, setValue, errors, control }) => {
 
   return (
     <>
-      <RowTitle title="Телефон" background="green" margin="14px 0 -6px 0" />
+      <RowTitle
+        title="Телефон"
+        background="linear-gradient(to right, SeaGreen , DarkOliveGreen)"
+        margin="14px 0 -4px 0"
+      />
       {fieldPhones?.map((field, index) => {
         if (field.id) {
           return (

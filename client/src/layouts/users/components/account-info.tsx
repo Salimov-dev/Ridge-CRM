@@ -7,16 +7,8 @@ import { getCurrentUserData } from "@store/user/users.store";
 
 const StyledLink = styled(Link)({
   textDecoration: "none",
-  color: "inherit",
   borderBottom: "1px solid transparent",
-  transition: "border-bottom-color 0.3s",
-
-  // Добавляем подчеркивание при наведении на ссылку
-  "&:hover": {
-    borderBottomColor: "#000", // Цвет подчеркивания при наведении
-    color: "yellow",
-    textDecoration: "underline"
-  }
+  transition: "border-bottom-color 0.3s"
 });
 
 const AccountInfo = () => {
@@ -33,7 +25,18 @@ const AccountInfo = () => {
       ) : (
         <Box sx={{ width: "fit-content" }}>
           <StyledLink to="/profile">
-            <Typography variant="h4">Заполните свой Профиль</Typography>
+            <Typography
+              variant="h4"
+              sx={{
+                color: "Coral",
+                "&:hover": {
+                  color: "red",
+                  textDecoration: "underline"
+                }
+              }}
+            >
+              Заполните свой Профиль
+            </Typography>
           </StyledLink>
         </Box>
       )}
