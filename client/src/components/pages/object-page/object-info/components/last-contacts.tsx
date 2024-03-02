@@ -1,13 +1,13 @@
 import { useSelector } from "react-redux";
 import { Box, Typography, styled } from "@mui/material";
-import DividerStyled from "@common/divider/divider-styled";
 import BasicTable from "@common/table/basic-table";
-import {
-  getLastContactsList,
-  getLastContactsLoadingStatus,
-} from "@store/last-contact/last-contact.store";
 import { lastContactColumns } from "@columns/last-contact.columns";
 import ButtonStyled from "@components/common/buttons/button-styled.button";
+import RowTitle from "@components/common/titles/row-title";
+import {
+  getLastContactsList,
+  getLastContactsLoadingStatus
+} from "@store/last-contact/last-contact.store";
 
 const Container = styled(Box)`
   display: flex;
@@ -21,7 +21,7 @@ const LastContacts = ({
   onUpdate,
   object,
   margin = "0",
-  isAuthorEntity,
+  isAuthorEntity
 }) => {
   const isLastContactsLoading = useSelector(getLastContactsLoadingStatus());
   const columns = lastContactColumns(onUpdate);
@@ -36,15 +36,17 @@ const LastContacts = ({
 
   return (
     <>
-      <DividerStyled />
       <Container sx={{ alignItems: "start" }}>
-        <Typography variant="h3" sx={{ margin: margin }}>
-          Последние контакты: {address}
-        </Typography>
+        <RowTitle
+          title="Последние контакты по объекту"
+          background="linear-gradient(to right, Chocolate , SaddleBrown)"
+          margin="16px 0px -4px 0"
+        />
         <ButtonStyled
           title="Добавить последний контакт"
           style="LAST_CONTACT"
           variant="contained"
+          width="280px"
           onClick={() => onOpen(objectId)}
         />
       </Container>

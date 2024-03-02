@@ -3,16 +3,11 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import { Box, styled } from "@mui/material";
 // components
-import ObjectsParams from "./components/object-params";
-import ObjectTasks from "./components/object-tasks";
-import ObjectMeetings from "./components/object-meetings";
-import LastContacts from "./components/last-contacts";
 import PageDialogs from "@components/common/dialog/page-dialogs";
-// columns
-import { tasksColumns } from "@columns/tasks.columns";
-import { meetingsColumns } from "@columns/meetings.columns";
-// hooks
-import useObjectInfo from "@hooks/object-info/use-object-info.hook";
+import Acitivty from "./components/activity/activity";
+import Contacts from "./components/contacts/contacts";
+import TabsStyled from "@components/common/tabs/tabs-styled";
+import Information from "./components/information/information";
 // store
 import { getObjectsList } from "@store/object/objects.store";
 import { getCurrentUserId, getIsUserCurator } from "@store/user/users.store";
@@ -24,7 +19,7 @@ const Component = styled(Box)`
   margin-bottom: 20px;
 `;
 
-const ObjectInfo = ({ object, objectId, isLoading, isAuthorEntity = true }) => {
+const ObjectInfo = ({ object, objectId, isLoading }) => {
   const [state, setState] = useState({
     createMyTaskPage: false,
     updateMyTaskPage: false,
@@ -49,55 +44,30 @@ const ObjectInfo = ({ object, objectId, isLoading, isAuthorEntity = true }) => {
   );
   const actualObjects = isCurator ? currentUserObjects : objects;
 
-  const {
-    handleOpenCreateMyTaskPage,
-    handleOpenUpdateMyTaskPage,
-    handleOpenCreateManagerTaskPage,
-    handleOpenUpdateManagerTaskPage,
-    handleOpenCreateLastContactPage,
-    handleOpenUpdateLastContactPage,
-    handleOpenCreateMeetingPage,
-    handleOpenUpdateMeetingPage
-  } = useObjectInfo(setState);
+  const tabs = [
+    {
+      label: "Информация",
+      component: <Information object={object} isLoading={isLoading} />
+    },
+    {
+      label: "Контакты",
+      component: <Contacts object={object} setState={setState} />
+    },
+    {
+      label: "Активность",
+      component: (
+        <Acitivty object={object} objectId={objectId} setState={setState} />
+      )
+    }
+  ];
+  const [value, setValue] = useState(0);
 
-  const isDialogPage = true;
-
+  const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
+    setValue(newValue);
+  };
   return (
     <Component>
-      <ObjectsParams object={object} isLoading={isLoading} />
-
-      <ObjectTasks
-        object={object}
-        objectId={objectId}
-        onOpenCreateMyTask={handleOpenCreateMyTaskPage}
-        onOpenCreateManagerTask={handleOpenCreateManagerTaskPage}
-        isAuthorEntity={isAuthorEntity}
-        columns={tasksColumns(
-          handleOpenUpdateMyTaskPage,
-          handleOpenUpdateManagerTaskPage,
-          () => {},
-          isDialogPage
-        )}
-      />
-      <ObjectMeetings
-        object={object}
-        objectId={objectId}
-        onOpenCreateMeeting={handleOpenCreateMeetingPage}
-        columns={meetingsColumns(
-          handleOpenUpdateMeetingPage,
-          () => {},
-          isDialogPage,
-          isCurator
-        )}
-        isAuthorEntity={isAuthorEntity}
-      />
-      <LastContacts
-        object={object}
-        objectId={objectId}
-        onOpen={handleOpenCreateLastContactPage}
-        onUpdate={handleOpenUpdateLastContactPage}
-        isAuthorEntity={isAuthorEntity}
-      />
+      <TabsStyled tabs={tabs} value={value} onChange={handleTabChange} />
       <PageDialogs state={state} setState={setState} objects={actualObjects} />
     </Component>
   );

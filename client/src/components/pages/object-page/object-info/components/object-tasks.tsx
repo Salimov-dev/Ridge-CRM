@@ -3,6 +3,7 @@ import { Box, Typography, styled } from "@mui/material";
 import BasicTable from "@common/table/basic-table";
 import ButtonStyled from "@components/common/buttons/button-styled.button";
 import sortingByDateAndTime from "@utils/other/sorting-by-date-and-time";
+import RowTitle from "@components/common/titles/row-title";
 import {
   getObjectTasksList,
   getTaskLoadingStatus
@@ -32,12 +33,17 @@ const ObjectTasks = ({
   return (
     <>
       <Container sx={{ alignItems: "start" }}>
-        <Typography variant="h3">Задачи по объекту: {address}</Typography>
+        <RowTitle
+          title="Задачи по объекту"
+          background="linear-gradient(to right, Orange , OrangeRed)"
+          margin="0px 0px -4px 0"
+        />
         {isAuthorEntity ? (
           <ButtonStyled
             title="Поставить себе задачу или звонок"
             style="MY_TASK_CALL"
             variant="contained"
+            width="330px"
             onClick={() => onOpenCreateMyTask(objectId)}
           />
         ) : (

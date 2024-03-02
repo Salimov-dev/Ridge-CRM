@@ -87,11 +87,13 @@ const FieldsPhone = ({ data, register, setValue, errors, control }) => {
                 width: "100%",
                 height: "100%",
                 display: "flex",
-                alignItems: "center",
-                gap: "4px"
+                alignItems: "center"
               }}
             >
-              <DeleteElementIcon onClick={() => handleRemovePhone(index)} />
+              <DeleteElementIcon
+                onClick={() => handleRemovePhone(index)}
+                error={errors?.phones?.[index]?.phone}
+              />
               <TextFieldStyled
                 register={register}
                 label="Телефон"
@@ -121,7 +123,7 @@ const FieldsPhone = ({ data, register, setValue, errors, control }) => {
           return null;
         }
       })}
-      <FormHelperText sx={{ marginTop: "-4px" }}>
+      <FormHelperText sx={{ margin: "-4px 0  0 52px" }}>
         Вводите номер телефона только в форматах 79045554433, 78129998877,
         9995544
       </FormHelperText>

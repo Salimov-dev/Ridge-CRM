@@ -17,7 +17,8 @@ const ButtonStyled = ({
   border = null,
   background = null,
   backgroundHover = null,
-  colorHover = null
+  colorHover = null,
+  margin = "0"
 }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -225,6 +226,7 @@ const ButtonStyled = ({
         background: background,
         whiteSpace: "nowrap",
         width: width,
+        margin: margin,
         "&:hover": {
           color: colorHover,
           background: backgroundHover,

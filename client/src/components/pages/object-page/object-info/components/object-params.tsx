@@ -21,6 +21,7 @@ import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
 import { getCurrentUserId, getIsUserCurator } from "@store/user/users.store";
 import { getCompaniesList } from "@store/company/company.store";
 import { getContactsList } from "@store/contact/contact.store";
+import DividerStyled from "@components/common/divider/divider-styled";
 
 const ObjectsParams = ({ object, isLoading }) => {
   const [state, setState] = useState({
@@ -104,7 +105,11 @@ const ObjectsParams = ({ object, isLoading }) => {
         isPaginate={false}
         isDialogMode={true}
       />
-
+      <Title title="Описание" />
+      <Box sx={{ marginBottom: "20px", whiteSpace: "pre-line" }}>
+        {description ? description : "Нет описания"}
+      </Box>
+      <DividerStyled />
       <RowTitle
         title="Связанные контакты"
         background="linear-gradient(to right, SteelBlue , DarkSlateBlue)"
@@ -127,10 +132,7 @@ const ObjectsParams = ({ object, isLoading }) => {
         isLoading={isLoading}
         isDialogMode={true}
       />
-      <Title title="Описание" />
-      <Box sx={{ marginBottom: "20px", whiteSpace: "pre-line" }}>
-        {description ? description : "Нет описания"}
-      </Box>
+      <DividerStyled />
       <PageDialogs state={state} setState={setState} />
     </>
   );

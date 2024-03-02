@@ -92,8 +92,7 @@ const FieldsContact = ({
               sx={{
                 width: "100%",
                 display: "flex",
-                alignItems: "center",
-                gap: "12px"
+                alignItems: "center"
               }}
             >
               <DeleteElementIcon onClick={() => handleRemoveContact(index)} />

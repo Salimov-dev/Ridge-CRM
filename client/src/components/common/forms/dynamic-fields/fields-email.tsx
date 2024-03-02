@@ -79,11 +79,13 @@ const FieldsEmail = ({ data, register, setValue, errors, control }) => {
                 width: "100%",
                 height: "100%",
                 display: "flex",
-                alignItems: "center",
-                gap: "4px"
+                alignItems: "center"
               }}
             >
-              <DeleteElementIcon onClick={() => handleRemoveEmail(index)} />
+              <DeleteElementIcon
+                onClick={() => handleRemoveEmail(index)}
+                error={errors?.emails?.[index]?.email}
+              />
               <TextFieldStyled
                 register={register}
                 label="Почта"

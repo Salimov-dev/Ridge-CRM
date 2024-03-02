@@ -1,12 +1,12 @@
 import { useSelector } from "react-redux";
 import { Box, Typography, styled } from "@mui/material";
 import BasicTable from "@common/table/basic-table";
-import DividerStyled from "@common/divider/divider-styled";
 import sortingByDateAndTime from "@utils/other/sorting-by-date-and-time";
 import ButtonStyled from "@components/common/buttons/button-styled.button";
+import RowTitle from "@components/common/titles/row-title";
 import {
   getMeetingLoadingStatus,
-  getObjectMeetingsList,
+  getObjectMeetingsList
 } from "@store/meeting/meetings.store";
 
 const Title = styled(Box)`
@@ -20,7 +20,7 @@ const ObjectMeetings = ({
   objectId,
   onOpenCreateMeeting,
   columns,
-  isAuthorEntity = true,
+  isAuthorEntity = true
 }) => {
   const isMeetingsLoading = useSelector(getMeetingLoadingStatus());
   const address = `${object?.city}, ${object?.address}`;
@@ -30,9 +30,12 @@ const ObjectMeetings = ({
 
   return (
     <>
-      <DividerStyled />
       <Title>
-        <Typography variant="h3">Встречи по объекту: {address}</Typography>
+        <RowTitle
+          title="Встречи по объекту"
+          background="linear-gradient(to right, RoyalBlue , MediumBlue)"
+          margin="16px 0px -4px 0"
+        />
         {isAuthorEntity ? (
           <ButtonStyled
             title="Добавить встречу"
