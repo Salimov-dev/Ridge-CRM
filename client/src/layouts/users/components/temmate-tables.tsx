@@ -15,7 +15,8 @@ const TeamMateTables = React.memo(
     data,
     register,
     setValue,
-    isLoading
+    isLoading,
+    onOpenUpdateUserPage
   }) => {
     return (
       <Box sx={{ marginTop: "10px" }}>
@@ -24,7 +25,7 @@ const TeamMateTables = React.memo(
         <RowTitle title="Мои Наблюдатели" background="blue" />
         <BasicTable
           items={observerUsersWithRole}
-          itemsColumns={usersColumns()}
+          itemsColumns={usersColumns(onOpenUpdateUserPage)}
           isLoading={isLoading}
         />
 
@@ -37,7 +38,7 @@ const TeamMateTables = React.memo(
         />
         <BasicTable
           items={searchedUsers}
-          itemsColumns={usersColumns()}
+          itemsColumns={usersColumns(onOpenUpdateUserPage)}
           isLoading={isLoading}
         />
       </Box>

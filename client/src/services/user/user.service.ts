@@ -20,7 +20,15 @@ const userService = {
   },
   update: async (payload) => {
     const { data } = await httpService.patch(
-      userEndpoint + localStorageService.getUserId() + "/edit-manager",
+      userEndpoint + localStorageService.getUserId() + "/update-user",
+      payload
+    );
+
+    return data;
+  },
+  updateTeammate: async (payload) => {
+    const { data } = await httpService.patch(
+      userEndpoint + payload._id + "/update-teammate",
       payload
     );
 
@@ -32,7 +40,7 @@ const userService = {
 
     const requestData = {
       currentPassword,
-      newPassword,
+      newPassword
     };
 
     const { data } = await httpService.patch(
@@ -41,6 +49,6 @@ const userService = {
     );
 
     return data;
-  },
+  }
 };
 export default userService;

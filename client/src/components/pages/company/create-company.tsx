@@ -16,7 +16,7 @@ import CompanyForm from "@forms/company/company.form";
 // store
 import { createCompany } from "@store/company/company.store";
 // schema
-import { companySchema } from "@schemas/company.shema";
+import { companySchema } from "@schemas/company/company.shema";
 
 const initialState = {
   name: "",

@@ -8,7 +8,7 @@ import TitleWithCloseButton from "@components/common/page-headers/header-with-cl
 import SuccessCancelFormButtons from "@components/common/buttons/success-cancel-form-buttons";
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
 // schemas
-import { passwordUpdateSchema } from "@schemas/password-update.schema";
+import { passwordUpdateSchema } from "@schemas/auth/password-update.schema";
 // store
 import { updatePassword } from "@store/user/users.store";
 // forms

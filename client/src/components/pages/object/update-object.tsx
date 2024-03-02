@@ -12,7 +12,7 @@ import SuccessCancelFormButtons from "@components/common/buttons/success-cancel-
 // utils
 import { removeSpacesAndConvertToNumber } from "@utils/data/remove-spaces-and-convert-to-number";
 // schemas
-import { objectSchema } from "@schemas/object.schema";
+import { objectSchema } from "@schemas/object/object.schema";
 // store
 import { getObjectById, updateObject } from "@store/object/objects.store";
 import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";

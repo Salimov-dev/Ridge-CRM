@@ -3,7 +3,7 @@ import TextFieldStyled from "../../components/common/inputs/text-field-styled";
 import SelectFieldStyled from "../../components/common/inputs/select-field-styled";
 import { companyProfilesArray } from "@data/company-profiles";
 import FieldsObject from "../../components/common/forms/dynamic-fields/fields-object";
-import FieldsContact from "./components/fields-contact";
+import FieldsContact from "../../components/common/forms/dynamic-fields/fields-contact";
 
 const CompanyForm = ({
   data,

@@ -120,62 +120,57 @@ export const contactsColumns = (handleOpenContactPage, isCurator) => {
     }
   };
 
-  const contactsColumn = {
-    header: "Контакты",
-    columns: [
-      {
-        accessorFn: (row) => row,
-        header: "Имя",
-        cell: (info) => {
-          const row = info.getValue();
-          const name = row?.name;
+  const contactsColumn = [
+    {
+      accessorFn: (row) => row,
+      header: "Имя",
+      cell: (info) => {
+        const row = info.getValue();
+        const name = row?.name;
 
-          return <AlignCenter>{name}</AlignCenter>;
-        }
-      },
-      {
-        accessorKey: "companies",
-        header: "Компания",
-        cell: (info) => {
-          const companies = info.getValue();
-          const companyIds = [
-            ...new Set(companies?.map((comp) => comp.company))
-          ];
-          const result = companyIds?.map((comp, index) => {
-            const companyName = useSelector(getCompanyNameById(comp));
-            return <AlignCenter key={comp[index]}>{companyName}</AlignCenter>;
-          });
-          return result.length ? result : <EmptyTd />;
-        }
-      },
-      {
-        accessorFn: (row) => row,
-        header: "Почта",
-        cell: (info) => {
-          const row = info.getValue();
-          const email = row?.emails.find(
-            (email) => email?.isDefault === true
-          )?.email;
-          return email ? <AlignCenter>{email}</AlignCenter> : <EmptyTd />;
-        }
-      },
-      {
-        accessorFn: (row) => row,
-        header: "Телефон",
-        cell: (info) => {
-          const row = info.getValue();
-          const phone = row.phones.find(
-            (phone) => phone.isDefault === true
-          ).phone;
-          return phone ? (
-            <AlignCenter>{FormatPhone(phone)}</AlignCenter>
-          ) : (
-            <EmptyTd />
-          );
-        }
+        return <AlignCenter>{name}</AlignCenter>;
       }
-    ]
-  };
+    },
+    {
+      accessorKey: "companies",
+      header: "Компания",
+      cell: (info) => {
+        const companies = info.getValue();
+        const companyIds = [...new Set(companies?.map((comp) => comp.company))];
+        const result = companyIds?.map((comp, index) => {
+          const companyName = useSelector(getCompanyNameById(comp));
+          return <AlignCenter key={comp[index]}>{companyName}</AlignCenter>;
+        });
+        return result.length ? result : <EmptyTd />;
+      }
+    },
+    {
+      accessorFn: (row) => row,
+      header: "Почта",
+      cell: (info) => {
+        const row = info.getValue();
+        const email = row?.emails.find(
+          (email) => email?.isDefault === true
+        )?.email;
+        return email ? <AlignCenter>{email}</AlignCenter> : <EmptyTd />;
+      }
+    },
+    {
+      accessorFn: (row) => row,
+      header: "Телефон",
+      cell: (info) => {
+        const row = info.getValue();
+        const phone = row.phones.find(
+          (phone) => phone.isDefault === true
+        ).phone;
+        return phone ? (
+          <AlignCenter>{FormatPhone(phone)}</AlignCenter>
+        ) : (
+          <EmptyTd />
+        );
+      }
+    }
+  ];
 
   const openContactColumn = {
     accessorKey: "_id",
@@ -201,7 +196,7 @@ export const contactsColumns = (handleOpenContactPage, isCurator) => {
     columns = [
       selectColumn,
       dateColumn,
-      contactsColumn,
+      ...contactsColumn,
       positionColumn,
       objectsColumn,
       commentColumn,
@@ -210,7 +205,7 @@ export const contactsColumns = (handleOpenContactPage, isCurator) => {
   } else {
     columns = [
       dateColumn,
-      contactsColumn,
+      ...contactsColumn,
       positionColumn,
       objectsColumn,
       commentColumn,

@@ -220,7 +220,7 @@ const useDialogHandlers = (setState) => {
     }));
   };
 
-  // обновление стейта при создании менеджера
+  // обновление стейта при создании члена команды
   const handleOpenCreateUserPage = () => {
     setState((prevState) => ({
       ...prevState,
@@ -231,6 +231,21 @@ const useDialogHandlers = (setState) => {
     setState((prevState) => ({
       ...prevState,
       createUserPage: false
+    }));
+  };
+
+  // обновление стейта при обновлении члена команды
+  const handleOpenUpdateUserPage = (meetingId) => {
+    setState((prevState) => ({
+      ...prevState,
+      updateUserPage: true,
+      userId: meetingId
+    }));
+  };
+  const handleCloseUpdateUserPage = () => {
+    setState((prevState) => ({
+      ...prevState,
+      updateUserPage: false
     }));
   };
 
@@ -375,7 +390,9 @@ const useDialogHandlers = (setState) => {
     handleOpenAgreementPage,
     handleCloseAgreementPage,
     handleOpenPersonalPolicyPage,
-    handleClosePersonalPolicyPage
+    handleClosePersonalPolicyPage,
+    handleOpenUpdateUserPage,
+    handleCloseUpdateUserPage
   };
 };
 

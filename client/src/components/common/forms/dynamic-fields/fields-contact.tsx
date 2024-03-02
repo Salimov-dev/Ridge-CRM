@@ -16,6 +16,7 @@ import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
 // store
 import { getContactsList } from "@store/contact/contact.store";
 import { getCurrentUserId } from "@store/user/users.store";
+import DeleteElementIcon from "@components/common/buttons/icons buttons/delete-element-icon";
 
 const FieldsContact = ({
   data,
@@ -31,17 +32,6 @@ const FieldsContact = ({
     contact: false
   });
 
-  const currentUserId = useSelector(getCurrentUserId());
-  const contactsList = useSelector(getContactsList());
-
-  const currentUserContacts = contactsList?.filter(
-    (cont) => cont.userId === currentUserId
-  );
-  const watchContactId = watch("contactId");
-
-  const { handleOpenCreateContactPage } = useDialogHandlers(setState);
-  const { handleOpenContactPage } = useDialogHandlers(setOpenContact);
-
   const {
     fields: fieldContacts,
     append: appenContact,
@@ -50,6 +40,23 @@ const FieldsContact = ({
     name: "contacts",
     control
   });
+
+  const currentUserId = useSelector(getCurrentUserId());
+  const contactsList = useSelector(getContactsList());
+  const filteredContacts = contactsList?.filter(
+    (contact) =>
+      !fieldContacts.some(
+        (fieldCompany) => fieldCompany.contact === contact._id
+      )
+  );
+
+  const currentUserContacts = contactsList?.filter(
+    (cont) => cont.userId === currentUserId
+  );
+  const watchContactId = watch("contactId");
+
+  const { handleOpenCreateContactPage } = useDialogHandlers(setState);
+  const { handleOpenContactPage } = useDialogHandlers(setOpenContact);
 
   const lastContactIndex = fieldContacts.length - 1;
 
@@ -89,11 +96,12 @@ const FieldsContact = ({
                 gap: "12px"
               }}
             >
+              <DeleteElementIcon onClick={() => handleRemoveContact(index)} />
               <AutocompleteStyled
                 label="Контакт"
                 register={register}
                 name={`contacts.${index}.contact`}
-                options={contactsList}
+                options={filteredContacts}
                 value={data.contacts?.[index].contact}
                 errors={errors?.contacts?.[index]?.contact}
                 setValue={setValue}
@@ -101,7 +109,9 @@ const FieldsContact = ({
                 optionLabel={(option) => option?.name}
               />
               <OpenPageObjectIconButton
-                containerWidth="70px"
+                containerWidth="112px"
+                height="100%"
+                width="24px"
                 title={null}
                 disabled={!data.contacts?.[index].contact}
                 onClick={() =>
@@ -136,6 +146,7 @@ const FieldsContact = ({
           style="REMOVE_SOME_NEW"
           width="100%"
           size="small"
+          disabled={!data?.contacts?.length}
           icon={<DoNotDisturbOnOutlinedIcon />}
           onClick={() => handleRemoveContact(lastContactIndex)} // передаем функцию removePhone с аргументом
         />

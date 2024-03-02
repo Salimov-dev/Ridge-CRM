@@ -13,7 +13,7 @@ import HeaderWithCloseButton from "@components/common/page-headers/header-with-c
 import ContactForm from "@forms/contact/contact.form";
 import PageDialogs from "@components/common/dialog/page-dialogs";
 // schema
-import { contactSchema } from "@schemas/contact.schema";
+import { contactSchema } from "@schemas/contact/contact.schema";
 // store
 import { createContact } from "@store/contact/contact.store";
 

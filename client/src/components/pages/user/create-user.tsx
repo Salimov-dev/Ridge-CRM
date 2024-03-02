@@ -7,11 +7,11 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import React, { useState } from "react";
 // components
 import TitleWithCloseButton from "@common/page-headers/header-with-close-button";
-import CreateUserForm from "@forms/user/create-user/create-user-form";
+import UserForm from "@forms/user/create-user/user-form";
 import SuccessCancelFormButtons from "@components/common/buttons/success-cancel-form-buttons";
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
 // schema
-import { createUserSchema } from "@schemas/create-user.schema";
+import { createUserSchema } from "@schemas/user/create-user.schema";
 // forms
 import Instruction from "@forms/user/create-user/components/instruction";
 // store
@@ -83,11 +83,13 @@ const CreateUser = React.memo(({ onClose }) => {
         onClose={onClose}
         background="orange"
       />
-      <CreateUserForm
+      <UserForm
         register={register}
         data={data}
         errors={errors}
         color={color}
+        setValue={setValue}
+        watch={watch}
         onColorChange={handleColorChange}
       />
       <Instruction />

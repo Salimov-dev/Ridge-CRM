@@ -133,7 +133,7 @@ const FieldsCompany = ({
           style="REMOVE_SOME_NEW"
           width="100%"
           size="small"
-          disabled={!data.companies.length}
+          disabled={!data?.companies?.length}
           icon={<DoNotDisturbOnOutlinedIcon />}
           onClick={() => handleRemoveCompany(lastCompanyIndex)} // передаем функцию removePhone с аргументом
         />

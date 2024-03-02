@@ -36,7 +36,9 @@ const initialState = {
 const Users = React.memo(() => {
   const [state, setState] = useState({
     createUserPage: false,
-    makePaymentPage: false
+    makePaymentPage: false,
+    updateUserPage: false,
+    userId: ""
   });
 
   const localStorageState = JSON.parse(
@@ -58,8 +60,11 @@ const Users = React.memo(() => {
   const userRoleManager = "69gfoep3944jgjdso345002";
   const userRoleObserver = "69dgp34954igfj345043001";
 
-  const { handleOpenCreateUserPage, handleOpenMakePaymentPage } =
-    useDialogHandlers(setState);
+  const {
+    handleOpenCreateUserPage,
+    handleOpenMakePaymentPage,
+    handleOpenUpdateUserPage
+  } = useDialogHandlers(setState);
 
   const usersWithoutCurrentUser = users?.filter(
     (user) => user?._id !== currentUserId
@@ -104,6 +109,7 @@ const Users = React.memo(() => {
         register={register}
         setValue={setValue}
         isLoading={isLoading}
+        onOpenUpdateUserPage={handleOpenUpdateUserPage}
       />
 
       <PageDialogs state={state} setState={setState} />

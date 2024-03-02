@@ -11,6 +11,7 @@ import SocketAvatar from "./components/socket-avatar.js";
 import SocketUserLicense from "./components/socket-user-license.js";
 import SocketCompany from "./components/socket-company.js";
 import SocketContact from "./components/socket-contact.js";
+import SocketTeammate from "./components/socket-teammate.js";
 
 const Sockets = (server) => {
   const io = new Server(server, {
@@ -33,6 +34,7 @@ const Sockets = (server) => {
     SocketUserLicense(io, socket);
     SocketCompany(io, socket);
     SocketContact(io, socket);
+    SocketTeammate(io, socket);
 
     socket.on("disconnect", () => {
       // console.log(chalk.red("User disconnected"));

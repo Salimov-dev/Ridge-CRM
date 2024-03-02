@@ -43,6 +43,9 @@ const usersListSlice = createSlice({
       state.entities = action.payload;
       state.isLoading = false;
     },
+    authRequested: (state) => {
+      state.error = null;
+    },
     authRequestSuccess: (state, action) => {
       state.auth = action.payload;
       state.isLoggedIn = true;
@@ -53,7 +56,6 @@ const usersListSlice = createSlice({
     },
     userCreated: (state, action) => {
       const newUser = action.payload;
-      console.log("newUser", newUser);
 
       return {
         ...state,
@@ -71,8 +73,10 @@ const usersListSlice = createSlice({
         state.entities.findIndex((u) => u._id === action.payload._id)
       ] = action.payload;
     },
-    authRequested: (state) => {
-      state.error = null;
+    teammateUpdateSuccessed: (state, action) => {
+      state.entities[
+        state.entities.findIndex((u) => u._id === action.payload._id)
+      ] = action.payload;
     }
   }
 });
@@ -86,12 +90,15 @@ const {
   authRequestSuccess,
   userLoggedOut,
   userUpdateSuccessed,
+  teammateUpdateSuccessed,
   userCreated
 } = actions;
 
 const authRequested = createAction("users/authRequested");
 const userUpdateFailed = createAction("users/userUpdateFailed");
+const teammateUpdateFailed = createAction("users/teammateUpdateFailed");
 const userUpdateRequested = createAction("users/userUpdateRequested");
+const teammateUpdateRequested = createAction("users/teammateUpdateRequested");
 
 export const login = (payload) => async (dispatch) => {
   dispatch(authRequested());
@@ -171,6 +178,26 @@ export const updateUserUpdate = (payload) => async (dispatch) => {
     dispatch(userUpdateSuccessed(payload));
   } catch (error) {
     dispatch(userUpdateFailed(error.message));
+  }
+};
+
+export const updateTeammate = (payload) => async (dispatch) => {
+  dispatch(teammateUpdateRequested());
+  try {
+    const { content } = await userService.updateTeammate(payload);
+
+    socket.emit("teammateUpdated", content);
+  } catch (error) {
+    dispatch(teammateUpdateFailed(error.message));
+  }
+};
+
+export const updateTeammateUpdate = (payload) => async (dispatch) => {
+  dispatch(teammateUpdateRequested());
+  try {
+    dispatch(teammateUpdateSuccessed(payload));
+  } catch (error) {
+    dispatch(teammateUpdateFailed(error.message));
   }
 };
 

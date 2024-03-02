@@ -11,7 +11,7 @@ import SuccessCancelFormButtons from "@components/common/buttons/success-cancel-
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
 import HeaderWithCloseButton from "@components/common/page-headers/header-with-close-button";
 // schemas
-import { companySchema } from "@schemas/company.shema";
+import { companySchema } from "@schemas/company/company.shema";
 // forms
 import CompanyForm from "@forms/company/company.form";
 import DialogConfirm from "@components/common/dialog/dialog-confirm";

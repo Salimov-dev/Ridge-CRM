@@ -9,7 +9,7 @@ import TitleWithCloseButton from "@components/common/page-headers/header-with-cl
 import SuccessCancelFormButtons from "@components/common/buttons/success-cancel-form-buttons";
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
 // schemas
-import { userProfileSchema } from "@schemas/user-profile.schema";
+import { userProfileSchema } from "@schemas/user/user-profile.schema";
 // store
 import { getCurrentUserData, updateUser } from "@store/user/users.store";
 import UserProfileForm from "@forms/user/user-profile.form";

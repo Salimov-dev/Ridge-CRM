@@ -21,7 +21,12 @@ import useModifyObjectToExportExel from "@hooks/object/use-modify-object-to-expo
 import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
 // store
 import { getObjectsStatusList } from "@store/object-params/object-status.store";
-import { getCurrentUserId, getIsUserCurator } from "@store/user/users.store";
+import {
+  getCurrentUserId,
+  getIsLoggedIn,
+  getIsUserCurator,
+  getUsersLoadingStatus
+} from "@store/user/users.store";
 import {
   getObjectById,
   getObjectsList,
@@ -89,6 +94,9 @@ const Objects = React.memo(() => {
 
   const isInputEmpty = JSON.stringify(initialState) !== JSON.stringify(data);
   const isLoading = useSelector(getObjectsLoadingStatus());
+  const isUsersLoading =
+    useSelector(getIsLoggedIn()) && useSelector(getUsersLoadingStatus());
+
   const isCurator = useSelector(getIsUserCurator(currentUserId));
 
   const objects = useSelector(getObjectsList());
@@ -183,7 +191,7 @@ const Objects = React.memo(() => {
         setRowSelection={setRowSelection}
         items={sortedObjects}
         itemsColumns={objectsColumns(handleOpenObjectPage, isCurator)}
-        isLoading={isLoading}
+        isLoading={isUsersLoading}
       />
       {isCurator && (
         <ExportToExelButton

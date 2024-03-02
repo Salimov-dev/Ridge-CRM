@@ -9,13 +9,6 @@ import isOutDated from "@utils/auth/is-out-date";
 // services
 import objectService from "@services/object/object.service";
 import localStorageService from "@services/user/local.storage-service";
-import { useSelector } from "react-redux";
-import {
-  getCurrentUserData,
-  getCurrentUserId,
-  getIsUserCurator,
-  getIsUserManager
-} from "../user/users.store";
 
 const socket = io(configFile.ioEndPoint);
 

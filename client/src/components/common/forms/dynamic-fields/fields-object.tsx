@@ -76,8 +76,7 @@ const FieldsObject = ({
               sx={{
                 width: "100%",
                 display: "flex",
-                alignItems: "center",
-                gap: "12px"
+                alignItems: "center"
               }}
             >
               <DeleteElementIcon onClick={() => handleRemoveObject(index)} />
@@ -95,7 +94,7 @@ const FieldsObject = ({
                 optionLabel={(option) => `${option?.city}, ${option?.address}`}
               />
               <OpenPageObjectIconButton
-                containerWidth="112px"
+                containerWidth="100px"
                 height="100%"
                 width="24px"
                 title={null}
@@ -133,7 +132,7 @@ const FieldsObject = ({
           style="REMOVE_SOME_NEW"
           width="100%"
           size="small"
-          disabled={!data.objects.length}
+          disabled={!data?.objects?.length}
           icon={<DoNotDisturbOnOutlinedIcon />}
           onClick={() => handleRemoveObject(lastObjectIndex)} // передаем функцию removePhone с аргументом
         />

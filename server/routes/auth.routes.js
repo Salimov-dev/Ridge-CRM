@@ -146,7 +146,7 @@ router.post("/create", [
         });
       }
 
-      const { email, password, role, curatorId } = req.body;
+      const { email, password, role, curatorId, color, city } = req.body;
 
       // Check if the user with the provided email already exists
       const existingUser = await User.findOne({ where: { email } });
@@ -168,7 +168,9 @@ router.post("/create", [
         email,
         password: hashedPassword,
         role: addRoleToUser(existingUser?.role, role),
-        curatorId: curatorId
+        curatorId: curatorId,
+        color,
+        city
       });
 
       // Create a user license for the new user

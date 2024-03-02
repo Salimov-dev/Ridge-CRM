@@ -19,7 +19,7 @@ import { createObject, getObjectsList } from "@store/object/objects.store";
 // hooks
 import useFindObject from "@hooks/object/use-find-object";
 // schema
-import { objectSchema } from "@schemas/object.schema";
+import { objectSchema } from "@schemas/object/object.schema";
 // utils
 import { removeSpacesAndConvertToNumber } from "@utils/data/remove-spaces-and-convert-to-number";
 

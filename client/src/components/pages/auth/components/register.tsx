@@ -16,7 +16,7 @@ import AuthForm from "@forms/user/auth-form";
 import PolisiesLinks from "./policies-links";
 import PageDialogs from "@components/common/dialog/page-dialogs";
 // schema
-import { registerSchema } from "@schemas/register.schema";
+import { registerSchema } from "@schemas/auth/register.schema";
 // store
 import { signUp } from "@store/user/users.store";
 
@@ -72,7 +72,6 @@ const Register = React.memo(({ page, onClose }) => {
     mode: "onSubmit",
     resolver: yupResolver(registerSchema)
   });
-  console.log("errors", errors);
 
   const data = watch();
   const redirectPath = "/users";

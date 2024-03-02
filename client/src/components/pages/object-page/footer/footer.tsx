@@ -3,6 +3,8 @@ import { useForm } from "react-hook-form";
 import { Box, styled } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import { yupResolver } from "@hookform/resolvers/yup";
 // components
 import Loader from "@common/loader/loader";
 import ButtonsPanel from "../buttons-panel/buttons-panel";
@@ -10,9 +12,8 @@ import AutocompleteStyled from "@common/inputs/autocomplete-styled";
 // store
 import { getObjectsStatusList } from "@store/object-params/object-status.store";
 import { updateObject } from "@store/object/objects.store";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { objectPageStatusSchema } from "@schemas/object-page-status.schema";
-import { toast } from "react-toastify";
+// schemas
+import { objectPageStatusSchema } from "@schemas/object/object-page-status.schema";
 
 const Component = styled(Box)`
   display: flex;

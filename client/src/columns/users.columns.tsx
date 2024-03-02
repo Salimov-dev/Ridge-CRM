@@ -13,7 +13,7 @@ import ButtonStyled from "@components/common/buttons/button-styled.button";
 import { useSelector } from "react-redux";
 import { getCurrentUserData } from "@store/user/users.store";
 
-export const usersColumns = () => [
+export const usersColumns = (onOpenUpdateUserPage) => [
   {
     header: "Основная информация",
     columns: [
@@ -127,6 +127,8 @@ export const usersColumns = () => [
         width: 60,
         cell: (info) => {
           const row = info.getValue();
+          const userId = row._id;
+
           const userRoleManager = "69gfoep3944jgjdso345002";
           const isRoleManager = row?.role.includes(userRoleManager);
 
@@ -145,7 +147,7 @@ export const usersColumns = () => [
                 backgroundHover={isRoleManager ? "darkGreen" : "darkBlue"}
                 colorHover="white"
                 // disabled={!isAuthorEntity}
-                // onClick={() => onUpdate(lastContactId)}
+                onClick={() => onOpenUpdateUserPage(userId)}
               />
             </AlignCenter>
           );

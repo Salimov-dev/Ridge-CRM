@@ -14,7 +14,7 @@ import MyTaskForm from "@forms/my-task.form";
 import DialogConfirm from "@components/common/dialog/dialog-confirm";
 import HeaderWithCloseButton from "@components/common/page-headers/header-with-close-button";
 // schema
-import { taskSchema } from "@schemas/task.shema";
+import { taskSchema } from "@schemas/task/task.shema";
 // store
 import { getObjectsList } from "@store/object/objects.store";
 import { getTaskById, removeTask, updateTask } from "@store/task/tasks.store";

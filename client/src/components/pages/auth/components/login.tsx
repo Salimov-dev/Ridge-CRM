@@ -15,7 +15,7 @@ import HeaderWithCloseButton from "@components/common/page-headers/header-with-c
 import AuthForm from "@forms/user/auth-form";
 import PageDialogs from "@components/common/dialog/page-dialogs";
 // schema
-import { loginSchema } from "@schemas/login.schema";
+import { loginSchema } from "@schemas/auth/login.schema";
 // store
 import { login } from "@store/user/users.store";
 

@@ -13,7 +13,7 @@ import TransferObjectToAnotherManagerForm from "@forms/transfer-object-to-anothe
 import SuccessCancelFormButtons from "@components/common/buttons/success-cancel-form-buttons";
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
 import HeaderWithCloseButton from "@components/common/page-headers/header-with-close-button";
-import { transferObjectToAnotherManagerSchema } from "@schemas/transfer-object-to-aother-manager.schema";
+import { transferObjectToAnotherManagerSchema } from "@schemas/object/transfer-object-to-aother-manager.schema";
 import transformUsersForSelect from "@utils/objects/transform-users-for-select";
 import { updateMultipleObjects } from "@store/object/objects.store";
 import { getUsersList } from "@store/user/users.store";

@@ -68,7 +68,7 @@ const ItemsOnMap = ({
   const iconImageHref = useMemo(() => {
     // Преобразование компонента LocationIcon в base64
     const svgString = `
-      <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="${userColor}" stroke="black" strokeWidth="2">
+      <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="${userColor}" stroke="#141B2D" strokeWidth="2">
         <path d="M12 2c-4.97 0-9 4.03-9 9s9 13 9 13s9-8.45 9-13S16.97 2 12 2zM12 15c-2.21 0-4-1.79-4-4s1.79-4 4-4s4 1.79 4 4S14.21 15 12 15z"/>
       </svg>
     `;

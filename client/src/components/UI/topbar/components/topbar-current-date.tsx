@@ -36,7 +36,7 @@ const TopBarCurrentDate = () => {
   const currentUserId = useSelector(getCurrentUserId());
   const userLicense = useSelector(getUserLicensesByUserId(currentUserId));
   const dateEnd = dayjs(userLicense?.dateEnd);
-  const daysDifference = dateEnd?.diff(dayjs(), "day");
+  const daysDifference = dateEnd?.diff(dayjs(), "day") + 1;
   const licenseBalance = makeDigitSeparator(userLicense?.balance);
 
   return (

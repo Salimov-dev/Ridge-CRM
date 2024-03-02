@@ -28,7 +28,7 @@ import { getCurrentRentersList } from "@store/object-params/current-renter.store
 import { getObjectConditionsList } from "@store/object-params/object-conditions.store";
 import { getTradeAreaList } from "@store/object-params/object-trade-area";
 import FieldsCompany from "@components/common/forms/dynamic-fields/fields-company";
-import FieldsContact from "@forms/company/components/fields-contact";
+import FieldsContact from "@components/common/forms/dynamic-fields/fields-contact";
 
 const ObjectForm = ({
   data,

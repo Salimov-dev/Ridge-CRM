@@ -50,7 +50,7 @@ router.get("/", auth, async (req, res) => {
   }
 });
 
-router.patch("/:userId/edit-manager", auth, async (req, res) => {
+router.patch("/:userId/update-user", auth, async (req, res) => {
   try {
     const userId = req.params.userId; // Use params instead of body for the userId
     const updatedUser = await User.update(req.body, {
@@ -63,6 +63,48 @@ router.patch("/:userId/edit-manager", auth, async (req, res) => {
     }
 
     res.send(updatedUser[1][0]);
+  } catch (e) {
+    console.error(e);
+    res.status(500).json({
+      message: "На сервере произошла ошибка. Попробуйте позже"
+    });
+  }
+});
+
+router.patch("/:userId/update-teammate", auth, async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const { color, role, isActive } = req.body;
+
+    const addRoleToUser = (userRoles, roleId) => {
+      if (!userRoles) {
+        // Если массив ролей не определен, создаем новый массив с ролью
+        return [roleId];
+      }
+      userRoles = [roleId];
+      return userRoles;
+    };
+
+    // Находим пользователя в базе данных
+    const existingUser = await User.findByPk(userId);
+
+    if (!existingUser) {
+      return res.status(404).json({
+        message: "Пользователь не найдена."
+      });
+    }
+
+    // Обновляем пользователя в базе данных
+    const updatedUser = await existingUser.update(
+      {
+        color: color,
+        role: addRoleToUser(existingUser?.role, role),
+        isActive: isActive
+      },
+      { where: { _id: userId } }
+    );
+
+    res.status(200).json(updatedUser);
   } catch (e) {
     console.error(e);
     res.status(500).json({

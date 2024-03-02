@@ -23,14 +23,14 @@ const User = sequelize.define(
     color: { type: DataTypes.STRING, defaultValue: null },
     role: {
       type: DataTypes.ARRAY(DataTypes.STRING),
-      defaultValue: ["69gfoep3944jgjdso345003"] // статус по умолчанию "Ознакомительный"
+      defaultValue: ["69gfoep3944jgjdso345003"] // роль по умолчанию "Куратор"
     },
     firstName: { type: DataTypes.STRING, defaultValue: null },
     surName: { type: DataTypes.STRING, defaultValue: null },
     lastName: { type: DataTypes.STRING, defaultValue: null },
     phone: { type: DataTypes.STRING, defaultValue: null },
     isEmailActived: { type: DataTypes.BOOLEAN, defaultValue: false },
-
+    isActive: { type: DataTypes.BOOLEAN, defaultValue: true },
     created_at: {
       type: DataTypes.DATE,
       defaultValue: DataTypes.NOW

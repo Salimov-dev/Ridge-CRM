@@ -28,6 +28,7 @@ import CreateCompany from "@components/pages/company/create-company";
 import UpdateCompany from "@components/pages/company/update-company";
 import Agreement from "@components/pages/agreement/agreement";
 import PersonalPolicy from "@components/pages/agreement/personal-policy";
+import UpdateUser from "@components/pages/user/update-user";
 
 const PageDialogs = ({
   state,
@@ -65,7 +66,8 @@ const PageDialogs = ({
     handleCloseCreateCompanyPage,
     handleCloseUpdateCompanyPage,
     handleCloseAgreementPage,
-    handleClosePersonalPolicyPage
+    handleClosePersonalPolicyPage,
+    handleCloseUpdateUserPage
   } = useDialogHandlers(setState);
 
   return (
@@ -265,6 +267,8 @@ const PageDialogs = ({
         open={state.updatePasswordPage}
         maxWidth="xs"
       />
+
+      {/* Окна для Члена команды */}
       <DialogStyled
         component={<CreateUser onClose={handleCloseCreateUserPage} />}
         onClose={handleCloseCreateUserPage}
@@ -272,11 +276,25 @@ const PageDialogs = ({
         maxWidth="sm"
       />
       <DialogStyled
+        component={
+          <UpdateUser
+            userId={state.userId}
+            onClose={handleCloseUpdateUserPage}
+          />
+        }
+        onClose={handleCloseUpdateUserPage}
+        maxWidth="sm"
+        open={state.updateUserPage}
+      />
+
+      {/* Окна для Страницы оплаты */}
+      <DialogStyled
         component={<MakePaymentPage onClose={handleCloseMakePaymentPage} />}
         onClose={handleCloseMakePaymentPage}
         open={state.makePaymentPage}
         maxWidth="sm"
       />
+
       {/* Окна для Контакта */}
       <DialogStyled
         component={<CreateContact onClose={handleCloseCreateContactPage} />}
@@ -295,6 +313,7 @@ const PageDialogs = ({
         maxWidth="sm"
         open={state.openContactPage}
       />
+
       {/* Окна для Компании */}
       <DialogStyled
         component={
@@ -306,7 +325,8 @@ const PageDialogs = ({
         maxWidth="sm"
         onClose={handleCloseCreateCompanyPage}
         open={state.createCompanyPage}
-      />{" "}
+      />
+
       {/* Окна для обновления Компании  */}
       <DialogStyled
         component={
@@ -319,6 +339,7 @@ const PageDialogs = ({
         maxWidth="sm"
         open={state.updateCompanyPage}
       />
+
       {/* Окна для лицензии и персональных данных */}
       <DialogStyled
         component={<Agreement onClose={handleCloseAgreementPage} />}

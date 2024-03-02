@@ -10,47 +10,48 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import SuccessCancelFormButtons from "@components/common/buttons/success-cancel-form-buttons";
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
 import HeaderWithCloseButton from "@components/common/page-headers/header-with-close-button";
+import Message from "./components/message";
 import DialogConfirm from "@components/common/dialog/dialog-confirm";
-import ContactForm from "@forms/contact/contact.form";
-// schema
-import { contactSchema } from "@schemas/contact/contact.schema";
-import {
-  getContactById,
-  removeContact,
-  updateContact
-} from "@store/contact/contact.store";
+// schemas
+import { updateUserSchema } from "@schemas/user/update-user.schema";
+// forms
+import UserForm from "@forms/user/create-user/user-form";
+// store
+import { getUserDataById, updateTeammate } from "@store/user/users.store";
 
-const UpdateContact = React.memo(({ contactId, onClose }) => {
+const UpdateUser = React.memo(({ userId, onClose }) => {
   const dispatch = useDispatch();
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
+  const user = useSelector(getUserDataById(userId));
+  const transformedUser = { ...user, role: user?.role[0] };
+
   const [open, setOpen] = useState(false);
+  const [color, setColor] = useState(user?.color);
   const [isLoading, setIsLoading] = useState(false);
-  const contact = useSelector(getContactById(contactId));
 
   const {
     register,
     watch,
     handleSubmit,
-    setValue,
-    control,
-    formState: { errors }
+    formState: { errors },
+    setValue
   } = useForm({
-    defaultValues: contact,
+    defaultValues: transformedUser,
     mode: "onChange",
-    resolver: yupResolver(contactSchema)
+    resolver: yupResolver(updateUserSchema)
   });
 
   const data = watch();
 
-  const onSubmit = (data) => {
+  const onSubmit = () => {
     setIsLoading(true);
 
-    dispatch<any>(updateContact(data))
+    dispatch<any>(updateTeammate(data))
       .then(() => {
         onClose();
-        toast.success("Контакт успешно изменен!");
+        toast.success("Пользователь успешно изменен!");
       })
       .catch((error) => {
         toast.error(error);
@@ -60,8 +61,13 @@ const UpdateContact = React.memo(({ contactId, onClose }) => {
       });
   };
 
-  const handleRemoveContact = (contactId) => {
-    dispatch<any>(removeContact(contactId)).then(onClose());
+  const handleColorChange = (color) => {
+    setColor(color);
+    setValue("color", color?.hex);
+  };
+
+  const handleRemoveUser = (userId) => {
+    // dispatch<any>(removeUser(userId)).then(onClose());
   };
 
   const handleClickOpen = () => {
@@ -75,19 +81,32 @@ const UpdateContact = React.memo(({ contactId, onClose }) => {
   return (
     <>
       <HeaderWithCloseButton
-        title="Править контакт"
-        color="white"
+        title="Изменить члена команды"
+        color="black"
         margin="0 0 20px 0"
-        background="Navy"
         onClose={onClose}
       />
-      <ContactForm
-        data={data}
-        watch={watch}
-        control={control}
+      {data?.isActive ? (
+        <Message
+          title="Пользователь активирован, доступ к Грядке открыт, взымается плата"
+          background="green"
+        />
+      ) : (
+        <Message
+          title="Пользователь отключен, доступ к Грядке закрыт, плата не взымается"
+          background="crimson"
+        />
+      )}
+
+      <UserForm
         register={register}
+        data={data}
         errors={errors}
+        color={color}
         setValue={setValue}
+        watch={watch}
+        onColorChange={handleColorChange}
+        isUpdatePage={true}
       />
       <SuccessCancelFormButtons
         onSuccess={handleSubmit(onSubmit)}
@@ -104,10 +123,10 @@ const UpdateContact = React.memo(({ contactId, onClose }) => {
         question="Вы уверены, что хотите удалить безвозвратно?"
         open={open}
         onClose={handleClose}
-        onSuccessClick={() => handleRemoveContact(contactId)}
+        onSuccessClick={() => handleRemoveUser(userId)}
       />
     </>
   );
 });
 
-export default UpdateContact;
+export default UpdateUser;

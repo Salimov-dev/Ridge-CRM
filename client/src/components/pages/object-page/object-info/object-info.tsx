@@ -17,7 +17,7 @@ import useObjectInfo from "@hooks/object-info/use-object-info.hook";
 import { getObjectsList } from "@store/object/objects.store";
 import { getCurrentUserId, getIsUserCurator } from "@store/user/users.store";
 import FieldsCompany from "@components/common/forms/dynamic-fields/fields-company";
-import FieldsContact from "@forms/company/components/fields-contact";
+import FieldsContact from "@components/common/forms/dynamic-fields/fields-contact";
 
 const Component = styled(Box)`
   display: flex;
