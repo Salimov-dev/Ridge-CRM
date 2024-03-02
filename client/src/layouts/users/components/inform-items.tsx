@@ -44,7 +44,7 @@ const InformItems = () => {
 
   const dateStart = dayjs(userLicense?.dateStart);
   const dateEnd = dayjs(userLicense?.dateEnd);
-  const daysDifference = dateEnd?.diff(dayjs(), "day");
+  const daysDifference = dateEnd?.diff(dayjs(), "day") + 1;
 
   return (
     <InformItemsContainer>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Box } from "@mui/material";
 import { useSelector } from "react-redux";
 import { useFieldArray } from "react-hook-form";
@@ -14,6 +14,7 @@ import PageDialogs from "@components/common/dialog/page-dialogs";
 import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
 // store
 import { getCompaniesList } from "@store/company/company.store";
+import DeleteElementIcon from "@components/common/buttons/icons buttons/delete-element-icon";
 
 const FieldsCompany = ({
   data,
@@ -44,8 +45,15 @@ const FieldsCompany = ({
     control
   });
 
-  const companiesList = useSelector(getCompaniesList());
   const lastCompanyIndex = fieldCompanies.length - 1;
+  const companiesList = useSelector(getCompaniesList());
+
+  const filteredCompanies = companiesList?.filter(
+    (company) =>
+      !fieldCompanies.some(
+        (fieldCompany) => fieldCompany.company === company._id
+      )
+  );
 
   const handleRemoveCompany = (index) => {
     removeCompany(index);
@@ -66,15 +74,19 @@ const FieldsCompany = ({
               sx={{
                 width: "100%",
                 display: "flex",
-                alignItems: "center",
-                gap: "12px"
+                alignItems: "center"
               }}
             >
+              <DeleteElementIcon onClick={() => handleRemoveCompany(index)} />
               <AutocompleteStyled
                 label="Компания"
                 register={register}
                 name={`companies.${index}.company`}
-                options={companiesList}
+                options={
+                  data.companies?.[index].company
+                    ? companiesList
+                    : filteredCompanies
+                }
                 value={data.companies?.[index].company}
                 errors={errors?.companies?.[index]?.company}
                 setValue={setValue}
@@ -82,7 +94,9 @@ const FieldsCompany = ({
                 optionLabel={(option) => option.name}
               />
               <OpenPageObjectIconButton
-                containerWidth="70px"
+                containerWidth="112px"
+                height="100%"
+                width="24px"
                 title={null}
                 disabled={!data.companies?.[index].company}
                 onClick={() =>
@@ -119,6 +133,7 @@ const FieldsCompany = ({
           style="REMOVE_SOME_NEW"
           width="100%"
           size="small"
+          disabled={!data.companies.length}
           icon={<DoNotDisturbOnOutlinedIcon />}
           onClick={() => handleRemoveCompany(lastCompanyIndex)} // передаем функцию removePhone с аргументом
         />

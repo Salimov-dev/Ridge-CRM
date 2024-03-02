@@ -47,16 +47,16 @@ router.get("/", auth, async (req, res) => {
   }
 });
 
-router.patch("/:UserLicenseId?/edit", auth, async (req, res) => {
+router.patch("/:userLicenseId?/edit", auth, async (req, res) => {
   try {
-    const { UserLicenseId } = req.params;
-    if (!UserLicenseId) {
+    const { userLicenseId } = req.params;
+    if (!userLicenseId) {
       return res.status(400).json({
         message: "Необходимо указать идентификатор лицензии (UserLicenseId)."
       });
     }
 
-    const existingUserLicense = await UserLicense.findByPk(UserLicenseId);
+    const existingUserLicense = await UserLicense.findByPk(userLicenseId);
 
     if (!existingUserLicense) {
       return res.status(404).json({

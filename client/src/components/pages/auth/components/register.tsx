@@ -72,6 +72,7 @@ const Register = React.memo(({ page, onClose }) => {
     mode: "onSubmit",
     resolver: yupResolver(registerSchema)
   });
+  console.log("errors", errors);
 
   const data = watch();
   const redirectPath = "/users";
@@ -83,7 +84,6 @@ const Register = React.memo(({ page, onClose }) => {
 
   const onSubmit = () => {
     setIsLoading(true);
-
     dispatch<any>(signUp(data))
       .then(() => {
         navigate(redirectPath);

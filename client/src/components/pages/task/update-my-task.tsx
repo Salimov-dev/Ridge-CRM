@@ -74,7 +74,7 @@ const UpdateMyTask = React.memo(
       const lastContactData = {
         date: data.date,
         objectId: data.objectId,
-        result: capitalizeFirstLetter(data.result).trim()
+        result: capitalizeFirstLetter(data.result)
       };
 
       dispatch<any>(updateTask(newData))

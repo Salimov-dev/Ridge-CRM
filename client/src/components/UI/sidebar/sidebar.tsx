@@ -78,7 +78,7 @@ const Sidebar = React.memo(() => {
   }, [currentPath]);
 
   useEffect(() => {
-    dispatch<any>(setCurrrentPathState(window.location.pathname));
+    dispatch<any>(setCurrrentPathState("/users"));
   }, [selected]);
 
   return (

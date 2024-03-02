@@ -53,12 +53,15 @@ const usersListSlice = createSlice({
     },
     userCreated: (state, action) => {
       const newUser = action.payload;
-      if (!state.entities.some((user) => user._id === newUser._id)) {
-        state.entities.push(newUser);
-      }
+      console.log("newUser", newUser);
+
+      return {
+        ...state,
+        entities: [...state.entities, newUser]
+      };
     },
     userLoggedOut: (state) => {
-      state.entities = null;
+      state.entities = [];
       state.isLoggedIn = false;
       state.auth = null;
       state.dataLoaded = false;
@@ -116,7 +119,7 @@ export const signUp = (payload) => async (dispatch) => {
 
     localStorageService.setTokens(data);
     dispatch(authRequestSuccess({ userId: data.userId }));
-    // dispatch(loadUsersList());
+    dispatch(loadUsersList());
   } catch (error) {
     const errorMessage = error.response.data.error.message;
 

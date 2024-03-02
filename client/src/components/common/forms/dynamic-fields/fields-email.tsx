@@ -1,4 +1,4 @@
-import { Box, FormControlLabel, InputAdornment, Switch } from "@mui/material";
+import { Box, InputAdornment } from "@mui/material";
 import { useFieldArray } from "react-hook-form";
 // icons
 import AlternateEmailOutlinedIcon from "@mui/icons-material/AlternateEmailOutlined";
@@ -8,6 +8,8 @@ import DoNotDisturbOnOutlinedIcon from "@mui/icons-material/DoNotDisturbOnOutlin
 import TextFieldStyled from "@components/common/inputs/text-field-styled";
 import RowTitle from "@components/common/titles/row-title";
 import ButtonStyled from "@components/common/buttons/button-styled.button";
+import DeleteElementIcon from "@components/common/buttons/icons buttons/delete-element-icon";
+import SwitchField from "@components/common/inputs/switch-field";
 
 const FieldsEmail = ({ data, register, setValue, errors, control }) => {
   const {
@@ -55,6 +57,12 @@ const FieldsEmail = ({ data, register, setValue, errors, control }) => {
     }
   };
 
+  const handleAddEmail = () => {
+    const isNewDefault = fieldEmails.length === 0; // Проверяем, есть ли уже телефоны
+
+    appendEmail({ email: "", isDefault: isNewDefault }); // Добавляем телефон с соответствующим значением isDefault
+  };
+
   return (
     <>
       <RowTitle
@@ -75,13 +83,13 @@ const FieldsEmail = ({ data, register, setValue, errors, control }) => {
                 gap: "4px"
               }}
             >
+              <DeleteElementIcon onClick={() => handleRemoveEmail(index)} />
               <TextFieldStyled
                 register={register}
                 label="Почта"
                 name={`emails.${index}.email`}
                 value={data.emails?.[index].email}
                 errors={errors?.emails?.[index]?.email}
-                onInputQuantities={12}
                 InputProps={{
                   endAdornment: (
                     <InputAdornment position="end">
@@ -90,28 +98,10 @@ const FieldsEmail = ({ data, register, setValue, errors, control }) => {
                   )
                 }}
               />
-              <FormControlLabel
-                label="Bottom"
-                labelPlacement="bottom"
-                sx={{ width: "80px", margin: "0" }}
-                control={
-                  <Switch
-                    checked={field.isDefault || false}
-                    color="default"
-                    onChange={() => handleChangeEmail(index, field.isDefault)}
-                    inputProps={{ "aria-label": "controlled" }}
-                    sx={{
-                      marginTop: "-10px",
-                      "& .Mui-checked": {
-                        color: "orange" // Задаем кастомный цвет для свитча в состоянии "включено"
-                      },
-                      "& .Mui-checked + .MuiSwitch-track": {
-                        backgroundColor: "orange" // Задаем кастомный цвет для фона свитча в состоянии "включено"
-                      }
-                    }}
-                  />
-                }
-                label={field.isDefault ? "Основная" : null}
+              <SwitchField
+                label={field.isDefault ? "Основной" : null}
+                checked={field.isDefault || false}
+                onChange={() => handleChangeEmail(index, field.isDefault)}
               />
             </Box>
           );
@@ -126,13 +116,14 @@ const FieldsEmail = ({ data, register, setValue, errors, control }) => {
           width="100%"
           size="small"
           icon={<ControlPointOutlinedIcon />}
-          onClick={() => appendEmail({ email: "", isDefault: false })}
+          onClick={handleAddEmail}
         />
         <ButtonStyled
           title="Удалить почту"
           style="REMOVE_SOME_NEW"
           width="100%"
           size="small"
+          disabled={!data.emails.length}
           icon={<DoNotDisturbOnOutlinedIcon />}
           onClick={() => handleRemoveEmail(lastEmailIndex)} // передаем функцию removePhone с аргументом
         />

@@ -15,12 +15,19 @@ import { removeSpacesAndConvertToNumber } from "@utils/data/remove-spaces-and-co
 import { objectSchema } from "@schemas/object.schema";
 // store
 import { getObjectById, updateObject } from "@store/object/objects.store";
+import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
+import PageDialogs from "@components/common/dialog/page-dialogs";
 
 const UpdateObject = React.memo(({ onClose, objectId }) => {
   const dispatch = useDispatch();
 
   const [isLoading, setIsLoading] = useState(false);
   const object = useSelector(getObjectById(objectId));
+
+  const [state, setState] = useState({
+    createCompanyPage: false,
+    updateCompanyPage: false
+  });
 
   const {
     register,
@@ -47,6 +54,9 @@ const UpdateObject = React.memo(({ onClose, objectId }) => {
     (newCompany) =>
       !objectCompanies.some((obj) => obj.company === newCompany.company)
   );
+
+  const { handleOpenCreateCompanyPage, handleOpenUpdateCompanyPage } =
+    useDialogHandlers(setState);
 
   const onSubmit = (data) => {
     setIsLoading(true);
@@ -97,9 +107,9 @@ const UpdateObject = React.memo(({ onClose, objectId }) => {
         register={register}
         errors={errors}
         watch={watch}
-        // setState={setState}
         control={control}
         setValue={setValue}
+        setState={setState}
         isUpdate={true}
       />
       <SuccessCancelFormButtons
@@ -107,6 +117,7 @@ const UpdateObject = React.memo(({ onClose, objectId }) => {
         onCancel={onClose}
       />
       <LoaderFullWindow isLoading={isLoading} />
+      <PageDialogs state={state} setState={setState} />
     </>
   );
 });

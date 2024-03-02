@@ -13,6 +13,7 @@ import AlertObjectInDatabase from "./components/alert-object-in-database";
 import HeaderWithCloseButton from "@components/common/page-headers/header-with-close-button";
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
 import SuccessCancelFormButtons from "@components/common/buttons/success-cancel-form-buttons";
+import PageDialogs from "@components/common/dialog/page-dialogs";
 // store
 import { createObject, getObjectsList } from "@store/object/objects.store";
 // hooks
@@ -20,10 +21,7 @@ import useFindObject from "@hooks/object/use-find-object";
 // schema
 import { objectSchema } from "@schemas/object.schema";
 // utils
-import { capitalizeFirstLetter } from "@utils/data/capitalize-first-letter";
-import { capitalizeAllFirstLetters } from "@utils/data/capitalize-all-first-letters";
 import { removeSpacesAndConvertToNumber } from "@utils/data/remove-spaces-and-convert-to-number";
-import PageDialogs from "@components/common/dialog/page-dialogs";
 
 const initialState = {
   status: null,

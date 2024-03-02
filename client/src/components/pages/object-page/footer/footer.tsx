@@ -10,6 +10,9 @@ import AutocompleteStyled from "@common/inputs/autocomplete-styled";
 // store
 import { getObjectsStatusList } from "@store/object-params/object-status.store";
 import { updateObject } from "@store/object/objects.store";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { objectPageStatusSchema } from "@schemas/object-page-status.schema";
+import { toast } from "react-toastify";
 
 const Component = styled(Box)`
   display: flex;
@@ -26,6 +29,7 @@ const Footer = ({
   onOpenCreatePresentationPage,
   isAuthorEntity = true
 }) => {
+  const [statusChanged, setStatusChanged] = useState(false);
   const dispatch = useDispatch();
   const objectStatuses = useSelector(getObjectsStatusList());
   const sortedObjectStatuses = orderBy(objectStatuses, "name", ["asc"]);
@@ -37,25 +41,24 @@ const Footer = ({
     formState: { errors }
   } = useForm({
     defaultValues: object,
-    mode: "onChange"
+    mode: "onChange",
+    resolver: yupResolver(objectPageStatusSchema)
   });
 
   const watchStatus = watch("status");
   const objectStatus = object?.status;
 
-  const [statusChanged, setStatusChanged] = useState(false);
-
   useEffect(() => {
+    if (!watchStatus) {
+      toast.error("Выберите статус");
+      return;
+    }
     if (watchStatus !== objectStatus) {
       setStatusChanged(true);
     } else {
       setStatusChanged(false);
     }
   }, [watchStatus, objectStatus]);
-
-  let removedCompanie = [];
-  let addedCompanie = [];
-  let previousCompanie = [];
 
   const newData = { ...object, status: watchStatus };
 

@@ -200,6 +200,14 @@ const ButtonStyled = ({
     backgroundHover = "DarkGreen";
   }
 
+  if (style === "DELETE_ICON") {
+    background = null;
+    color = null;
+    colorHover = null;
+    backgroundHover = null;
+    border = null;
+  }
+
   return (
     <Button
       variant={variant}

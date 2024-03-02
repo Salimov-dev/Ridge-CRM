@@ -28,16 +28,6 @@ const ContactForm = ({
             watch={watch}
           />
 
-          <FieldsCompany
-            data={data}
-            register={register}
-            errors={errors}
-            setValue={setValue}
-            control={control}
-            watch={watch}
-            setState={setState}
-            isHideElement={isHideElement}
-          />
           <FieldsPhone
             data={data}
             register={register}
@@ -52,7 +42,7 @@ const ContactForm = ({
             setValue={setValue}
             control={control}
           />
-          <FieldsObject
+          <FieldsCompany
             data={data}
             register={register}
             errors={errors}
@@ -61,6 +51,15 @@ const ContactForm = ({
             watch={watch}
             setState={setState}
             isHideElement={isHideElement}
+          />
+          <FieldsObject
+            data={data}
+            register={register}
+            errors={errors}
+            setValue={setValue}
+            control={control}
+            watch={watch}
+            setState={setState}
           />
         </FieldsContainer>
       </Form>

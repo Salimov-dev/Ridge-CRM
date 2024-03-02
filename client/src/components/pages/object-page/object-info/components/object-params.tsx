@@ -43,8 +43,8 @@ const ObjectsParams = ({ object, isLoading }) => {
 
   const companiesList = useSelector(getCompaniesList());
   const objectCompanies = object?.companies.map((comp) => comp.company);
-  const userCompanies = companiesList?.filter(
-    (comp, index) => comp._id === objectCompanies[index]
+  const userCompanies = companiesList.filter((cont) =>
+    objectCompanies.includes(cont._id)
   );
 
   const isCurator = useSelector(getIsUserCurator(currentUserId));
@@ -118,7 +118,7 @@ const ObjectsParams = ({ object, isLoading }) => {
       />
       <RowTitle
         title="Связанные компании"
-        background="Maroon"
+        background="Crimson"
         margin="6px 0px -16px 0"
       />
       <BasicTable

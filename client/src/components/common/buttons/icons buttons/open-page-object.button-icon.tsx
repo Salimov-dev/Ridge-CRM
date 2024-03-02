@@ -18,10 +18,7 @@ const OpenPageObjectIconButton = ({
   color = "white"
 }) => {
   return (
-    <Components
-      onClick={onClick}
-      sx={{ width: containerWidth, margin: "-10px 0 0 0" }}
-    >
+    <Components onClick={onClick} sx={{ width: containerWidth }}>
       <IconButton
         onClick={onClick}
         disabled={disabled}

@@ -82,13 +82,24 @@ const ObjectForm = ({
           margin="14px 0 -2px 0"
         />
         <FieldsContainer>
-          <DistrictSelect
-            register={register}
-            selectedArea={selectedArea}
-            errors={errors}
-            watchDistrict={watchDistrict}
-            isUpdate={isUpdate}
-          />
+          {isUpdate ? (
+            <TextFieldStyled
+              register={register}
+              label="Район"
+              name="selectedArea"
+              valueAsNumber={true}
+              value={selectedArea}
+              disabled={true}
+            />
+          ) : (
+            <DistrictSelect
+              register={register}
+              selectedArea={selectedArea}
+              errors={errors}
+              watchDistrict={watchDistrict}
+              isUpdate={isUpdate}
+            />
+          )}
           <SelectFieldStyled
             label="Метро"
             register={register}

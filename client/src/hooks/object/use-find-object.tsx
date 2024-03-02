@@ -1,20 +1,27 @@
+import { citiesArray } from "@data/cities";
+import { getCurrentUserData } from "@store/user/users.store";
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 const useFindObject = () => {
   const [findedObject, setFindedObject] = useState({});
   const isEmptyFindedObject = Object.keys(findedObject).length === 0;
+  const currentUser = useSelector(getCurrentUserData());
+  const userCity = citiesArray.find((city) => city._id === currentUser?.city);
+
+  const center = [userCity?.longitude, userCity?.latitude];
 
   const init = () => {
     const myMap = new ymaps.Map(
       "findObject",
       {
-        center: [59.927702320754996, 30.337777413480463],
+        center: center,
         zoom: 12,
-        controls: ["searchControl", "zoomControl", "rulerControl"],
+        controls: ["searchControl", "zoomControl", "rulerControl"]
       },
       {
         searchControlProvider: "yandex#search",
-        suppressMapOpenBlock: true,
+        suppressMapOpenBlock: true
       }
     );
 
@@ -40,11 +47,11 @@ const useFindObject = () => {
       return new ymaps.Placemark(
         coords,
         {
-          iconCaption: "поиск...",
+          iconCaption: "поиск..."
         },
         {
           preset: "islands#violetDotIconWithCaption",
-          draggable: true,
+          draggable: true
         }
       );
     };
@@ -58,11 +65,11 @@ const useFindObject = () => {
             firstGeoObject.getLocalities().length
               ? firstGeoObject.getLocalities()
               : firstGeoObject.getAdministrativeAreas(),
-            firstGeoObject.getThoroughfare() || firstGeoObject.getPremise(),
+            firstGeoObject.getThoroughfare() || firstGeoObject.getPremise()
           ]
             .filter(Boolean)
             .join(", "),
-          balloonContent: firstGeoObject.getAddressLine(),
+          balloonContent: firstGeoObject.getAddressLine()
         });
         setFindedObject(firstGeoObject.properties.getAll());
 
@@ -101,14 +108,14 @@ const useFindObject = () => {
   };
 
   const getDistrict = () => {
-    const city = findedObject?.description
+    const city = findedObject?.description;
 
-    const district = findedObject.metaDataProperty?.GeocoderMetaData?.AddressDetails
-    ?.Country?.AdministrativeArea?.SubAdministrativeArea
-    ?.SubAdministrativeAreaName;
-    return district ? district : city
+    const district =
+      findedObject.metaDataProperty?.GeocoderMetaData?.AddressDetails?.Country
+        ?.AdministrativeArea?.SubAdministrativeArea?.SubAdministrativeAreaName;
+    return district ? district : city;
   };
-  
+
   const getAddress = () => {
     if (isEmptyFindedObject) {
       return null;
@@ -138,7 +145,7 @@ const useFindObject = () => {
     getAddress,
     getLatitudeCoordinates,
     getLongitudeCoordinates,
-    findedObject,
+    findedObject
   };
 };
 

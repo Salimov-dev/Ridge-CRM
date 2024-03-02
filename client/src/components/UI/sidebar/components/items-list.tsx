@@ -2,7 +2,6 @@
 import Item from "./item";
 import ItemsTitle from "./items-title";
 // icons
-import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
 import GroupsOutlinedIcon from "@mui/icons-material/GroupsOutlined";
 import BusinessCenterOutlinedIcon from "@mui/icons-material/BusinessCenterOutlined";

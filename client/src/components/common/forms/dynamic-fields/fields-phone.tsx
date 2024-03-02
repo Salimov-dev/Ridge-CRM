@@ -7,6 +7,7 @@ import {
   Switch
 } from "@mui/material";
 // icons
+import HighlightOffOutlinedIcon from "@mui/icons-material/HighlightOffOutlined";
 import PhoneIphoneOutlinedIcon from "@mui/icons-material/PhoneIphoneOutlined";
 import ControlPointOutlinedIcon from "@mui/icons-material/ControlPointOutlined";
 import DoNotDisturbOnOutlinedIcon from "@mui/icons-material/DoNotDisturbOnOutlined";
@@ -14,6 +15,9 @@ import DoNotDisturbOnOutlinedIcon from "@mui/icons-material/DoNotDisturbOnOutlin
 import TextFieldStyled from "@components/common/inputs/text-field-styled";
 import RowTitle from "@components/common/titles/row-title";
 import ButtonStyled from "@components/common/buttons/button-styled.button";
+import DeleteElementIcon from "@components/common/buttons/icons buttons/delete-element-icon";
+import SimpleSwitch from "@components/common/inputs/simple-switch";
+import SwitchField from "@components/common/inputs/switch-field";
 
 const FieldsPhone = ({ data, register, setValue, errors, control }) => {
   const {
@@ -60,6 +64,13 @@ const FieldsPhone = ({ data, register, setValue, errors, control }) => {
       }
     }
   };
+
+  const handleAddPhone = () => {
+    const isNewDefault = fieldPhones.length === 0; // Проверяем, есть ли уже телефоны
+
+    appendPhone({ phone: "", isDefault: isNewDefault }); // Добавляем телефон с соответствующим значением isDefault
+  };
+
   return (
     <>
       <RowTitle title="Телефон" background="green" margin="14px 0 -6px 0" />
@@ -76,6 +87,7 @@ const FieldsPhone = ({ data, register, setValue, errors, control }) => {
                 gap: "4px"
               }}
             >
+              <DeleteElementIcon onClick={() => handleRemovePhone(index)} />
               <TextFieldStyled
                 register={register}
                 label="Телефон"
@@ -94,28 +106,10 @@ const FieldsPhone = ({ data, register, setValue, errors, control }) => {
                   )
                 }}
               />
-              <FormControlLabel
-                label="Bottom"
-                labelPlacement="bottom"
-                sx={{ width: "80px", margin: "0" }}
-                control={
-                  <Switch
-                    checked={field.isDefault || false}
-                    color="default"
-                    onChange={() => handleChangePhone(index, field.isDefault)}
-                    inputProps={{ "aria-label": "controlled" }}
-                    sx={{
-                      marginTop: "-10px",
-                      "& .Mui-checked": {
-                        color: "LimeGreen" // Задаем кастомный цвет для свитча в состоянии "включено"
-                      },
-                      "& .Mui-checked + .MuiSwitch-track": {
-                        backgroundColor: "LimeGreen" // Задаем кастомный цвет для фона свитча в состоянии "включено"
-                      }
-                    }}
-                  />
-                }
+              <SwitchField
                 label={field.isDefault ? "Основной" : null}
+                checked={field.isDefault || false}
+                onChange={() => handleChangePhone(index, field.isDefault)}
               />
             </Box>
           );
@@ -134,13 +128,14 @@ const FieldsPhone = ({ data, register, setValue, errors, control }) => {
           width="100%"
           size="small"
           icon={<ControlPointOutlinedIcon />}
-          onClick={() => appendPhone({ phone: "", isDefault: false })}
+          onClick={handleAddPhone}
         />
         <ButtonStyled
           title="Удалить телефон"
           style="REMOVE_SOME_NEW"
           width="100%"
           size="small"
+          disabled={!data.phones.length}
           icon={<DoNotDisturbOnOutlinedIcon />}
           onClick={() => handleRemovePhone(lastPhoneIndex)} // передаем функцию removePhone с аргументом
         />

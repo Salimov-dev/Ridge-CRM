@@ -16,6 +16,7 @@ import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
 // store
 import { getObjectsList } from "@store/object/objects.store";
 import { getCurrentUserId } from "@store/user/users.store";
+import DeleteElementIcon from "@components/common/buttons/icons buttons/delete-element-icon";
 
 const FieldsObject = ({
   data,
@@ -31,16 +32,6 @@ const FieldsObject = ({
     object: false
   });
 
-  const currentUserId = useSelector(getCurrentUserId());
-  const objectsList = useSelector(getObjectsList());
-  const currentUserObjects = objectsList?.filter(
-    (obj) => obj.userId === currentUserId
-  );
-  const watchObjectId = watch("objectId");
-
-  const { handleOpenCreateObjectPage } = useDialogHandlers(setState);
-  const { handleOpenObjectPage } = useDialogHandlers(setOpenObject);
-
   const {
     fields: fieldObjects,
     append: appenObject,
@@ -49,6 +40,21 @@ const FieldsObject = ({
     name: "objects",
     control
   });
+  const currentUserId = useSelector(getCurrentUserId());
+  const objectsList = useSelector(getObjectsList());
+
+  const filteredObjects = objectsList?.filter(
+    (object) =>
+      !fieldObjects.some((fieldCompany) => fieldCompany.object === object._id)
+  );
+
+  const currentUserObjects = objectsList?.filter(
+    (obj) => obj.userId === currentUserId
+  );
+  const watchObjectId = watch("objectId");
+
+  const { handleOpenCreateObjectPage } = useDialogHandlers(setState);
+  const { handleOpenObjectPage } = useDialogHandlers(setOpenObject);
 
   const lastObjectIndex = fieldObjects.length - 1;
 
@@ -74,11 +80,14 @@ const FieldsObject = ({
                 gap: "12px"
               }}
             >
+              <DeleteElementIcon onClick={() => handleRemoveObject(index)} />
               <AutocompleteStyled
                 label="Объект"
                 register={register}
                 name={`objects.${index}.object`}
-                options={currentUserObjects}
+                options={
+                  data.objects?.[index].object ? objectsList : filteredObjects
+                }
                 value={data.objects?.[index].object}
                 errors={errors?.objects?.[index]?.object}
                 setValue={setValue}
@@ -86,11 +95,13 @@ const FieldsObject = ({
                 optionLabel={(option) => `${option?.city}, ${option?.address}`}
               />
               <OpenPageObjectIconButton
-                containerWidth="70px"
+                containerWidth="112px"
+                height="100%"
+                width="24px"
                 title={null}
-                disabled={!data.objects?.[index].object}
+                disabled={!data?.objects?.[index]?.object}
                 onClick={() =>
-                  handleOpenObjectPage(data.objects?.[index].object)
+                  handleOpenObjectPage(data?.objects?.[index]?.object)
                 }
               />
             </Box>
@@ -122,6 +133,7 @@ const FieldsObject = ({
           style="REMOVE_SOME_NEW"
           width="100%"
           size="small"
+          disabled={!data.objects.length}
           icon={<DoNotDisturbOnOutlinedIcon />}
           onClick={() => handleRemoveObject(lastObjectIndex)} // передаем функцию removePhone с аргументом
         />
