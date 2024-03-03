@@ -2,6 +2,7 @@ import { DataTypes } from "sequelize";
 import { sequelize } from "../utils/postgre-conection.js";
 import User from "./User.js";
 import Object from "./Object.js";
+import ContactCompany from "./contact/ContactCompany.js";
 
 const LastContact = sequelize.define(
   "LastContact",
@@ -33,6 +34,7 @@ const LastContact = sequelize.define(
     },
     date: { type: DataTypes.DATE },
     result: { type: DataTypes.STRING },
+    contacts: { type: DataTypes.JSONB, defaultValue: [] },
     created_at: {
       type: DataTypes.DATE,
       defaultValue: DataTypes.NOW
@@ -47,5 +49,11 @@ const LastContact = sequelize.define(
     tableName: "lastContacts"
   }
 );
+
+LastContact.hasMany(ContactCompany, {
+  foreignKey: "lastContactId",
+  onDelete: "CASCADE",
+  onUpdate: "CASCADE"
+});
 
 export default LastContact;

@@ -4,12 +4,12 @@ import CreateIcon from "@mui/icons-material/Create";
 // components
 import getDateToday from "@utils/date/get-date-today";
 import SelectFieldStyled from "@components/common/inputs/select-field-styled";
-import { FieldsContainer, Form } from "../components/common/forms/styled";
-import TimePickerStyled from "../components/common/inputs/time-picker";
-import DatePickerStyled from "../components/common/inputs/date-picker";
-import AutocompleteStyled from "../components/common/inputs/autocomplete-styled";
-import TextFieldStyled from "../components/common/inputs/text-field-styled";
-import SimpleSwitch from "../components/common/inputs/simple-switch";
+import { FieldsContainer, Form } from "../../components/common/forms/styled";
+import TimePickerStyled from "../../components/common/inputs/time-picker";
+import DatePickerStyled from "../../components/common/inputs/date-picker";
+import AutocompleteStyled from "../../components/common/inputs/autocomplete-styled";
+import TextFieldStyled from "../../components/common/inputs/text-field-styled";
+import SimpleSwitch from "../../components/common/inputs/simple-switch";
 // utils
 import { capitalizeFirstLetter } from "@utils/data/capitalize-first-letter";
 

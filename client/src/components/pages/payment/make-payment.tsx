@@ -11,7 +11,7 @@ import config from "@config/config.json";
 import TitleWithCloseButton from "@common/page-headers/header-with-close-button";
 import SuccessCancelFormButtons from "@components/common/buttons/success-cancel-form-buttons";
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
-import MakePaymentForm from "@forms/make-payment.form";
+import MakePaymentForm from "@forms/make-payment/make-payment.form";
 import CostOneLicense from "./components/cost-one-license";
 import CurrentLicenseInfo from "./components/current-license-info";
 import EnoughLicenseDays from "./components/enough-license-days";

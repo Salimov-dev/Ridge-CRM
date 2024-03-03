@@ -10,7 +10,7 @@ import AutocompleteStyled from "@components/common/inputs/autocomplete-styled";
 import RowTitle from "@components/common/titles/row-title";
 import ButtonStyled from "@components/common/buttons/button-styled.button";
 import PageDialogs from "@components/common/dialog/page-dialogs";
-import OpenPageObjectIconButton from "@components/common/buttons/icons buttons/open-page-object.button-icon";
+import OpenPageElementIconButton from "@components/common/buttons/icons buttons/open-page-element.button-icon";
 // hooks
 import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
 // store
@@ -111,7 +111,7 @@ const FieldsContact = ({
                 watchItemId={watchContactId}
                 optionLabel={(option) => option?.name}
               />
-              <OpenPageObjectIconButton
+              <OpenPageElementIconButton
                 containerWidth="112px"
                 height="100%"
                 width="24px"

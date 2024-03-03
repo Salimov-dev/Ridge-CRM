@@ -1,14 +1,14 @@
 // components
-import TextFieldStyled from "../components/common/inputs/text-field-styled";
-import SimpleSelectField from "../components/common/inputs/simple-select-field";
-import DatePickerStyled from "../components/common/inputs/date-picker";
-import TimePickerStyled from "../components/common/inputs/time-picker";
-import SimpleSwitch from "../components/common/inputs/simple-switch";
-import AutocompleteStyled from "../components/common/inputs/autocomplete-styled";
+import TextFieldStyled from "../../components/common/inputs/text-field-styled";
+import SimpleSelectField from "../../components/common/inputs/simple-select-field";
+import DatePickerStyled from "../../components/common/inputs/date-picker";
+import TimePickerStyled from "../../components/common/inputs/time-picker";
+import SimpleSwitch from "../../components/common/inputs/simple-switch";
+import AutocompleteStyled from "../../components/common/inputs/autocomplete-styled";
 // styled
-import { FieldsContainer, Form } from "../components/common/forms/styled";
+import { FieldsContainer, Form } from "../../components/common/forms/styled";
 // utils
-import getDateToday from "../utils/date/get-date-today";
+import getDateToday from "../../utils/date/get-date-today";
 
 const ManagerTaskForm = ({
   data,

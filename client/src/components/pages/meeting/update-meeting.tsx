@@ -11,7 +11,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import SuccessCancelFormButtons from "@components/common/buttons/success-cancel-form-buttons";
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
 import HeaderWithCloseButton from "@components/common/page-headers/header-with-close-button";
-import MeetingForm from "@forms/meeting.form";
+import MeetingForm from "@forms/meeting/meeting.form";
 import DialogConfirm from "@components/common/dialog/dialog-confirm";
 import ItemOnMap from "@components/common/map/item-on-map/item-on-map";
 // schema

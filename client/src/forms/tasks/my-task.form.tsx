@@ -1,9 +1,9 @@
-import { FieldsContainer, Form } from "../components/common/forms/styled";
-import TextFieldStyled from "../components/common/inputs/text-field-styled";
-import DatePickerStyled from "../components/common/inputs/date-picker";
-import TimePickerStyled from "../components/common/inputs/time-picker";
-import SimpleSwitch from "../components/common/inputs/simple-switch";
-import AutocompleteStyled from "../components/common/inputs/autocomplete-styled";
+import { FieldsContainer, Form } from "../../components/common/forms/styled";
+import TextFieldStyled from "../../components/common/inputs/text-field-styled";
+import DatePickerStyled from "../../components/common/inputs/date-picker";
+import TimePickerStyled from "../../components/common/inputs/time-picker";
+import SimpleSwitch from "../../components/common/inputs/simple-switch";
+import AutocompleteStyled from "../../components/common/inputs/autocomplete-styled";
 import { capitalizeFirstLetter } from "@utils/data/capitalize-first-letter";
 
 const MyTaskForm = ({

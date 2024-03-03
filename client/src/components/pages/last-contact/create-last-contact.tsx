@@ -4,20 +4,22 @@ import { toast } from "react-toastify";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useTheme } from "@emotion/react";
+import { tokens } from "@theme/theme";
 import { useDispatch } from "react-redux";
 // components
-import LastContactForm from "@forms/last-contact.form";
+import PageDialogs from "@components/common/dialog/page-dialogs";
+import HeaderWithCloseButton from "@common/page-headers/header-with-close-button";
+import SuccessCancelFormButtons from "@components/common/buttons/success-cancel-form-buttons";
+import LoaderFullWindow from "@components/common/loader/loader-full-window";
+// forms
+import LastContactForm from "@forms/last-contact/last-contact.form";
 // store
 import { createLastContact } from "@store/last-contact/last-contact.store";
 // schema
 import { lastContactSchema } from "@schemas/last-contact.schema";
 // utils
 import { capitalizeFirstLetter } from "@utils/data/capitalize-first-letter";
-import SuccessCancelFormButtons from "@components/common/buttons/success-cancel-form-buttons";
-import LoaderFullWindow from "@components/common/loader/loader-full-window";
-import { useTheme } from "@emotion/react";
-import { tokens } from "@theme/theme";
-import HeaderWithCloseButton from "@common/page-headers/header-with-close-button";
 
 const initialState = {
   date: dayjs(),
@@ -31,12 +33,16 @@ const CreateLastContact = React.memo(({ objectPageId, onClose }) => {
   const colors = tokens(theme.palette.mode);
 
   const [isLoading, setIsLoading] = useState(false);
+  const [state, setState] = useState({
+    createContactPage: false
+  });
 
   const {
     register,
     watch,
     handleSubmit,
     setValue,
+    control,
     formState: { errors }
   } = useForm({
     defaultValues: initialState,
@@ -46,10 +52,11 @@ const CreateLastContact = React.memo(({ objectPageId, onClose }) => {
 
   const data = watch();
 
-  const onSubmit = (data) => {
+  const onSubmit = () => {
     setIsLoading(true);
 
     const lastContactData = {
+      ...data,
       date: data.date,
       objectId: data.objectId,
       result: capitalizeFirstLetter(data.result).trim()
@@ -88,12 +95,16 @@ const CreateLastContact = React.memo(({ objectPageId, onClose }) => {
         register={register}
         errors={errors}
         setValue={setValue}
+        control={control}
+        watch={watch}
+        setState={setState}
       />
       <SuccessCancelFormButtons
         onSuccess={handleSubmit(onSubmit)}
         onCancel={onClose}
       />
       <LoaderFullWindow isLoading={isLoading} />
+      <PageDialogs state={state} setState={setState} />
     </>
   );
 });

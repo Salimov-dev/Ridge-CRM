@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 // components
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
 import SuccessCancelFormButtons from "@components/common/buttons/success-cancel-form-buttons";
-import MyTaskForm from "@forms/my-task.form";
+import MyTaskForm from "@forms/tasks/my-task.form";
 import DialogConfirm from "@components/common/dialog/dialog-confirm";
 import HeaderWithCloseButton from "@components/common/page-headers/header-with-close-button";
 // schema

@@ -9,6 +9,12 @@ import {
   getObjectMeetingsList
 } from "@store/meeting/meetings.store";
 
+const Component = styled(Box)`
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+`;
+
 const Title = styled(Box)`
   display: flex;
   align-items: center;
@@ -29,12 +35,12 @@ const ObjectMeetings = ({
   const sortedMeetings = sortingByDateAndTime(meetings);
 
   return (
-    <>
+    <Component>
       <Title>
         <RowTitle
           title="Встречи по объекту"
           background="linear-gradient(to right, RoyalBlue , MediumBlue)"
-          margin="16px 0px -4px 0"
+          margin="0px 0px -4px 0"
         />
         {isAuthorEntity ? (
           <ButtonStyled
@@ -54,7 +60,7 @@ const ObjectMeetings = ({
       ) : (
         <Typography>Не обнаружены</Typography>
       )}
-    </>
+    </Component>
   );
 };
 

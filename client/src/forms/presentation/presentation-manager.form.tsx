@@ -1,12 +1,12 @@
 import { useSelector } from "react-redux";
 import { Box } from "@mui/material";
 // components
-import TextFieldStyled from "../components/common/inputs/text-field-styled";
-import AutocompleteStyled from "../components/common/inputs/autocomplete-styled";
+import TextFieldStyled from "../../components/common/inputs/text-field-styled";
+import AutocompleteStyled from "../../components/common/inputs/autocomplete-styled";
 // styled
-import { FieldsContainer, Form } from "../components/common/forms/styled";
+import { FieldsContainer, Form } from "../../components/common/forms/styled";
 // store
-import { getPresentationStatusList } from "../store/presentation/presentation-status.store";
+import { getPresentationStatusList } from "../../store/presentation/presentation-status.store";
 
 const ManagerPresentationForm = ({
   objects,

@@ -9,6 +9,12 @@ import {
   getTaskLoadingStatus
 } from "@store/task/tasks.store";
 
+const Component = styled(Box)`
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+`;
+
 const Container = styled(Box)`
   display: flex;
   align-items: center;
@@ -31,7 +37,7 @@ const ObjectTasks = ({
   const sortedTasks = sortingByDateAndTime(tasks);
 
   return (
-    <>
+    <Component>
       <Container sx={{ alignItems: "start" }}>
         <RowTitle
           title="Задачи по объекту"
@@ -51,6 +57,7 @@ const ObjectTasks = ({
             title="Поставить менеджеру задачу"
             style="MANAGER_TASK"
             variant="contained"
+            width="260px"
             onClick={() => onOpenCreateManagerTask(objectId)}
           />
         )}
@@ -66,7 +73,7 @@ const ObjectTasks = ({
       ) : (
         <Typography sx={{ marginBottom: "20px" }}>Не обнаружены</Typography>
       )}
-    </>
+    </Component>
   );
 };
 

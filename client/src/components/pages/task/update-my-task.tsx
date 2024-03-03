@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useDispatch, useSelector } from "react-redux";
 // components
-import MyTaskForm from "@forms/my-task.form";
+import MyTaskForm from "@forms/tasks/my-task.form";
 import TitleWithCloseButton from "@components/common/page-headers/header-with-close-button";
 import SuccessCancelFormButtons from "@components/common/buttons/success-cancel-form-buttons";
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
@@ -50,7 +50,6 @@ const UpdateMyTask = React.memo(
     const data = watch();
     const isEditMode = taskId ? true : false;
     const objects = useSelector(getObjectsList());
-    console.log("data", data);
 
     const currentUserId = useSelector(getCurrentUserId());
     const currentUserObjects = objects?.filter(

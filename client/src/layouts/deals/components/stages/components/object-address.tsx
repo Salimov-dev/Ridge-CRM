@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import { Box, Typography, styled } from "@mui/material";
-import OpenPageObjectIconButton from "@components/common/buttons/icons buttons/open-page-object.button-icon";
+import OpenPageElementIconButton from "@components/common/buttons/icons buttons/open-page-element.button-icon";
 import { getObjectAddressById } from "@store/object/objects.store";
 
 const Component = styled(Box)`
@@ -15,7 +15,7 @@ const ObjectAddress = ({ obj, onClick }) => {
   return (
     <Component>
       <Typography variant="h6">{objectAddress}</Typography>
-      <OpenPageObjectIconButton onClick={onClick} color="black" />
+      <OpenPageElementIconButton onClick={onClick} color="black" />
     </Component>
   );
 };

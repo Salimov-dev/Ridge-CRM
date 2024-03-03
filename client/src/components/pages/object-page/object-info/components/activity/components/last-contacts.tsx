@@ -9,6 +9,12 @@ import {
   getLastContactsLoadingStatus
 } from "@store/last-contact/last-contact.store";
 
+const Component = styled(Box)`
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+`;
+
 const Container = styled(Box)`
   display: flex;
   align-items: center;
@@ -19,49 +25,46 @@ const LastContacts = ({
   objectId,
   onOpen,
   onUpdate,
-  object,
-  margin = "0",
-  isAuthorEntity
+  isAuthorEntity,
+  onOpenContactPage
 }) => {
-  const isLastContactsLoading = useSelector(getLastContactsLoadingStatus());
-  const columns = lastContactColumns(onUpdate);
-  const address = `${object?.city}, ${object?.address}`;
-
   const lastContactsList = useSelector(getLastContactsList());
-
+  const isLastContactsLoading = useSelector(getLastContactsLoadingStatus());
   const lastContacts = lastContactsList?.filter(
     (contact) => contact.objectId === objectId
   );
   const sortedLastContacts = lastContacts?.reverse();
 
   return (
-    <>
+    <Component>
       <Container sx={{ alignItems: "start" }}>
         <RowTitle
           title="Последние контакты по объекту"
           background="linear-gradient(to right, Chocolate , SaddleBrown)"
-          margin="16px 0px -4px 0"
+          margin="0px 0px -4px 0"
         />
-        <ButtonStyled
-          title="Добавить последний контакт"
-          style="LAST_CONTACT"
-          variant="contained"
-          width="280px"
-          onClick={() => onOpen(objectId)}
-        />
+        {isAuthorEntity ? (
+          <ButtonStyled
+            title="Добавить последний контакт"
+            style="LAST_CONTACT"
+            variant="contained"
+            width="280px"
+            onClick={() => onOpen(objectId)}
+          />
+        ) : null}
       </Container>
 
       {sortedLastContacts?.length ? (
         <BasicTable
           items={sortedLastContacts}
-          itemsColumns={columns}
+          itemsColumns={lastContactColumns(onUpdate, onOpenContactPage)}
           isLoading={isLastContactsLoading}
           isDialogMode={true}
         />
       ) : (
         <Typography>Не обнаружены</Typography>
       )}
-    </>
+    </Component>
   );
 };
 

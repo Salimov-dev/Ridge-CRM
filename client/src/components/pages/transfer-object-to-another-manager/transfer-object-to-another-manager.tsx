@@ -9,7 +9,7 @@ import { useForm } from "react-hook-form";
 import DialogConfirm from "@components/common/dialog/dialog-confirm";
 import Titles from "./components/titles";
 import SelectedError from "./components/selected-error";
-import TransferObjectToAnotherManagerForm from "@forms/transfer-object-to-another-manager.form";
+import TransferObjectToAnotherManagerForm from "@forms/transfer-object-to-another-manager/transfer-object-to-another-manager.form";
 import SuccessCancelFormButtons from "@components/common/buttons/success-cancel-form-buttons";
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
 import HeaderWithCloseButton from "@components/common/page-headers/header-with-close-button";

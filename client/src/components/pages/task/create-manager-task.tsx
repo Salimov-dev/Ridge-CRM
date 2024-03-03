@@ -11,7 +11,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import HeaderWithCloseButton from "@components/common/page-headers/header-with-close-button";
 import SuccessCancelFormButtons from "@components/common/buttons/success-cancel-form-buttons";
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
-import MyTaskForm from "@forms/my-task.form";
+import MyTaskForm from "@forms/tasks/my-task.form";
 // schema
 import { taskSchema } from "@schemas/task/task.shema";
 // utils

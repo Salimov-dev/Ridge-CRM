@@ -8,12 +8,13 @@ const Components = styled(Box)`
   align-items: center;
 `;
 
-const OpenPageObjectIconButton = ({
+const OpenPageElementIconButton = ({
   onClick,
   disabled = false,
   title = "Открыть объект",
   width = "24px",
   height = "24px",
+  heightButton = "auto",
   containerWidth = "auto",
   color = "white"
 }) => {
@@ -23,6 +24,7 @@ const OpenPageObjectIconButton = ({
         onClick={onClick}
         disabled={disabled}
         sx={{
+          height: heightButton,
           color: color,
           "&:disabled": {
             // стили для неактивной иконки
@@ -32,7 +34,9 @@ const OpenPageObjectIconButton = ({
           },
           "&:hover": {
             // стили при наведении (неактивное состояние)
-            transform: disabled ? "none" : "scale(1.2)" // если disabled, не изменяем масштаб
+            transform: disabled ? "none" : "scale(1.2)", // если disabled, не изменяем масштаб
+            color: "yellow",
+            background: "transparent"
           }
         }}
       >
@@ -50,4 +54,4 @@ const OpenPageObjectIconButton = ({
   );
 };
 
-export default OpenPageObjectIconButton;
+export default OpenPageElementIconButton;

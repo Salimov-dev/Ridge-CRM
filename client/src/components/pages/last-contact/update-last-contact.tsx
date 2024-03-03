@@ -8,7 +8,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useTheme } from "@emotion/react";
 import { tokens } from "@theme/theme";
 // components
-import LastContactForm from "@forms/last-contact.form";
+import LastContactForm from "@forms/last-contact/last-contact.form";
 import SuccessCancelFormButtons from "@components/common/buttons/success-cancel-form-buttons";
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
 import HeaderWithCloseButton from "@components/common/page-headers/header-with-close-button";
@@ -44,6 +44,7 @@ const UpdateLastContact = React.memo(({ lastContactId, onClose }) => {
     register,
     watch,
     handleSubmit,
+    control,
     formState: { errors },
     setValue
   } = useForm({
@@ -107,6 +108,8 @@ const UpdateLastContact = React.memo(({ lastContactId, onClose }) => {
         register={register}
         errors={errors}
         setValue={setValue}
+        control={control}
+        watch={watch}
       />
       <SuccessCancelFormButtons
         onSuccess={handleSubmit(onSubmit)}

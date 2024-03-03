@@ -1,11 +1,21 @@
 // components
-import TextFieldStyled from "../components/common/inputs/text-field-styled";
-import DatePickerStyled from "../components/common/inputs/date-picker";
-// styled
-import { FieldsContainer, Form } from "../components/common/forms/styled";
+import TextFieldStyled from "@components/common/inputs/text-field-styled";
+import DatePickerStyled from "@components/common/inputs/date-picker";
+// components
+import { FieldsContainer, Form } from "@components/common/forms/styled";
+// utils
 import { capitalizeFirstLetter } from "@utils/data/capitalize-first-letter";
+import FieldsContact from "@components/common/forms/dynamic-fields/fields-contact";
 
-const LastContactForm = ({ data, register, errors, setValue }) => {
+const LastContactForm = ({
+  data,
+  register,
+  errors,
+  setValue,
+  control,
+  watch,
+  setState = () => {}
+}) => {
   return (
     <Form>
       <FieldsContainer sx={{ flexDirection: "column" }}>
@@ -26,7 +36,16 @@ const LastContactForm = ({ data, register, errors, setValue }) => {
           errors={errors?.result}
           rows="2"
           multiline={true}
-          onInputQuantities={200}
+          inputProps={{ maxLength: 200 }}
+        />
+        <FieldsContact
+          data={data}
+          register={register}
+          errors={errors}
+          setValue={setValue}
+          control={control}
+          watch={watch}
+          setState={setState}
         />
       </FieldsContainer>
     </Form>

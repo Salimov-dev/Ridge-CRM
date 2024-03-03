@@ -8,6 +8,7 @@ import EmptyTd from "@components/common/columns/empty-td";
 import UserNameWithAvatar from "@components/common/user-name-with-avatar";
 import ButtonStyled from "@components/common/buttons/button-styled.button";
 import { AlignCenter } from "@components/common/columns/styled";
+import ContactTableEntity from "@components/common/table-entities/contact-table-entity";
 // utils
 import { FormatDate } from "@utils/date/format-date";
 import { getLastContactsById } from "@store/last-contact/last-contact.store";
@@ -18,7 +19,7 @@ import {
 // hooks
 import useGetUserAvatar from "@hooks/user/use-get-user-avatar";
 
-export const lastContactColumns = (onUpdate) => [
+export const lastContactColumns = (onUpdate, onOpenContactPage) => [
   {
     accessorKey: "date",
     header: "Дата",
@@ -33,6 +34,21 @@ export const lastContactColumns = (onUpdate) => [
           <Typography>{formattedDate}</Typography>
           <Typography>{dayOfWeek}</Typography>{" "}
         </Box>
+      );
+    }
+  },
+  {
+    accessorFn: (row) => row,
+    header: "Комиссия",
+    cell: (info) => {
+      const row = info.getValue();
+      const contacts = row.contacts;
+
+      return (
+        <ContactTableEntity
+          contacts={contacts}
+          onOpenContactPage={onOpenContactPage}
+        />
       );
     }
   },
