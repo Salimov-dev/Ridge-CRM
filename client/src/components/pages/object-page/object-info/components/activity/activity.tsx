@@ -68,7 +68,8 @@ const Acitivty = ({ object, objectId, setState }) => {
           handleOpenUpdateMeetingPage,
           () => {},
           isDialogPage,
-          isCurator
+          isCurator,
+          isAuthorEntity
         )}
         isAuthorEntity={isAuthorEntity}
       />
@@ -78,6 +79,7 @@ const Acitivty = ({ object, objectId, setState }) => {
         onUpdate={handleOpenUpdateLastContactPage}
         onOpenContactPage={handleOpenContactPage}
         isAuthorEntity={isAuthorEntity}
+        isCurator={isCurator}
       />
     </Component>
   );

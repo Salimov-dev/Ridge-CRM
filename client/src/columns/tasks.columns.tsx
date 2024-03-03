@@ -77,6 +77,7 @@ export const tasksColumns = (
       {
         accessorKey: "objectId",
         header: "Объект",
+        enableSorting: false,
         cell: (info) => {
           const objectId = info.getValue();
           const object = useSelector(getObjectById(objectId));
@@ -119,14 +120,16 @@ export const tasksColumns = (
       {
         accessorKey: "comment",
         header: "Задача",
+        enableSorting: false,
         cell: (info) => {
           const comment = info.getValue();
-          return comment;
+          return <AlignCenter>{comment}</AlignCenter>;
         }
       },
       {
         accessorKey: "userId",
         header: "Задачу поставил",
+        enableSorting: false,
         cell: (info) => {
           const userId = info.getValue();
           const { getAvatarSrc, isLoading } = useGetUserAvatar(userId);
@@ -145,6 +148,7 @@ export const tasksColumns = (
       {
         accessorFn: (row) => row,
         header: "Ответственный",
+        enableSorting: false,
         cell: (info) => {
           const row = info.getValue();
           const managerId = row.managerId;
@@ -177,6 +181,7 @@ export const tasksColumns = (
       {
         accessorKey: "result",
         header: "Результат",
+        enableSorting: false,
         cell: (info) => {
           const comment = info.getValue();
           return comment ? comment : <EmptyTd />;

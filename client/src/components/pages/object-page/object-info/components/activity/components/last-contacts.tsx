@@ -26,7 +26,8 @@ const LastContacts = ({
   onOpen,
   onUpdate,
   isAuthorEntity,
-  onOpenContactPage
+  onOpenContactPage,
+  isCurator
 }) => {
   const lastContactsList = useSelector(getLastContactsList());
   const isLastContactsLoading = useSelector(getLastContactsLoadingStatus());
@@ -57,7 +58,12 @@ const LastContacts = ({
       {sortedLastContacts?.length ? (
         <BasicTable
           items={sortedLastContacts}
-          itemsColumns={lastContactColumns(onUpdate, onOpenContactPage)}
+          itemsColumns={lastContactColumns(
+            onUpdate,
+            onOpenContactPage,
+            isAuthorEntity,
+            isCurator
+          )}
           isLoading={isLastContactsLoading}
           isDialogMode={true}
         />

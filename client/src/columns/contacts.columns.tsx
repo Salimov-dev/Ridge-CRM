@@ -127,6 +127,7 @@ export const contactsColumns = (
     {
       accessorFn: (row) => row,
       header: "Имя",
+      enableSorting: false,
       cell: (info) => {
         const row = info.getValue();
         const name = row?.name;
@@ -152,6 +153,7 @@ export const contactsColumns = (
     {
       accessorKey: "companies",
       header: "Компания",
+      enableSorting: false,
       cell: (info) => {
         const companies = info.getValue();
 
@@ -182,6 +184,7 @@ export const contactsColumns = (
     {
       accessorFn: (row) => row,
       header: "Почта",
+      enableSorting: false,
       cell: (info) => {
         const row = info.getValue();
         const email = row?.emails.find(
@@ -193,6 +196,7 @@ export const contactsColumns = (
     {
       accessorFn: (row) => row,
       header: "Телефон",
+      enableSorting: false,
       cell: (info) => {
         const row = info.getValue();
         const phone = row.phones.find(

@@ -94,6 +94,7 @@ export const companiesColumns = (
   const objectsColumn = {
     accessorFn: (row) => row,
     header: "Контакты",
+    enableSorting: false,
     cell: (info) => {
       const row = info.getValue();
       const objects = row.objects;

@@ -23,7 +23,8 @@ export const meetingsColumns = (
   handleOpenUpdateMeetingPage,
   handleOpenObjectPage,
   isDialogPage,
-  isCurator
+  isCurator,
+  isAuthorEntity
 ) => {
   let columns = [];
 
@@ -67,12 +68,15 @@ export const meetingsColumns = (
       {
         accessorFn: (row) => row,
         header: "Адрес встречи",
+        enableSorting: false,
         cell: (info) => {
           const meeting = info.getValue();
           return (
-            <Typography>
-              {meeting.city}, {meeting.address}
-            </Typography>
+            <AlignCenter>
+              <Typography>
+                {meeting.city}, {meeting.address}
+              </Typography>
+            </AlignCenter>
           );
         }
       }
@@ -147,7 +151,7 @@ export const meetingsColumns = (
         enableSorting: false,
         cell: (info) => {
           const comment = info.getValue();
-          return comment;
+          return <AlignCenter>{comment}</AlignCenter>;
         }
       },
       {
@@ -156,7 +160,11 @@ export const meetingsColumns = (
         enableSorting: false,
         cell: (info) => {
           const result = info.getValue();
-          return result ? result : <AlignCenter>-</AlignCenter>;
+          return result ? (
+            <AlignCenter>{result}</AlignCenter>
+          ) : (
+            <AlignCenter>-</AlignCenter>
+          );
         }
       },
       {
@@ -167,7 +175,12 @@ export const meetingsColumns = (
           const date = info.getValue();
           return <AlignCenter>{FormatDate(date)}</AlignCenter>;
         }
-      },
+      }
+    ]
+  };
+  const updateColumn = {
+    header: "Править",
+    columns: [
       {
         accessorKey: "_id",
         header: "Править",
@@ -203,6 +216,10 @@ export const meetingsColumns = (
 
   if (!isDialogPage) {
     columns.splice(1, 0, meetingObjectColumn);
+  }
+
+  if (isAuthorEntity) {
+    columns.push(updateColumn);
   }
 
   return columns;
