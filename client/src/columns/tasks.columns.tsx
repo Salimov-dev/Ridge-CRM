@@ -14,8 +14,7 @@ import { getObjectById } from "@store/object/objects.store";
 import { getTaskById } from "@store/task/tasks.store";
 import {
   getCurrentUserId,
-  getIsUserAuthorThisEntity,
-  getUsersLoadingStatus
+  getIsUserAuthorThisEntity
 } from "@store/user/users.store";
 // utils
 import { FormatDate } from "@utils/date/format-date";
@@ -118,21 +117,30 @@ export const tasksColumns = (
     }
   },
   {
-    accessorKey: "managerId",
+    accessorFn: (row) => row,
     header: "Ответственный",
     cell: (info) => {
-      const managerId = info.getValue();
-      const { getAvatarSrc, isLoading } = useGetUserAvatar(managerId);
+      const row = info.getValue();
+      const managerId = row.managerId;
+      const userId = row.userId;
+      const { getAvatarSrc: getManagerAvatar, isLoading: isLoadingManager } =
+        useGetUserAvatar(managerId);
+      const { getAvatarSrc: getUserAvatar, isLoading: isLoadingUser } =
+        useGetUserAvatar(userId);
       return (
         <AlignCenter>
           {managerId ? (
             <UserNameWithAvatar
               userId={managerId}
-              avatarSrc={getAvatarSrc()}
-              isLoading={isLoading}
+              avatarSrc={getManagerAvatar()}
+              isLoading={isLoadingManager}
             />
           ) : (
-            <EmptyTd />
+            <UserNameWithAvatar
+              userId={userId}
+              avatarSrc={getUserAvatar()}
+              isLoading={isLoadingUser}
+            />
           )}
         </AlignCenter>
       );
@@ -163,13 +171,16 @@ export const tasksColumns = (
     }
   },
   {
-    accessorKey: "_id",
-    header: "",
+    accessorFn: (row) => row,
+    header: "Править",
+    enableSorting: false,
     cell: (info) => {
-      const taskId = info.getValue();
+      const row = info.getValue();
+      const taskId = row._id;
       const task = useSelector(getTaskById(taskId));
       const currentUserId = useSelector(getCurrentUserId());
       const isCuratorTask = Boolean(task?.managerId);
+      const isCallTask = row.isCallTask;
 
       const isAuthorEntity = useSelector(
         getIsUserAuthorThisEntity(currentUserId, task)
@@ -190,7 +201,7 @@ export const tasksColumns = (
         <AlignCenter>
           <ButtonStyled
             title="Править"
-            style="MY_TASK"
+            style={isCallTask ? "OBJECT" : "MY_TASK"}
             disabled={disabled}
             onClick={() => handleOpenUpdateMyTaskPage(taskId)}
           />

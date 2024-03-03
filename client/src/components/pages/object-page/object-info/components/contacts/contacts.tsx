@@ -1,9 +1,13 @@
 import { useSelector } from "react-redux";
-import { companiesColumns } from "@columns/companies.columns";
-import { contactsColumns } from "@columns/contacts.columns";
+// components
 import BasicTable from "@components/common/table/basic-table";
 import RowTitle from "@components/common/titles/row-title";
+// columns
+import { companiesColumns } from "@columns/companies.columns";
+import { contactsColumns } from "@columns/contacts.columns";
+// hooks
 import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
+// store
 import { getCompaniesList } from "@store/company/company.store";
 import { getContactsList } from "@store/contact/contact.store";
 import { getObjectsLoadingStatus } from "@store/object/objects.store";
@@ -25,6 +29,7 @@ const Contacts = ({ object, setState }) => {
 
   const isCurator = useSelector(getIsUserCurator(currentUserId));
   const isLoading = useSelector(getObjectsLoadingStatus());
+  const isHideCheckbox = true;
 
   const { handleOpenContactPage, handleOpenUpdateCompanyPage } =
     useDialogHandlers(setState);
@@ -38,7 +43,11 @@ const Contacts = ({ object, setState }) => {
       />
       <BasicTable
         items={userContacts}
-        itemsColumns={contactsColumns(handleOpenContactPage, isCurator)}
+        itemsColumns={contactsColumns(
+          handleOpenContactPage,
+          isCurator,
+          isHideCheckbox
+        )}
         isLoading={isLoading}
         isDialogMode={true}
       />
@@ -49,7 +58,11 @@ const Contacts = ({ object, setState }) => {
       />
       <BasicTable
         items={userCompanies}
-        itemsColumns={companiesColumns(handleOpenUpdateCompanyPage, isCurator)}
+        itemsColumns={companiesColumns(
+          handleOpenUpdateCompanyPage,
+          isCurator,
+          isHideCheckbox
+        )}
         isLoading={isLoading}
         isDialogMode={true}
       />

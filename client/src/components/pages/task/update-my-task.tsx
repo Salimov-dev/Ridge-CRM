@@ -50,6 +50,7 @@ const UpdateMyTask = React.memo(
     const data = watch();
     const isEditMode = taskId ? true : false;
     const objects = useSelector(getObjectsList());
+    console.log("data", data);
 
     const currentUserId = useSelector(getCurrentUserId());
     const currentUserObjects = objects?.filter(

@@ -19,7 +19,7 @@ const MyTaskForm = ({
   isObjectPage = false
 }) => {
   const watchObjectId = watch("objectId");
-  const watchIsDone = watch("isDone", false);
+  const watchIsDone = watch("isDone");
   const watchIsCallTask = watch("isCallTask");
   const watchManagerId = watch("managerId", "");
 
@@ -87,7 +87,7 @@ const MyTaskForm = ({
         required={true}
         multiline={true}
         errors={errors?.comment}
-        onInputQuantities={200}
+        inputProps={{ maxLength: 200 }}
       />
       {isEditMode ? (
         <TextFieldStyled
@@ -97,7 +97,7 @@ const MyTaskForm = ({
           value={capitalizeFirstLetter(data?.result)}
           rows="2"
           multiline={true}
-          onInputQuantities={100}
+          inputProps={{ maxLength: 100 }}
         />
       ) : null}
 

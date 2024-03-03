@@ -90,6 +90,7 @@ const Companies = React.memo(() => {
 
   const companiesList = useSelector(getCompaniesList());
   const isLoading = useSelector(getCompaniesLoadingStatus());
+  const isHideCheckbox = false;
 
   // const CompaniesStatuses = useSelector(getCompaniestatusList());
 
@@ -142,7 +143,11 @@ const Companies = React.memo(() => {
       /> */}
       <BasicTable
         items={companiesList}
-        itemsColumns={companiesColumns(handleOpenUpdateCompanyPage, isCurator)}
+        itemsColumns={companiesColumns(
+          handleOpenUpdateCompanyPage,
+          isCurator,
+          isHideCheckbox
+        )}
         isLoading={isLoading}
         rowSelection={rowSelection}
         setRowSelection={setRowSelection}

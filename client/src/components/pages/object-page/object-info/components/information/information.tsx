@@ -1,15 +1,18 @@
+import { Box } from "@mui/material";
+// components
+import BasicTable from "@components/common/table/basic-table";
+import RowTitle from "@components/common/titles/row-title";
+// columns
 import {
   commercialTermsColumns,
   estateOptionsColumns,
   estateTypeColumns,
   locationColumns
 } from "@columns/object-page.columns";
-import BasicTable from "@components/common/table/basic-table";
-import RowTitle from "@components/common/titles/row-title";
-import { Box } from "@mui/material";
 
 const Information = ({ object, isLoading }) => {
-  const description = object?.description?.fullDescription;
+  const description = object?.fullDescription;
+
   return (
     <>
       <RowTitle

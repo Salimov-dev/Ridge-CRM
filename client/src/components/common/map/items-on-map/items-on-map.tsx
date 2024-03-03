@@ -1,11 +1,9 @@
 import dayjs from "dayjs";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { Box, styled } from "@mui/material";
-// components
-import Loader from "../../loader/loader";
+import { useSelector } from "react-redux";
 // yandex map
-import targetDefault from "@assets/map/target.png";
 import {
   Map,
   Placemark,
@@ -13,12 +11,14 @@ import {
   FullscreenControl
 } from "@pbe/react-yandex-maps";
 import target_cluster from "@assets/map/target_cluster.png";
+// components
+import Loader from "../../loader/loader";
 // styles
 import "./styles.css";
+// data
 import { citiesArray } from "@data/cities";
-import { useSelector } from "react-redux";
-import { getCurrentUserData } from "@store/user/users.store";
-import { getCityDataById } from "@store/city/citites.store";
+// store
+import { getCurrentUserData, getUsersList } from "@store/user/users.store";
 
 const MapContainer = styled(Box)`
   height: 350px;
@@ -32,12 +32,12 @@ const ItemsOnMap = ({
   baloon,
   isLoading,
   onClick,
-  target = targetDefault,
   targetCluster = target_cluster
 }) => {
   const [activePortal, setActivePortal] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
 
+  const usersList = useSelector(getUsersList());
   const currentUser = useSelector(getCurrentUserData());
   const userCity = citiesArray.find((city) => city._id === currentUser?.city);
 
@@ -63,17 +63,18 @@ const ItemsOnMap = ({
     return createPortal(children, el);
   };
 
-  const userColor = currentUser?.color;
+  const getItemImageHref = (item) => {
+    const itemUser = usersList?.find((user) => user._id === item?.userId);
+    const userItemColor = itemUser?.color;
 
-  const iconImageHref = useMemo(() => {
     // Преобразование компонента LocationIcon в base64
     const svgString = `
-      <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="${userColor}" stroke="#141B2D" strokeWidth="2">
-        <path d="M12 2c-4.97 0-9 4.03-9 9s9 13 9 13s9-8.45 9-13S16.97 2 12 2zM12 15c-2.21 0-4-1.79-4-4s1.79-4 4-4s4 1.79 4 4S14.21 15 12 15z"/>
-      </svg>
-    `;
+        <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="${userItemColor}" stroke="#141B2D" strokeWidth="2">
+          <path d="M12 2c-4.97 0-9 4.03-9 9s9 13 9 13s9-8.45 9-13S16.97 2 12 2zM12 15c-2.21 0-4-1.79-4-4s1.79-4 4-4s4 1.79 4 4S14.21 15 12 15z"/>
+        </svg>
+      `;
     return `data:image/svg+xml;base64,${btoa(svgString)}`;
-  }, [userColor]);
+  };
 
   return (
     <MapContainer sx={{ width: !isFullscreen ? "100%" : "calc(100% - 86px)" }}>
@@ -121,7 +122,7 @@ const ItemsOnMap = ({
                 modules={["geoObject.addon.balloon", "geoObject.addon.hint"]}
                 options={{
                   iconLayout: "default#image",
-                  iconImageHref: iconImageHref,
+                  iconImageHref: getItemImageHref(item),
                   iconImageSize: [40, 40],
                   iconImageOffset: [-20, -40]
                 }}

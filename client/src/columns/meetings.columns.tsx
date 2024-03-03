@@ -176,7 +176,7 @@ export const meetingsColumns = (
   if (isCurator) {
     columns.splice(-5, 0, {
       accessorKey: "userId",
-      header: "Фамилия и Имя",
+      header: "Менеджер",
       cell: (info) => {
         const userId = info.getValue();
         const user = useSelector(getUserDataById(userId));

@@ -37,7 +37,11 @@ function IndeterminateCheckbox({
   );
 }
 
-export const companiesColumns = (handleOpenUpdateCompanyPage, isCurator) => {
+export const companiesColumns = (
+  handleOpenUpdateCompanyPage,
+  isCurator,
+  isHideCheckbox
+) => {
   let columns = [];
 
   const selectColumn = {
@@ -165,12 +169,11 @@ export const companiesColumns = (handleOpenUpdateCompanyPage, isCurator) => {
 
   if (isCurator) {
     columns = [
-      selectColumn,
       dateColumn,
       companyNameColumn,
       contactsColumn,
       objectsColumn,
-      usersColumn,
+      // usersColumn,
       openCompanyColumn
     ];
   } else {
@@ -179,9 +182,13 @@ export const companiesColumns = (handleOpenUpdateCompanyPage, isCurator) => {
       companyNameColumn,
       contactsColumn,
       objectsColumn,
-      usersColumn,
+      // usersColumn,
       openCompanyColumn
     ];
+  }
+
+  if (isCurator && !isHideCheckbox) {
+    columns.unshift(selectColumn);
   }
 
   return columns;

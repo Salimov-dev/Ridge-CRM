@@ -6,9 +6,9 @@ const DoneStatusIcon = ({ isDone }) => {
   return (
     <Box sx={{ display: "flex", justifyContent: "center" }}>
       {!isDone ? (
-        <CircleOutlinedIcon sx={{ color: "gray" }} />
+        <CircleOutlinedIcon sx={{ color: "Crimson" }} />
       ) : (
-        <CheckCircleOutlineOutlinedIcon sx={{ color: "green" }} />
+        <CheckCircleOutlineOutlinedIcon sx={{ color: "LimeGreen" }} />
       )}
     </Box>
   );

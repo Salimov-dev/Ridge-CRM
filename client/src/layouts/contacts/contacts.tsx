@@ -66,6 +66,7 @@ const Contacts = React.memo(() => {
 
   const isCurator = useSelector(getIsUserCurator(currentUserId));
   const isInputEmpty = JSON.stringify(initialState) !== JSON.stringify(data);
+  const isHideCheckbox = false;
 
   // const contactsList = useSelector(getContactsList());
 
@@ -112,7 +113,11 @@ const Contacts = React.memo(() => {
       />
       <BasicTable
         items={contactsList}
-        itemsColumns={contactsColumns(handleOpenContactPage, isCurator)}
+        itemsColumns={contactsColumns(
+          handleOpenContactPage,
+          isCurator,
+          isHideCheckbox
+        )}
         isLoading={isLoading}
         rowSelection={rowSelection}
         setRowSelection={setRowSelection}

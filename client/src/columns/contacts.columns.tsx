@@ -10,10 +10,7 @@ import ButtonStyled from "@components/common/buttons/button-styled.button";
 // store
 import { getPositionNameById } from "@store/contact/contact-positions.store";
 import { getObjectAddressById } from "@store/object/objects.store";
-import {
-  getCompanyById,
-  getCompanyNameById
-} from "@store/company/company.store";
+import { getCompanyNameById } from "@store/company/company.store";
 
 function IndeterminateCheckbox({
   indeterminate,
@@ -38,7 +35,11 @@ function IndeterminateCheckbox({
   );
 }
 
-export const contactsColumns = (handleOpenContactPage, isCurator) => {
+export const contactsColumns = (
+  handleOpenContactPage,
+  isCurator,
+  isHideCheckbox
+) => {
   let columns = [];
 
   const selectColumn = {
@@ -194,7 +195,6 @@ export const contactsColumns = (handleOpenContactPage, isCurator) => {
 
   if (isCurator) {
     columns = [
-      selectColumn,
       dateColumn,
       ...contactsColumn,
       positionColumn,
@@ -211,6 +211,10 @@ export const contactsColumns = (handleOpenContactPage, isCurator) => {
       commentColumn,
       openContactColumn
     ];
+  }
+
+  if (isCurator && !isHideCheckbox) {
+    columns.unshift(selectColumn);
   }
 
   return columns;
