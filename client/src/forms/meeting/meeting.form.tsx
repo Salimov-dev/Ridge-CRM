@@ -1,5 +1,5 @@
 // MUI
-import { InputAdornment } from "@mui/material";
+import { Box, InputAdornment } from "@mui/material";
 import CreateIcon from "@mui/icons-material/Create";
 // components
 import getDateToday from "@utils/date/get-date-today";
@@ -94,7 +94,7 @@ const MeetingForm = ({
             required={true}
             errors={errors?.comment}
             value={capitalizeFirstLetter(data?.comment)}
-            onInputQuantities={150}
+            inputProps={{ maxLength: 150 }}
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
@@ -105,15 +105,17 @@ const MeetingForm = ({
           />
         </FieldsContainer>
         {isEditMode ? (
-          <TextFieldStyled
-            register={register}
-            label="Результат"
-            name="result"
-            value={capitalizeFirstLetter(data?.result)}
-            rows="2"
-            multiline={true}
-            onInputQuantities={100}
-          />
+          <Box sx={{ width: "100%", marginBottom: "-10px" }}>
+            <TextFieldStyled
+              register={register}
+              label="Результат"
+              name="result"
+              value={capitalizeFirstLetter(data?.result) || ""}
+              rows="2"
+              multiline={true}
+              inputProps={{ maxLength: 100 }}
+            />
+          </Box>
         ) : null}
 
         {isEditMode ? (
@@ -121,6 +123,7 @@ const MeetingForm = ({
             title="Встреча выполненна"
             value={watchIsDone}
             isLoading={isMeetingsLoading}
+            padding="0"
             onChange={(e) => {
               setValue("isDone", e.target.checked);
             }}

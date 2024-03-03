@@ -11,7 +11,7 @@ import {
   FormatTypeEstate,
   FormatTypeObject,
   FormatTypeRent,
-  FormatWorkingPosition,
+  FormatWorkingPosition
 } from "@components/common/table/helpers/helpers";
 import EmptyTd from "@components/common/columns/empty-td";
 import { useSelector } from "react-redux";
@@ -27,7 +27,7 @@ export const locationColumns = [
     cell: (info) => {
       const date = info.getValue();
       return <AlignCenter>{FormatDate(date)}</AlignCenter>;
-    },
+    }
   },
   {
     accessorKey: "city",
@@ -36,7 +36,7 @@ export const locationColumns = [
     cell: (info) => {
       const city = info.getValue();
       return <AlignCenter>{city}</AlignCenter>;
-    },
+    }
   },
   {
     accessorKey: "district",
@@ -46,7 +46,7 @@ export const locationColumns = [
       const district = info.getValue();
       const distName = useSelector(getDistrictName(district));
       return <AlignCenter>{distName}</AlignCenter>;
-    },
+    }
   },
   {
     accessorKey: "metro",
@@ -59,7 +59,7 @@ export const locationColumns = [
       ) : (
         <EmptyTd />
       );
-    },
+    }
   },
   {
     accessorKey: "address",
@@ -68,7 +68,7 @@ export const locationColumns = [
     cell: (info) => {
       const address = info.getValue();
       return <AlignCenter>{address}</AlignCenter>;
-    },
+    }
   },
   {
     accessorFn: (row) => row,
@@ -82,7 +82,7 @@ export const locationColumns = [
       } else {
         return <EmptyTd />;
       }
-    },
+    }
   },
   {
     accessorKey: "userId",
@@ -90,9 +90,15 @@ export const locationColumns = [
     enableSorting: false,
     cell: (info) => {
       const userId = info.getValue();
-      return <AlignCenter>{FormatManagerName(userId)}</AlignCenter>;
-    },
-  },
+      return (
+        <AlignCenter
+          style={{ background: "yellow", color: "black", padding: "5px" }}
+        >
+          {FormatManagerName(userId)}
+        </AlignCenter>
+      );
+    }
+  }
 ];
 
 export const estateTypeColumns = [
@@ -103,7 +109,7 @@ export const estateTypeColumns = [
     cell: (info) => {
       const cadNumber = info.getValue();
       return cadNumber ? <AlignCenter>{cadNumber}</AlignCenter> : <EmptyTd />;
-    },
+    }
   },
   {
     accessorKey: "estateTypes",
@@ -112,7 +118,7 @@ export const estateTypeColumns = [
     cell: (info) => {
       const type = info.getValue();
       return <AlignCenter>{FormatTypeEstate(type)}</AlignCenter>;
-    },
+    }
   },
   {
     accessorKey: "objectTypes",
@@ -121,7 +127,7 @@ export const estateTypeColumns = [
     cell: (info) => {
       const type = info.getValue();
       return <AlignCenter>{FormatTypeObject(type)}</AlignCenter>;
-    },
+    }
   },
   {
     accessorFn: (row) => row,
@@ -134,7 +140,7 @@ export const estateTypeColumns = [
       ) : (
         <EmptyTd />
       );
-    },
+    }
   },
   {
     accessorFn: (row) => row,
@@ -147,7 +153,7 @@ export const estateTypeColumns = [
       ) : (
         <EmptyTd />
       );
-    },
+    }
   },
   {
     accessorKey: "currentRenters",
@@ -156,7 +162,7 @@ export const estateTypeColumns = [
     cell: (info) => {
       const renter = info.getValue();
       return <AlignCenter>{FormatCurrentRenter(renter)}</AlignCenter>;
-    },
+    }
   },
   {
     accessorKey: "objectConditions",
@@ -171,7 +177,7 @@ export const estateTypeColumns = [
       ) : (
         <EmptyTd />
       );
-    },
+    }
   },
   {
     accessorKey: "status",
@@ -179,9 +185,15 @@ export const estateTypeColumns = [
     enableSorting: false,
     cell: (info) => {
       const status = info.getValue();
-      return <AlignCenter>{FormatObjectStatus(status)}</AlignCenter>;
-    },
-  },
+      return (
+        <AlignCenter
+          style={{ background: "yellow", color: "black", padding: "5px" }}
+        >
+          {FormatObjectStatus(status)}
+        </AlignCenter>
+      );
+    }
+  }
 ];
 
 export const estateOptionsColumns = [
@@ -192,7 +204,7 @@ export const estateOptionsColumns = [
     cell: (info) => {
       const square = info.getValue();
       return square ? <AlignCenter>{`${square}кВт`}</AlignCenter> : <EmptyTd />;
-    },
+    }
   },
   {
     accessorKey: "waterSuply",
@@ -201,7 +213,7 @@ export const estateOptionsColumns = [
     cell: (info) => {
       const waterSuply = info.getValue();
       return waterSuply ? <AlignCenter>{waterSuply}</AlignCenter> : <EmptyTd />;
-    },
+    }
   },
   {
     accessorKey: "premisesHeight",
@@ -214,7 +226,7 @@ export const estateOptionsColumns = [
       ) : (
         <EmptyTd />
       );
-    },
+    }
   },
   {
     accessorKey: "premisesFloor",
@@ -227,7 +239,7 @@ export const estateOptionsColumns = [
       ) : (
         <EmptyTd />
       );
-    },
+    }
   },
   {
     accessorKey: "parkingQuantity",
@@ -240,7 +252,7 @@ export const estateOptionsColumns = [
       ) : (
         <EmptyTd />
       );
-    },
+    }
   },
   {
     accessorKey: "loadingArea",
@@ -253,8 +265,8 @@ export const estateOptionsColumns = [
       ) : (
         <EmptyTd />
       );
-    },
-  },
+    }
+  }
 ];
 
 export const commercialTermsColumns = [
@@ -269,7 +281,7 @@ export const commercialTermsColumns = [
       ) : (
         <EmptyTd />
       );
-    },
+    }
   },
   {
     accessorKey: "rentPrice",
@@ -282,7 +294,7 @@ export const commercialTermsColumns = [
       ) : (
         <EmptyTd />
       );
-    },
+    }
   },
   {
     accessorFn: (row) => row,
@@ -298,7 +310,7 @@ export const commercialTermsColumns = [
       if (priceForMetr) {
         return <AlignCenter>{`${result}₽/м²`}</AlignCenter>;
       } else return <EmptyTd />;
-    },
+    }
   },
   {
     accessorKey: "indexingAnnual",
@@ -311,7 +323,7 @@ export const commercialTermsColumns = [
       ) : (
         <EmptyTd />
       );
-    },
+    }
   },
   {
     accessorKey: "rentalHolidays",
@@ -324,7 +336,7 @@ export const commercialTermsColumns = [
       ) : (
         <EmptyTd />
       );
-    },
+    }
   },
   {
     accessorKey: "securityDeposit",
@@ -337,7 +349,7 @@ export const commercialTermsColumns = [
       ) : (
         <EmptyTd />
       );
-    },
+    }
   },
   {
     accessorFn: (row) => row,
@@ -350,7 +362,7 @@ export const commercialTermsColumns = [
       ) : (
         <EmptyTd />
       );
-    },
+    }
   },
   {
     accessorFn: (row) => row,
@@ -363,7 +375,7 @@ export const commercialTermsColumns = [
       ) : (
         <EmptyTd />
       );
-    },
+    }
   },
   {
     accessorKey: "rentTypes",
@@ -376,8 +388,8 @@ export const commercialTermsColumns = [
       ) : (
         <EmptyTd />
       );
-    },
-  },
+    }
+  }
 ];
 
 export const contactsColumns = [
@@ -388,7 +400,7 @@ export const contactsColumns = [
     cell: (info) => {
       const name = info?.getValue();
       return name ? <AlignCenter>{name}</AlignCenter> : <EmptyTd />;
-    },
+    }
   },
   {
     accessorKey: "position",
@@ -401,7 +413,7 @@ export const contactsColumns = [
       ) : (
         <EmptyTd />
       );
-    },
+    }
   },
   {
     accessorKey: "phone",
@@ -414,7 +426,7 @@ export const contactsColumns = [
       ) : (
         <EmptyTd />
       );
-    },
+    }
   },
   {
     accessorKey: "email",
@@ -423,6 +435,6 @@ export const contactsColumns = [
     cell: (info) => {
       const email = info?.getValue();
       return email ? <AlignCenter>{email}</AlignCenter> : <EmptyTd />;
-    },
-  },
+    }
+  }
 ];

@@ -44,7 +44,7 @@ const Meeting = sequelize.define(
     date: { type: DataTypes.DATE },
     time: { type: DataTypes.DATE },
     comment: { type: DataTypes.STRING },
-    result: { type: DataTypes.STRING, defaultValue: null },
+    result: { type: DataTypes.STRING, defaultValue: "" },
 
     created_at: {
       type: DataTypes.DATE,

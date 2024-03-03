@@ -11,6 +11,7 @@ import ButtonStyled from "@components/common/buttons/button-styled.button";
 import { getPositionNameById } from "@store/contact/contact-positions.store";
 import { getObjectAddressById } from "@store/object/objects.store";
 import { getCompanyNameById } from "@store/company/company.store";
+import CompanyTableEntity from "@components/common/table-entities/company-table-entity";
 
 function IndeterminateCheckbox({
   indeterminate,
@@ -38,7 +39,8 @@ function IndeterminateCheckbox({
 export const contactsColumns = (
   handleOpenContactPage,
   isCurator,
-  isHideCheckbox
+  isHideCheckbox,
+  handleOpenUpdateCompanyPage
 ) => {
   let columns = [];
 
@@ -117,7 +119,7 @@ export const contactsColumns = (
     enableSorting: false,
     cell: (info) => {
       const comment = info.getValue();
-      return <AlignCenter>{comment}</AlignCenter>;
+      return comment ? <AlignCenter>{comment}</AlignCenter> : <EmptyTd />;
     }
   };
 
@@ -132,19 +134,51 @@ export const contactsColumns = (
         return <AlignCenter>{name}</AlignCenter>;
       }
     },
+    // {
+    //   accessorFn: (row) => row,
+    //   header: "Контакты",
+    //   cell: (info) => {
+    //     const row = info.getValue();
+    //     const companies = row.companies;
+
+    //     return (
+    //       <CompanyTableEntity
+    //         companies={companies}
+    //         onOpenCompanyPage={handleOpenUpdateCompanyPage}
+    //       />
+    //     );
+    //   }
+    // },
     {
       accessorKey: "companies",
       header: "Компания",
       cell: (info) => {
         const companies = info.getValue();
-        const companyIds = [...new Set(companies?.map((comp) => comp.company))];
-        const result = companyIds?.map((comp, index) => {
-          const companyName = useSelector(getCompanyNameById(comp));
-          return <AlignCenter key={comp[index]}>{companyName}</AlignCenter>;
-        });
-        return result.length ? result : <EmptyTd />;
+
+        // const row = info.getValue();
+        // const companies = row.companies;
+
+        return (
+          <CompanyTableEntity
+            companies={companies}
+            onOpenCompanyPage={handleOpenUpdateCompanyPage}
+          />
+        );
       }
     },
+    // {
+    //   accessorKey: "companies",
+    //   header: "Компания",
+    //   cell: (info) => {
+    //     const companies = info.getValue();
+    //     const companyIds = [...new Set(companies?.map((comp) => comp.company))];
+    //     const result = companyIds?.map((comp, index) => {
+    //       const companyName = useSelector(getCompanyNameById(comp));
+    //       return <AlignCenter key={comp[index]}>{companyName}</AlignCenter>;
+    //     });
+    //     return result.length ? result : <EmptyTd />;
+    //   }
+    // },
     {
       accessorFn: (row) => row,
       header: "Почта",

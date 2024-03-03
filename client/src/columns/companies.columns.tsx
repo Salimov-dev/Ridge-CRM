@@ -5,14 +5,10 @@ import { FormatDate } from "@utils/date/format-date";
 // components
 import { AlignCenter } from "@components/common/columns/styled";
 import EmptyTd from "@components/common/columns/empty-td";
+import ObjectTableEntity from "@components/common/table-entities/object-table-entity";
 import ButtonStyled from "@components/common/buttons/button-styled.button";
 // store
-import { getObjectAddressById } from "@store/object/objects.store";
-import { getUserNameById } from "@store/user/users.store";
-import {
-  getContactById,
-  getContactsBycontactId
-} from "@store/contact/contact.store";
+import { getContactById } from "@store/contact/contact.store";
 
 function IndeterminateCheckbox({
   indeterminate,
@@ -40,7 +36,8 @@ function IndeterminateCheckbox({
 export const companiesColumns = (
   handleOpenUpdateCompanyPage,
   isCurator,
-  isHideCheckbox
+  isHideCheckbox,
+  handleOpenObjectPage
 ) => {
   let columns = [];
 
@@ -95,20 +92,18 @@ export const companiesColumns = (
   };
 
   const objectsColumn = {
-    accessorKey: "objects",
-    header: "Объект",
-    enableSorting: false,
+    accessorFn: (row) => row,
+    header: "Контакты",
     cell: (info) => {
-      const objects = info.getValue();
-      const objectIds = [...new Set(objects?.map((obj) => obj.object))];
+      const row = info.getValue();
+      const objects = row.objects;
 
-      const result = objectIds?.map((obj, index) => (
-        <AlignCenter key={`${obj}-${index}`}>
-          {useSelector(getObjectAddressById(obj))}
-        </AlignCenter>
-      ));
-
-      return result.length ? result : <EmptyTd />;
+      return (
+        <ObjectTableEntity
+          objects={objects}
+          onOpenObjectPage={handleOpenObjectPage}
+        />
+      );
     }
   };
 
@@ -127,23 +122,6 @@ export const companiesColumns = (
       });
 
       return result.length ? result : <EmptyTd />;
-    }
-  };
-
-  const usersColumn = {
-    accessorFn: (row) => row,
-    header: "Менеджеры",
-    enableSorting: false,
-    cell: (info) => {
-      const row = info.getValue();
-      // const contactIds = [...new Set(contacts?.map((cont) => cont.contact))];
-
-      // const result = contactIds?.map((cont) => (
-      //   <AlignCenter>{useSelector(getUserNameById(cont))}</AlignCenter>
-      // ));
-
-      // return result.length ? result : <EmptyTd />;
-      return <AlignCenter>Менеджер</AlignCenter>;
     }
   };
 
@@ -173,7 +151,6 @@ export const companiesColumns = (
       companyNameColumn,
       contactsColumn,
       objectsColumn,
-      // usersColumn,
       openCompanyColumn
     ];
   } else {
@@ -182,7 +159,6 @@ export const companiesColumns = (
       companyNameColumn,
       contactsColumn,
       objectsColumn,
-      // usersColumn,
       openCompanyColumn
     ];
   }

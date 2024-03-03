@@ -37,21 +37,7 @@ export const lastContactColumns = (onUpdate, onOpenContactPage) => [
       );
     }
   },
-  {
-    accessorFn: (row) => row,
-    header: "Комиссия",
-    cell: (info) => {
-      const row = info.getValue();
-      const contacts = row.contacts;
 
-      return (
-        <ContactTableEntity
-          contacts={contacts}
-          onOpenContactPage={onOpenContactPage}
-        />
-      );
-    }
-  },
   {
     accessorKey: "userId",
     header: "Менеджер",
@@ -71,6 +57,21 @@ export const lastContactColumns = (onUpdate, onOpenContactPage) => [
     }
   },
   {
+    accessorFn: (row) => row,
+    header: "Контакты",
+    cell: (info) => {
+      const row = info.getValue();
+      const contacts = row.contacts;
+
+      return (
+        <ContactTableEntity
+          contacts={contacts}
+          onOpenContactPage={onOpenContactPage}
+        />
+      );
+    }
+  },
+  {
     accessorKey: "result",
     header: "Результат",
     cell: (info) => {
@@ -78,9 +79,10 @@ export const lastContactColumns = (onUpdate, onOpenContactPage) => [
       return result ? result : <EmptyTd />;
     }
   },
+
   {
     accessorKey: "_id",
-    header: "",
+    header: "Править",
     maxWidth: 70,
     minWidth: 50,
     width: 60,

@@ -26,187 +26,222 @@ export const tasksColumns = (
   handleOpenUpdateMyTaskPage,
   handleOpenUpdateManagerTaskPage,
   handleOpenObjectPage,
-  isDialogPage
-) => [
-  {
-    accessorKey: "isDone",
-    header: "",
-    enableSorting: false,
-    cell: (info) => {
-      const isDone = info.getValue();
-      return <DoneStatusIcon isDone={isDone} />;
-    }
-  },
-  {
-    accessorKey: "date",
-    header: "Дата",
-    enableSorting: false,
-    cell: (info) => {
-      const date = info.getValue();
-      const formattedDate = FormatDate(date);
-      const dayOfWeek = dayjs(date).locale("ru").format("dd");
-      return (
-        <Box sx={{ display: "flex", justifyContent: "center", gap: "6px" }}>
-          <Typography>{formattedDate}</Typography>
-          <Typography>{dayOfWeek}</Typography>{" "}
-        </Box>
-      );
-    }
-  },
-  {
-    accessorKey: "time",
-    header: "Время",
-    enableSorting: false,
-    cell: (info) => {
-      const time = info.getValue();
-      return <AlignCenter>{FormatTime(time)}</AlignCenter>;
-    }
-  },
-  {
-    accessorKey: "objectId",
+  isDialogPage,
+  isCurator
+) => {
+  let columns = [];
+
+  const dateColumn = {
+    header: "Дата и время",
+    columns: [
+      {
+        accessorKey: "isDone",
+        header: "",
+        enableSorting: false,
+        cell: (info) => {
+          const isDone = info.getValue();
+          return <DoneStatusIcon isDone={isDone} />;
+        }
+      },
+      {
+        accessorKey: "date",
+        header: "Дата",
+        enableSorting: false,
+        cell: (info) => {
+          const date = info.getValue();
+          const formattedDate = FormatDate(date);
+          const dayOfWeek = dayjs(date).locale("ru").format("dd");
+          return (
+            <Box sx={{ display: "flex", justifyContent: "center", gap: "6px" }}>
+              <Typography>{formattedDate}</Typography>
+              <Typography>{dayOfWeek}</Typography>{" "}
+            </Box>
+          );
+        }
+      },
+      {
+        accessorKey: "time",
+        header: "Время",
+        enableSorting: false,
+        cell: (info) => {
+          const time = info.getValue();
+          return <AlignCenter>{FormatTime(time)}</AlignCenter>;
+        }
+      }
+    ]
+  };
+
+  const taskObjectColumn = {
     header: "Объект задачи",
-    cell: (info) => {
-      const objectId = info.getValue();
-      const object = useSelector(getObjectById(objectId));
-      const fullAddress = `${object?.city}, ${object?.address}`;
+    columns: [
+      {
+        accessorKey: "objectId",
+        header: "Объект",
+        cell: (info) => {
+          const objectId = info.getValue();
+          const object = useSelector(getObjectById(objectId));
+          const fullAddress = `${object?.city}, ${object?.address}`;
 
-      return (
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between"
-          }}
-        >
-          {objectId ? (
-            <>
-              {fullAddress}
-              {!isDialogPage ? (
-                <AlignCenter>
-                  <ButtonStyled
-                    title="Открыть"
-                    style="OPEN_OBJECT"
-                    onClick={() => handleOpenObjectPage(objectId)}
-                  />
-                </AlignCenter>
-              ) : null}
-            </>
-          ) : (
-            <EmptyTd />
-          )}
-        </Box>
-      );
-    }
-  },
-  {
-    accessorKey: "userId",
-    header: "Задачу поставил",
-    cell: (info) => {
-      const userId = info.getValue();
-      const { getAvatarSrc, isLoading } = useGetUserAvatar(userId);
+          return (
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between"
+              }}
+            >
+              {objectId ? (
+                <>
+                  {fullAddress}
+                  {!isDialogPage ? (
+                    <AlignCenter>
+                      <ButtonStyled
+                        title="Открыть"
+                        style="OPEN_OBJECT"
+                        onClick={() => handleOpenObjectPage(objectId)}
+                      />
+                    </AlignCenter>
+                  ) : null}
+                </>
+              ) : (
+                <EmptyTd />
+              )}
+            </Box>
+          );
+        }
+      }
+    ]
+  };
 
-      return (
-        <AlignCenter>
-          <UserNameWithAvatar
-            userId={userId}
-            avatarSrc={getAvatarSrc()}
-            isLoading={isLoading}
-          />
-        </AlignCenter>
-      );
-    }
-  },
-  {
-    accessorFn: (row) => row,
-    header: "Ответственный",
-    cell: (info) => {
-      const row = info.getValue();
-      const managerId = row.managerId;
-      const userId = row.userId;
-      const { getAvatarSrc: getManagerAvatar, isLoading: isLoadingManager } =
-        useGetUserAvatar(managerId);
-      const { getAvatarSrc: getUserAvatar, isLoading: isLoadingUser } =
-        useGetUserAvatar(userId);
-      return (
-        <AlignCenter>
-          {managerId ? (
-            <UserNameWithAvatar
-              userId={managerId}
-              avatarSrc={getManagerAvatar()}
-              isLoading={isLoadingManager}
-            />
-          ) : (
-            <UserNameWithAvatar
-              userId={userId}
-              avatarSrc={getUserAvatar()}
-              isLoading={isLoadingUser}
-            />
-          )}
-        </AlignCenter>
-      );
-    }
-  },
-  {
-    accessorKey: "comment",
+  const otherColumns = {
     header: "Задача",
-    cell: (info) => {
-      const comment = info.getValue();
-      return comment;
-    }
-  },
-  {
-    accessorKey: "result",
-    header: "Результат",
-    cell: (info) => {
-      const comment = info.getValue();
-      return comment ? comment : <EmptyTd />;
-    }
-  },
-  {
-    accessorKey: "created_at",
-    header: "Дата создания",
-    cell: (info) => {
-      const date = info?.getValue();
-      return <AlignCenter>{FormatDate(date)}</AlignCenter>;
-    }
-  },
-  {
-    accessorFn: (row) => row,
-    header: "Править",
-    enableSorting: false,
-    cell: (info) => {
-      const row = info.getValue();
-      const taskId = row._id;
-      const task = useSelector(getTaskById(taskId));
-      const currentUserId = useSelector(getCurrentUserId());
-      const isCuratorTask = Boolean(task?.managerId);
-      const isCallTask = row.isCallTask;
+    columns: [
+      {
+        accessorKey: "comment",
+        header: "Задача",
+        cell: (info) => {
+          const comment = info.getValue();
+          return comment;
+        }
+      },
+      {
+        accessorKey: "userId",
+        header: "Задачу поставил",
+        cell: (info) => {
+          const userId = info.getValue();
+          const { getAvatarSrc, isLoading } = useGetUserAvatar(userId);
 
-      const isAuthorEntity = useSelector(
-        getIsUserAuthorThisEntity(currentUserId, task)
-      );
+          return (
+            <AlignCenter>
+              <UserNameWithAvatar
+                userId={userId}
+                avatarSrc={getAvatarSrc()}
+                isLoading={isLoading}
+              />
+            </AlignCenter>
+          );
+        }
+      },
+      {
+        accessorFn: (row) => row,
+        header: "Ответственный",
+        cell: (info) => {
+          const row = info.getValue();
+          const managerId = row.managerId;
+          const userId = row.userId;
+          const {
+            getAvatarSrc: getManagerAvatar,
+            isLoading: isLoadingManager
+          } = useGetUserAvatar(managerId);
+          const { getAvatarSrc: getUserAvatar, isLoading: isLoadingUser } =
+            useGetUserAvatar(userId);
+          return (
+            <AlignCenter>
+              {managerId ? (
+                <UserNameWithAvatar
+                  userId={managerId}
+                  avatarSrc={getManagerAvatar()}
+                  isLoading={isLoadingManager}
+                />
+              ) : (
+                <UserNameWithAvatar
+                  userId={userId}
+                  avatarSrc={getUserAvatar()}
+                  isLoading={isLoadingUser}
+                />
+              )}
+            </AlignCenter>
+          );
+        }
+      },
+      {
+        accessorKey: "result",
+        header: "Результат",
+        cell: (info) => {
+          const comment = info.getValue();
+          return comment ? comment : <EmptyTd />;
+        }
+      },
+      {
+        accessorKey: "created_at",
+        header: "Дата постановки задачи",
+        enableSorting: false,
+        cell: (info) => {
+          const date = info.getValue();
+          return <AlignCenter>{FormatDate(date)}</AlignCenter>;
+        }
+      },
+      {
+        accessorFn: (row) => row,
+        header: "Править",
+        enableSorting: false,
+        cell: (info) => {
+          const row = info.getValue();
+          const taskId = row._id;
+          const task = useSelector(getTaskById(taskId));
+          const currentUserId = useSelector(getCurrentUserId());
+          const isCuratorTask = Boolean(task?.managerId);
+          const isCallTask = row.isCallTask;
 
-      const disabled = !isCuratorTask && !isAuthorEntity;
+          const isAuthorEntity = useSelector(
+            getIsUserAuthorThisEntity(currentUserId, task)
+          );
 
-      return isCuratorTask ? (
-        <AlignCenter>
-          <ButtonStyled
-            title="Править"
-            style="MANAGER_TASK"
-            disabled={disabled}
-            onClick={() => handleOpenUpdateManagerTaskPage(taskId)}
-          />
-        </AlignCenter>
-      ) : (
-        <AlignCenter>
-          <ButtonStyled
-            title="Править"
-            style={isCallTask ? "OBJECT" : "MY_TASK"}
-            disabled={disabled}
-            onClick={() => handleOpenUpdateMyTaskPage(taskId)}
-          />
-        </AlignCenter>
-      );
-    }
+          const disabled = !isCuratorTask && !isAuthorEntity;
+
+          return isCuratorTask ? (
+            <AlignCenter>
+              <ButtonStyled
+                title="Править"
+                style="MANAGER_TASK"
+                disabled={disabled}
+                onClick={() => handleOpenUpdateManagerTaskPage(taskId)}
+              />
+            </AlignCenter>
+          ) : (
+            <AlignCenter>
+              <ButtonStyled
+                title="Править"
+                style={isCallTask ? "OBJECT" : "MY_TASK"}
+                disabled={disabled}
+                onClick={() => handleOpenUpdateMyTaskPage(taskId)}
+              />
+            </AlignCenter>
+          );
+        }
+      }
+    ]
+  };
+
+  if (isCurator) {
+    columns = [dateColumn, otherColumns];
+  } else {
+    columns = [dateColumn, otherColumns];
   }
-];
+
+  if (!isDialogPage) {
+    columns.splice(1, 0, taskObjectColumn);
+  }
+
+  return columns;
+};

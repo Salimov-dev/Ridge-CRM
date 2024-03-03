@@ -2,24 +2,26 @@ import { useSelector } from "react-redux";
 import { Box } from "@mui/material";
 import OpenPageElementIconButton from "../buttons/icons buttons/open-page-element.button-icon";
 import { AlignCenter } from "../columns/styled";
-import { getContactsList } from "@store/contact/contact.store";
+import { getCompaniesList } from "@store/company/company.store";
 
-const ContactTableEntity = ({ contacts, onOpenContactPage }) => {
-  const contactsList = useSelector(getContactsList());
+const CompanyTableEntity = ({ companies, onOpenCompanyPage }) => {
+  const companiesList = useSelector(getCompaniesList());
+
   return (
     <AlignCenter sx={{ display: "flex", flexDirection: "column" }}>
-      {contacts.map((contact, index) => {
-        const contactId = contact.contact;
-        const getContactName = (contactId) => {
-          const findedContact = contactsList?.find(
-            (item) => item._id === contactId
+      {companies.map((company, index) => {
+        const companyId = company.company;
+
+        const getCompanyName = (companyId) => {
+          const findedCompany = companiesList?.find(
+            (item) => item._id === companyId
           );
-          return findedContact?.name;
+          return findedCompany?.name;
         };
 
         return (
           <Box
-            key={contactId}
+            key={companyId}
             sx={{
               display: "flex",
               gap: "8px",
@@ -27,14 +29,14 @@ const ContactTableEntity = ({ contacts, onOpenContactPage }) => {
               justifyContent: "center"
             }}
           >
-            {getContactName(contactId)}
+            {getCompanyName(companyId)}
             <OpenPageElementIconButton
               title="Открыть контакт"
               containerWidth="10px"
               height="20px"
               heightButton="20px"
               width="16px"
-              onClick={() => onOpenContactPage(contactId)}
+              onClick={() => onOpenCompanyPage(companyId)}
             />
           </Box>
         );
@@ -43,4 +45,4 @@ const ContactTableEntity = ({ contacts, onOpenContactPage }) => {
   );
 };
 
-export default ContactTableEntity;
+export default CompanyTableEntity;

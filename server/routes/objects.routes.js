@@ -280,13 +280,10 @@ router.patch("/update-multiple", auth, async (req, res) => {
     }
 
     // Обновите объекты с соответствующими ID
-    const toConnectObjectStatus = "64bvcpas34kszc21d2344876";
+    const toConnectObjectStatus = "64bvcpas34kszc21d2344876"; // статус для объекта "Связаться"
     await Object.update(
-      { _id: { [Op.in]: objectIds } },
-      {
-        userId,
-        status: toConnectObjectStatus
-      }
+      { userId, status: toConnectObjectStatus }, // параметры обновления
+      { where: { _id: { [Op.in]: objectIds } } } // условия выборки
     );
 
     // Найти и вернуть обновленные объекты

@@ -30,12 +30,10 @@ const initialState = {
   time: null,
   comment: "",
   objectId: null,
-  // result: "",
+  result: "",
   city: "",
   address: "",
-  latitude: null,
-  longitude: null
-  // zoom: null,
+  latitude: null
 };
 
 const CreateMeeting = React.memo(

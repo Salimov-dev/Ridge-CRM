@@ -77,7 +77,10 @@ const FieldsCompany = ({
                 alignItems: "center"
               }}
             >
-              <DeleteElementIcon onClick={() => handleRemoveCompany(index)} />
+              <DeleteElementIcon
+                onClick={() => handleRemoveCompany(index)}
+                error={errors?.companies}
+              />
               <AutocompleteStyled
                 label="Компания"
                 register={register}

@@ -31,8 +31,11 @@ const Contacts = ({ object, setState }) => {
   const isLoading = useSelector(getObjectsLoadingStatus());
   const isHideCheckbox = true;
 
-  const { handleOpenContactPage, handleOpenUpdateCompanyPage } =
-    useDialogHandlers(setState);
+  const {
+    handleOpenContactPage,
+    handleOpenUpdateCompanyPage,
+    handleOpenObjectPage
+  } = useDialogHandlers(setState);
 
   return (
     <>
@@ -46,7 +49,8 @@ const Contacts = ({ object, setState }) => {
         itemsColumns={contactsColumns(
           handleOpenContactPage,
           isCurator,
-          isHideCheckbox
+          isHideCheckbox,
+          handleOpenUpdateCompanyPage
         )}
         isLoading={isLoading}
         isDialogMode={true}
@@ -61,7 +65,8 @@ const Contacts = ({ object, setState }) => {
         itemsColumns={companiesColumns(
           handleOpenUpdateCompanyPage,
           isCurator,
-          isHideCheckbox
+          isHideCheckbox,
+          handleOpenObjectPage
         )}
         isLoading={isLoading}
         isDialogMode={true}

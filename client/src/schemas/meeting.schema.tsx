@@ -5,5 +5,5 @@ export const meetingSchema = yup.object().shape({
   type: yup.string().required("Тип обязателен для заполнения"),
   comment: yup.string().required("Заполните комментарий"),
   date: yup.date().required("Выберите дату"),
-  time: yup.date().required("Выберите время"),
+  time: yup.date().required("Выберите время")
 });

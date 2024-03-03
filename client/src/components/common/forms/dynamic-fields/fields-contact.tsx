@@ -95,7 +95,10 @@ const FieldsContact = ({
                 alignItems: "center"
               }}
             >
-              <DeleteElementIcon onClick={() => handleRemoveContact(index)} />
+              <DeleteElementIcon
+                onClick={() => handleRemoveContact(index)}
+                error={errors?.contacts}
+              />
               <AutocompleteStyled
                 label="Контакт"
                 register={register}

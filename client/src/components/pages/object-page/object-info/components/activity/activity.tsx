@@ -56,7 +56,8 @@ const Acitivty = ({ object, objectId, setState }) => {
           handleOpenUpdateMyTaskPage,
           handleOpenUpdateManagerTaskPage,
           () => {},
-          isDialogPage
+          isDialogPage,
+          isCurator
         )}
       />
       <ObjectMeetings

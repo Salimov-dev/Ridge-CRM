@@ -2,24 +2,28 @@ import { useSelector } from "react-redux";
 import { Box } from "@mui/material";
 import OpenPageElementIconButton from "../buttons/icons buttons/open-page-element.button-icon";
 import { AlignCenter } from "../columns/styled";
-import { getContactsList } from "@store/contact/contact.store";
+import { getObjectsList } from "@store/object/objects.store";
 
-const ContactTableEntity = ({ contacts, onOpenContactPage }) => {
-  const contactsList = useSelector(getContactsList());
+const ObjectTableEntity = ({ objects, onOpenObjectPage }) => {
+  const objectsList = useSelector(getObjectsList());
+
   return (
     <AlignCenter sx={{ display: "flex", flexDirection: "column" }}>
-      {contacts.map((contact, index) => {
-        const contactId = contact.contact;
-        const getContactName = (contactId) => {
-          const findedContact = contactsList?.find(
-            (item) => item._id === contactId
+      {objects.map((object) => {
+        const objectId = object.object;
+
+        const getObjectName = (objectId) => {
+          const findedObject = objectsList?.find(
+            (item) => item._id === objectId
           );
-          return findedContact?.name;
+          const fullAddress = `${findedObject?.city}, ${findedObject?.address}`;
+
+          return fullAddress;
         };
 
         return (
           <Box
-            key={contactId}
+            key={objectId}
             sx={{
               display: "flex",
               gap: "8px",
@@ -27,14 +31,14 @@ const ContactTableEntity = ({ contacts, onOpenContactPage }) => {
               justifyContent: "center"
             }}
           >
-            {getContactName(contactId)}
+            {getObjectName(objectId)}
             <OpenPageElementIconButton
               title="Открыть контакт"
               containerWidth="10px"
               height="20px"
               heightButton="20px"
               width="16px"
-              onClick={() => onOpenContactPage(contactId)}
+              onClick={() => onOpenObjectPage(objectId)}
             />
           </Box>
         );
@@ -43,4 +47,4 @@ const ContactTableEntity = ({ contacts, onOpenContactPage }) => {
   );
 };
 
-export default ContactTableEntity;
+export default ObjectTableEntity;
