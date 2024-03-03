@@ -1,10 +1,10 @@
 // data
 import { gendersArray } from "@data/genders";
 // components
-import { FieldsContainer, Form } from "../../components/common/forms/styled";
-import DatePickerStyled from "../../components/common/inputs/date-picker";
-import TextFieldStyled from "../../components/common/inputs/text-field-styled";
-import SimpleSelectField from "../../components/common/inputs/simple-select-field";
+import { FieldsContainer, Form } from "@components/common/forms/styled";
+import DatePickerStyled from "@components/common/inputs/date-picker";
+import TextFieldStyled from "@components/common/inputs/text-field-styled";
+import SimpleSelectField from "@components/common/inputs/simple-select-field";
 // utils
 import { capitalizeFirstLetter } from "@utils/data/capitalize-first-letter";
 
@@ -20,7 +20,7 @@ const UserProfileForm = ({ data, register, errors, setValue }) => {
             required={true}
             errors={errors?.lastName}
             value={capitalizeFirstLetter(data?.lastName)}
-            onInputQuantities={150}
+            inputProps={{ maxLength: 150 }}
           />
           <TextFieldStyled
             register={register}
@@ -29,7 +29,7 @@ const UserProfileForm = ({ data, register, errors, setValue }) => {
             required={true}
             errors={errors?.firstName}
             value={capitalizeFirstLetter(data?.firstName)}
-            onInputQuantities={150}
+            inputProps={{ maxLength: 150 }}
           />
           <TextFieldStyled
             register={register}
@@ -38,7 +38,7 @@ const UserProfileForm = ({ data, register, errors, setValue }) => {
             required={true}
             errors={errors?.surName}
             value={capitalizeFirstLetter(data?.surName)}
-            onInputQuantities={150}
+            inputProps={{ maxLength: 150 }}
           />
           <DatePickerStyled
             register={register}
@@ -53,13 +53,11 @@ const UserProfileForm = ({ data, register, errors, setValue }) => {
           <TextFieldStyled
             register={register}
             label="Телефон"
-            type="number"
             name="phone"
             required={true}
             errors={errors?.phone}
             value={data?.phone || ""}
-            onInputQuantities={12}
-            valueAsNumber={true}
+            inputProps={{ maxLength: 14 }}
             subtitle={"Только в формате 79098887766, 78129998877, 9302211"}
             isHelperText={true}
           />

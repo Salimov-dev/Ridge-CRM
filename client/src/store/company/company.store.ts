@@ -208,7 +208,7 @@ export const getCompanyNameById = (id) => (state) => {
   if (state.companies.entities) {
     const company = state?.companies?.entities.find((comp) => comp?._id === id);
 
-    return company.name || ""; // в случае отсутствия имени вернуть пустую строку
+    return company?.name || ""; // в случае отсутствия имени вернуть пустую строку
   }
   return ""; // вернуть пустую строку, если нет компании в state
 };

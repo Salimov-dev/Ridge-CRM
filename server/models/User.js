@@ -18,7 +18,7 @@ const User = sequelize.define(
     curatorId: { type: DataTypes.STRING, defaultValue: null },
     gender: { type: DataTypes.STRING, defaultValue: null },
     birthday: { type: DataTypes.STRING, defaultValue: null },
-    status: { type: DataTypes.STRING, defaultValue: null },
+    status: { type: DataTypes.STRING, defaultValue: "64da6448547d1cfcd04b001" },
     city: { type: DataTypes.STRING, defaultValue: null },
     color: { type: DataTypes.STRING, defaultValue: null },
     role: {

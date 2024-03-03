@@ -11,6 +11,7 @@ import { getCurrentUserData, getUserNameById } from "@store/user/users.store";
 import { getUserAvatarsLoadingStatus } from "@store/avatar/avatar.store";
 // icons
 import ProfileButtons from "./components/profile-buttons";
+import EmailConfirmInfo from "./components/email-confirm-info";
 
 const Profile = () => {
   const [state, setState] = useState({
@@ -32,9 +33,9 @@ const Profile = () => {
         }`}
       />
       <ProfileButtons setState={setState} />
-      {/* <EmailConfirmInfo user={user} /> */}
+      <EmailConfirmInfo user={user} />
       <Avatar state={state} setState={setState} />
-      <UserProfileInfo user={user} setState={setState} />
+      <UserProfileInfo user={user} />
 
       <PageDialogs state={state} setState={setState} />
     </ContainerStyled>

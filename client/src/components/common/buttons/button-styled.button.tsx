@@ -43,8 +43,9 @@ const ButtonStyled = ({
   }
 
   if (style === "CANCEL") {
-    color = colors.cancel["lightCoral"];
+    color = "white";
     colorHover = "white";
+    background = "firebrick";
     borderColor = colors.cancel["lightCoral"];
     backgroundHover = colors.cancel["red"];
   }

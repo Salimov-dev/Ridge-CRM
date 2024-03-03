@@ -12,6 +12,9 @@ import estateTypesReducer from "./object-params/estate-types.store";
 import currentRenterReducer from "./object-params/current-renter.store";
 import workingPositionReducer from "./user-params/working-position.store";
 import tradeAreaReducer from "./object-params/object-trade-area";
+import citiesReducer from "./city/citites.store";
+// company
+import companiesReducer from "./company/company.store";
 // meetings
 import meetingsReducer from "./meeting/meetings.store";
 import meetingTypesReducer from "./meeting/meeting-types.store";
@@ -20,6 +23,8 @@ import objectPropertiesReducer from "./object-params/object-properties";
 // users
 import usersListReducer from "./user/users.store";
 import userStatusesReducer from "./user-params/user-statuses.store";
+import userLicensesReducer from "./user/user-license.store";
+import userRolesReducer from "./user-params/user-role.store";
 // tasks
 import tasksReducer from "./task/tasks.store";
 // last contact
@@ -29,15 +34,14 @@ import presentationsReducer from "./presentation/presentations.store";
 import presentationStatusReducer from "./presentation/presentation-status.store";
 // statictic
 import staticticPositionsReducer from "./statictics/statictics-positions.store";
+// avatar
+import avatarReducer from "./avatar/avatar.store";
+// contact
+import contactsReducer from "./contact/contact.store";
+import contactPositionsReducer from "./contact/contact-positions.store";
 // other
 import monthIndexReducer from "./month-index.store";
 import currrentPathReducer from "./current-path.store";
-import avatarReducer from "./avatar/avatar.store";
-import userLicensesReducer from "./user/user-license.store";
-import companiesReducer from "./company/company.store";
-import contactsReducer from "./contact/contact.store";
-import contactPositionsReducer from "./contact/contact-positions.store";
-import citiesReducer from "./city/citites.store";
 
 const rootReducer = combineReducers({
   // objects
@@ -58,6 +62,7 @@ const rootReducer = combineReducers({
   users: usersListReducer,
   userStatuses: userStatusesReducer,
   userLicenses: userLicensesReducer,
+  userRoles: userRolesReducer,
   // meetings
   meetings: meetingsReducer,
   meetingStatuses: meetingStatusesReducer,

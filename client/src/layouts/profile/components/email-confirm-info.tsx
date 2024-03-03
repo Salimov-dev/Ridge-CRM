@@ -1,3 +1,4 @@
+import styled from "@emotion/styled";
 import { Typography, Box } from "@mui/material";
 // components
 import ButtonStyled from "@components/common/buttons/button-styled.button";
@@ -5,31 +6,24 @@ import ButtonStyled from "@components/common/buttons/button-styled.button";
 import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";
 import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
 
+const Container = styled(Box)`
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin: 0 0 10px 0;
+`;
+
 const EmailConfirmInfo = ({ user }) => {
-  const isUserActivated = user?.isActive;
+  const isUserActivated = user?.isEmailActivated;
   return isUserActivated ? (
-    <Box
-      sx={{
-        display: "flex",
-        alignItems: "center",
-        gap: "4px",
-        margin: "10px 0",
-      }}
-    >
+    <Container>
       <CheckCircleOutlineOutlinedIcon
         sx={{ width: "30px", height: "30px", color: "green" }}
       />
       <Typography variant="h4">Почта подтверждена</Typography>
-    </Box>
+    </Container>
   ) : (
-    <Box
-      sx={{
-        display: "flex",
-        alignItems: "center",
-        gap: "4px",
-        margin: "10px 0",
-      }}
-    >
+    <Container>
       <CancelOutlinedIcon
         sx={{ width: "30px", height: "30px", color: "red" }}
       />
@@ -40,7 +34,7 @@ const EmailConfirmInfo = ({ user }) => {
         variant="contained"
         // onClick={handleOpenUpdateProfilePage}
       />
-    </Box>
+    </Container>
   );
 };
 

@@ -1,28 +1,30 @@
+import { useSelector } from "react-redux";
 import { Box, Typography } from "@mui/material";
 import styled from "@emotion/styled";
 // utils
 import { FormatDate } from "@utils/date/format-date";
 import { getGenderName } from "@utils/user/get-gender-name";
+// store
+import { getUserStatusNameById } from "@store/user-params/user-statuses.store";
+import { getUserRolNameById } from "@store/user-params/user-role.store";
 
 const Component = styled(Box)`
   display: flex;
   flex-direction: column;
 `;
 
-const UserProfileInfo = ({ user, setState }) => {
-  const getRoleName = (role) => {
-    if (role && role[0]) {
-      if (role[0] === "CURATOR") return "Куратор";
-      if (role[0] === "MANAGER") return "Менеджер";
-      if (role[0] === "OBSERVER") return "Наблюдатель";
-      return "Не задано";
-    }
-  };
+const Container = styled(Box)`
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin: 30px 0 10px 0;
+`;
 
+const UserProfileInfo = ({ user }) => {
   const userDataArrayMain = [
     { name: "Почта", value: user?.email || "Не задано" },
-    { name: "Статус", value: user?.status || "Не задано" },
-    { name: "Роль", value: getRoleName(user?.role) }
+    { name: "Статус", value: useSelector(getUserStatusNameById(user?.status)) },
+    { name: "Роль", value: useSelector(getUserRolNameById(user?.role[0])) }
   ];
 
   const userDataArraySecondary = [
@@ -39,14 +41,7 @@ const UserProfileInfo = ({ user, setState }) => {
 
   return (
     <Component>
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          gap: "14px",
-          margin: "30px 0 10px 0"
-        }}
-      >
+      <Container>
         <Box>
           {userDataArrayMain.map((item) => (
             <Typography variant="h5" key={item.name}>
@@ -61,7 +56,7 @@ const UserProfileInfo = ({ user, setState }) => {
             </Typography>
           ))}
         </Box>
-      </Box>
+      </Container>
     </Component>
   );
 };
