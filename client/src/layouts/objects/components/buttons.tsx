@@ -4,6 +4,7 @@ import styled from "@emotion/styled";
 import { Box } from "@mui/material";
 import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
 import SyncAltOutlinedIcon from "@mui/icons-material/SyncAltOutlined";
+import SmartDisplayOutlinedIcon from "@mui/icons-material/SmartDisplayOutlined";
 
 const Component = styled(Box)`
   display: flex;
@@ -16,6 +17,7 @@ const Buttons = ({
   reset,
   onOpenCreateObjectPage,
   onOpenTransferObjectPage,
+  onOpenVideoPlayerPage,
   isCurator,
   isInputEmpty
 }) => {
@@ -37,6 +39,13 @@ const Buttons = ({
           onClick={onOpenTransferObjectPage}
         />
       )}
+      <ButtonStyled
+        title="Видео-инструкция"
+        style="VIDEO_INSTR"
+        variant="contained"
+        icon={<SmartDisplayOutlinedIcon />}
+        onClick={onOpenVideoPlayerPage}
+      />
       {isInputEmpty && (
         <ClearFilterButton reset={reset} initialState={initialState} />
       )}

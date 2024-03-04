@@ -328,13 +328,27 @@ const useDialogHandlers = (setState) => {
   const handleOpenPersonalPolicyPage = () => {
     setState((prevState) => ({
       ...prevState,
-      peresonalPolicyPage: true
+      personalPolicyPage: true
     }));
   };
   const handleClosePersonalPolicyPage = () => {
     setState((prevState) => ({
       ...prevState,
-      peresonalPolicyPage: false
+      personalPolicyPage: false
+    }));
+  };
+
+  // обновление стейта при открытии страницы с видео
+  const handleOpenVideoPlayerPage = () => {
+    setState((prevState) => ({
+      ...prevState,
+      videoPlayerPage: true
+    }));
+  };
+  const handleCloseVideoPlayerPage = () => {
+    setState((prevState) => ({
+      ...prevState,
+      videoPlayerPage: false
     }));
   };
 
@@ -392,7 +406,9 @@ const useDialogHandlers = (setState) => {
     handleOpenPersonalPolicyPage,
     handleClosePersonalPolicyPage,
     handleOpenUpdateUserPage,
-    handleCloseUpdateUserPage
+    handleCloseUpdateUserPage,
+    handleOpenVideoPlayerPage,
+    handleCloseVideoPlayerPage
   };
 };
 

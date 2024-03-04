@@ -29,6 +29,19 @@ const UpdateObject = React.memo(({ onClose, objectId }) => {
     updateCompanyPage: false
   });
 
+  const transformedObject = {
+    ...object,
+    advanseDeposit: String(object.advanseDeposit),
+    agentComission: String(object.agentComission),
+    electricityKw: String(object.electricityKw),
+    parkingQuantity: String(object.parkingQuantity),
+    indexingAnnual: String(object.indexingAnnual),
+    rentPrice: String(object.rentPrice),
+    rentSquare: String(object.rentSquare),
+    rentalHolidays: object.rentalHolidays,
+    securityDeposit: String(object.securityDeposit)
+  };
+
   const {
     register,
     watch,
@@ -37,7 +50,7 @@ const UpdateObject = React.memo(({ onClose, objectId }) => {
     setValue,
     formState: { errors }
   } = useForm({
-    defaultValues: object,
+    defaultValues: transformedObject,
     mode: "onChange",
     resolver: yupResolver(objectSchema)
   });

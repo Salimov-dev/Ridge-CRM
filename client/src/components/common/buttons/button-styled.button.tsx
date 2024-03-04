@@ -210,6 +210,13 @@ const ButtonStyled = ({
     border = null;
   }
 
+  if (style === "VIDEO_INSTR") {
+    background = "Red";
+    color = "white";
+    colorHover = "white";
+    backgroundHover = "FireBrick";
+  }
+
   return (
     <Button
       variant={variant}

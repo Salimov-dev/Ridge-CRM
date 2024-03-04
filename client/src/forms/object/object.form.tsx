@@ -82,24 +82,15 @@ const ObjectForm = ({
           margin="14px 0 -2px 0"
         />
         <FieldsContainer>
-          {isUpdate ? (
-            <TextFieldStyled
-              register={register}
-              label="Район"
-              name="selectedArea"
-              valueAsNumber={true}
-              value={selectedArea}
-              disabled={true}
-            />
-          ) : (
-            <DistrictSelect
-              register={register}
-              selectedArea={selectedArea}
-              errors={errors}
-              watchDistrict={watchDistrict}
-              isUpdate={isUpdate}
-            />
-          )}
+          <DistrictSelect
+            register={register}
+            selectedArea={selectedArea}
+            errors={errors}
+            watchDistrict={watchDistrict}
+            isUpdate={isUpdate}
+            disabled={isUpdate && true}
+          />
+
           <SelectFieldStyled
             label="Метро"
             register={register}
@@ -379,10 +370,11 @@ const ObjectForm = ({
               register={register}
               label="Высота потолков"
               name="premisesHeight"
-              valueAsNumber={true}
-              value={data?.premisesHeight || null}
+              type="text"
+              // valueAsNumber={true}
+              value={data?.premisesHeight || ""}
               errors={errors?.premisesHeight}
-              inputProps={{ maxLength: 2 }}
+              inputProps={{ maxLength: 4 }}
               InputProps={{
                 endAdornment: <InputAdornment position="end">м</InputAdornment>
               }}

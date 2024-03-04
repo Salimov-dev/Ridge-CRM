@@ -93,7 +93,7 @@ export const companiesColumns = (
 
   const objectsColumn = {
     accessorFn: (row) => row,
-    header: "Контакты",
+    header: "Другие объекты компании",
     enableSorting: false,
     cell: (info) => {
       const row = info.getValue();

@@ -184,7 +184,7 @@ export const tasksColumns = (
         enableSorting: false,
         cell: (info) => {
           const comment = info.getValue();
-          return comment ? comment : <EmptyTd />;
+          return comment ? <AlignCenter>{comment}</AlignCenter> : <EmptyTd />;
         }
       },
       {

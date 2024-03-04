@@ -31,7 +31,8 @@ const DistrictSelect = ({
   errors,
   watchDistrict,
   selectedArea,
-  isUpdate = false
+  isUpdate = false,
+  disabled
 }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -80,6 +81,7 @@ const DistrictSelect = ({
             itemsList={getDistrictsList()}
             value={watchDistrict}
             errors={errors?.district}
+            disabled={disabled}
           />
         )}
         {!selectedArea && (

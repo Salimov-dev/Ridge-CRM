@@ -152,7 +152,7 @@ export const contactsColumns = (
     // },
     {
       accessorKey: "companies",
-      header: "Компания",
+      header: "Связан с компаниями",
       enableSorting: false,
       cell: (info) => {
         const companies = info.getValue();

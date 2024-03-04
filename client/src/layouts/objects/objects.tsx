@@ -32,6 +32,7 @@ import {
   getObjectsList,
   getObjectsLoadingStatus
 } from "@store/object/objects.store";
+import VideoPlayer from "@components/common/video-player/video-player";
 
 const initialState = {
   address: "",
@@ -66,7 +67,8 @@ const Objects = React.memo(() => {
     updatePage: false,
     objectId: null,
     presentationPage: false,
-    transferObjectPage: false
+    transferObjectPage: false,
+    videoPlayerPage: false
   });
 
   const localStorageState = JSON.parse(
@@ -111,7 +113,8 @@ const Objects = React.memo(() => {
   const {
     handleOpenCreateObjectPage,
     handleOpenObjectPage,
-    handleOpenTransferObjectPage
+    handleOpenTransferObjectPage,
+    handleOpenVideoPlayerPage
   } = useDialogHandlers(setState);
 
   const handleSelectedBaloon = (item) => {
@@ -162,6 +165,7 @@ const Objects = React.memo(() => {
         reset={reset}
         onOpenCreateObjectPage={handleOpenCreateObjectPage}
         onOpenTransferObjectPage={handleOpenTransferObjectPage}
+        onOpenVideoPlayerPage={handleOpenVideoPlayerPage}
         isCurator={isCurator}
         isInputEmpty={isInputEmpty}
       />
@@ -204,6 +208,8 @@ const Objects = React.memo(() => {
         setState={setState}
         selectedObjects={state.selectedObjects}
         setRowSelection={setRowSelection}
+        videoTitle="Как пользоваться страницей с Объектами"
+        videoSrc="https://www.youtube.com/embed/zz_SjeT_-M4"
       />
     </>
   );

@@ -29,6 +29,7 @@ import UpdateCompany from "@components/pages/company/update-company";
 import Agreement from "@components/pages/agreement/agreement";
 import PersonalPolicy from "@components/pages/agreement/personal-policy";
 import UpdateUser from "@components/pages/user/update-user";
+import VideoPlayerPage from "@components/pages/video-player/video-player.page";
 
 const PageDialogs = ({
   state,
@@ -36,7 +37,9 @@ const PageDialogs = ({
   objects = [],
   users = [],
   selectedObjects = [],
-  setRowSelection = () => {}
+  setRowSelection = () => {},
+  videoTitle = "",
+  videoSrc = ""
 }) => {
   const {
     handleCloseCreateObjectPage,
@@ -67,7 +70,8 @@ const PageDialogs = ({
     handleCloseUpdateCompanyPage,
     handleCloseAgreementPage,
     handleClosePersonalPolicyPage,
-    handleCloseUpdateUserPage
+    handleCloseUpdateUserPage,
+    handleCloseVideoPlayerPage
   } = useDialogHandlers(setState);
 
   return (
@@ -83,6 +87,7 @@ const PageDialogs = ({
         }
         onClose={handleCloseObjectPage}
         open={state.objectPage}
+        maxWidth="xl"
       />
       <DialogStyled
         component={<CreateObject onClose={handleCloseCreateObjectPage} />}
@@ -351,7 +356,21 @@ const PageDialogs = ({
         component={<PersonalPolicy onClose={handleClosePersonalPolicyPage} />}
         onClose={handleClosePersonalPolicyPage}
         maxWidth="xl"
-        open={state.peresonalPolicyPage}
+        open={state.personalPolicyPage}
+      />
+
+      {/* Окно для диалога с видео */}
+      <DialogStyled
+        component={
+          <VideoPlayerPage
+            onClose={handleCloseVideoPlayerPage}
+            videoTitle={videoTitle}
+            videoSrc={videoSrc}
+          />
+        }
+        onClose={handleCloseVideoPlayerPage}
+        maxWidth="lg"
+        open={state.videoPlayerPage}
       />
     </>
   );

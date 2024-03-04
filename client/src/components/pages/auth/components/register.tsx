@@ -58,7 +58,7 @@ const Register = React.memo(({ page, onClose }) => {
   const [state, setState] = useState({
     loginPage: false,
     agreementPage: false,
-    peresonalPolicyPage: false
+    personalPolicyPage: false
   });
 
   const {
