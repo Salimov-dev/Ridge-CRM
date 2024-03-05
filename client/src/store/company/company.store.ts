@@ -8,6 +8,7 @@ import localStorageService from "@services/user/local.storage-service";
 import companyService from "@services/company/company.service";
 // config
 import configFile from "@config/config.json";
+import { updateObjects } from "@store/object/objects.store";
 
 const socket = io(configFile.ioEndPoint);
 
@@ -134,7 +135,9 @@ export function createCompanyUpdate(payload) {
 export const updateCompany = (payload) => async (dispatch) => {
   dispatch(companyUpdateRequested());
   try {
-    await companyService.update(payload);
+    const { content } = await companyService.update(payload);
+
+    dispatch(updateObjects(content));
     socket.emit("companyUpdated", payload);
   } catch (error) {
     dispatch(companyUpdateFailed(error.message));
@@ -144,13 +147,16 @@ export const updateCompany = (payload) => async (dispatch) => {
 export const updateCompanyUpdate = (payload) => async (dispatch) => {
   dispatch(companyUpdateRequested());
   try {
-    dispatch(companyUpdateSuccessed(payload));
+    console.log("payload", payload);
+
+    dispatch(companyUpdateSuccessed(payload.newData));
   } catch (error) {
     dispatch(companyUpdateFailed(error.message));
   }
 };
 
 export const updateCompanies = (payload) => async (dispatch) => {
+  console.log("payload", payload);
   dispatch(companyUpdateRequested());
   try {
     dispatch(companiesUpdateSuccessed(payload));

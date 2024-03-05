@@ -6,17 +6,17 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 // components
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
-import ObjectForm from "@forms/object/object.form";
 import HeaderWithBackButton from "@common/page-headers/header-with-back-button";
 import SuccessCancelFormButtons from "@components/common/buttons/success-cancel-form-buttons";
+import PageDialogs from "@components/common/dialog/page-dialogs";
 // utils
 import { removeSpacesAndConvertToNumber } from "@utils/data/remove-spaces-and-convert-to-number";
+// forms
+import ObjectForm from "@forms/object/object.form";
 // schemas
 import { objectSchema } from "@schemas/object/object.schema";
 // store
 import { getObjectById, updateObject } from "@store/object/objects.store";
-import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
-import PageDialogs from "@components/common/dialog/page-dialogs";
 
 const UpdateObject = React.memo(({ onClose, objectId }) => {
   const dispatch = useDispatch();
@@ -67,9 +67,6 @@ const UpdateObject = React.memo(({ onClose, objectId }) => {
     (newCompany) =>
       !objectCompanies.some((obj) => obj.company === newCompany.company)
   );
-
-  const { handleOpenCreateCompanyPage, handleOpenUpdateCompanyPage } =
-    useDialogHandlers(setState);
 
   const onSubmit = (data) => {
     setIsLoading(true);

@@ -146,6 +146,7 @@ router.patch("/:objectId?/edit", auth, async (req, res) => {
     const { newData } = req.body;
 
     const companies = newData.companies;
+
     if (
       !req.body.previousCompanies ||
       !req.body.removedCompanies ||

@@ -47,10 +47,23 @@ const UpdateCompany = React.memo(({ companyId, onClose }) => {
 
   const data = watch();
 
+  const newObjects = watch("objects");
+  const previousObjects = company?.objects;
+  const companyObjects = company?.objects;
+  const removedObjects = companyObjects?.filter(
+    (obj) => !newObjects.some((item) => item.object === obj.object)
+  );
+  const addedObjects = newObjects?.filter(
+    (newObject) =>
+      !companyObjects?.some((obj) => obj.object === newObject.object)
+  );
+
   const onSubmit = () => {
     setIsLoading(true);
-
-    dispatch<any>(updateCompany(data))
+    const newData = data;
+    dispatch<any>(
+      updateCompany({ newData, previousObjects, removedObjects, addedObjects })
+    )
       .then(() => {
         onClose();
         toast.success("Компания успешно изменена!");

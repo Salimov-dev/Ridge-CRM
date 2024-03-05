@@ -3,6 +3,7 @@ import Company from "../models/company/Company.js";
 import auth from "../middleware/auth.middleware.js";
 import User from "../models/User.js";
 import { roleCurator, roleManager, roleObserver } from "../utils/user-roles.js";
+import Object from "../models/Object.js";
 
 const router = express.Router({ mergeParams: true });
 
@@ -68,6 +69,32 @@ router.post("/create", auth, async (req, res) => {
 router.patch("/:companyId?/edit", auth, async (req, res) => {
   try {
     const { companyId } = req.params;
+    const { newData } = req.body;
+    const objects = newData.objects;
+
+    if (
+      !req.body.previousObjects ||
+      !req.body.removedObjects ||
+      !req.body.addedObjects
+    ) {
+      const updatedCompany = await Company.update(newData, {
+        where: { _id: companyId }
+      });
+      return res.send(updatedCompany);
+    }
+
+    const previousObjects = req.body.previousObjects;
+    const removedObjects = req.body.removedObjects;
+    const addedObjects = req.body.addedObjects;
+    const removedObjectIds = removedObjects.map((object) => object.object);
+
+    // Находим все объекты, которые есть в массиве removedObjectIds
+    const objectsRemovedObjects = await Object.findAll({
+      where: {
+        _id: removedObjectIds
+      }
+    });
+
     if (!companyId) {
       return res.status(400).json({
         message: "Необходимо указать идентификатор компании (companyId)."
@@ -82,9 +109,93 @@ router.patch("/:companyId?/edit", auth, async (req, res) => {
       });
     }
 
-    const updatedCompany = await existingCompany.update(req.body);
+    // Получаем связанные объекты для обновления
+    const objectsToUpdate = await Object.findAll({
+      where: {
+        // Проверяем, есть ли objectId из objects в массиве компаний
+        _id: objects.map((obj) => obj.object)
+      }
+    });
 
-    res.status(200).json(updatedCompany);
+    // Обновляем список компаний у каждого объекта
+    for (const object of objectsToUpdate) {
+      let companies = object.dataValues.companies || [];
+
+      // Проверяем, есть ли уже такая компания у объекта
+      const foundCompanyIndex = companies.findIndex(
+        (company) => company.company === companyId
+      );
+
+      if (foundCompanyIndex === -1) {
+        // Если компания не найдена, добавляем новую компанию в массив
+        companies.push({ company: companyId });
+      }
+
+      // Сохраняем обновление для данной объекты в массив
+      await Object.update({ companies }, { where: { _id: object._id } });
+    }
+
+    // Удаление компании из списков компаний в удаленных объектах
+    for (const object of objectsRemovedObjects) {
+      // Фильтрация массива компаний каждой объекты
+      const updatedCompanies = object.companies.filter(
+        (comp) => comp.company !== companyId
+      );
+
+      // Обновляем компанию с новым списком компаний
+      await object.update({ companies: updatedCompanies });
+    }
+
+    // Обновляем компанию
+    await existingCompany.update(newData);
+
+    // Получаем обновленный список компаний после обновления
+    const updatedObjects = await Object.findAll({
+      where: {
+        _id: objectsToUpdate.map((obj) => obj._id)
+      }
+    });
+
+    // Добавляем в обновленные компании добавленные объекты
+    addedObjects.forEach((addedObject) => {
+      const foundObject = updatedObjects.find(
+        (object) => object._id === addedObject.object
+      );
+      if (foundObject) updatedObjects.push(foundObject);
+    });
+
+    const removedObjectsList = await Object.findAll({
+      where: {
+        _id: removedObjects.map((object) => object.object)
+      }
+    });
+    console.log("removedObjectsList", removedObjectsList);
+
+    // Добавляем удаленную компанию, если она была удалена из updatedObjects
+    removedObjectsList.forEach((removedObject) => {
+      const foundObject = updatedObjects.find(
+        (object) => object._id === removedObject.object
+      );
+      if (!foundObject) {
+        updatedObjects.push(removedObject);
+      }
+    });
+
+    const updatedObjectsSet = new Set();
+    const uniqueUpdatedObjects = [];
+
+    // Фильтруем объекты и добавляем уникальные объекты в массив uniqueUpdatedObjects
+    updatedObjects.forEach((obj) => {
+      if (!updatedObjectsSet.has(obj._id)) {
+        uniqueUpdatedObjects.push(obj);
+        updatedObjectsSet.add(obj._id);
+      }
+    });
+
+    res.status(200).json({
+      updatedObjects: uniqueUpdatedObjects,
+      previousObjects
+    });
   } catch (e) {
     res.status(500).json({
       message: "На сервере произошла ошибка, попробуйте позже"

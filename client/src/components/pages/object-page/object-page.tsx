@@ -19,6 +19,7 @@ import {
 const ObjectPage = React.memo(
   ({ objectId, onClose, onEdit, onOpenCreatePresentationPage }) => {
     const object = useSelector(getObjectById(objectId));
+    console.log("object", object);
 
     const currentUserId = useSelector(getCurrentUserId());
     const isLoading = useSelector(getObjectsLoadingStatus());

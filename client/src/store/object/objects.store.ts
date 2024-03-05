@@ -1,4 +1,4 @@
-import { updateCompanies } from "./../company/company.store";
+import { updateCompanies, updateCompany } from "./../company/company.store";
 import dayjs from "dayjs";
 import { io } from "socket.io-client";
 import { createAction, createSlice } from "@reduxjs/toolkit";
@@ -57,6 +57,24 @@ const objectsSlice = createSlice({
       state.entities[
         state.entities.findIndex((obj) => obj._id === action.payload._id)
       ] = action.payload;
+    },
+    objectsUpdateSuccessed: (state, action) => {
+      const { updatedObjects } = action.payload;
+
+      state.entities = state.entities.map((obj) => {
+        const updatedObject = updatedObjects.find(
+          (updatedObj) => updatedObj._id === obj._id
+        );
+        if (updatedObject) {
+          return updatedObject;
+        }
+        return obj;
+      });
+    },
+    objectRemoved: (state, action) => {
+      state.entities = state.entities.filter(
+        (obj) => obj._id !== action.payload
+      );
     }
   }
 });
@@ -81,6 +99,7 @@ const {
   objectsFailed,
   objectCreated,
   objectUpdateSuccessed,
+  objectsUpdateSuccessed,
   objectRemoved
 } = actions;
 
@@ -123,7 +142,7 @@ export const updateObject = (payload) => async (dispatch) => {
   try {
     const { content } = await objectService.update(payload);
 
-    dispatch(updateCompanies(content));
+    dispatch(updateCompany(content.updatedObjects));
     socket.emit("objectUpdated", payload.newData);
   } catch (error) {
     dispatch(objectUpdateFailed(error.message));
@@ -138,6 +157,26 @@ export const updateObjectUpdate = (payload) => async (dispatch) => {
     dispatch(objectUpdateFailed(error.message));
   }
 };
+
+export const updateObjects = (payload) => async (dispatch) => {
+  dispatch(objectUpdateRequested());
+  try {
+    dispatch(objectsUpdateSuccessed(payload));
+  } catch (error) {
+    dispatch(objectUpdateFailed(error.message));
+  }
+};
+
+// export const updateObjectsUpdate = (payload) => async (dispatch) => {
+//   dispatch(objectUpdateRequested());
+//   try {
+//     console.log("payload updateObjectsUpdate", payload);
+
+//     dispatch(ObjectsUpdateSuccessed(payload));
+//   } catch (error) {
+//     dispatch(objectUpdateFailed(error.message));
+//   }
+// };
 
 export const updateMultipleObjects =
   (objectIds, userId) => async (dispatch) => {
