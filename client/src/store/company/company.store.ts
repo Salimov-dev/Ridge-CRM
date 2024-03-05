@@ -58,7 +58,7 @@ const companiesSlice = createSlice({
       ] = action.payload;
     },
     companiesUpdateSuccessed: (state, action) => {
-      const { updatedCompanies } = action.payload;
+      const updatedCompanies = action.payload;
 
       state.entities = state.entities.map((comp) => {
         const updatedCompany = updatedCompanies.find(
@@ -147,8 +147,6 @@ export const updateCompany = (payload) => async (dispatch) => {
 export const updateCompanyUpdate = (payload) => async (dispatch) => {
   dispatch(companyUpdateRequested());
   try {
-    console.log("payload", payload);
-
     dispatch(companyUpdateSuccessed(payload.newData));
   } catch (error) {
     dispatch(companyUpdateFailed(error.message));
@@ -156,7 +154,6 @@ export const updateCompanyUpdate = (payload) => async (dispatch) => {
 };
 
 export const updateCompanies = (payload) => async (dispatch) => {
-  console.log("payload", payload);
   dispatch(companyUpdateRequested());
   try {
     dispatch(companiesUpdateSuccessed(payload));
@@ -164,17 +161,6 @@ export const updateCompanies = (payload) => async (dispatch) => {
     dispatch(companyUpdateFailed(error.message));
   }
 };
-
-// export const updateCompaniesUpdate = (payload) => async (dispatch) => {
-//   dispatch(companyUpdateRequested());
-//   try {
-//     console.log("payload updateCompaniesUpdate", payload);
-
-//     dispatch(companiesUpdateSuccessed(payload));
-//   } catch (error) {
-//     dispatch(companyUpdateFailed(error.message));
-//   }
-// };
 
 export const removeCompany = (companyId) => async (dispatch) => {
   dispatch(removeCompanyRequested());

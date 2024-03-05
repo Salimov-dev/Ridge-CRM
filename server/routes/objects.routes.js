@@ -142,9 +142,7 @@ router.get("/:objectId?", auth, async (req, res) => {
 router.patch("/:objectId?/edit", auth, async (req, res) => {
   try {
     const { objectId } = req.params;
-
     const { newData } = req.body;
-
     const companies = newData.companies;
 
     if (

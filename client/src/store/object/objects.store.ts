@@ -1,4 +1,4 @@
-import { updateCompanies, updateCompany } from "./../company/company.store";
+import { updateCompanies } from "./../company/company.store";
 import dayjs from "dayjs";
 import { io } from "socket.io-client";
 import { createAction, createSlice } from "@reduxjs/toolkit";
@@ -142,7 +142,7 @@ export const updateObject = (payload) => async (dispatch) => {
   try {
     const { content } = await objectService.update(payload);
 
-    dispatch(updateCompany(content.updatedObjects));
+    dispatch(updateCompanies(content.updatedCompanies));
     socket.emit("objectUpdated", payload.newData);
   } catch (error) {
     dispatch(objectUpdateFailed(error.message));
@@ -166,17 +166,6 @@ export const updateObjects = (payload) => async (dispatch) => {
     dispatch(objectUpdateFailed(error.message));
   }
 };
-
-// export const updateObjectsUpdate = (payload) => async (dispatch) => {
-//   dispatch(objectUpdateRequested());
-//   try {
-//     console.log("payload updateObjectsUpdate", payload);
-
-//     dispatch(ObjectsUpdateSuccessed(payload));
-//   } catch (error) {
-//     dispatch(objectUpdateFailed(error.message));
-//   }
-// };
 
 export const updateMultipleObjects =
   (objectIds, userId) => async (dispatch) => {
