@@ -24,7 +24,7 @@ const HeaderLayout = ({
           width: width,
           background: background,
           color: color,
-          padding: "4px 14px",
+          padding: "0px 8px",
           textAlign: "center",
           borderRadius: "4px"
         }}

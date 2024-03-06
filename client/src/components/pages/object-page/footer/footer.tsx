@@ -92,7 +92,6 @@ const Footer = ({
         onClose={onClose}
         onEdit={onEdit}
         onOpenCreatePresentationPage={onOpenCreatePresentationPage}
-        negativeTitle="Закрыть"
         isEdit={isEdit}
         isAuthorEntity={isAuthorEntity}
       />

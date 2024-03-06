@@ -23,6 +23,7 @@ const Contacts = ({ object, setState }) => {
 
   const companiesList = useSelector(getCompaniesList());
   const objectCompanies = object?.companies.map((comp) => comp.company);
+
   const userCompanies = companiesList.filter((cont) =>
     objectCompanies.includes(cont._id)
   );
@@ -66,7 +67,9 @@ const Contacts = ({ object, setState }) => {
           handleOpenUpdateCompanyPage,
           isCurator,
           isHideCheckbox,
-          handleOpenObjectPage
+          handleOpenObjectPage,
+          object,
+          handleOpenContactPage
         )}
         isLoading={isLoading}
         isDialogMode={true}

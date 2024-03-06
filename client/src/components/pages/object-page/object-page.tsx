@@ -48,12 +48,7 @@ const ObjectPage = React.memo(
           center={center}
           isLoading={isLoading}
         />
-        <ObjectInfo
-          object={object}
-          objectId={objectId}
-          isLoading={isLoading}
-          isAuthorEntity={isAuthorEntity}
-        />
+        <ObjectInfo object={object} objectId={objectId} isLoading={isLoading} />
         <Footer
           object={object}
           onClose={onClose}

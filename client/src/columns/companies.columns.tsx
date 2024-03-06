@@ -9,6 +9,7 @@ import ObjectTableEntity from "@components/common/table-entities/object-table-en
 import ButtonStyled from "@components/common/buttons/button-styled.button";
 // store
 import { getContactById } from "@store/contact/contact.store";
+import ContactTableEntity from "@components/common/table-entities/contact-table-entity";
 
 function IndeterminateCheckbox({
   indeterminate,
@@ -37,7 +38,9 @@ export const companiesColumns = (
   handleOpenUpdateCompanyPage,
   isCurator,
   isHideCheckbox,
-  handleOpenObjectPage
+  handleOpenObjectPage,
+  object,
+  handleOpenContactPage
 ) => {
   let columns = [];
 
@@ -98,10 +101,13 @@ export const companiesColumns = (
     cell: (info) => {
       const row = info.getValue();
       const objects = row.objects;
+      const objectId = object?._id;
+
+      const filteredObject = objects?.filter((obj) => obj.object !== objectId);
 
       return (
         <ObjectTableEntity
-          objects={objects}
+          objects={filteredObject}
           onOpenObjectPage={handleOpenObjectPage}
         />
       );
@@ -114,17 +120,33 @@ export const companiesColumns = (
     enableSorting: false,
     cell: (info) => {
       const contacts = info.getValue();
-      const contactIds = [...new Set(contacts?.map((cont) => cont.contact))];
 
-      const result = contactIds?.map((cont, index) => {
-        const contact = useSelector(getContactById(cont));
-
-        return <AlignCenter key={cont[index]}>{contact?.name}</AlignCenter>;
-      });
-
-      return result.length ? result : <EmptyTd />;
+      return (
+        <ContactTableEntity
+          contacts={contacts}
+          onOpenContactPage={handleOpenContactPage}
+        />
+      );
     }
   };
+
+  // const contactsColumn = {
+  //   accessorKey: "contacts",
+  //   header: "Контакты",
+  //   enableSorting: false,
+  //   cell: (info) => {
+  //     const contacts = info.getValue();
+  //     const contactIds = [...new Set(contacts?.map((cont) => cont.contact))];
+
+  //     const result = contactIds?.map((cont, index) => {
+  //       const contact = useSelector(getContactById(cont));
+
+  //       return <AlignCenter key={cont[index]}>{contact?.name}</AlignCenter>;
+  //     });
+
+  //     return result.length ? result : <EmptyTd />;
+  //   }
+  // };
 
   const openCompanyColumn = {
     accessorKey: "_id",
