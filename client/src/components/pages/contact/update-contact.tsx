@@ -11,9 +11,11 @@ import SuccessCancelFormButtons from "@components/common/buttons/success-cancel-
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
 import HeaderWithCloseButton from "@components/common/page-headers/header-with-close-button";
 import DialogConfirm from "@components/common/dialog/dialog-confirm";
+// forms
 import ContactForm from "@forms/contact/contact.form";
 // schema
 import { contactSchema } from "@schemas/contact/contact.schema";
+// store
 import {
   getContactById,
   removeContact,
@@ -44,10 +46,25 @@ const UpdateContact = React.memo(({ contactId, onClose }) => {
 
   const data = watch();
 
+  const newObjects = watch("objects");
+  const previousObjects = contact?.objects;
+  const contactObjects = contact?.objects;
+  const removedObjects = contactObjects?.filter(
+    (obj) => !newObjects.some((item) => item.object === obj.object)
+  );
+  const addedObjects = newObjects?.filter(
+    (newObject) =>
+      !contactObjects?.some((obj) => obj.object === newObject.object)
+  );
+
   const onSubmit = (data) => {
     setIsLoading(true);
 
-    dispatch<any>(updateContact(data))
+    const newData = data;
+
+    dispatch<any>(
+      updateContact({ newData, previousObjects, removedObjects, addedObjects })
+    )
       .then(() => {
         onClose();
         toast.success("Контакт успешно изменен!");

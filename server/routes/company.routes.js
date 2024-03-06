@@ -72,21 +72,17 @@ router.patch("/:companyId?/edit", auth, async (req, res) => {
     const { newData } = req.body;
     const objects = newData.objects;
 
-    if (
-      !req.body.previousObjects ||
-      !req.body.removedObjects ||
-      !req.body.addedObjects
-    ) {
+    const previousObjects = req.body.previousObjects;
+    const removedObjects = req.body.removedObjects;
+    const addedObjects = req.body.addedObjects;
+    const removedObjectIds = removedObjects.map((object) => object.object);
+
+    if (!previousObjects || !removedObjects || !addedObjects) {
       const updatedCompany = await Company.update(newData, {
         where: { _id: companyId }
       });
       return res.send(updatedCompany);
     }
-
-    const previousObjects = req.body.previousObjects;
-    const removedObjects = req.body.removedObjects;
-    const addedObjects = req.body.addedObjects;
-    const removedObjectIds = removedObjects.map((object) => object.object);
 
     // Находим все объекты, которые есть в массиве removedObjectIds
     const objectsRemovedObjects = await Object.findAll({

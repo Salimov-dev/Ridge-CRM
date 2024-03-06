@@ -8,6 +8,7 @@ import localStorageService from "@services/user/local.storage-service";
 import contactService from "@services/contact/contact.service";
 // config
 import configFile from "@config/config.json";
+import { updateObjects } from "@store/object/objects.store";
 
 const socket = io(configFile.ioEndPoint);
 
@@ -56,6 +57,19 @@ const contactsSlice = createSlice({
         state.entities.findIndex((cont) => cont._id === action.payload._id)
       ] = action.payload;
     },
+    contactsUpdateSuccessed: (state, action) => {
+      const updatedContacts = action.payload;
+
+      state.entities = state.entities.map((comp) => {
+        const updatedContact = updatedContacts.find(
+          (updatedCont) => updatedCont._id === comp._id
+        );
+        if (updatedContact) {
+          return updatedContact;
+        }
+        return comp;
+      });
+    },
     contactRemoved: (state, action) => {
       state.entities = state.entities.filter(
         (cont) => cont._id !== action.payload
@@ -78,6 +92,7 @@ const {
   contactsFailed,
   contactCreated,
   contactUpdateSuccessed,
+  contactsUpdateSuccessed,
   contactRemoved
 } = actions;
 
@@ -120,7 +135,9 @@ export function createContactUpdate(payload) {
 export const updateContact = (payload) => async (dispatch) => {
   dispatch(contactUpdateRequested());
   try {
-    await contactService.update(payload);
+    const { content } = await contactService.update(payload);
+
+    dispatch(updateObjects(content));
     socket.emit("contactUpdated", payload);
   } catch (error) {
     dispatch(contactUpdateFailed(error.message));
@@ -130,7 +147,16 @@ export const updateContact = (payload) => async (dispatch) => {
 export const updateContactUpdate = (payload) => async (dispatch) => {
   dispatch(contactUpdateRequested());
   try {
-    dispatch(contactUpdateSuccessed(payload));
+    dispatch(contactUpdateSuccessed(payload.newData));
+  } catch (error) {
+    dispatch(contactUpdateFailed(error.message));
+  }
+};
+
+export const updateContacts = (payload) => async (dispatch) => {
+  dispatch(contactUpdateRequested());
+  try {
+    dispatch(contactsUpdateSuccessed(payload));
   } catch (error) {
     dispatch(contactUpdateFailed(error.message));
   }

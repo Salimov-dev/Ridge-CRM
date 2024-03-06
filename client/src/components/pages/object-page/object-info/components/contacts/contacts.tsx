@@ -51,7 +51,8 @@ const Contacts = ({ object, setState }) => {
           handleOpenContactPage,
           isCurator,
           isHideCheckbox,
-          handleOpenUpdateCompanyPage
+          handleOpenUpdateCompanyPage,
+          object
         )}
         isLoading={isLoading}
         isDialogMode={true}

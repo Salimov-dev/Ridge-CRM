@@ -60,7 +60,9 @@ const UpdateCompany = React.memo(({ companyId, onClose }) => {
 
   const onSubmit = () => {
     setIsLoading(true);
+
     const newData = data;
+
     dispatch<any>(
       updateCompany({ newData, previousObjects, removedObjects, addedObjects })
     )

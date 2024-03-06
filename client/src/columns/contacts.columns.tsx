@@ -12,6 +12,7 @@ import { getPositionNameById } from "@store/contact/contact-positions.store";
 import { getObjectAddressById } from "@store/object/objects.store";
 import { getCompanyNameById } from "@store/company/company.store";
 import CompanyTableEntity from "@components/common/table-entities/company-table-entity";
+import ObjectTableEntity from "@components/common/table-entities/object-table-entity";
 
 function IndeterminateCheckbox({
   indeterminate,
@@ -40,7 +41,8 @@ export const contactsColumns = (
   handleOpenContactPage,
   isCurator,
   isHideCheckbox,
-  handleOpenUpdateCompanyPage
+  handleOpenUpdateCompanyPage,
+  object
 ) => {
   let columns = [];
 
@@ -96,22 +98,42 @@ export const contactsColumns = (
   };
 
   const objectsColumn = {
-    accessorKey: "objects",
-    header: "Объект",
+    accessorFn: (row) => row,
+    header: "Другие объекты компании",
     enableSorting: false,
     cell: (info) => {
-      const objects = info.getValue();
-      const objectIds = [...new Set(objects?.map((obj) => obj.object))];
+      const row = info.getValue();
+      const objects = row.objects;
+      const objectId = object?._id;
 
-      const result = objectIds?.map((obj, index) => (
-        <AlignCenter key={obj[index]}>
-          {useSelector(getObjectAddressById(obj))}
-        </AlignCenter>
-      ));
+      const filteredObject = objects?.filter((obj) => obj.object !== objectId);
 
-      return result.length ? result : <EmptyTd />;
+      return (
+        <ObjectTableEntity
+          objects={filteredObject}
+          onOpenObjectPage={handleOpenContactPage}
+        />
+      );
     }
   };
+
+  // const objectsColumn = {
+  //   accessorKey: "objects",
+  //   header: "Объект",
+  //   enableSorting: false,
+  //   cell: (info) => {
+  //     const objects = info.getValue();
+  //     const objectIds = [...new Set(objects?.map((obj) => obj.object))];
+
+  //     const result = objectIds?.map((obj, index) => (
+  //       <AlignCenter key={obj[index]}>
+  //         {useSelector(getObjectAddressById(obj))}
+  //       </AlignCenter>
+  //     ));
+
+  //     return result.length ? result : <EmptyTd />;
+  //   }
+  // };
 
   const commentColumn = {
     accessorKey: "comment",

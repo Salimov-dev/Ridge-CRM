@@ -22,7 +22,7 @@ const contactService = {
   },
   update: async (payload) => {
     const { data } = await httpService.patch(
-      contactEndpoint + "/" + payload._id + "/edit",
+      contactEndpoint + "/" + payload.newData._id + "/edit",
       payload
     );
     return data;

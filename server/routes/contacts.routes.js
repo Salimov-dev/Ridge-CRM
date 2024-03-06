@@ -3,8 +3,7 @@ import Contact from "../models/contact/Contact.js";
 import auth from "../middleware/auth.middleware.js";
 import User from "../models/User.js";
 import { roleCurator, roleManager, roleObserver } from "../utils/user-roles.js";
-import CompanyContact from "../models/company/CompanyContact.js";
-import Company from "../models/company/Company.js";
+import Object from "../models/Object.js";
 
 const router = express.Router({ mergeParams: true });
 
@@ -50,44 +49,6 @@ router.get("/", auth, async (req, res) => {
   }
 });
 
-// router.post("/create", auth, async (req, res) => {
-//   try {
-//     const userId = req.user._id;
-//     const newContact = await Contact.create({
-//       ...req.body,
-//       userId
-//     });
-
-//     // Обновляем список контактов в компании
-//     const companyId = req.body.companyId; // Предположим, что у контакта есть companyId
-//     if (companyId) {
-//       const company = await Company.findByPk(companyId);
-//       if (company) {
-//         // Добавляем новый контакт в список контактов компании
-//         await CompanyContact.create({
-//           companyId: company._id,
-//           contactId: newContact._id
-//         });
-
-//         // Отправляем успешный ответ
-//         res.status(201).send(newContact);
-//         return;
-//       }
-//     }
-
-//     // Если компания не найдена или у контакта нет companyId
-//     res.status(400).json({
-//       message:
-//         "Невозможно добавить контакт в компанию. Укажите корректный companyId."
-//     });
-//   } catch (e) {
-//     console.error(e);
-//     res.status(500).json({
-//       message: "На сервере произошла ошибка, попробуйте позже"
-//     });
-//   }
-// });
-
 router.post("/create", auth, async (req, res) => {
   try {
     const userId = req.user._id;
@@ -106,71 +67,130 @@ router.post("/create", auth, async (req, res) => {
 
 router.patch("/:contactId?/edit", auth, async (req, res) => {
   try {
-    const userId = req.user._id;
     const { contactId } = req.params;
+    const { newData } = req.body;
+    const objects = newData.objects;
 
-    // Находим контакт
-    const existingContact = await Contact.findOne({
+    const previousObjects = req.body.previousObjects;
+    const removedObjects = req.body.removedObjects;
+    const addedObjects = req.body.addedObjects;
+    const removedObjectIds = removedObjects.map((object) => object.object);
+
+    if (!previousObjects || !removedObjects || !addedObjects) {
+      const updatedContact = await Contact.update(newData, {
+        where: { _id: contactId }
+      });
+      return res.send(updatedContact);
+    }
+
+    // Находим все объекты, которые есть в массиве removedObjectIds
+    const objectsRemovedObjects = await Object.findAll({
       where: {
-        _id: contactId,
-        userId: userId
+        _id: removedObjectIds
       }
     });
 
-    // Если контакт найден и принадлежит текущему пользователю, обновляем его
-    if (existingContact) {
-      await existingContact.update({
-        ...req.body
-      });
-
-      // Получаем связанные компании для обновления
-      const companiesToUpdate = await Company.findAll({
-        where: {
-          // Проверяем, есть ли companyId из contacts в массиве компаний
-          _id: existingContact.companies.map((comp) => comp.company)
-        }
-      });
-
-      // Собираем все обновления в массив
-      const companyUpdates = [];
-
-      // Обновляем список контактов в каждой компании
-      for (const company of companiesToUpdate) {
-        let contacts = company.dataValues.contacts || [];
-
-        // Проверяем, есть ли уже такой контакт у компании
-        const foundContactIndex = contacts.findIndex(
-          (contact) => contact.contact === contactId
-        );
-
-        if (foundContactIndex === -1) {
-          // Если контакт не найден, добавляем новый контакт в массив
-          contacts.push({ contact: contactId });
-        }
-
-        // Сохраняем обновление для данной компании в массив
-        companyUpdates.push({
-          id: company._id,
-          contacts: contacts
-        });
-      }
-
-      // Выполняем все обновления компаний одновременно
-      await Promise.all(
-        companyUpdates.map(async (update) => {
-          await Company.update(
-            { contacts: update.contacts },
-            { where: { _id: update.id } }
-          );
-        })
-      );
-
-      res.status(200).send(existingContact);
-    } else {
-      res.status(404).json({
-        message: "Контакт не найден или у вас нет прав на его обновление"
+    if (!contactId) {
+      return res.status(400).json({
+        message: "Необходимо указать идентификатор контакта (contactId)."
       });
     }
+
+    // Находим контакт
+    const existingContact = await Contact.findByPk(contactId);
+
+    if (!existingContact) {
+      return res.status(404).json({
+        message: "Контакт не найдена."
+      });
+    }
+
+    // Получаем связанные объекты для обновления
+    const objectsToUpdate = await Object.findAll({
+      where: {
+        // Проверяем, есть ли objectId из objects в массиве контактов
+        _id: objects.map((obj) => obj.object)
+      }
+    });
+
+    // Обновляем список контактов у каждого объекта
+    for (const object of objectsToUpdate) {
+      let contacts = object.dataValues.contacts || [];
+
+      // Проверяем, есть ли уже такая компания у объекта
+      const foundContactIndex = contacts.findIndex(
+        (contact) => contact.contact === contactId
+      );
+
+      if (foundContactIndex === -1) {
+        // Если компания не найдена, добавляем новую контакт в массив
+        contacts.push({ contact: contactId });
+      }
+
+      // Сохраняем обновление для данной объекты в массив
+      await Object.update({ contacts }, { where: { _id: object._id } });
+    }
+
+    // Удаление контакты из списков контактов в удаленных объектах
+    for (const object of objectsRemovedObjects) {
+      // Фильтрация массива контактов каждого объекта
+      const updatedContacts = object.contacts.filter(
+        (cont) => cont.contact !== contactId
+      );
+
+      // Обновляем контакт с новым списком контактов
+      await object.update({ contacts: updatedContacts });
+    }
+
+    // Обновляем контакт
+    await existingContact.update(newData);
+
+    // Получаем обновленный список контактов после обновления
+    const updatedObjects = await Object.findAll({
+      where: {
+        _id: objectsToUpdate.map((obj) => obj._id)
+      }
+    });
+
+    // Добавляем в обновленные контакты добавленные объекты
+    addedObjects.forEach((addedObject) => {
+      const foundObject = updatedObjects.find(
+        (object) => object._id === addedObject.object
+      );
+      if (foundObject) updatedObjects.push(foundObject);
+    });
+
+    const removedObjectsList = await Object.findAll({
+      where: {
+        _id: removedObjects.map((object) => object.object)
+      }
+    });
+
+    // Добавляем удаленный контакт, если она была удалена из updatedObjects
+    removedObjectsList.forEach((removedObject) => {
+      const foundObject = updatedObjects.find(
+        (object) => object._id === removedObject.object
+      );
+      if (!foundObject) {
+        updatedObjects.push(removedObject);
+      }
+    });
+
+    const updatedContactsSet = new Set();
+    const uniqueUpdatedContacts = [];
+
+    // Фильтруем объекты и добавляем уникальные объекты в массив uniqueUpdatedContacts
+    updatedObjects.forEach((obj) => {
+      if (!updatedContactsSet.has(obj._id)) {
+        uniqueUpdatedContacts.push(obj);
+        updatedContactsSet.add(obj._id);
+      }
+    });
+
+    res.status(200).json({
+      updatedObjects: uniqueUpdatedContacts,
+      previousObjects
+    });
   } catch (e) {
     console.error(e);
     res.status(500).json({
@@ -178,33 +198,6 @@ router.patch("/:contactId?/edit", auth, async (req, res) => {
     });
   }
 });
-
-// router.patch("/:contactId?/edit", auth, async (req, res) => {
-//   try {
-//     const { contactId } = req.params;
-//     if (!contactId) {
-//       return res.status(400).json({
-//         message: "Необходимо указать идентификатор контакта (contactId)."
-//       });
-//     }
-
-//     const existingContact = await Contact.findByPk(contactId);
-
-//     if (!existingContact) {
-//       return res.status(404).json({
-//         message: "Контакт не найден"
-//       });
-//     }
-
-//     const updatedContact = await existingContact.update(req.body);
-
-//     res.status(200).json(updatedContact);
-//   } catch (e) {
-//     res.status(500).json({
-//       message: "На сервере произошла ошибка, попробуйте позже"
-//     });
-//   }
-// });
 
 router.delete("/:contactId?", auth, async (req, res) => {
   try {
