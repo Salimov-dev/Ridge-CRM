@@ -10,7 +10,11 @@ import TabsStyled from "@components/common/tabs/tabs-styled";
 import Information from "./components/information/information";
 // store
 import { getObjectsList } from "@store/object/objects.store";
-import { getCurrentUserId, getIsUserCurator } from "@store/user/users.store";
+import {
+  getCurrentUserId,
+  getIsUserCurator,
+  getUsersList
+} from "@store/user/users.store";
 
 const Component = styled(Box)`
   display: flex;
@@ -36,6 +40,7 @@ const ObjectInfo = ({ object, objectId, isLoading }) => {
   });
 
   const objects = useSelector(getObjectsList());
+  const users = useSelector(getUsersList());
 
   const currentUserId = useSelector(getCurrentUserId());
   const isCurator = useSelector(getIsUserCurator(currentUserId));
@@ -68,7 +73,12 @@ const ObjectInfo = ({ object, objectId, isLoading }) => {
   return (
     <Component>
       <TabsStyled tabs={tabs} value={value} onChange={handleTabChange} />
-      <PageDialogs state={state} setState={setState} objects={actualObjects} />
+      <PageDialogs
+        users={users}
+        state={state}
+        setState={setState}
+        objects={actualObjects}
+      />
     </Component>
   );
 };

@@ -2,9 +2,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { Box, Paper, styled } from "@mui/material";
 // components
 import ObjectAddress from "./object-address";
-import UserNameWithAvatar from "@components/common/user-name-with-avatar";
+import UserNameWithAvatar from "@components/common/user/user-name-with-avatar";
 // data
 import { dealStagesArray } from "@data/deals/deals-stages";
+// hooks
+import useGetUserAvatar from "@hooks/user/use-get-user-avatar";
+import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
 // store
 import { updateObject } from "@store/object/objects.store";
 import {
@@ -12,9 +15,6 @@ import {
   getIsUserAuthorThisEntity,
   getUsersList
 } from "@store/user/users.store";
-// hooks
-import useGetUserAvatar from "@hooks/user/use-get-user-avatar";
-import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
 
 const Component = styled(Box)`
   width: 100%;
@@ -36,7 +36,6 @@ const ObjectContainer = styled(Paper)`
   background: white;
   padding: 10px;
   border: 1px solid gray;
-  cursor: grab;
 `;
 
 const Objects = ({
@@ -91,6 +90,7 @@ const Objects = ({
             key={obj?._id}
             draggable={isAuthorEntity}
             onDragEnd={(e) => handleDragEnd(obj, stage)}
+            sx={{ cursor: isAuthorEntity ? "grab" : "default" }}
           >
             <ObjectAddress
               obj={obj}

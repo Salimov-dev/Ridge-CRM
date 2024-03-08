@@ -7,12 +7,13 @@ import { AlignCenter } from "@components/common/columns/styled";
 import EmptyTd from "@components/common/columns/empty-td";
 import { FormatPhone } from "@components/common/table/helpers/helpers";
 import ButtonStyled from "@components/common/buttons/button-styled.button";
-// store
-import { getPositionNameById } from "@store/contact/contact-positions.store";
-import { getObjectAddressById } from "@store/object/objects.store";
-import { getCompanyNameById } from "@store/company/company.store";
 import CompanyTableEntity from "@components/common/table-entities/company-table-entity";
 import ObjectTableEntity from "@components/common/table-entities/object-table-entity";
+// store
+import { getPositionNameById } from "@store/contact/contact-positions.store";
+import { getUserDataById } from "@store/user/users.store";
+import useGetUserAvatar from "@hooks/user/use-get-user-avatar";
+import UserNameWithAvatar from "@components/common/user/user-name-with-avatar";
 
 function IndeterminateCheckbox({
   indeterminate,
@@ -42,7 +43,8 @@ export const contactsColumns = (
   isCurator,
   isHideCheckbox,
   handleOpenUpdateCompanyPage,
-  object
+  object,
+  handleOpenObjectPage
 ) => {
   let columns = [];
 
@@ -99,7 +101,7 @@ export const contactsColumns = (
 
   const objectsColumn = {
     accessorFn: (row) => row,
-    header: "Другие объекты компании",
+    header: "Объекты контакта",
     enableSorting: false,
     cell: (info) => {
       const row = info.getValue();
@@ -111,29 +113,11 @@ export const contactsColumns = (
       return (
         <ObjectTableEntity
           objects={filteredObject}
-          onOpenObjectPage={handleOpenContactPage}
+          onOpenObjectPage={handleOpenObjectPage}
         />
       );
     }
   };
-
-  // const objectsColumn = {
-  //   accessorKey: "objects",
-  //   header: "Объект",
-  //   enableSorting: false,
-  //   cell: (info) => {
-  //     const objects = info.getValue();
-  //     const objectIds = [...new Set(objects?.map((obj) => obj.object))];
-
-  //     const result = objectIds?.map((obj, index) => (
-  //       <AlignCenter key={obj[index]}>
-  //         {useSelector(getObjectAddressById(obj))}
-  //       </AlignCenter>
-  //     ));
-
-  //     return result.length ? result : <EmptyTd />;
-  //   }
-  // };
 
   const commentColumn = {
     accessorKey: "comment",
@@ -157,31 +141,12 @@ export const contactsColumns = (
         return <AlignCenter>{name}</AlignCenter>;
       }
     },
-    // {
-    //   accessorFn: (row) => row,
-    //   header: "Контакты",
-    //   cell: (info) => {
-    //     const row = info.getValue();
-    //     const companies = row.companies;
-
-    //     return (
-    //       <CompanyTableEntity
-    //         companies={companies}
-    //         onOpenCompanyPage={handleOpenUpdateCompanyPage}
-    //       />
-    //     );
-    //   }
-    // },
     {
       accessorKey: "companies",
       header: "Связан с компаниями",
       enableSorting: false,
       cell: (info) => {
         const companies = info.getValue();
-
-        // const row = info.getValue();
-        // const companies = row.companies;
-
         return (
           <CompanyTableEntity
             companies={companies}
@@ -190,19 +155,6 @@ export const contactsColumns = (
         );
       }
     },
-    // {
-    //   accessorKey: "companies",
-    //   header: "Компания",
-    //   cell: (info) => {
-    //     const companies = info.getValue();
-    //     const companyIds = [...new Set(companies?.map((comp) => comp.company))];
-    //     const result = companyIds?.map((comp, index) => {
-    //       const companyName = useSelector(getCompanyNameById(comp));
-    //       return <AlignCenter key={comp[index]}>{companyName}</AlignCenter>;
-    //     });
-    //     return result.length ? result : <EmptyTd />;
-    //   }
-    // },
     {
       accessorFn: (row) => row,
       header: "Почта",
@@ -233,6 +185,31 @@ export const contactsColumns = (
     }
   ];
 
+  const managerColumn = {
+    header: "Менеджер",
+    columns: [
+      {
+        accessorKey: "userId",
+        header: "Фамилия и Имя",
+        cell: (info) => {
+          const userId = info.getValue();
+          const user = useSelector(getUserDataById(userId));
+          const { getAvatarSrc, isLoading } = useGetUserAvatar(user?._id);
+
+          return (
+            <AlignCenter>
+              <UserNameWithAvatar
+                userId={userId}
+                avatarSrc={getAvatarSrc()}
+                isLoading={isLoading}
+              />
+            </AlignCenter>
+          );
+        }
+      }
+    ]
+  };
+
   const openContactColumn = {
     accessorKey: "_id",
     header: "Контакт",
@@ -259,6 +236,7 @@ export const contactsColumns = (
       ...contactsColumn,
       positionColumn,
       objectsColumn,
+      managerColumn,
       commentColumn,
       openContactColumn
     ];
@@ -273,9 +251,9 @@ export const contactsColumns = (
     ];
   }
 
-  if (isCurator && !isHideCheckbox) {
-    columns.unshift(selectColumn);
-  }
+  // if (isCurator && !isHideCheckbox) {
+  //   columns.unshift(selectColumn);
+  // }
 
   return columns;
 };

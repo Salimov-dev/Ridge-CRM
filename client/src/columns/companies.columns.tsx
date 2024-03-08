@@ -1,14 +1,10 @@
 import React, { HTMLProps } from "react";
-import { useSelector } from "react-redux";
 // utils
 import { FormatDate } from "@utils/date/format-date";
 // components
 import { AlignCenter } from "@components/common/columns/styled";
-import EmptyTd from "@components/common/columns/empty-td";
 import ObjectTableEntity from "@components/common/table-entities/object-table-entity";
 import ButtonStyled from "@components/common/buttons/button-styled.button";
-// store
-import { getContactById } from "@store/contact/contact.store";
 import ContactTableEntity from "@components/common/table-entities/contact-table-entity";
 
 function IndeterminateCheckbox({
@@ -130,24 +126,6 @@ export const companiesColumns = (
     }
   };
 
-  // const contactsColumn = {
-  //   accessorKey: "contacts",
-  //   header: "Контакты",
-  //   enableSorting: false,
-  //   cell: (info) => {
-  //     const contacts = info.getValue();
-  //     const contactIds = [...new Set(contacts?.map((cont) => cont.contact))];
-
-  //     const result = contactIds?.map((cont, index) => {
-  //       const contact = useSelector(getContactById(cont));
-
-  //       return <AlignCenter key={cont[index]}>{contact?.name}</AlignCenter>;
-  //     });
-
-  //     return result.length ? result : <EmptyTd />;
-  //   }
-  // };
-
   const openCompanyColumn = {
     accessorKey: "_id",
     header: "Компания",
@@ -186,9 +164,9 @@ export const companiesColumns = (
     ];
   }
 
-  if (isCurator && !isHideCheckbox) {
-    columns.unshift(selectColumn);
-  }
+  // if (isCurator && !isHideCheckbox) {
+  //   columns.unshift(selectColumn);
+  // }
 
   return columns;
 };

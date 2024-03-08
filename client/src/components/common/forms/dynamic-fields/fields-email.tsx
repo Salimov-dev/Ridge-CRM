@@ -90,7 +90,7 @@ const FieldsEmail = ({ data, register, setValue, errors, control }) => {
                 register={register}
                 label="Почта"
                 name={`emails.${index}.email`}
-                value={data.emails?.[index].email}
+                value={data?.emails?.[index].email}
                 errors={errors?.emails?.[index]?.email}
                 InputProps={{
                   endAdornment: (
@@ -125,7 +125,7 @@ const FieldsEmail = ({ data, register, setValue, errors, control }) => {
           style="REMOVE_SOME_NEW"
           width="100%"
           size="small"
-          disabled={!data.emails.length}
+          disabled={!data?.emails?.length}
           icon={<DoNotDisturbOnOutlinedIcon />}
           onClick={() => handleRemoveEmail(lastEmailIndex)} // передаем функцию removePhone с аргументом
         />

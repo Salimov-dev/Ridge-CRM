@@ -58,7 +58,7 @@ const FieldsContact = ({
   const { handleOpenCreateContactPage } = useDialogHandlers(setState);
   const { handleOpenContactPage } = useDialogHandlers(setOpenContact);
 
-  const lastContactIndex = fieldContacts.length - 1;
+  const lastContactIndex = fieldContacts?.length - 1;
 
   const handleChangeContact = (contactIndex, currentState) => {
     const updatedContacts = data.contacts.map((contact, index) => {

@@ -1,6 +1,7 @@
 import dayjs from "dayjs";
+import { orderBy } from "lodash";
 import { useForm } from "react-hook-form";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 // components
 import HeaderLayout from "@components/common/page-headers/header-layout";
@@ -18,6 +19,7 @@ import { getObjectsList } from "@store/object/objects.store";
 import { getCurrentUserId, getIsUserCurator } from "@store/user/users.store";
 import { getContactsList } from "@store/contact/contact.store";
 import { getLastContactsLoadingStatus } from "@store/last-contact/last-contact.store";
+import useSearchContact from "@hooks/contact/use-search-contact";
 
 const initialState = {
   objectAddress: "",
@@ -68,12 +70,11 @@ const Contacts = React.memo(() => {
   const isInputEmpty = JSON.stringify(initialState) !== JSON.stringify(data);
   const isHideCheckbox = false;
 
-  // const contactsList = useSelector(getContactsList());
-
-  // const searchedContacts = useSearchContact(contactsList, data);
-  // const sortedContacts = useMemo(() => {
-  //   return orderBy(searchedContacts, ["created_at"], ["desc"]);
-  // }, [searchedContacts]);
+  const searchedContacts = useSearchContact(contactsList, data);
+  const sortedContacts = useMemo(() => {
+    return orderBy(searchedContacts, ["created_at"], ["desc"]);
+  }, [searchedContacts]);
+  console.log("sortedContacts", sortedContacts);
 
   const { handleOpenCreateContactPage, handleOpenContactPage } =
     useDialogHandlers(setState);
@@ -116,7 +117,10 @@ const Contacts = React.memo(() => {
         itemsColumns={contactsColumns(
           handleOpenContactPage,
           isCurator,
-          isHideCheckbox
+          isHideCheckbox,
+          () => {},
+          {},
+          () => {}
         )}
         isLoading={isLoading}
         rowSelection={rowSelection}

@@ -4,6 +4,7 @@ const Component = styled(Box)`
   display: flex;
   justify-content: center;
   width: 100%;
+  margin-bottom: 20px;
 `;
 
 const TitleContainer = styled(Box)`
@@ -23,7 +24,7 @@ const Title = ({ item, objects }) => {
       sx={{
         color: item?.txtColor,
         backgroundColor: item?.bkgColor,
-        padding: "8px 10px",
+        padding: "8px 10px"
       }}
     >
       <TitleContainer>

@@ -5,7 +5,6 @@ import { Paper, styled } from "@mui/material";
 // components
 import Title from "./components/title";
 import Objects from "./components/objects";
-import DividerStyled from "@components/common/divider/divider-styled";
 import Loader from "@components/common/loader/loader";
 // store
 import { getObjectsLoadingStatus } from "@store/object/objects.store";
@@ -43,10 +42,6 @@ const Stages = ({ objects, stages, setState, isCurator }) => {
             }}
           >
             <Title item={stage} objects={objects} />
-            <DividerStyled
-              margin="10px 0 20px 0"
-              color={draggableStageId === stage?._id ? "yellow" : "inherit"}
-            />
             {!isLoading ? (
               <Objects
                 stage={stage}

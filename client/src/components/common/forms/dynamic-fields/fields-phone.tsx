@@ -141,7 +141,7 @@ const FieldsPhone = ({ data, register, setValue, errors, control }) => {
           style="REMOVE_SOME_NEW"
           width="100%"
           size="small"
-          disabled={!data.phones.length}
+          disabled={!data?.phones?.length}
           icon={<DoNotDisturbOnOutlinedIcon />}
           onClick={() => handleRemovePhone(lastPhoneIndex)} // передаем функцию removePhone с аргументом
         />

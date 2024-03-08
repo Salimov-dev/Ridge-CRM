@@ -11,13 +11,14 @@ import { FormatDate } from "@utils/date/format-date";
 import Flags from "@components/common/columns/flags";
 import { AlignCenter } from "@components/common/columns/styled";
 import EmptyTd from "@components/common/columns/empty-td";
-import UserNameWithAvatar from "@components/common/user-name-with-avatar";
+import UserNameWithAvatar from "@components/common/user/user-name-with-avatar";
 import ButtonStyled from "@components/common/buttons/button-styled.button";
 import {
   FormatMetro,
-  FormatObjectStatus,
-  FormatPhone
+  FormatObjectStatus
 } from "@components/common/table/helpers/helpers";
+import ContactTableEntity from "@components/common/table-entities/contact-table-entity";
+import CompanyTableEntity from "@components/common/table-entities/company-table-entity";
 // hooks
 import useGetUserAvatar from "@hooks/user/use-get-user-avatar";
 // store
@@ -53,7 +54,12 @@ function IndeterminateCheckbox({
   );
 }
 
-export const objectsColumns = (handleOpenObjectPage, isCurator) => {
+export const objectsColumns = (
+  handleOpenObjectPage,
+  isCurator,
+  handleOpenContactPage,
+  handleOpenUpdateCompanyPage
+) => {
   let columns = [];
 
   const selectColumn = {
@@ -167,27 +173,32 @@ export const objectsColumns = (handleOpenObjectPage, isCurator) => {
     header: "Контактная информация",
     columns: [
       {
-        accessorKey: "phone",
-        header: "Телефон",
+        accessorKey: "contacts",
+        header: "Контакты",
+        enableSorting: false,
         cell: (info) => {
-          const phone = info.getValue();
-          return phone ? (
-            <AlignCenter>
-              <Typography sx={{ whiteSpace: "nowrap" }}>
-                {FormatPhone(phone)}
-              </Typography>
-            </AlignCenter>
-          ) : (
-            <EmptyTd />
+          const contacts = info.getValue();
+
+          return (
+            <ContactTableEntity
+              contacts={contacts}
+              onOpenContactPage={handleOpenContactPage}
+            />
           );
         }
       },
       {
-        accessorKey: "name",
-        header: "Имя",
+        accessorKey: "companies",
+        header: "Связан с компаниями",
+        enableSorting: false,
         cell: (info) => {
-          const name = info.getValue();
-          return name ? <AlignCenter>{name}</AlignCenter> : <EmptyTd />;
+          const companies = info.getValue();
+          return (
+            <CompanyTableEntity
+              companies={companies}
+              onOpenCompanyPage={handleOpenUpdateCompanyPage}
+            />
+          );
         }
       }
     ]

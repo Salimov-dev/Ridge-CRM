@@ -16,7 +16,8 @@ const OpenPageElementIconButton = ({
   height = "24px",
   heightButton = "auto",
   containerWidth = "auto",
-  color = "white"
+  color = "white",
+  colorHover = "yellow"
 }) => {
   return (
     <Components sx={{ width: containerWidth }}>
@@ -35,7 +36,7 @@ const OpenPageElementIconButton = ({
           "&:hover": {
             // стили при наведении (неактивное состояние)
             transform: disabled ? "none" : "scale(1.2)", // если disabled, не изменяем масштаб
-            color: "yellow",
+            color: colorHover,
             background: "transparent"
           }
         }}

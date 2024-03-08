@@ -10,8 +10,8 @@ const ObjectTableEntity = ({ objects, onOpenObjectPage }) => {
 
   return (
     <AlignCenter sx={{ display: "flex", flexDirection: "column" }}>
-      {objects.length ? (
-        objects.map((object) => {
+      {objects?.length ? (
+        objects?.map((object) => {
           const objectId = object.object;
 
           const getObjectName = (objectId) => {

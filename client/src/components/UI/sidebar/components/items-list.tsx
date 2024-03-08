@@ -58,6 +58,13 @@ const ItemsList = ({
         setSelected={setSelected}
       />
       <Item
+        title="Презентации"
+        to="/presentations"
+        icon={<AssignmentOutlinedIcon />}
+        selected={selected}
+        setSelected={setSelected}
+      />
+      <Item
         title="Контакты"
         to="/contacts"
         icon={<ContactPhoneOutlinedIcon />}
@@ -96,13 +103,6 @@ const ItemsList = ({
         title="Календарь"
         to="/calendar"
         icon={<CalendarTodayOutlinedIcon />}
-        selected={selected}
-        setSelected={setSelected}
-      />
-      <Item
-        title="Презентации"
-        to="/presentations"
-        icon={<AssignmentOutlinedIcon />}
         selected={selected}
         setSelected={setSelected}
       />

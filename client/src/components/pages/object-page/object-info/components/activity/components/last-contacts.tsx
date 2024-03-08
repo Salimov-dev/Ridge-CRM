@@ -61,7 +61,6 @@ const LastContacts = ({
           itemsColumns={lastContactColumns(
             onUpdate,
             onOpenContactPage,
-            isAuthorEntity,
             isCurator
           )}
           isLoading={isLastContactsLoading}

@@ -14,8 +14,7 @@ const ContactForm = ({
   control,
   register,
   errors,
-  setValue,
-  isHideElement
+  setValue
 }) => {
   return (
     <>
@@ -27,7 +26,6 @@ const ContactForm = ({
             errors={errors}
             watch={watch}
           />
-
           <FieldsPhone
             data={data}
             register={register}
@@ -50,7 +48,6 @@ const ContactForm = ({
             control={control}
             watch={watch}
             setState={setState}
-            isHideElement={isHideElement}
           />
           <FieldsObject
             data={data}

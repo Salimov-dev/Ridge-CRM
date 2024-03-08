@@ -165,7 +165,6 @@ router.patch("/:companyId?/edit", auth, async (req, res) => {
         _id: removedObjects.map((object) => object.object)
       }
     });
-    console.log("removedObjectsList", removedObjectsList);
 
     // Добавляем удаленную компанию, если она была удалена из updatedObjects
     removedObjectsList.forEach((removedObject) => {

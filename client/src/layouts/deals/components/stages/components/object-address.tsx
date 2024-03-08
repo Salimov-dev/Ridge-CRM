@@ -6,6 +6,7 @@ import { getObjectAddressById } from "@store/object/objects.store";
 const Component = styled(Box)`
   display: flex;
   justify-content: space-between;
+  align-items: center;
   gap: 4px;
 `;
 
@@ -15,7 +16,13 @@ const ObjectAddress = ({ obj, onClick }) => {
   return (
     <Component>
       <Typography variant="h6">{objectAddress}</Typography>
-      <OpenPageElementIconButton onClick={onClick} color="black" />
+      <OpenPageElementIconButton
+        title="Открыть объект"
+        width="24px"
+        color="black"
+        colorHover="blue"
+        onClick={onClick}
+      />
     </Component>
   );
 };

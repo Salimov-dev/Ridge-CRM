@@ -12,21 +12,21 @@ import { allowedStatuses, dealStagesArray } from "@data/deals/deals-stages";
 // hooks
 import useSearchDeals from "@hooks/deals/use-search-deals";
 // store
+import { getCurrentUserId, getIsUserCurator } from "@store/user/users.store";
 import {
   getObjectsList,
-  getObjectsLoadingStatus,
+  getObjectsLoadingStatus
 } from "@store/object/objects.store";
-import { getCurrentUserId, getIsUserCurator } from "@store/user/users.store";
 
 const initialState = {
-  selectedUsers: [],
+  selectedUsers: []
 };
 
 const Deals = React.memo(() => {
   const [state, setState] = useState({
     objectPage: false,
     updatePage: false,
-    objectId: null,
+    objectId: null
   });
 
   const localStorageState = JSON.parse(
@@ -37,7 +37,7 @@ const Deals = React.memo(() => {
     defaultValues: Boolean(localStorageState)
       ? localStorageState
       : initialState,
-    mode: "onChange",
+    mode: "onChange"
   });
 
   const data = watch();

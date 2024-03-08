@@ -68,8 +68,7 @@ const Acitivty = ({ object, objectId, setState }) => {
           handleOpenUpdateMeetingPage,
           () => {},
           isDialogPage,
-          isCurator,
-          isAuthorEntity
+          isCurator
         )}
         isAuthorEntity={isAuthorEntity}
       />

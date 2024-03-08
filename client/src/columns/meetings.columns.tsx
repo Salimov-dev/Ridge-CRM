@@ -6,6 +6,7 @@ import { Box, Typography } from "@mui/material";
 import DoneStatusIcon from "@components/common/columns/done-status-icon";
 import { AlignCenter } from "@components/common/columns/styled";
 import ButtonStyled from "@components/common/buttons/button-styled.button";
+import OpenPageElementIconButton from "@components/common/buttons/icons buttons/open-page-element.button-icon";
 // utils
 import { FormatDate } from "@utils/date/format-date";
 import { FormatTime } from "@utils/date/format-time";
@@ -16,15 +17,17 @@ import { getMeetingTypeNameById } from "@store/meeting/meeting-types.store";
 import { getMeetingById } from "@store/meeting/meetings.store";
 import {
   getCurrentUserId,
-  getIsUserAuthorThisEntity
+  getIsUserAuthorThisEntity,
+  getUserDataById
 } from "@store/user/users.store";
+import useGetUserAvatar from "@hooks/user/use-get-user-avatar";
+import UserNameWithAvatar from "@components/common/user/user-name-with-avatar";
 
 export const meetingsColumns = (
   handleOpenUpdateMeetingPage,
   handleOpenObjectPage,
   isDialogPage,
-  isCurator,
-  isAuthorEntity
+  isCurator
 ) => {
   let columns = [];
 
@@ -42,17 +45,17 @@ export const meetingsColumns = (
       },
       {
         accessorKey: "date",
-        header: "Дата",
+        header: "Дата встречи",
         enableSorting: false,
         cell: (info) => {
           const date = info.getValue();
           const formattedDate = FormatDate(date);
           const dayOfWeek = dayjs(date).locale("ru").format("dd");
           return (
-            <Box sx={{ display: "flex", gap: "6px" }}>
+            <AlignCenter>
               <Typography>{formattedDate}</Typography>
               <Typography>{dayOfWeek}</Typography>
-            </Box>
+            </AlignCenter>
           );
         }
       },
@@ -100,20 +103,49 @@ export const meetingsColumns = (
               sx={{
                 display: "flex",
                 alignItems: "center",
-                justifyContent: "space-between"
+                justifyContent: "start",
+                gap: "8px"
               }}
             >
               {fullAddress}
               {!isDialogPage ? (
-                <ButtonStyled
-                  title="Открыть"
-                  style="OPEN_OBJECT"
+                <OpenPageElementIconButton
+                  title="Открыть объект"
+                  containerWidth="10px"
+                  height="20px"
+                  heightButton="20px"
+                  width="20px"
                   onClick={() => handleOpenObjectPage(objectId)}
                 />
               ) : null}
             </Box>
           ) : (
             <AlignCenter>-</AlignCenter>
+          );
+        }
+      }
+    ]
+  };
+
+  const managerColumn = {
+    header: "Менеджер",
+    columns: [
+      {
+        accessorKey: "userId",
+        header: "Фамилия и Имя",
+        cell: (info) => {
+          const userId = info.getValue();
+          const user = useSelector(getUserDataById(userId));
+          const { getAvatarSrc, isLoading } = useGetUserAvatar(user?._id);
+
+          return (
+            <AlignCenter>
+              <UserNameWithAvatar
+                userId={userId}
+                avatarSrc={getAvatarSrc()}
+                isLoading={isLoading}
+              />
+            </AlignCenter>
           );
         }
       }
@@ -178,6 +210,7 @@ export const meetingsColumns = (
       }
     ]
   };
+
   const updateColumn = {
     header: "Править",
     columns: [
@@ -209,7 +242,7 @@ export const meetingsColumns = (
   };
 
   if (isCurator) {
-    columns = [dateColumn, otherColumns];
+    columns = [dateColumn, managerColumn, otherColumns];
   } else {
     columns = [dateColumn, otherColumns];
   }
@@ -218,9 +251,7 @@ export const meetingsColumns = (
     columns.splice(1, 0, meetingObjectColumn);
   }
 
-  if (isAuthorEntity) {
-    columns.push(updateColumn);
-  }
+  columns.push(updateColumn);
 
   return columns;
 };

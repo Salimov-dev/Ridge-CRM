@@ -25,6 +25,14 @@ const ContactsFiltersPanel = React.memo(
         <FieldsContainer>
           <SearchField
             register={register}
+            label="Найти по адресу объекта"
+            name="result"
+            value={data.result}
+            inputProps={{ maxLength: 30 }}
+            disabled={isLoading ? true : false}
+          />
+          <SearchField
+            register={register}
             label="Найти по компании"
             name="task"
             value={data.task}
@@ -42,14 +50,6 @@ const ContactsFiltersPanel = React.memo(
           <SearchField
             register={register}
             label="Найти по телефону"
-            name="result"
-            value={data.result}
-            inputProps={{ maxLength: 30 }}
-            disabled={isLoading ? true : false}
-          />
-          <SearchField
-            register={register}
-            label="Найти по адресу объекта"
             name="result"
             value={data.result}
             inputProps={{ maxLength: 30 }}

@@ -11,6 +11,7 @@ import SuccessCancelFormButtons from "@components/common/buttons/success-cancel-
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
 import HeaderWithCloseButton from "@components/common/page-headers/header-with-close-button";
 import DialogConfirm from "@components/common/dialog/dialog-confirm";
+import UserEntityAuthor from "@components/common/user/user-entity-author";
 // forms
 import ContactForm from "@forms/contact/contact.form";
 // schema
@@ -106,6 +107,7 @@ const UpdateContact = React.memo(({ contactId, onClose }) => {
         errors={errors}
         setValue={setValue}
       />
+      <UserEntityAuthor title="Контакт создал" userId={contact?.userId} />
       <SuccessCancelFormButtons
         onSuccess={handleSubmit(onSubmit)}
         onCancel={onClose}

@@ -9,6 +9,7 @@ import DividerStyled from "@common/divider/divider-styled";
 import Attribute from "@common/map/baloon/attribute";
 import ButtonStyled from "@components/common/buttons/button-styled.button";
 import Loader from "@components/common/loader/loader";
+import OpenPageElementIconButton from "@components/common/buttons/icons buttons/open-page-element.button-icon";
 // utils
 import { makeDigitSeparator } from "@utils/data/make-digit-separator";
 // store
@@ -20,7 +21,7 @@ import { getCurrentRenterNameById } from "@store/object-params/current-renter.st
 import {
   getCurrentUserId,
   getIsUserCurator,
-  getUserNameById,
+  getUserNameById
 } from "@store/user/users.store";
 
 const BaloonContainer = styled(Box)`
@@ -31,6 +32,13 @@ const BaloonContainer = styled(Box)`
   flex-direction: column;
   align-items: start;
   padding: 20px 0;
+`;
+
+const AddressContainer = styled(Box)`
+  width: 92%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 `;
 
 const ObjectBaloon = React.memo(({ object, onOpenObjectPage, isLoading }) => {
@@ -53,19 +61,25 @@ const ObjectBaloon = React.memo(({ object, onOpenObjectPage, isLoading }) => {
   const rentPrice = object?.rentPrice;
   const rentTypes = object?.rentTypes;
 
-  const objectType = useSelector(
-    getObjectTypeNameById(object?.objectTypes)
-  );
-  const estateType = useSelector(
-    getEstateTypeNameById(object?.estateTypes)
-  );
-  const renter = useSelector(
-    getCurrentRenterNameById(object?.currentRenters)
-  );
+  const objectType = useSelector(getObjectTypeNameById(object?.objectTypes));
+  const estateType = useSelector(getEstateTypeNameById(object?.estateTypes));
+  const renter = useSelector(getCurrentRenterNameById(object?.currentRenters));
 
   return !isLoading ? (
     <BaloonContainer>
-      <Attribute title="Город:" subTitle={city} />
+      <AddressContainer>
+        <Attribute title="Город:" subTitle={city} />
+        <OpenPageElementIconButton
+          title="Открыть объект"
+          containerWidth="10px"
+          height="20px"
+          heightButton="20px"
+          width="20px"
+          color="black"
+          colorHover="blue"
+          onClick={() => onOpenObjectPage(objectId)}
+        />
+      </AddressContainer>
       <Attribute title="Район:" subTitle={district} />
       <Attribute title="Адрес:" subTitle={address} />
       {isCurator && <Attribute title="Менеджер:" subTitle={manager} />}
@@ -96,14 +110,13 @@ const ObjectBaloon = React.memo(({ object, onOpenObjectPage, isLoading }) => {
       <Attribute title="Телефон:" subTitle={phone ? FormatPhone(phone) : "-"} />
       <Attribute title="Email:" subTitle={email ? email : "-"} />
 
-      <Box sx={{ width: "100%", display: "flex", justifyContent: "center" }}>
-        <ButtonStyled
-          title="Открыть страницу объекта"
-          style="OBJECT"
-          size="small"
-          onClick={() => onOpenObjectPage(objectId)}
-        />
-      </Box>
+      <ButtonStyled
+        title="Открыть страницу объекта"
+        style="OBJECT"
+        width="100%"
+        size="small"
+        onClick={() => onOpenObjectPage(objectId)}
+      />
     </BaloonContainer>
   ) : (
     <Loader color={colors.grey[600]} height="85px" />

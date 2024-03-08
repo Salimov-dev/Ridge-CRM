@@ -44,11 +44,11 @@ const MeetingBaloon = React.memo(
         <Attribute title="Время встречи:" subTitle={time} />
         <Attribute title="Тип:" subTitle={meetingType} />
         <Typography>
-          <b>Адрес:</b>
+          <b>Адрес встречи:</b>
         </Typography>
         <Attribute gap="0" subTitle={`${meeting?.city}, ${meeting?.address}`} />
         <Typography>
-          <b>Коммент:</b>
+          <b>Комментарий:</b>
         </Typography>
         <Attribute subTitle={meeting?.comment} gap="0" />
 
@@ -56,21 +56,14 @@ const MeetingBaloon = React.memo(
         <Attribute title="Статус:" subTitle={status} />
         <Attribute title="Менеджер:" subTitle={manager} />
 
-        <Box
-          sx={{
-            width: "100%",
-            display: "flex",
-            justifyContent: "center",
-            gap: "4px",
-          }}
-        >
-          <ButtonStyled
-            title="Править встречу"
-            style="MEETING"
-            size="small"
-            onClick={() => onOpenUpdateMeetingPage(meetingId)}
-          />
-        </Box>
+        <ButtonStyled
+          title="Править встречу"
+          style="MEETING"
+          size="small"
+          width="100%"
+          onClick={() => onOpenUpdateMeetingPage(meetingId)}
+        />
+
         {objectId ? (
           <>
             <DividerStyled />
@@ -79,21 +72,14 @@ const MeetingBaloon = React.memo(
             </Typography>
             <Attribute title="" subTitle={objectAddress} gap="0" />
             <Divider />
-            <Box
-              sx={{
-                width: "100%",
-                display: "flex",
-                justifyContent: "center",
-                gap: "4px",
-              }}
-            >
-              <ButtonStyled
-                title="Страница объекта"
-                style="OBJECT"
-                size="small"
-                onClick={() => onOpenObjectPage(objectId)}
-              />
-            </Box>
+
+            <ButtonStyled
+              title="Страница объекта"
+              style="OBJECT"
+              width="100%"
+              size="small"
+              onClick={() => onOpenObjectPage(objectId)}
+            />
           </>
         ) : null}
       </BaloonContainer>

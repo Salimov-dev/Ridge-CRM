@@ -7,7 +7,7 @@ import { Box, Button, Menu, MenuItem, styled } from "@mui/material";
 // store
 import { getCurrentUserId, logOut } from "@store/user/users.store";
 // commponents
-import UserNameWithAvatar from "@components/common/user-name-with-avatar";
+import UserNameWithAvatar from "@components/common/user/user-name-with-avatar";
 // hooks
 import useGetUserAvatar from "@hooks/user/use-get-user-avatar";
 import { setCurrrentPathState } from "@store/current-path.store";

@@ -32,7 +32,6 @@ import {
   getObjectsList,
   getObjectsLoadingStatus
 } from "@store/object/objects.store";
-import VideoPlayer from "@components/common/video-player/video-player";
 
 const initialState = {
   address: "",
@@ -114,7 +113,9 @@ const Objects = React.memo(() => {
     handleOpenCreateObjectPage,
     handleOpenObjectPage,
     handleOpenTransferObjectPage,
-    handleOpenVideoPlayerPage
+    handleOpenVideoPlayerPage,
+    handleOpenContactPage,
+    handleOpenUpdateCompanyPage
   } = useDialogHandlers(setState);
 
   const handleSelectedBaloon = (item) => {
@@ -194,15 +195,20 @@ const Objects = React.memo(() => {
         rowSelection={rowSelection}
         setRowSelection={setRowSelection}
         items={sortedObjects}
-        itemsColumns={objectsColumns(handleOpenObjectPage, isCurator)}
+        itemsColumns={objectsColumns(
+          handleOpenObjectPage,
+          isCurator,
+          handleOpenContactPage,
+          handleOpenUpdateCompanyPage
+        )}
         isLoading={isUsersLoading}
       />
-      {isCurator && (
+      {/* {isCurator && (
         <ExportToExelButton
           title="Скачать объекты в EXCEL"
           data={modifiedObjectsData}
         />
-      )}
+      )} */}
       <PageDialogs
         state={state}
         setState={setState}

@@ -5,6 +5,7 @@ import User from "../models/User.js";
 import auth from "../middleware/auth.middleware.js";
 import { roleCurator, roleManager, roleObserver } from "../utils/user-roles.js";
 import Company from "../models/company/Company.js";
+import Contact from "../models/contact/Contact.js";
 import { sequelize } from "../utils/postgre-conection.js";
 
 const router = express.Router({ mergeParams: true });
@@ -53,7 +54,7 @@ router.get("/", auth, async (req, res) => {
 router.post("/create", auth, async (req, res) => {
   try {
     const userId = req.user._id;
-    const { companies } = req.body;
+    const { companies, contacts } = req.body;
 
     const newObject = await Object.create({
       ...req.body,
@@ -70,8 +71,17 @@ router.post("/create", auth, async (req, res) => {
       }
     });
 
+    // Получаем связанные контакты для обновления
+    const contactsToUpdate = await Contact.findAll({
+      where: {
+        // Проверяем, есть ли contactId из contacts в массиве компаний
+        _id: contacts.map((cont) => cont.contact)
+      }
+    });
+
     // Собираем все обновления в массив
     let companyUpdates = [];
+    let contactUpdates = [];
 
     // Обновляем список объектов в каждой компании
     for (const company of companiesToUpdate) {
@@ -93,8 +103,29 @@ router.post("/create", auth, async (req, res) => {
       );
     }
 
-    // Выполняем все обновления компаний одновременно
+    // Обновляем список объектов в каждом контакте
+    for (const contact of contactsToUpdate) {
+      let objects = contact.dataValues.objects || [];
+
+      // Проверяем, есть ли уже такой объект у объекта
+      const foundObjectIndex = objects.findIndex(
+        (obj) => obj.object === objectId
+      );
+
+      if (foundObjectIndex === -1) {
+        // Если объект не найден, добавляем новый объект в массив
+        objects.push({ object: objectId });
+      }
+
+      // Сохраняем обновление для данного объекта в массив
+      contactUpdates.push(
+        Contact.update({ objects }, { where: { _id: contact._id } })
+      );
+    }
+
+    // Выполняем все обновления компаний и контактов одновременно
     await Promise.all(companyUpdates);
+    await Promise.all(contactUpdates);
 
     // Получаем обновленный список компаний
     const updatedCompanies = await Company.findAll({
@@ -103,7 +134,14 @@ router.post("/create", auth, async (req, res) => {
       }
     });
 
-    res.status(201).json({ newObject, updatedCompanies });
+    // Получаем обновленный список контактов
+    const updatedContacts = await Contact.findAll({
+      where: {
+        _id: contacts.map((cont) => cont.contact)
+      }
+    });
+
+    res.status(201).json({ newObject, updatedCompanies, updatedContacts });
   } catch (e) {
     console.error(e);
     res.status(500).json({

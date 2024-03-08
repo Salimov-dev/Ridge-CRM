@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 // components
 import TableCell from "./components/table-cell";
-import UserNameWithAvatar from "../../components/common/user-name-with-avatar";
+import UserNameWithAvatar from "../../components/common/user/user-name-with-avatar";
 // hooks
 import { useTableHeader } from "./hooks/use-table-header";
 // utils

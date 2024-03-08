@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Box, Typography } from "@mui/material";
 // components
 import EmptyTd from "@components/common/columns/empty-td";
-import UserNameWithAvatar from "@components/common/user-name-with-avatar";
+import UserNameWithAvatar from "@components/common/user/user-name-with-avatar";
 import ButtonStyled from "@components/common/buttons/button-styled.button";
 import { AlignCenter } from "@components/common/columns/styled";
 import ContactTableEntity from "@components/common/table-entities/contact-table-entity";
@@ -19,12 +19,7 @@ import {
 // hooks
 import useGetUserAvatar from "@hooks/user/use-get-user-avatar";
 
-export const lastContactColumns = (
-  onUpdate,
-  onOpenContactPage,
-  isAuthorEntity,
-  isCurator
-) => {
+export const lastContactColumns = (onUpdate, onOpenContactPage, isCurator) => {
   let columns = [];
 
   const mainColumns = [
@@ -94,9 +89,6 @@ export const lastContactColumns = (
   const updateColumn = {
     accessorKey: "_id",
     header: "Править",
-    maxWidth: 70,
-    minWidth: 50,
-    width: 60,
     cell: (info) => {
       const lastContactId = info.getValue();
       const lastContact = useSelector(getLastContactsById(lastContactId));
@@ -124,9 +116,7 @@ export const lastContactColumns = (
     columns = [...mainColumns];
   }
 
-  if (isAuthorEntity) {
-    columns.push(updateColumn);
-  }
+  columns.push(updateColumn);
 
   return columns;
 };

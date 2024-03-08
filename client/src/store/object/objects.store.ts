@@ -9,6 +9,7 @@ import isOutDated from "@utils/auth/is-out-date";
 // services
 import objectService from "@services/object/object.service";
 import localStorageService from "@services/user/local.storage-service";
+import { updateContacts } from "@store/contact/contact.store";
 
 const socket = io(configFile.ioEndPoint);
 
@@ -121,6 +122,7 @@ export const createObject = (payload) => async (dispatch) => {
   try {
     const { content } = await objectService.create(payload);
 
+    dispatch(updateContacts(content.updatedContacts));
     dispatch(updateCompanies(content.updatedCompanies));
     socket.emit("objectCreated", content.newObject);
   } catch (error) {

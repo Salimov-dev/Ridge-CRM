@@ -23,8 +23,7 @@ const FieldsCompany = ({
   watch,
   errors,
   setState,
-  control,
-  isHideElement = false
+  control
 }) => {
   const [openCompany, setOpenCompany] = useState({
     companyPage: false,
@@ -113,16 +112,14 @@ const FieldsCompany = ({
         }
       })}
       <Box sx={{ width: "100%", display: "flex", gap: "4px" }}>
-        {!isHideElement && (
-          <ButtonStyled
-            title="Создать компанию"
-            style="CREATE_NEW_COMPANY"
-            width="100%"
-            size="small"
-            icon={<AddCircleIcon />}
-            onClick={handleOpenCreateCompanyPage}
-          />
-        )}
+        <ButtonStyled
+          title="Создать компанию"
+          style="CREATE_NEW_COMPANY"
+          width="100%"
+          size="small"
+          icon={<AddCircleIcon />}
+          onClick={handleOpenCreateCompanyPage}
+        />
         <ButtonStyled
           title="Добавить компанию"
           style="ADD_NEW_COMPANY"

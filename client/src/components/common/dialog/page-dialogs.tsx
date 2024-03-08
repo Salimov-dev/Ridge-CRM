@@ -195,7 +195,7 @@ const PageDialogs = ({
             users={users}
             taskId={state.taskId}
             onClose={handleCloseUpdateManagerTaskPage}
-            isObjectPage={!!state?.objectId?.length}
+            isObjectPage={true}
           />
         }
       />
