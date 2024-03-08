@@ -19,7 +19,7 @@ const Component = styled(Box)`
   justify-content: space-between;
 `;
 
-const CalendarHeader = ({ setState, isCurator }) => {
+const CalendarHeader = ({ setState, isCurator, onOpenVideoPlayerPage }) => {
   const monthIndex = useSelector(getMonthIndexState());
   const isTasksLoading = useSelector(getTaskLoadingStatus());
   const isMeetingsLoading = useSelector(getMeetingLoadingStatus());
@@ -37,6 +37,7 @@ const CalendarHeader = ({ setState, isCurator }) => {
         onOpenCreateMyTask={handleOpenCreateMyTaskPage}
         onOpenCreateManagerTask={handleOpenCreateManagerTaskPage}
         onOpenCreateMeetingPage={handleOpenCreateMeetingPage}
+        onOpenVideoPlayerPage={onOpenVideoPlayerPage}
         isCurator={isCurator}
       />
       <MonthToday monthIndex={monthIndex} />

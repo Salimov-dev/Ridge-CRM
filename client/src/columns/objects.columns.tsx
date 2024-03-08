@@ -58,7 +58,8 @@ export const objectsColumns = (
   handleOpenObjectPage,
   isCurator,
   handleOpenContactPage,
-  handleOpenUpdateCompanyPage
+  handleOpenUpdateCompanyPage,
+  isHideCheckbox
 ) => {
   let columns = [];
 
@@ -357,7 +358,7 @@ export const objectsColumns = (
 
   if (isCurator) {
     columns = [
-      selectColumn,
+      ...(!isHideCheckbox ? [selectColumn] : []),
       dateColumn,
       locationColumn,
       contactsColumn,
@@ -367,6 +368,7 @@ export const objectsColumns = (
     ];
   } else {
     columns = [
+      ...(!isHideCheckbox ? [selectColumn] : []),
       dateColumn,
       locationColumn,
       contactsColumn,

@@ -45,7 +45,7 @@ const UserForm = ({
           <Container>
             <String>
               <Typography variant="h5">Электр.почта: </Typography>
-              <Typography variant="h4" sx={{ color: "Yellow" }}>
+              <Typography variant="h5" sx={{ color: "Yellow" }}>
                 {data?.email}
               </Typography>
             </String>

@@ -59,7 +59,8 @@ const Companies = React.memo(() => {
     openContactPage: false,
     companyId: null,
     createCompanyPage: false,
-    updateCompanyPage: false
+    updateCompanyPage: false,
+    videoPlayerPage: false
   });
 
   const localStorageState = JSON.parse(
@@ -85,8 +86,11 @@ const Companies = React.memo(() => {
   const objects = useSelector(getObjectsList());
   const currentUserId = useSelector(getCurrentUserId());
 
-  const { handleOpenCreateCompanyPage, handleOpenUpdateCompanyPage } =
-    useDialogHandlers(setState);
+  const {
+    handleOpenCreateCompanyPage,
+    handleOpenUpdateCompanyPage,
+    handleOpenVideoPlayerPage
+  } = useDialogHandlers(setState);
 
   const companiesList = useSelector(getCompaniesList());
   const isLoading = useSelector(getCompaniesLoadingStatus());
@@ -130,6 +134,7 @@ const Companies = React.memo(() => {
         initialState={initialState}
         reset={reset}
         onOpenCreateCompanyPage={handleOpenCreateCompanyPage}
+        onOpenVideoPlayerPage={handleOpenVideoPlayerPage}
         isInputEmpty={isInputEmpty}
       />
       {/* <CompaniesFiltersPanel
@@ -146,13 +151,21 @@ const Companies = React.memo(() => {
         itemsColumns={companiesColumns(
           handleOpenUpdateCompanyPage,
           isCurator,
-          isHideCheckbox
+          isHideCheckbox,
+          () => {},
+          {},
+          () => {}
         )}
         isLoading={isLoading}
         rowSelection={rowSelection}
         setRowSelection={setRowSelection}
       />
-      <PageDialogs state={state} setState={setState} />
+      <PageDialogs
+        state={state}
+        setState={setState}
+        videoTitle="Как пользоваться страницей с Контактами"
+        videoSrc="https://www.youtube.com/embed/zz_SjeT_-M4"
+      />
     </ContainerStyled>
   );
 });

@@ -1,4 +1,5 @@
 import ButtonStyled from "@components/common/buttons/button-styled.button";
+import SmartDisplayOutlinedIcon from "@mui/icons-material/SmartDisplayOutlined";
 import styled from "@emotion/styled";
 import { Box } from "@mui/material";
 
@@ -12,7 +13,8 @@ const Buttons = ({
   onOpenCreateMyTask,
   onOpenCreateManagerTask,
   onOpenCreateMeetingPage,
-  isCurator,
+  onOpenVideoPlayerPage,
+  isCurator
 }) => {
   return (
     <Component>
@@ -35,6 +37,13 @@ const Buttons = ({
         style="MEETING"
         variant="contained"
         onClick={onOpenCreateMeetingPage}
+      />
+      <ButtonStyled
+        title="Видео-инструкция"
+        style="VIDEO_INSTR"
+        variant="contained"
+        icon={<SmartDisplayOutlinedIcon />}
+        onClick={onOpenVideoPlayerPage}
       />
     </Component>
   );

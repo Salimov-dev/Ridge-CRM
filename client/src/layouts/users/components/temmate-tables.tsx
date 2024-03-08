@@ -22,14 +22,20 @@ const TeamMateTables = React.memo(
       <Box sx={{ marginTop: "10px" }}>
         <AccountInfo />
 
-        <RowTitle title="Мои Наблюдатели" background="blue" />
+        <RowTitle
+          title="Мои Наблюдатели"
+          background="linear-gradient(to right, SteelBlue , DarkSlateBlue)"
+        />
         <BasicTable
           items={observerUsersWithRole}
           itemsColumns={usersColumns(onOpenUpdateUserPage)}
           isLoading={isLoading}
         />
 
-        <RowTitle title="Мои Менеджеры" background="green" />
+        <RowTitle
+          title="Мои Менеджеры"
+          background="linear-gradient(to right, green , darkGreen)"
+        />
         <UsersFiltersPanel
           data={data}
           register={register}

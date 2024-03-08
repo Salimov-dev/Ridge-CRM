@@ -14,13 +14,13 @@ import { tasksColumns } from "@columns/tasks.columns";
 import { meetingsColumns } from "@columns/meetings.columns";
 // utils
 import getMonth from "@utils/calendar/get-month";
+// hooks
+import useCalendar from "@hooks/calendar/use-calendar";
+import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
 // store
 import { getMonthIndexState } from "@store/month-index.store";
 import { getCurrentUserId, getIsUserCurator } from "@store/user/users.store";
 import { getObjectsList } from "@store/object/objects.store";
-// hooks
-import useCalendar from "@hooks/calendar/use-calendar";
-import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
 
 const initialState = {
   task: "",
@@ -45,7 +45,8 @@ const Calendar = React.memo(() => {
     lastContactId: "",
     meetingId: "",
     currentMonth: getMonth(),
-    dateCreate: null
+    dateCreate: null,
+    videoPlayerPage: false
   });
 
   const localStorageState = JSON.parse(
@@ -81,7 +82,8 @@ const Calendar = React.memo(() => {
     handleOpenUpdateMyTaskPage,
     handleOpenUpdateManagerTaskPage,
     handleOpenObjectPage,
-    handleOpenUpdateMeetingPage
+    handleOpenUpdateMeetingPage,
+    handleOpenVideoPlayerPage
   } = useDialogHandlers(setState);
 
   useEffect(() => {
@@ -99,7 +101,11 @@ const Calendar = React.memo(() => {
   return (
     <>
       <HeaderLayout title="Календарь" />
-      <CalendarHeader setState={setState} isCurator={isCurator} />
+      <CalendarHeader
+        setState={setState}
+        isCurator={isCurator}
+        onOpenVideoPlayerPage={handleOpenVideoPlayerPage}
+      />
       <CalendarBody
         tasks={getTask}
         meetings={getMeeting}
@@ -115,7 +121,8 @@ const Calendar = React.memo(() => {
           handleOpenUpdateMyTaskPage,
           handleOpenUpdateManagerTaskPage,
           handleOpenObjectPage,
-          isDialogPage
+          isDialogPage,
+          null
         )}
         setValue={setValue}
       />
@@ -124,10 +131,17 @@ const Calendar = React.memo(() => {
         columns={meetingsColumns(
           handleOpenUpdateMeetingPage,
           handleOpenObjectPage,
-          isDialogPage
+          isDialogPage,
+          null
         )}
       />
-      <PageDialogs state={state} setState={setState} objects={actualObjects} />
+      <PageDialogs
+        state={state}
+        setState={setState}
+        objects={actualObjects}
+        videoTitle="Как пользоваться страницей с Календарем"
+        videoSrc="https://www.youtube.com/embed/zz_SjeT_-M4"
+      />
     </>
   );
 });

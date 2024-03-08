@@ -51,7 +51,8 @@ const Meetings = React.memo(() => {
     createMeetingPage: false,
     updateMeetingPage: false,
     objectId: null,
-    meetingId: ""
+    meetingId: "",
+    videoPlayerPage: false
   });
 
   const localStorageState = JSON.parse(
@@ -94,7 +95,8 @@ const Meetings = React.memo(() => {
   const {
     handleOpenCreateMeetingPage,
     handleOpenUpdateMeetingPage,
-    handleOpenObjectPage
+    handleOpenObjectPage,
+    handleOpenVideoPlayerPage
   } = useDialogHandlers(setState);
 
   const handleChangeSelectedMeetingBaloon = (meetingId) => {
@@ -126,6 +128,7 @@ const Meetings = React.memo(() => {
         initialState={initialState}
         reset={reset}
         onOpenCreateMeetingPage={handleOpenCreateMeetingPage}
+        onOpenVideoPlayerPage={handleOpenVideoPlayerPage}
         isInputEmpty={isInputEmpty}
       />
       <ItemsOnMap
@@ -162,7 +165,12 @@ const Meetings = React.memo(() => {
         )}
         isLoading={isLoading}
       />
-      <PageDialogs state={state} setState={setState} />
+      <PageDialogs
+        state={state}
+        setState={setState}
+        videoTitle="Как пользоваться страницей со Встречами"
+        videoSrc="https://www.youtube.com/embed/zz_SjeT_-M4"
+      />
     </>
   );
 });

@@ -7,6 +7,7 @@ import { getGenderName } from "@utils/user/get-gender-name";
 // store
 import { getUserStatusNameById } from "@store/user-params/user-statuses.store";
 import { getUserRolNameById } from "@store/user-params/user-role.store";
+import { getCityNameById } from "@store/city/citites.store";
 
 const Component = styled(Box)`
   display: flex;
@@ -24,6 +25,7 @@ const UserProfileInfo = ({ user }) => {
   const userDataArrayMain = [
     { name: "Почта", value: user?.email || "Не задано" },
     { name: "Статус", value: useSelector(getUserStatusNameById(user?.status)) },
+    { name: "Город", value: useSelector(getCityNameById(user?.city)) },
     { name: "Роль", value: useSelector(getUserRolNameById(user?.role[0])) }
   ];
 

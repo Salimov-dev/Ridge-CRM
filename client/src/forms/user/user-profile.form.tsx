@@ -7,6 +7,7 @@ import TextFieldStyled from "@components/common/inputs/text-field-styled";
 import SimpleSelectField from "@components/common/inputs/simple-select-field";
 // utils
 import { capitalizeFirstLetter } from "@utils/data/capitalize-first-letter";
+import { citiesArray } from "@data/cities";
 
 const UserProfileForm = ({ data, register, errors, setValue }) => {
   return (
@@ -70,6 +71,16 @@ const UserProfileForm = ({ data, register, errors, setValue }) => {
             label="Пол"
             value={data?.gender}
             errors={errors?.gender}
+          />
+          <SimpleSelectField
+            register={register}
+            itemsList={citiesArray}
+            name="city"
+            labelId="city"
+            required={true}
+            label="Город"
+            value={data?.city}
+            errors={errors?.city}
           />
         </FieldsContainer>
       </Form>

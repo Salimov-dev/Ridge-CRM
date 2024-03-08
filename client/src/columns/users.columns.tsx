@@ -12,6 +12,10 @@ import useGetUserAvatar from "@hooks/user/use-get-user-avatar";
 import ButtonStyled from "@components/common/buttons/button-styled.button";
 import { useSelector } from "react-redux";
 import { getCurrentUserData } from "@store/user/users.store";
+import { getObjectsList } from "@store/object/objects.store";
+import { getContactsList } from "@store/contact/contact.store";
+import { getCompaniesList } from "@store/company/company.store";
+import { getPresentationsList } from "@store/presentation/presentations.store";
 
 export const usersColumns = (onOpenUpdateUserPage) => [
   {
@@ -91,6 +95,72 @@ export const usersColumns = (onOpenUpdateUserPage) => [
   },
 
   {
+    header: "Результаты",
+    columns: [
+      {
+        accessorFn: (row) => row,
+        header: "Объектов",
+        cell: (info) => {
+          const row = info.getValue();
+          const userId = row?._id;
+
+          const objects = useSelector(getObjectsList());
+          const filteredObjects = objects?.filter(
+            (obj) => obj.userId === userId
+          );
+
+          return <AlignCenter>{filteredObjects?.length}шт</AlignCenter>;
+        }
+      },
+      {
+        accessorFn: (row) => row,
+        header: "Контактов",
+        cell: (info) => {
+          const row = info.getValue();
+          const userId = row?._id;
+
+          const contacts = useSelector(getContactsList());
+          const filteredContacts = contacts?.filter(
+            (obj) => obj.userId === userId
+          );
+
+          return <AlignCenter>{filteredContacts?.length}шт</AlignCenter>;
+        }
+      },
+      {
+        accessorFn: (row) => row,
+        header: "Компаний",
+        cell: (info) => {
+          const row = info.getValue();
+          const userId = row?._id;
+
+          const companies = useSelector(getCompaniesList());
+          const filteredCompanies = companies?.filter(
+            (comp) => comp.userId === userId
+          );
+
+          return <AlignCenter>{filteredCompanies?.length}шт</AlignCenter>;
+        }
+      },
+      {
+        accessorFn: (row) => row,
+        header: "Презентаций",
+        cell: (info) => {
+          const row = info.getValue();
+          const userId = row?._id;
+
+          const presentations = useSelector(getPresentationsList());
+          const filteredPresentations = presentations?.filter(
+            (pres) => pres.userId === userId
+          );
+
+          return <AlignCenter>{filteredPresentations?.length}шт</AlignCenter>;
+        }
+      }
+    ]
+  },
+
+  {
     header: "Контакты",
     columns: [
       {
@@ -146,7 +216,6 @@ export const usersColumns = (onOpenUpdateUserPage) => [
                 background={isRoleManager ? "green" : "blue"}
                 backgroundHover={isRoleManager ? "darkGreen" : "darkBlue"}
                 colorHover="white"
-                // disabled={!isAuthorEntity}
                 onClick={() => onOpenUpdateUserPage(userId)}
               />
             </AlignCenter>

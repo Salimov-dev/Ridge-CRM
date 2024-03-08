@@ -88,9 +88,9 @@ const ButtonStyled = ({
   }
 
   if (style === "PRESENTATION") {
-    background = colors.presentation["primary"];
+    background = "Chocolate";
     colorHover = "white";
-    backgroundHover = colors.presentation["hover"];
+    backgroundHover = "Sienna";
   }
 
   if (style === "TRANSFER_OJECTS") {
@@ -158,9 +158,9 @@ const ButtonStyled = ({
   }
 
   if (style === "COMPANY") {
-    background = "Crimson";
+    background = "DarkViolet";
     colorHover = "white";
-    backgroundHover = "FireBrick";
+    backgroundHover = "DarkMagenta";
   }
 
   if (style === "ADD_NEW_COMPANY") {

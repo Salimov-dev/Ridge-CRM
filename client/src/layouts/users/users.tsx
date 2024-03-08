@@ -38,7 +38,8 @@ const Users = React.memo(() => {
     createUserPage: false,
     makePaymentPage: false,
     updateUserPage: false,
-    userId: ""
+    userId: "",
+    videoPlayerPage: false
   });
 
   const localStorageState = JSON.parse(
@@ -61,7 +62,8 @@ const Users = React.memo(() => {
   const {
     handleOpenCreateUserPage,
     handleOpenMakePaymentPage,
-    handleOpenUpdateUserPage
+    handleOpenUpdateUserPage,
+    handleOpenVideoPlayerPage
   } = useDialogHandlers(setState);
 
   const usersWithoutCurrentUser = users?.filter(
@@ -96,6 +98,7 @@ const Users = React.memo(() => {
         reset={reset}
         onOpenCreateUserPage={handleOpenCreateUserPage}
         onOpenMakePaymentPage={handleOpenMakePaymentPage}
+        onOpenVideoPlayerPage={handleOpenVideoPlayerPage}
         isInputEmpty={isInputEmpty}
       />
       <InformItems />
@@ -110,7 +113,12 @@ const Users = React.memo(() => {
         onOpenUpdateUserPage={handleOpenUpdateUserPage}
       />
 
-      <PageDialogs state={state} setState={setState} />
+      <PageDialogs
+        state={state}
+        setState={setState}
+        videoTitle="Как пользоваться страницей с Командой"
+        videoSrc="https://www.youtube.com/embed/zz_SjeT_-M4"
+      />
     </Component>
   );
 });

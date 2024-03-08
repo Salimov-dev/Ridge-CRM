@@ -26,7 +26,7 @@ import { getCurrentUserId, getIsUserCurator } from "@store/user/users.store";
 import { getPresentationStatusList } from "@store/presentation/presentation-status.store";
 import {
   getPresentationsList,
-  getPresentationsLoadingStatus,
+  getPresentationsLoadingStatus
 } from "@store/presentation/presentations.store";
 
 const initialState = {
@@ -35,7 +35,7 @@ const initialState = {
   selectedStatuses: [],
   selectedUsers: [],
   startDate: null,
-  endDate: null,
+  endDate: null
 };
 
 const Presentations = React.memo(() => {
@@ -48,6 +48,7 @@ const Presentations = React.memo(() => {
     updatePresentationPage: false,
     objectId: null,
     presentationId: "",
+    videoPlayerPage: false
   });
 
   const localStorageState = JSON.parse(
@@ -61,12 +62,12 @@ const Presentations = React.memo(() => {
       : null,
     endDate: localStorageState?.endDate
       ? dayjs(localStorageState?.endDate)
-      : null,
+      : null
   };
 
   const { register, watch, setValue, reset } = useForm({
     defaultValues: !!localStorageState ? formatedState : initialState,
-    mode: "onChange",
+    mode: "onChange"
   });
 
   const data = watch();
@@ -90,19 +91,20 @@ const Presentations = React.memo(() => {
     handleOpenObjectPage,
     handleOpenCreatePresentationPage,
     handleOpenUpdatePresentationPage,
+    handleOpenVideoPlayerPage
   } = useDialogHandlers(setState);
 
   const handleSelectPresentationBaloon = (presentationId) => {
     setState((prevState) => ({
       ...prevState,
-      selectedPresentationBaloon: presentationId,
+      selectedPresentationBaloon: presentationId
     }));
   };
 
   const handleSetPresentationsWithLocation = (location) => {
     setState((prevState) => ({
       ...prevState,
-      presentationsWithLocation: location,
+      presentationsWithLocation: location
     }));
   };
 
@@ -138,8 +140,8 @@ const Presentations = React.memo(() => {
                 city: matchingObject?.city,
                 address: matchingObject?.address,
                 latitude: matchingObject?.latitude,
-                longitude: matchingObject?.longitude,
-              },
+                longitude: matchingObject?.longitude
+              }
             };
           } else {
             return presentation;
@@ -157,6 +159,7 @@ const Presentations = React.memo(() => {
         initialState={initialState}
         reset={reset}
         onOpenCreatePresentationPage={handleOpenCreatePresentationPage}
+        onOpenVideoPlayerPage={handleOpenVideoPlayerPage}
         isInputEmpty={isInputEmpty}
       />
       <ItemsOnMap
@@ -192,7 +195,12 @@ const Presentations = React.memo(() => {
         )}
         isLoading={isLoading}
       />
-      <PageDialogs state={state} setState={setState} />
+      <PageDialogs
+        state={state}
+        setState={setState}
+        videoTitle="Как пользоваться страницей с Презентациями"
+        videoSrc="https://www.youtube.com/embed/zz_SjeT_-M4"
+      />
     </>
   );
 });

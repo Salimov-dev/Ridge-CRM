@@ -27,7 +27,8 @@ const initialState = {
   selectedStatuses: [],
   selectedUsers: [],
   startDate: null,
-  endDate: null
+  endDate: null,
+  videoPlayerPage: false
 };
 
 const Contacts = React.memo(() => {
@@ -76,8 +77,11 @@ const Contacts = React.memo(() => {
   }, [searchedContacts]);
   console.log("sortedContacts", sortedContacts);
 
-  const { handleOpenCreateContactPage, handleOpenContactPage } =
-    useDialogHandlers(setState);
+  const {
+    handleOpenCreateContactPage,
+    handleOpenContactPage,
+    handleOpenVideoPlayerPage
+  } = useDialogHandlers(setState);
 
   useEffect(() => {
     localStorage.setItem("search-contacts-data", JSON.stringify(data));
@@ -101,6 +105,7 @@ const Contacts = React.memo(() => {
         initialState={initialState}
         reset={reset}
         onOpenCreateContactPage={handleOpenCreateContactPage}
+        onOpenVideoPlayerPage={handleOpenVideoPlayerPage}
         isInputEmpty={isInputEmpty}
       />
       <ContactsFiltersPanel
@@ -126,7 +131,12 @@ const Contacts = React.memo(() => {
         rowSelection={rowSelection}
         setRowSelection={setRowSelection}
       />
-      <PageDialogs state={state} setState={setState} />
+      <PageDialogs
+        state={state}
+        setState={setState}
+        videoTitle="Как пользоваться страницей с Контактами"
+        videoSrc="https://www.youtube.com/embed/zz_SjeT_-M4"
+      />
     </ContainerStyled>
   );
 });

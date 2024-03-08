@@ -18,7 +18,10 @@ const AccountInfo = () => {
 
   return (
     <Box sx={{ marginBottom: "20px" }}>
-      <RowTitle title="Куратор команды" background="red" />
+      <RowTitle
+        title="Куратор команды"
+        background="linear-gradient(to right, red , firebrick)"
+      />
 
       {!isUserNameFilledUp ? (
         <Typography variant="h4">{currentUserName}</Typography>

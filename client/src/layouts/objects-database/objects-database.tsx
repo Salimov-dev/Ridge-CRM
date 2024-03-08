@@ -11,6 +11,7 @@ import BasicTable from "@components/common/table/basic-table";
 import ChangePeriodButton from "./components/change-period-button";
 import ObjectsDatabaseFiltersPanel from "@components/UI/filters-panels/objectsdatabase-filters-panel";
 import PageDialogs from "@components/common/dialog/page-dialogs";
+import { ContainerStyled } from "@components/common/container/container-styled";
 // columns
 import { objectsColumns } from "@columns/objects.columns";
 // hooks
@@ -23,7 +24,6 @@ import {
   getObjectsList,
   getObjectsLoadingStatus
 } from "@store/object/objects.store";
-import { ContainerStyled } from "@components/common/container/container-styled";
 
 const ChangePeriodsContainer = styled(Box)`
   width: 100%;
@@ -69,6 +69,7 @@ const ObjectsDatabase = React.memo(() => {
 
   const currentUserId = useSelector(getCurrentUserId());
   const isCurator = useSelector(getIsUserCurator(currentUserId));
+  const isHideCheckbox = true;
 
   const { searchedObjects, filteredObjects } = useSearchObjectDatabase(
     objects,
@@ -178,7 +179,13 @@ const ObjectsDatabase = React.memo(() => {
       {!isLoading ? (
         <BasicTable
           items={filteredObjects}
-          itemsColumns={objectsColumns(handleOpenObjectPage, isCurator)}
+          itemsColumns={objectsColumns(
+            handleOpenObjectPage,
+            isCurator,
+            () => {},
+            () => {},
+            isHideCheckbox
+          )}
           isLoading={isLoading}
         />
       ) : (
