@@ -23,9 +23,10 @@ const Title = ({ task, setState }) => {
   const taskId = task?._id;
   const isTaskDone = task?.isDone;
 
-  const { handleOpenUpdateMyTaskPage } = useDialogHandlers(setState);
+  const { handleOpenUpdateMyTaskPage, handleOpenUpdateManagerTaskPage } =
+    useDialogHandlers(setState);
 
-  const isCuratorTask = !!task?.managerId;
+  const isCuratorTask = Boolean(task?.managerId);
   const dispatch = useDispatch();
 
   const handleDoneTask = (task) => {
@@ -46,7 +47,11 @@ const Title = ({ task, setState }) => {
       <ButtonsContainer>
         <UpdateElement
           itemId={taskId}
-          onClick={handleOpenUpdateMyTaskPage}
+          onClick={
+            isCuratorTask
+              ? handleOpenUpdateManagerTaskPage
+              : handleOpenUpdateMyTaskPage
+          }
           isDone={isTaskDone}
         />
         <DoneIconToggler

@@ -6,13 +6,11 @@ import { getObjectsList } from "@store/object/objects.store";
 
 const useSearchCompany = (companies, data) => {
   const objects = useSelector(getObjectsList());
-  console.log("companies", companies);
 
   const searchedCompanies = useMemo(() => {
     let array = companies;
 
     if (data?.company?.length) {
-      console.log("companies", companies);
       array = array?.filter((comp) =>
         comp.name.toLowerCase().includes(data.company.toLowerCase())
       );

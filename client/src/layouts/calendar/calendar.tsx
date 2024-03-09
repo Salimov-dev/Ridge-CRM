@@ -19,8 +19,13 @@ import useCalendar from "@hooks/calendar/use-calendar";
 import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
 // store
 import { getMonthIndexState } from "@store/month-index.store";
-import { getCurrentUserId, getIsUserCurator } from "@store/user/users.store";
+import {
+  getCurrentUserId,
+  getIsUserCurator,
+  getUsersList
+} from "@store/user/users.store";
 import { getObjectsList } from "@store/object/objects.store";
+import { getActualUsersList } from "@utils/actual-items/get-actual-users-list";
 
 const initialState = {
   task: "",
@@ -69,6 +74,7 @@ const Calendar = React.memo(() => {
     (obj) => obj?.userId === currentUserId
   );
   const actualObjects = isCurator ? currentUserObjects : objects;
+  const usersList = getActualUsersList(objects);
 
   const {
     sortedCurrentWeeklyMeetings,
@@ -138,6 +144,7 @@ const Calendar = React.memo(() => {
       <PageDialogs
         state={state}
         setState={setState}
+        users={usersList}
         objects={actualObjects}
         videoTitle="Как пользоваться страницей с Календарем"
         videoSrc="https://www.youtube.com/embed/zz_SjeT_-M4"

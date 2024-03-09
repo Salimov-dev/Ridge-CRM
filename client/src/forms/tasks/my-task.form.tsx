@@ -15,13 +15,13 @@ const MyTaskForm = ({
   errors = null,
   isCurator = false,
   isEditMode = false,
-  users = [],
+  users,
   isObjectPage = false
 }) => {
   const watchObjectId = watch("objectId");
   const watchIsDone = watch("isDone");
   const watchIsCallTask = watch("isCallTask");
-  const watchManagerId = watch("managerId", "");
+  const watchManagerId = watch("managerId");
 
   return (
     <Form noValidate>
@@ -74,8 +74,8 @@ const MyTaskForm = ({
           value={watchManagerId}
           setValue={setValue}
           watchItemId={watchManagerId}
-          disabled={!!watchManagerId}
-          optionLabel={(option) => `${option?.lastName} ${option?.firstName}`}
+          disabled={isObjectPage && !!watchManagerId}
+          optionLabel={(option) => `${option?.name}`}
         />
       )}
       <TextFieldStyled

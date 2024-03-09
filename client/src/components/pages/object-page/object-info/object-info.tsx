@@ -15,6 +15,7 @@ import {
   getIsUserCurator,
   getUsersList
 } from "@store/user/users.store";
+import { getActualUsersList } from "@utils/actual-items/get-actual-users-list";
 
 const Component = styled(Box)`
   display: flex;
@@ -40,6 +41,7 @@ const ObjectInfo = ({ object, objectId, isLoading }) => {
   });
 
   const objects = useSelector(getObjectsList());
+  const usersList = getActualUsersList(objects);
   const users = useSelector(getUsersList());
 
   const currentUserId = useSelector(getCurrentUserId());
@@ -74,7 +76,7 @@ const ObjectInfo = ({ object, objectId, isLoading }) => {
     <Component>
       <TabsStyled tabs={tabs} value={value} onChange={handleTabChange} />
       <PageDialogs
-        users={users}
+        users={usersList}
         state={state}
         setState={setState}
         objects={actualObjects}

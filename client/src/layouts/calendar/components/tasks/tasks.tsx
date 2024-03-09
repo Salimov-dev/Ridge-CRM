@@ -9,7 +9,7 @@ import TaskComment from "./components/task-comment";
 import Loader from "@components/common/loader/loader";
 import Result from "./components/result";
 // store
-import { getCurrentUserId, getUserNameById } from "@store/user/users.store";
+import { getCurrentUserId, getUsersList } from "@store/user/users.store";
 import { updateTask } from "@store/task/tasks.store";
 
 const Tasks = ({
@@ -18,16 +18,25 @@ const Tasks = ({
   draggableDay,
   setDraggableDay,
   isSelectedDayDialog,
-  setState,
+  setState
 }) => {
   const dispatch = useDispatch();
+  const users = useSelector(getUsersList());
   const currentUserId = useSelector(getCurrentUserId());
+
+  const getUserNameById = (id) => {
+    const user = users?.find((user) => user._id === id);
+    const isFullName = user?.lastName && user?.firstName;
+    const result = `${user?.lastName} ${user?.firstName}`;
+
+    return isFullName ? result : "Новенький";
+  };
 
   const handleDragEnd = (task) => {
     if (task?.date !== draggableDay) {
       const updatedTask = {
         ...task,
-        date: draggableDay,
+        date: draggableDay
       };
       dispatch<any>(updateTask(updatedTask)).then(() => {
         setDraggableDay(null);
@@ -68,7 +77,7 @@ const Tasks = ({
                   : taskIsCall
                   ? "DarkOliveGreen"
                   : "orange"
-                : "gray",
+                : "gray"
             }}
           >
             <Title task={task} setState={setState} />
@@ -79,14 +88,12 @@ const Tasks = ({
                 <Typography>
                   <b>Задачу поставил:</b>
                 </Typography>
-                <Typography>
-                  {useSelector(getUserNameById(task?.userId))}
-                </Typography>
+                <Typography>{getUserNameById(task?.userId)}</Typography>
               </Box>
             ) : null}
             {isCurator && task?.managerId?.length ? (
               <Typography>
-                <b>Менеджер:</b> {useSelector(getUserNameById(task?.managerId))}
+                <b>Менеджер:</b> {getUserNameById(task?.managerId)}
               </Typography>
             ) : null}
             <TaskObject task={task} setState={setState} />
