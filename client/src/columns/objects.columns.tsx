@@ -76,14 +76,16 @@ export const objectsColumns = (
     ),
     cell: ({ row }) => (
       <div className="px-1">
-        <IndeterminateCheckbox
-          {...{
-            checked: row.getIsSelected(),
-            disabled: !row.getCanSelect(),
-            indeterminate: row.getIsSomeSelected(),
-            onChange: row.getToggleSelectedHandler()
-          }}
-        />
+        <AlignCenter>
+          <IndeterminateCheckbox
+            {...{
+              checked: row.getIsSelected(),
+              disabled: !row.getCanSelect(),
+              indeterminate: row.getIsSomeSelected(),
+              onChange: row.getToggleSelectedHandler()
+            }}
+          />
+        </AlignCenter>
       </div>
     )
   };

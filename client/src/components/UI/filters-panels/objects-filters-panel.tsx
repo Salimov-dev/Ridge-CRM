@@ -27,6 +27,7 @@ const ObjectsFiltersPanel = React.memo(
     } = useObjectsFiltersPanel(objects);
 
     const usersList = getActualUsersList(objects);
+
     const statusesList = getActualStatusesList(objects, statuses);
 
     return (
@@ -42,7 +43,7 @@ const ObjectsFiltersPanel = React.memo(
           />
           <SearchField
             register={register}
-            label="Найти по телефону"
+            label="Найти по телефону из Контакта"
             name="phone"
             value={data.phone}
             inputProps={{ maxLength: 12 }}
@@ -50,7 +51,7 @@ const ObjectsFiltersPanel = React.memo(
           />
           <SearchField
             register={register}
-            label="Найти по имени"
+            label="Найти по имени из Контакта"
             name="name"
             value={data.name}
             inputProps={{ maxLength: 30 }}
@@ -58,7 +59,7 @@ const ObjectsFiltersPanel = React.memo(
           />
           <SearchField
             register={register}
-            label="Найти по описанию"
+            label="Найти по описанию из Объекта"
             name="fullDescription"
             value={data.fullDescription}
             inputProps={{ maxLength: 30 }}
@@ -66,9 +67,9 @@ const ObjectsFiltersPanel = React.memo(
           />
           <SearchField
             register={register}
-            label="Найти по кадастровому №"
-            name="cadastralNumber"
-            value={data.cadastralNumber}
+            label="Найти по названию Компании"
+            name="company"
+            value={data.company}
             inputProps={{ maxLength: 30 }}
             disabled={isLoading ? true : false}
           />
@@ -188,6 +189,14 @@ const ObjectsFiltersPanel = React.memo(
             label="Добавлены до"
             value={data.endDate}
             onChange={(value) => setValue("endDate", value)}
+            disabled={isLoading ? true : false}
+          />
+          <SearchField
+            register={register}
+            label="Найти по кадастровому №"
+            name="cadastralNumber"
+            value={data.cadastralNumber}
+            inputProps={{ maxLength: 30 }}
             disabled={isLoading ? true : false}
           />
           {isCurator ? (

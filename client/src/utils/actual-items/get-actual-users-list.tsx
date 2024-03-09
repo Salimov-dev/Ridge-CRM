@@ -12,10 +12,14 @@ export const getActualUsersList = (items) => {
 
   const actualUsersArray = uniqueUsers?.map((id) => {
     const foundObject = users?.find((user) => user._id === id);
+    const lastName = foundObject?.lastName;
+    const firstName = foundObject?.firstName;
     return foundObject
       ? {
           _id: foundObject._id,
-          name: `${foundObject.lastName} ${foundObject.firstName}`
+          name: `${lastName ? lastName : "Без"} ${
+            firstName ? firstName : "имени"
+          }`
         }
       : null;
   });

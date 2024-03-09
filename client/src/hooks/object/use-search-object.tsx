@@ -1,16 +1,21 @@
 import "dayjs/locale/ru";
 import dayjs from "dayjs";
 import { useMemo } from "react";
-import { useSelector } from "react-redux";
-import { getMeetingsList } from "../../store/meeting/meetings.store";
-import { getTasksList } from "../../store/task/tasks.store";
-import { getLastContactsList } from "../../store/last-contact/last-contact.store";
 import { orderBy } from "lodash";
+import { useSelector } from "react-redux";
+// store
+import { getMeetingsList } from "@store/meeting/meetings.store";
+import { getTasksList } from "@store/task/tasks.store";
+import { getLastContactsList } from "@store/last-contact/last-contact.store";
+import { getContactsList } from "@store/contact/contact.store";
+import { getCompaniesList } from "@store/company/company.store";
 
 const useSearchObject = (objects, data) => {
   const meetings = useSelector(getMeetingsList());
   const tasks = useSelector(getTasksList());
   const lastContacts = useSelector(getLastContactsList());
+  const contacts = useSelector(getContactsList());
+  const companies = useSelector(getCompaniesList());
 
   const hasMeetings = (objectId) => {
     const objectsWithMeetings = meetings.filter(
@@ -42,29 +47,84 @@ const useSearchObject = (objects, data) => {
   const searchedObjects = useMemo(() => {
     let array = objects;
 
-    // object contacts
-    if (data?.phone?.length) {
-      array = array?.filter((obj) => String(obj.phone).includes(data?.phone));
-    }
-
-    if (data?.name?.length) {
-      array = array?.filter((obj) =>
-        obj?.toLowerCase().includes(data?.toLowerCase())
-      );
-    }
-
+    // выбор по адресу
     if (data?.address?.length) {
       array = array?.filter((obj) =>
-        obj.address.toLowerCase().includes(data.toLowerCase())
+        obj?.address?.toLowerCase()?.includes(data?.address.toLowerCase())
       );
     }
 
+    // выбор по телефону
+    if (data?.phone?.length) {
+      const findedContacts = contacts?.filter((cont) => {
+        const findedPhones = cont.phones?.filter((phone) =>
+          phone?.phone.includes(String(data?.phone))
+        );
+        // Возвращаем true, если есть совпадения
+        return findedPhones.length > 0;
+      });
+
+      // Получаем массив идентификаторов контактов
+      const contactIds = findedContacts?.map((cont) => cont._id);
+
+      // Возвращаем только те объекты из array, у которых в contacts есть id контактов из contactIds
+      const result = array?.filter((obj) =>
+        obj.contacts.some((contact) => contactIds?.includes(contact.contact))
+      );
+
+      return result;
+    }
+
+    // выбор по компании
+    if (data?.company?.length) {
+      const findedCompanies = companies?.filter((comp) => {
+        const findedNames = comp.name
+          ?.toLowerCase()
+          .includes(data?.company.toLowerCase());
+        // Возвращаем true, если есть совпадения
+        return findedNames; // Возвращаем булево значение, а не длину массива
+      });
+
+      // Получаем массив идентификаторов контактов
+      const companyIds = findedCompanies?.map((comp) => comp._id);
+
+      // Возвращаем только те объекты из array, у которых в companies есть id контактов из contactIds
+      const result = array?.filter((obj) =>
+        obj.companies.some((company) => companyIds?.includes(company.company))
+      );
+
+      return result;
+    }
+
+    // выбор по имени
+    if (data?.name?.length) {
+      const findedContacts = contacts?.filter((cont) => {
+        const findedNames = cont.name
+          ?.toLowerCase()
+          .includes(data?.name.toLowerCase());
+        // Возвращаем true, если есть совпадения
+        return findedNames; // Возвращаем булево значение, а не длину массива
+      });
+
+      // Получаем массив идентификаторов контактов
+      const contactIds = findedContacts?.map((cont) => cont._id);
+
+      // Возвращаем только те объекты из array, у которых в contacts есть id контактов из contactIds
+      const result = array?.filter((obj) =>
+        obj.contacts.some((contact) => contactIds?.includes(contact.contact))
+      );
+
+      return result;
+    }
+
+    // выбор по кадастровому
     if (data?.cadastralNumber?.length) {
       array = array?.filter((obj) =>
         obj.cadastralNumber.includes(data.cadastralNumber)
       );
     }
 
+    // выбор по описанию
     if (data?.fullDescription?.length) {
       const searchTerm = data.fullDescription.toLowerCase();
       array = array?.filter((obj) =>
@@ -78,14 +138,19 @@ const useSearchObject = (objects, data) => {
         data.selectedStatuses.includes(obj.status)
       );
     }
+
+    // выбор по станции метро
     if (data.selectedMetro?.length) {
       array = array?.filter((obj) =>
         data.selectedMetro.includes(obj.location.metro)
       );
     }
+
+    // выбор по менеджеру
     if (data.selectedUsers?.length) {
       array = array?.filter((obj) => data.selectedUsers?.includes(obj?.userId));
     }
+
     // Текущий арендатор
     if (data.selectedCurrentRenters?.length) {
       array = array?.filter((obj) =>
@@ -149,7 +214,7 @@ const useSearchObject = (objects, data) => {
       array = array?.filter((obj) => data.selectedCities?.includes(obj.city));
     }
 
-    // objects data and time pickers
+    // выбор по времени добавления
     if (data.startDate && data.endDate) {
       const startDate = dayjs(data.startDate);
       const endDate = dayjs(data.endDate).endOf("day");

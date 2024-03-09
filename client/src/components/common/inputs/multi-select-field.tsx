@@ -6,7 +6,7 @@ import {
   MenuItem,
   Checkbox,
   OutlinedInput,
-  ListItemText,
+  ListItemText
 } from "@mui/material";
 
 const ITEM_HEIGHT = 48;
@@ -15,17 +15,17 @@ const MenuProps = {
   PaperProps: {
     style: {
       maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250,
-    },
-  },
+      width: 250
+    }
+  }
 };
 
 const StyledSelect = styled(Select)(() => ({
   "&.Mui-focused": {
     "& .MuiOutlinedInput-notchedOutline": {
-      borderColor: "green",
-    },
-  },
+      borderColor: "green"
+    }
+  }
 }));
 
 const MultiSelectField = ({
@@ -37,7 +37,7 @@ const MultiSelectField = ({
   label,
   disabled = false,
   isItemValueId = true,
-  minWidth="100px"
+  minWidth = "100px"
 }) => {
   function checkArrayElements(arr) {
     for (const element of arr) {
@@ -57,8 +57,8 @@ const MultiSelectField = ({
         sx={{
           color: "gray !important",
           "&.Mui-focused": {
-            color: "white !important",
-          },
+            color: "white !important"
+          }
         }}
       >
         {label}
@@ -76,7 +76,9 @@ const MultiSelectField = ({
         renderValue={(selected) => {
           const uniqueSelected = [...new Set(selected)];
           const selectedItemsNames = uniqueSelected?.map((elementID) => {
-            const item = itemsList?.find((item) => (isItemValueId ? item?._id : item?.name) === elementID);
+            const item = itemsList?.find(
+              (item) => (isItemValueId ? item?._id : item?.name) === elementID
+            );
             return item ? item?.name : "";
           });
           return itemsWithId
@@ -86,23 +88,30 @@ const MultiSelectField = ({
         MenuProps={MenuProps}
         sx={{
           "& .MuiOutlinedInput-notchedOutline": {
-            borderColor: selectedItems?.length ? "green" : "gray",
+            borderColor: selectedItems?.length ? "green" : "gray"
           },
           "& .MuiInputLabel-root": {
-            color: selectedItems?.length ? "white" : "gray",
-          },
+            color: selectedItems?.length ? "white" : "gray"
+          }
         }}
       >
         {itemsList?.map((item, index) =>
           itemsWithId ? (
-            <MenuItem key={`item-${item?._id}`} value={isItemValueId ? item?._id : item?.name}>
+            <MenuItem
+              key={`item-${item?._id}`}
+              value={isItemValueId ? item?._id : item?.name}
+            >
               <Checkbox
-                key={`checkbox-${item?._id}`} 
-                checked={selectedItems?.indexOf(isItemValueId ? item?._id : item?.name) > -1}
+                key={`checkbox-${item?._id}`}
+                checked={
+                  selectedItems?.indexOf(
+                    isItemValueId ? item?._id : item?.name
+                  ) > -1
+                }
                 sx={{ color: "white !important" }}
               />
               <ListItemText
-                key={`text-${item?._id}`} 
+                key={`text-${item?._id}`}
                 primary={<span>{item?.name}</span>}
               />
             </MenuItem>

@@ -9,7 +9,7 @@ import { pluralizeDays } from "@utils/date/pluralize-days";
 import { makeDigitSeparator } from "@utils/data/make-digit-separator";
 // store
 import { getUserLicensesByUserId } from "@store/user/user-license.store";
-import { getCurrentUserId } from "@store/user/users.store";
+import { getCurrentUserId, getIsUserCurator } from "@store/user/users.store";
 
 const Component = styled(Box)`
   width: 400px;
@@ -34,6 +34,7 @@ const TopBarCurrentDate = () => {
   ).replace(/\.$/, "");
 
   const currentUserId = useSelector(getCurrentUserId());
+  const isCurator = useSelector(getIsUserCurator(currentUserId));
   const userLicense = useSelector(getUserLicensesByUserId(currentUserId));
   const dateEnd = dayjs(userLicense?.dateEnd);
   const daysDifference = dateEnd?.diff(dayjs(), "day") + 1;
@@ -51,28 +52,32 @@ const TopBarCurrentDate = () => {
       >
         <Element variant="h5">{formattedDate} </Element>
       </Tooltip>
-      <Typography color="grey">|</Typography>
-      <Tooltip
-        title="Баланса хватит на"
-        placement="top-start"
-        arrow
-        onClick={() => navigate("/users")}
-      >
-        <Element variant="h5">
-          {daysDifference} {pluralizeDays(daysDifference)}{" "}
-        </Element>
-      </Tooltip>
-      <Typography color="grey">|</Typography>
-      <Tooltip
-        title="Текущий баланс"
-        placement="top-start"
-        arrow
-        onClick={() => navigate("/users")}
-      >
-        <Element variant="h5">
-          {!isDemoLicense ? `${licenseBalance}₽` : "демо"}
-        </Element>
-      </Tooltip>
+      {isCurator ? (
+        <>
+          <Typography color="grey">|</Typography>
+          <Tooltip
+            title="Баланса хватит на"
+            placement="top-start"
+            arrow
+            onClick={() => navigate("/users")}
+          >
+            <Element variant="h5">
+              {daysDifference} {pluralizeDays(daysDifference)}{" "}
+            </Element>
+          </Tooltip>
+          <Typography color="grey">|</Typography>
+          <Tooltip
+            title="Текущий баланс"
+            placement="top-start"
+            arrow
+            onClick={() => navigate("/users")}
+          >
+            <Element variant="h5">
+              {!isDemoLicense ? `${licenseBalance}₽` : "демо"}
+            </Element>
+          </Tooltip>
+        </>
+      ) : null}
     </Component>
   );
 };

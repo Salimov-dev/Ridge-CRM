@@ -37,6 +37,7 @@ const initialState = {
   address: "",
   phone: "",
   name: "",
+  company: "",
   cadastralNumber: "",
   fullDescription: "",
   objectActivity: "",
@@ -99,6 +100,7 @@ const Objects = React.memo(() => {
     useSelector(getIsLoggedIn()) && useSelector(getUsersLoadingStatus());
 
   const isCurator = useSelector(getIsUserCurator(currentUserId));
+  const isHideCheckbox = isCurator ? false : true;
 
   const objects = useSelector(getObjectsList());
 
@@ -199,7 +201,8 @@ const Objects = React.memo(() => {
           handleOpenObjectPage,
           isCurator,
           handleOpenContactPage,
-          handleOpenUpdateCompanyPage
+          handleOpenUpdateCompanyPage,
+          isHideCheckbox
         )}
         isLoading={isUsersLoading}
       />
