@@ -14,20 +14,23 @@ import BasicTable from "@components/common/table/basic-table";
 import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
 // columns
 import { contactsColumns } from "@columns/contacts.columns";
+// hooks
+import useSearchContact from "@hooks/contact/use-search-contact";
 // store
-import { getObjectsList } from "@store/object/objects.store";
 import { getCurrentUserId, getIsUserCurator } from "@store/user/users.store";
 import { getContactsList } from "@store/contact/contact.store";
 import { getLastContactsLoadingStatus } from "@store/last-contact/last-contact.store";
-import useSearchContact from "@hooks/contact/use-search-contact";
+import { getWorkingPositionsList } from "@store/user-params/working-position.store";
 
 const initialState = {
-  objectAddress: "",
-  curatorComment: "",
-  selectedStatuses: [],
-  selectedUsers: [],
+  name: "",
+  address: "",
+  phone: "",
+  company: "",
+  email: "",
   startDate: null,
   endDate: null,
+  selectedPositions: [],
   videoPlayerPage: false
 };
 
@@ -61,9 +64,10 @@ const Contacts = React.memo(() => {
   });
 
   const data = watch();
-  const objects = useSelector(getObjectsList());
+
   const currentUserId = useSelector(getCurrentUserId());
   const contactsList = useSelector(getContactsList());
+  const contactsPositions = useSelector(getWorkingPositionsList());
 
   const isLoading = useSelector(getLastContactsLoadingStatus());
 
@@ -72,6 +76,7 @@ const Contacts = React.memo(() => {
   const isHideCheckbox = false;
 
   const searchedContacts = useSearchContact(contactsList, data);
+
   const sortedContacts = useMemo(() => {
     return orderBy(searchedContacts, ["created_at"], ["desc"]);
   }, [searchedContacts]);
@@ -111,15 +116,15 @@ const Contacts = React.memo(() => {
       />
       <ContactsFiltersPanel
         data={data}
-        // contacts={contactsList}
-        // statuses={contactsStatuses}
+        contacts={contactsList}
+        positions={contactsPositions}
         register={register}
         setValue={setValue}
-        // isCurator={isCurator}
-        // isLoading={isLoading}
+        isCurator={isCurator}
+        isLoading={isLoading}
       />
       <BasicTable
-        items={contactsList}
+        items={sortedContacts}
         itemsColumns={contactsColumns(
           handleOpenContactPage,
           isCurator,

@@ -27,7 +27,8 @@ const MeetingsFiltersPanel = React.memo(
     const statusesList = getActualStatusesList(meetings, statuses);
 
     const getActualTypesList = () => {
-      const filteredTypes = meetings?.map((meet) => meet?.meetingType);
+      const filteredTypes = meetings?.map((meet) => meet?.type);
+
       const formatedTypesArray = filteredTypes?.filter((type) => type !== "");
       const uniqueTypes = [...new Set(formatedTypesArray)];
 

@@ -6,7 +6,10 @@ const useSearchDeals = (deals, data) => {
     let array = deals;
 
     if (data.selectedUsers?.length) {
-      array = array?.filter((obj) => data.selectedUsers.includes(obj.userId));
+      const res = array?.filter((obj) =>
+        data.selectedUsers?.includes(obj?.userId)
+      );
+      return res;
     }
 
     return array;

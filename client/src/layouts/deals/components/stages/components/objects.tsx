@@ -75,10 +75,8 @@ const Objects = ({
       {objects?.map((obj) => {
         const isDeal = obj?.status === stage?.objectStatusId;
         const user = users?.find((user) => user?._id === obj?.userId);
-        const { avatarSrc, isLoading } = useGetUserAvatar(user?._id);
-        const getAvatarSrc = () => {
-          return isLoading ? null : avatarSrc;
-        };
+        const { getAvatarSrc, isLoading } = useGetUserAvatar(user?._id);
+
         const isAuthorEntity = useSelector(
           getIsUserAuthorThisEntity(currentUserId, obj)
         );

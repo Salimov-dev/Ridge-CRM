@@ -70,7 +70,7 @@ const Deals = React.memo(() => {
   return (
     <Box>
       <HeaderLayout title="Сделки" />
-      {isCurator && (
+      {/* {isCurator && (
         <DealsFiltersPanel
           data={data}
           deals={objectsInDeals}
@@ -81,7 +81,7 @@ const Deals = React.memo(() => {
           isInputEmpty={isInputEmpty}
           isLoading={isLoading}
         />
-      )}
+      )} */}
       <Stages
         objects={searchedDeals}
         setState={setState}

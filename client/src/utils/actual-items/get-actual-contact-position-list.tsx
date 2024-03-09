@@ -1,7 +1,8 @@
 import { orderBy } from "lodash";
 
-export const getActualContactPositionList = (items, contactPosition) => {
+export const getActualContactPositionList = (items, positions) => {
   const filteredContactPosition = items?.map((item) => item?.position);
+
   const formatedContactPositionArray = filteredContactPosition?.filter(
     (position) => position !== ""
   );
@@ -9,9 +10,7 @@ export const getActualContactPositionList = (items, contactPosition) => {
   const uniqueContactPosition = [...new Set(formatedContactPositionArray)];
 
   const actualContactPositionArray = uniqueContactPosition?.map((id) => {
-    const foundPosition = contactPosition?.find(
-      (position) => position._id === id
-    );
+    const foundPosition = positions?.find((position) => position._id === id);
     return foundPosition
       ? {
           _id: foundPosition._id,

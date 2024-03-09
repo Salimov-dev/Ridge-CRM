@@ -9,7 +9,7 @@ const useGetUserAvatar = (userId) => {
 
   const usersArray = Array.isArray(userAvatarsList) ? userAvatarsList : [];
 
-  const user = usersArray.find((user) => user.userId === userId);
+  const user = usersArray?.find((user) => user.userId === userId);
   const userSrc = user?.src;
 
   const getUserAvatar = () => {

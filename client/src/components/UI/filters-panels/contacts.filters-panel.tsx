@@ -1,4 +1,3 @@
-import { useSelector } from "react-redux";
 import React from "react";
 // components
 import SearchField from "@common/inputs/search-field";
@@ -7,17 +6,12 @@ import SearchDatePicker from "@components/common/inputs/search-date-picker";
 import MultiSelectField from "@components/common/inputs/multi-select-field";
 // utils
 import { getActualContactPositionList } from "@utils/actual-items/get-actual-contact-position-list";
-// store
-import { getContactPositionsList } from "@store/contact/contact-positions.store";
-import { getContactsList } from "@store/contact/contact.store";
 
 const ContactsFiltersPanel = React.memo(
-  ({ data, register, setValue, isLoading }) => {
-    const contacts = useSelector(getContactsList());
-    const contactPositions = useSelector(getContactPositionsList());
+  ({ data, contacts, positions, register, setValue, isLoading }) => {
     const actualContactPositions = getActualContactPositionList(
       contacts,
-      contactPositions
+      positions
     );
 
     return (
@@ -25,33 +19,41 @@ const ContactsFiltersPanel = React.memo(
         <FieldsContainer>
           <SearchField
             register={register}
-            label="Найти по адресу объекта"
-            name="result"
-            value={data.result}
-            inputProps={{ maxLength: 30 }}
-            disabled={isLoading ? true : false}
-          />
-          <SearchField
-            register={register}
-            label="Найти по компании"
-            name="task"
-            value={data.task}
-            inputProps={{ maxLength: 30 }}
-            disabled={isLoading ? true : false}
-          />
-          <SearchField
-            register={register}
-            label="Найти по почте"
-            name="result"
-            value={data.result}
+            label="Найти по имени"
+            name="name"
+            value={data.name}
             inputProps={{ maxLength: 30 }}
             disabled={isLoading ? true : false}
           />
           <SearchField
             register={register}
             label="Найти по телефону"
-            name="result"
-            value={data.result}
+            name="phone"
+            value={data.phone}
+            inputProps={{ maxLength: 30 }}
+            disabled={isLoading ? true : false}
+          />
+          <SearchField
+            register={register}
+            label="Найти по почте"
+            name="email"
+            value={data.email}
+            inputProps={{ maxLength: 30 }}
+            disabled={isLoading ? true : false}
+          />
+          <SearchField
+            register={register}
+            label="Найти по адресу объекта"
+            name="address"
+            value={data.address}
+            inputProps={{ maxLength: 30 }}
+            disabled={isLoading ? true : false}
+          />
+          <SearchField
+            register={register}
+            label="Найти по названию Компании"
+            name="company"
+            value={data.company}
             inputProps={{ maxLength: 30 }}
             disabled={isLoading ? true : false}
           />
@@ -78,8 +80,8 @@ const ContactsFiltersPanel = React.memo(
             labelId="users-label"
             label="Выбор по позиции"
             itemsList={actualContactPositions}
-            // selectedItems={data.selectedUsers}
-            // onChange={(e) => setValue("selectedUsers", e.target.value)}
+            selectedItems={data.selectedPositions}
+            onChange={(e) => setValue("selectedPositions", e.target.value)}
             disabled={isLoading ? true : false}
           />
         </FieldsContainer>

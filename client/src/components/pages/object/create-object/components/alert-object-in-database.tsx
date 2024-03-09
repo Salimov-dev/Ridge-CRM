@@ -11,7 +11,7 @@ const AlertObjectInDatabase = () => {
   return (
     <Component>
       <Typography variant="h4">
-        ВНИМАНИЕ! Объект с таким адресом уже есть в базе!
+        ВНИМАНИЕ! Объект с таким адресом уже есть в Вашем списке объектов!
       </Typography>
     </Component>
   );

@@ -1,11 +1,10 @@
+import React from "react";
 // components
 import SearchField from "@common/inputs/search-field";
-import MultiSelectField from "@common/inputs/multi-select-field";
 import { FieldsContainer, Form } from "@components/common/forms/styled";
 import SearchSelectField from "@common/inputs/search-select-field";
 // data
 import { gendersArray } from "@data/genders";
-import React from "react";
 
 const UsersFiltersPanel = React.memo(
   ({ register, data, users, statuses, setValue, isLoading }) => {
