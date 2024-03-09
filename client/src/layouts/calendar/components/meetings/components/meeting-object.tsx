@@ -3,9 +3,10 @@ import { Box, Typography } from "@mui/material";
 // components
 import DividerStyled from "@components/common/divider/divider-styled";
 import OpenPageElementIconButton from "@components/common/buttons/icons buttons/open-page-element.button-icon";
+// hooks
+import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
 // store
 import { getObjectAddressById } from "@store/object/objects.store";
-import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
 
 const MeetingObject = ({ meet, setState }) => {
   const meetingObjectId = meet?.objectId;
@@ -22,6 +23,9 @@ const MeetingObject = ({ meet, setState }) => {
       >
         <Typography>{objectAddress}</Typography>
         <OpenPageElementIconButton
+          color="Gainsboro"
+          colorHover="white"
+          width="20px"
           onClick={() => handleOpenObjectPage(meetingObjectId)}
         />
       </Box>

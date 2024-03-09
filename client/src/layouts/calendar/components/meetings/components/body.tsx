@@ -24,8 +24,7 @@ const Body = ({ meet, isCurator, isSelectedDayDialog, setState }) => {
       ) : null}
       {isCurator ? (
         <Typography>
-          <b>Менеджер:</b> {useSelector (getUserNameById(meet?.userId))}
-          {/* <b>Менеджер:</b> {getUserName(meet?.userId)} */}
+          <b>Менеджер:</b> {useSelector(getUserNameById(meet?.userId))}
         </Typography>
       ) : null}
       <MeetingObject meet={meet} setState={setState} />

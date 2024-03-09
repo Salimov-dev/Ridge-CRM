@@ -26,8 +26,6 @@ const Component = styled(Box)`
   gap: 4px;
   margin-bottom: 14px;
   overflow-y: scroll;
-  padding-right: 4px;
-  margin-right: -8px;
 `;
 
 const ObjectContainer = styled(Paper)`

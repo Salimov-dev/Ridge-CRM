@@ -32,7 +32,7 @@ export const tasksColumns = (
   let columns = [];
 
   const dateColumn = {
-    header: "Дата и время",
+    header: "Дата и время выполнения задачи",
     columns: [
       {
         accessorKey: "isDone",
@@ -195,7 +195,13 @@ export const tasksColumns = (
           const date = info.getValue();
           return <AlignCenter>{FormatDate(date)}</AlignCenter>;
         }
-      },
+      }
+    ]
+  };
+
+  const updateColumn = {
+    header: "Задача",
+    columns: [
       {
         accessorFn: (row) => row,
         header: "Править",
@@ -247,6 +253,8 @@ export const tasksColumns = (
   if (!isDialogPage) {
     columns.splice(1, 0, taskObjectColumn);
   }
+
+  columns.push(updateColumn);
 
   return columns;
 };

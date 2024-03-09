@@ -21,6 +21,9 @@ const TaskObject = ({ task, setState }) => {
       >
         <Typography>{objectAddress}</Typography>
         <OpenPageElementIconButton
+          color="Gainsboro"
+          colorHover="white"
+          width="20px"
           onClick={() => handleOpenObjectPage(taskObjectId)}
         />
       </Box>

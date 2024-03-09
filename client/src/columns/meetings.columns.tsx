@@ -7,9 +7,12 @@ import DoneStatusIcon from "@components/common/columns/done-status-icon";
 import { AlignCenter } from "@components/common/columns/styled";
 import ButtonStyled from "@components/common/buttons/button-styled.button";
 import OpenPageElementIconButton from "@components/common/buttons/icons buttons/open-page-element.button-icon";
+import UserNameWithAvatar from "@components/common/user/user-name-with-avatar";
 // utils
 import { FormatDate } from "@utils/date/format-date";
 import { FormatTime } from "@utils/date/format-time";
+// hooks
+import useGetUserAvatar from "@hooks/user/use-get-user-avatar";
 // store
 import { getObjectById } from "@store/object/objects.store";
 import { getMeetingStatusNameById } from "@store/meeting/meeting-status.store";
@@ -20,8 +23,6 @@ import {
   getIsUserAuthorThisEntity,
   getUserDataById
 } from "@store/user/users.store";
-import useGetUserAvatar from "@hooks/user/use-get-user-avatar";
-import UserNameWithAvatar from "@components/common/user/user-name-with-avatar";
 
 export const meetingsColumns = (
   handleOpenUpdateMeetingPage,
@@ -153,7 +154,7 @@ export const meetingsColumns = (
   };
 
   const otherColumns = {
-    header: "Задача",
+    header: "Встреча",
     columns: [
       {
         accessorKey: "type",

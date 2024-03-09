@@ -1,11 +1,15 @@
 import { Box, styled } from "@mui/material";
 import { useSelector } from "react-redux";
-import ControlPointOutlinedIcon from "@mui/icons-material/ControlPointOutlined";
-import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import { useTheme } from "@emotion/react";
 import { tokens } from "@theme/theme";
-import CalendarActionIcon from "../../../../../components/common/calendar/calendar-body/components/month/calendar-action-icon";
+// icons
+import ControlPointOutlinedIcon from "@mui/icons-material/ControlPointOutlined";
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
+// components
+import CalendarActionIcon from "@components/common/calendar/calendar-body/components/month/calendar-action-icon";
+// hooks
 import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
+// store
 import { getCurrentUserId, getIsUserCurator } from "@store/user/users.store";
 
 const ActionsContainer = styled(Box)`
@@ -24,7 +28,7 @@ const ActionsIcons = ({ day, setState, isCurrentDay, isFutureDay }) => {
   const {
     handleOpenCreateManagerTaskPage,
     handleOpenCreateMyTaskPage,
-    handleOpenCreateMeetingPage,
+    handleOpenCreateMeetingPage
   } = useDialogHandlers(setState);
 
   return (

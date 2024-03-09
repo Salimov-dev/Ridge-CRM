@@ -5,5 +5,6 @@ export const createUserSchema = yup.object().shape({
     .string()
     .email("Введите email корректно")
     .required("Почта обязательна для заполнения"),
-  role: yup.string().required("Выберите роль")
+  role: yup.string().required("Выберите роль"),
+  color: yup.string().required("ОБЯЗАТЕЛЬНО ВЫБЕРИТЕ ЦВЕТ")
 });
