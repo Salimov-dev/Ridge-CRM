@@ -12,6 +12,7 @@ import LoaderFullWindow from "@components/common/loader/loader-full-window";
 import HeaderWithCloseButton from "@components/common/page-headers/header-with-close-button";
 import DialogConfirm from "@components/common/dialog/dialog-confirm";
 import UserEntityAuthor from "@components/common/user/user-entity-author";
+import PageDialogs from "@components/common/dialog/page-dialogs";
 // forms
 import ContactForm from "@forms/contact/contact.form";
 // schema
@@ -24,6 +25,13 @@ import {
 } from "@store/contact/contact.store";
 
 const UpdateContact = React.memo(({ contactId, onClose }) => {
+  const [state, setState] = useState({
+    objectPage: false,
+    createPage: false,
+    updatePage: false,
+    createCompanyPage: false
+  });
+
   const dispatch = useDispatch();
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -106,6 +114,7 @@ const UpdateContact = React.memo(({ contactId, onClose }) => {
         register={register}
         errors={errors}
         setValue={setValue}
+        setState={setState}
       />
       <UserEntityAuthor title="Контакт создал" userId={contact?.userId} />
       <SuccessCancelFormButtons
@@ -119,6 +128,7 @@ const UpdateContact = React.memo(({ contactId, onClose }) => {
         size={75}
         isLoading={isLoading}
       />
+      <PageDialogs state={state} setState={setState} />
       <DialogConfirm
         question="Вы уверены, что хотите удалить безвозвратно?"
         open={open}

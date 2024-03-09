@@ -21,6 +21,7 @@ import {
   removeCompany,
   updateCompany
 } from "@store/company/company.store";
+import PageDialogs from "@components/common/dialog/page-dialogs";
 
 const UpdateCompany = React.memo(({ companyId, onClose }) => {
   const dispatch = useDispatch();
@@ -29,6 +30,13 @@ const UpdateCompany = React.memo(({ companyId, onClose }) => {
 
   const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [state, setState] = useState({
+    objectPage: false,
+    createPage: false,
+    updatePage: false,
+    createCompanyPage: false,
+    contactId: null
+  });
 
   const company = useSelector(getCompanyById(companyId));
 
@@ -105,6 +113,7 @@ const UpdateCompany = React.memo(({ companyId, onClose }) => {
         errors={errors}
         register={register}
         setValue={setValue}
+        setState={setState}
       />
       <SuccessCancelFormButtons
         onSuccess={handleSubmit(onSubmit)}
@@ -123,6 +132,7 @@ const UpdateCompany = React.memo(({ companyId, onClose }) => {
         onClose={handleClose}
         onSuccessClick={() => handleRemoveContact(companyId)}
       />
+      <PageDialogs state={state} setState={setState} />
     </>
   );
 });

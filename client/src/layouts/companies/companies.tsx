@@ -89,7 +89,9 @@ const Companies = React.memo(() => {
   const {
     handleOpenCreateCompanyPage,
     handleOpenUpdateCompanyPage,
-    handleOpenVideoPlayerPage
+    handleOpenVideoPlayerPage,
+    handleOpenObjectPage,
+    handleOpenContactPage
   } = useDialogHandlers(setState);
 
   const companiesList = useSelector(getCompaniesList());
@@ -152,9 +154,9 @@ const Companies = React.memo(() => {
           handleOpenUpdateCompanyPage,
           isCurator,
           isHideCheckbox,
-          () => {},
+          handleOpenObjectPage,
           {},
-          () => {}
+          handleOpenContactPage
         )}
         isLoading={isLoading}
         rowSelection={rowSelection}

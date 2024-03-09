@@ -11,11 +11,11 @@ import { FormatDate } from "@utils/date/format-date";
 import useGetUserAvatar from "@hooks/user/use-get-user-avatar";
 import ButtonStyled from "@components/common/buttons/button-styled.button";
 import { useSelector } from "react-redux";
-import { getCurrentUserData } from "@store/user/users.store";
 import { getObjectsList } from "@store/object/objects.store";
 import { getContactsList } from "@store/contact/contact.store";
 import { getCompaniesList } from "@store/company/company.store";
 import { getPresentationsList } from "@store/presentation/presentations.store";
+import { getUserStatusNameById } from "@store/user-params/user-statuses.store";
 
 export const usersColumns = (onOpenUpdateUserPage) => [
   {
@@ -190,6 +190,18 @@ export const usersColumns = (onOpenUpdateUserPage) => [
     header: "Пользователь",
     columns: [
       {
+        accessorKey: "status",
+        header: "Статус",
+        cell: (info) => {
+          const status = info.getValue();
+          return (
+            <AlignCenter>
+              {useSelector(getUserStatusNameById(status))}
+            </AlignCenter>
+          );
+        }
+      },
+      {
         accessorFn: (row) => row,
         header: "Открыть",
         maxWidth: 70,
@@ -201,13 +213,6 @@ export const usersColumns = (onOpenUpdateUserPage) => [
 
           const userRoleManager = "69gfoep3944jgjdso345002";
           const isRoleManager = row?.role.includes(userRoleManager);
-
-          // const lastContactId = info.getValue();
-          // const lastContact = useSelector(getLastContactsById(lastContactId));
-          // const currentUserId = useSelector(getCurrentUserId());
-          // const isAuthorEntity = useSelector(
-          //   getIsUserAuthorThisEntity(currentUserId, lastContact)
-          // );
 
           return (
             <AlignCenter>

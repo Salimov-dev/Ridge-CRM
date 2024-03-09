@@ -75,12 +75,13 @@ const Contacts = React.memo(() => {
   const sortedContacts = useMemo(() => {
     return orderBy(searchedContacts, ["created_at"], ["desc"]);
   }, [searchedContacts]);
-  console.log("sortedContacts", sortedContacts);
 
   const {
     handleOpenCreateContactPage,
     handleOpenContactPage,
-    handleOpenVideoPlayerPage
+    handleOpenVideoPlayerPage,
+    handleOpenUpdateCompanyPage,
+    handleOpenObjectPage
   } = useDialogHandlers(setState);
 
   useEffect(() => {
@@ -123,9 +124,9 @@ const Contacts = React.memo(() => {
           handleOpenContactPage,
           isCurator,
           isHideCheckbox,
-          () => {},
+          handleOpenUpdateCompanyPage,
           {},
-          () => {}
+          handleOpenObjectPage
         )}
         isLoading={isLoading}
         rowSelection={rowSelection}

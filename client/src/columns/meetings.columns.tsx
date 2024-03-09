@@ -212,7 +212,7 @@ export const meetingsColumns = (
   };
 
   const updateColumn = {
-    header: "Править",
+    header: "Встреча",
     columns: [
       {
         accessorKey: "_id",

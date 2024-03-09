@@ -185,30 +185,27 @@ export const contactsColumns = (
     }
   ];
 
-  const managerColumn = {
-    header: "Менеджер",
-    columns: [
-      {
-        accessorKey: "userId",
-        header: "Фамилия и Имя",
-        cell: (info) => {
-          const userId = info.getValue();
-          const user = useSelector(getUserDataById(userId));
-          const { getAvatarSrc, isLoading } = useGetUserAvatar(user?._id);
+  const managerColumn = [
+    {
+      accessorKey: "userId",
+      header: "Менеджер",
+      cell: (info) => {
+        const userId = info.getValue();
+        const user = useSelector(getUserDataById(userId));
+        const { getAvatarSrc, isLoading } = useGetUserAvatar(user?._id);
 
-          return (
-            <AlignCenter>
-              <UserNameWithAvatar
-                userId={userId}
-                avatarSrc={getAvatarSrc()}
-                isLoading={isLoading}
-              />
-            </AlignCenter>
-          );
-        }
+        return (
+          <AlignCenter>
+            <UserNameWithAvatar
+              userId={userId}
+              avatarSrc={getAvatarSrc()}
+              isLoading={isLoading}
+            />
+          </AlignCenter>
+        );
       }
-    ]
-  };
+    }
+  ];
 
   const openContactColumn = {
     accessorKey: "_id",
@@ -236,7 +233,7 @@ export const contactsColumns = (
       ...contactsColumn,
       positionColumn,
       objectsColumn,
-      managerColumn,
+      ...managerColumn,
       commentColumn,
       openContactColumn
     ];
