@@ -8,13 +8,14 @@ import { getCurrentWeekObjects } from "@utils/objects/get-current-week-objects";
 import { getCurrentWeekPresentations } from "@utils/presentations/get-current-week-presentations";
 import { getCurrentWeekMeetings } from "@utils/meetings/get-current-week-meetings";
 import { getCurrentWeekTasks } from "@utils/tasks/get-current-week-tasks";
-import { getCurrentWeekObjectsWithPhone } from "@utils/objects/get-current-week-objects-wtih-phone";
 // store
 import { getObjectsLoadingStatus } from "@store/object/objects.store";
 import { getPresentationsLoadingStatus } from "@store/presentation/presentations.store";
 import { getMeetingLoadingStatus } from "@store/meeting/meetings.store";
 import { getTaskLoadingStatus } from "@store/task/tasks.store";
 import { getCurrentUserId, getIsUserCurator } from "@store/user/users.store";
+import { getContactsList } from "@store/contact/contact.store";
+import { getCurrentWeekContacts } from "@utils/contacts/get-current-week-contacts";
 
 const ResultComponent = styled(Box)`
   display: flex;
@@ -23,7 +24,6 @@ const ResultComponent = styled(Box)`
   gap: 8px;
   justify-content: center;
   align-items: center;
-  // border: 2px solid #1f2a40;
   border-top: 0px;
   border-radius: 0 0 6px 6px;
 `;
@@ -34,7 +34,8 @@ const TopBarWeeklyResults = React.memo(() => {
 
   const objects = getCurrentWeekObjects();
   const isObjectLoading = useSelector(getObjectsLoadingStatus());
-  const objectsWithPhone = getCurrentWeekObjectsWithPhone();
+
+  const contacts = getCurrentWeekContacts();
 
   const presentations = getCurrentWeekPresentations();
   const isPresentationsLoading = useSelector(getPresentationsLoadingStatus());
@@ -59,7 +60,7 @@ const TopBarWeeklyResults = React.memo(() => {
   );
 
   return (
-    <Tooltip title="Результаты текущей недели" placement="bottom" arrow>
+    <Tooltip title="Личные результаты текущей недели" placement="bottom" arrow>
       <ResultComponent>
         <TopBarDataContainter
           title="Объектов:"
@@ -70,9 +71,9 @@ const TopBarWeeklyResults = React.memo(() => {
           isLoading={isObjectLoading}
         />
         <TopBarDataContainter
-          title="С контактами:"
-          elements={objectsWithPhone}
-          path="/objects"
+          title="Контактов:"
+          elements={contacts}
+          path="/contacts"
           backgroundColor="OrangeRed"
           isLoading={isObjectLoading}
         />

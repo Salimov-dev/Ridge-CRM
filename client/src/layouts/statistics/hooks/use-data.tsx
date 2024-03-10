@@ -5,7 +5,6 @@ import useTableHeader from "@columns/statictics-columns/hooks/use-table-header";
 import { objectStatusesArray } from "@data/object/object-status";
 // utils
 import { getWeeklyObjects } from "@utils/objects/get-weekly-objects";
-import { getWeeklyObjectsWithPhone } from "@utils/objects/get-weekly-objects-with-phone";
 
 const useData = (objects) => {
   const currentDate = dayjs();
@@ -18,11 +17,6 @@ const useData = (objects) => {
   )} - ${endOfCurrentWeek.format("DD.MM")}`;
 
   const weeklyObjects = getWeeklyObjects(
-    startOfCurrentWeek,
-    endOfCurrentWeek,
-    objects
-  );
-  const weeklyObjectsWithPhone = getWeeklyObjectsWithPhone(
     startOfCurrentWeek,
     endOfCurrentWeek,
     objects
@@ -40,11 +34,6 @@ const useData = (objects) => {
     formattedEndPrevWeekDate,
     objects
   );
-  const previousWeekObjectsWithPhone = getWeeklyObjectsWithPhone(
-    formattedStartPrevWeekDate,
-    formattedEndPrevWeekDate,
-    objects
-  );
 
   // 3 неделя месяца
   const thirdWeek = useTableHeader(2);
@@ -54,11 +43,6 @@ const useData = (objects) => {
   const formattedStartNexDate = startOfThirdWeek.format("YYYY-MM-DD");
   const formattedEndNexDate = endOfThirdWeek.format("YYYY-MM-DD");
   const thirdWeekObjects = getWeeklyObjects(
-    formattedStartNexDate,
-    formattedEndNexDate,
-    objects
-  );
-  const thirdWeekObjectsWithPhone = getWeeklyObjectsWithPhone(
     formattedStartNexDate,
     formattedEndNexDate,
     objects
@@ -76,11 +60,6 @@ const useData = (objects) => {
     formattedEnFourthDate,
     objects
   );
-  const fourthWeekObjectsWithPhone = getWeeklyObjectsWithPhone(
-    formattedStarFourthDate,
-    formattedEnFourthDate,
-    objects
-  );
 
   // объекты для отрисовки кривых линий
   const chartData = [
@@ -90,46 +69,22 @@ const useData = (objects) => {
       data: [
         {
           x: fourthWeek,
-          y: fourthWeekObjects?.length,
+          y: fourthWeekObjects?.length
         },
         {
           x: thirdWeek,
-          y: thirdWeekObjects?.length,
+          y: thirdWeekObjects?.length
         },
         {
           x: previousWeek,
-          y: previousWeekObjects?.length,
+          y: previousWeekObjects?.length
         },
         {
           x: currentWeek,
-          y: weeklyObjects?.length,
-        },
-      ],
-    },
-    {
-      id: "С телефоном",
-      color: "hsl(313, 70%, 50%)",
-      data: [
-        {
-          x: fourthWeek,
-          y: fourthWeekObjectsWithPhone?.length - fourthWeekObjects?.length,
-        },
-        {
-          x: thirdWeek,
-          y:
-            thirdWeekObjectsWithPhone?.length -
-            thirdWeekObjectsWithPhone?.length,
-        },
-        {
-          x: previousWeek,
-          y: previousWeekObjectsWithPhone?.length - previousWeekObjects?.length,
-        },
-        {
-          x: currentWeek,
-          y: weeklyObjectsWithPhone?.length - weeklyObjects?.length,
-        },
-      ],
-    },
+          y: weeklyObjects?.length
+        }
+      ]
+    }
   ];
 
   // объекты для отрисовки пирога
@@ -157,7 +112,7 @@ const useData = (objects) => {
       id: status.name,
       label: status.name,
       value: usedStatuses[status._id],
-      color: `hsl(${Math.random() * 360}, 70%, 50%)`,
+      color: `hsl(${Math.random() * 360}, 70%, 50%)`
     };
   });
 

@@ -12,7 +12,7 @@ const UpdatePasswordForm = ({ data, register, errors }) => {
           name="currentPassword"
           errors={errors?.currentPassword}
           value={data?.currentPassword}
-          onInputQuantities={125}
+          inputProps={{ maxLength: 150 }}
         />
         <TextFieldStyled
           register={register}
@@ -21,7 +21,7 @@ const UpdatePasswordForm = ({ data, register, errors }) => {
           name="newPassword"
           errors={errors?.newPassword}
           value={data?.newPassword}
-          onInputQuantities={125}
+          inputProps={{ maxLength: 150 }}
         />
       </FieldsContainer>
     </Form>

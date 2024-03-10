@@ -67,6 +67,7 @@ const UserForm = ({
             required={true}
             errors={errors?.email}
             value={data?.email}
+            inputProps={{ maxLength: 100 }}
           />
         )}
         <SelectFieldStyled

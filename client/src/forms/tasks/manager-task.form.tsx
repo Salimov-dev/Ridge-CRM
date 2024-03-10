@@ -82,7 +82,7 @@ const ManagerTaskForm = ({
         rows="3"
         multiline={true}
         errors={errors?.comment}
-        onInputQuantities={200}
+        inputProps={{ maxLength: 150 }}
         disabled={isEditMode && !isAuthorEntity}
       />
       {isEditMode ? (
@@ -93,7 +93,7 @@ const ManagerTaskForm = ({
           value={data?.result}
           rows="2"
           multiline={true}
-          onInputQuantities={100}
+          inputProps={{ maxLength: 150 }}
         />
       ) : null}
       {isEditMode ? (

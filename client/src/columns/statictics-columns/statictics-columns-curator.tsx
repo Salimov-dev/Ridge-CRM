@@ -11,11 +11,9 @@ import { useTableHeader } from "./hooks/use-table-header";
 // utils
 import { getWeeklyObjects } from "../../utils/objects/get-weekly-objects";
 import { getWeeklyPresentations } from "../../utils/presentations/get-weekly-presentations";
-import { getWeeklyObjectsWithPhone } from "../../utils/objects/get-weekly-objects-with-phone";
 // store
 import { getObjectsList } from "../../store/object/objects.store";
 import { getPresentationsList } from "../../store/presentation/presentations.store";
-import { getUserDataById } from "../../store/user/users.store";
 import { Typography } from "@mui/material";
 import useGetUserAvatar from "../../hooks/user/use-get-user-avatar";
 
@@ -262,16 +260,10 @@ export const staticticsColumnsCurator = [
             formattedEndDate,
             objects
           );
-          const weeklyObjectsWithPhone = getWeeklyObjectsWithPhone(
-            formattedStartDate,
-            formattedEndDate,
-            objects
-          );
 
           return (
             <TableCell
               objects={weeklyObjects}
-              objectsWithPhone={weeklyObjectsWithPhone}
               presentations={weeklyPresentations}
             />
           );
@@ -307,16 +299,10 @@ export const staticticsColumnsCurator = [
             formattedEndDate,
             currentUserObjects
           );
-          const weeklyObjectsWithPhone = getWeeklyObjectsWithPhone(
-            formattedStartDate,
-            formattedEndDate,
-            currentUserObjects
-          );
 
           return (
             <TableCell
               objects={weeklyObjects}
-              objectsWithPhone={weeklyObjectsWithPhone}
               presentations={weeklyPresentations}
             />
           );
@@ -352,16 +338,10 @@ export const staticticsColumnsCurator = [
             formattedEndDate,
             objects
           );
-          const weeklyObjectsWithPhone = getWeeklyObjectsWithPhone(
-            formattedStartDate,
-            formattedEndDate,
-            objects
-          );
 
           return (
             <TableCell
               objects={weeklyObjects}
-              objectsWithPhone={weeklyObjectsWithPhone}
               presentations={weeklyPresentations}
             />
           );
@@ -398,16 +378,10 @@ export const staticticsColumnsCurator = [
             formattedEndDate,
             currentUserObjects
           );
-          const weeklyObjectsWithPhone = getWeeklyObjectsWithPhone(
-            formattedStartDate,
-            formattedEndDate,
-            currentUserObjects
-          );
 
           return (
             <TableCell
               objects={weeklyObjects}
-              objectsWithPhone={weeklyObjectsWithPhone}
               presentations={weeklyPresentations}
             />
           );
@@ -443,16 +417,10 @@ export const staticticsColumnsCurator = [
             formattedEndDate,
             objects
           );
-          const weeklyObjectsWithPhone = getWeeklyObjectsWithPhone(
-            formattedStartDate,
-            formattedEndDate,
-            objects
-          );
 
           return (
             <TableCell
               objects={weeklyObjects}
-              objectsWithPhone={weeklyObjectsWithPhone}
               presentations={weeklyPresentations}
             />
           );
@@ -489,16 +457,10 @@ export const staticticsColumnsCurator = [
             formattedEndDate,
             currentUserObjects
           );
-          const weeklyObjectsWithPhone = getWeeklyObjectsWithPhone(
-            formattedStartDate,
-            formattedEndDate,
-            currentUserObjects
-          );
 
           return (
             <TableCell
               objects={weeklyObjects}
-              objectsWithPhone={weeklyObjectsWithPhone}
               presentations={weeklyPresentations}
             />
           );
@@ -536,16 +498,10 @@ export const staticticsColumnsCurator = [
             endOfWeek,
             objects
           );
-          const weeklyObjectsWithPhone = getWeeklyObjectsWithPhone(
-            startOfWeek,
-            endOfWeek,
-            objects
-          );
 
           return (
             <TableCell
               objects={weeklyObjects}
-              objectsWithPhone={weeklyObjectsWithPhone}
               presentations={weeklyPresentations}
               isLastWeek={true}
             />
@@ -577,16 +533,10 @@ export const staticticsColumnsCurator = [
             endOfWeek,
             currentUserObjects
           );
-          const weeklyObjectsWithPhone = getWeeklyObjectsWithPhone(
-            startOfWeek,
-            endOfWeek,
-            currentUserObjects
-          );
 
           return (
             <TableCell
               objects={weeklyObjects}
-              objectsWithPhone={weeklyObjectsWithPhone}
               presentations={weeklyPresentations}
               isLastWeek={true}
             />

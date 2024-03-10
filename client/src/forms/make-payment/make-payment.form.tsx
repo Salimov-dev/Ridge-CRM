@@ -11,6 +11,7 @@ const MakePaymentForm = ({ data, register, errors }) => {
           valueAsNumber={true}
           name="amount"
           required={true}
+          inputProps={{ maxLength: 8 }}
           errors={errors?.amount}
           value={data?.amount}
         />

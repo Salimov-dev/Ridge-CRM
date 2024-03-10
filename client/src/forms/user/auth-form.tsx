@@ -44,6 +44,7 @@ const AuthForm = ({
           name="email"
           errors={errors?.email}
           value={data?.email}
+          inputProps={{ maxLength: 150 }}
         />
 
         <TextFieldStyled
@@ -53,6 +54,7 @@ const AuthForm = ({
           name="password"
           value={data?.password}
           errors={errors?.password}
+          inputProps={{ maxLength: 20 }}
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">

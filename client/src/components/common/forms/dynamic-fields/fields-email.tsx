@@ -92,6 +92,7 @@ const FieldsEmail = ({ data, register, setValue, errors, control }) => {
                 name={`emails.${index}.email`}
                 value={data?.emails?.[index].email}
                 errors={errors?.emails?.[index]?.email}
+                inputProps={{ maxLength: 150 }}
                 InputProps={{
                   endAdornment: (
                     <InputAdornment position="end">

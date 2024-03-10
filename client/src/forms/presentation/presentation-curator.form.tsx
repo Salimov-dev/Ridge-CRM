@@ -38,7 +38,7 @@ const CuratorPresentationForm = ({
           multiline={true}
           value={data?.curatorComment}
           errors={errors?.curatorComment}
-          onInputQuantities={500}
+          inputProps={{ maxLength: 500 }}
         />
       </FieldsContainer>
     </Form>

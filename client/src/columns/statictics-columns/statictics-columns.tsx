@@ -9,7 +9,6 @@ import { useTableHeader } from "./hooks/use-table-header";
 // utils
 import { getWeeklyObjects } from "../../utils/objects/get-weekly-objects";
 import { getWeeklyPresentations } from "../../utils/presentations/get-weekly-presentations";
-import { getWeeklyObjectsWithPhone } from "../../utils/objects/get-weekly-objects-with-phone";
 // store
 import { getObjectsList } from "../../store/object/objects.store";
 import { getPresentationsList } from "../../store/presentation/presentations.store";
@@ -56,7 +55,7 @@ const generateMonthHeaders = () => {
             presentations={presentationsQuantity}
           />
         );
-      },
+      }
     });
   }
 
@@ -72,7 +71,7 @@ export const staticticsColumns = [
         header: "Позиция",
         cell: () => {
           return <TableCell onlyTitle={true} />;
-        },
+        }
       },
       {
         accessorFn: (row) => row,
@@ -114,9 +113,9 @@ export const staticticsColumns = [
               presentations={currentMonthPresentations}
             />
           );
-        },
-      },
-    ],
+        }
+      }
+    ]
   },
 
   {
@@ -148,19 +147,14 @@ export const staticticsColumns = [
             formattedStartDate,
             formattedEndDate
           );
-          const weeklyObjectsWithPhone = getWeeklyObjectsWithPhone(
-            formattedStartDate,
-            formattedEndDate
-          );
 
           return (
             <TableCell
               objects={weeklyObjects}
-              objectsWithPhone={weeklyObjectsWithPhone}
               presentations={weeklyPresentations}
             />
           );
-        },
+        }
       },
       {
         // 3 неделя
@@ -189,19 +183,14 @@ export const staticticsColumns = [
             formattedStartDate,
             formattedEndDate
           );
-          const weeklyObjectsWithPhone = getWeeklyObjectsWithPhone(
-            formattedStartDate,
-            formattedEndDate
-          );
 
           return (
             <TableCell
               objects={weeklyObjects}
-              objectsWithPhone={weeklyObjectsWithPhone}
               presentations={weeklyPresentations}
             />
           );
-        },
+        }
       },
       {
         // предыдущая неделя
@@ -230,19 +219,14 @@ export const staticticsColumns = [
             formattedStartDate,
             formattedEndDate
           );
-          const weeklyObjectsWithPhone = getWeeklyObjectsWithPhone(
-            formattedStartDate,
-            formattedEndDate
-          );
 
           return (
             <TableCell
               objects={weeklyObjects}
-              objectsWithPhone={weeklyObjectsWithPhone}
               presentations={weeklyPresentations}
             />
           );
-        },
+        }
       },
       {
         // текущая неделя
@@ -269,25 +253,20 @@ export const staticticsColumns = [
             endOfWeek
           );
           const weeklyObjects = getWeeklyObjects(startOfWeek, endOfWeek);
-          const weeklyObjectsWithPhone = getWeeklyObjectsWithPhone(
-            startOfWeek,
-            endOfWeek
-          );
 
           return (
             <TableCell
               objects={weeklyObjects}
-              objectsWithPhone={weeklyObjectsWithPhone}
               presentations={weeklyPresentations}
               isLastWeek={true}
             />
           );
-        },
-      },
-    ],
+        }
+      }
+    ]
   },
   {
     header: "ПОСЛЕДНИЕ 6 МЕСЯЦЕВ",
-    columns: generateMonthHeaders(),
-  },
+    columns: generateMonthHeaders()
+  }
 ];

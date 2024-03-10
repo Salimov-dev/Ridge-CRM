@@ -25,7 +25,7 @@ const MainFields = ({ register, data, errors, watch }) => {
         errors={errors.name}
         value={data.name}
         isCapitalize={true}
-        inputProps={{ maxLength: 50 }}
+        inputProps={{ maxLength: 150 }}
         InputProps={{
           endAdornment: (
             <InputAdornment position="end">
@@ -51,7 +51,7 @@ const MainFields = ({ register, data, errors, watch }) => {
         errors={errors.comment}
         value={data.comment}
         isCapitalize={true}
-        inputProps={{ maxLength: 50 }}
+        inputProps={{ maxLength: 150 }}
         InputProps={{
           endAdornment: (
             <InputAdornment position="end">

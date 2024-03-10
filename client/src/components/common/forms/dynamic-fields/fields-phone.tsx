@@ -102,8 +102,8 @@ const FieldsPhone = ({ data, register, setValue, errors, control }) => {
                 name={`phones.${index}.phone`}
                 value={data.phones?.[index].phone}
                 errors={errors?.phones?.[index]?.phone}
-                onInputQuantities={12}
                 isHelperText={true}
+                inputProps={{ maxLength: 150 }}
                 InputProps={{
                   endAdornment: (
                     <InputAdornment position="end">

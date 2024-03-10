@@ -42,7 +42,7 @@ const ManagerPresentationForm = ({
           name="cloudLink"
           value={data?.cloudLink}
           errors={errors?.cloudLink}
-          onInputQuantities={200}
+          inputProps={{ maxLength: 150 }}
         />
         {isCurator && (
           <Box sx={{ width: "100%", marginTop: "20px" }}>
@@ -64,7 +64,7 @@ const ManagerPresentationForm = ({
               multiline={true}
               value={data?.curatorComment}
               errors={errors?.curatorComment}
-              onInputQuantities={500}
+              inputProps={{ maxLength: 500 }}
             />
           </Box>
         )}

@@ -12,23 +12,25 @@ import Deals from "@layouts/deals/deals";
 import Presentations from "@layouts/presentations/presentations";
 import Users from "@layouts/users/users";
 import Profile from "@layouts/profile/profile";
+import Contacts from "@layouts/contacts/contacts";
+import Companies from "@layouts/companies/companies";
 // components
 import UpdateProfile from "@components/pages/user/update-profile";
 import NoMatchRoute from "@components/common/rout/no-match";
+import Loader from "@components/common/loader/loader";
 // store
 import {
   getCurrentUserId,
+  getIsLoggedIn,
   getIsUserCurator,
   getUsersLoadingStatus
 } from "@store/user/users.store";
-import Contacts from "@layouts/contacts/contacts";
-import Loader from "@components/common/loader/loader";
-import Companies from "@layouts/companies/companies";
 
 export default function AppRoutes() {
   const currentUserId = useSelector(getCurrentUserId());
   const isUserLoading = useSelector(getUsersLoadingStatus());
   const isCurator = useSelector(getIsUserCurator(currentUserId));
+  const isLoggedIn = useSelector(getIsLoggedIn());
 
   const routes = [
     { id: 1, path: "objects/*", element: <Objects /> },
@@ -60,8 +62,8 @@ export default function AppRoutes() {
   return (
     <Routes>
       <Route path="*" element={<NoMatchRoute />} />
-      <Route path="/" element={<Main />} />
-      <Route path="auth/*" element={<Main />} />
+      <Route path="/" element={isLoggedIn ? <Objects /> : <Main />} />
+      <Route path="auth/*" element={isLoggedIn ? <Objects /> : <Main />} />
 
       {routes.map((route) => (
         <Route

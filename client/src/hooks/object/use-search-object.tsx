@@ -36,10 +36,10 @@ const useSearchObject = (objects, data) => {
   };
 
   const hasLastContact = (objectId) => {
-    const objectsWithLastContact = lastContacts.filter(
+    const objectsWithLastContact = lastContacts?.filter(
       (contact) => contact?.objectId === objectId
     );
-    const hasLastContact = objectsWithLastContact.length > 0;
+    const hasLastContact = objectsWithLastContact?.length > 0;
 
     return hasLastContact;
   };
@@ -61,7 +61,7 @@ const useSearchObject = (objects, data) => {
           phone?.phone.includes(String(data?.phone))
         );
         // Возвращаем true, если есть совпадения
-        return findedPhones.length > 0;
+        return findedPhones?.length > 0;
       });
 
       // Получаем массив идентификаторов контактов

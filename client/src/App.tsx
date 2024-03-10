@@ -22,6 +22,8 @@ import { ColorModeContext, useMode } from "./theme/theme";
 import AppRoutes from "./routes/routes";
 // sockets
 import Sockets from "./sockets/sockets";
+import { useSelector } from "react-redux";
+import { getIsLoggedIn } from "@store/user/users.store";
 
 export const AppStyled = styled(Box)`
   display: flex;
@@ -45,6 +47,7 @@ function App() {
 
   const currentPath = location.pathname;
   const isHomePage = currentPath === "/";
+  const isLoggedIn = useSelector(getIsLoggedIn());
 
   return (
     <ColorModeContext.Provider value={colorMode}>
@@ -55,7 +58,15 @@ function App() {
           <ScrollToTop />
           <AppStyled>
             <Sidebar />
-            <RightSide sx={{ padding: isHomePage ? "0" : "0 20px 50px 20px" }}>
+            <RightSide
+              sx={{
+                padding: isHomePage
+                  ? isLoggedIn
+                    ? "0 20px 50px 20px"
+                    : "0"
+                  : "0 20px 50px 20px"
+              }}
+            >
               <TopBar />
               <AppRoutes />
               <Footer />
