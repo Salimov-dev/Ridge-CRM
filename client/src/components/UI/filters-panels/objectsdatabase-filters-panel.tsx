@@ -1,11 +1,11 @@
 import React from "react";
 // components
-import { FieldsContainer, Form } from "../../common/forms/styled";
-import MultiSelectField from "../../common/inputs/multi-select-field";
-import ClearFilterButton from "../../common/buttons/clear-filter.button";
+import { FieldsContainer, Form } from "@common/forms/styled";
+import MultiSelectField from "@common/inputs/multi-select-field";
+import ClearFilterButton from "@common/buttons/clear-filter.button";
 // utils
-import { getActualUsersList } from "../../../utils/actual-items/get-actual-users-list";
-import { getActualStatusesList } from "../../../utils/actual-items/get-actual-statuses-list";
+import { getActualUsersList } from "@utils/actual-items/get-actual-users-list";
+import { getActualStatusesList } from "@utils/actual-items/get-actual-statuses-list";
 
 const ObjectsDatabaseFiltersPanel = React.memo(
   ({
@@ -35,9 +35,10 @@ const ObjectsDatabaseFiltersPanel = React.memo(
               minWidth="250px"
               selectedItems={data.selectedUsers}
               onChange={(e) => setValue("selectedUsers", e.target.value)}
-              disabled={isLoading ? true : false}
+              disabled={!usersList?.length}
             />
           ) : null}
+
           <MultiSelectField
             name="selectedStatuses"
             labelId="selectedStatuses-label"
@@ -45,7 +46,7 @@ const ObjectsDatabaseFiltersPanel = React.memo(
             itemsList={statusesList}
             selectedItems={data.selectedStatuses}
             onChange={(e) => setValue("selectedStatuses", e.target.value)}
-            disabled={isLoading ? true : false}
+            disabled={!statusesList?.length}
           />
           <ClearFilterButton
             width="270px"

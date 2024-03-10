@@ -13,7 +13,6 @@ import { getTaskLoadingStatus } from "@store/task/tasks.store";
 import { getMeetingLoadingStatus } from "@store/meeting/meetings.store";
 
 const Component = styled(Box)`
-  margin-bottom: 6px;
   display: flex;
   gap: 4px;
   justify-content: space-between;

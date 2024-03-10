@@ -18,7 +18,7 @@ const ObjectAddress = ({ obj, onClick }) => {
       <Typography variant="h6">{objectAddress}</Typography>
       <OpenPageElementIconButton
         title="Открыть объект"
-        width="24px"
+        width="20px"
         color="black"
         colorHover="blue"
         onClick={onClick}

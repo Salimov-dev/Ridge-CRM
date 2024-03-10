@@ -104,6 +104,11 @@ const ObjectsDatabase = React.memo(() => {
   return (
     <ContainerStyled>
       <HeaderLayout title="Проработка базы объектов" />
+      <Box sx={{ margin: "0 0 10px 0" }}>
+        <Typography variant="h4">
+          Объектов для проработки: {sortedObjects?.length}шт
+        </Typography>
+      </Box>
       <ObjectsDatabaseFiltersPanel
         data={data}
         objects={sortedObjects}
