@@ -4,30 +4,31 @@ import React, { useEffect } from "react";
 import { Box, styled } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 // components
-import HeaderLayout from "../../components/common/page-headers/header-layout";
-import BasicTable from "../../components/common/table/basic-table";
-import PieStyled from "../../components/common/chart/pie";
-import ChartLine from "../../components/common/chart/chart-line";
-import StaticticsFiltersPanel from "../../components/UI/filters-panels/statictics-filters-panel";
+import HeaderLayout from "@components/common/page-headers/header-layout";
+import BasicTable from "@components/common/table/basic-table";
+import PieStyled from "@components/common/chart/pie";
+import ChartLine from "@components/common/chart/chart-line";
+import StaticticsFiltersPanel from "@components/UI/filters-panels/statictics-filters-panel";
 // hooks
 import useData from "./hooks/use-data";
-import useSearchStatictics from "../../hooks/statictics/use-search-statistics";
+import useSearchStatictics from "@hooks/statictics/use-search-statistics";
 // columns
-import { staticticsColumnsCurator } from "../../columns/statictics-columns/statictics-columns-curator";
-import { staticticsColumns } from "../../columns/statictics-columns/statictics-columns";
+import { staticticsColumnsCurator } from "@columns/statictics-columns/statictics-columns-curator";
+import { staticticsColumns } from "@columns/statictics-columns/statictics-columns";
 // utils
-import { getUsersWithoutCurrentUser } from "../../utils/user/get-users-without-current-user";
+import { getUsersWithoutCurrentUser } from "@utils/user/get-users-without-current-user";
 // store
-import { setStaticticPositions } from "../../store/statictics/statictics-positions.store";
+import { setStaticticPositions } from "@store/statictics/statictics-positions.store";
 import {
   getObjectsList,
-  getObjectsLoadingStatus,
-} from "../../store/object/objects.store";
+  getObjectsLoadingStatus
+} from "@store/object/objects.store";
 import {
+  getCurrentUserData,
   getCurrentUserId,
   getIsUserCurator,
-  getUsersList,
-} from "../../store/user/users.store";
+  getUsersList
+} from "@store/user/users.store";
 
 const Component = styled(Box)`
   margin-bottom: 150px;
@@ -41,7 +42,7 @@ const ChartsContainer = styled(Box)`
 const initialState = {
   selectedUsers: [],
   selectedPositions: [],
-  withoutCurator: false,
+  withoutCurator: false
 };
 
 const Statictics = React.memo(() => {
@@ -54,7 +55,7 @@ const Statictics = React.memo(() => {
     defaultValues: Boolean(localStorageState)
       ? localStorageState
       : initialState,
-    mode: "onBlur",
+    mode: "onBlur"
   });
 
   const data = watch();
@@ -66,6 +67,7 @@ const Statictics = React.memo(() => {
   const usersWithoutCurrentUser = getUsersWithoutCurrentUser();
 
   const currentUserId = useSelector(getCurrentUserId());
+  const currentUserData = useSelector(getCurrentUserData(currentUserId));
   const isCurator = useSelector(getIsUserCurator(currentUserId));
 
   const users = isCurator
@@ -137,7 +139,7 @@ const Statictics = React.memo(() => {
       </ChartsContainer>
 
       <BasicTable
-        items={searchedUsers}
+        items={isCurator ? searchedUsers : [currentUserData]}
         itemsColumns={columns}
         hasFooter={isCurator && true}
         isLoading={isObjectsLoading}

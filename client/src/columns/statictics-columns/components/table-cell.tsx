@@ -1,25 +1,25 @@
 import { useSelector } from "react-redux";
 import { Box } from "@mui/material";
 import Position from "./position";
-import { loadStaticticPositions } from "../../../store/statictics/statictics-positions.store";
+import { loadStaticticPositions } from "@store/statictics/statictics-positions.store";
 
 const TableCell = ({
   objects = [],
-  objectsWithPhone = [],
+  contacts = [],
   presentations = [],
   onlyTitle = false,
-  isLastWeek = false,
+  isLastWeek = false
 }) => {
   const staticticPositions = useSelector(loadStaticticPositions());
-  const isObjects = staticticPositions?.includes("91dfgiuqh2314ugdfh2144213");
-  const isObjectsWithPhone = staticticPositions?.includes(
-    "91dfgiuqhufj23gh23j854h99"
+  const isObjects = staticticPositions?.includes("91dfgiuqh2314ugdfh2144213"); // Объекты
+  const isContacts = staticticPositions?.includes(
+    "91dfgiuqhufj23gh23j854h99" // Контакты
   );
   const isPresentations = staticticPositions?.includes(
-    "91dfgiu76fh2384hgf4599565"
+    "91dfgiu76fh2384hgf4599565" // Презентации
   );
 
-  const isShowAll = !isObjects && !isObjectsWithPhone && !isPresentations;
+  const isShowAll = !isObjects && !isContacts && !isPresentations;
 
   return (
     <Box
@@ -29,7 +29,7 @@ const TableCell = ({
         flexDirection: "column",
         gap: "6px",
         border: isLastWeek ? "3px dashed white" : "none",
-        padding: isLastWeek ? "4px" : "none",
+        padding: isLastWeek ? "4px" : "none"
       }}
     >
       {isShowAll || isObjects ? (
@@ -42,11 +42,11 @@ const TableCell = ({
         />
       ) : null}
 
-      {isShowAll || isObjectsWithPhone ? (
+      {isShowAll || isContacts ? (
         <Position
           onlyTitle={onlyTitle}
-          item={objectsWithPhone}
-          title="С телефоном"
+          item={contacts}
+          title="Контакты"
           background="FireBrick"
         />
       ) : null}

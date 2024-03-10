@@ -16,6 +16,8 @@ import { getObjectsList } from "../../store/object/objects.store";
 import { getPresentationsList } from "../../store/presentation/presentations.store";
 import { Typography } from "@mui/material";
 import useGetUserAvatar from "../../hooks/user/use-get-user-avatar";
+import { getContactsList } from "@store/contact/contact.store";
+import { getWeeklyContacts } from "@utils/contacts/get-weekly-contacts";
 
 dayjs.extend(customParseFormat);
 dayjs.locale("ru");
@@ -34,26 +36,29 @@ const generateMonthHeaders = () => {
       footer: () => {
         const objects = useSelector(getObjectsList());
         const presentations = useSelector(getPresentationsList());
+        const contacts = useSelector(getContactsList());
 
+        // объекты
         const currentMonthObjects = objects?.filter((object) => {
           return dayjs(object.created_at).month() === month.month();
         });
 
-        const objectsWithPhone = currentMonthObjects?.filter((obj) => {
-          const phoneNumber = obj?.phone;
-          return phoneNumber !== null && String(phoneNumber)?.length > 0;
-        });
-
+        // презентации
         const currentMonthPresentations = presentations?.filter(
           (presentation) => {
             return dayjs(presentation.created_at).month() === month.month();
           }
         );
 
+        // контакты
+        const currentMonthContacts = contacts?.filter((contact) => {
+          return dayjs(contact.created_at).month() === month.month();
+        });
+
         return (
           <TableCell
             objects={currentMonthObjects}
-            objectsWithPhone={objectsWithPhone}
+            contacts={currentMonthContacts}
             presentations={currentMonthPresentations}
           />
         );
@@ -62,34 +67,38 @@ const generateMonthHeaders = () => {
         const user = info.getValue();
         const objects = useSelector(getObjectsList());
         const presentations = useSelector(getPresentationsList());
+        const contacts = useSelector(getContactsList());
 
+        // объекты
         const currentUserObjects = objects?.filter(
           (obj) => obj?.userId === user?._id
         );
-
-        const currentUserPresentations = presentations?.filter(
-          (pres) => pres?.userId === user?._id
-        );
-
         const currentMonthObjects = currentUserObjects?.filter((object) => {
           return dayjs(object.created_at).month() === month.month();
         });
 
-        const objectsWithPhone = currentMonthObjects?.filter((obj) => {
-          const phoneNumber = obj?.phone;
-          return phoneNumber !== null && String(phoneNumber)?.length > 0;
-        });
-
+        // презентации
+        const currentUserPresentations = presentations?.filter(
+          (pres) => pres?.userId === user?._id
+        );
         const currentMonthPresentations = currentUserPresentations?.filter(
           (presentation) => {
             return dayjs(presentation.created_at).month() === month.month();
           }
         );
 
+        // контакты
+        const currentUserContacts = contacts?.filter(
+          (cont) => cont?.userId === user?._id
+        );
+        const currentMonthContacts = currentUserContacts?.filter((contact) => {
+          return dayjs(contact.created_at).month() === month.month();
+        });
+
         return (
           <TableCell
             objects={currentMonthObjects}
-            objectsWithPhone={objectsWithPhone}
+            contacts={currentMonthContacts}
             presentations={currentMonthPresentations}
           />
         );
@@ -142,10 +151,12 @@ export const staticticsColumnsCurator = [
         footer: () => {
           const objects = useSelector(getObjectsList());
           const presentations = useSelector(getPresentationsList());
+          const contacts = useSelector(getContactsList());
 
           const currentMonth = dayjs();
           const sixMonthsAgo = currentMonth.subtract(6, "month");
 
+          // объекты
           const currentMonthObjects = objects?.filter((object) => {
             const objectDate = dayjs(object.created_at);
             return (
@@ -154,11 +165,7 @@ export const staticticsColumnsCurator = [
             );
           });
 
-          const objectsWithPhone = objects?.filter((obj) => {
-            const phoneNumber = obj?.phone;
-            return phoneNumber !== null && String(phoneNumber)?.length > 0;
-          });
-
+          // презентации
           const currentMonthPresentations = presentations?.filter(
             (presentation) => {
               const presentationDate = dayjs(presentation.created_at);
@@ -169,10 +176,19 @@ export const staticticsColumnsCurator = [
             }
           );
 
+          // контакты
+          const currentMonthContacts = contacts?.filter((contact) => {
+            const contactDate = dayjs(contact.created_at);
+            return (
+              contactDate.isAfter(sixMonthsAgo) &&
+              contactDate.isBefore(currentMonth)
+            );
+          });
+
           return (
             <TableCell
               objects={currentMonthObjects}
-              objectsWithPhone={objectsWithPhone}
+              contacts={currentMonthContacts}
               presentations={currentMonthPresentations}
             />
           );
@@ -183,15 +199,12 @@ export const staticticsColumnsCurator = [
           const user = info.getValue();
           const objects = useSelector(getObjectsList());
           const presentations = useSelector(getPresentationsList());
+          const contacts = useSelector(getContactsList());
 
+          // объекты
           const currentUserObjects = objects?.filter(
             (obj) => obj?.userId === user?._id
           );
-
-          const currentUserPresentations = presentations?.filter(
-            (pres) => pres?.userId === user?._id
-          );
-
           const currentMonthObjects = currentUserObjects?.filter((object) => {
             const objectDate = dayjs(object.created_at);
             return (
@@ -200,11 +213,10 @@ export const staticticsColumnsCurator = [
             );
           });
 
-          const objectsWithPhone = currentMonthObjects?.filter((obj) => {
-            const phoneNumber = obj?.phone;
-            return phoneNumber !== null && String(phoneNumber)?.length > 0;
-          });
-
+          // презентации
+          const currentUserPresentations = presentations?.filter(
+            (pres) => pres?.userId === user?._id
+          );
           const currentMonthPresentations = currentUserPresentations?.filter(
             (presentation) => {
               const presentationDate = dayjs(presentation.created_at);
@@ -215,10 +227,24 @@ export const staticticsColumnsCurator = [
             }
           );
 
+          // контакты
+          const currentUserContacts = contacts?.filter(
+            (cont) => cont?.userId === user?._id
+          );
+          const currentMonthContacts = currentUserContacts?.filter(
+            (contact) => {
+              const contactDate = dayjs(contact.created_at);
+              return (
+                contactDate.isAfter(sixMonthsAgo) &&
+                contactDate.isBefore(currentMonth)
+              );
+            }
+          );
+
           return (
             <TableCell
               objects={currentMonthObjects}
-              objectsWithPhone={objectsWithPhone}
+              contacts={currentMonthContacts}
               presentations={currentMonthPresentations}
             />
           );
@@ -241,6 +267,7 @@ export const staticticsColumnsCurator = [
         footer: () => {
           const objects = useSelector(getObjectsList());
           const presentations = useSelector(getPresentationsList());
+          const contacts = useSelector(getContactsList());
 
           const currentDate = dayjs();
           const endOPreviousWeek = currentDate
@@ -250,20 +277,31 @@ export const staticticsColumnsCurator = [
           const formattedStartDate = startOPreviousWeek.format("YYYY-MM-DD");
           const formattedEndDate = endOPreviousWeek.format("YYYY-MM-DD");
 
-          const weeklyPresentations = getWeeklyPresentations(
-            formattedStartDate,
-            formattedEndDate,
-            presentations
-          );
+          // объекты
           const weeklyObjects = getWeeklyObjects(
             formattedStartDate,
             formattedEndDate,
             objects
           );
 
+          // презентации
+          const weeklyPresentations = getWeeklyPresentations(
+            formattedStartDate,
+            formattedEndDate,
+            presentations
+          );
+
+          // контакты
+          const weeklyContacts = getWeeklyContacts(
+            formattedStartDate,
+            formattedEndDate,
+            contacts
+          );
+
           return (
             <TableCell
               objects={weeklyObjects}
+              contacts={weeklyContacts}
               presentations={weeklyPresentations}
             />
           );
@@ -279,20 +317,12 @@ export const staticticsColumnsCurator = [
           const formattedStartDate = startOPreviousWeek.format("YYYY-MM-DD");
           const formattedEndDate = endOPreviousWeek.format("YYYY-MM-DD");
           const objects = useSelector(getObjectsList());
+          const presentations = useSelector(getPresentationsList());
+          const contacts = useSelector(getContactsList());
 
+          // объекты
           const currentUserObjects = objects?.filter(
             (obj) => obj?.userId === user?._id
-          );
-
-          const presentations = useSelector(getPresentationsList());
-          const currentUserPresentations = presentations?.filter(
-            (pres) => pres?.userId === user?._id
-          );
-
-          const weeklyPresentations = getWeeklyPresentations(
-            formattedStartDate,
-            formattedEndDate,
-            currentUserPresentations
           );
           const weeklyObjects = getWeeklyObjects(
             formattedStartDate,
@@ -300,9 +330,30 @@ export const staticticsColumnsCurator = [
             currentUserObjects
           );
 
+          // презентации
+          const currentUserPresentations = presentations?.filter(
+            (pres) => pres?.userId === user?._id
+          );
+          const weeklyPresentations = getWeeklyPresentations(
+            formattedStartDate,
+            formattedEndDate,
+            currentUserPresentations
+          );
+
+          // контакты
+          const currentUserContacts = contacts?.filter(
+            (pres) => pres?.userId === user?._id
+          );
+          const weeklyContacts = getWeeklyContacts(
+            formattedStartDate,
+            formattedEndDate,
+            currentUserContacts
+          );
+
           return (
             <TableCell
               objects={weeklyObjects}
+              contacts={weeklyContacts}
               presentations={weeklyPresentations}
             />
           );
@@ -319,6 +370,7 @@ export const staticticsColumnsCurator = [
         footer: () => {
           const objects = useSelector(getObjectsList());
           const presentations = useSelector(getPresentationsList());
+          const contacts = useSelector(getContactsList());
 
           const currentDate = dayjs();
           const endOPreviousWeek = currentDate
@@ -328,20 +380,30 @@ export const staticticsColumnsCurator = [
           const formattedStartDate = startOPreviousWeek.format("YYYY-MM-DD");
           const formattedEndDate = endOPreviousWeek.format("YYYY-MM-DD");
 
-          const weeklyPresentations = getWeeklyPresentations(
-            formattedStartDate,
-            formattedEndDate,
-            presentations
-          );
+          // объекты
           const weeklyObjects = getWeeklyObjects(
             formattedStartDate,
             formattedEndDate,
             objects
           );
 
+          // презентации
+          const weeklyPresentations = getWeeklyPresentations(
+            formattedStartDate,
+            formattedEndDate,
+            presentations
+          );
+
+          // контакты
+          const weeklyContacts = getWeeklyContacts(
+            formattedStartDate,
+            formattedEndDate,
+            contacts
+          );
           return (
             <TableCell
               objects={weeklyObjects}
+              contacts={weeklyContacts}
               presentations={weeklyPresentations}
             />
           );
@@ -359,19 +421,12 @@ export const staticticsColumnsCurator = [
 
           const user = info.getValue();
           const objects = useSelector(getObjectsList());
+          const presentations = useSelector(getPresentationsList());
+          const contacts = useSelector(getContactsList());
+
+          // объекты
           const currentUserObjects = objects?.filter(
             (obj) => obj?.userId === user?._id
-          );
-
-          const presentations = useSelector(getPresentationsList());
-          const currentUserPresentations = presentations?.filter(
-            (pres) => pres?.userId === user?._id
-          );
-
-          const weeklyPresentations = getWeeklyPresentations(
-            formattedStartDate,
-            formattedEndDate,
-            currentUserPresentations
           );
           const weeklyObjects = getWeeklyObjects(
             formattedStartDate,
@@ -379,9 +434,30 @@ export const staticticsColumnsCurator = [
             currentUserObjects
           );
 
+          // презентации
+          const currentUserPresentations = presentations?.filter(
+            (pres) => pres?.userId === user?._id
+          );
+          const weeklyPresentations = getWeeklyPresentations(
+            formattedStartDate,
+            formattedEndDate,
+            currentUserPresentations
+          );
+
+          // контакты
+          const currentUserContacts = contacts?.filter(
+            (pres) => pres?.userId === user?._id
+          );
+          const weeklyContacts = getWeeklyContacts(
+            formattedStartDate,
+            formattedEndDate,
+            currentUserContacts
+          );
+
           return (
             <TableCell
               objects={weeklyObjects}
+              contacts={weeklyContacts}
               presentations={weeklyPresentations}
             />
           );
@@ -398,6 +474,7 @@ export const staticticsColumnsCurator = [
         footer: () => {
           const objects = useSelector(getObjectsList());
           const presentations = useSelector(getPresentationsList());
+          const contacts = useSelector(getContactsList());
 
           const currentDate = dayjs();
           const endOPreviousWeek = currentDate
@@ -407,20 +484,31 @@ export const staticticsColumnsCurator = [
           const formattedStartDate = startOPreviousWeek.format("YYYY-MM-DD");
           const formattedEndDate = endOPreviousWeek.format("YYYY-MM-DD");
 
-          const weeklyPresentations = getWeeklyPresentations(
-            formattedStartDate,
-            formattedEndDate,
-            presentations
-          );
+          // объекты
           const weeklyObjects = getWeeklyObjects(
             formattedStartDate,
             formattedEndDate,
             objects
           );
 
+          // презентации
+          const weeklyPresentations = getWeeklyPresentations(
+            formattedStartDate,
+            formattedEndDate,
+            presentations
+          );
+
+          // контакты
+          const weeklyContacts = getWeeklyContacts(
+            formattedStartDate,
+            formattedEndDate,
+            contacts
+          );
+
           return (
             <TableCell
               objects={weeklyObjects}
+              contacts={weeklyContacts}
               presentations={weeklyPresentations}
             />
           );
@@ -438,19 +526,12 @@ export const staticticsColumnsCurator = [
 
           const user = info.getValue();
           const objects = useSelector(getObjectsList());
+          const presentations = useSelector(getPresentationsList());
+          const contacts = useSelector(getContactsList());
+
+          // объекты
           const currentUserObjects = objects?.filter(
             (obj) => obj?.userId === user?._id
-          );
-
-          const presentations = useSelector(getPresentationsList());
-          const currentUserPresentations = presentations?.filter(
-            (pres) => pres?.userId === user?._id
-          );
-
-          const weeklyPresentations = getWeeklyPresentations(
-            formattedStartDate,
-            formattedEndDate,
-            currentUserPresentations
           );
           const weeklyObjects = getWeeklyObjects(
             formattedStartDate,
@@ -458,9 +539,30 @@ export const staticticsColumnsCurator = [
             currentUserObjects
           );
 
+          // презентации
+          const currentUserPresentations = presentations?.filter(
+            (pres) => pres?.userId === user?._id
+          );
+          const weeklyPresentations = getWeeklyPresentations(
+            formattedStartDate,
+            formattedEndDate,
+            currentUserPresentations
+          );
+
+          // контакты
+          const currentUserContacts = contacts?.filter(
+            (cont) => cont?.userId === user?._id
+          );
+          const weeklyContacts = getWeeklyContacts(
+            formattedStartDate,
+            formattedEndDate,
+            currentUserContacts
+          );
+
           return (
             <TableCell
               objects={weeklyObjects}
+              contacts={weeklyContacts}
               presentations={weeklyPresentations}
             />
           );
@@ -483,25 +585,37 @@ export const staticticsColumnsCurator = [
         footer: () => {
           const objects = useSelector(getObjectsList());
           const presentations = useSelector(getPresentationsList());
+          const contacts = useSelector(getContactsList());
 
           const currentDate = dayjs();
           const startOfWeek = currentDate.startOf("week");
           const endOfWeek = currentDate.endOf("week").day(0);
 
-          const weeklyPresentations = getWeeklyPresentations(
-            startOfWeek,
-            endOfWeek,
-            presentations
-          );
+          // объекты
           const weeklyObjects = getWeeklyObjects(
             startOfWeek,
             endOfWeek,
             objects
           );
 
+          // презентации
+          const weeklyPresentations = getWeeklyPresentations(
+            startOfWeek,
+            endOfWeek,
+            presentations
+          );
+
+          // контакты
+          const weeklyContacts = getWeeklyContacts(
+            startOfWeek,
+            endOfWeek,
+            contacts
+          );
+
           return (
             <TableCell
               objects={weeklyObjects}
+              contacts={weeklyContacts}
               presentations={weeklyPresentations}
               isLastWeek={true}
             />
@@ -514,19 +628,12 @@ export const staticticsColumnsCurator = [
 
           const user = info.getValue();
           const objects = useSelector(getObjectsList());
+          const contacts = useSelector(getContactsList());
+          const presentations = useSelector(getPresentationsList());
+
+          // объекты
           const currentUserObjects = objects?.filter(
             (obj) => obj?.userId === user?._id
-          );
-
-          const presentations = useSelector(getPresentationsList());
-          const currentUserPresentations = presentations?.filter(
-            (pres) => pres?.userId === user?._id
-          );
-
-          const weeklyPresentations = getWeeklyPresentations(
-            startOfWeek,
-            endOfWeek,
-            currentUserPresentations
           );
           const weeklyObjects = getWeeklyObjects(
             startOfWeek,
@@ -534,9 +641,30 @@ export const staticticsColumnsCurator = [
             currentUserObjects
           );
 
+          // презентации
+          const currentUserPresentations = presentations?.filter(
+            (pres) => pres?.userId === user?._id
+          );
+          const weeklyPresentations = getWeeklyPresentations(
+            startOfWeek,
+            endOfWeek,
+            currentUserPresentations
+          );
+
+          // контакты
+          const currentUserContacts = contacts?.filter(
+            (cont) => cont?.userId === user?._id
+          );
+          const weeklyContacts = getWeeklyContacts(
+            startOfWeek,
+            endOfWeek,
+            currentUserContacts
+          );
+
           return (
             <TableCell
               objects={weeklyObjects}
+              contacts={weeklyContacts}
               presentations={weeklyPresentations}
               isLastWeek={true}
             />

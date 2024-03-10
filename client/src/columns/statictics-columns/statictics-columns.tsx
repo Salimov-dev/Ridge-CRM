@@ -12,6 +12,7 @@ import { getWeeklyPresentations } from "../../utils/presentations/get-weekly-pre
 // store
 import { getObjectsList } from "../../store/object/objects.store";
 import { getPresentationsList } from "../../store/presentation/presentations.store";
+import { getContactsList } from "@store/contact/contact.store";
 
 dayjs.extend(customParseFormat);
 dayjs.locale("ru");
@@ -29,12 +30,15 @@ const generateMonthHeaders = () => {
       cell: () => {
         const objects = useSelector(getObjectsList());
         const presentations = useSelector(getPresentationsList());
+        const contacts = useSelector(getContactsList());
 
+        // объекты
         const currentMonthObjects = objects.filter((object) => {
           return dayjs(object.created_at).month() === month.month();
         });
         const objectQuantity = currentMonthObjects;
 
+        // презентации
         const currentMonthPresentations = presentations?.filter(
           (presentation) => {
             return dayjs(presentation.created_at).month() === month.month();
@@ -42,16 +46,16 @@ const generateMonthHeaders = () => {
         );
         const presentationsQuantity = currentMonthPresentations;
 
-        const objectsWithPhone = currentMonthObjects?.filter((obj) => {
-          const phoneNumber = obj?.phone;
-          return phoneNumber !== null && String(phoneNumber)?.length > 0;
+        // контакты
+        const currentMonthContacts = contacts?.filter((contact) => {
+          return dayjs(contact.created_at).month() === month.month();
         });
-        const objectsWithPhoneQuantity = objectsWithPhone;
+        const contactsQuantity = currentMonthContacts;
 
         return (
           <TableCell
             objects={objectQuantity}
-            objectsWithPhone={objectsWithPhoneQuantity}
+            contacts={contactsQuantity}
             presentations={presentationsQuantity}
           />
         );
@@ -109,7 +113,6 @@ export const staticticsColumns = [
           return (
             <TableCell
               objects={currentMonthObjects}
-              objectsWithPhone={objectsWithPhone}
               presentations={currentMonthPresentations}
             />
           );
