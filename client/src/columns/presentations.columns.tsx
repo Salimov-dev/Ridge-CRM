@@ -77,11 +77,13 @@ export const presentationsColumns = (
       const { getAvatarSrc, isLoading } = useGetUserAvatar(userId);
 
       return (
-        <UserNameWithAvatar
-          userId={userId}
-          avatarSrc={getAvatarSrc()}
-          isLoading={isLoading}
-        />
+        <AlignCenter>
+          <UserNameWithAvatar
+            userId={userId}
+            avatarSrc={getAvatarSrc()}
+            isLoading={isLoading}
+          />
+        </AlignCenter>
       );
     }
   };
@@ -142,7 +144,7 @@ export const presentationsColumns = (
     },
     {
       accessorKey: "_id",
-      header: "",
+      header: "Презентация",
       cell: (info) => {
         const dispatch = useDispatch();
         const presentationId = info.getValue();

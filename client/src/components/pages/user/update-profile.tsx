@@ -12,6 +12,7 @@ import LoaderFullWindow from "@components/common/loader/loader-full-window";
 import { userProfileSchema } from "@schemas/user/user-profile.schema";
 // store
 import { getCurrentUserData, updateUser } from "@store/user/users.store";
+// forms
 import UserProfileForm from "@forms/user/user-profile.form";
 
 const UpdateProfile = ({ onClose = () => {} }) => {

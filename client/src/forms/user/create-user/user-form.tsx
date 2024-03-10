@@ -6,6 +6,8 @@ import { userRolesArray } from "@data/users/user-roles";
 import { Box, Typography } from "@mui/material";
 import styled from "@emotion/styled";
 import SimpleSwitch from "@components/common/inputs/simple-switch";
+import SimpleSelectField from "@components/common/inputs/simple-select-field";
+import { citiesArray } from "@data/cities";
 
 const String = styled(Box)`
   display: flex;
@@ -79,6 +81,16 @@ const UserForm = ({
           itemsList={transformedRoles}
           value={data.role ?? ""}
           errors={errors?.role}
+        />
+        <SimpleSelectField
+          register={register}
+          itemsList={citiesArray}
+          name="city"
+          labelId="city"
+          required={true}
+          label="Город"
+          value={data?.city}
+          errors={errors?.city}
         />
         <ColorPicker
           title="Выберите цвет нового пользователя в Грядке"

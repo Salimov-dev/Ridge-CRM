@@ -81,6 +81,7 @@ const Presentations = React.memo(() => {
   const isInputEmpty = JSON.stringify(initialState) !== JSON.stringify(data);
 
   const presentationsList = useSelector(getPresentationsList());
+  console.log("presentationsList", presentationsList);
 
   const searchedPresentations = useSearchPresentation(presentationsList, data);
   const sortedPresentations = useMemo(() => {
@@ -136,12 +137,11 @@ const Presentations = React.memo(() => {
           if (matchingObject) {
             return {
               ...presentation,
-              location: {
-                city: matchingObject?.city,
-                address: matchingObject?.address,
-                latitude: matchingObject?.latitude,
-                longitude: matchingObject?.longitude
-              }
+
+              city: matchingObject?.city,
+              address: matchingObject?.address,
+              latitude: matchingObject?.latitude,
+              longitude: matchingObject?.longitude
             };
           } else {
             return presentation;
