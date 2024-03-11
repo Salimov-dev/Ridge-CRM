@@ -1,5 +1,5 @@
 {
-  "apiEndpoint": "https://ridge-crm.ru:8080/api/",
-  "ioEndPoint": "https://ridge-crm.ru:8080",
+  "apiEndpoint": "https://ridge-crm.ru/api/",
+  "ioEndPoint": "https://ridge-crm.ru",
   "licenseCost": 25
 }
