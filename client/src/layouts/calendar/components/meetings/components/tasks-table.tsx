@@ -2,7 +2,8 @@ import { useSelector } from "react-redux";
 import { Box, Typography, styled } from "@mui/material";
 // components
 import BasicTable from "@components/common/table/basic-table";
-import TasksFiltersPanel from "@ui/filters-panels/tasks-filters-panel";
+import TasksFiltersPanel from "@components/UI/filters-panels/tasks-filters-panel";
+// store
 import { getTaskLoadingStatus } from "@store/task/tasks.store";
 
 const Header = styled(Box)`
