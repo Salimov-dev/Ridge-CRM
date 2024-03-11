@@ -12,7 +12,7 @@ import cookieParser from "cookie-parser";
 import express from "express";
 import cors from "cors";
 import path from "path";
-import https from "https";
+import http from "http";
 import config from "config";
 import fs from "fs";
 import cron from "node-cron";
@@ -28,7 +28,7 @@ const options = {
 };
 
 const app = express();
-const server = https.createServer(options, app);
+const server = http.createServer(options, app);
 
 Sockets(server);
 
