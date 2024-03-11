@@ -1,5 +1,5 @@
 {
-  "apiEndpoint": "http://ridge-crm.ru/api/",
-  "ioEndPoint": "http://ridge-crm.ru",
+  "apiEndpoint": "https://ridge-crm.ru/api/",
+  "ioEndPoint": "https://ridge-crm.ru",
   "licenseCost": 25
 }
