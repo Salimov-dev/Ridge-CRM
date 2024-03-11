@@ -14,14 +14,21 @@ import cors from "cors";
 import path from "path";
 import http from "http";
 import config from "config";
+import fs from "fs";
 import cron from "node-cron";
 
 const PORT = config.get("port") ?? 8080;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
+const options = {
+  key: fs.readFileSync(path.resolve(__dirname, "cert.key")), // Путь к закрытому ключу SSL
+  cert: fs.readFileSync(path.resolve(__dirname, "cert.crt")), // Путь к SSL-сертификату
+  ca: fs.readFileSync(path.resolve(__dirname, "cert_ca.crt")) // Путь к промежуточному SSL-сертификату
+};
+
 const app = express();
-const server = http.createServer(app);
+const server = http.createServer(options, app);
 
 Sockets(server);
 
