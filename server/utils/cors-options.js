@@ -4,6 +4,8 @@ export const corsOptions = {
     "http://localhost:3000",
     "http://31.129.108.151",
     "https://ridge-crm.ru",
+    "http://ridge-crm.ru",
+    "http://ridge-crm.ru:8080"
   ],
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS",
   allowedHeaders: [
@@ -11,8 +13,8 @@ export const corsOptions = {
     "X-Requested-With",
     "Content-Type",
     "Accept",
-    "Authorization",
+    "Authorization"
   ],
   credentials: true,
-  optionSuccessStatus: 200,
+  optionSuccessStatus: 200
 };
