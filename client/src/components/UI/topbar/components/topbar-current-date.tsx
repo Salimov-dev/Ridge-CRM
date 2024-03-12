@@ -12,7 +12,7 @@ import { getUserLicensesByUserId } from "@store/user/user-license.store";
 import { getCurrentUserId, getIsUserCurator } from "@store/user/users.store";
 
 const Component = styled(Box)`
-  width: 400px;
+  width: fit-content;
   display: flex;
   gap: 6px;
   justify-content: start;

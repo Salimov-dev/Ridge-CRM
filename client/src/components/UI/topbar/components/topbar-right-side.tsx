@@ -13,13 +13,14 @@ import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
 // store
 import {
   getCurrentUserData,
+  getIsLoggedIn,
   getUsersLoadingStatus
 } from "@store/user/users.store";
 
 const Component = styled(Box)`
   display: flex;
   justify-content: end;
-  padding-top: 10px;
+  align-items: center;
 `;
 
 const TopBarRightSide = () => {
@@ -34,9 +35,15 @@ const TopBarRightSide = () => {
   const { handleOpenAuthPage } = useDialogHandlers(setState);
 
   const isLoading = useSelector(getUsersLoadingStatus());
+  const isLoggedIn = useSelector(getIsLoggedIn());
 
   return (
-    <Component>
+    <Component
+      sx={{
+        paddingTop: isLoggedIn ? "0" : "10px",
+        marginRight: isLoggedIn ? "0" : "-10px"
+      }}
+    >
       {!isLoading ? (
         currentUser ? (
           <UserMenu currentUser={currentUser} />

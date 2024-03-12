@@ -29,6 +29,7 @@ import { getIsLoggedIn } from "@store/user/users.store";
 export const AppStyled = styled(Box)`
   display: flex;
   min-height: 100vh;
+  min-width: 1400px;
 `;
 
 export const RightSide = styled(Box)`
