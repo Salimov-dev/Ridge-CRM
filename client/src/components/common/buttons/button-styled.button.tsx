@@ -231,19 +231,19 @@ const ButtonStyled = ({
         padding: padding,
         fontSize: fontSize,
         height: {
-          xs: "pre-wrap",
+          xs: !isLoggedIn ? "pre-wrap" : "nowrap",
           sm: height
         },
         color: color,
         border: border,
         borderColor: borderColor,
         background: background,
-        width: width,
-        margin: margin,
         whiteSpace: {
-          xs: isLoggedIn ? "pre-wrap" : "nowrap",
+          xs: !isLoggedIn ? "pre-wrap" : "nowrap",
           sm: "nowrap"
         },
+        width: width,
+        margin: margin,
         "&:hover": {
           color: colorHover,
           background: backgroundHover,
