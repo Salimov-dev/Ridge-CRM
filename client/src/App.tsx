@@ -57,7 +57,9 @@ function App() {
         <AppLoader>
           <Sockets />
           <ScrollToTop />
-          <AppStyled sx={{ minWidth: isLoggedIn ? "1400px" : null }}>
+          <AppStyled
+            sx={{ minWidth: isLoggedIn ? "1400px" : null, width: "100%" }}
+          >
             <Sidebar />
             <RightSide
               sx={{
