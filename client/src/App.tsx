@@ -29,7 +29,6 @@ import { getIsLoggedIn } from "@store/user/users.store";
 export const AppStyled = styled(Box)`
   display: flex;
   min-height: 100vh;
-  min-width: 1400px;
 `;
 
 export const RightSide = styled(Box)`
@@ -58,7 +57,7 @@ function App() {
         <AppLoader>
           <Sockets />
           <ScrollToTop />
-          <AppStyled>
+          <AppStyled sx={{ minWidth: isLoggedIn ? "1400px" : null }}>
             <Sidebar />
             <RightSide
               sx={{
