@@ -38,14 +38,14 @@ const LeftSide = ({ setState }) => {
           fontSize: { xs: "32px", sm: "42px", lg: "50px" },
           fontWeight: "bold",
           lineHeight: "1.2",
-          WebkitTextStroke: "1px white",
-          WebkitTextFillColor: "transparent",
-          MozTextStroke: "1px white",
-          MozTextFillColor: "transparent",
-          OTextStroke: "1px white",
-          OTextFillColor: "transparent",
-          msTextStroke: "1px white",
-          msTextFillColor: "transparent",
+          WebkitTextStroke: { sm: "1px white", sx: null },
+          WebkitTextFillColor: { sm: "transparent", sx: null },
+          MozTextStroke: { sm: "1px white", sx: null },
+          MozTextFillColor: { sm: "transparent", sx: null },
+          OTextStroke: { sm: "1px white", sx: null },
+          OTextFillColor: { sm: "transparent", sx: null },
+          msTextStroke: { sm: "1px white", sx: null },
+          msTextFillColor: { sm: "transparent", sx: null },
           textAlign: { xs: "center", lg: "start" }
         }}
       >
