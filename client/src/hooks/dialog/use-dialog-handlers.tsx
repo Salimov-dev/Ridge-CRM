@@ -61,7 +61,7 @@ const useDialogHandlers = (setState) => {
     setState((prevState) => ({
       ...prevState,
       createMyTaskPage: true,
-      dateCreate: day instanceof dayjs ? day : null
+      dateCreate: day && day.format ? day : null
     }));
   };
   const handleCloseCreateMyTaskPage = () => {
@@ -85,7 +85,7 @@ const useDialogHandlers = (setState) => {
     setState((prevState) => ({
       ...prevState,
       createManagerTaskPage: true,
-      dateCreate: day instanceof dayjs ? day : null
+      dateCreate: day && day.format ? day : null
     }));
   };
   const handleCloseCreateManagerTaskPage = () => {
@@ -138,7 +138,7 @@ const useDialogHandlers = (setState) => {
     setState((prevState) => ({
       ...prevState,
       createMeetingPage: true,
-      dateCreate: day instanceof dayjs ? day : null
+      dateCreate: day && day.format ? day : null
     }));
   };
   const handleCloseCreateMeetingPage = () => {
