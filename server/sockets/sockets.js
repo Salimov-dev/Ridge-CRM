@@ -12,14 +12,18 @@ import SocketUserLicense from "./components/socket-user-license.js";
 import SocketCompany from "./components/socket-company.js";
 import SocketContact from "./components/socket-contact.js";
 import SocketTeammate from "./components/socket-teammate.js";
+import { corsOptions } from "../utils/cors-options.js";
 
 const Sockets = (server) => {
   const io = new Server(server, {
-    cors: {
-      origin: "http://localhost:5173",
-      methods: ["GET", "POST"]
-    }
+    cors: corsOptions
   });
+  // const io = new Server(server, {
+  //   cors: {
+  //     origin: "http://localhost:5173",
+  //     methods: ["GET", "POST"]
+  //   }
+  // });
 
   io.on("connection", (socket) => {
     // console.log(chalk.blue("A user connected"));
