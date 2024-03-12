@@ -40,7 +40,9 @@ const TopBar = React.memo(() => {
       {isLoggedIn ? (
         <>
           <TopBarCurrentDate />
-          <TopBarWeeklyResults />
+          <Box sx={{ display: { xs: "none", md: "block" } }}>
+            <TopBarWeeklyResults />
+          </Box>
         </>
       ) : null}
       <TopBarRightSide />
