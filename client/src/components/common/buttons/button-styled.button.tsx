@@ -241,7 +241,7 @@ const ButtonStyled = ({
         width: width,
         margin: margin,
         whiteSpace: {
-          xs: isLoggedIn ? "nowrap" : "pre-wrap",
+          xs: isLoggedIn ? "pre-wrap" : "nowrap",
           sm: "nowrap"
         },
         "&:hover": {
