@@ -34,7 +34,7 @@ const TopBar = React.memo(() => {
           ? "space-between"
           : { xs: "center", lg: "end" },
         padding: isLoggedIn ? "0" : "0 20px 0 20px",
-        marginBottom: { xs: "40px", lg: "inherit" }
+        marginBottom: { xs: isLoggedIn ? "0" : "40px", lg: "inherit" }
       }}
     >
       {isLoggedIn ? (
