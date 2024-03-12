@@ -1,6 +1,8 @@
 import { useTheme } from "@emotion/react";
 import { Button } from "@mui/material";
+import { getIsLoggedIn } from "@store/user/users.store";
 import { tokens } from "@theme/theme";
+import { useSelector } from "react-redux";
 
 const ButtonStyled = ({
   title = "title",
@@ -22,6 +24,7 @@ const ButtonStyled = ({
 }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  const isLoggedIn = useSelector(getIsLoggedIn());
 
   let color = "white";
   // let colorHover = "black";
@@ -235,11 +238,10 @@ const ButtonStyled = ({
         border: border,
         borderColor: borderColor,
         background: background,
-        whiteSpace: "nowrap",
         width: width,
         margin: margin,
         whiteSpace: {
-          xs: "pre-wrap",
+          xs: isLoggedIn ? "nowrap" : "pre-wrap",
           sm: "nowrap"
         },
         "&:hover": {
