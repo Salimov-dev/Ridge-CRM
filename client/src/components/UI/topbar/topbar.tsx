@@ -30,8 +30,11 @@ const TopBar = React.memo(() => {
   return (
     <Component
       sx={{
-        justifyContent: isLoggedIn ? "space-between" : "end",
-        padding: isLoggedIn ? "0" : "0 20px 0 20px"
+        justifyContent: isLoggedIn
+          ? "space-between"
+          : { xs: "center", lg: "end" },
+        padding: isLoggedIn ? "0" : "0 20px 0 20px",
+        marginBottom: { xs: "40px", lg: "inherit" }
       }}
     >
       {isLoggedIn ? (

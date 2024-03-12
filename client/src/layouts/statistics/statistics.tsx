@@ -8,6 +8,7 @@ import HeaderLayout from "@components/common/page-headers/header-layout";
 import BasicTable from "@components/common/table/basic-table";
 import PieStyled from "@components/common/chart/pie";
 import ChartLine from "@components/common/chart/chart-line";
+import { ContainerStyled } from "@components/common/container/container-styled";
 import StaticticsFiltersPanel from "@components/UI/filters-panels/statictics-filters-panel";
 // hooks
 import useData from "./hooks/use-data";
@@ -29,10 +30,6 @@ import {
   getIsUserCurator,
   getUsersList
 } from "@store/user/users.store";
-
-const Component = styled(Box)`
-  margin-bottom: 150px;
-`;
 
 const ChartsContainer = styled(Box)`
   display: flex;
@@ -116,7 +113,7 @@ const Statictics = React.memo(() => {
   }, []);
 
   return (
-    <Component>
+    <ContainerStyled>
       <HeaderLayout title="Статистика" />
       {isCurator && (
         <StaticticsFiltersPanel
@@ -145,7 +142,7 @@ const Statictics = React.memo(() => {
         isLoading={isObjectsLoading}
         isPaginate={false}
       />
-    </Component>
+    </ContainerStyled>
   );
 });
 

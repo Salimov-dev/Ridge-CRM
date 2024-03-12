@@ -14,6 +14,7 @@ import HeaderLayout from "@components/common/page-headers/header-layout";
 import ItemsOnMap from "@components/common/map/items-on-map/items-on-map";
 import ExportToExelButton from "@components/common/buttons/export-to-excel.button";
 import Buttons from "./components/buttons";
+import { ContainerStyled } from "@components/common/container/container-styled";
 import PageDialogs from "@components/common/dialog/page-dialogs";
 // hooks
 import useSearchObject from "@hooks/object/use-search-object";
@@ -161,7 +162,7 @@ const Objects = React.memo(() => {
   }, [rowSelection]);
 
   return (
-    <>
+    <ContainerStyled>
       <HeaderLayout title="Таблица объектов" />
       <Buttons
         initialState={initialState}
@@ -220,7 +221,7 @@ const Objects = React.memo(() => {
         videoTitle="Как пользоваться страницей с Объектами"
         videoSrc="https://www.youtube.com/embed/zz_SjeT_-M4"
       />
-    </>
+    </ContainerStyled>
   );
 });
 

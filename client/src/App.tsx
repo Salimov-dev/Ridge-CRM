@@ -2,6 +2,7 @@
 import { Box, CssBaseline, ThemeProvider } from "@mui/material";
 import { ToastContainer } from "react-toastify";
 import { useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
 // styled
 import "./styles.css";
 import styled from "@emotion/styled";
@@ -22,7 +23,7 @@ import { ColorModeContext, useMode } from "./theme/theme";
 import AppRoutes from "./routes/routes";
 // sockets
 import Sockets from "./sockets/sockets";
-import { useSelector } from "react-redux";
+// store
 import { getIsLoggedIn } from "@store/user/users.store";
 
 export const AppStyled = styled(Box)`

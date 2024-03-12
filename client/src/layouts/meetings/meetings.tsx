@@ -11,6 +11,7 @@ import HeaderLayout from "@components/common/page-headers/header-layout";
 import Buttons from "./components/buttons";
 import ItemsOnMap from "@components/common/map/items-on-map/items-on-map";
 import PageDialogs from "@components/common/dialog/page-dialogs";
+import { ContainerStyled } from "@components/common/container/container-styled";
 // hooks
 import useSearchMeeting from "@hooks/meeting/use-search-meeting";
 // icons
@@ -122,7 +123,7 @@ const Meetings = React.memo(() => {
   }, []);
 
   return (
-    <>
+    <ContainerStyled>
       <HeaderLayout title="Встречи" />
       <Buttons
         initialState={initialState}
@@ -171,7 +172,7 @@ const Meetings = React.memo(() => {
         videoTitle="Как пользоваться страницей со Встречами"
         videoSrc="https://www.youtube.com/embed/zz_SjeT_-M4"
       />
-    </>
+    </ContainerStyled>
   );
 });
 

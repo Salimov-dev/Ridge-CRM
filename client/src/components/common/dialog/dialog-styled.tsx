@@ -9,7 +9,7 @@ const DialogStyled = ({
   onClose = () => {},
   open = false,
   fullWidth = true,
-  maxWidth = "lg",
+  maxWidth = "lg"
 }) => {
   return (
     <Dialog
@@ -18,6 +18,7 @@ const DialogStyled = ({
       open={open}
       maxWidth={maxWidth}
       scroll="body"
+      fullScreen={window.innerWidth < 700}
     >
       <Container>{component}</Container>
     </Dialog>

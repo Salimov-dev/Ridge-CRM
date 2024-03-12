@@ -9,11 +9,13 @@ import CalendarBody from "@components/common/calendar/calendar-body/calendar-bod
 import HeaderLayout from "@components/common/page-headers/header-layout";
 import PageDialogs from "@components/common/dialog/page-dialogs";
 import CurrentWeeklyMeetings from "./components/meetings/components/current-weekly-meetings";
+import { ContainerStyled } from "@components/common/container/container-styled";
 // columns
 import { tasksColumns } from "@columns/tasks.columns";
 import { meetingsColumns } from "@columns/meetings.columns";
 // utils
 import getMonth from "@utils/calendar/get-month";
+import { getActualUsersList } from "@utils/actual-items/get-actual-users-list";
 // hooks
 import useCalendar from "@hooks/calendar/use-calendar";
 import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
@@ -25,7 +27,6 @@ import {
   getUsersList
 } from "@store/user/users.store";
 import { getObjectsList } from "@store/object/objects.store";
-import { getActualUsersList } from "@utils/actual-items/get-actual-users-list";
 
 const initialState = {
   task: "",
@@ -105,7 +106,7 @@ const Calendar = React.memo(() => {
   }, []);
 
   return (
-    <>
+    <ContainerStyled>
       <HeaderLayout title="Календарь" />
       <CalendarHeader
         setState={setState}
@@ -149,7 +150,7 @@ const Calendar = React.memo(() => {
         videoTitle="Как пользоваться страницей с Календарем"
         videoSrc="https://www.youtube.com/embed/zz_SjeT_-M4"
       />
-    </>
+    </ContainerStyled>
   );
 });
 

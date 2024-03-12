@@ -1,4 +1,3 @@
-import { Box } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
@@ -7,6 +6,7 @@ import Stages from "./components/stages/stages";
 import HeaderLayout from "@components/common/page-headers/header-layout";
 import DealsFiltersPanel from "@components/UI/filters-panels/deals-filters-panel";
 import PageDialogs from "@components/common/dialog/page-dialogs";
+import { ContainerStyled } from "@components/common/container/container-styled";
 // data
 import { allowedStatuses, dealStagesArray } from "@data/deals/deals-stages";
 // hooks
@@ -68,7 +68,7 @@ const Deals = React.memo(() => {
   }, []);
 
   return (
-    <Box>
+    <ContainerStyled>
       <HeaderLayout title="Сделки" />
       {/* {isCurator && (
         <DealsFiltersPanel
@@ -89,7 +89,7 @@ const Deals = React.memo(() => {
         isCurator={isCurator}
       />
       <PageDialogs state={state} setState={setState} />
-    </Box>
+    </ContainerStyled>
   );
 });
 

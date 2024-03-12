@@ -227,7 +227,10 @@ const ButtonStyled = ({
       sx={{
         padding: padding,
         fontSize: fontSize,
-        height: height,
+        height: {
+          xs: "pre-wrap",
+          sm: height
+        },
         color: color,
         border: border,
         borderColor: borderColor,
@@ -235,6 +238,10 @@ const ButtonStyled = ({
         whiteSpace: "nowrap",
         width: width,
         margin: margin,
+        whiteSpace: {
+          xs: "pre-wrap",
+          sm: "nowrap"
+        },
         "&:hover": {
           color: colorHover,
           background: backgroundHover,

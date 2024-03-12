@@ -10,6 +10,7 @@ import HeaderLayout from "@components/common/page-headers/header-layout";
 import PresentationsFiltersPanel from "@components/UI/filters-panels/presentations-filters-panel";
 import ItemsOnMap from "@components/common/map/items-on-map/items-on-map";
 import PageDialogs from "@components/common/dialog/page-dialogs";
+import { ContainerStyled } from "@components/common/container/container-styled";
 import PresentationBaloon from "@components/UI/maps/presentation-baloon";
 import Buttons from "./components/buttons";
 // columns
@@ -152,7 +153,7 @@ const Presentations = React.memo(() => {
   }, [presentationsList, objects]);
 
   return (
-    <>
+    <ContainerStyled>
       <HeaderLayout title="Презентации" />
       <Buttons
         initialState={initialState}
@@ -200,7 +201,7 @@ const Presentations = React.memo(() => {
         videoTitle="Как пользоваться страницей с Презентациями"
         videoSrc="https://www.youtube.com/embed/zz_SjeT_-M4"
       />
-    </>
+    </ContainerStyled>
   );
 });
 

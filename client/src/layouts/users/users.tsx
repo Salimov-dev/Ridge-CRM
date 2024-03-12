@@ -1,8 +1,6 @@
 // libraries
 import React, { useEffect, useState } from "react";
-import { Box } from "@mui/material";
 import { useSelector } from "react-redux";
-import styled from "@emotion/styled";
 import { useForm } from "react-hook-form";
 // components
 import PageDialogs from "@components/common/dialog/page-dialogs";
@@ -10,6 +8,7 @@ import HeaderLayout from "@components/common/page-headers/header-layout";
 import TeamMateTables from "./components/temmate-tables";
 import InformItems from "./components/inform-items";
 import Buttons from "./components/buttons";
+import { ContainerStyled } from "@components/common/container/container-styled";
 // hooks
 import useSearchUser from "@hooks/user/use-search-user";
 import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
@@ -19,10 +18,6 @@ import {
   getUsersList,
   getUsersLoadingStatus
 } from "@store/user/users.store";
-
-const Component = styled(Box)`
-  height: 100%;
-`;
 
 const initialState = {
   lastName: "",
@@ -91,7 +86,7 @@ const Users = React.memo(() => {
   }, []);
 
   return (
-    <Component>
+    <ContainerStyled>
       <HeaderLayout title="Моя команда" />
       <Buttons
         initialState={initialState}
@@ -119,7 +114,7 @@ const Users = React.memo(() => {
         videoTitle="Как пользоваться страницей с Командой"
         videoSrc="https://www.youtube.com/embed/zz_SjeT_-M4"
       />
-    </Component>
+    </ContainerStyled>
   );
 });
 
