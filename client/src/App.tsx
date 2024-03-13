@@ -61,7 +61,7 @@ function App() {
             sx={{
               minWidth: isLoggedIn ? "1400px" : "100%",
               minHeight: isLoggedIn
-                ? { xs: "1900px", sm: "1400px", md: "1000px" }
+                ? { xs: "1900px", sm: "1400px", md: "1000px", lg: "100vh" }
                 : "100vh"
             }}
           >
