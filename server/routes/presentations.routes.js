@@ -3,27 +3,75 @@ import Company from "../models/company/Company.js";
 import User from "../models/User.js";
 import auth from "../middleware/auth.middleware.js";
 import Presentation from "../models/Presentation.js";
+import { roleCurator, roleManager, roleObserver } from "../utils/user-roles.js";
 
 const router = express.Router({ mergeParams: true });
 
 router.get("/", auth, async (req, res) => {
   try {
     const userId = req.user._id;
-    // const user = await User.findOne({ _id: userId });
-    // const userRole = user.role;
+    const user = await User.findByPk(userId);
 
-    // if (userRole === "MANAGER") {
-    //   const presentations = await Presentation.find({ userId });
-    //   return res.status(200).send(presentations);
-    // }
+    if (!user) {
+      return res.status(404).json({ message: "Пользователь не найден" });
+    }
+    const userRole = user.role;
 
-    const presentations = await Presentation.findAll({ where: { userId } });
-    // const managers = await User.find({ curatorId: userId });
-    // const managerIds = managers.map((manager) => manager._id);
-    // const managerPresentations = await Presentation.find({ userId: { $in: managerIds } });
-    // const allPresentations = [...presentations, ...managerPresentations];
+    // если пользователь Менеджер
+    if (userRole.includes(roleManager)) {
+      const presentations = await Presentation.findAll({ where: { userId } });
+      return res.status(200).send(presentations);
+    }
 
-    return res.status(200).send(presentations);
+    // если пользователь Наблюдатель
+    if (userRole.includes(roleObserver)) {
+      const presentations = await Presentation.findAll({ where: { userId } });
+      const curatorId = user.curatorId;
+      const curatorUsers = await User.findAll({ where: { curatorId } });
+      const curatorManagerIds = curatorUsers.map((user) => user._id);
+
+      const curatorManagersPresentations = await Presentation.findAll({
+        where: { userId: curatorManagerIds }
+      });
+
+      // Удалить объекты, которые уже принадлежат пользователю
+      const filteredCuratorManagersPresentations =
+        curatorManagersPresentations.filter((obj) => obj.userId !== userId);
+
+      // Добавить объекты, где userId === curatorId
+      const curatorPresentations = await Presentation.findAll({
+        where: { userId: curatorId }
+      });
+
+      const usersPresentations = [
+        ...presentations,
+        ...filteredCuratorManagersPresentations.map((obj) => obj.dataValues),
+        ...curatorPresentations.map((obj) => obj.dataValues)
+      ];
+
+      return res.status(200).send(usersPresentations);
+    }
+
+    // если пользователь Куратор
+    if (userRole.includes(roleCurator)) {
+      const presentations = await Presentation.findAll({ where: { userId } });
+
+      const curatorUsers = await User.findAll({ where: { curatorId: userId } });
+      const curatorManagerIds = curatorUsers.map((user) => user._id);
+
+      const curatorManagersPresentations = await Presentation.findAll({
+        where: { userId: curatorManagerIds }
+      });
+
+      const usersPresentations = [
+        ...presentations,
+        ...curatorManagersPresentations.map((obj) => obj.dataValues)
+      ];
+
+      return res.status(200).send(usersPresentations);
+    }
+
+    return res.status(200).send([]);
   } catch (e) {
     res.status(500).json({
       message: "На сервере произошла ошибка, попробуйте позже"
@@ -34,9 +82,6 @@ router.get("/", auth, async (req, res) => {
 router.post("/create", auth, async (req, res) => {
   try {
     const userId = req.user._id;
-    // const company = await Company.findOne({
-    //   $or: [{ managers: userId }, { curators: userId }],
-    // });
 
     const newPresentation = await Presentation.create({
       ...req.body,

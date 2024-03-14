@@ -16,12 +16,43 @@ router.get("/", auth, async (req, res) => {
     }
     const userRole = user.role;
 
+    // если пользователь Менеджер
     if (userRole.includes(roleManager)) {
       const lastContacts = await LastContact.findAll({ where: { userId } });
       return res.status(200).send(lastContacts);
     }
 
-    if (userRole.includes(roleCurator) || userRole.includes(roleObserver)) {
+    // если пользователь Наблюдатель
+    if (userRole.includes(roleObserver)) {
+      const lastContacts = await LastContact.findAll({ where: { userId } });
+      const curatorId = user.curatorId;
+      const curatorUsers = await User.findAll({ where: { curatorId } });
+      const curatorManagerIds = curatorUsers.map((user) => user._id);
+
+      const curatorManagerslastContacts = await LastContact.findAll({
+        where: { userId: curatorManagerIds }
+      });
+
+      // Удалить последние контакты, которые уже принадлежат пользователю
+      const filteredCuratorManagerslastContacts =
+        curatorManagerslastContacts.filter((obj) => obj.userId !== userId);
+
+      // Добавить последние контакты, где userId === curatorId
+      const curatorlastContacts = await LastContact.findAll({
+        where: { userId: curatorId }
+      });
+
+      const userslastContacts = [
+        ...lastContacts,
+        ...filteredCuratorManagerslastContacts.map((obj) => obj.dataValues),
+        ...curatorlastContacts.map((obj) => obj.dataValues)
+      ];
+
+      return res.status(200).send(userslastContacts);
+    }
+
+    // если пользователь Куратор
+    if (userRole.includes(roleCurator)) {
       const lastContacts = await LastContact.findAll({ where: { userId } });
 
       const curatorUsers = await User.findAll({ where: { curatorId: userId } });

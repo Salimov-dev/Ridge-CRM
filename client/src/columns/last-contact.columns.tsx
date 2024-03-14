@@ -14,13 +14,16 @@ import { FormatDate } from "@utils/date/format-date";
 import { getLastContactsById } from "@store/last-contact/last-contact.store";
 import {
   getCurrentUserId,
-  getIsUserAuthorThisEntity
+  getIsUserAuthorThisEntity,
+  getIsUserManager
 } from "@store/user/users.store";
 // hooks
 import useGetUserAvatar from "@hooks/user/use-get-user-avatar";
 
-export const lastContactColumns = (onUpdate, onOpenContactPage, isCurator) => {
+export const lastContactColumns = (onUpdate, onOpenContactPage) => {
   let columns = [];
+  const currentUserId = useSelector(getCurrentUserId());
+  const isManager = useSelector(getIsUserManager(currentUserId));
 
   const mainColumns = [
     {
@@ -110,7 +113,7 @@ export const lastContactColumns = (onUpdate, onOpenContactPage, isCurator) => {
     }
   };
 
-  if (isCurator) {
+  if (!isManager) {
     columns = [...mainColumns];
   } else {
     columns = [...mainColumns];

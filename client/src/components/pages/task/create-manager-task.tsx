@@ -52,8 +52,6 @@ const CreateManagerTask = React.memo(
       resolver: yupResolver(taskManagerSchema)
     });
     const data = watch();
-    console.log("data", data);
-    console.log("errors", errors);
 
     const objectManagerId = watch("managerId");
     const objects = useSelector(getObjectsList());

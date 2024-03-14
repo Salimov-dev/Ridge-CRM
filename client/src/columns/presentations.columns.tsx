@@ -18,16 +18,18 @@ import { getPresentationStatusNameById } from "@store/presentation/presentation-
 import { getPresentationById } from "@store/presentation/presentations.store";
 import {
   getCurrentUserId,
-  getIsUserAuthorThisEntity
+  getIsUserAuthorThisEntity,
+  getIsUserManager
 } from "@store/user/users.store";
 
 export const presentationsColumns = (
   handleOpenObjectPage,
   handleOpenUpdatePresentationPage,
-  isDialogPage,
-  isCurator
+  isDialogPage
 ) => {
   let columns = [];
+  const currentUserId = useSelector(getCurrentUserId());
+  const isManager = useSelector(getIsUserManager(currentUserId));
 
   const firstColumns = {
     accessorKey: "created_at",
@@ -168,7 +170,7 @@ export const presentationsColumns = (
     }
   ];
 
-  if (isCurator) {
+  if (!isManager) {
     columns = [firstColumns, objectColumn, managerColumns, ...otherColumn];
   } else {
     columns = [firstColumns, objectColumn, ...otherColumn];

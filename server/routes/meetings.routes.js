@@ -16,11 +16,43 @@ router.get("/", auth, async (req, res) => {
     }
     const userRole = user.role;
 
+    // если пользователь Менеджер
     if (userRole.includes(roleManager)) {
       const meetings = await Meeting.findAll({ where: { userId } });
       return res.status(200).send(meetings);
     }
 
+    // если пользователь Наблюдатель
+    if (userRole.includes(roleObserver)) {
+      const meetings = await Meeting.findAll({ where: { userId } });
+      const curatorId = user.curatorId;
+      const curatorUsers = await User.findAll({ where: { curatorId } });
+      const curatorManagerIds = curatorUsers.map((user) => user._id);
+
+      const curatorManagersMeetings = await Meeting.findAll({
+        where: { userId: curatorManagerIds }
+      });
+
+      // Удалить встречи, которые уже принадлежат пользователю
+      const filteredCuratorManagersMeetings = curatorManagersMeetings.filter(
+        (obj) => obj.userId !== userId
+      );
+
+      // Добавить встречи, где userId === curatorId
+      const curatorMeetings = await Meeting.findAll({
+        where: { userId: curatorId }
+      });
+
+      const usersMeetings = [
+        ...meetings,
+        ...filteredCuratorManagersMeetings.map((meet) => meet.dataValues),
+        ...curatorMeetings.map((meet) => meet.dataValues)
+      ];
+
+      return res.status(200).send(usersMeetings);
+    }
+
+    // если пользователь Куратор
     if (userRole.includes(roleCurator) || userRole.includes(roleObserver)) {
       const meetings = await Meeting.findAll({ where: { userId } });
 

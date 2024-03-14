@@ -20,11 +20,13 @@ router.get("/", auth, async (req, res) => {
     }
     const userRole = user.role;
 
+    // если пользователь Менеджер
     if (userRole.includes(roleManager)) {
       const objects = await Object.findAll({ where: { userId } });
       return res.status(200).send(objects);
     }
 
+    // если пользователь Наблюдатель
     if (userRole.includes(roleObserver)) {
       const objects = await Object.findAll({ where: { userId } });
       const curatorId = user.curatorId;
@@ -54,6 +56,7 @@ router.get("/", auth, async (req, res) => {
       return res.status(200).send(usersObjects);
     }
 
+    // если пользователь Куратор
     if (userRole.includes(roleCurator)) {
       const objects = await Object.findAll({ where: { userId } });
 

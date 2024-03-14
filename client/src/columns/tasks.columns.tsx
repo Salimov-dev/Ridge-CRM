@@ -14,7 +14,8 @@ import { getObjectById } from "@store/object/objects.store";
 import { getTaskById } from "@store/task/tasks.store";
 import {
   getCurrentUserId,
-  getIsUserAuthorThisEntity
+  getIsUserAuthorThisEntity,
+  getIsUserManager
 } from "@store/user/users.store";
 // utils
 import { FormatDate } from "@utils/date/format-date";
@@ -26,10 +27,11 @@ export const tasksColumns = (
   handleOpenUpdateMyTaskPage,
   handleOpenUpdateManagerTaskPage,
   handleOpenObjectPage,
-  isDialogPage,
-  isCurator
+  isDialogPage
 ) => {
   let columns = [];
+  const currentUserId = useSelector(getCurrentUserId());
+  const isManager = useSelector(getIsUserManager(currentUserId));
 
   const dateColumn = {
     header: "Дата и время выполнения задачи",
@@ -244,7 +246,7 @@ export const tasksColumns = (
     ]
   };
 
-  if (isCurator) {
+  if (!isManager) {
     columns = [dateColumn, otherColumns];
   } else {
     columns = [dateColumn, otherColumns];

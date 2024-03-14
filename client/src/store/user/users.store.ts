@@ -244,6 +244,7 @@ export const getIsUserManager = (userId) => (state) => {
 
   const roleManager = "69gfoep3944jgjdso345002";
   const isManager = userRole?.includes(roleManager);
+  // console.log("isManager", isManager);
 
   return isManager;
 };
@@ -267,21 +268,6 @@ export const getIsUserObserver = (userId) => (state) => {
 
   return isObserver;
 };
-// export const getIsUserCurator = (userId) => (state) => {
-//   const user = state.users.entities?.find((user) => user?._id === userId);
-//   const userRole = user?.role;
-//   const roleCurator = "69gfoep3944jgjdso345003";
-
-//   console.log("roleCurator:", roleCurator);
-//   console.log("userRole:", userRole);
-
-//   const isCurator =
-//     userRole?.find((role) => role === roleCurator) !== undefined;
-
-//   console.log("isCurator:", isCurator);
-
-//   return isCurator;
-// };
 
 export const getIsUserAuthorThisEntity = (userId, entity) => (state) => {
   const user = state.users.entities?.find((user) => user?._id === userId);

@@ -38,7 +38,6 @@ const ObjectTasks = ({
   const currentUserId = useSelector(getCurrentUserId());
   const isCurator = useSelector(getIsUserCurator(currentUserId));
   const isObjectAuthorObserver = useSelector(getIsUserObserver(object?.userId));
-  console.log("isObserver", isObjectAuthorObserver);
 
   const tasks = useSelector(getObjectTasksList(objectId));
 

@@ -21,16 +21,18 @@ import { getMeetingById } from "@store/meeting/meetings.store";
 import {
   getCurrentUserId,
   getIsUserAuthorThisEntity,
+  getIsUserManager,
   getUserDataById
 } from "@store/user/users.store";
 
 export const meetingsColumns = (
   handleOpenUpdateMeetingPage,
   handleOpenObjectPage,
-  isDialogPage,
-  isCurator
+  isDialogPage
 ) => {
   let columns = [];
+  const currentUserId = useSelector(getCurrentUserId());
+  const isManager = useSelector(getIsUserManager(currentUserId));
 
   const dateColumn = {
     header: "Дата и время встречи",
@@ -242,7 +244,7 @@ export const meetingsColumns = (
     ]
   };
 
-  if (isCurator) {
+  if (!isManager) {
     columns = [dateColumn, managerColumn, otherColumns];
   } else {
     columns = [dateColumn, otherColumns];

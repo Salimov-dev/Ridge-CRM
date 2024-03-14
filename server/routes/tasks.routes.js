@@ -27,8 +27,38 @@ router.get("/", auth, async (req, res) => {
       return res.status(200).send(tasks);
     }
 
-    // если пользователь Куратор или Наблюдатель
-    if (userRole.includes(roleCurator) || userRole.includes(roleObserver)) {
+    // если пользователь Наблюдатель
+    if (userRole.includes(roleObserver)) {
+      const tasks = await Task.findAll({ where: { userId } });
+      const curatorId = user.curatorId;
+      const curatorUsers = await User.findAll({ where: { curatorId } });
+      const curatorManagerIds = curatorUsers.map((user) => user._id);
+
+      const curatorManagersTasks = await Task.findAll({
+        where: { userId: curatorManagerIds }
+      });
+
+      // Удалить задачи, которые уже принадлежат пользователю
+      const filteredCuratorManagersTasks = curatorManagersTasks.filter(
+        (obj) => obj.userId !== userId
+      );
+
+      // Добавить задачи, где userId === curatorId
+      const curatorTasks = await Task.findAll({
+        where: { userId: curatorId }
+      });
+
+      const usersTasks = [
+        ...tasks,
+        ...filteredCuratorManagersTasks.map((task) => task.dataValues),
+        ...curatorTasks.map((task) => task.dataValues)
+      ];
+
+      return res.status(200).send(usersTasks);
+    }
+
+    // если пользователь Куратор
+    if (userRole.includes(roleCurator)) {
       const tasks = await Task.findAll({ where: { userId } });
 
       const curatorUsers = await User.findAll({ where: { curatorId: userId } });
