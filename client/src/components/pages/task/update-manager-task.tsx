@@ -18,6 +18,7 @@ import { taskSchema } from "@schemas/task/task.shema";
 // store
 import { getObjectsList } from "@store/object/objects.store";
 import { getTaskById, removeTask, updateTask } from "@store/task/tasks.store";
+import { getCurrentUserId, getIsUserManager } from "@store/user/users.store";
 
 const UpdateManagerTask = React.memo(
   ({ title, onClose, taskId, users, isObjectPage }) => {
@@ -29,6 +30,7 @@ const UpdateManagerTask = React.memo(
     const [isLoading, setIsLoading] = useState(false);
 
     const task = useSelector(getTaskById(taskId));
+    const isEditMode = taskId ? true : false;
 
     const formatedTask = {
       ...task,
@@ -50,6 +52,8 @@ const UpdateManagerTask = React.memo(
 
     const data = watch();
     const watchManagerId = watch("managerId", null);
+    const currentUserId = useSelector(getCurrentUserId());
+    const isUserManager = useSelector(getIsUserManager(currentUserId));
     const objectId = task?.objectId;
     const objects = useSelector(getObjectsList());
     const selectedManagerObjects = objects?.filter(
@@ -101,7 +105,7 @@ const UpdateManagerTask = React.memo(
     return (
       <>
         <HeaderWithCloseButton
-          title={title}
+          title={!isUserManager ? title : "Изменить задачу от Куратора"}
           background={colors.task["managerTask"]}
           color="white"
           onClose={onClose}
@@ -113,8 +117,8 @@ const UpdateManagerTask = React.memo(
           setValue={setValue}
           watch={watch}
           errors={errors}
-          isCurator={true}
           users={users}
+          isEditMode={true}
           isObjectPage={isObjectPage}
         />
         <SuccessCancelFormButtons

@@ -1,5 +1,5 @@
 import { Typography } from "@mui/material";
-import DividerStyled from "../../../../../components/common/divider/divider-styled";
+import DividerStyled from "@components/common/divider/divider-styled";
 
 const Result = ({ task }) => {
   const result = task?.result;

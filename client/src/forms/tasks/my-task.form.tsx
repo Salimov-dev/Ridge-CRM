@@ -1,27 +1,39 @@
-import { FieldsContainer, Form } from "../../components/common/forms/styled";
-import TextFieldStyled from "../../components/common/inputs/text-field-styled";
-import DatePickerStyled from "../../components/common/inputs/date-picker";
-import TimePickerStyled from "../../components/common/inputs/time-picker";
-import SimpleSwitch from "../../components/common/inputs/simple-switch";
-import AutocompleteStyled from "../../components/common/inputs/autocomplete-styled";
+import { useSelector } from "react-redux";
+// components
+import { FieldsContainer, Form } from "@components/common/forms/styled";
+import TextFieldStyled from "@components/common/inputs/text-field-styled";
+import DatePickerStyled from "@components/common/inputs/date-picker";
+import TimePickerStyled from "@components/common/inputs/time-picker";
+import SimpleSwitch from "@components/common/inputs/simple-switch";
+import AutocompleteStyled from "@components/common/inputs/autocomplete-styled";
+// utils
 import { capitalizeFirstLetter } from "@utils/data/capitalize-first-letter";
+import {
+  getCurrentUserId,
+  getIsUserCurator,
+  getIsUserManager
+} from "@store/user/users.store";
 
 const MyTaskForm = ({
   data,
   objects,
+  users,
   register,
   setValue,
   watch,
   errors = null,
-  isCurator = false,
   isEditMode = false,
-  users,
-  isObjectPage = false
+  isObjectPage = false,
+  isMyTask = false
 }) => {
   const watchObjectId = watch("objectId");
   const watchIsDone = watch("isDone");
   const watchIsCallTask = watch("isCallTask");
   const watchManagerId = watch("managerId");
+
+  const currentUserId = useSelector(getCurrentUserId());
+  const isUserManager = useSelector(getIsUserManager(currentUserId));
+  const isUserCurator = useSelector(getIsUserCurator(currentUserId));
 
   return (
     <Form noValidate>
@@ -30,6 +42,7 @@ const MyTaskForm = ({
           title="Сделать звонок"
           value={watchIsCallTask}
           padding="0px"
+          disabled={!isUserCurator && isEditMode}
           onChange={(e) => {
             setValue("isCallTask", e.target.checked);
           }}
@@ -42,6 +55,7 @@ const MyTaskForm = ({
           label="Дата *"
           value={data?.date || null}
           errors={errors?.date}
+          disabled={!isMyTask && !isUserCurator && isEditMode}
           onChange={(value) => setValue("date", value)}
         />
         <TimePickerStyled
@@ -51,21 +65,11 @@ const MyTaskForm = ({
           required={true}
           value={data?.time}
           setValue={setValue}
+          disabled={!isMyTask && !isUserCurator && isEditMode}
           errors={errors?.time}
         />
       </FieldsContainer>
-      <AutocompleteStyled
-        label="Объект"
-        register={register}
-        name="objectId"
-        options={objects}
-        value={data.objectId}
-        setValue={setValue}
-        watchItemId={watchObjectId}
-        disabled={isObjectPage}
-        optionLabel={(option) => `${option?.city}, ${option?.address}`}
-      />
-      {isCurator && (
+      {isUserCurator && !isMyTask && (
         <AutocompleteStyled
           label="Менеджер"
           register={register}
@@ -74,10 +78,25 @@ const MyTaskForm = ({
           value={watchManagerId}
           setValue={setValue}
           watchItemId={watchManagerId}
+          errors={errors?.managerId}
           disabled={isObjectPage && !!watchManagerId}
           optionLabel={(option) => `${option?.name}`}
         />
       )}
+      {(isMyTask || (watchManagerId && watchObjectId)) && (
+        <AutocompleteStyled
+          label="Объект"
+          register={register}
+          name="objectId"
+          options={objects}
+          value={data.objectId}
+          setValue={setValue}
+          watchItemId={watchObjectId || ""}
+          disabled={!isMyTask && (isObjectPage || !watchManagerId)}
+          optionLabel={(option) => `${option?.city}, ${option?.address}`}
+        />
+      )}
+
       <TextFieldStyled
         register={register}
         label="Комментарий"
@@ -87,6 +106,7 @@ const MyTaskForm = ({
         required={true}
         multiline={true}
         errors={errors?.comment}
+        disabled={!isMyTask && isUserManager}
         inputProps={{ maxLength: 200 }}
       />
       {isEditMode ? (
@@ -94,9 +114,10 @@ const MyTaskForm = ({
           register={register}
           label="Результат"
           name="result"
-          value={capitalizeFirstLetter(data?.result)}
+          value={capitalizeFirstLetter(data?.result) || ""}
           rows="2"
           multiline={true}
+          disabled={!isMyTask && !isUserManager}
           inputProps={{ maxLength: 100 }}
         />
       ) : null}

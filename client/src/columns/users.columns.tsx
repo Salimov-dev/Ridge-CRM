@@ -16,6 +16,7 @@ import { getContactsList } from "@store/contact/contact.store";
 import { getCompaniesList } from "@store/company/company.store";
 import { getPresentationsList } from "@store/presentation/presentations.store";
 import { getUserStatusNameById } from "@store/user-params/user-statuses.store";
+import { Box } from "@mui/material";
 
 export const usersColumns = (onOpenUpdateUserPage) => [
   {
@@ -28,6 +29,26 @@ export const usersColumns = (onOpenUpdateUserPage) => [
           const date = info.getValue();
 
           return <AlignCenter>{FormatDate(date)}</AlignCenter>;
+        }
+      },
+      {
+        accessorKey: "color",
+        header: "Цвет",
+        cell: (info) => {
+          const color = info.getValue();
+
+          return (
+            <AlignCenter>
+              <Box
+                sx={{
+                  width: "20px",
+                  height: "20px",
+                  borderRadius: "50%",
+                  background: color
+                }}
+              ></Box>
+            </AlignCenter>
+          );
         }
       },
       {
@@ -49,6 +70,7 @@ export const usersColumns = (onOpenUpdateUserPage) => [
           );
         }
       },
+
       {
         accessorKey: "lastName",
         header: "Фамилия",

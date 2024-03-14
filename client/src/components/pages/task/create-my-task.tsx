@@ -15,8 +15,6 @@ import LoaderFullWindow from "@components/common/loader/loader-full-window";
 import { createTask } from "@store/task/tasks.store";
 // schema
 import { taskSchema } from "@schemas/task/task.shema";
-// utils
-import { capitalizeFirstLetter } from "@utils/data/capitalize-first-letter";
 
 const initialState = {
   date: null,
@@ -103,6 +101,7 @@ const CreateMyTask = React.memo(
           watch={watch}
           errors={errors}
           isObjectPage={isObjectPage}
+          isMyTask={true}
         />
         <SuccessCancelFormButtons
           onSuccess={handleSubmit(onSubmit)}

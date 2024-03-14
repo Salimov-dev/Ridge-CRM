@@ -2,6 +2,7 @@ import express from "express";
 import auth from "../middleware/auth.middleware.js";
 import Task from "../models/Task.js";
 import User from "../models/User.js";
+import { Op } from "sequelize";
 import { roleCurator, roleManager, roleObserver } from "../utils/user-roles.js";
 
 const router = express.Router({ mergeParams: true });
@@ -16,11 +17,17 @@ router.get("/", auth, async (req, res) => {
     }
     const userRole = user.role;
 
+    // если пользователь Менеджер
     if (userRole.includes(roleManager)) {
-      const tasks = await Task.findAll({ where: { userId } });
+      const tasks = await Task.findAll({
+        where: {
+          [Op.or]: [{ userId }, { managerId: userId }]
+        }
+      });
       return res.status(200).send(tasks);
     }
 
+    // если пользователь Куратор или Наблюдатель
     if (userRole.includes(roleCurator) || userRole.includes(roleObserver)) {
       const tasks = await Task.findAll({ where: { userId } });
 

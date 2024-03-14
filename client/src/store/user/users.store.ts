@@ -240,18 +240,48 @@ export const getUserDataById = (id) => (state) => {
 
 export const getIsUserManager = (userId) => (state) => {
   const user = state.users.entities?.find((user) => user?._id === userId);
-  const isManager = user?.role === "MANAGER";
+  const userRole = user?.role;
+
+  const roleManager = "69gfoep3944jgjdso345002";
+  const isManager = userRole?.includes(roleManager);
+
   return isManager;
 };
 
 export const getIsUserCurator = (userId) => (state) => {
-  const user = state?.users?.entities?.find((user) => user?._id === userId);
+  const user = state.users.entities?.find((user) => user?._id === userId);
+  const userRole = user?.role;
 
   const roleCurator = "69gfoep3944jgjdso345003";
-  const isCurator = user?.role?.includes(roleCurator) || false;
+  const isCurator = userRole?.includes(roleCurator);
 
   return isCurator;
 };
+
+export const getIsUserObserver = (userId) => (state) => {
+  const user = state.users.entities?.find((user) => user?._id === userId);
+  const userRole = user?.role;
+
+  const roleCurator = "69dgp34954igfj345043001";
+  const isObserver = userRole?.includes(roleCurator);
+
+  return isObserver;
+};
+// export const getIsUserCurator = (userId) => (state) => {
+//   const user = state.users.entities?.find((user) => user?._id === userId);
+//   const userRole = user?.role;
+//   const roleCurator = "69gfoep3944jgjdso345003";
+
+//   console.log("roleCurator:", roleCurator);
+//   console.log("userRole:", userRole);
+
+//   const isCurator =
+//     userRole?.find((role) => role === roleCurator) !== undefined;
+
+//   console.log("isCurator:", isCurator);
+
+//   return isCurator;
+// };
 
 export const getIsUserAuthorThisEntity = (userId, entity) => (state) => {
   const user = state.users.entities?.find((user) => user?._id === userId);

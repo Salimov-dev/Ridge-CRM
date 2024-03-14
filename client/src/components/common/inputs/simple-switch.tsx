@@ -4,7 +4,7 @@ import {
   FormControlLabel,
   FormGroup,
   Switch,
-  styled,
+  styled
 } from "@mui/material";
 import { useState } from "react";
 
@@ -26,6 +26,7 @@ const SimpleSwitch = ({
   whiteSpace = "nowrap",
   isLoading = false,
   padding = "5px 15px 5px 0px",
+  disabled = false
 }) => {
   const [checked, setChecked] = useState(value);
 
@@ -45,7 +46,7 @@ const SimpleSwitch = ({
               <Switch
                 color="success"
                 checked={value}
-                disabled={isLoading}
+                disabled={disabled}
                 onChange={handleChange}
               />
             }
@@ -54,7 +55,7 @@ const SimpleSwitch = ({
             sx={{
               width: "100%",
               whiteSpace: whiteSpace,
-              color: checked ? "white" : "gray",
+              color: checked ? "white" : "gray"
             }}
           />
         </FormGroup>

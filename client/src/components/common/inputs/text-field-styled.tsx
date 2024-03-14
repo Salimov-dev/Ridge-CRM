@@ -1,7 +1,6 @@
 import { useTheme } from "@emotion/react";
 import { Box, TextField, styled, FormHelperText } from "@mui/material";
 import { tokens } from "@theme/theme";
-import Errors from "./components/errors";
 import { capitalizeFirstLetter } from "@utils/data/capitalize-first-letter";
 
 const StyledTextField = styled(TextField)(({ colors }) => ({
@@ -77,7 +76,9 @@ const TextFieldStyled = ({
         colors={colors}
       />
       {isHelperText ? <FormHelperText>{subtitle}</FormHelperText> : null}
-      <Errors errors={errors} padding="0 0 0 10px" />
+      <FormHelperText sx={{ color: "yellow", paddingLeft: "10px" }}>
+        {errors?.message}
+      </FormHelperText>
     </Box>
   );
 };

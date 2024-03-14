@@ -19,6 +19,7 @@ import { capitalizeFirstLetter } from "@utils/data/capitalize-first-letter";
 // store
 import { createTask } from "@store/task/tasks.store";
 import { getObjectById, getObjectsList } from "@store/object/objects.store";
+import { taskManagerSchema } from "@schemas/task/task-manager.shema";
 
 const initialState = {
   comment: "",
@@ -48,10 +49,17 @@ const CreateManagerTask = React.memo(
     } = useForm({
       defaultValues: initialState,
       mode: "onChange",
-      resolver: yupResolver(taskSchema)
+      resolver: yupResolver(taskManagerSchema)
     });
     const data = watch();
+    console.log("data", data);
+    console.log("errors", errors);
+
+    const objectManagerId = watch("managerId");
     const objects = useSelector(getObjectsList());
+    const managerObjects = objects?.filter(
+      (obj) => obj.userId === objectManagerId
+    );
     const currentObject = useSelector(getObjectById(objectId));
     const managerId = currentObject?.userId;
 
@@ -97,7 +105,7 @@ const CreateManagerTask = React.memo(
         />
         <MyTaskForm
           data={data}
-          objects={objects}
+          objects={managerObjects}
           register={register}
           setValue={setValue}
           watch={watch}

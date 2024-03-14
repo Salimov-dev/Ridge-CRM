@@ -22,9 +22,16 @@ router.get("/", auth, async (req, res) => {
 
     // если пользователь Менеджер
     if (userRole.includes(roleManager)) {
+      const curatorId = user.curatorId;
+      const userCurator = await User.findByPk(curatorId);
+
       const userToSend = { ...user.dataValues };
-      delete userToSend.password; // удаляем пароль
-      return res.status(200).send([userToSend]);
+      const userCuratorToSend = { ...userCurator.dataValues };
+
+      delete userToSend.password; // удаляем пароль менеджера
+      delete userCurator.password; // удаляем пароль куратора
+
+      return res.status(200).send([userToSend, userCuratorToSend]);
     }
 
     // если пользователь Куратор или Наблюдатель

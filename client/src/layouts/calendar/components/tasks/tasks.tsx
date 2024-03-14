@@ -51,6 +51,7 @@ const Tasks = ({
       {tasks?.map((task) => {
         const taskIsDone = task?.isDone;
         const taskIsCall = task?.isCallTask;
+        const result = task?.result;
 
         return (
           <ItemContainer
@@ -97,7 +98,8 @@ const Tasks = ({
               </Typography>
             ) : null}
             <TaskObject task={task} setState={setState} />
-            {isSelectedDayDialog ? <Result task={task} /> : null}
+            {/* {isSelectedDayDialog ? <Result task={task} /> : null} */}
+            {result ? <Result task={task} /> : null}
           </ItemContainer>
         );
       })}
