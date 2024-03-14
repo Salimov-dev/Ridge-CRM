@@ -24,7 +24,11 @@ import useGetUserAvatar from "@hooks/user/use-get-user-avatar";
 // store
 import { getLastContactsList } from "@store/last-contact/last-contact.store";
 import { getDistrictName } from "@store/object-params/districts.store";
-import { getUserDataById } from "@store/user/users.store";
+import {
+  getCurrentUserId,
+  getIsUserManager,
+  getUserDataById
+} from "@store/user/users.store";
 import { getTasksList } from "@store/task/tasks.store";
 import {
   getMeetingsList,
@@ -56,12 +60,13 @@ function IndeterminateCheckbox({
 
 export const objectsColumns = (
   handleOpenObjectPage,
-  isCurator,
   handleOpenContactPage,
   handleOpenUpdateCompanyPage,
   isHideCheckbox
 ) => {
   let columns = [];
+  const currentUserId = useSelector(getCurrentUserId());
+  const isManager = useSelector(getIsUserManager(currentUserId));
 
   const selectColumn = {
     id: "select",
@@ -358,7 +363,7 @@ export const objectsColumns = (
     ]
   };
 
-  if (isCurator) {
+  if (!isManager) {
     columns = [
       ...(!isHideCheckbox ? [selectColumn] : []),
       dateColumn,

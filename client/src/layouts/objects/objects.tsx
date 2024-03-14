@@ -26,6 +26,7 @@ import {
   getCurrentUserId,
   getIsLoggedIn,
   getIsUserCurator,
+  getIsUserManager,
   getUsersLoadingStatus
 } from "@store/user/users.store";
 import {
@@ -101,6 +102,7 @@ const Objects = React.memo(() => {
     useSelector(getIsLoggedIn()) && useSelector(getUsersLoadingStatus());
 
   const isCurator = useSelector(getIsUserCurator(currentUserId));
+  const isManager = useSelector(getIsUserManager(currentUserId));
   const isHideCheckbox = isCurator ? false : true;
 
   const objects = useSelector(getObjectsList());
@@ -203,7 +205,8 @@ const Objects = React.memo(() => {
           isCurator,
           handleOpenContactPage,
           handleOpenUpdateCompanyPage,
-          isHideCheckbox
+          isHideCheckbox,
+          isManager
         )}
         isLoading={isUsersLoading}
       />

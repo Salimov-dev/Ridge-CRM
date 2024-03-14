@@ -8,6 +8,11 @@ import {
   getObjectTasksList,
   getTaskLoadingStatus
 } from "@store/task/tasks.store";
+import {
+  getCurrentUserId,
+  getIsUserCurator,
+  getIsUserObserver
+} from "@store/user/users.store";
 
 const Component = styled(Box)`
   display: flex;
@@ -30,7 +35,10 @@ const ObjectTasks = ({
   isAuthorEntity
 }) => {
   const isTasksLoading = useSelector(getTaskLoadingStatus());
-  const address = `${object?.city}, ${object?.address}`;
+  const currentUserId = useSelector(getCurrentUserId());
+  const isCurator = useSelector(getIsUserCurator(currentUserId));
+  const isObjectAuthorObserver = useSelector(getIsUserObserver(object?.userId));
+  console.log("isObserver", isObjectAuthorObserver);
 
   const tasks = useSelector(getObjectTasksList(objectId));
 
@@ -53,13 +61,16 @@ const ObjectTasks = ({
             onClick={() => onOpenCreateMyTask(objectId)}
           />
         ) : (
-          <ButtonStyled
-            title="Поставить менеджеру задачу"
-            style="MANAGER_TASK"
-            variant="contained"
-            width="260px"
-            onClick={() => onOpenCreateManagerTask(objectId)}
-          />
+          isCurator &&
+          !isObjectAuthorObserver && (
+            <ButtonStyled
+              title="Поставить менеджеру задачу"
+              style="MANAGER_TASK"
+              variant="contained"
+              width="260px"
+              onClick={() => onOpenCreateManagerTask(objectId)}
+            />
+          )
         )}
       </Container>
 

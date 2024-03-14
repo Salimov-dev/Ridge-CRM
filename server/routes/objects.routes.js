@@ -25,7 +25,36 @@ router.get("/", auth, async (req, res) => {
       return res.status(200).send(objects);
     }
 
-    if (userRole.includes(roleCurator) || userRole.includes(roleObserver)) {
+    if (userRole.includes(roleObserver)) {
+      const objects = await Object.findAll({ where: { userId } });
+      const curatorId = user.curatorId;
+      const curatorUsers = await User.findAll({ where: { curatorId } });
+      const curatorManagerIds = curatorUsers.map((user) => user._id);
+
+      const curatorManagersObjects = await Object.findAll({
+        where: { userId: curatorManagerIds }
+      });
+
+      // Удалить объекты, которые уже принадлежат пользователю
+      const filteredCuratorManagersObjects = curatorManagersObjects.filter(
+        (obj) => obj.userId !== userId
+      );
+
+      // Добавить объекты, где userId === curatorId
+      const curatorObjects = await Object.findAll({
+        where: { userId: curatorId }
+      });
+
+      const usersObjects = [
+        ...objects,
+        ...filteredCuratorManagersObjects.map((obj) => obj.dataValues),
+        ...curatorObjects.map((obj) => obj.dataValues)
+      ];
+
+      return res.status(200).send(usersObjects);
+    }
+
+    if (userRole.includes(roleCurator)) {
       const objects = await Object.findAll({ where: { userId } });
 
       const curatorUsers = await User.findAll({ where: { curatorId: userId } });

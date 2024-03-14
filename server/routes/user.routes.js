@@ -34,8 +34,37 @@ router.get("/", auth, async (req, res) => {
       return res.status(200).send([userToSend, userCuratorToSend]);
     }
 
-    // если пользователь Куратор или Наблюдатель
-    if (userRole.includes(roleCurator) || userRole.includes(roleObserver)) {
+    // если пользователь Наблюдатель
+    if (userRole.includes(roleObserver)) {
+      const curatorId = user.curatorId;
+      const userCurator = await User.findByPk(curatorId);
+
+      // Добавить юзеров, где userId === curatorId
+      const curatorUsers = await User.findAll({
+        where: { curatorId: userCurator._id } // Найти пользователей с curatorId равным userCurator._id
+      });
+
+      const userToSend = { ...user.dataValues };
+      const userCuratorToSend = { ...userCurator.dataValues };
+
+      delete userToSend.password; // удаляем пароль менеджера
+      delete userCuratorToSend.password; // удаляем пароль куратора
+
+      const managerList = [
+        userToSend,
+        userCuratorToSend,
+        ...curatorUsers.map((user) => {
+          const userData = { ...user.dataValues };
+          delete userData.password;
+          return userData;
+        })
+      ];
+
+      return res.status(200).send(managerList);
+    }
+
+    // если пользователь Куратор
+    if (userRole.includes(roleCurator)) {
       const curatorUsers = await User.findAll({ where: { curatorId: userId } });
       const usersData = [
         { ...user.dataValues, password: undefined },

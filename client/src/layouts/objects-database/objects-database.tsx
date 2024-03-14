@@ -186,7 +186,6 @@ const ObjectsDatabase = React.memo(() => {
           items={filteredObjects}
           itemsColumns={objectsColumns(
             handleOpenObjectPage,
-            isCurator,
             () => {},
             () => {},
             isHideCheckbox
