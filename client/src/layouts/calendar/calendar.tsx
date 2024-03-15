@@ -128,8 +128,7 @@ const Calendar = React.memo(() => {
           handleOpenUpdateMyTaskPage,
           handleOpenUpdateManagerTaskPage,
           handleOpenObjectPage,
-          isDialogPage,
-          null
+          isDialogPage
         )}
         setValue={setValue}
       />
@@ -138,8 +137,7 @@ const Calendar = React.memo(() => {
         columns={meetingsColumns(
           handleOpenUpdateMeetingPage,
           handleOpenObjectPage,
-          isDialogPage,
-          null
+          isDialogPage
         )}
       />
       <PageDialogs

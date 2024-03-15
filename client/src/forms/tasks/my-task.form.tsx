@@ -83,7 +83,7 @@ const MyTaskForm = ({
           optionLabel={(option) => `${option?.name}`}
         />
       )}
-      {(isMyTask || (watchManagerId && watchObjectId)) && (
+      {(isMyTask || watchManagerId) && !(isEditMode && !watchObjectId) && (
         <AutocompleteStyled
           label="Объект"
           register={register}

@@ -1,7 +1,7 @@
 // libraries
 import { toast } from "react-toastify";
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useTheme } from "@emotion/react";
 import { useForm } from "react-hook-form";
 import { tokens } from "@theme/theme";
@@ -15,6 +15,8 @@ import LoaderFullWindow from "@components/common/loader/loader-full-window";
 import { createTask } from "@store/task/tasks.store";
 // schema
 import { taskSchema } from "@schemas/task/task.shema";
+import { getCurrentUserId } from "@store/user/users.store";
+import { getObjectsList } from "@store/object/objects.store";
 
 const initialState = {
   date: null,
@@ -55,6 +57,13 @@ const CreateMyTask = React.memo(
     });
     const data = watch();
     const watchIsCallTask = watch("isCallTask");
+    const currentUserId = useSelector(getCurrentUserId());
+
+    const objectsList = useSelector(getObjectsList());
+    const currentUserObjects = objectsList?.filter(
+      (obj) => obj?.userId === currentUserId
+    );
+    const isMyTask = true;
 
     const onSubmit = () => {
       setIsLoading(true);
@@ -95,13 +104,13 @@ const CreateMyTask = React.memo(
         />
         <MyTaskForm
           data={data}
-          objects={objects}
+          objects={isMyTask ? currentUserObjects : objects}
           register={register}
           setValue={setValue}
           watch={watch}
           errors={errors}
           isObjectPage={isObjectPage}
-          isMyTask={true}
+          isMyTask={isMyTask}
         />
         <SuccessCancelFormButtons
           onSuccess={handleSubmit(onSubmit)}
