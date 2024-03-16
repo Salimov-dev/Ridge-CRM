@@ -244,7 +244,6 @@ export const getIsUserManager = (userId) => (state) => {
 
   const roleManager = "69gfoep3944jgjdso345002";
   const isManager = userRole?.includes(roleManager);
-  // console.log("isManager", isManager);
 
   return isManager;
 };

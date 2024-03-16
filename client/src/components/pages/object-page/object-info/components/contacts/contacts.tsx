@@ -49,7 +49,6 @@ const Contacts = ({ object, setState }) => {
         items={userContacts}
         itemsColumns={contactsColumns(
           handleOpenContactPage,
-          isCurator,
           isHideCheckbox,
           handleOpenUpdateCompanyPage,
           object,

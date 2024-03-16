@@ -14,7 +14,10 @@ import { getPresentationsLoadingStatus } from "@store/presentation/presentations
 import { getMeetingLoadingStatus } from "@store/meeting/meetings.store";
 import { getTaskLoadingStatus } from "@store/task/tasks.store";
 import { getCurrentUserId, getIsUserCurator } from "@store/user/users.store";
-import { getContactsList } from "@store/contact/contact.store";
+import {
+  getContactLoadingStatus,
+  getContactsList
+} from "@store/contact/contact.store";
 import { getCurrentWeekContacts } from "@utils/contacts/get-current-week-contacts";
 
 const ResultComponent = styled(Box)`
@@ -36,6 +39,7 @@ const TopBarWeeklyResults = React.memo(() => {
   const isObjectLoading = useSelector(getObjectsLoadingStatus());
 
   const contacts = getCurrentWeekContacts();
+  const isContactsLoading = useSelector(getContactLoadingStatus());
 
   const presentations = getCurrentWeekPresentations();
   const isPresentationsLoading = useSelector(getPresentationsLoadingStatus());
@@ -75,7 +79,7 @@ const TopBarWeeklyResults = React.memo(() => {
           elements={contacts}
           path="/contacts"
           backgroundColor="OrangeRed"
-          isLoading={isObjectLoading}
+          isLoading={isContactsLoading}
         />
         <TopBarDataContainter
           title="Презентаций:"

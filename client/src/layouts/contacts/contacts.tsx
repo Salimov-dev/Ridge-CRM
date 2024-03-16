@@ -127,7 +127,6 @@ const Contacts = React.memo(() => {
         items={sortedContacts}
         itemsColumns={contactsColumns(
           handleOpenContactPage,
-          isCurator,
           isHideCheckbox,
           handleOpenUpdateCompanyPage,
           {},

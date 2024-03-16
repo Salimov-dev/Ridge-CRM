@@ -6,7 +6,6 @@ import auth from "../middleware/auth.middleware.js";
 import { roleCurator, roleManager, roleObserver } from "../utils/user-roles.js";
 import Company from "../models/company/Company.js";
 import Contact from "../models/contact/Contact.js";
-import { sequelize } from "../utils/postgre-conection.js";
 
 const router = express.Router({ mergeParams: true });
 

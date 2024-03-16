@@ -8,7 +8,7 @@ export const getCurrentWeekContacts = () => {
 
   if (contacts) {
     const weeklyContacts = contacts?.filter((cont) => {
-      const createdAt = dayjs(cont?.date);
+      const createdAt = dayjs(cont?.created_at);
       const startOfWeek = currentDate.startOf("week");
       const endOfWeek = currentDate.endOf("week");
       return createdAt.isBetween(startOfWeek, endOfWeek);

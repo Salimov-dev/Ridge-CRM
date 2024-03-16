@@ -8,6 +8,7 @@ import localStorageService from "@services/user/local.storage-service";
 import contactService from "@services/contact/contact.service";
 // config
 import configFile from "@config/config.json";
+// store
 import { updateObjects } from "@store/object/objects.store";
 
 const socket = io(configFile.ioEndPoint);

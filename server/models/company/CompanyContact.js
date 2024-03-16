@@ -24,7 +24,7 @@ const CompanyContact = sequelize.define(
       type: DataTypes.UUID,
       allowNull: false
     },
-    contact: { type: DataTypes.STRING },
+    contactId: { type: DataTypes.STRING },
     created_at: {
       type: DataTypes.DATE,
       defaultValue: DataTypes.NOW

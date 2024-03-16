@@ -9,11 +9,16 @@ import { FormatPhone } from "@components/common/table/helpers/helpers";
 import ButtonStyled from "@components/common/buttons/button-styled.button";
 import CompanyTableEntity from "@components/common/table-entities/company-table-entity";
 import ObjectTableEntity from "@components/common/table-entities/object-table-entity";
+import UserNameWithAvatar from "@components/common/user/user-name-with-avatar";
+// hooks
+import useGetUserAvatar from "@hooks/user/use-get-user-avatar";
 // store
 import { getPositionNameById } from "@store/contact/contact-positions.store";
-import { getUserDataById } from "@store/user/users.store";
-import useGetUserAvatar from "@hooks/user/use-get-user-avatar";
-import UserNameWithAvatar from "@components/common/user/user-name-with-avatar";
+import {
+  getCurrentUserId,
+  getIsUserManager,
+  getUserDataById
+} from "@store/user/users.store";
 
 function IndeterminateCheckbox({
   indeterminate,
@@ -40,13 +45,14 @@ function IndeterminateCheckbox({
 
 export const contactsColumns = (
   handleOpenContactPage,
-  isCurator,
   isHideCheckbox,
   handleOpenUpdateCompanyPage,
   object,
   handleOpenObjectPage
 ) => {
   let columns = [];
+  const currentUserId = useSelector(getCurrentUserId());
+  const isManager = useSelector(getIsUserManager(currentUserId));
 
   const selectColumn = {
     id: "select",
@@ -173,9 +179,9 @@ export const contactsColumns = (
       enableSorting: false,
       cell: (info) => {
         const row = info.getValue();
-        const phone = row.phones.find(
-          (phone) => phone.isDefault === true
-        ).phone;
+        const phone = row?.phones.find(
+          (phone) => phone?.isDefault === true
+        )?.phone;
         return phone ? (
           <AlignCenter>{FormatPhone(phone)}</AlignCenter>
         ) : (
@@ -185,27 +191,30 @@ export const contactsColumns = (
     }
   ];
 
-  const managerColumn = [
-    {
-      accessorKey: "userId",
-      header: "Менеджер",
-      cell: (info) => {
-        const userId = info.getValue();
-        const user = useSelector(getUserDataById(userId));
-        const { getAvatarSrc, isLoading } = useGetUserAvatar(user?._id);
+  const managerColumn = {
+    header: "Менеджер",
+    columns: [
+      {
+        accessorKey: "userId",
+        header: "Фамилия и Имя",
+        cell: (info) => {
+          const userId = info.getValue();
+          const user = useSelector(getUserDataById(userId));
+          const { getAvatarSrc, isLoading } = useGetUserAvatar(user?._id);
 
-        return (
-          <AlignCenter>
-            <UserNameWithAvatar
-              userId={userId}
-              avatarSrc={getAvatarSrc()}
-              isLoading={isLoading}
-            />
-          </AlignCenter>
-        );
+          return (
+            <AlignCenter>
+              <UserNameWithAvatar
+                userId={userId}
+                avatarSrc={getAvatarSrc()}
+                isLoading={isLoading}
+              />
+            </AlignCenter>
+          );
+        }
       }
-    }
-  ];
+    ]
+  };
 
   const openContactColumn = {
     accessorKey: "_id",
@@ -227,13 +236,12 @@ export const contactsColumns = (
     }
   };
 
-  if (isCurator) {
+  if (isManager) {
     columns = [
       dateColumn,
       ...contactsColumn,
       positionColumn,
       objectsColumn,
-      ...managerColumn,
       commentColumn,
       openContactColumn
     ];
@@ -243,14 +251,11 @@ export const contactsColumns = (
       ...contactsColumn,
       positionColumn,
       objectsColumn,
+      managerColumn,
       commentColumn,
       openContactColumn
     ];
   }
-
-  // if (isCurator && !isHideCheckbox) {
-  //   columns.unshift(selectColumn);
-  // }
 
   return columns;
 };

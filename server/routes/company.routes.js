@@ -4,6 +4,7 @@ import auth from "../middleware/auth.middleware.js";
 import User from "../models/User.js";
 import { roleCurator, roleManager, roleObserver } from "../utils/user-roles.js";
 import Object from "../models/Object.js";
+import Contact from "../models/contact/Contact.js";
 
 const router = express.Router({ mergeParams: true });
 
@@ -187,8 +188,76 @@ router.patch("/:companyId?/edit", auth, async (req, res) => {
       }
     });
 
+    //// РАБОТАЕМ С УДАЛЕННЫМИ И ДОБАВЛЕННЫМИ В КОМПАНИЮ КОНТАКТАМИ ///////
+    const previousContacts = req.body.previousContacts;
+    const removedContacts = req.body.removedContacts;
+    const addedContacts = req.body.addedContacts;
+    const removedContactIds = removedContacts.map((contact) => contact.contact);
+    console.log("req.body", req.body);
+    if (!previousContacts || !removedContacts || !addedContacts) {
+      const updatedContact = await Contact.update(newData, {
+        where: { _id: companyId }
+      });
+      return res.send(updatedContact);
+    }
+
+    // Находим все контакты, которые есть в массиве removedContactIds
+    const contactsRemovedContacts = await Contact.findAll({
+      where: {
+        _id: removedContactIds
+      }
+    });
+
+    // Получаем связанные контакты для обновления
+    const contactsToUpdate = await Contact.findAll({
+      where: {
+        // Проверяем, есть ли контакты, которые были добавлены
+        _id: addedContacts.map((cont) => cont.contact)
+      }
+    });
+
+    // Обновляем список компаний у каждого контакта
+    for (const contact of contactsToUpdate) {
+      let companies = contact.dataValues.companies || [];
+
+      // Проверяем, есть ли уже такая компания у контакта
+      const foundCompanyIndex = companies.findIndex(
+        (company) => company.company === companyId
+      );
+
+      if (foundCompanyIndex === -1) {
+        // Если компания не найдена, добавляем новую компанию в массив
+        companies.push({ company: companyId });
+      }
+
+      contact.companies = companies;
+
+      // Сохраняем обновление для данного контакта
+      await Contact.update({ companies }, { where: { _id: contact._id } });
+    }
+
+    // Удаление компании из списков компаний в удаленных контакта
+    for (const contact of contactsRemovedContacts) {
+      // Фильтрация массива компаний каждой объекты
+      const updatedCompanies = contact.companies.filter(
+        (comp) => comp.company !== companyId
+      );
+
+      // Обновляем компанию с новым списком компаний
+      await contact.update({ companies: updatedCompanies });
+    }
+
+    const updatedContacts = await Contact.findAll({
+      where: {
+        _id: contactsToUpdate.map((cont) => cont._id) // Используйте свойство _id для поиска контактов
+      }
+    });
+
+    /////////////////////////////////////
+
     res.status(200).json({
       updatedObjects: uniqueUpdatedObjects,
+      updatedContacts,
       previousObjects
     });
   } catch (e) {
@@ -208,7 +277,7 @@ router.delete("/:companyId?", auth, async (req, res) => {
       });
     }
 
-    const deletedCompany = await company.findByPk(companyId);
+    const deletedCompany = await Company.findByPk(companyId);
 
     if (!deletedCompany) {
       return res.status(404).json({
