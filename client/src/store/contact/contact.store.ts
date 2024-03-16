@@ -59,7 +59,7 @@ const contactsSlice = createSlice({
       ] = action.payload;
     },
     contactsUpdateSuccessed: (state, action) => {
-      const updatedContacts = action.payload;
+      const { updatedContacts } = action.payload;
 
       state.entities = state.entities.map((comp) => {
         const updatedContact = updatedContacts.find(

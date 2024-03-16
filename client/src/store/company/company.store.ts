@@ -9,6 +9,7 @@ import companyService from "@services/company/company.service";
 // config
 import configFile from "@config/config.json";
 import { updateObjects } from "@store/object/objects.store";
+import { updateContacts } from "@store/contact/contact.store";
 
 const socket = io(configFile.ioEndPoint);
 
@@ -138,6 +139,7 @@ export const updateCompany = (payload) => async (dispatch) => {
     const { content } = await companyService.update(payload);
 
     dispatch(updateObjects(content));
+    dispatch(updateContacts(content));
     socket.emit("companyUpdated", payload);
   } catch (error) {
     dispatch(companyUpdateFailed(error.message));

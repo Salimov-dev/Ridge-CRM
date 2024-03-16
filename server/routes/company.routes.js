@@ -253,11 +253,44 @@ router.patch("/:companyId?/edit", auth, async (req, res) => {
       }
     });
 
-    /////////////////////////////////////
+    // Добавляем в обновленные контакты добавленные компании
+    addedContacts.forEach((addedContact) => {
+      const foundContact = updatedContacts.find(
+        (contact) => contact._id === addedContact.contact
+      );
+      if (foundContact) updatedContacts.push(foundContact);
+    });
+
+    const removedContactsList = await Contact.findAll({
+      where: {
+        _id: removedContacts.map((contact) => contact.contact)
+      }
+    });
+
+    // Добавляем удаленную компанию, если она была удалена из updatedContacts
+    removedContactsList.forEach((removedContact) => {
+      const foundContact = updatedContacts.find(
+        (contact) => contact._id === removedContact.contact
+      );
+      if (!foundContact) {
+        updatedContacts.push(removedContact);
+      }
+    });
+
+    const updatedContactsSet = new Set();
+    const uniqueUpdatedContacts = [];
+
+    // Фильтруем контакты и добавляем уникальные контакты в массив uniqueUpdatedContacts
+    updatedContacts.forEach((cont) => {
+      if (!updatedContactsSet.has(cont._id)) {
+        uniqueUpdatedContacts.push(cont);
+        updatedContactsSet.add(cont._id);
+      }
+    });
 
     res.status(200).json({
       updatedObjects: uniqueUpdatedObjects,
-      updatedContacts,
+      updatedContacts: uniqueUpdatedContacts,
       previousObjects
     });
   } catch (e) {
