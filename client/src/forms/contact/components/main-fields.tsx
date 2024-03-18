@@ -9,6 +9,7 @@ import TextFieldStyled from "@components/common/inputs/text-field-styled";
 import SelectFieldStyled from "@components/common/inputs/select-field-styled";
 // store
 import { getWorkingPositionsList } from "@store/user-params/working-position.store";
+import { capitalizeFirstLetter } from "@utils/data/capitalize-first-letter";
 
 const MainFields = ({ register, data, errors, watch }) => {
   const workingPositions = useSelector(getWorkingPositionsList());
@@ -22,9 +23,8 @@ const MainFields = ({ register, data, errors, watch }) => {
         label="Имя"
         name="name"
         required={true}
-        errors={errors.name}
+        errors={capitalizeFirstLetter(errors.name)}
         value={data.name}
-        isCapitalize={true}
         inputProps={{ maxLength: 150 }}
         InputProps={{
           endAdornment: (
@@ -50,7 +50,6 @@ const MainFields = ({ register, data, errors, watch }) => {
         name="comment"
         errors={errors.comment}
         value={data.comment}
-        isCapitalize={true}
         inputProps={{ maxLength: 150 }}
         InputProps={{
           endAdornment: (

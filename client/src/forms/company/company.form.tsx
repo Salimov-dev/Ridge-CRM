@@ -4,6 +4,7 @@ import SelectFieldStyled from "../../components/common/inputs/select-field-style
 import { companyProfilesArray } from "@data/company-profiles";
 import FieldsObject from "../../components/common/forms/dynamic-fields/fields-object";
 import FieldsContact from "../../components/common/forms/dynamic-fields/fields-contact";
+import { capitalizeFirstLetter } from "@utils/data/capitalize-first-letter";
 
 const CompanyForm = ({
   data,
@@ -21,10 +22,9 @@ const CompanyForm = ({
           register={register}
           label="Название компании"
           name="name"
-          isCapitalize={true}
           required={true}
           errors={errors?.name}
-          value={data?.name}
+          value={capitalizeFirstLetter(data?.name)}
           inputProps={{ maxLength: 150 }}
         />
         <SelectFieldStyled

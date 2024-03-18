@@ -66,6 +66,7 @@ const LeftSide = ({ setState }) => {
       </Typography>
       <Typography
         sx={{
+          color: "GreenYellow",
           fontSize: { xs: "12px", sm: "16px", lg: "20px" },
           lineHeight: "1.4",
           textAlign: { xs: "center", lg: "start" }

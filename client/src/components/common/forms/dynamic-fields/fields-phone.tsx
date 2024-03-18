@@ -93,6 +93,7 @@ const FieldsPhone = ({ data, register, setValue, errors, control }) => {
               <DeleteElementIcon
                 onClick={() => handleRemovePhone(index)}
                 error={errors?.phones?.[index]?.phone}
+                disabled={data?.phones?.length <= 1}
               />
               <TextFieldStyled
                 register={register}
@@ -141,7 +142,7 @@ const FieldsPhone = ({ data, register, setValue, errors, control }) => {
           style="REMOVE_SOME_NEW"
           width="100%"
           size="small"
-          disabled={!data?.phones?.length}
+          disabled={data?.phones?.length <= 1}
           icon={<DoNotDisturbOnOutlinedIcon />}
           onClick={() => handleRemovePhone(lastPhoneIndex)} // передаем функцию removePhone с аргументом
         />

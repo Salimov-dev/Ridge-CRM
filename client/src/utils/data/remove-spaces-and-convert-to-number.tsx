@@ -7,9 +7,9 @@ export const removeSpacesAndConvertToNumber = (str) => {
   // Убираем все пробелы из строки и преобразуем в число
   const numberWithoutSpaces = Number(str.replace(/\s/g, ""));
 
-  return isNaN(numberWithoutSpaces)
-    ? null
-    : numberWithoutSpaces === 0
+  // Проверяем, является ли результат числом
+  // Если не является числом или равен 0, возвращаем null
+  return isNaN(numberWithoutSpaces) || numberWithoutSpaces === 0
     ? null
     : numberWithoutSpaces;
 };

@@ -1,7 +1,7 @@
 import HighlightOffOutlinedIcon from "@mui/icons-material/HighlightOffOutlined";
 import ButtonStyled from "../button-styled.button";
 
-const DeleteElementIcon = ({ onClick, error }) => {
+const DeleteElementIcon = ({ onClick, error, disabled = false }) => {
   return (
     <ButtonStyled
       title={null}
@@ -9,6 +9,7 @@ const DeleteElementIcon = ({ onClick, error }) => {
       padding="0"
       variant="text"
       height="100%"
+      disabled={disabled}
       margin={error ? "-19px -4px 0 -10px" : "-4px -4px 0 -10px"}
       backgroundHover={null}
       icon={
@@ -16,7 +17,7 @@ const DeleteElementIcon = ({ onClick, error }) => {
           sx={{
             height: "100%",
             width: "26px",
-            color: "IndianRed",
+            color: disabled ? "grey" : "IndianRed",
             marginRight: "-16px",
             "&:hover": {
               color: "red",

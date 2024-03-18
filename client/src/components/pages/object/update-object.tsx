@@ -32,13 +32,9 @@ const UpdateObject = React.memo(({ onClose, objectId }) => {
   const transformedObject = {
     ...object,
     advanseDeposit: String(object.advanseDeposit),
-    agentComission: String(object.agentComission),
-    electricityKw: String(object.electricityKw),
     parkingQuantity: String(object.parkingQuantity),
-    indexingAnnual: String(object.indexingAnnual),
     rentPrice: String(object.rentPrice),
     rentSquare: String(object.rentSquare),
-    rentalHolidays: object.rentalHolidays,
     securityDeposit: String(object.securityDeposit)
   };
 
@@ -74,11 +70,7 @@ const UpdateObject = React.memo(({ onClose, objectId }) => {
     const newData = {
       ...data,
       advanseDeposit: removeSpacesAndConvertToNumber(data.advanseDeposit),
-      agentComission: removeSpacesAndConvertToNumber(data.agentComission),
-      electricityKw: removeSpacesAndConvertToNumber(data.electricityKw),
       parkingQuantity: removeSpacesAndConvertToNumber(data.parkingQuantity),
-      indexingAnnual: removeSpacesAndConvertToNumber(data.indexingAnnual),
-      premisesHeight: removeSpacesAndConvertToNumber(data.premisesHeight),
       rentPrice: removeSpacesAndConvertToNumber(data.rentPrice),
       rentSquare: removeSpacesAndConvertToNumber(data.rentSquare),
       rentalHolidays: data.rentalHolidays,

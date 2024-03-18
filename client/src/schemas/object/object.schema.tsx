@@ -49,10 +49,18 @@ export const objectSchema = yup.object().shape({
         if (value === null) {
           return true; // Пропускаем проверку, если значение равно null
         }
-        return (
-          !isNaN(removeSpacesAndConvertToNumber(value)) &&
-          removeSpacesAndConvertToNumber(value) <= 100
-        ); // Возвращаем true, если значение является числом и не превышает 100
+        const regex = /^[0-9.]+$/; // Регулярное выражение, разрешающее только цифры и точку
+        return regex.test(value); // Возвращаем true, если значение соответствует регулярному выражению
+      }
+    )
+    .test(
+      "is-valid-percent",
+      "Комиссия не может превышать 100%",
+      function (value) {
+        if (value === null) {
+          return true; // Пропускаем проверку, если значение равно null
+        }
+        return parseFloat(value) <= 100; // Возвращаем true, если значение не превышает 100
       }
     )
     .nullable(),
@@ -65,10 +73,32 @@ export const objectSchema = yup.object().shape({
         if (value === null) {
           return true; // Пропускаем проверку, если значение равно null
         }
-        return (
-          !isNaN(removeSpacesAndConvertToNumber(value)) &&
-          removeSpacesAndConvertToNumber(value) <= 100
-        ); // Возвращаем true, если значение является числом и не превышает 100
+        const regex = /^[0-9.]+$/; // Регулярное выражение, разрешающее только цифры и точку
+        return regex.test(value); // Возвращаем true, если значение соответствует регулярному выражению
+      }
+    )
+    .test(
+      "is-valid-percent",
+      "Индексация не может превышать 100%",
+      function (value) {
+        if (value === null) {
+          return true; // Пропускаем проверку, если значение равно null
+        }
+        return parseFloat(value) <= 100; // Возвращаем true, если значение не превышает 100
+      }
+    )
+    .nullable(),
+  cadastralNumber: yup
+    .mixed()
+    .test(
+      "is-valid-number",
+      "Номер должен содержать только цифры, точку и двоеточие",
+      function (value) {
+        if (value === null || value === "") {
+          return true; // Пропускаем проверку, если значение равно null или пустой строке
+        }
+        const regex = /^[0-9:.]+$/; // Регулярное выражение, разрешающее только цифры, точку и двоеточие
+        return regex.test(value); // Возвращаем true, если значение соответствует регулярному выражению
       }
     )
     .nullable(),
@@ -100,7 +130,8 @@ export const objectSchema = yup.object().shape({
         if (value === null) {
           return true; // Пропускаем проверку, если значение равно null
         }
-        return !isNaN(removeSpacesAndConvertToNumber(value));
+        const regex = /^[0-9.]+$/; // Регулярное выражение, разрешающее только цифры и точку
+        return regex.test(value); // Возвращаем true, если значение соответствует регулярному выражению
       }
     )
     .nullable(),
@@ -108,15 +139,13 @@ export const objectSchema = yup.object().shape({
     .mixed()
     .test(
       "is-valid-number",
-      "Высота должна быть числом и не превышать 30м",
+      "Высота потолков должна быть числом",
       function (value) {
         if (value === null) {
           return true; // Пропускаем проверку, если значение равно null
         }
-        return (
-          !isNaN(removeSpacesAndConvertToNumber(value)) &&
-          removeSpacesAndConvertToNumber(value) <= 30
-        ); // Возвращаем true, если значение является числом и не превышает 100
+        const regex = /^[0-9.]+$/; // Регулярное выражение, разрешающее только цифры и точку
+        return regex.test(value); // Возвращаем true, если значение соответствует регулярному выражению
       }
     )
     .nullable(),

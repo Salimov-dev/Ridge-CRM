@@ -18,6 +18,7 @@ import { useSelector } from "react-redux";
 import { getEstateConditionNameById } from "@store/object-params/object-conditions.store";
 import { getDistrictName } from "@store/object-params/districts.store";
 import { AlignCenter } from "@components/common/columns/styled";
+import makeToLocalString from "@utils/data/make-to-local-string";
 
 export const locationColumns = [
   {
@@ -277,7 +278,7 @@ export const commercialTermsColumns = [
     cell: (info) => {
       const square = info.getValue();
       return square ? (
-        <AlignCenter>{`${makeDigitSeparator(square)}м²`}</AlignCenter>
+        <AlignCenter>{`${makeToLocalString(square)}м²`}</AlignCenter>
       ) : (
         <EmptyTd />
       );
@@ -290,7 +291,7 @@ export const commercialTermsColumns = [
     cell: (info) => {
       const price = info.getValue();
       return price ? (
-        <AlignCenter>{`${makeDigitSeparator(price)}₽`}</AlignCenter>
+        <AlignCenter>{`${makeToLocalString(price)}₽`}</AlignCenter>
       ) : (
         <EmptyTd />
       );
@@ -302,11 +303,11 @@ export const commercialTermsColumns = [
     enableSorting: false,
     cell: (info) => {
       const object = info.getValue();
-      const rentPrice = object?.rentPrice;
-      const rentSquare = object?.rentSquare;
+      const rentPrice = Number(object?.rentPrice);
+      const rentSquare = Number(object?.rentSquare);
       const priceForMetr = Math.round(rentPrice / rentSquare);
 
-      const result = makeDigitSeparator(priceForMetr);
+      const result = makeToLocalString(priceForMetr);
       if (priceForMetr) {
         return <AlignCenter>{`${result}₽/м²`}</AlignCenter>;
       } else return <EmptyTd />;
@@ -319,7 +320,7 @@ export const commercialTermsColumns = [
     cell: (info) => {
       const indexing = info.getValue();
       return indexing ? (
-        <AlignCenter>{`${makeDigitSeparator(indexing)}%`}</AlignCenter>
+        <AlignCenter>{`${makeToLocalString(indexing)}%`}</AlignCenter>
       ) : (
         <EmptyTd />
       );
@@ -345,7 +346,7 @@ export const commercialTermsColumns = [
     cell: (info) => {
       const securityDeposit = info.getValue();
       return securityDeposit ? (
-        <AlignCenter>{`${makeDigitSeparator(securityDeposit)}₽`}</AlignCenter>
+        <AlignCenter>{`${makeToLocalString(securityDeposit)}₽`}</AlignCenter>
       ) : (
         <EmptyTd />
       );
@@ -358,7 +359,7 @@ export const commercialTermsColumns = [
     cell: (info) => {
       const advanseDeposit = info?.getValue()?.advanseDeposit;
       return advanseDeposit ? (
-        <AlignCenter>{`${makeDigitSeparator(advanseDeposit)}₽`}</AlignCenter>
+        <AlignCenter>{`${makeToLocalString(advanseDeposit)}₽`}</AlignCenter>
       ) : (
         <EmptyTd />
       );
@@ -371,7 +372,7 @@ export const commercialTermsColumns = [
       const object = info.getValue();
       const agentComission = object?.agentComission;
       return agentComission ? (
-        <AlignCenter>{`${makeDigitSeparator(agentComission)}%`}</AlignCenter>
+        <AlignCenter>{`${makeToLocalString(agentComission)}%`}</AlignCenter>
       ) : (
         <EmptyTd />
       );
