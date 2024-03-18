@@ -46,8 +46,8 @@ export const objectSchema = yup.object().shape({
       "is-valid-number",
       "Комиссия должна быть числом и не превышать 100%",
       function (value) {
-        if (value === null) {
-          return true; // Пропускаем проверку, если значение равно null
+        if (value === "" || value === null) {
+          return true; // Пропускаем проверку, если значение равно пустой строке или null
         }
         const regex = /^[0-9.]+$/; // Регулярное выражение, разрешающее только цифры и точку
         return regex.test(value); // Возвращаем true, если значение соответствует регулярному выражению
@@ -57,8 +57,8 @@ export const objectSchema = yup.object().shape({
       "is-valid-percent",
       "Комиссия не может превышать 100%",
       function (value) {
-        if (value === null) {
-          return true; // Пропускаем проверку, если значение равно null
+        if (value === "" || value === null) {
+          return true; // Пропускаем проверку, если значение равно пустой строке или null
         }
         return parseFloat(value) <= 100; // Возвращаем true, если значение не превышает 100
       }
@@ -70,7 +70,7 @@ export const objectSchema = yup.object().shape({
       "is-valid-number",
       "Индексация должна быть числом и не превышать 100%",
       function (value) {
-        if (value === null) {
+        if (value === "" || value === null) {
           return true; // Пропускаем проверку, если значение равно null
         }
         const regex = /^[0-9.]+$/; // Регулярное выражение, разрешающее только цифры и точку
@@ -81,7 +81,7 @@ export const objectSchema = yup.object().shape({
       "is-valid-percent",
       "Индексация не может превышать 100%",
       function (value) {
-        if (value === null) {
+        if (value === "" || value === null) {
           return true; // Пропускаем проверку, если значение равно null
         }
         return parseFloat(value) <= 100; // Возвращаем true, если значение не превышает 100
@@ -127,7 +127,7 @@ export const objectSchema = yup.object().shape({
       "is-valid-number",
       "Электричество должно быть числом",
       function (value) {
-        if (value === null) {
+        if (value === "" || value === null) {
           return true; // Пропускаем проверку, если значение равно null
         }
         const regex = /^[0-9.]+$/; // Регулярное выражение, разрешающее только цифры и точку
@@ -141,7 +141,7 @@ export const objectSchema = yup.object().shape({
       "is-valid-number",
       "Высота потолков должна быть числом",
       function (value) {
-        if (value === null) {
+        if (value === "" || value === null) {
           return true; // Пропускаем проверку, если значение равно null
         }
         const regex = /^[0-9.]+$/; // Регулярное выражение, разрешающее только цифры и точку

@@ -5,19 +5,22 @@ import dayjs from "dayjs";
 import { enterPhoneFormat } from "../../../../utils/data/enter-phone-format";
 import { getPriceForRentMetr } from "../../../../utils/data/get-price-rent-for-metr";
 // store
-import { getMetroName } from "../../../../store/object-params/metro.store";
-import { getObjectById } from "../../../../store/object/objects.store";
-import { getUserNameById } from "../../../../store/user/users.store";
-import { getDistrictName } from "../../../../store/object-params/districts.store";
-import { getRentTypeNameById } from "../../../../store/object-params/rent-types.store";
-import { getObjectTypeNameById } from "../../../../store/object-params/object-types.store";
-import { getEstateTypeNameById } from "../../../../store/object-params/estate-types.store";
-import { getObjectStatusNameById } from "../../../../store/object-params/object-status.store";
-import { getCurrentRenterNameById } from "../../../../store/object-params/current-renter.store";
-import { getWorkingPositionNameById } from "../../../../store/user-params/working-position.store";
-import { getEstateConditionNameById } from "../../../../store/object-params/object-conditions.store";
-import { getObjectPropertiesNameById } from "../../../../store/object-params/object-properties";
-import { getTradeAreaNameById } from "../../../../store/object-params/object-trade-area";
+import { getMetroList, getMetroName } from "@store/object-params/metro.store";
+import { getObjectById } from "@store/object/objects.store";
+import { getUserNameById } from "@store/user/users.store";
+import { getDistrictName } from "@store/object-params/districts.store";
+import {
+  getRentTypeNameById,
+  getRentTypesList
+} from "@store/object-params/rent-types.store";
+import { getObjectTypeNameById } from "@store/object-params/object-types.store";
+import { getEstateTypeNameById } from "@store/object-params/estate-types.store";
+import { getObjectStatusNameById } from "@store/object-params/object-status.store";
+import { getCurrentRenterNameById } from "@store/object-params/current-renter.store";
+import { getWorkingPositionNameById } from "@store/user-params/working-position.store";
+import { getEstateConditionNameById } from "@store/object-params/object-conditions.store";
+import { getObjectPropertiesNameById } from "@store/object-params/object-properties";
+import { getTradeAreaNameById } from "@store/object-params/object-trade-area";
 
 export const FormatDate = (date) => {
   return dayjs(date).format("DD.MM.YY");
@@ -48,7 +51,10 @@ export const FormatTypeEstate = (id) => {
 };
 
 export const FormatTypeRent = (id) => {
-  return useSelector(getRentTypeNameById(id));
+  const rentTypes = useSelector(getRentTypesList());
+
+  const type = rentTypes.find((m) => m._id === id);
+  return type ? type.name : "";
 };
 
 export const FormatCurrentRenter = (id) => {
@@ -72,7 +78,9 @@ export const FormatWorkingPosition = (id) => {
 };
 
 export const FormatMetro = (id) => {
-  return useSelector(getMetroName(id));
+  const metroList = useSelector(getMetroList());
+  const metro = metroList.find((m) => m._id === id);
+  return metro ? metro.name : "";
 };
 
 export const priceForMetr = (id) => {

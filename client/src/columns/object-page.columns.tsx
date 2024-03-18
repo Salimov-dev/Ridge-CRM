@@ -15,10 +15,15 @@ import {
 } from "@components/common/table/helpers/helpers";
 import EmptyTd from "@components/common/columns/empty-td";
 import { useSelector } from "react-redux";
-import { getEstateConditionNameById } from "@store/object-params/object-conditions.store";
+import {
+  getEstateConditionNameById,
+  getObjectConditionsList
+} from "@store/object-params/object-conditions.store";
 import { getDistrictName } from "@store/object-params/districts.store";
 import { AlignCenter } from "@components/common/columns/styled";
 import makeToLocalString from "@utils/data/make-to-local-string";
+import { getRentTypesList } from "@store/object-params/rent-types.store";
+import { getMetroList } from "@store/object-params/metro.store";
 
 export const locationColumns = [
   {
@@ -54,12 +59,11 @@ export const locationColumns = [
     header: "Метро",
     enableSorting: false,
     cell: (info) => {
-      const metro = info.getValue();
-      return metro ? (
-        <AlignCenter>{FormatMetro(metro)}</AlignCenter>
-      ) : (
-        <EmptyTd />
-      );
+      const metroId = info.getValue();
+      const metroList = useSelector(getMetroList());
+      const metro = metroList.find((m) => m._id === metroId);
+
+      return metro ? <AlignCenter>{metro.name}</AlignCenter> : <EmptyTd />;
     }
   },
   {
@@ -170,11 +174,13 @@ export const estateTypeColumns = [
     header: "Состояние помещения",
     enableSorting: false,
     cell: (info) => {
-      const сondition = info.getValue();
-      const conditionName = useSelector(getEstateConditionNameById(сondition));
+      const сonditionId = info.getValue();
+
+      const condList = useSelector(getObjectConditionsList());
+      const сondition = condList.find((cond) => cond?._id === сonditionId);
 
       return сondition ? (
-        <AlignCenter>{conditionName}</AlignCenter>
+        <AlignCenter>{сondition?.name}</AlignCenter>
       ) : (
         <EmptyTd />
       );
@@ -380,15 +386,15 @@ export const commercialTermsColumns = [
   },
   {
     accessorKey: "rentTypes",
-    header: "Договор",
+    header: "Тип договора",
     enableSorting: false,
     cell: (info) => {
-      const deal = info.getValue();
-      return deal ? (
-        <AlignCenter>{FormatTypeRent(deal)}</AlignCenter>
-      ) : (
-        <EmptyTd />
-      );
+      const typeId = info.getValue();
+      const rentTypesList = useSelector(getRentTypesList());
+
+      const type = rentTypesList.find((type) => type?._id === typeId);
+
+      return type ? <AlignCenter>{type?.name}</AlignCenter> : <EmptyTd />;
     }
   }
 ];

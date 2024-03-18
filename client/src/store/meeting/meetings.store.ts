@@ -99,7 +99,6 @@ export function createMeeting(payload) {
     dispatch(meetingCreateRequested());
     try {
       const { content } = await meetingsService.create(payload);
-
       socket.emit("meetingCreated", content);
     } catch (error) {
       dispatch(createMeetingFailed(error.message));
