@@ -1,16 +1,28 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   createObjectUpdate,
   removeObjectUpdate,
   updateMultipleObjectsUpdate,
   updateObjectUpdate
 } from "@store/object/objects.store.ts";
+import { getCurrentUserId, getIsUserManager } from "@store/user/users.store";
 
 const handleObjectSocket = (socket) => {
   const dispatch = useDispatch();
+  const currentUserId = useSelector(getCurrentUserId());
+  const isManager = useSelector(getIsUserManager(currentUserId));
 
   socket.on("createObject", async (newObject) => {
-    dispatch<any>(createObjectUpdate(newObject));
+    const objectUserId = newObject?.userId;
+
+    if (
+      isManager === undefined ||
+      (isManager && objectUserId !== currentUserId)
+    ) {
+      return null;
+    } else {
+      dispatch<any>(createObjectUpdate(newObject));
+    }
   });
   socket.on("updateObject", async (updatedObject) => {
     dispatch<any>(updateObjectUpdate(updatedObject));
