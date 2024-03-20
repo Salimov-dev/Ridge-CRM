@@ -12,7 +12,11 @@ import { allowedStatuses, dealStagesArray } from "@data/deals/deals-stages";
 // hooks
 import useSearchDeals from "@hooks/deals/use-search-deals";
 // store
-import { getCurrentUserId, getIsUserCurator } from "@store/user/users.store";
+import {
+  getCurrentUserId,
+  getIsUserCurator,
+  getIsUserManager
+} from "@store/user/users.store";
 import {
   getObjectsList,
   getObjectsLoadingStatus
@@ -44,6 +48,7 @@ const Deals = React.memo(() => {
   const currentUserId = useSelector(getCurrentUserId());
 
   const isCurator = useSelector(getIsUserCurator(currentUserId));
+  const isManager = useSelector(getIsUserManager(currentUserId));
   const isLoading = useSelector(getObjectsLoadingStatus());
   const isInputEmpty = JSON.stringify(initialState) !== JSON.stringify(data);
 
@@ -70,7 +75,7 @@ const Deals = React.memo(() => {
   return (
     <ContainerStyled>
       <HeaderLayout title="Сделки" />
-      {/* {isCurator && (
+      {!isManager && (
         <DealsFiltersPanel
           data={data}
           deals={objectsInDeals}
@@ -81,7 +86,7 @@ const Deals = React.memo(() => {
           isInputEmpty={isInputEmpty}
           isLoading={isLoading}
         />
-      )} */}
+      )}
       <Stages
         objects={searchedDeals}
         setState={setState}

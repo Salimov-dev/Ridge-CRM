@@ -24,11 +24,7 @@ import useGetUserAvatar from "@hooks/user/use-get-user-avatar";
 // store
 import { getLastContactsList } from "@store/last-contact/last-contact.store";
 import { getDistrictName } from "@store/object-params/districts.store";
-import {
-  getCurrentUserId,
-  getIsUserManager,
-  getUserDataById
-} from "@store/user/users.store";
+import { getUserDataById } from "@store/user/users.store";
 import { getTasksList } from "@store/task/tasks.store";
 import {
   getMeetingsList,
@@ -62,11 +58,10 @@ export const objectsColumns = (
   handleOpenObjectPage,
   handleOpenContactPage,
   handleOpenUpdateCompanyPage,
-  isHideCheckbox
+  isHideCheckbox,
+  isManager
 ) => {
   let columns = [];
-  const currentUserId = useSelector(getCurrentUserId());
-  const isManager = useSelector(getIsUserManager(currentUserId));
 
   const selectColumn = {
     id: "select",
@@ -276,14 +271,13 @@ export const objectsColumns = (
 
   const managerColumn = {
     header: "Менеджер",
-    columns: [
+    columns: isManager !== undefined && [
       {
         accessorKey: "userId",
         header: "Фамилия и Имя",
         cell: (info) => {
           const userId = info.getValue();
-          const user = useSelector(getUserDataById(userId));
-          const { getAvatarSrc, isLoading } = useGetUserAvatar(user?._id);
+          const { getAvatarSrc, isLoading } = useGetUserAvatar(userId);
 
           return (
             <AlignCenter>

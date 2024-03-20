@@ -131,15 +131,15 @@ export const meetingsColumns = (
   };
 
   const managerColumn = {
+    id: "managerColumn",
     header: "Менеджер",
-    columns: [
+    columns: isManager !== undefined && [
       {
         accessorKey: "userId",
         header: "Фамилия и Имя",
         cell: (info) => {
           const userId = info.getValue();
-          const user = useSelector(getUserDataById(userId));
-          const { getAvatarSrc, isLoading } = useGetUserAvatar(user?._id);
+          const { getAvatarSrc, isLoading } = useGetUserAvatar(userId);
 
           return (
             <AlignCenter>
@@ -245,16 +245,14 @@ export const meetingsColumns = (
   };
 
   if (!isManager) {
-    columns = [dateColumn, managerColumn, otherColumns];
+    columns = [dateColumn, otherColumns, managerColumn, updateColumn];
   } else {
-    columns = [dateColumn, otherColumns];
+    columns = [dateColumn, otherColumns, updateColumn];
   }
 
   if (!isDialogPage) {
     columns.splice(1, 0, meetingObjectColumn);
   }
-
-  columns.push(updateColumn);
 
   return columns;
 };

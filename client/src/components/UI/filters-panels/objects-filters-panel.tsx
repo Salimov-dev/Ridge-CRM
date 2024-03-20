@@ -14,7 +14,7 @@ import { getActualStatusesList } from "@utils/actual-items/get-actual-statuses-l
 import { getActualUsersList } from "@utils/actual-items/get-actual-users-list";
 
 const ObjectsFiltersPanel = React.memo(
-  ({ setValue, objects, statuses, data, register, isCurator, isLoading }) => {
+  ({ setValue, objects, statuses, data, register, isManager, isLoading }) => {
     const {
       getActualCitiesList,
       getActualDistrictsList,
@@ -26,7 +26,7 @@ const ObjectsFiltersPanel = React.memo(
       getActualObjectTradeArea
     } = useObjectsFiltersPanel(objects);
 
-    const usersList = getActualUsersList(objects);
+    const usersList = getActualUsersList(objects, true);
 
     const statusesList = getActualStatusesList(objects, statuses);
 
@@ -199,7 +199,7 @@ const ObjectsFiltersPanel = React.memo(
             inputProps={{ maxLength: 30 }}
             disabled={isLoading ? true : false}
           />
-          {isCurator ? (
+          {!isManager ? (
             <MultiSelectField
               name="users"
               labelId="users-label"

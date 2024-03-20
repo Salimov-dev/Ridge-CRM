@@ -103,6 +103,7 @@ const Objects = React.memo(() => {
 
   const isCurator = useSelector(getIsUserCurator(currentUserId));
   const isManager = useSelector(getIsUserManager(currentUserId));
+
   const isHideCheckbox = isCurator ? false : true;
 
   const objects = useSelector(getObjectsList());
@@ -193,7 +194,7 @@ const Objects = React.memo(() => {
         statuses={objectsSatuses}
         register={register}
         setValue={setValue}
-        isCurator={isCurator}
+        isManager={isManager}
         isLoading={isLoading}
       />
       <BasicTable
@@ -202,7 +203,6 @@ const Objects = React.memo(() => {
         items={sortedObjects}
         itemsColumns={objectsColumns(
           handleOpenObjectPage,
-          isCurator,
           handleOpenContactPage,
           handleOpenUpdateCompanyPage,
           isHideCheckbox,

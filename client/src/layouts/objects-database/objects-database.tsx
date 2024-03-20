@@ -19,7 +19,11 @@ import useSearchObjectDatabase from "@hooks/objects-database/use-search-object-d
 import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
 // store
 import { getObjectsStatusList } from "@store/object-params/object-status.store";
-import { getCurrentUserId, getIsUserCurator } from "@store/user/users.store";
+import {
+  getCurrentUserId,
+  getIsUserCurator,
+  getIsUserManager
+} from "@store/user/users.store";
 import {
   getObjectsList,
   getObjectsLoadingStatus
@@ -47,7 +51,11 @@ const ObjectsDatabase = React.memo(() => {
     objectId: null
   });
 
-  const { handleOpenObjectPage } = useDialogHandlers(setState);
+  const {
+    handleOpenObjectPage,
+    handleOpenContactPage,
+    handleOpenUpdateCompanyPage
+  } = useDialogHandlers(setState);
 
   const localStorageState = JSON.parse(
     localStorage.getItem("search-objectsdatabase-data")
@@ -69,6 +77,7 @@ const ObjectsDatabase = React.memo(() => {
 
   const currentUserId = useSelector(getCurrentUserId());
   const isCurator = useSelector(getIsUserCurator(currentUserId));
+  const isManager = useSelector(getIsUserManager(currentUserId));
   const isHideCheckbox = true;
 
   const { searchedObjects, filteredObjects } = useSearchObjectDatabase(
@@ -186,9 +195,10 @@ const ObjectsDatabase = React.memo(() => {
           items={filteredObjects}
           itemsColumns={objectsColumns(
             handleOpenObjectPage,
-            () => {},
-            () => {},
-            isHideCheckbox
+            handleOpenContactPage,
+            handleOpenUpdateCompanyPage,
+            isHideCheckbox,
+            isManager
           )}
           isLoading={isLoading}
         />

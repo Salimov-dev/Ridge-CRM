@@ -44,25 +44,6 @@ export const lastContactColumns = (onUpdate, onOpenContactPage) => {
       }
     },
     {
-      accessorKey: "userId",
-      header: "Менеджер",
-      enableSorting: false,
-      cell: (info) => {
-        const userId = info.getValue();
-        const { getAvatarSrc, isLoading } = useGetUserAvatar(userId);
-
-        return (
-          <AlignCenter>
-            <UserNameWithAvatar
-              userId={userId}
-              avatarSrc={getAvatarSrc()}
-              isLoading={isLoading}
-            />
-          </AlignCenter>
-        );
-      }
-    },
-    {
       accessorFn: (row) => row,
       header: "Контакты",
       enableSorting: false,
@@ -89,6 +70,31 @@ export const lastContactColumns = (onUpdate, onOpenContactPage) => {
     }
   ];
 
+  const managerColumn =
+    isManager !== undefined
+      ? [
+          {
+            id: "manager",
+            accessorKey: "userId",
+            header: "Фамилия и Имя",
+            cell: (info) => {
+              const userId = info.getValue();
+              const { getAvatarSrc, isLoading } = useGetUserAvatar(userId);
+
+              return (
+                <AlignCenter>
+                  <UserNameWithAvatar
+                    userId={userId}
+                    avatarSrc={getAvatarSrc()}
+                    isLoading={isLoading}
+                  />
+                </AlignCenter>
+              );
+            }
+          }
+        ]
+      : [];
+
   const updateColumn = {
     accessorKey: "_id",
     header: "Править",
@@ -114,7 +120,7 @@ export const lastContactColumns = (onUpdate, onOpenContactPage) => {
   };
 
   if (!isManager) {
-    columns = [...mainColumns];
+    columns = [...mainColumns, ...managerColumn];
   } else {
     columns = [...mainColumns];
   }

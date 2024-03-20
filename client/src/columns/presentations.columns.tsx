@@ -19,7 +19,8 @@ import { getPresentationById } from "@store/presentation/presentations.store";
 import {
   getCurrentUserId,
   getIsUserAuthorThisEntity,
-  getIsUserManager
+  getIsUserManager,
+  getUserDataById
 } from "@store/user/users.store";
 
 export const presentationsColumns = (
@@ -71,23 +72,29 @@ export const presentationsColumns = (
     }
   };
 
-  const managerColumns = {
-    accessorKey: "userId",
-    header: "Менеджер",
-    cell: (info) => {
-      const userId = info.getValue();
-      const { getAvatarSrc, isLoading } = useGetUserAvatar(userId);
+  const managerColumn = {
+    id: "managerColumn",
+    header: null,
+    columns: isManager !== undefined && [
+      {
+        accessorKey: "userId",
+        header: "Фамилия и Имя",
+        cell: (info) => {
+          const userId = info.getValue();
+          const { getAvatarSrc, isLoading } = useGetUserAvatar(userId);
 
-      return (
-        <AlignCenter>
-          <UserNameWithAvatar
-            userId={userId}
-            avatarSrc={getAvatarSrc()}
-            isLoading={isLoading}
-          />
-        </AlignCenter>
-      );
-    }
+          return (
+            <AlignCenter>
+              <UserNameWithAvatar
+                userId={userId}
+                avatarSrc={getAvatarSrc()}
+                isLoading={isLoading}
+              />
+            </AlignCenter>
+          );
+        }
+      }
+    ]
   };
 
   const otherColumn = [
@@ -171,7 +178,7 @@ export const presentationsColumns = (
   ];
 
   if (!isManager) {
-    columns = [firstColumns, objectColumn, managerColumns, ...otherColumn];
+    columns = [firstColumns, objectColumn, managerColumn, ...otherColumn];
   } else {
     columns = [firstColumns, objectColumn, ...otherColumn];
   }

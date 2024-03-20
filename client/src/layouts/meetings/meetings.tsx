@@ -25,7 +25,11 @@ import sortingByDateAndTime from "@utils/other/sorting-by-date-and-time";
 import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
 // store
 import { getMeetingStatusesList } from "@store/meeting/meeting-status.store";
-import { getCurrentUserId, getIsUserCurator } from "@store/user/users.store";
+import {
+  getCurrentUserId,
+  getIsUserCurator,
+  getIsUserManager
+} from "@store/user/users.store";
 import { getMeetingTypesList } from "@store/meeting/meeting-types.store";
 import {
   getMeetingById,
@@ -78,6 +82,7 @@ const Meetings = React.memo(() => {
   const data = watch();
   const currentUserId = useSelector(getCurrentUserId());
   const isCurator = useSelector(getIsUserCurator(currentUserId));
+  const isManager = useSelector(getIsUserManager(currentUserId));
 
   const meetings = useSelector(getMeetingsList());
 
@@ -153,7 +158,7 @@ const Meetings = React.memo(() => {
         types={meetingsTypes}
         register={register}
         setValue={setValue}
-        isCurator={isCurator}
+        isManager={isManager}
         isLoading={isLoading}
       />
       <BasicTable

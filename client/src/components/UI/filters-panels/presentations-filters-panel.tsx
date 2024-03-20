@@ -15,7 +15,7 @@ const PresentationsFiltersPanel = React.memo(
     data,
     register,
     setValue,
-    isCurator,
+    isManager,
     isLoading
   }) => {
     const usersList = getActualUsersList(presentations);
@@ -40,17 +40,15 @@ const PresentationsFiltersPanel = React.memo(
             inputProps={{ maxLength: 30 }}
             disabled={isLoading ? true : false}
           />
-          {isCurator ? (
-            <MultiSelectField
-              name="users"
-              labelId="users-label"
-              label="Выбор по менеджеру"
-              itemsList={usersList}
-              selectedItems={data.selectedUsers}
-              onChange={(e) => setValue("selectedUsers", e.target.value)}
-              disabled={isLoading ? true : false}
-            />
-          ) : null}
+          <MultiSelectField
+            name="selectedStatuses"
+            labelId="selectedStatuses-label"
+            label="Выбор по статусу"
+            itemsList={statusesList}
+            selectedItems={data.selectedStatuses}
+            onChange={(e) => setValue("selectedStatuses", e.target.value)}
+            disabled={isLoading ? true : false}
+          />
         </FieldsContainer>
         <FieldsContainer>
           <SearchDatePicker
@@ -69,15 +67,17 @@ const PresentationsFiltersPanel = React.memo(
             onChange={(value) => setValue("endDate", value)}
             disabled={isLoading ? true : false}
           />
-          <MultiSelectField
-            name="selectedStatuses"
-            labelId="selectedStatuses-label"
-            label="Выбор по статусу"
-            itemsList={statusesList}
-            selectedItems={data.selectedStatuses}
-            onChange={(e) => setValue("selectedStatuses", e.target.value)}
-            disabled={isLoading ? true : false}
-          />
+          {!isManager ? (
+            <MultiSelectField
+              name="users"
+              labelId="users-label"
+              label="Выбор по менеджеру"
+              itemsList={usersList}
+              selectedItems={data.selectedUsers}
+              onChange={(e) => setValue("selectedUsers", e.target.value)}
+              disabled={isLoading ? true : false}
+            />
+          ) : null}
         </FieldsContainer>
       </Form>
     );

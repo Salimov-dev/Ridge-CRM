@@ -23,7 +23,11 @@ import useSearchPresentation from "@hooks/presentation/use-search-presentation";
 import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
 // store
 import { getObjectsList } from "@store/object/objects.store";
-import { getCurrentUserId, getIsUserCurator } from "@store/user/users.store";
+import {
+  getCurrentUserId,
+  getIsUserCurator,
+  getIsUserManager
+} from "@store/user/users.store";
 import { getPresentationStatusList } from "@store/presentation/presentation-status.store";
 import {
   getPresentationsList,
@@ -78,6 +82,7 @@ const Presentations = React.memo(() => {
 
   const isDialogPage = true;
   const isCurator = useSelector(getIsUserCurator(currentUserId));
+  const isManager = useSelector(getIsUserManager(currentUserId));
   const isLoading = useSelector(getPresentationsLoadingStatus());
   const isInputEmpty = JSON.stringify(initialState) !== JSON.stringify(data);
 
@@ -182,7 +187,7 @@ const Presentations = React.memo(() => {
         statuses={presentationsStatuses}
         register={register}
         setValue={setValue}
-        isCurator={isCurator}
+        isManager={isManager}
         isLoading={isLoading}
       />
       <BasicTable

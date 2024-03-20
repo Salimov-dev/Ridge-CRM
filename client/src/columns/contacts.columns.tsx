@@ -192,15 +192,15 @@ export const contactsColumns = (
   ];
 
   const managerColumn = {
-    header: "Менеджер",
-    columns: [
+    id: "managerColumn",
+    header: null,
+    columns: isManager !== undefined && [
       {
         accessorKey: "userId",
         header: "Фамилия и Имя",
         cell: (info) => {
           const userId = info.getValue();
-          const user = useSelector(getUserDataById(userId));
-          const { getAvatarSrc, isLoading } = useGetUserAvatar(user?._id);
+          const { getAvatarSrc, isLoading } = useGetUserAvatar(userId);
 
           return (
             <AlignCenter>

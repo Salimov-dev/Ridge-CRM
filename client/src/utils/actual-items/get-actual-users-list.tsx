@@ -1,8 +1,8 @@
 import { orderBy } from "lodash";
 import { useSelector } from "react-redux";
-import { getCurrentUserId, getUsersList } from "../../store/user/users.store";
+import { getCurrentUserId, getUsersList } from "@store/user/users.store";
 
-export const getActualUsersList = (items) => {
+export const getActualUsersList = (items, noUnique = false) => {
   const users = useSelector(getUsersList());
 
   const filteredUsers = items?.map((item) => item?.userId);
@@ -14,7 +14,9 @@ export const getActualUsersList = (items) => {
     (uniqUser) => uniqUser !== currentUserId
   );
 
-  const actualUsersArray = usersWithoutCurrentUser?.map((id) => {
+  const actualUsersArray = (
+    noUnique ? uniqueUsers : usersWithoutCurrentUser
+  )?.map((id) => {
     const foundObject = users?.find((user) => user._id === id);
     const lastName = foundObject?.lastName;
     const firstName = foundObject?.firstName;

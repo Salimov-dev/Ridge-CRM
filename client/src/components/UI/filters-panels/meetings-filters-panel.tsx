@@ -20,10 +20,11 @@ const MeetingsFiltersPanel = React.memo(
     types,
     register,
     setValue,
-    isCurator,
+    isManager,
     isLoading
   }) => {
-    const usersList = getActualUsersList(meetings);
+    const usersList = getActualUsersList(meetings, true);
+
     const statusesList = getActualStatusesList(meetings, statuses);
 
     const getActualTypesList = () => {
@@ -76,17 +77,6 @@ const MeetingsFiltersPanel = React.memo(
             onChange={(e) => setValue("selectedTypes", e.target.value)}
             disabled={isLoading ? true : false}
           />
-          {isCurator ? (
-            <MultiSelectField
-              name="users"
-              labelId="users-label"
-              label="Выбор по менеджеру"
-              itemsList={usersList}
-              selectedItems={data.selectedUsers}
-              onChange={(e) => setValue("selectedUsers", e.target.value)}
-              disabled={isLoading ? true : false}
-            />
-          ) : null}
         </FieldsContainer>
         <FieldsContainer>
           <SearchDatePicker
@@ -115,6 +105,17 @@ const MeetingsFiltersPanel = React.memo(
             disabled={isLoading ? true : false}
             isSelect={Boolean(data?.meetingsActivity?.length)}
           />
+          {!isManager ? (
+            <MultiSelectField
+              name="users"
+              labelId="users-label"
+              label="Выбор по менеджеру"
+              itemsList={usersList}
+              selectedItems={data.selectedUsers}
+              onChange={(e) => setValue("selectedUsers", e.target.value)}
+              disabled={isLoading ? true : false}
+            />
+          ) : null}
         </FieldsContainer>
       </Form>
     );

@@ -17,7 +17,7 @@ const DealsFiltersPanel = React.memo(
     isInputEmpty,
     isLoading
   }) => {
-    const usersList = getActualUsersList(deals);
+    const usersList = getActualUsersList(deals, true);
 
     return (
       <Form>
