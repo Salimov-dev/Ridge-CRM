@@ -1,9 +1,8 @@
+import { useEffect, useState } from "react";
 import { useTheme } from "@emotion/react";
 import { Box, TextField, styled, FormHelperText } from "@mui/material";
 import { tokens } from "@theme/theme";
-import { capitalizeFirstLetter } from "@utils/data/capitalize-first-letter";
 import { makeDigitSeparator } from "@utils/data/make-digit-separator";
-import { useEffect, useState } from "react";
 
 const StyledTextField = styled(TextField)(({ colors }) => ({
   minWidth: "30px",
@@ -64,7 +63,7 @@ const TextFieldStyled = ({
 
     // Если newValue пустая строка, устанавливаем значение в null
     if (newValue === "") {
-      setValue(null);
+      setValue("");
     } else {
       // Иначе, обновляем значение поля ввода
       setValue(newValue);

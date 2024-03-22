@@ -20,25 +20,29 @@ const ContactTableEntity = ({ contacts, onOpenContactPage }) => {
       {contacts?.length ? (
         contacts.map((contact, index) => {
           const contactId = contact.contact;
+
           const getContactName = (contactId) => {
             const findedContact = contactsList?.find(
               (item) => item._id === contactId
             );
+
             return findedContact?.name;
           };
 
           return (
-            <Component key={contactId}>
-              {getContactName(contactId)}
-              <OpenPageElementIconButton
-                title="Открыть контакт"
-                containerWidth="10px"
-                height="20px"
-                heightButton="20px"
-                width="16px"
-                onClick={() => onOpenContactPage(contactId)}
-              />
-            </Component>
+            getContactName(contactId) && (
+              <Component key={contactId}>
+                {getContactName(contactId)}
+                <OpenPageElementIconButton
+                  title="Открыть контакт"
+                  containerWidth="10px"
+                  height="20px"
+                  heightButton="20px"
+                  width="16px"
+                  onClick={() => onOpenContactPage(contactId)}
+                />
+              </Component>
+            )
           );
         })
       ) : (

@@ -50,7 +50,7 @@ const FieldsContact = ({
       )
   );
 
-  const currentUserContacts = filteredContacts?.filter(
+  const currentUserContacts = contactsList?.filter(
     (cont) => cont.userId === currentUserId
   );
   const watchContactId = watch("contactId");

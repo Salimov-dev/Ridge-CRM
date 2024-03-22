@@ -23,8 +23,8 @@ const MainFields = ({ register, data, errors, watch }) => {
         label="Имя"
         name="name"
         required={true}
-        errors={capitalizeFirstLetter(errors.name)}
-        value={data.name}
+        errors={errors.name}
+        value={capitalizeFirstLetter(data.name)}
         inputProps={{ maxLength: 150 }}
         InputProps={{
           endAdornment: (
@@ -49,7 +49,7 @@ const MainFields = ({ register, data, errors, watch }) => {
         label="Комментарий"
         name="comment"
         errors={errors.comment}
-        value={data.comment}
+        value={capitalizeFirstLetter(data.comment)}
         inputProps={{ maxLength: 150 }}
         InputProps={{
           endAdornment: (

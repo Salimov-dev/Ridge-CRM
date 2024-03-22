@@ -27,6 +27,7 @@ import { getCurrentUserId, getIsUserManager } from "@store/user/users.store";
 import { getObjectById } from "@store/object/objects.store";
 import { filteredContactsForManager } from "@utils/contacts/filtered-contacts-for-manager";
 import { filteredObjectsForManager } from "@utils/objects/filtered-objects-for-manager";
+import { getContactsList } from "@store/contact/contact.store";
 
 const UpdateCompany = React.memo(({ companyId, onClose }) => {
   const dispatch = useDispatch();
@@ -96,32 +97,76 @@ const UpdateCompany = React.memo(({ companyId, onClose }) => {
       !companyContacts?.some((cont) => cont.contact === newContact.contact)
   );
 
+  const contactsList = useSelector(getContactsList());
+
+  const filteredContacts = data.contacts?.filter((cont) => {
+    const findedContact = contactsList.find(
+      (elem) => elem._id === cont.contact
+    );
+
+    if (findedContact?.userId === currentUserId) {
+      return true;
+    }
+    return false;
+  });
+
+  useEffect(() => {
+    isManager && setValue("contacts", filteredContacts);
+  }, [contactsList]);
+
+  console.log("company simple", company.contacts);
+
   const onSubmit = () => {
-    setIsLoading(true);
+    const newData = { ...data };
+    console.log("data onSubmit", data.contacts);
 
-    const newData = data;
+    // Создание списка контактов, которые были удалены в результате фильтрации
+    const removedContactsIds = companyContacts
+      .filter(
+        (contact) =>
+          !filteredContacts.some((cont) => cont.contact === contact.contact)
+      )
+      .map((contact) => contact.contact);
 
-    dispatch<any>(
-      updateCompany({
-        newData,
-        previousObjects,
-        removedObjects,
-        addedObjects,
-        previousContacts,
-        removedContacts,
-        addedContacts
-      })
-    )
-      .then(() => {
-        onClose();
-        toast.success("Компания успешно изменена!");
-      })
-      .catch((error) => {
-        toast.error(error);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
+    // Создание списка контактов, добавленных текущим пользователем и которых еще нет в newData.contacts
+    const addedContacts = data.contacts.filter(
+      (contact) =>
+        !companyContacts.some((cont) => cont.contact === contact.contact) &&
+        !newData.contacts.some((cont) => cont.contact === contact.contact)
+    );
+
+    // Добавление удаленных контактов в newData
+    newData.contacts = [
+      ...newData.contacts,
+      ...removedContactsIds.map((contactId) => ({ contact: contactId }))
+    ];
+
+    // Добавление новых контактов, созданных текущим пользователем, в newData
+    newData.contacts = [...newData.contacts, ...addedContacts];
+
+    console.log("newData", newData);
+
+    // dispatch<any>(
+    //   updateCompany({
+    //     newData,
+    //     previousObjects,
+    //     removedObjects,
+    //     addedObjects,
+    //     previousContacts,
+    //     removedContacts,
+    //     addedContacts
+    //   })
+    // )
+    //   .then(() => {
+    //     onClose();
+    //     toast.success("Компания успешно изменена!");
+    //   })
+    //   .catch((error) => {
+    //     toast.error(error);
+    //   })
+    //   .finally(() => {
+    //     setIsLoading(false);
+    //   });
   };
 
   const handleRemoveContact = (companyId) => {

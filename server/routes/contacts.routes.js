@@ -16,32 +16,63 @@ router.get("/", auth, async (req, res) => {
       return res.status(404).json({ message: "Пользователь не найден" });
     }
     const userRole = user.role;
-    const contacts = await Contact.findAll();
-    // if (userRole.includes(roleManager)) {
-    //   const Contacts = await Contact.findAll({ where: { userId } });
-    //   return res.status(200).send(Contacts);
-    // }
 
-    // if (userRole.includes(roleCurator) || userRole.includes(roleObserver)) {
-    //   const Contacts = await Contact.findAll({ where: { userId } });
+    // если пользователь Менеджер
+    if (userRole.includes(roleManager)) {
+      const contacts = await Contact.findAll({ where: { userId } });
+      return res.status(200).send(contacts);
+    }
 
-    //   const curatorUsers = await User.findAll({ where: { curatorId: userId } });
-    //   const curatorManagerIds = curatorUsers.map((user) => user._id);
+    // если пользователь Наблюдатель
+    if (userRole.includes(roleObserver)) {
+      const contacts = await Contact.findAll({ where: { userId } });
+      const curatorId = user.curatorId;
+      const curatorUsers = await User.findAll({ where: { curatorId } });
+      const curatorManagerIds = curatorUsers.map((user) => user._id);
 
-    //   const curatorManagersContacts = await Contact.findAll({
-    //     where: { userId: curatorManagerIds }
-    //   });
+      const curatorManagersContacts = await Contact.findAll({
+        where: { userId: curatorManagerIds }
+      });
 
-    //   const usersContacts = [
-    //     ...Contacts,
-    //     ...curatorManagersContacts.map((meet) => meet.dataValues)
-    //   ];
+      // Удалить объекты, которые уже принадлежат пользователю
+      const filteredCuratorManagersContacts = curatorManagersContacts.filter(
+        (obj) => obj.userId !== userId
+      );
 
-    //   return res.status(200).send(usersContacts);
-    // }
+      // Добавить объекты, где userId === curatorId
+      const curatorContacts = await Contact.findAll({
+        where: { userId: curatorId }
+      });
 
-    return res.status(200).send(contacts);
-    // return res.status(200).send([]);
+      const usersContacts = [
+        ...contacts,
+        ...filteredCuratorManagersContacts.map((cont) => cont.dataValues),
+        ...curatorContacts.map((cont) => cont.dataValues)
+      ];
+
+      return res.status(200).send(usersContacts);
+    }
+
+    // если пользователь Куратор
+    if (userRole.includes(roleCurator)) {
+      const objects = await Contact.findAll({ where: { userId } });
+
+      const curatorUsers = await User.findAll({ where: { curatorId: userId } });
+      const curatorManagerIds = curatorUsers.map((user) => user._id);
+
+      const curatorManagersObjects = await Contact.findAll({
+        where: { userId: curatorManagerIds }
+      });
+
+      const usersObjects = [
+        ...objects,
+        ...curatorManagersObjects.map((obj) => obj.dataValues)
+      ];
+
+      return res.status(200).send(usersObjects);
+    }
+
+    return res.status(200).send([]);
   } catch (e) {
     res.status(500).json({
       message: "На сервере произошла ошибка, попробуйте позже"

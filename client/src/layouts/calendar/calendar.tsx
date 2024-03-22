@@ -31,7 +31,8 @@ import { getObjectsList } from "@store/object/objects.store";
 const initialState = {
   task: "",
   result: "",
-  selectedTaskTypes: []
+  selectedTaskTypes: [],
+  onlyMyTasks: false
 };
 
 const Calendar = React.memo(() => {
