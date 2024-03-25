@@ -96,7 +96,6 @@ const FieldsCompany = ({
                 optionLabel={(option) => option.name}
               />
               <OpenPageElementIconButton
-                containerWidth="112px"
                 height="100%"
                 width="24px"
                 title={null}

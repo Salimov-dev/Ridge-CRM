@@ -114,37 +114,29 @@ const UpdateCompany = React.memo(({ companyId, onClose }) => {
     isManager && setValue("contacts", filteredContacts);
   }, [contactsList]);
 
-  console.log("company simple", company.contacts);
+  // console.log("contactsList", contactsList);
+  // console.log("company simple", company.contacts);
+
+  // находим пользователей, созданных другими пользователями
+  const othertUsersContacts = company?.contacts?.filter((cont) => {
+    // const contact = useSelector(getContactById(cont.contact));
+    // console.log("cont", cont);
+    const contact = contactsList?.find((elem) => elem._id === cont.contact);
+    // console.log("contact", contact);
+
+    if (contact === undefined) {
+      return cont;
+    } else {
+      return null;
+    }
+  });
 
   const onSubmit = () => {
-    const newData = { ...data };
-    console.log("data onSubmit", data.contacts);
+    // setIsLoading(true);
 
-    // Создание списка контактов, которые были удалены в результате фильтрации
-    const removedContactsIds = companyContacts
-      .filter(
-        (contact) =>
-          !filteredContacts.some((cont) => cont.contact === contact.contact)
-      )
-      .map((contact) => contact.contact);
+    const newData = data;
 
-    // Создание списка контактов, добавленных текущим пользователем и которых еще нет в newData.contacts
-    const addedContacts = data.contacts.filter(
-      (contact) =>
-        !companyContacts.some((cont) => cont.contact === contact.contact) &&
-        !newData.contacts.some((cont) => cont.contact === contact.contact)
-    );
-
-    // Добавление удаленных контактов в newData
-    newData.contacts = [
-      ...newData.contacts,
-      ...removedContactsIds.map((contactId) => ({ contact: contactId }))
-    ];
-
-    // Добавление новых контактов, созданных текущим пользователем, в newData
-    newData.contacts = [...newData.contacts, ...addedContacts];
-
-    console.log("newData", newData);
+    console.log("othertUsersContacts", othertUsersContacts);
 
     // dispatch<any>(
     //   updateCompany({

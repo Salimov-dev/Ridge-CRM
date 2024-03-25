@@ -8,7 +8,6 @@ import EmptyTd from "../columns/empty-td";
 
 const Component = styled(Box)`
   display: flex;
-  gap: 8px;
   alignitems: center;
   justify-content: center;
 `;
@@ -35,7 +34,6 @@ const ContactTableEntity = ({ contacts, onOpenContactPage }) => {
                 {getContactName(contactId)}
                 <OpenPageElementIconButton
                   title="Открыть контакт"
-                  containerWidth="10px"
                   height="20px"
                   heightButton="20px"
                   width="16px"

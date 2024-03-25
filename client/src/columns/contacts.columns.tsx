@@ -93,38 +93,6 @@ export const contactsColumns = (
     }
   };
 
-  const positionColumn = {
-    accessorKey: "position",
-    header: "Позиция",
-    enableSorting: false,
-    cell: (info) => {
-      const positionId = info.getValue();
-      const positionName = useSelector(getPositionNameById(positionId));
-
-      return <AlignCenter>{positionName}</AlignCenter>;
-    }
-  };
-
-  const objectsColumn = {
-    accessorFn: (row) => row,
-    header: "Объекты контакта",
-    enableSorting: false,
-    cell: (info) => {
-      const row = info.getValue();
-      const objects = row.objects;
-      const objectId = object?._id;
-
-      const filteredObject = objects?.filter((obj) => obj.object !== objectId);
-
-      return (
-        <ObjectTableEntity
-          objects={filteredObject}
-          onOpenObjectPage={handleOpenObjectPage}
-        />
-      );
-    }
-  };
-
   const commentColumn = {
     accessorKey: "comment",
     header: "Комментарий",
@@ -135,65 +103,102 @@ export const contactsColumns = (
     }
   };
 
-  const contactsColumn = [
-    {
-      accessorFn: (row) => row,
-      header: "Имя",
-      enableSorting: false,
-      cell: (info) => {
-        const row = info.getValue();
-        const name = row?.name;
+  const contactsColumn = {
+    id: "contactsColumn",
+    header: "Контакт",
+    columns: [
+      {
+        accessorFn: (row) => row,
+        header: "Имя",
+        enableSorting: false,
+        cell: (info) => {
+          const row = info.getValue();
+          const name = row?.name;
 
-        return <AlignCenter>{name}</AlignCenter>;
+          return <AlignCenter>{name}</AlignCenter>;
+        }
+      },
+
+      {
+        accessorFn: (row) => row,
+        header: "Телефон",
+        enableSorting: false,
+        cell: (info) => {
+          const row = info.getValue();
+          const phone = row?.phones.find(
+            (phone) => phone?.isDefault === true
+          )?.phone;
+          return phone ? (
+            <AlignCenter>{FormatPhone(phone)}</AlignCenter>
+          ) : (
+            <EmptyTd />
+          );
+        }
+      },
+      {
+        accessorFn: (row) => row,
+        header: "Почта",
+        enableSorting: false,
+        cell: (info) => {
+          const row = info.getValue();
+          const email = row?.emails.find(
+            (email) => email?.isDefault === true
+          )?.email;
+          return email ? <AlignCenter>{email}</AlignCenter> : <EmptyTd />;
+        }
+      },
+      {
+        accessorKey: "position",
+        header: "Позиция",
+        enableSorting: false,
+        cell: (info) => {
+          const positionId = info.getValue();
+          const positionName = useSelector(getPositionNameById(positionId));
+
+          return <AlignCenter>{positionName}</AlignCenter>;
+        }
+      },
+      {
+        accessorKey: "companies",
+        header: "Связан с компаниями",
+        enableSorting: false,
+        cell: (info) => {
+          const companies = info.getValue();
+          return (
+            <CompanyTableEntity
+              companies={companies}
+              onOpenCompanyPage={handleOpenUpdateCompanyPage}
+            />
+          );
+        }
+      },
+      {
+        accessorFn: (row) => row,
+        header: "Объекты контакта",
+        enableSorting: false,
+        cell: (info) => {
+          const row = info.getValue();
+          const objects = row.objects;
+          const objectId = object?._id;
+
+          const filteredObject = objects?.filter(
+            (obj) => obj.object !== objectId
+          );
+
+          return (
+            <ObjectTableEntity
+              objects={filteredObject}
+              onOpenObjectPage={handleOpenObjectPage}
+            />
+          );
+        }
       }
-    },
-    {
-      accessorKey: "companies",
-      header: "Связан с компаниями",
-      enableSorting: false,
-      cell: (info) => {
-        const companies = info.getValue();
-        return (
-          <CompanyTableEntity
-            companies={companies}
-            onOpenCompanyPage={handleOpenUpdateCompanyPage}
-          />
-        );
-      }
-    },
-    {
-      accessorFn: (row) => row,
-      header: "Почта",
-      enableSorting: false,
-      cell: (info) => {
-        const row = info.getValue();
-        const email = row?.emails.find(
-          (email) => email?.isDefault === true
-        )?.email;
-        return email ? <AlignCenter>{email}</AlignCenter> : <EmptyTd />;
-      }
-    },
-    {
-      accessorFn: (row) => row,
-      header: "Телефон",
-      enableSorting: false,
-      cell: (info) => {
-        const row = info.getValue();
-        const phone = row?.phones.find(
-          (phone) => phone?.isDefault === true
-        )?.phone;
-        return phone ? (
-          <AlignCenter>{FormatPhone(phone)}</AlignCenter>
-        ) : (
-          <EmptyTd />
-        );
-      }
-    }
-  ];
+    ]
+  };
 
   const managerColumn = {
     id: "managerColumn",
-    header: null,
+    header: "Менеджер",
     columns: isManager !== undefined && [
       {
         accessorKey: "userId",
@@ -237,20 +242,11 @@ export const contactsColumns = (
   };
 
   if (isManager) {
-    columns = [
-      dateColumn,
-      ...contactsColumn,
-      positionColumn,
-      objectsColumn,
-      commentColumn,
-      openContactColumn
-    ];
+    columns = [dateColumn, contactsColumn, commentColumn, openContactColumn];
   } else {
     columns = [
       dateColumn,
-      ...contactsColumn,
-      positionColumn,
-      objectsColumn,
+      contactsColumn,
       managerColumn,
       commentColumn,
       openContactColumn

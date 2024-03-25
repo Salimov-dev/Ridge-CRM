@@ -8,7 +8,6 @@ import EmptyTd from "../columns/empty-td";
 
 const Component = styled(Box)`
   display: flex;
-  gap: 8px;
   alignitems: center;
   justify-content: center;
 `;
@@ -33,10 +32,9 @@ const CompanyTableEntity = ({ companies, onOpenCompanyPage }) => {
             <Component key={companyId}>
               {getCompanyName(companyId)}
               <OpenPageElementIconButton
-                title="Открыть контакт"
-                containerWidth="10px"
-                height="20px"
-                heightButton="20px"
+                title="Открыть компанию"
+                height="16px"
+                heightButton="12px"
                 width="16px"
                 onClick={() => onOpenCompanyPage(companyId)}
               />

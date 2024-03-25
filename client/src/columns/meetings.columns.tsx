@@ -106,15 +106,13 @@ export const meetingsColumns = (
               sx={{
                 display: "flex",
                 alignItems: "center",
-                justifyContent: "start",
-                gap: "8px"
+                justifyContent: "start"
               }}
             >
               {fullAddress}
               {!isDialogPage ? (
                 <OpenPageElementIconButton
                   title="Открыть объект"
-                  containerWidth="10px"
                   height="20px"
                   heightButton="20px"
                   width="20px"

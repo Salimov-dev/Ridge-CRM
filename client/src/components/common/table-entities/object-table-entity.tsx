@@ -28,7 +28,6 @@ const ObjectTableEntity = ({ objects, onOpenObjectPage }) => {
               key={objectId}
               sx={{
                 display: "flex",
-                gap: "8px",
                 alignItems: "center",
                 justifyContent: "center"
               }}
@@ -36,7 +35,6 @@ const ObjectTableEntity = ({ objects, onOpenObjectPage }) => {
               {getObjectName(objectId)}
               <OpenPageElementIconButton
                 title="Открыть контакт"
-                containerWidth="10px"
                 height="20px"
                 heightButton="20px"
                 width="16px"

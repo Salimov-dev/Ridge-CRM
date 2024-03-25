@@ -4,7 +4,6 @@ import { Box, Typography, styled } from "@mui/material";
 import AvatarImage from "@layouts/profile/components/avatar-image";
 
 const Component = styled(Box)`
-  // width: 100%;
   display: flex;
   gap: 6px;
   align-items: center;
@@ -18,10 +17,11 @@ const UserNameWithAvatar = React.memo(
     isLoading,
     fontStyle = "normal",
     withName = true,
-    color = "white"
+    color = "white",
+    margin = "0"
   }) => {
     return (
-      <Component>
+      <Component sx={{ margin }}>
         <AvatarImage
           width="30px"
           height="30px"

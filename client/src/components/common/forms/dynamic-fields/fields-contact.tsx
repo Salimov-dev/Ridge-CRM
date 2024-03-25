@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Box } from "@mui/material";
+import { useEffect, useState } from "react";
+import { Box, Typography } from "@mui/material";
 import { useSelector } from "react-redux";
 import { useFieldArray } from "react-hook-form";
 import ControlPointOutlinedIcon from "@mui/icons-material/ControlPointOutlined";
@@ -11,12 +11,14 @@ import RowTitle from "@components/common/titles/row-title";
 import ButtonStyled from "@components/common/buttons/button-styled.button";
 import PageDialogs from "@components/common/dialog/page-dialogs";
 import OpenPageElementIconButton from "@components/common/buttons/icons buttons/open-page-element.button-icon";
+import DeleteElementIcon from "@components/common/buttons/icons buttons/delete-element-icon";
+import UserNameWithAvatar from "@components/common/user/user-name-with-avatar";
 // hooks
 import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
+import useGetUserAvatar from "@hooks/user/use-get-user-avatar";
 // store
 import { getContactsList } from "@store/contact/contact.store";
-import { getCurrentUserId } from "@store/user/users.store";
-import DeleteElementIcon from "@components/common/buttons/icons buttons/delete-element-icon";
+import { getUsersList } from "@store/user/users.store";
 
 const FieldsContact = ({
   data,
@@ -41,7 +43,6 @@ const FieldsContact = ({
     control
   });
 
-  const currentUserId = useSelector(getCurrentUserId());
   const contactsList = useSelector(getContactsList());
   const filteredContacts = contactsList?.filter(
     (contact) =>
@@ -50,9 +51,6 @@ const FieldsContact = ({
       )
   );
 
-  const currentUserContacts = contactsList?.filter(
-    (cont) => cont.userId === currentUserId
-  );
   const watchContactId = watch("contactId");
 
   const { handleOpenCreateContactPage } = useDialogHandlers(setState);
@@ -63,9 +61,9 @@ const FieldsContact = ({
   const handleChangeContact = (contactIndex, currentState) => {
     const updatedContacts = data.contacts.map((contact, index) => {
       if (index === contactIndex) {
-        return { ...contact, isDefault: !currentState }; // Инвертируем состояние текущего объекта
+        return { ...contact, isDefault: !currentState };
       } else if (contact.isDefault) {
-        return { ...contact, isDefault: false }; // Если у другого объекта isDefault был true, устанавливаем его в false
+        return { ...contact, isDefault: false };
       }
       return contact;
     });
@@ -77,6 +75,14 @@ const FieldsContact = ({
     handleChangeContact(index, false);
     removeContact(index);
   };
+
+  const userAvatars = {};
+  const users = useSelector(getUsersList());
+  users.forEach((user) => {
+    const { getAvatarSrc, isLoading } = useGetUserAvatar(user._id);
+    userAvatars[user._id] = { getAvatarSrc, isLoading };
+  });
+
   return (
     <>
       <RowTitle
@@ -84,7 +90,17 @@ const FieldsContact = ({
         background="linear-gradient(to right, SteelBlue , DarkSlateBlue)"
         margin="14px 0 -4px 0"
       />
-      {fieldContacts?.map((field, index) => {
+      {fieldContacts.map((field, index) => {
+        console.log("field", field);
+
+        const createdContact = data.contacts[index].contact;
+        const contact = contactsList?.find(
+          (elem) => elem._id === createdContact
+        );
+        const contactUserId = contact?.userId;
+        const user = users?.find((user) => user?._id === contactUserId);
+        const avatarData = userAvatars[contactUserId];
+
         if (field.id) {
           return (
             <Box
@@ -108,14 +124,29 @@ const FieldsContact = ({
                     ? contactsList
                     : filteredContacts
                 }
-                value={data.contacts?.[index].contact}
+                value={data.contacts[index].contact}
                 errors={errors?.contacts?.[index]?.contact}
                 setValue={setValue}
                 watchItemId={watchContactId}
                 optionLabel={(option) => option?.name}
               />
+
+              {createdContact ? (
+                <UserNameWithAvatar
+                  userId={user?._id}
+                  avatarSrc={avatarData?.getAvatarSrc()}
+                  fontStyle="italic"
+                  isLoading={avatarData?.isLoading}
+                  margin="0 0 0 14px"
+                  color="white"
+                  maxWidth="450px"
+                />
+              ) : (
+                <Typography sx={{ margin: "0 0 0 45px" }}>
+                  Выберите контакт
+                </Typography>
+              )}
               <OpenPageElementIconButton
-                containerWidth="112px"
                 height="100%"
                 width="24px"
                 title={null}
@@ -154,7 +185,7 @@ const FieldsContact = ({
           size="small"
           disabled={!data?.contacts?.length}
           icon={<DoNotDisturbOnOutlinedIcon />}
-          onClick={() => handleRemoveContact(lastContactIndex)} // передаем функцию removePhone с аргументом
+          onClick={() => handleRemoveContact(lastContactIndex)}
         />
       </Box>
       <PageDialogs state={openContact} setState={setOpenContact} />

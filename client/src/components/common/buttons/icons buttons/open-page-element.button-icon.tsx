@@ -12,15 +12,14 @@ const OpenPageElementIconButton = ({
   onClick,
   disabled = false,
   title = "Открыть объект",
-  width = "24px",
-  height = "24px",
+  width = "16px",
+  height = "16px",
   heightButton = "auto",
-  containerWidth = "auto",
   color = "white",
   colorHover = "yellow"
 }) => {
   return (
-    <Components sx={{ width: containerWidth }}>
+    <Components>
       <IconButton
         onClick={onClick}
         disabled={disabled}
@@ -28,14 +27,11 @@ const OpenPageElementIconButton = ({
           height: heightButton,
           color: color,
           "&:disabled": {
-            // стили для неактивной иконки
-
-            color: "rgba(0, 0, 0, 0.26)", // изменяем цвет на серый
-            pointerEvents: "none" // отключаем события указателя, чтобы иконка не реагировала на нажатия
+            color: "rgba(0, 0, 0, 0.26)",
+            pointerEvents: "none"
           },
           "&:hover": {
-            // стили при наведении (неактивное состояние)
-            transform: disabled ? "none" : "scale(1.2)", // если disabled, не изменяем масштаб
+            transform: disabled ? "none" : "scale(1.2)",
             color: colorHover,
             background: "transparent"
           }
@@ -46,7 +42,7 @@ const OpenPageElementIconButton = ({
             sx={{
               width: width,
               height: height,
-              opacity: disabled ? "0.5" : "1" // устанавливаем прозрачность
+              opacity: disabled ? "0.5" : "1"
             }}
           />
         </Tooltip>

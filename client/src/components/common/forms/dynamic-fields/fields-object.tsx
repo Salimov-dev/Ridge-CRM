@@ -94,7 +94,6 @@ const FieldsObject = ({
                 optionLabel={(option) => `${option?.city}, ${option?.address}`}
               />
               <OpenPageElementIconButton
-                containerWidth="100px"
                 height="100%"
                 width="24px"
                 title={null}
