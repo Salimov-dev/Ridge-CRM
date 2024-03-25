@@ -10,11 +10,7 @@ import useGetUserAvatar from "@hooks/user/use-get-user-avatar";
 import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
 // store
 import { updateObject } from "@store/object/objects.store";
-import {
-  getCurrentUserId,
-  getIsUserAuthorThisEntity,
-  getUsersList
-} from "@store/user/users.store";
+import { getCurrentUserId, getUsersList } from "@store/user/users.store";
 
 const Component = styled(Box)`
   width: 100%;
@@ -47,6 +43,12 @@ const Objects = ({
   const dispatch = useDispatch();
   const users = useSelector(getUsersList());
   const currentUserId = useSelector(getCurrentUserId());
+  const userAvatars = {};
+
+  users.forEach((user) => {
+    const { getAvatarSrc, isLoading } = useGetUserAvatar(user._id);
+    userAvatars[user._id] = { getAvatarSrc, isLoading };
+  });
 
   const { handleOpenObjectPage } = useDialogHandlers(setState);
 
@@ -62,6 +64,7 @@ const Objects = ({
         ...obj,
         status: getNewDealStage(draggableStageId)
       };
+
       dispatch<any>(updateObject({ newData: updatedObject }));
 
       setDraggableStageId(null);
@@ -75,17 +78,14 @@ const Objects = ({
       {objects?.map((obj) => {
         const isDeal = obj?.status === stage?.objectStatusId;
         const user = users?.find((user) => user?._id === obj?.userId);
-        const { getAvatarSrc, isLoading } = useGetUserAvatar(user?._id);
-
-        const isAuthorEntity = useSelector(
-          getIsUserAuthorThisEntity(currentUserId, obj)
-        );
+        const avatarData = userAvatars[obj.userId];
+        const isAuthorEntity = obj.userId === currentUserId;
 
         return isDeal ? (
           <ObjectContainer
             key={obj?._id}
             draggable={isAuthorEntity}
-            onDragEnd={(e) => handleDragEnd(obj, stage)}
+            onDragEnd={() => handleDragEnd(obj, stage)}
             sx={{ cursor: isAuthorEntity ? "grab" : "default" }}
           >
             <ObjectAddress
@@ -96,9 +96,9 @@ const Objects = ({
               <UserNameWithAvatar
                 userId={user._id}
                 color="black"
-                avatarSrc={getAvatarSrc()}
+                avatarSrc={avatarData.getAvatarSrc()}
                 fontStyle="italic"
-                isLoading={isLoading}
+                isLoading={avatarData.isLoading}
               />
             )}
           </ObjectContainer>

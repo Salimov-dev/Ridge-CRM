@@ -9,21 +9,20 @@ import Loader from "@components/common/loader/loader";
 // store
 import { getObjectsLoadingStatus } from "@store/object/objects.store";
 
+const DealContainer = styled(Paper)`
+  display: flex;
+  height: 500px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: start;
+  color: black;
+  background: inherit;
+  border: 2px dashed gray;
+  padding: 10px;
+`;
 const Stages = ({ objects, stages, setState, isCurator }) => {
   const [draggableStageId, setDraggableStageId] = useState(null);
   const isLoading = useSelector(getObjectsLoadingStatus());
-
-  const DealContainer = styled(Paper)`
-    display: flex;
-    height: 500px;
-    flex-direction: column;
-    align-items: center;
-    justify-content: start;
-    color: black;
-    background: inherit;
-    border: 2px dashed gray;
-    padding: 10px;
-  `;
 
   const handleDragOver = (e, stageId) => {
     e.preventDefault();
