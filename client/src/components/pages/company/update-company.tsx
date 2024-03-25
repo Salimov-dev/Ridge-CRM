@@ -24,9 +24,6 @@ import {
   updateCompany
 } from "@store/company/company.store";
 import { getCurrentUserId, getIsUserManager } from "@store/user/users.store";
-import { getObjectById } from "@store/object/objects.store";
-import { filteredContactsForManager } from "@utils/contacts/filtered-contacts-for-manager";
-import { filteredObjectsForManager } from "@utils/objects/filtered-objects-for-manager";
 import { getContactsList } from "@store/contact/contact.store";
 
 const UpdateCompany = React.memo(({ companyId, onClose }) => {
@@ -49,14 +46,7 @@ const UpdateCompany = React.memo(({ companyId, onClose }) => {
   const currentUserId = useSelector(getCurrentUserId());
   const isManager = useSelector(getIsUserManager(currentUserId));
 
-  const filteredInitialCompany = () => {
-    return {
-      ...company,
-      contacts: filteredContactsForManager(company),
-      objects: filteredObjectsForManager(company)
-    };
-  };
-
+  const contactsList = useSelector(getContactsList());
   const {
     register,
     watch,
@@ -66,7 +56,6 @@ const UpdateCompany = React.memo(({ companyId, onClose }) => {
     setValue
   } = useForm({
     defaultValues: company,
-    // defaultValues: isManager ? filteredInitialCompany() : company,
     mode: "onChange",
     resolver: yupResolver(companySchema)
   });
@@ -89,17 +78,29 @@ const UpdateCompany = React.memo(({ companyId, onClose }) => {
   const newContacts = watch("contacts");
   const previousContacts = company?.contacts;
   const companyContacts = company?.contacts;
-  const removedContacts = companyContacts?.filter(
-    (cont) => !newContacts.some((item) => item.contact === cont.contact)
-  );
+  const removedContacts = !isManager
+    ? companyContacts?.filter(
+        (cont) => !newContacts.some((item) => item.contact === cont.contact)
+      )
+    : [];
   const addedContacts = newContacts?.filter(
     (newContact) =>
       !companyContacts?.some((cont) => cont.contact === newContact.contact)
   );
 
-  const contactsList = useSelector(getContactsList());
+  // находим пользователей, созданных другими пользователями
+  const othertUsersContacts = company?.contacts?.filter((cont) => {
+    const contact = contactsList?.find((elem) => elem._id === cont.contact);
 
-  const filteredContacts = data.contacts?.filter((cont) => {
+    if (contact === undefined) {
+      return cont;
+    } else {
+      return null;
+    }
+  });
+
+  // фильтруем контакты только текущего менеджера, исключаем контакты других пользователей
+  const currentUserContacts = data.contacts?.filter((cont) => {
     const findedContact = contactsList.find(
       (elem) => elem._id === cont.contact
     );
@@ -111,54 +112,38 @@ const UpdateCompany = React.memo(({ companyId, onClose }) => {
   });
 
   useEffect(() => {
-    isManager && setValue("contacts", filteredContacts);
+    isManager && setValue("contacts", currentUserContacts);
   }, [contactsList]);
 
-  // console.log("contactsList", contactsList);
-  // console.log("company simple", company.contacts);
-
-  // находим пользователей, созданных другими пользователями
-  const othertUsersContacts = company?.contacts?.filter((cont) => {
-    // const contact = useSelector(getContactById(cont.contact));
-    // console.log("cont", cont);
-    const contact = contactsList?.find((elem) => elem._id === cont.contact);
-    // console.log("contact", contact);
-
-    if (contact === undefined) {
-      return cont;
-    } else {
-      return null;
-    }
-  });
-
   const onSubmit = () => {
-    // setIsLoading(true);
+    setIsLoading(true);
 
-    const newData = data;
+    const newData = {
+      ...data,
+      contacts: data.contacts.concat(othertUsersContacts)
+    };
 
-    console.log("othertUsersContacts", othertUsersContacts);
-
-    // dispatch<any>(
-    //   updateCompany({
-    //     newData,
-    //     previousObjects,
-    //     removedObjects,
-    //     addedObjects,
-    //     previousContacts,
-    //     removedContacts,
-    //     addedContacts
-    //   })
-    // )
-    //   .then(() => {
-    //     onClose();
-    //     toast.success("Компания успешно изменена!");
-    //   })
-    //   .catch((error) => {
-    //     toast.error(error);
-    //   })
-    //   .finally(() => {
-    //     setIsLoading(false);
-    //   });
+    dispatch<any>(
+      updateCompany({
+        newData,
+        previousObjects,
+        removedObjects,
+        addedObjects,
+        previousContacts,
+        removedContacts,
+        addedContacts
+      })
+    )
+      .then(() => {
+        onClose();
+        toast.success("Компания успешно изменена!");
+      })
+      .catch((error) => {
+        toast.error(error);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
 
   const handleRemoveContact = (companyId) => {

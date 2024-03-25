@@ -91,8 +91,6 @@ const FieldsContact = ({
         margin="14px 0 -4px 0"
       />
       {fieldContacts.map((field, index) => {
-        console.log("field", field);
-
         const createdContact = data.contacts[index].contact;
         const contact = contactsList?.find(
           (elem) => elem._id === createdContact
