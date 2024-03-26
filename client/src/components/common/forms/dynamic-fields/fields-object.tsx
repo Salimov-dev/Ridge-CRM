@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { useSelector } from "react-redux";
 import { useFieldArray } from "react-hook-form";
 import ControlPointOutlinedIcon from "@mui/icons-material/ControlPointOutlined";
@@ -11,12 +11,14 @@ import RowTitle from "@components/common/titles/row-title";
 import ButtonStyled from "@components/common/buttons/button-styled.button";
 import OpenPageElementIconButton from "@components/common/buttons/icons buttons/open-page-element.button-icon";
 import PageDialogs from "@components/common/dialog/page-dialogs";
+import DeleteElementIcon from "@components/common/buttons/icons buttons/delete-element-icon";
 // hooks
 import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
+import useGetUserAvatar from "@hooks/user/use-get-user-avatar";
 // store
 import { getObjectsList } from "@store/object/objects.store";
-import { getCurrentUserId } from "@store/user/users.store";
-import DeleteElementIcon from "@components/common/buttons/icons buttons/delete-element-icon";
+import { getUsersList } from "@store/user/users.store";
+import UserNameWithAvatar from "@components/common/user/user-name-with-avatar";
 
 const FieldsObject = ({
   data,
@@ -40,7 +42,9 @@ const FieldsObject = ({
     name: "objects",
     control
   });
-  const currentUserId = useSelector(getCurrentUserId());
+
+  const watchObjectId = watch("objectId");
+  const lastObjectIndex = fieldObjects.length - 1;
   const objectsList = useSelector(getObjectsList());
 
   const filteredObjects = objectsList?.filter(
@@ -48,19 +52,34 @@ const FieldsObject = ({
       !fieldObjects.some((fieldCompany) => fieldCompany.object === object._id)
   );
 
-  const currentUserObjects = objectsList?.filter(
-    (obj) => obj.userId === currentUserId
-  );
-  const watchObjectId = watch("objectId");
+  const userAvatars = {};
+  const users = useSelector(getUsersList());
+  users.forEach((user) => {
+    const { getAvatarSrc, isLoading } = useGetUserAvatar(user._id);
+    userAvatars[user._id] = { getAvatarSrc, isLoading };
+  });
 
   const { handleOpenCreateObjectPage } = useDialogHandlers(setState);
   const { handleOpenObjectPage } = useDialogHandlers(setOpenObject);
 
-  const lastObjectIndex = fieldObjects.length - 1;
+  const handleChangeObject = (objectIndex, currentState) => {
+    const updatedObjects = data.objects.map((object, index) => {
+      if (index === objectIndex) {
+        return { ...object, isDefault: !currentState };
+      } else if (object.isDefault) {
+        return { ...object, isDefault: false };
+      }
+      return object;
+    });
+
+    setValue("objects", updatedObjects);
+  };
 
   const handleRemoveObject = (index) => {
+    handleChangeObject(index, false);
     removeObject(index);
   };
+
   return (
     <>
       <RowTitle
@@ -69,6 +88,12 @@ const FieldsObject = ({
         margin="14px 0 -4px 0"
       />
       {fieldObjects?.map((field, index) => {
+        const createdObject = data.objects[index].object;
+        const object = objectsList?.find((elem) => elem._id === createdObject);
+        const objectUserId = object?.userId;
+        const user = users?.find((user) => user?._id === objectUserId);
+        const avatarData = userAvatars[objectUserId];
+
         if (field.id) {
           return (
             <Box
@@ -79,7 +104,10 @@ const FieldsObject = ({
                 alignItems: "center"
               }}
             >
-              <DeleteElementIcon onClick={() => handleRemoveObject(index)} />
+              <DeleteElementIcon
+                onClick={() => handleRemoveObject(index)}
+                error={errors?.objects}
+              />
               <AutocompleteStyled
                 label="Объект"
                 register={register}
@@ -93,6 +121,21 @@ const FieldsObject = ({
                 watchItemId={watchObjectId}
                 optionLabel={(option) => `${option?.city}, ${option?.address}`}
               />
+              {createdObject ? (
+                <UserNameWithAvatar
+                  userId={user?._id}
+                  avatarSrc={avatarData?.getAvatarSrc()}
+                  fontStyle="italic"
+                  isLoading={avatarData?.isLoading}
+                  margin="0 0 0 14px"
+                  color="white"
+                  maxWidth="450px"
+                />
+              ) : (
+                <Typography sx={{ margin: "0 0 0 45px" }}>
+                  Выберите объект
+                </Typography>
+              )}
               <OpenPageElementIconButton
                 height="100%"
                 width="24px"

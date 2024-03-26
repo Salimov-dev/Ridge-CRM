@@ -98,7 +98,6 @@ export const companiesColumns = (
       const row = info.getValue();
       const objects = row.objects;
       const objectId = object?._id;
-
       const filteredObject = objects?.filter((obj) => obj.object !== objectId);
 
       return (
@@ -163,10 +162,6 @@ export const companiesColumns = (
       openCompanyColumn
     ];
   }
-
-  // if (isCurator && !isHideCheckbox) {
-  //   columns.unshift(selectColumn);
-  // }
 
   return columns;
 };

@@ -25,6 +25,7 @@ import {
 } from "@store/company/company.store";
 import { getCurrentUserId, getIsUserManager } from "@store/user/users.store";
 import { getContactsList } from "@store/contact/contact.store";
+import { getObjectsList } from "@store/object/objects.store";
 
 const UpdateCompany = React.memo(({ companyId, onClose }) => {
   const dispatch = useDispatch();
@@ -42,11 +43,11 @@ const UpdateCompany = React.memo(({ companyId, onClose }) => {
   });
 
   const company = useSelector(getCompanyById(companyId));
-
   const currentUserId = useSelector(getCurrentUserId());
   const isManager = useSelector(getIsUserManager(currentUserId));
-
   const contactsList = useSelector(getContactsList());
+  const objectsList = useSelector(getObjectsList());
+
   const {
     register,
     watch,
@@ -66,9 +67,11 @@ const UpdateCompany = React.memo(({ companyId, onClose }) => {
   const newObjects = watch("objects");
   const previousObjects = company?.objects;
   const companyObjects = company?.objects;
-  const removedObjects = companyObjects?.filter(
-    (obj) => !newObjects.some((item) => item.object === obj.object)
-  );
+  const removedObjects = !isManager
+    ? companyObjects?.filter(
+        (cont) => !newObjects.some((item) => item.object === cont.object)
+      )
+    : [];
   const addedObjects = newObjects?.filter(
     (newObject) =>
       !companyObjects?.some((obj) => obj.object === newObject.object)
@@ -88,12 +91,23 @@ const UpdateCompany = React.memo(({ companyId, onClose }) => {
       !companyContacts?.some((cont) => cont.contact === newContact.contact)
   );
 
-  // находим пользователей, созданных другими пользователями
+  // находим контакты, созданные другими пользователями
   const othertUsersContacts = company?.contacts?.filter((cont) => {
     const contact = contactsList?.find((elem) => elem._id === cont.contact);
 
     if (contact === undefined) {
       return cont;
+    } else {
+      return null;
+    }
+  });
+
+  // находим объекты, созданные другими пользователями
+  const othertUsersObjects = company?.objects?.filter((obj) => {
+    const object = objectsList?.find((elem) => elem._id === obj.object);
+
+    if (object === undefined) {
+      return obj;
     } else {
       return null;
     }
@@ -111,8 +125,19 @@ const UpdateCompany = React.memo(({ companyId, onClose }) => {
     return false;
   });
 
+  // фильтруем объекты только текущего менеджера, исключаем объекты других пользователей
+  const currentUserObjects = data.objects?.filter((cont) => {
+    const findedObject = objectsList.find((elem) => elem._id === cont.object);
+
+    if (findedObject?.userId === currentUserId) {
+      return true;
+    }
+    return false;
+  });
+
   useEffect(() => {
     isManager && setValue("contacts", currentUserContacts);
+    isManager && setValue("objects", currentUserObjects);
   }, [contactsList]);
 
   const onSubmit = () => {
@@ -120,7 +145,8 @@ const UpdateCompany = React.memo(({ companyId, onClose }) => {
 
     const newData = {
       ...data,
-      contacts: data.contacts.concat(othertUsersContacts)
+      contacts: data.contacts.concat(othertUsersContacts),
+      objects: data.objects.concat(othertUsersObjects)
     };
 
     dispatch<any>(

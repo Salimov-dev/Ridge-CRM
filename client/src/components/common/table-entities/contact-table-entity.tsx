@@ -1,10 +1,13 @@
 import { useSelector } from "react-redux";
 import { Box } from "@mui/material";
+import styled from "@emotion/styled";
+// components
 import OpenPageElementIconButton from "../buttons/icons buttons/open-page-element.button-icon";
 import { AlignCenter } from "../columns/styled";
-import { getContactsList } from "@store/contact/contact.store";
-import styled from "@emotion/styled";
 import EmptyTd from "../columns/empty-td";
+// store
+import { getContactById, getContactsList } from "@store/contact/contact.store";
+import { getCurrentUserId, getIsUserManager } from "@store/user/users.store";
 
 const Component = styled(Box)`
   display: flex;
@@ -14,9 +17,17 @@ const Component = styled(Box)`
 
 const ContactTableEntity = ({ contacts, onOpenContactPage }) => {
   const contactsList = useSelector(getContactsList());
+  const currentUserId = useSelector(getCurrentUserId());
+  const isManager = useSelector(getIsUserManager(currentUserId));
+
+  const currentUserContacts = contacts?.filter((cont) => {
+    const contact = useSelector(getContactById(cont.contact));
+    const result = contact?.userId === currentUserId;
+    return result;
+  });
   return (
     <AlignCenter sx={{ display: "flex", flexDirection: "column" }}>
-      {contacts?.length ? (
+      {(isManager ? currentUserContacts : contacts)?.length ? (
         contacts.map((contact, index) => {
           const contactId = contact.contact;
 

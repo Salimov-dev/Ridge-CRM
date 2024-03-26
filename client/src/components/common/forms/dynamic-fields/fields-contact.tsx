@@ -42,6 +42,8 @@ const FieldsContact = ({
     name: "contacts",
     control
   });
+  const watchContactId = watch("contactId");
+  const lastContactIndex = fieldContacts?.length - 1;
 
   const contactsList = useSelector(getContactsList());
   const filteredContacts = contactsList?.filter(
@@ -51,12 +53,15 @@ const FieldsContact = ({
       )
   );
 
-  const watchContactId = watch("contactId");
+  const userAvatars = {};
+  const users = useSelector(getUsersList());
+  users.forEach((user) => {
+    const { getAvatarSrc, isLoading } = useGetUserAvatar(user._id);
+    userAvatars[user._id] = { getAvatarSrc, isLoading };
+  });
 
   const { handleOpenCreateContactPage } = useDialogHandlers(setState);
   const { handleOpenContactPage } = useDialogHandlers(setOpenContact);
-
-  const lastContactIndex = fieldContacts?.length - 1;
 
   const handleChangeContact = (contactIndex, currentState) => {
     const updatedContacts = data.contacts.map((contact, index) => {
@@ -75,13 +80,6 @@ const FieldsContact = ({
     handleChangeContact(index, false);
     removeContact(index);
   };
-
-  const userAvatars = {};
-  const users = useSelector(getUsersList());
-  users.forEach((user) => {
-    const { getAvatarSrc, isLoading } = useGetUserAvatar(user._id);
-    userAvatars[user._id] = { getAvatarSrc, isLoading };
-  });
 
   return (
     <>
