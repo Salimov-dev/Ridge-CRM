@@ -1,16 +1,18 @@
 // libraries
+import { useTheme } from "@emotion/react";
+import { tokens } from "@theme/theme";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { yupResolver } from "@hookform/resolvers/yup";
 // components
-import Header from "./components/header";
 import ManagerPresentationForm from "@forms/presentation/presentation-manager.form";
 import CuratorPresentationForm from "@forms/presentation/presentation-curator.form";
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
 import SuccessCancelFormButtons from "@components/common/buttons/success-cancel-form-buttons";
 import DialogConfirm from "@components/common/dialog/dialog-confirm";
+import HeaderWithCloseButton from "@components/common/page-headers/header-with-close-button";
 // schema
 import { presentationSchema } from "@schemas/presentation.schema";
 // utils
@@ -27,9 +29,6 @@ import {
   removePresentation,
   updatePresentation
 } from "@store/presentation/presentations.store";
-import { useTheme } from "@emotion/react";
-import { tokens } from "@theme/theme";
-import HeaderWithCloseButton from "@components/common/page-headers/header-with-close-button";
 
 const UpdatePresentation = React.memo(({ presentationId, onClose }) => {
   const dispatch = useDispatch();

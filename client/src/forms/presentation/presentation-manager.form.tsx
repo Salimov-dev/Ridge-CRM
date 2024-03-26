@@ -34,7 +34,7 @@ const ManagerPresentationForm = ({
           setValue={setValue}
           watchItemId={watchObjectId}
           errors={errors?.objectId}
-          disabled={isObjectPage}
+          disabled={isObjectPage || isCurator}
         />
         <TextFieldStyled
           register={register}
@@ -43,6 +43,7 @@ const ManagerPresentationForm = ({
           value={data?.cloudLink}
           errors={errors?.cloudLink}
           inputProps={{ maxLength: 150 }}
+          disabled={isCurator || isCurator}
         />
         {isCurator && (
           <Box sx={{ width: "100%", marginTop: "20px" }}>

@@ -68,7 +68,7 @@ const Objects = React.memo(() => {
     createPage: false,
     updatePage: false,
     objectId: null,
-    presentationPage: false,
+    createPresentationPage: false,
     transferObjectPage: false,
     videoPlayerPage: false
   });
@@ -221,6 +221,7 @@ const Objects = React.memo(() => {
         setState={setState}
         selectedObjects={state.selectedObjects}
         setRowSelection={setRowSelection}
+        isObjectPage={true}
         videoTitle="Как пользоваться страницей с Объектами"
         videoSrc="https://www.youtube.com/embed/zz_SjeT_-M4"
       />

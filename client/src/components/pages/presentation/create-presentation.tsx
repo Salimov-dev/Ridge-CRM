@@ -30,7 +30,7 @@ const initialState = {
   curatorComment: ""
 };
 
-const CreatePresentation = React.memo(({ objectId, onClose }) => {
+const CreatePresentation = React.memo(({ objectId, onClose, isObjectPage }) => {
   const dispatch = useDispatch();
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -92,7 +92,7 @@ const CreatePresentation = React.memo(({ objectId, onClose }) => {
   };
 
   useEffect(() => {
-    setValue<any>("objectId", objectId);
+    isObjectPage && setValue<any>("objectId", objectId);
   }, [objectId]);
 
   return (
@@ -111,7 +111,7 @@ const CreatePresentation = React.memo(({ objectId, onClose }) => {
         errors={errors}
         watch={watch}
         setValue={setValue}
-        isObjectPage={true}
+        isObjectPage={isObjectPage}
       />
       <SuccessCancelFormButtons
         onSuccess={handleSubmit(onSubmit)}

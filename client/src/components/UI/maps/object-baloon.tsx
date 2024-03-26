@@ -71,7 +71,6 @@ const ObjectBaloon = React.memo(({ object, onOpenObjectPage, isLoading }) => {
         <Attribute title="Город:" subTitle={city} />
         <OpenPageElementIconButton
           title="Открыть объект"
-          containerWidth="10px"
           height="20px"
           heightButton="20px"
           width="20px"

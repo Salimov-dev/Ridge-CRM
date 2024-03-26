@@ -31,10 +31,10 @@ const useDialogHandlers = (setState) => {
 
   // обновление стейта при открытии окна создания презентации
   const handleOpenCreatePresentationPage = () => {
-    setState((prevState) => ({ ...prevState, presentationPage: true }));
+    setState((prevState) => ({ ...prevState, createPresentationPage: true }));
   };
   const handleCloseCreatePresentationPage = () => {
-    setState((prevState) => ({ ...prevState, presentationPage: false }));
+    setState((prevState) => ({ ...prevState, createPresentationPage: false }));
   };
   // обновление стейта при открытии страницы обновления объекта
   const handleOpenUpdatePresentationPage = (presentationId) => {

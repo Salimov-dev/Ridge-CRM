@@ -2,7 +2,6 @@ import express from "express";
 import Company from "../models/company/Company.js";
 import auth from "../middleware/auth.middleware.js";
 import User from "../models/User.js";
-import { roleCurator, roleManager, roleObserver } from "../utils/user-roles.js";
 import Object from "../models/Object.js";
 import Contact from "../models/contact/Contact.js";
 
@@ -16,33 +15,8 @@ router.get("/", auth, async (req, res) => {
     if (!user) {
       return res.status(404).json({ message: "Пользователь не найден" });
     }
-    const userRole = user.role;
     const companies = await Company.findAll();
 
-    // if (userRole.includes(roleManager)) {
-    //   const companies = await Company.findAll({ where: { userId } });
-    //   return res.status(200).send(companies);
-    // }
-
-    // if (userRole.includes(roleCurator) || userRole.includes(roleObserver)) {
-    //   const companies = await Company.findAll({ where: { userId } });
-
-    //   const curatorUsers = await User.findAll({ where: { curatorId: userId } });
-    //   const curatorManagerIds = curatorUsers.map((user) => user._id);
-
-    //   const curatorManagerscompanies = await Company.findAll({
-    //     where: { userId: curatorManagerIds }
-    //   });
-
-    //   const userscompanies = [
-    //     ...companies,
-    //     ...curatorManagerscompanies.map((meet) => meet.dataValues)
-    //   ];
-
-    //   return res.status(200).send(userscompanies);
-    // }
-
-    // return res.status(200).send([]);
     return res.status(200).send(companies);
   } catch (e) {
     res.status(500).json({

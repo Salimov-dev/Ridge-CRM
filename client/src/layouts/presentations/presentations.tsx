@@ -15,9 +15,6 @@ import PresentationBaloon from "@components/UI/maps/presentation-baloon";
 import Buttons from "./components/buttons";
 // columns
 import { presentationsColumns } from "@columns/presentations.columns";
-// map images
-import target from "@assets/map/target-presentation.png";
-import targetCluster from "@assets/map/target-presentation-cluster.png";
 // hooks
 import useSearchPresentation from "@hooks/presentation/use-search-presentation";
 import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
@@ -132,30 +129,37 @@ const Presentations = React.memo(() => {
   }, []);
 
   useEffect(() => {
-    if (presentationsList && objects) {
-      const presentationsWithLocationData = presentationsList.map(
+    if (searchedPresentations && objects) {
+      const presentationsWithLocationData = searchedPresentations.map(
         (presentation) => {
           const matchingObject = objects?.find(
             (object) => object._id === presentation.objectId
           );
 
           if (matchingObject) {
-            return {
+            const newPres = {
               ...presentation,
-
               city: matchingObject?.city,
               address: matchingObject?.address,
               latitude: matchingObject?.latitude,
               longitude: matchingObject?.longitude
             };
+
+            return newPres;
           } else {
             return presentation;
           }
         }
       );
-      handleSetPresentationsWithLocation(presentationsWithLocationData);
+
+      if (
+        JSON.stringify(presentationsWithLocationData) !==
+        JSON.stringify(state.presentationsWithLocation)
+      ) {
+        handleSetPresentationsWithLocation(presentationsWithLocationData);
+      }
     }
-  }, [presentationsList, objects]);
+  }, [searchedPresentations, objects]);
 
   return (
     <ContainerStyled>
@@ -170,6 +174,7 @@ const Presentations = React.memo(() => {
       <ItemsOnMap
         items={state.presentationsWithLocation}
         onClick={handleSelectPresentationBaloon}
+        isLoading={isLoading}
         baloon={
           <PresentationBaloon
             presentationId={state.selectedPresentationBaloon}
@@ -177,9 +182,6 @@ const Presentations = React.memo(() => {
             onOpenUpdatePresentationPage={handleOpenUpdatePresentationPage}
           />
         }
-        isLoading={isLoading}
-        target={target}
-        targetCluster={targetCluster}
       />
       <PresentationsFiltersPanel
         data={data}
@@ -196,7 +198,8 @@ const Presentations = React.memo(() => {
           handleOpenObjectPage,
           handleOpenUpdatePresentationPage,
           isDialogPage,
-          isCurator
+          isCurator,
+          isManager
         )}
         isLoading={isLoading}
       />

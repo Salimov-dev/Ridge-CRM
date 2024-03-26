@@ -107,7 +107,6 @@ router.patch("/:presentationId?/edit", auth, async (req, res) => {
     }
 
     const existingPresentation = await Presentation.findByPk(presentationId);
-
     if (!existingPresentation) {
       return res.status(404).json({
         message: "Презентация не найдена."

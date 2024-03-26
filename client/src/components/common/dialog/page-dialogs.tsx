@@ -39,7 +39,8 @@ const PageDialogs = ({
   selectedObjects = [],
   setRowSelection = () => {},
   videoTitle = "",
-  videoSrc = ""
+  videoSrc = "",
+  isObjectPage = false
 }) => {
   const {
     handleCloseCreateObjectPage,
@@ -107,13 +108,14 @@ const PageDialogs = ({
       <DialogStyled
         component={
           <CreatePresentation
-            objectId={state.objectId}
             onClose={handleCloseCreatePresentationPage}
+            objectId={state.objectId}
+            isObjectPage={isObjectPage}
           />
         }
-        onClose={handleCloseUpdateObjectPage}
+        onClose={handleCloseCreatePresentationPage}
         maxWidth="sm"
-        open={state.presentationPage}
+        open={state.createPresentationPage}
       />
       <DialogStyled
         component={

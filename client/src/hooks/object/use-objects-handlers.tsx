@@ -9,11 +9,10 @@ const useObjectHandlers = (setState) => {
 
   // обновление стейта при открытии страницы объекта
   const handleOpenObjectPage = (objectId) => {
-
     setState((prevState) => ({
       ...prevState,
       objectPage: true,
-      objectId: objectId,
+      objectId: objectId
     }));
   };
   const handleCloseObjectPage = () => {
@@ -30,10 +29,10 @@ const useObjectHandlers = (setState) => {
 
   // обновление стейта при открытии окна создания презентации
   const handleOpenCreatePresentationPage = () => {
-    setState((prevState) => ({ ...prevState, presentationPage: true }));
+    setState((prevState) => ({ ...prevState, createPresentationPage: true }));
   };
   const handleCloseCreatePresentationPage = () => {
-    setState((prevState) => ({ ...prevState, presentationPage: false }));
+    setState((prevState) => ({ ...prevState, createPresentationPage: false }));
   };
 
   // обновление стейта при открытии окна передачи объекта другому менеджеру
@@ -48,7 +47,7 @@ const useObjectHandlers = (setState) => {
   const handleOpenCreateMyTaskPage = () => {
     setState((prevState) => ({
       ...prevState,
-      createMyTaskPage: true,
+      createMyTaskPage: true
     }));
   };
   const handleCloseCreateMyTaskPage = () => {
@@ -60,7 +59,7 @@ const useObjectHandlers = (setState) => {
     setState((prevState) => ({
       ...prevState,
       updateMyTaskPage: true,
-      taskId: taskId,
+      taskId: taskId
     }));
   };
   const handleCloseUpdateMyTaskPage = () => {
@@ -71,7 +70,7 @@ const useObjectHandlers = (setState) => {
   const handleOpenCreateManagerTaskPage = () => {
     setState((prevState) => ({
       ...prevState,
-      createManagerTaskPage: true,
+      createManagerTaskPage: true
     }));
   };
   const handleCloseCreateManagerTaskPage = () => {
@@ -83,7 +82,7 @@ const useObjectHandlers = (setState) => {
     setState((prevState) => ({
       ...prevState,
       updateManagerTaskPage: true,
-      taskId: taskId,
+      taskId: taskId
     }));
   };
   const handleCloseUpdateManagerTaskPage = () => {
@@ -94,13 +93,13 @@ const useObjectHandlers = (setState) => {
   const handleOpenCreateLastContactPage = () => {
     setState((prevState) => ({
       ...prevState,
-      createLastContactPage: true,
+      createLastContactPage: true
     }));
   };
   const handleCloseCreateLastContactPage = () => {
     setState((prevState) => ({
       ...prevState,
-      createLastContactPage: false,
+      createLastContactPage: false
     }));
   };
 
@@ -109,13 +108,13 @@ const useObjectHandlers = (setState) => {
     setState((prevState) => ({
       ...prevState,
       updateLastContactPage: true,
-      lastContactId: lastContactId,
+      lastContactId: lastContactId
     }));
   };
   const handleCloseUpdateLastContactPage = () => {
     setState((prevState) => ({
       ...prevState,
-      updateLastContactPage: false,
+      updateLastContactPage: false
     }));
   };
 
@@ -123,13 +122,13 @@ const useObjectHandlers = (setState) => {
   const handleOpenCreateMeetingPage = () => {
     setState((prevState) => ({
       ...prevState,
-      createMeetingPage: true,
+      createMeetingPage: true
     }));
   };
   const handleCloseCreateMeetingPage = () => {
     setState((prevState) => ({
       ...prevState,
-      createMeetingPage: false,
+      createMeetingPage: false
     }));
   };
 
@@ -138,13 +137,13 @@ const useObjectHandlers = (setState) => {
     setState((prevState) => ({
       ...prevState,
       updateMeetingPage: true,
-      meetingId: meetingId,
+      meetingId: meetingId
     }));
   };
   const handleCloseUpdateMeetingPage = () => {
     setState((prevState) => ({
       ...prevState,
-      updateMeetingPage: false,
+      updateMeetingPage: false
     }));
   };
   return {
@@ -173,7 +172,7 @@ const useObjectHandlers = (setState) => {
     handleOpenCreateMeetingPage,
     handleCloseCreateMeetingPage,
     handleOpenUpdateMeetingPage,
-    handleCloseUpdateMeetingPage,
+    handleCloseUpdateMeetingPage
   };
 };
 

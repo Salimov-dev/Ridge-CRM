@@ -1,10 +1,11 @@
 // libraries
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { Box, Button, Tooltip, Typography } from "@mui/material";
 // components
 import { AlignCenter } from "@components/common/columns/styled";
 import ButtonStyled from "@components/common/buttons/button-styled.button";
 import UserNameWithAvatar from "@components/common/user/user-name-with-avatar";
+import AnyObjectTableEntity from "@components/common/table-entities/any-object-table-entity";
 // hooks
 import useGetUserAvatar from "@hooks/user/use-get-user-avatar";
 // icons
@@ -15,66 +16,190 @@ import { FormatDate } from "@utils/date/format-date";
 // store
 import { getObjectById } from "@store/object/objects.store";
 import { getPresentationStatusNameById } from "@store/presentation/presentation-status.store";
-import { getPresentationById } from "@store/presentation/presentations.store";
-import {
-  getCurrentUserId,
-  getIsUserAuthorThisEntity,
-  getIsUserManager,
-  getUserDataById
-} from "@store/user/users.store";
 
 export const presentationsColumns = (
   handleOpenObjectPage,
   handleOpenUpdatePresentationPage,
-  isDialogPage
+  isDialogPage,
+  isCurator,
+  isManager
 ) => {
   let columns = [];
-  const currentUserId = useSelector(getCurrentUserId());
-  const isManager = useSelector(getIsUserManager(currentUserId));
 
   const firstColumns = {
-    accessorKey: "created_at",
-    header: "Дата",
-    cell: (info) => {
-      const date = info.getValue();
-      return <AlignCenter>{FormatDate(date)}</AlignCenter>;
-    }
+    header: "Презентация",
+    columns: [
+      {
+        accessorKey: "created_at",
+        header: "Дата",
+        cell: (info) => {
+          const date = info.getValue();
+          return <AlignCenter>{FormatDate(date)}</AlignCenter>;
+        }
+      },
+      {
+        accessorKey: "objectId",
+        header: "Объект презентации",
+        cell: (info) => {
+          const objectId = info.getValue();
+          const object = useSelector(getObjectById(objectId));
+          return objectId ? (
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between"
+              }}
+            >
+              {/* {fullAddress} */}
+              <AnyObjectTableEntity
+                object={object}
+                onOpenObjectPage={handleOpenObjectPage}
+              />
+            </Box>
+          ) : (
+            <AlignCenter>-</AlignCenter>
+          );
+        }
+      },
+      {
+        accessorKey: "cloudLink",
+        header: "Облако",
+        cell: (info) => {
+          const cloudLink = info.getValue();
+
+          const handleOpenCloud = () => {
+            const cloudLink = info.getValue();
+
+            if (cloudLink) {
+              window.open(cloudLink, "_blank"); // Открывает ссылку в новой вкладке браузера
+            }
+          };
+          return cloudLink?.length ? (
+            <AlignCenter>
+              <Tooltip title="Открыть облако" placement="top-start" arrow>
+                <Button onClick={handleOpenCloud}>
+                  <CloudDoneIcon sx={{ color: "white" }} />
+                </Button>
+              </Tooltip>
+            </AlignCenter>
+          ) : (
+            <AlignCenter>
+              <Tooltip title="Облако отсутствует" placement="top-start" arrow>
+                <CloudOffIcon sx={{ color: "white" }} />
+              </Tooltip>
+            </AlignCenter>
+          );
+        }
+      }
+    ]
   };
 
-  const objectColumn = {
-    accessorKey: "objectId",
-    header: "Объект презентации",
-    cell: (info) => {
-      const objectId = info.getValue();
-      const object = useSelector(getObjectById(objectId));
-      const fullAddress = `${object?.city}, ${object?.address}`;
+  const considerationColumn = {
+    id: "considerationColumn",
+    header: "Рассмотрение",
+    columns: [
+      {
+        accessorKey: "status",
+        header: "Статус рассмотрения",
+        cell: (info) => {
+          const status = info.getValue();
+          const name = useSelector(getPresentationStatusNameById(status));
 
-      return objectId ? (
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between"
-          }}
-        >
-          {fullAddress}
-          {!isDialogPage && objectId ? (
-            <ButtonStyled
-              title="Открыть"
-              style="OPEN_OBJECT"
-              onClick={() => handleOpenObjectPage(objectId)}
-            />
-          ) : null}
-        </Box>
-      ) : (
-        <AlignCenter>-</AlignCenter>
-      );
-    }
+          const getColor = () => {
+            const toBeAgreed = "654wqeg3469y9dfsd82dd334";
+            const refused = "654wqeporew325iugfu43005";
+            const agreed = "654wqepvmq49450iqw23fd68";
+            const finalize = "654wqe92hc0siq123of00q99";
+
+            if (status === toBeAgreed) {
+              return "orange";
+            }
+            if (status === refused) {
+              return "red";
+            }
+            if (status === agreed) {
+              return "green";
+            }
+            if (status === finalize) {
+              return "blue";
+            }
+          };
+
+          return (
+            <AlignCenter>
+              <Typography
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  width: "100%",
+                  height: "30px",
+                  background: getColor()
+                }}
+              >
+                {name}
+              </Typography>
+            </AlignCenter>
+          );
+        }
+      },
+      {
+        accessorKey: "curatorComment",
+        header: "Комментарий Куратора",
+        cell: (info) => {
+          const curatorComment = info.getValue();
+          return curatorComment ? (
+            <AlignCenter>{curatorComment}</AlignCenter>
+          ) : (
+            <AlignCenter>Дождитесь итогов согласования</AlignCenter>
+          );
+        }
+      }
+    ]
+  };
+
+  const updateColumn = {
+    id: "updateColumn",
+    header: "Согласование",
+    columns: [
+      {
+        accessorKey: "_id",
+        header: "Презентация",
+        cell: (info) => {
+          const presentationId = info.getValue();
+
+          return (
+            <AlignCenter>
+              {isCurator ? (
+                <ButtonStyled
+                  title="СОГЛАСОВАТЬ"
+                  style="CANCEL"
+                  disabled={!isCurator}
+                  onClick={() =>
+                    handleOpenUpdatePresentationPage(presentationId)
+                  }
+                />
+              ) : (
+                <ButtonStyled
+                  title="Править"
+                  style="PRESENTATION"
+                  disabled={!isCurator}
+                  onClick={() =>
+                    handleOpenUpdatePresentationPage(presentationId)
+                  }
+                />
+              )}
+            </AlignCenter>
+          );
+        }
+      }
+    ]
   };
 
   const managerColumn = {
     id: "managerColumn",
-    header: null,
+    header: "Менеджер",
     columns: isManager !== undefined && [
       {
         accessorKey: "userId",
@@ -97,90 +222,10 @@ export const presentationsColumns = (
     ]
   };
 
-  const otherColumn = [
-    {
-      accessorKey: "status",
-      header: "Статус рассмотрения",
-      cell: (info) => {
-        const status = info.getValue();
-        const name = useSelector(getPresentationStatusNameById(status));
-        return <AlignCenter>{name}</AlignCenter>;
-      }
-    },
-    {
-      accessorKey: "curatorComment",
-      header: "Комментарий Куратора",
-      cell: (info) => {
-        const curatorComment = info.getValue();
-        return curatorComment ? (
-          curatorComment
-        ) : (
-          <Typography sx={{ fontStyle: "italic" }}>
-            Дождитесь итогов согласования
-          </Typography>
-        );
-      }
-    },
-    {
-      accessorKey: "cloudLink",
-      header: "Облако",
-      cell: (info) => {
-        const cloudLink = info.getValue();
-
-        const handleOpenCloud = () => {
-          const cloudLink = info.getValue();
-
-          if (cloudLink) {
-            window.open(cloudLink, "_blank"); // Открывает ссылку в новой вкладке браузера
-          }
-        };
-        return cloudLink?.length ? (
-          <AlignCenter>
-            <Tooltip title="Открыть облако" placement="top-start" arrow>
-              <Button onClick={handleOpenCloud}>
-                <CloudDoneIcon sx={{ color: "white" }} />
-              </Button>
-            </Tooltip>
-          </AlignCenter>
-        ) : (
-          <AlignCenter>
-            <Tooltip title="Облако отсутствует" placement="top-start" arrow>
-              <CloudOffIcon sx={{ color: "white" }} />
-            </Tooltip>
-          </AlignCenter>
-        );
-      }
-    },
-    {
-      accessorKey: "_id",
-      header: "Презентация",
-      cell: (info) => {
-        const dispatch = useDispatch();
-        const presentationId = info.getValue();
-        const presentation = useSelector(getPresentationById(presentationId));
-        const currentUserId = useSelector(getCurrentUserId());
-        const isAuthorEntity = useSelector(
-          getIsUserAuthorThisEntity(currentUserId, presentation)
-        );
-
-        return (
-          <AlignCenter>
-            <ButtonStyled
-              title="Править"
-              style="PRESENTATION"
-              disabled={!isAuthorEntity}
-              onClick={() => handleOpenUpdatePresentationPage(presentationId)}
-            />
-          </AlignCenter>
-        );
-      }
-    }
-  ];
-
   if (!isManager) {
-    columns = [firstColumns, objectColumn, managerColumn, ...otherColumn];
+    columns = [firstColumns, considerationColumn, managerColumn, updateColumn];
   } else {
-    columns = [firstColumns, objectColumn, ...otherColumn];
+    columns = [firstColumns, considerationColumn, updateColumn];
   }
 
   return columns;
