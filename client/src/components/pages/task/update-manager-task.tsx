@@ -158,7 +158,7 @@ const UpdateManagerTask = React.memo(
           onCancel={onClose}
           onRemove={handleClickOpen}
           isUpdate={true}
-          disabledRemoveButton={!isUserManager}
+          disabledRemoveButton={isUserManager}
         />
         <DialogConfirm
           question="Вы уверены, что хотите удалить задачу менеджеру?"

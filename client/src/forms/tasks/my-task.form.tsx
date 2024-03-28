@@ -24,6 +24,8 @@ const MyTaskForm = ({
   isObjectPage = false,
   isMyTask = false
 }) => {
+  console.log("isObjectPage", isObjectPage);
+
   const watchObjectId = watch("objectId");
   const watchIsDone = watch("isDone");
   const watchIsCallTask = watch("isCallTask");
@@ -88,7 +90,8 @@ const MyTaskForm = ({
           value={data.objectId}
           setValue={setValue}
           watchItemId={watchObjectId || ""}
-          disabled={!isMyTask && (isObjectPage || !watchManagerId)}
+          disabled={!isMyTask || isObjectPage}
+          // disabled={!isMyTask && (isObjectPage || !watchManagerId)}
           optionLabel={(option) => `${option?.city}, ${option?.address}`}
         />
       )}

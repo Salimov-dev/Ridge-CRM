@@ -16,7 +16,7 @@ const Month = ({ meetings, tasks, month, setState }) => {
   const [draggableDay, setDraggableDay] = useState(null);
 
   const formattedDate = dayjs(draggableDay, {
-    format: "YYYYMMDDHHmmss",
+    format: "YYYYMMDDHHmmss"
   }).format("YYYY-MM-DDTHH:mm:ss.SSSZ");
 
   const handleDragOver = (e, day) => {

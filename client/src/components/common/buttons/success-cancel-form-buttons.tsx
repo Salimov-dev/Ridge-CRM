@@ -31,7 +31,7 @@ const SuccessCancelFormButtons = ({
         disabled={disabledSuccess}
       />
       <Container>
-        {disabledRemoveButton && (
+        {!disabledRemoveButton && (
           <ButtonStyled title="Удалить" style="DELETE" onClick={onRemove} />
         )}
         <ButtonStyled title="Отмена" style="CANCEL" onClick={onCancel} />

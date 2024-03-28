@@ -52,6 +52,9 @@ const CreateManagerTask = React.memo(
       resolver: yupResolver(taskManagerSchema)
     });
     const data = watch();
+    const watchManagerId = watch("managerId");
+    console.log("data", data);
+    console.log("watchManagerId", watchManagerId);
 
     const users = useSelector(getUsersList());
     const currentUserId = useSelector(getCurrentUserId());
@@ -114,6 +117,10 @@ const CreateManagerTask = React.memo(
         setValue<any>("date", null);
       }
     }, [dateCreate]);
+
+    useEffect(() => {
+      setValue("objectId", null);
+    }, [watchManagerId]);
 
     return (
       <>

@@ -13,7 +13,7 @@ const CalendarBody = ({
   currentMonth,
   meetings,
   background,
-  setState,
+  setState
 }) => {
   return (
     <Component>

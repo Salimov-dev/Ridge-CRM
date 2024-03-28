@@ -12,7 +12,6 @@ const OneDayContainer = styled(Box)`
   display: flex;
   border: 1px solid gray;
   flex-direction: column;
-  cursor: pointer;
   padding: 6px;
 `;
 
@@ -24,7 +23,7 @@ const Day = ({
   onDragOver,
   draggableDay,
   setDraggableDay,
-  setState,
+  setState
 }) => {
   const isCurrentDay = chechIsCurrentDay(day);
   const isFutureDay = chechIsFutureDay(day);
@@ -54,8 +53,8 @@ const Day = ({
             ? formattedDay !== draggableDay
               ? "yellow"
               : "DeepPink"
-            : "Crimson",
-        },
+            : "Crimson"
+        }
       }}
     >
       <Date

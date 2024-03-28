@@ -23,7 +23,11 @@ import {
   removeCompany,
   updateCompany
 } from "@store/company/company.store";
-import { getCurrentUserId, getIsUserManager } from "@store/user/users.store";
+import {
+  getCurrentUserId,
+  getIsUserCurator,
+  getIsUserManager
+} from "@store/user/users.store";
 import { getContactsList } from "@store/contact/contact.store";
 import { getObjectsList } from "@store/object/objects.store";
 
@@ -45,6 +49,7 @@ const UpdateCompany = React.memo(({ companyId, onClose }) => {
   const company = useSelector(getCompanyById(companyId));
   const currentUserId = useSelector(getCurrentUserId());
   const isManager = useSelector(getIsUserManager(currentUserId));
+  const isCurator = useSelector(getIsUserCurator(currentUserId));
   const contactsList = useSelector(getContactsList());
   const objectsList = useSelector(getObjectsList());
 
@@ -207,6 +212,7 @@ const UpdateCompany = React.memo(({ companyId, onClose }) => {
         onCancel={onClose}
         onRemove={handleClickOpen}
         isUpdate={true}
+        disabledRemoveButton={isCurator}
       />
       <LoaderFullWindow
         color={colors.grey[600]}

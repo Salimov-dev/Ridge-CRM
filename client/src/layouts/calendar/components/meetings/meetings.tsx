@@ -45,7 +45,7 @@ const Meetings = ({
             draggable={isAuthorEntity && true}
             onDragEnd={() => handleDragEnd(meet)}
             sx={{
-              cursor: "grab",
+              cursor: isAuthorEntity ? "grab" : null,
               border: "3px solid RoyalBlue",
               color: "GhostWhite",
               background: !meet?.isDone ? "RoyalBlue" : "gray"

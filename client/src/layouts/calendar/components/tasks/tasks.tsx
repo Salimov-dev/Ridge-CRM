@@ -60,7 +60,7 @@ const Tasks = ({
             draggable={isAuthorEntity && true}
             onDragEnd={() => handleDragEnd(task)}
             sx={{
-              cursor: "grab",
+              cursor: isAuthorEntity ? "grab" : null,
               border: task.managerId
                 ? "3px solid red"
                 : taskIsCall
