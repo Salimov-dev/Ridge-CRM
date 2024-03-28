@@ -8,13 +8,11 @@ import SimpleSwitch from "@components/common/inputs/simple-switch";
 import AutocompleteStyled from "@components/common/inputs/autocomplete-styled";
 // utils
 import { capitalizeFirstLetter } from "@utils/data/capitalize-first-letter";
-import {
-  getCurrentUserId,
-  getIsUserCurator,
-  getIsUserManager
-} from "@store/user/users.store";
+// store
+import { getCurrentUserId, getIsUserCurator } from "@store/user/users.store";
 
 const MyTaskForm = ({
+  task = {},
   data,
   objects,
   users,
@@ -32,7 +30,6 @@ const MyTaskForm = ({
   const watchManagerId = watch("managerId");
 
   const currentUserId = useSelector(getCurrentUserId());
-  const isUserManager = useSelector(getIsUserManager(currentUserId));
   const isUserCurator = useSelector(getIsUserCurator(currentUserId));
 
   return (
@@ -42,7 +39,6 @@ const MyTaskForm = ({
           title="Сделать звонок"
           value={watchIsCallTask}
           padding="0px"
-          disabled={!isUserCurator && isEditMode}
           onChange={(e) => {
             setValue("isCallTask", e.target.checked);
           }}
@@ -106,7 +102,6 @@ const MyTaskForm = ({
         required={true}
         multiline={true}
         errors={errors?.comment}
-        disabled={!isMyTask && isUserManager}
         inputProps={{ maxLength: 200 }}
       />
       {isEditMode ? (
@@ -117,7 +112,6 @@ const MyTaskForm = ({
           value={capitalizeFirstLetter(data?.result) || ""}
           rows="2"
           multiline={true}
-          disabled={!isMyTask && !isUserManager}
           inputProps={{ maxLength: 100 }}
         />
       ) : null}

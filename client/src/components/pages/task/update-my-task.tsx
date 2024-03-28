@@ -3,6 +3,8 @@ import dayjs from "dayjs";
 import { toast } from "react-toastify";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useTheme } from "@emotion/react";
+import { tokens } from "@theme/theme";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useDispatch, useSelector } from "react-redux";
 // components
@@ -24,6 +26,9 @@ import DialogConfirm from "@components/common/dialog/dialog-confirm";
 const UpdateMyTask = React.memo(
   ({ title, taskId, objectId, onClose, isObjectPage }) => {
     const dispatch = useDispatch();
+    const theme = useTheme();
+    const colors = tokens(theme.palette.mode);
+
     const [open, setOpen] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
 
@@ -50,6 +55,7 @@ const UpdateMyTask = React.memo(
     const data = watch();
     const isEditMode = taskId ? true : false;
     const objects = useSelector(getObjectsList());
+    const watchIsCallTask = watch("isCallTask");
 
     const currentUserId = useSelector(getCurrentUserId());
     const currentUserObjects = objects?.filter(
@@ -132,12 +138,13 @@ const UpdateMyTask = React.memo(
     return (
       <>
         <TitleWithCloseButton
-          title={title}
-          background="orange"
+          title={watchIsCallTask ? "Нужно совершить звонок" : title}
+          background={watchIsCallTask ? "ForestGreen" : colors.task["myTask"]}
           color="white"
           onClose={onClose}
         />
         <MyTaskForm
+          task={task}
           data={data}
           objects={currentUserObjects}
           register={register}

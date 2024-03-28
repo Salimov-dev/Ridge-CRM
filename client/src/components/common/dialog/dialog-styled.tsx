@@ -11,8 +11,6 @@ const DialogStyled = ({
   fullWidth = true,
   maxWidth = "lg"
 }) => {
-  console.log("open", open);
-
   return (
     <Dialog
       onClose={onClose}

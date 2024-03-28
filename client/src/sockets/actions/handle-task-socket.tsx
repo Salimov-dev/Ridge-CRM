@@ -4,23 +4,18 @@ import {
   removeTaskUpdate,
   updateTaskUpdate
 } from "@store/task/tasks.store";
-import { getCurrentUserId, getIsUserManager } from "@store/user/users.store";
+import { getCurrentUserId } from "@store/user/users.store";
 
 const handleTaskSocket = (socket) => {
   const dispatch = useDispatch();
   const currentUserId = useSelector(getCurrentUserId());
-  const isManager = useSelector(getIsUserManager(currentUserId));
 
   socket.on("createTask", async (newTask) => {
-    const taskUserId = newTask?.userId;
-
-    if (
-      isManager === undefined ||
-      (isManager && taskUserId !== currentUserId)
-    ) {
-      return null;
-    } else {
-      dispatch<any>(createTaskUpdate(newTask));
+    if (newTask.userId === currentUserId) {
+      return dispatch<any>(createTaskUpdate(newTask));
+    }
+    if (newTask.managerId === currentUserId) {
+      return dispatch<any>(createTaskUpdate(newTask));
     }
   });
   socket.on("updateTask", async (updatedTask) => {

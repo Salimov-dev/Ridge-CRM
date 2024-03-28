@@ -6,6 +6,7 @@ import AutocompleteStyled from "../../components/common/inputs/autocomplete-styl
 import { FieldsContainer, Form } from "../../components/common/forms/styled";
 // store
 import { getPresentationStatusList } from "../../store/presentation/presentation-status.store";
+import { capitalizeFirstLetter } from "@utils/data/capitalize-first-letter";
 
 const CuratorPresentationForm = ({
   data,
@@ -36,7 +37,7 @@ const CuratorPresentationForm = ({
           name="curatorComment"
           rows="6"
           multiline={true}
-          value={data?.curatorComment}
+          value={capitalizeFirstLetter(data?.curatorComment)}
           errors={errors?.curatorComment}
           inputProps={{ maxLength: 500 }}
         />

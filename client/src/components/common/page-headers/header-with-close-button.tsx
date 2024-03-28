@@ -16,10 +16,11 @@ const HeaderWithCloseButton = ({
   onClose,
   background = "",
   color = "white",
-  margin = "0 0 20px 0",
+  margin = "0 0 20px 0"
 }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+
   return (
     <Component sx={{ margin: margin }}>
       <LayoutTitle

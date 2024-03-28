@@ -19,7 +19,7 @@ const TaskObject = ({ task, setState }) => {
       <Box
         sx={{ display: "flex", gap: "4px", justifyContent: "space-between" }}
       >
-        <Typography>{objectAddress}</Typography>
+        {taskObjectId && <Typography>{objectAddress}</Typography>}
         <OpenPageElementIconButton
           color="Gainsboro"
           colorHover="white"

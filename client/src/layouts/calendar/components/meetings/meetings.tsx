@@ -16,7 +16,7 @@ const Meetings = ({
   setDraggableDay,
   isCurator,
   isSelectedDayDialog,
-  setState,
+  setState
 }) => {
   const dispatch = useDispatch();
 
@@ -24,7 +24,7 @@ const Meetings = ({
     if (meet?.date !== draggableDay) {
       const updatedMeeting = {
         ...meet,
-        date: draggableDay,
+        date: draggableDay
       };
       dispatch<any>(updateMeeting(updatedMeeting)).then(() =>
         setDraggableDay(null)
@@ -36,32 +36,36 @@ const Meetings = ({
 
   return meetings ? (
     <ItemsContainer>
-      {meetings?.map((meet) => (
-        <ItemContainer
-          key={meet._id}
-          draggable={true}
-          onDragEnd={() => handleDragEnd(meet)}
-          sx={{
-            cursor: "grab",
-            border: "3px solid RoyalBlue",
-            color: "GhostWhite",
-            background: !meet?.isDone ? "RoyalBlue" : "gray",
-          }}
-        >
-          <Title
-            meet={meet}
-            currentUserId={currentUserId}
-            setState={setState}
-          />
-          <Body
-            meet={meet}
-            isCurator={isCurator}
-            isSelectedDayDialog={isSelectedDayDialog}
-            setState={setState}
-          />
-          {isSelectedDayDialog ? <Result meet={meet} /> : null}
-        </ItemContainer>
-      ))}
+      {meetings?.map((meet) => {
+        const isAuthorEntity = meet?.userId === currentUserId;
+
+        return (
+          <ItemContainer
+            key={meet._id}
+            draggable={isAuthorEntity && true}
+            onDragEnd={() => handleDragEnd(meet)}
+            sx={{
+              cursor: "grab",
+              border: "3px solid RoyalBlue",
+              color: "GhostWhite",
+              background: !meet?.isDone ? "RoyalBlue" : "gray"
+            }}
+          >
+            <Title
+              meet={meet}
+              currentUserId={currentUserId}
+              setState={setState}
+            />
+            <Body
+              meet={meet}
+              isCurator={isCurator}
+              isSelectedDayDialog={isSelectedDayDialog}
+              setState={setState}
+            />
+            {isSelectedDayDialog ? <Result meet={meet} /> : null}
+          </ItemContainer>
+        );
+      })}
     </ItemsContainer>
   ) : (
     <Loader />

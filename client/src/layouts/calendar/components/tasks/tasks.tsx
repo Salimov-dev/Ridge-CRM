@@ -52,11 +52,12 @@ const Tasks = ({
         const taskIsDone = task?.isDone;
         const taskIsCall = task?.isCallTask;
         const result = task?.result;
+        const isAuthorEntity = task?.userId === currentUserId;
 
         return (
           <ItemContainer
             key={task?._id}
-            draggable={true}
+            draggable={isAuthorEntity && true}
             onDragEnd={() => handleDragEnd(task)}
             sx={{
               cursor: "grab",
@@ -98,7 +99,6 @@ const Tasks = ({
               </Typography>
             ) : null}
             <TaskObject task={task} setState={setState} />
-            {/* {isSelectedDayDialog ? <Result task={task} /> : null} */}
             {result ? <Result task={task} /> : null}
           </ItemContainer>
         );

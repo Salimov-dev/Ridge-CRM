@@ -132,7 +132,7 @@ router.delete("/:taskId?", auth, async (req, res) => {
     const { taskId } = req.params;
     if (!taskId) {
       return res.status(400).json({
-        message: "Необходимо указать идентификатор объекта (objectId)."
+        message: "Необходимо указать идентификатор объекта (taskId)."
       });
     }
 

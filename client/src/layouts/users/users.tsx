@@ -46,6 +46,7 @@ const Users = React.memo(() => {
   });
   const data = watch();
   const users = useSelector(getUsersList());
+
   const currentUserId = useSelector(getCurrentUserId());
 
   const isLoading = useSelector(getUsersLoadingStatus());
@@ -64,14 +65,12 @@ const Users = React.memo(() => {
   const usersWithoutCurrentUser = users?.filter(
     (user) => user?._id !== currentUserId
   );
-
   const observerUsersWithRole = usersWithoutCurrentUser?.filter(
     (user) => user?.role && user?.role.includes(userRoleObserver)
   );
   const managerUsersWithRole = usersWithoutCurrentUser?.filter(
     (user) => user?.role && user?.role.includes(userRoleManager)
   );
-
   const searchedUsers = useSearchUser({
     users: managerUsersWithRole,
     data

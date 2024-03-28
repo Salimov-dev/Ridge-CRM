@@ -10,18 +10,23 @@ import { useDispatch, useSelector } from "react-redux";
 // components
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
 import SuccessCancelFormButtons from "@components/common/buttons/success-cancel-form-buttons";
-import MyTaskForm from "@forms/tasks/my-task.form";
 import DialogConfirm from "@components/common/dialog/dialog-confirm";
 import HeaderWithCloseButton from "@components/common/page-headers/header-with-close-button";
 // schema
 import { taskSchema } from "@schemas/task/task.shema";
+// forms
+import ManagerTaskForm from "@forms/tasks/manager-task.form";
 // store
 import { getObjectsList } from "@store/object/objects.store";
 import { getTaskById, removeTask, updateTask } from "@store/task/tasks.store";
-import { getCurrentUserId, getIsUserManager } from "@store/user/users.store";
+import {
+  getCurrentUserId,
+  getIsUserManager,
+  getUsersList
+} from "@store/user/users.store";
 
 const UpdateManagerTask = React.memo(
-  ({ title, onClose, taskId, users, isObjectPage }) => {
+  ({ title, onClose, taskId, isObjectPage }) => {
     const dispatch = useDispatch();
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
@@ -30,7 +35,6 @@ const UpdateManagerTask = React.memo(
     const [isLoading, setIsLoading] = useState(false);
 
     const task = useSelector(getTaskById(taskId));
-    const isEditMode = taskId ? true : false;
 
     const formatedTask = {
       ...task,
@@ -51,7 +55,8 @@ const UpdateManagerTask = React.memo(
     });
 
     const data = watch();
-    const watchManagerId = watch("managerId", null);
+    const managerId = task?.managerId;
+    const watchManagerId = watch("managerId");
     const currentUserId = useSelector(getCurrentUserId());
     const isUserManager = useSelector(getIsUserManager(currentUserId));
     const objectId = task?.objectId;
@@ -59,6 +64,19 @@ const UpdateManagerTask = React.memo(
     const selectedManagerObjects = objects?.filter(
       (obj) => obj?.userId === watchManagerId
     );
+
+    const users = useSelector(getUsersList());
+    const actualUsersArray = users?.map((user) => {
+      const lastName = user?.lastName;
+      const firstName = user?.firstName;
+
+      return {
+        _id: user._id,
+        name: `${lastName ? lastName : "Без"} ${
+          firstName ? firstName : "имени"
+        }`
+      };
+    });
 
     const onSubmit = (data) => {
       setIsLoading(true);
@@ -84,8 +102,16 @@ const UpdateManagerTask = React.memo(
         });
     };
 
-    const handleRemoveTask = (taskId) => {
-      dispatch<any>(removeTask(taskId)).then(onClose());
+    const handleRemoveTask = () => {
+      setIsLoading(true);
+      dispatch<any>(removeTask(taskId))
+        .then(onClose())
+        .catch((error) => {
+          toast.error(error);
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
     };
 
     const handleClickOpen = () => {
@@ -102,6 +128,11 @@ const UpdateManagerTask = React.memo(
       }
     }, [objectId]);
 
+    useEffect(() => {
+      setValue<any>("objectId", objectId);
+      setValue<any>("managerId", managerId);
+    }, []);
+
     return (
       <>
         <HeaderWithCloseButton
@@ -110,14 +141,15 @@ const UpdateManagerTask = React.memo(
           color="white"
           onClose={onClose}
         />
-        <MyTaskForm
+        <ManagerTaskForm
+          task={task}
           data={data}
           objects={selectedManagerObjects}
           register={register}
           setValue={setValue}
           watch={watch}
           errors={errors}
-          users={users}
+          users={actualUsersArray}
           isEditMode={true}
           isObjectPage={isObjectPage}
         />
@@ -126,11 +158,12 @@ const UpdateManagerTask = React.memo(
           onCancel={onClose}
           onRemove={handleClickOpen}
           isUpdate={true}
+          disabledRemoveButton={!isUserManager}
         />
         <DialogConfirm
           question="Вы уверены, что хотите удалить задачу менеджеру?"
           open={open}
-          onSuccessClick={() => handleRemoveTask(watchManagerId)}
+          onSuccessClick={() => handleRemoveTask()}
           onClose={handleClose}
         />
         <LoaderFullWindow isLoading={isLoading} />

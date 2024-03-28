@@ -1,6 +1,6 @@
 import dayjs from "dayjs";
 import "dayjs/locale/ru";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 // mui
 import { Box, Typography } from "@mui/material";
 // components
@@ -9,16 +9,17 @@ import UserNameWithAvatar from "@components/common/user/user-name-with-avatar";
 import ButtonStyled from "@components/common/buttons/button-styled.button";
 import { AlignCenter } from "@components/common/columns/styled";
 import ContactTableEntity from "@components/common/table-entities/contact-table-entity";
+// hooks
+import useGetUserAvatar from "@hooks/user/use-get-user-avatar";
 // utils
 import { FormatDate } from "@utils/date/format-date";
+// store
 import { getLastContactsById } from "@store/last-contact/last-contact.store";
 import {
   getCurrentUserId,
   getIsUserAuthorThisEntity,
   getIsUserManager
 } from "@store/user/users.store";
-// hooks
-import useGetUserAvatar from "@hooks/user/use-get-user-avatar";
 
 export const lastContactColumns = (onUpdate, onOpenContactPage) => {
   let columns = [];

@@ -1,7 +1,6 @@
 // libraries
 import { useTheme } from "@emotion/react";
 import { tokens } from "@theme/theme";
-import dayjs from "dayjs";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
@@ -11,15 +10,16 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import HeaderWithCloseButton from "@components/common/page-headers/header-with-close-button";
 import SuccessCancelFormButtons from "@components/common/buttons/success-cancel-form-buttons";
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
-import MyTaskForm from "@forms/tasks/my-task.form";
 // schema
-import { taskSchema } from "@schemas/task/task.shema";
+import { taskManagerSchema } from "@schemas/task/task-manager.shema";
 // utils
 import { capitalizeFirstLetter } from "@utils/data/capitalize-first-letter";
+// forms
+import ManagerTaskForm from "@forms/tasks/manager-task.form";
 // store
 import { createTask } from "@store/task/tasks.store";
 import { getObjectById, getObjectsList } from "@store/object/objects.store";
-import { taskManagerSchema } from "@schemas/task/task-manager.shema";
+import { getCurrentUserId, getUsersList } from "@store/user/users.store";
 
 const initialState = {
   comment: "",
@@ -33,7 +33,7 @@ const initialState = {
 };
 
 const CreateManagerTask = React.memo(
-  ({ users, title, dateCreate, onClose, objectId, isObjectPage }) => {
+  ({ title, dateCreate, onClose, objectId, isObjectPage }) => {
     const dispatch = useDispatch();
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
@@ -52,6 +52,28 @@ const CreateManagerTask = React.memo(
       resolver: yupResolver(taskManagerSchema)
     });
     const data = watch();
+
+    const users = useSelector(getUsersList());
+    const currentUserId = useSelector(getCurrentUserId());
+
+    const usersWithoutCurrentUser = users?.filter(
+      (user) => user?._id !== currentUserId
+    );
+    const userRoleManager = "69gfoep3944jgjdso345002";
+    const managerUsersWithRole = usersWithoutCurrentUser?.filter(
+      (user) => user?.role && user?.role.includes(userRoleManager)
+    );
+    const actualUsersArray = managerUsersWithRole?.map((user) => {
+      const lastName = user?.lastName;
+      const firstName = user?.firstName;
+
+      return {
+        _id: user._id,
+        name: `${lastName ? lastName : "Без"} ${
+          firstName ? firstName : "имени"
+        }`
+      };
+    });
 
     const objectManagerId = watch("managerId");
     const objects = useSelector(getObjectsList());
@@ -101,15 +123,14 @@ const CreateManagerTask = React.memo(
           onClose={onClose}
           margin="0 0 20px 0"
         />
-        <MyTaskForm
+        <ManagerTaskForm
           data={data}
           objects={managerObjects}
           register={register}
           setValue={setValue}
           watch={watch}
           errors={errors}
-          isCurator={true}
-          users={users}
+          users={actualUsersArray}
           isObjectPage={isObjectPage}
         />
         <SuccessCancelFormButtons

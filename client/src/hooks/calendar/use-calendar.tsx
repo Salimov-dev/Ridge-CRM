@@ -5,7 +5,12 @@ import { orderBy } from "lodash";
 import { useSelector } from "react-redux";
 // store
 import { getMeetingsList } from "@store/meeting/meetings.store";
-import { getCurrentUserId, getIsUserCurator } from "@store/user/users.store";
+import {
+  getCurrentUserId,
+  getIsUserCurator,
+  getIsUserManager,
+  getIsUserObserver
+} from "@store/user/users.store";
 // utils
 import getStartWeekDate from "@utils/date/get-start-week-date";
 import getEndWeekDate from "@utils/date/get-end-week-date";
@@ -20,6 +25,8 @@ const useCalendar = (data, setState) => {
 
   const currentUserId = useSelector(getCurrentUserId());
   const isCurator = useSelector(getIsUserCurator(currentUserId));
+  const isObserver = useSelector(getIsUserObserver(currentUserId));
+  const isManager = useSelector(getIsUserManager(currentUserId));
 
   const startOfWeek = getStartWeekDate();
   const endOfWeek = getEndWeekDate();
@@ -39,7 +46,18 @@ const useCalendar = (data, setState) => {
   const currentUserTasks = tasks?.filter(
     (task) => task?.userId === currentUserId
   );
-  const actualTasks = isCurator ? currentUserTasks : tasks;
+  const getActualTasks = () => {
+    if (isManager) {
+      return tasks;
+    }
+    if (isCurator) {
+      return currentUserTasks;
+    }
+    if (isObserver) {
+      return currentUserTasks;
+    }
+  };
+  const actualTasks = getActualTasks();
   const searchedTasks = useSearchTask(actualTasks, data);
   const sortedTasks = useMemo(() => {
     return orderBy(searchedTasks, ["date"], ["desc"]);
@@ -80,7 +98,7 @@ const useCalendar = (data, setState) => {
   const handleChangeCurrentMonth = (monthIndex) => {
     setState((prevState) => ({
       ...prevState,
-      currentMonth: getMonth(monthIndex),
+      currentMonth: getMonth(monthIndex)
     }));
   };
 
@@ -90,7 +108,7 @@ const useCalendar = (data, setState) => {
     actualTasks,
     getMeeting,
     getTask,
-    handleChangeCurrentMonth,
+    handleChangeCurrentMonth
   };
 };
 
