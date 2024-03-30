@@ -66,7 +66,6 @@ const UpdateAvatar = React.memo(({ onClose }) => {
       })
       .catch((err) => {
         setIsLoading(false);
-        console.log("err", err);
       });
   };
 

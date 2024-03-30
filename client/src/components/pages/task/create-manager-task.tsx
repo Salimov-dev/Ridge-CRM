@@ -53,8 +53,6 @@ const CreateManagerTask = React.memo(
     });
     const data = watch();
     const watchManagerId = watch("managerId");
-    console.log("data", data);
-    console.log("watchManagerId", watchManagerId);
 
     const users = useSelector(getUsersList());
     const currentUserId = useSelector(getCurrentUserId());

@@ -1,15 +1,28 @@
-import { citiesArray } from "@data/cities";
-import { getCurrentUserData } from "@store/user/users.store";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
+// data
+import { citiesArray } from "@data/cities";
+// store
+import { getCurrentUserData, getCurrentUserId } from "@store/user/users.store";
+import {
+  getUserLicensesByUserId,
+  updateUserLicense
+} from "@store/user/user-license.store";
 
 const useFindObject = () => {
+  const dispatch = useDispatch();
+
   const [findedObject, setFindedObject] = useState({});
+  const [errors, setErrors] = useState([]);
+
   const isEmptyFindedObject = Object.keys(findedObject).length === 0;
   const currentUser = useSelector(getCurrentUserData());
   const userCity = citiesArray.find((city) => city._id === currentUser?.city);
-
   const center = [userCity?.longitude, userCity?.latitude];
+
+  const currentUserId = useSelector(getCurrentUserId());
+  const userLicense = useSelector(getUserLicensesByUserId(currentUserId));
 
   const init = () => {
     const myMap = new ymaps.Map(
@@ -27,21 +40,22 @@ const useFindObject = () => {
 
     let myPlacemark;
 
-    myMap.events.add("click", (e) => {
-      const coords = e.get("coords");
+    userLicense?.quantityClicksOnMap &&
+      myMap.events.add("click", (e) => {
+        const coords = e.get("coords");
 
-      if (myPlacemark) {
-        myPlacemark.geometry.setCoordinates(coords);
-      } else {
-        myPlacemark = createPlacemark(coords);
-        myMap.geoObjects.add(myPlacemark);
+        if (myPlacemark) {
+          myPlacemark.geometry.setCoordinates(coords);
+        } else {
+          myPlacemark = createPlacemark(coords);
+          myMap.geoObjects.add(myPlacemark);
 
-        myPlacemark.events.add("dragend", () => {
-          getAddress(myPlacemark.geometry.getCoordinates());
-        });
-      }
-      getAddress(coords);
-    });
+          myPlacemark.events.add("dragend", () => {
+            getAddress(myPlacemark.geometry.getCoordinates());
+          });
+        }
+        getAddress(coords);
+      });
 
     const createPlacemark = (coords) => {
       return new ymaps.Placemark(
@@ -138,6 +152,23 @@ const useFindObject = () => {
   useEffect(() => {
     ymaps.ready(init);
   }, []);
+
+  useEffect(() => {
+    if (Object.keys(findedObject).length !== 0) {
+      const updatedUserLicense = {
+        ...userLicense,
+        quantityClicksOnMap: userLicense?.quantityClicksOnMap - 1
+      };
+
+      dispatch<any>(updateUserLicense(updatedUserLicense))
+        .then(() => {})
+        .catch((error) => {
+          setErrors(error);
+          toast.error(error);
+        })
+        .finally(() => {});
+    }
+  }, [findedObject]);
 
   return {
     getCity,

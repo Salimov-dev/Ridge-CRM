@@ -10,7 +10,11 @@ import useGetUserAvatar from "@hooks/user/use-get-user-avatar";
 import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
 // store
 import { updateObject } from "@store/object/objects.store";
-import { getCurrentUserId, getUsersList } from "@store/user/users.store";
+import {
+  getCurrentUserId,
+  getIsUserManager,
+  getUsersList
+} from "@store/user/users.store";
 
 const Component = styled(Box)`
   width: 100%;
@@ -43,6 +47,7 @@ const Objects = ({
   const dispatch = useDispatch();
   const users = useSelector(getUsersList());
   const currentUserId = useSelector(getCurrentUserId());
+  const isManager = useSelector(getIsUserManager(currentUserId));
   const userAvatars = {};
 
   users.forEach((user) => {
@@ -92,7 +97,7 @@ const Objects = ({
               obj={obj}
               onClick={() => handleOpenObjectPage(obj?._id)}
             />
-            {isCurator && (
+            {!isManager && (
               <UserNameWithAvatar
                 userId={user._id}
                 color="black"

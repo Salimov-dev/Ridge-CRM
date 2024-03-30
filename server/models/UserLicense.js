@@ -24,6 +24,7 @@ const UserLicense = sequelize.define(
     managers: { type: DataTypes.ARRAY(DataTypes.STRING), defaultValue: [] },
     observers: { type: DataTypes.ARRAY(DataTypes.STRING), defaultValue: [] },
     balance: { type: DataTypes.DECIMAL, defaultValue: 0 },
+    quantityClicksOnMap: { type: DataTypes.INTEGER, defaultValue: 60 },
     dateStart: { type: DataTypes.DATE, defaultValue: DataTypes.NOW },
     dateEnd: {
       type: DataTypes.DATE,

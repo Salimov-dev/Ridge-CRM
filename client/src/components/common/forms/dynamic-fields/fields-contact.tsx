@@ -86,7 +86,7 @@ const FieldsContact = ({
       <RowTitle
         title="Связь с контактами"
         background="linear-gradient(to right, SteelBlue , DarkSlateBlue)"
-        margin="14px 0 -4px 0"
+        margin="14px 0 -8px 0"
       />
       {fieldContacts.map((field, index) => {
         const createdContact = data.contacts[index].contact;

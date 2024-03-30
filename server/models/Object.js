@@ -34,7 +34,6 @@ const Object = sequelize.define(
     latitude: { type: DataTypes.DOUBLE },
     longitude: { type: DataTypes.DOUBLE },
     zoom: { type: DataTypes.INTEGER, defaultValue: 16 },
-
     companies: { type: DataTypes.JSONB, defaultValue: [] },
     contacts: { type: DataTypes.JSONB, defaultValue: [] },
     fullDescription: {

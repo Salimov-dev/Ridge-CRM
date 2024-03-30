@@ -24,8 +24,6 @@ const MyTaskForm = ({
   isObjectPage = false,
   isMyTask = false
 }) => {
-  console.log("isObjectPage", isObjectPage);
-
   const watchObjectId = watch("objectId");
   const watchIsDone = watch("isDone");
   const watchIsCallTask = watch("isCallTask");

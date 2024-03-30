@@ -14,14 +14,16 @@ import HeaderWithCloseButton from "@components/common/page-headers/header-with-c
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
 import SuccessCancelFormButtons from "@components/common/buttons/success-cancel-form-buttons";
 import PageDialogs from "@components/common/dialog/page-dialogs";
-// store
-import { createObject, getObjectsList } from "@store/object/objects.store";
 // hooks
 import useFindObject from "@hooks/object/use-find-object";
 // schema
 import { objectSchema } from "@schemas/object/object.schema";
 // utils
 import { removeSpacesAndConvertToNumber } from "@utils/data/remove-spaces-and-convert-to-number";
+// store
+import { createObject, getObjectsList } from "@store/object/objects.store";
+import { getCurrentUserId } from "@store/user/users.store";
+import { getUserLicensesByUserId } from "@store/user/user-license.store";
 
 const initialState = {
   status: null,
@@ -95,6 +97,8 @@ const CreateObject = React.memo(({ onClose }) => {
   const data = watch();
 
   const objects = useSelector(getObjectsList());
+  const currentUserId = useSelector(getCurrentUserId());
+  const userLicense = useSelector(getUserLicensesByUserId(currentUserId));
 
   const watchAddress = watch<any>("address", "");
   const watchCity = watch<any>("city", "");
@@ -129,6 +133,30 @@ const CreateObject = React.memo(({ onClose }) => {
       .finally(() => {
         setIsLoading(false);
       });
+  };
+
+  const getHeaderTitle = () => {
+    if (!userLicense?.quantityClicksOnMap) {
+      return "Клики по карте на сегодня закончились, попробуйте завтра";
+    }
+    if (!isFindedObject) {
+      return "КЛИКНИТЕ по карте, чтобы выбрать объект";
+    }
+    if (isFindedObject) {
+      return `Создать объект: ${getCity()}, ${getAddress()}`;
+    }
+  };
+
+  const getColorHeaderTitle = () => {
+    if (!userLicense?.quantityClicksOnMap) {
+      return colors.error["red"];
+    }
+    if (!isFindedObject) {
+      return colors.error["red"];
+    }
+    if (isFindedObject) {
+      return colors.header["gold"];
+    }
   };
 
   // устаналиваю значения для объекта
@@ -166,16 +194,10 @@ const CreateObject = React.memo(({ onClose }) => {
   return (
     <>
       <HeaderWithCloseButton
-        title={
-          !isFindedObject
-            ? "КЛИКНИТЕ по карте, чтобы выбрать объект"
-            : `Создать объект: ${getCity()}, ${getAddress()}`
-        }
+        title={getHeaderTitle()}
         color={!isFindedObject ? "white" : "black"}
         margin="0 0 20px 0"
-        background={
-          !isFindedObject ? colors.error["red"] : colors.header["gold"]
-        }
+        background={getColorHeaderTitle()}
         onClose={onClose}
       />
       {isObjectAlreadyInDatabase && <AlertObjectInDatabase />}

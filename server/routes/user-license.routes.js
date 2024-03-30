@@ -101,6 +101,27 @@ router.patch("/:userLicenseId?/edit", auth, async (req, res) => {
     const newDateEnd = req.body.dateEnd;
     existingUserLicense.dateEnd = newDateEnd;
 
+    // Вычитаем клик по карте из текущего количества quantityClicksOnMap лицензии
+    const newQuantityClicksOnMap = req.body.quantityClicksOnMap;
+
+    let currentLicenseQuantityClicksOnMap =
+      existingUserLicense.quantityClicksOnMap;
+
+    if (currentLicenseQuantityClicksOnMap === 0) {
+      console.log(
+        "currentLicenseQuantityClicksOnMap",
+        currentLicenseQuantityClicksOnMap
+      );
+      return res.status(400).json({
+        error: {
+          message: "Количество кликов на текущий день закончилось",
+          code: 400
+        }
+      });
+    }
+
+    existingUserLicense.quantityClicksOnMap = newQuantityClicksOnMap;
+
     // Сохраняем обновленную лицензию
     await existingUserLicense.save();
 

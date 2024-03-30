@@ -22,6 +22,7 @@ import { createMeeting } from "@store/meeting/meetings.store";
 import { getObjectsList } from "@store/object/objects.store";
 import { getMeetingTypesList } from "@store/meeting/meeting-types.store";
 import { getMeetingStatusesList } from "@store/meeting/meeting-status.store";
+import { getUserLicensesByUserId } from "@store/user/user-license.store";
 
 const initialState = {
   status: "",
@@ -46,6 +47,7 @@ const CreateMeeting = React.memo(
     const statuses = useSelector(getMeetingStatusesList());
     const meetingTypes = useSelector(getMeetingTypesList());
     const currentUserId = useSelector(getCurrentUserId());
+    const userLicense = useSelector(getUserLicensesByUserId(currentUserId));
 
     const objects = useSelector(getObjectsList());
     const currentUserObjects = objects?.filter(
@@ -92,6 +94,30 @@ const CreateMeeting = React.memo(
         });
     };
 
+    const getHeaderTitle = () => {
+      if (!userLicense?.quantityClicksOnMap) {
+        return "Клики по карте на сегодня закончились, попробуйте завтра";
+      }
+      if (!isEmptyFindedObject) {
+        return "КЛИКНИТЕ по карте, чтобы выбрать место встречи";
+      }
+      if (isEmptyFindedObject) {
+        return `Встреча по адресу: ${getCity()}, ${getAddress()}`;
+      }
+    };
+
+    const getColorHeaderTitle = () => {
+      if (!userLicense?.quantityClicksOnMap) {
+        return colors.error["red"];
+      }
+      if (!isEmptyFindedObject) {
+        return colors.error["red"];
+      }
+      if (isEmptyFindedObject) {
+        return colors.header["gold"];
+      }
+    };
+
     useEffect(() => {
       setValue<any>("city", getCity());
       setValue<any>("address", getAddress());
@@ -114,16 +140,10 @@ const CreateMeeting = React.memo(
     return (
       <>
         <HeaderWithCloseButton
-          title={
-            !isEmptyFindedObject
-              ? "КЛИКНИТЕ по карте, чтобы выбрать место встречи"
-              : `Встреча по адресу: ${getCity()}, ${getAddress()}`
-          }
+          title={getHeaderTitle()}
           color={!isEmptyFindedObject ? "white" : "black"}
           margin="0 0 20px 0"
-          background={
-            !isEmptyFindedObject ? colors.error["red"] : colors.header["gold"]
-          }
+          background={getColorHeaderTitle()}
           onClose={onClose}
         />
         <FindObjectOnMap />

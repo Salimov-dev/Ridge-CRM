@@ -57,6 +57,7 @@ const useCalendar = (data, setState) => {
       return currentUserTasks;
     }
   };
+
   const actualTasks = getActualTasks();
   const searchedTasks = useSearchTask(actualTasks, data);
   const sortedTasks = useMemo(() => {
@@ -64,6 +65,7 @@ const useCalendar = (data, setState) => {
   }, [searchedTasks]);
 
   // ищем встречи
+
   const getMeeting = (day) => {
     const meeting = meetings?.filter(
       (meet) =>
@@ -71,6 +73,19 @@ const useCalendar = (data, setState) => {
         dayjs(day)?.format("YYYY-MM-DD")
     );
     const sortedMeetings = orderBy(meeting, ["date"], ["desc"]);
+
+    const currentUserMeetings = sortedMeetings?.filter(
+      (meet) => meet?.userId === currentUserId
+    );
+    if (isManager) {
+      return sortedMeetings;
+    }
+    if (isCurator) {
+      return sortedMeetings;
+    }
+    if (isObserver) {
+      return currentUserMeetings;
+    }
 
     return sortedMeetings;
   };
