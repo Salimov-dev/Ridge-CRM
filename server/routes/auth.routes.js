@@ -5,6 +5,11 @@ import User from "../models/User.js";
 import tokenService from "../services/token.service.js";
 import UserLicense from "../models/UserLicense.js";
 import { sequelize } from "../utils/postgre-conection.js";
+import nodemailer from "nodemailer";
+import dotenv from "dotenv";
+dotenv.config();
+
+const { SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASSWORD, API_URL } = process.env;
 
 const router = express.Router({ mergeParams: true });
 
@@ -101,7 +106,33 @@ router.post("/signUp", [
         userId: newUser._id
       });
 
-      // Send the response with tokens and user ID
+      // работа с отправкой писем
+      const html = `
+        <h1>Hello World</h1>
+        <p>It is mail from Ridge CRM</p>
+      `;
+
+      const sendMail = () => {
+        nodemailer.createTransport({
+          host: SMTP_HOST,
+          post: SMTP_PORT,
+          secure: false,
+          auth: {
+            user: SMTP_USER,
+            pass: SMTP_PASSWORD
+          }
+        });
+      };
+
+      const info = await transporter.sendMail({
+        from: SMTP_USER,
+        to: "salimov.rent@mail.ru",
+        subject: "Активация аккаунта",
+        text: "Такой текст",
+        html: html
+      });
+      console.log("Message sent:" + info.messageId);
+
       res.status(201).send({ ...tokens, userId: newUser._id });
     } catch (e) {
       console.error(e);
@@ -264,7 +295,39 @@ router.post("/signInWithPassword", [
       const tokens = tokenService.generate({ _id: existingUser._id });
       await tokenService.save(existingUser._id, tokens.refreshToken);
 
-      // Send the response with tokens and user ID
+      // Создаем экземпляр отправителя
+      const transporter = nodemailer.createTransport({
+        host: SMTP_HOST,
+        port: SMTP_PORT,
+        secure: false,
+        auth: {
+          user: SMTP_USER,
+          pass: SMTP_PASSWORD
+        }
+      });
+
+      // HTML содержимое для письма
+      const html = `
+      <h3>Приветствуем! ${existingUser.firstName}</h3><br>
+      <p>Обнаружен вход в Грядку ЦРМ через Ваш аккаунт ${existingUser.email}</p>
+      <p>Если это были не Вы, рекомендуем сменить пароль или обратиться в техподдержку Грядки</p><br>
+      <p>----------------------------------------</p>
+      <p>Грядка ЦРМ</p>
+      <p>https://ridge-crm.ru/</p>
+      <p>Телеграм: https://t.me/ridge_crm</p>
+      <p>Почта: ridge-crm@mail.ru</p>
+      `;
+
+      // Отправляем письмо
+      const info = await transporter.sendMail({
+        from: SMTP_USER,
+        to: "salimov.rent@mail.ru",
+        subject: "Вход в аккаунт",
+        text: "Такой текст",
+        html: html
+      });
+      console.log("Сообщение отправлено:" + info.messageId);
+
       res.status(200).send({ ...tokens, userId: existingUser._id });
     } catch (e) {
       console.error(e);
