@@ -25,6 +25,7 @@ import {
   getIsUserCurator,
   getUsersLoadingStatus
 } from "@store/user/users.store";
+import Callback from "@layouts/callback/callback";
 
 export default function AppRoutes() {
   const currentUserId = useSelector(getCurrentUserId());
@@ -56,7 +57,8 @@ export default function AppRoutes() {
     { id: 9, path: ":userId?/presentations", element: <Presentations /> },
     { id: 10, path: ":userId?/profileUpdate", element: <UpdateProfile /> },
     { id: 11, path: "contacts/", element: <Contacts /> },
-    { id: 12, path: "companies/", element: <Companies /> }
+    { id: 12, path: "companies/", element: <Companies /> },
+    { id: 12, path: "callback/", element: <Callback /> }
   ];
 
   return (

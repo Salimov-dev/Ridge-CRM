@@ -42,6 +42,12 @@ const UserMenu = () => {
     dispatch<any>(setCurrrentPathState(window.location.pathname));
   };
 
+  const handleOpenCallBackPage = () => {
+    setAnchorEl(null);
+    navigate("callback");
+    dispatch<any>(setCurrrentPathState(window.location.pathname));
+  };
+
   const handleLogOut = () => {
     // setAnchorEl(null);
     dispatch<any>(logOut());
@@ -77,6 +83,7 @@ const UserMenu = () => {
         }}
       >
         <MenuItem onClick={handleOpenProfile}>Профиль</MenuItem>
+        <MenuItem onClick={handleOpenCallBackPage}>Обратная связь</MenuItem>
         <MenuItem onClick={handleLogOut}>Выйти</MenuItem>
       </Menu>
     </Component>

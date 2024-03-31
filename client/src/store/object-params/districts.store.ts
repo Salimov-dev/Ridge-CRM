@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { districtsSPB } from "../../data/districts/districts-Spb";
-import { districtsMSK } from "../../data/districts/districts-Msk";
+import { allDistrictsList } from "@data/object/get-districts-list";
 
 const districtsSlice = createSlice({
   name: "districts",
@@ -18,8 +17,7 @@ const { reducer: districtsReducer, actions } = districtsSlice;
 const { districtsLoaded } = actions;
 
 export const loadDistrictsList = () => async (dispatch) => {
-  const districtsFullArray = [...districtsSPB, ...districtsMSK];
-  dispatch(districtsLoaded(districtsFullArray));
+  dispatch(districtsLoaded(allDistrictsList()));
 };
 
 export const getDistrictsList = () => (state) => state.districts.entities;
