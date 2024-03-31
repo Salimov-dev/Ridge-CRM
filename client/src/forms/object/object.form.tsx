@@ -33,6 +33,8 @@ import { getCurrentRentersList } from "@store/object-params/current-renter.store
 import { getObjectConditionsList } from "@store/object-params/object-conditions.store";
 import { getTradeAreaList } from "@store/object-params/object-trade-area";
 import { getMetroList } from "@store/object-params/metro.store";
+import { hasDistrict } from "@data/object/has-district";
+import { allDistrictsList } from "@data/object/get-districts-list";
 
 const ObjectForm = ({
   data,
@@ -68,6 +70,7 @@ const ObjectForm = ({
   const watchDistrict = watch("district");
 
   const watchMetro = watch("metro");
+
   const watchRentTypes = watch("rentTypes");
   const watchObjectTypes = watch("objectTypes");
   const watchEstateTypes = watch("estateTypes");
@@ -95,6 +98,11 @@ const ObjectForm = ({
     ["asc"]
   );
 
+  const districtIsId = allDistrictsList()?.find((dist) => {
+    const result = dist._id === watchDistrict;
+    return result;
+  });
+
   return (
     <>
       <Form noValidate>
@@ -104,21 +112,31 @@ const ObjectForm = ({
           margin="14px 0 -8px 0"
         />
         <FieldsContainer>
-          <DistrictSelect
-            register={register}
-            selectedArea={selectedArea}
-            errors={errors}
-            watchDistrict={watchDistrict}
-            isUpdate={isUpdate}
-            disabled={isUpdate && true}
-          />
+          {isUpdate && !districtIsId ? (
+            <TextFieldStyled
+              register={register}
+              label="Район"
+              name="district"
+              disabled={true}
+              value={watchDistrict}
+            />
+          ) : (
+            <DistrictSelect
+              register={register}
+              selectedArea={selectedArea}
+              errors={errors}
+              watchDistrict={watchDistrict}
+              isUpdate={isUpdate}
+              disabled={isUpdate && true}
+            />
+          )}
           <SelectFieldStyled
             label="Метро"
             register={register}
             name="metro"
             labelId="metro"
             itemsList={isUpdate ? sortedAllMetros : sortedMetrosForFindedObject}
-            value={watchMetro ?? ""}
+            value={watchMetro ?? null}
             disabled={!isCityHasMetro || !watchDistrict}
           />
           <SelectFieldStyled

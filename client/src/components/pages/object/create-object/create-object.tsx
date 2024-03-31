@@ -178,11 +178,14 @@ const CreateObject = React.memo(({ onClose }) => {
       selectedArea?.includes("Казань")
     ) {
       setIsCityHasMetro(true);
-      return setValue("district", "");
+      setValue("district", null);
     } else if (hasDistrict(selectedArea)) {
-      setValue("district", "");
+      setIsCityHasMetro(false);
+      setValue("metro", null);
+      setValue("district", null);
     } else {
       setIsCityHasMetro(false);
+      setValue("metro", null);
       setValue("district", selectedArea);
     }
   }, [selectedArea]);

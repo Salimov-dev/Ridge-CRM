@@ -1,7 +1,8 @@
 import styled from "@emotion/styled";
 import backgroundImage from "@assets/main-background.png";
-import { Box } from "@mui/material";
+import { Box, Hidden } from "@mui/material";
 import { useEffect, useState } from "react";
+import Contacts from "./contacts";
 
 const Component = styled(Box)`
   margin: 20px 0 0 0;
@@ -21,6 +22,7 @@ const RightSide = () => {
       setImageHeight(img.height);
     };
   }, []);
+
   return (
     <Component
       sx={{
@@ -34,7 +36,11 @@ const RightSide = () => {
         },
         backgroundSize: { xs: "100%", md: "100%", lg: "auto 100%" }
       }}
-    ></Component>
+    >
+      <Hidden lgDown>
+        <Contacts />
+      </Hidden>
+    </Component>
   );
 };
 
