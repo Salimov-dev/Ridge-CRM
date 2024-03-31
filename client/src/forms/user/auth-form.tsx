@@ -25,7 +25,7 @@ const AuthForm = ({
 }) => {
   const [showPassword, setShowPassword] = useState(false);
   const citiesList = useSelector(getCititesList());
-  const sortedLastContacts = orderBy(citiesList, "name", ["desc"]);
+  const sortedCities = orderBy(citiesList, "name", ["asc"]);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const handleMouseDownPassword = (
@@ -75,7 +75,7 @@ const AuthForm = ({
             label="Выберите свой город"
             register={register}
             name="city"
-            options={sortedLastContacts}
+            options={sortedCities}
             value={watch.city ?? ""}
             setValue={setValue}
             watchItemId={watch.city}

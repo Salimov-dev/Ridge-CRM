@@ -16,7 +16,7 @@ import path from "path";
 import https from "https";
 import config from "config";
 import fs from "fs";
-// import cron from "node-cron";
+import cron from "node-cron";
 
 const PORT = config.get("port") ?? 8080;
 const __filename = fileURLToPath(import.meta.url);

@@ -106,7 +106,8 @@ router.post("/signUp", [
     } catch (e) {
       console.error(e);
       res.status(500).json({
-        message: "На сервере произошла ошибка. Попробуйте позже"
+        message: "На сервере произошла ошибка. Попробуйте позже",
+        error: e.message
       });
     }
   }
