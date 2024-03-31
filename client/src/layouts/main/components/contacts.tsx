@@ -16,8 +16,7 @@ const Logo = styled("img")({
   borderRadius: "25%",
   cursor: "pointer",
   "&:hover": {
-    transform: "scale(1.1)",
-    border: "1px solid white"
+    transform: "scale(1.1)"
   }
 });
 
@@ -46,7 +45,6 @@ const Contacts = ({
     >
       <Logo
         src={TelegramIcon}
-        style={{ borderRadius: "50%" }}
         onClick={handleTelegramClick}
         style={{ width: size, height: size }}
       />
