@@ -1,4 +1,3 @@
-import { districtsSPB } from "@data/districts/districts-Spb";
 import { districtsMaykop } from "@data/districts/districts-Maykop";
 import { districtsUfa } from "@data/districts/districts-Ufa";
 import { districtsUlanUde } from "@data/districts/districts-Ulan-Ude";
@@ -74,6 +73,7 @@ import { districtsKhantyMansiysk } from "@data/districts/districts-Khanty-Mansiy
 import { districtsAnadyr } from "@data/districts/districts-Anadyr";
 import { districtsSalekhard } from "@data/districts/districts-Salekhard";
 import { districtsMSK } from "@data/districts/districts-Msk";
+import { districtsSPB } from "@data/districts/districts-Spb";
 
 export const getFindedObjectDistrictsList = (selectedArea) => {
   switch (true) {

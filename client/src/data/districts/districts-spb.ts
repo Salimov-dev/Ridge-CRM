@@ -1,4 +1,4 @@
-const districtsSPB = [
+export const districtsSPB = [
   {
     _id: "78c6ad2cf12eada13e31588f",
     name: "Адмиралтейский"
@@ -68,5 +68,3 @@ const districtsSPB = [
     name: "Центральный"
   }
 ];
-
-export { districtsSPB };
