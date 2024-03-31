@@ -72,8 +72,128 @@ import { districtsNaryanMar } from "@data/districts/districts-Naryan-Mar";
 import { districtsKhantyMansiysk } from "@data/districts/districts-Khanty-Mansiysk";
 import { districtsAnadyr } from "@data/districts/districts-Anadyr";
 import { districtsSalekhard } from "@data/districts/districts-Salekhard";
-import { districtsMSK } from "../districts/districts-Msk";
-import { districtsSPB } from "../districts/districts-Spb";
+
+const districtsMSK = [
+  {
+    _id: "776ad2cf12eada13e3158ab",
+    name: "Восточный (ВАО)"
+  },
+  {
+    _id: "776ad2cf12eada13e3158ac",
+    name: "Западный (ЗАО)"
+  },
+  {
+    _id: "776ad2cf12eada13e3158ad",
+    name: "Зеленоградский (ЗелАО)"
+  },
+  {
+    _id: "776ad2cf12eada13e3158ae",
+    name: "Новомосковский (НМАО)"
+  },
+  {
+    _id: "776ad2cf12eada13e3158af",
+    name: "Северный (САО)"
+  },
+  {
+    _id: "776ad2cf12eada13e3158b0",
+    name: "Северо-Восточный (СВАО)"
+  },
+  {
+    _id: "776ad2cf12eada13e3158b1",
+    name: "Северо-Западный (СЗАО)"
+  },
+  {
+    _id: "776ad2cf12eada13e3158b2",
+    name: "Троицкий (ТАО)"
+  },
+  {
+    _id: "776ad2cf12eada13e3158b3",
+    name: "Центральный (ЦАО)"
+  },
+  {
+    _id: "776ad2cf12eada13e3158b4",
+    name: "Юго-Восточный (ЮВАО)"
+  },
+  {
+    _id: "776ad2cf12eada13e3158b5",
+    name: "Юго-Западный (ЮЗАО)"
+  },
+  {
+    _id: "776ad2cf12eada13e3158b6",
+    name: "Южный (ЮАО)"
+  }
+];
+
+const districtsSPB = [
+  {
+    _id: "78c6ad2cf12eada13e31588f",
+    name: "Адмиралтейский"
+  },
+  {
+    _id: "78c6ad2cf12eada13e315890",
+    name: "Василеостровский"
+  },
+  {
+    _id: "78c6ad2cf12eada13e315891",
+    name: "Выборгский"
+  },
+  {
+    _id: "78f38b5b9707a3e2381cf0e7",
+    name: "Калининский"
+  },
+  {
+    _id: "78c6ad2cf12eada13e308246",
+    name: "Кировский"
+  },
+  {
+    _id: "78c6ad2cf12eada13e315892",
+    name: "Колпинский"
+  },
+  {
+    _id: "78c6ad2cf12eada13e315893",
+    name: "Красногвардейский"
+  },
+  {
+    _id: "78c6ad2cf12eada13e3158a7",
+    name: "Красносельский"
+  },
+  {
+    _id: "78c6ad2cf12eada13e315897",
+    name: "Петроградский"
+  },
+  {
+    _id: "78c6ad2cf12eada13e315898",
+    name: "Петродворцовый"
+  },
+  {
+    _id: "78c6ad2cf12eada13e315899",
+    name: "Приморский"
+  },
+  {
+    _id: "78c6ad2cf12eada13e31589a",
+    name: "Пушкинский"
+  },
+  {
+    _id: "78c6ad2cf12eada13e3158a9",
+    name: "Ломоносовский"
+  },
+  {
+    _id: "78c6ad2cf12eada13e357677",
+    name: "Московский"
+  },
+  {
+    _id: "78c6ad2cf12eada13e315895",
+    name: "Невский "
+  },
+  {
+    _id: "78c6ad2cf12eada13e31589b",
+    name: "Фрунзенский"
+  },
+  {
+    _id: "78c6ad2cf12eada13e31589c",
+    name: "Центральный"
+  }
+];
 
 export const getFindedObjectDistrictsList = (selectedArea) => {
   switch (true) {
