@@ -20,6 +20,8 @@ import useFindObject from "@hooks/object/use-find-object";
 import { objectSchema } from "@schemas/object/object.schema";
 // utils
 import { removeSpacesAndConvertToNumber } from "@utils/data/remove-spaces-and-convert-to-number";
+// data
+import { hasDistrict } from "@data/object/has-district";
 // store
 import { createObject, getObjectsList } from "@store/object/objects.store";
 import { getCurrentUserId } from "@store/user/users.store";
@@ -67,7 +69,7 @@ const CreateObject = React.memo(({ onClose }) => {
   const [state, setState] = useState({
     createCompanyPage: false
   });
-  // const [isCityHasMetro, setIsCityHasMetro] = useState(false);
+  const [isCityHasMetro, setIsCityHasMetro] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isObjectAlreadyInDatabase, setObjectAlreadyInDatabase] =
     useState(false);
@@ -172,12 +174,15 @@ const CreateObject = React.memo(({ onClose }) => {
   useEffect(() => {
     if (
       selectedArea?.includes("Санкт-Петербург") ||
-      selectedArea?.includes("Москва")
+      selectedArea?.includes("Москва") ||
+      selectedArea?.includes("Казань")
     ) {
-      // setIsCityHasMetro(true);
+      setIsCityHasMetro(true);
+      return setValue("district", "");
+    } else if (hasDistrict(selectedArea)) {
       setValue("district", "");
     } else {
-      // setIsCityHasMetro(false);
+      setIsCityHasMetro(false);
       setValue("district", selectedArea);
     }
   }, [selectedArea]);
@@ -211,6 +216,7 @@ const CreateObject = React.memo(({ onClose }) => {
         setState={setState}
         control={control}
         setValue={setValue}
+        isCityHasMetro={isCityHasMetro}
       />
       <SuccessCancelFormButtons
         onSuccess={handleSubmit(onSubmit)}

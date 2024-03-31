@@ -179,7 +179,7 @@ const useObjectsFiltersPanel = (objects) => {
     getActualEstateTypesList,
     getActualObjectTypesList,
     getActualObjectProperties,
-    getActualObjectTradeArea,
+    getActualObjectTradeArea
   };
 };
 

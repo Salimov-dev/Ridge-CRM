@@ -141,9 +141,7 @@ const useSearchObject = (objects, data) => {
 
     // выбор по станции метро
     if (data.selectedMetro?.length) {
-      array = array?.filter((obj) =>
-        data.selectedMetro.includes(obj.location.metro)
-      );
+      array = array?.filter((obj) => data.selectedMetro.includes(obj.metro));
     }
 
     // выбор по менеджеру

@@ -15,10 +15,15 @@ import TextFieldStyled from "@components/common/inputs/text-field-styled";
 import DistrictSelect from "@components/common/inputs/district-select";
 import SelectFieldStyled from "@components/common/inputs/select-field-styled";
 import RowTitle from "@components/common/titles/row-title";
+import FieldsCompany from "@components/common/forms/dynamic-fields/fields-company";
+import FieldsContact from "@components/common/forms/dynamic-fields/fields-contact";
 // utils
 import { capitalizeFirstLetter } from "@utils/data/capitalize-first-letter";
+// data
+import { metroListArraySPB } from "@data/metro/metro-spb";
+import { metroListArrayMSK } from "@data/metro/metro-msk";
+import { metroListArrayKZN } from "@data/metro/metro-kzn";
 // store
-import { getMetroList } from "@store/object-params/metro.store";
 import { getRentTypesList } from "@store/object-params/rent-types.store";
 import { getObjectTypesList } from "@store/object-params/object-types.store";
 import { getEstateTypesList } from "@store/object-params/estate-types.store";
@@ -27,8 +32,7 @@ import { getObjectPropertiesList } from "@store/object-params/object-properties"
 import { getCurrentRentersList } from "@store/object-params/current-renter.store";
 import { getObjectConditionsList } from "@store/object-params/object-conditions.store";
 import { getTradeAreaList } from "@store/object-params/object-trade-area";
-import FieldsCompany from "@components/common/forms/dynamic-fields/fields-company";
-import FieldsContact from "@components/common/forms/dynamic-fields/fields-contact";
+import { getMetroList } from "@store/object-params/metro.store";
 
 const ObjectForm = ({
   data,
@@ -39,7 +43,8 @@ const ObjectForm = ({
   isUpdate = false,
   setState,
   control,
-  setValue
+  setValue,
+  isCityHasMetro = false
 }) => {
   const objectStatuses = useSelector(getObjectsStatusList());
   const sortedObjectStatuses = orderBy(objectStatuses, ["name"], ["asc"]);
@@ -52,8 +57,6 @@ const ObjectForm = ({
   const objectConditions = useSelector(getObjectConditionsList());
   const sortedObjectConditions = orderBy(objectConditions, ["name"], ["asc"]);
 
-  const metros = useSelector(getMetroList());
-  const sortedMetros = orderBy(metros, ["name"], ["asc"]);
   const rentTypes = useSelector(getRentTypesList());
   const sortedRentTypes = orderBy(rentTypes, ["name"], ["asc"]);
   const objectTypes = useSelector(getObjectTypesList());
@@ -63,6 +66,7 @@ const ObjectForm = ({
 
   const watchStatus = watch("status");
   const watchDistrict = watch("district");
+
   const watchMetro = watch("metro");
   const watchRentTypes = watch("rentTypes");
   const watchObjectTypes = watch("objectTypes");
@@ -72,6 +76,24 @@ const ObjectForm = ({
   const watchObjectProperties = watch("objectProperties");
   const watchObjectTradeArea = watch("tradeArea");
   const watchCloudLink = watch("cloudLink");
+
+  const getObjectMetrosList = () => {
+    if (selectedArea?.includes("Санкт-Петербург")) {
+      return metroListArraySPB;
+    } else if (selectedArea?.includes("Москва")) {
+      return metroListArrayMSK;
+    } else if (selectedArea?.includes("Казань")) {
+      return metroListArrayKZN;
+    }
+  };
+
+  const metroList = useSelector(getMetroList());
+  const sortedAllMetros = orderBy(metroList, ["name"], ["asc"]);
+  const sortedMetrosForFindedObject = orderBy(
+    getObjectMetrosList(),
+    ["name"],
+    ["asc"]
+  );
 
   return (
     <>
@@ -90,15 +112,14 @@ const ObjectForm = ({
             isUpdate={isUpdate}
             disabled={isUpdate && true}
           />
-
           <SelectFieldStyled
             label="Метро"
             register={register}
             name="metro"
             labelId="metro"
-            itemsList={sortedMetros}
+            itemsList={isUpdate ? sortedAllMetros : sortedMetrosForFindedObject}
             value={watchMetro ?? ""}
-            disabled={!watchDistrict}
+            disabled={!isCityHasMetro || !watchDistrict}
           />
           <SelectFieldStyled
             label="Статус объекта"

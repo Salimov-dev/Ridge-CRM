@@ -1,17 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { districtsSPB } from "../../data/districts/districts-spb";
-import { districtsMSK } from "../../data/districts/districts-msk";
+import { districtsSPB } from "../../data/districts/districts-Spb";
+import { districtsMSK } from "../../data/districts/districts-Msk";
 
 const districtsSlice = createSlice({
   name: "districts",
   initialState: {
-    entities: null,
+    entities: null
   },
   reducers: {
     districtsLoaded: (state, action) => {
       state.entities = action.payload;
-    },
-  },
+    }
+  }
 });
 
 const { reducer: districtsReducer, actions } = districtsSlice;

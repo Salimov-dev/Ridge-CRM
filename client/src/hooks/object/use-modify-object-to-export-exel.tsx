@@ -134,7 +134,7 @@ const useModifyObjectToExportExel = (objects) => {
         "Электричество (кВт)": electricityKw ? electricityKw : "-",
         Водоснабжение: waterSuply ? waterSuply : "-",
         "Состояние полов": premisesFloor ? premisesFloor : "-",
-        "Кадастровый №": cadastralNumber ? cadastralNumber : "-",
+        "Кадастровый №": cadastralNumber ? cadastralNumber : "-"
       };
 
       return result;

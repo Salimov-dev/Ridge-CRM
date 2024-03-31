@@ -56,14 +56,6 @@ const citiesArray = [
     zoom: 12
   },
   {
-    _id: "45ffgfd45gffd00459",
-    name: "Магас",
-    region: "06",
-    latitude: 44.8135,
-    longitude: 43.1655,
-    zoom: 12
-  },
-  {
     _id: "45ffgfd45gffd00460",
     name: "Нальчик",
     region: "07",

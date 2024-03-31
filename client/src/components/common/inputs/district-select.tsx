@@ -5,8 +5,11 @@ import { Box, FormHelperText, Typography } from "@mui/material";
 // components
 import SimpleSelectField from "@components/common/inputs/simple-select-field";
 // data
-import { districtsMSK } from "@data/districts/districts-msk";
-import { districtsSPB } from "@data/districts/districts-spb";
+import { hasDistrict } from "@data/object/has-district";
+import {
+  allDistrictsList,
+  getFindedObjectDistrictsList
+} from "@data/object/get-districts-list";
 
 const Container = styled(Box)`
   width: 100%;
@@ -37,25 +40,10 @@ const DistrictSelect = ({
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
-  const getDistrictsList = () => {
-    if (selectedArea?.includes("Санкт-Петербург")) {
-      return districtsSPB;
-    }
-    if (selectedArea?.includes("Москва")) {
-      return districtsMSK;
-    }
-
-    return districtsSPB;
-  };
-
-  const hasDistrict =
-    selectedArea?.includes("Санкт-Петербург") ||
-    selectedArea?.includes("Москва");
-
   return (
     <>
       <Container>
-        {!isUpdate && !hasDistrict ? (
+        {!isUpdate && !hasDistrict(selectedArea) ? (
           <DistrictName colors={colors} errors={errors}>
             {selectedArea ? (
               selectedArea
@@ -78,7 +66,11 @@ const DistrictSelect = ({
             name="district"
             labelId="district"
             required={true}
-            itemsList={getDistrictsList()}
+            itemsList={
+              isUpdate
+                ? allDistrictsList()
+                : getFindedObjectDistrictsList(selectedArea)
+            }
             value={watchDistrict}
             errors={errors?.district}
             disabled={disabled}
