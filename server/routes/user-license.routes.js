@@ -108,10 +108,6 @@ router.patch("/:userLicenseId?/edit", auth, async (req, res) => {
       existingUserLicense.quantityClicksOnMap;
 
     if (currentLicenseQuantityClicksOnMap === 0) {
-      console.log(
-        "currentLicenseQuantityClicksOnMap",
-        currentLicenseQuantityClicksOnMap
-      );
       return res.status(400).json({
         error: {
           message: "Количество кликов на текущий день закончилось",

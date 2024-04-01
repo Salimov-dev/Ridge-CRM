@@ -25,6 +25,7 @@ const UpdateUser = React.memo(({ userId, onClose }) => {
   const colors = tokens(theme.palette.mode);
 
   const user = useSelector(getUserDataById(userId));
+
   const transformedUser = { ...user, role: user?.role[0] };
 
   const [open, setOpen] = useState(false);
@@ -86,7 +87,6 @@ const UpdateUser = React.memo(({ userId, onClose }) => {
         margin="0 0 20px 0"
         onClose={onClose}
       />
-
       <UserForm
         register={register}
         data={data}

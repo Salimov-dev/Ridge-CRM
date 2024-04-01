@@ -7,6 +7,7 @@ import UserLicense from "../models/UserLicense.js";
 import { sequelize } from "../utils/postgre-conection.js";
 import nodemailer from "nodemailer";
 import dotenv from "dotenv";
+import { v4 as uuidv4 } from "uuid";
 dotenv.config();
 
 const { SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASSWORD, API_URL } = process.env;
@@ -106,32 +107,47 @@ router.post("/signUp", [
         userId: newUser._id
       });
 
-      // работа с отправкой писем
+      // ссылка для активации почты
+      const activationLink = `${API_URL}/api/activate/${uuidv4()}`;
+
+      // Создаем экземпляр отправителя
+      const transporter = nodemailer.createTransport({
+        host: SMTP_HOST,
+        port: SMTP_PORT,
+        secure: false,
+        auth: {
+          user: SMTP_USER,
+          pass: SMTP_PASSWORD
+        }
+      });
+
+      // HTML содержимое для письма
       const html = `
-        <h1>Hello World</h1>
-        <p>It is mail from Ridge CRM</p>
+      <h3>С удовольствием приветствуем Вас в Грядке ЦРМ!</h3>
+      <p>Рады видеть под новым аккаунтом ${newUser.email}</p>
+      <p>Бесплатный период пользования Грядкой составляет 14 календарных дней, этот срок не сгорает, если решите приобрести подписку на пользование системой ранее его окончания</p>
+      <p>Будем признательны за обратную связь при использовании в работе нашей системы</p>
+      <p>Работайте самостоятельно или соберите свою команду менеджеров и порвите рынок недвижимости с помощью Грядки ЦРМ!</p>
+      <p>Желаем приятного сбора урожая!</p><br>
+
+      <h4>И не забудьте обязательно подтвердить свою почту по ссылке: </h4>
+      <a href="${activationLink}">${activationLink}</a><br>
+
+      <p>----------------------------------------</p>
+      <p>Грядка ЦРМ</p>
+      <p>https://ridge-crm.ru/</p>
+      <p>Телеграм: https://t.me/ridge_crm</p>
+      <p>Почта: ridge-crm@mail.ru</p>
       `;
 
-      const sendMail = () => {
-        nodemailer.createTransport({
-          host: SMTP_HOST,
-          post: SMTP_PORT,
-          secure: false,
-          auth: {
-            user: SMTP_USER,
-            pass: SMTP_PASSWORD
-          }
-        });
-      };
-
+      // Отправляем письмо
       const info = await transporter.sendMail({
         from: SMTP_USER,
         to: "salimov.rent@mail.ru",
-        subject: "Активация аккаунта",
+        subject: "Вход в аккаунт",
         text: "Такой текст",
         html: html
       });
-      console.log("Message sent:" + info.messageId);
 
       res.status(201).send({ ...tokens, userId: newUser._id });
     } catch (e) {
@@ -246,6 +262,7 @@ router.post("/create", [
   }
 ]);
 
+// логин с паролем
 router.post("/signInWithPassword", [
   check("email", "Email некорректный").isEmail(),
   check("password", "Пароль не может быть пустым").exists().trim(),
@@ -308,7 +325,12 @@ router.post("/signInWithPassword", [
 
       // HTML содержимое для письма
       const html = `
-      <h3>Приветствуем! ${existingUser.firstName}</h3><br>
+      <h3>Приветствуем, ${existingUser.firstName || "Новый пользователь"}!</h3>
+      ${
+        !existingUser.firstName
+          ? `<h4>Заполните свой профиль в Грядке, чтобы мы могли приветствовать Вас по имени</h4>`
+          : ""
+      }
       <p>Обнаружен вход в Грядку ЦРМ через Ваш аккаунт ${existingUser.email}</p>
       <p>Если это были не Вы, рекомендуем сменить пароль или обратиться в техподдержку Грядки</p><br>
       <p>----------------------------------------</p>
@@ -326,7 +348,6 @@ router.post("/signInWithPassword", [
         text: "Такой текст",
         html: html
       });
-      console.log("Сообщение отправлено:" + info.messageId);
 
       res.status(200).send({ ...tokens, userId: existingUser._id });
     } catch (e) {
@@ -337,6 +358,27 @@ router.post("/signInWithPassword", [
     }
   }
 ]);
+
+// активация почты
+router.post("/activate/:link", async (req, res) => {
+  try {
+    // const { refresh_token: refreshToken } = req.body;
+    // const data = tokenService.validateRefresh(refreshToken);
+    // const dbToken = await tokenService.findToken(refreshToken);
+    // if (isTokenInvalid(data, dbToken)) {
+    //   return res.status(401).json({ message: "Не авторизован" });
+    // }
+    // const tokens = await tokenService.generate({
+    //   _id: dbToken.user.toString()
+    // });
+    // await tokenService.save(data._id, tokens.refreshToken);
+    // res.status(200).send({ ...tokens, userId: data._id });
+  } catch (error) {
+    res.status(500).json({
+      message: "На сервере произошла ошибка. Попробуйте позже"
+    });
+  }
+});
 
 function isTokenInvalid(data, dbToken) {
   return !data || !dbToken || data._id !== dbToken?.user?.toString();

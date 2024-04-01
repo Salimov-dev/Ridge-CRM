@@ -16,7 +16,11 @@ import HeaderWithCloseButton from "@components/common/page-headers/header-with-c
 import { transferObjectToAnotherManagerSchema } from "@schemas/object/transfer-object-to-aother-manager.schema";
 import transformUsersForSelect from "@utils/objects/transform-users-for-select";
 import { updateMultipleObjects } from "@store/object/objects.store";
-import { getUsersList } from "@store/user/users.store";
+import {
+  getCurrentUserId,
+  getIsUserCurator,
+  getUsersList
+} from "@store/user/users.store";
 
 const TitlesContainer = styled(Box)`
   display: flex;
@@ -56,6 +60,8 @@ const TransferObjectToAnotherManager = React.memo(
 
     const users = useSelector(getUsersList());
     const transformUsers = transformUsersForSelect(users);
+    const currentUserId = useSelector(getCurrentUserId());
+    const isCurator = useSelector(getIsUserCurator(currentUserId));
 
     const onSubmit = () => {
       setIsLoading(true);
@@ -113,7 +119,7 @@ const TransferObjectToAnotherManager = React.memo(
         <SuccessCancelFormButtons
           onSuccess={handleClickOpen}
           onCancel={onClose}
-          // disabledSuccess={!watchManagerId}
+          disabledRemoveButton={true}
         />
         <LoaderFullWindow
           color={colors.grey[600]}

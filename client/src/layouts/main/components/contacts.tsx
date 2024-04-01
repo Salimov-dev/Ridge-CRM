@@ -9,7 +9,7 @@ const IconsContainer = styled(Box)`
   height: 100%;
   display: flex;
   align-items: end;
-  gap: 16px;
+  gap: 26px;
 `;
 
 const Logo = styled("img")({
@@ -23,7 +23,7 @@ const Logo = styled("img")({
 const Contacts = ({
   justifyContent = "end",
   padding = "20px",
-  size = "100px"
+  size = "80px"
 }) => {
   const handleTelegramClick = () => {
     window.open("https://t.me/ridge_crm", "_blank");

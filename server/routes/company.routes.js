@@ -167,7 +167,7 @@ router.patch("/:companyId?/edit", auth, async (req, res) => {
     const removedContacts = req.body.removedContacts;
     const addedContacts = req.body.addedContacts;
     const removedContactIds = removedContacts.map((contact) => contact.contact);
-    console.log("req.body", req.body);
+
     if (!previousContacts || !removedContacts || !addedContacts) {
       const updatedContact = await Contact.update(newData, {
         where: { _id: companyId }

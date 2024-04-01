@@ -34,7 +34,7 @@ const TeamMateTables = React.memo(
 
         <RowTitle
           title="Мои Менеджеры"
-          background="linear-gradient(to right, green , darkGreen)"
+          background="linear-gradient(to right, orange , darkorange)"
         />
         <UsersFiltersPanel
           data={data}

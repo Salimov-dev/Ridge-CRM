@@ -88,7 +88,7 @@ router.get("/", auth, async (req, res) => {
 
 router.patch("/:userId/update-user", auth, async (req, res) => {
   try {
-    const userId = req.params.userId; // Use params instead of body for the userId
+    const userId = req.params.userId;
     const updatedUser = await User.update(req.body, {
       where: { _id: userId },
       returning: true

@@ -16,7 +16,7 @@ import { getContactsList } from "@store/contact/contact.store";
 import { getCompaniesList } from "@store/company/company.store";
 import { getPresentationsList } from "@store/presentation/presentations.store";
 import { getUserStatusNameById } from "@store/user-params/user-statuses.store";
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
 export const usersColumns = (onOpenUpdateUserPage) => [
   {
@@ -34,6 +34,7 @@ export const usersColumns = (onOpenUpdateUserPage) => [
       {
         accessorKey: "color",
         header: "Цвет",
+        enableSorting: false,
         cell: (info) => {
           const color = info.getValue();
 
@@ -54,6 +55,7 @@ export const usersColumns = (onOpenUpdateUserPage) => [
       {
         accessorKey: "_id",
         header: "Аватар",
+        enableSorting: false,
         cell: (info) => {
           const userId = info.getValue();
           const { getAvatarSrc, isLoading } = useGetUserAvatar(userId);
@@ -188,6 +190,7 @@ export const usersColumns = (onOpenUpdateUserPage) => [
       {
         accessorKey: "phone",
         header: "Телефон",
+        enableSorting: false,
         cell: (info) => {
           const phone = info.getValue();
 
@@ -201,6 +204,7 @@ export const usersColumns = (onOpenUpdateUserPage) => [
       {
         accessorKey: "email",
         header: "Email",
+        enableSorting: false,
         cell: (info) => {
           const email = info.getValue();
           return <AlignCenter>{email}</AlignCenter>;
@@ -212,20 +216,37 @@ export const usersColumns = (onOpenUpdateUserPage) => [
     header: "Пользователь",
     columns: [
       {
-        accessorKey: "status",
+        accessorKey: "isActive",
         header: "Статус",
+        enableSorting: false,
         cell: (info) => {
-          const status = info.getValue();
-          return (
-            <AlignCenter>
-              {useSelector(getUserStatusNameById(status))}
-            </AlignCenter>
-          );
+          const isActive = info.getValue();
+
+          const getIsActiveStatus = () => {
+            if (isActive) {
+              return (
+                <AlignCenter>
+                  <Typography sx={{ background: "green", padding: "4px" }}>
+                    Активен
+                  </Typography>
+                </AlignCenter>
+              );
+            } else {
+              return (
+                <AlignCenter sx={{ background: "firebrick", padding: "4px" }}>
+                  <Typography>Декативирован</Typography>
+                </AlignCenter>
+              );
+            }
+          };
+
+          return <AlignCenter>{getIsActiveStatus()}</AlignCenter>;
         }
       },
       {
         accessorFn: (row) => row,
         header: "Открыть",
+        enableSorting: false,
         maxWidth: 70,
         minWidth: 50,
         width: 60,
@@ -240,8 +261,8 @@ export const usersColumns = (onOpenUpdateUserPage) => [
             <AlignCenter>
               <ButtonStyled
                 title="ПРАВИТЬ"
-                background={isRoleManager ? "green" : "blue"}
-                backgroundHover={isRoleManager ? "darkGreen" : "darkBlue"}
+                background={isRoleManager ? "darkorange" : "blue"}
+                backgroundHover={isRoleManager ? "darkorange" : "darkBlue"}
                 colorHover="white"
                 onClick={() => onOpenUpdateUserPage(userId)}
               />
