@@ -30,6 +30,7 @@ const User = sequelize.define(
     lastName: { type: DataTypes.STRING, defaultValue: null },
     phone: { type: DataTypes.STRING, defaultValue: null },
     isEmailActived: { type: DataTypes.BOOLEAN, defaultValue: false },
+    activationLink: { type: DataTypes.STRING, defaultValue: null },
     isActive: { type: DataTypes.BOOLEAN, defaultValue: true },
     created_at: {
       type: DataTypes.DATE,

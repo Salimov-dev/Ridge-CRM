@@ -75,7 +75,7 @@ router.post("/signUp", [
 
       const { email, password, color, city } = req.body;
 
-      // Check if the user with the provided email already exists
+      // проверяем есть ли юзер с такой почтой
       const existingUser = await User.findOne({ where: { email } });
 
       if (existingUser) {
@@ -88,30 +88,34 @@ router.post("/signUp", [
         });
       }
 
-      // Hash the password
+      // хеширем пароль
       const hashedPassword = await bcrypt.hash(password, 12);
+
+      // ссылка для активации почты
+      // const activationLink = `${API_URL}/api/activate/${uuidv4()}`;
+      const activationLinkId = uuidv4();
+      const activationLink = `http://localhost:5173/activate/${activationLinkId}`;
 
       // Create a new user with Sequelize
       const newUser = await User.create({
         email,
         password: hashedPassword,
         color,
-        city
+        city,
+        activationLink: activationLinkId
+      });
+
+      // создаем новую лицензию для пользователя
+      await UserLicense.create({
+        userId: newUser._id
       });
 
       // Generate tokens and save the refresh token
       const tokens = tokenService.generate({ _id: newUser._id });
       await tokenService.save(newUser._id, tokens.refreshToken);
 
-      await UserLicense.create({
-        userId: newUser._id
-      });
-
-      // ссылка для активации почты
-      const activationLink = `${API_URL}/api/activate/${uuidv4()}`;
-
       // Создаем экземпляр отправителя
-      const transporter = nodemailer.createTransport({
+      const registrationNewUser = nodemailer.createTransport({
         host: SMTP_HOST,
         port: SMTP_PORT,
         secure: false,
@@ -121,8 +125,19 @@ router.post("/signUp", [
         }
       });
 
-      // HTML содержимое для письма
-      const html = `
+      // Создаем экземпляр отправителя
+      const adminNotification = nodemailer.createTransport({
+        host: SMTP_HOST,
+        port: SMTP_PORT,
+        secure: false,
+        auth: {
+          user: SMTP_USER,
+          pass: SMTP_PASSWORD
+        }
+      });
+
+      // HTML содержимое письма для пользователя о регистрации
+      const htmlForNewUser = `
       <h3>С удовольствием приветствуем Вас в Грядке ЦРМ!</h3>
       <p>Рады видеть под новым аккаунтом ${newUser.email}</p>
       <p>Бесплатный период пользования Грядкой составляет 14 календарных дней, этот срок не сгорает, если решите приобрести подписку на пользование системой ранее его окончания</p>
@@ -140,13 +155,31 @@ router.post("/signUp", [
       <p>Почта: ridge-crm@mail.ru</p>
       `;
 
-      // Отправляем письмо
-      const info = await transporter.sendMail({
+      // HTML содержимое письма для администратора Грядки о регистрации нового пользователя
+      const htmlForAdmin = `
+      <h3>У Вас новый пользователь в Грядке ЦРМ под логином ${newUser.email}!</h3>
+
+      <p>----------------------------------------</p>
+      <p>Грядка ЦРМ</p>
+      <p>https://ridge-crm.ru/</p>
+      <p>Телеграм: https://t.me/ridge_crm</p>
+      <p>Почта: ridge-crm@mail.ru</p>
+      `;
+
+      // Отправляем письмо пользователю об успешной регистрации
+      await registrationNewUser.sendMail({
         from: SMTP_USER,
-        to: "salimov.rent@mail.ru",
-        subject: "Вход в аккаунт",
-        text: "Такой текст",
-        html: html
+        to: newUser.email,
+        subject: "Регистрация в Грядке ЦРМ",
+        html: htmlForNewUser
+      });
+
+      // Отправляем письмо Администратору о регистрации нового пользователя
+      await adminNotification.sendMail({
+        from: SMTP_USER,
+        to: SMTP_USER,
+        subject: "Регистрация нового пользователя в Грядке ЦРМ",
+        html: htmlForAdmin
       });
 
       res.status(201).send({ ...tokens, userId: newUser._id });
@@ -280,8 +313,6 @@ router.post("/signInWithPassword", [
       }
 
       const { email, password } = req.body;
-
-      // Find the user with the provided email
       const existingUser = await User.findOne({ where: { email } });
 
       if (!existingUser) {
@@ -308,11 +339,9 @@ router.post("/signInWithPassword", [
         });
       }
 
-      // Generate tokens and save the refresh token
       const tokens = tokenService.generate({ _id: existingUser._id });
       await tokenService.save(existingUser._id, tokens.refreshToken);
 
-      // Создаем экземпляр отправителя
       const transporter = nodemailer.createTransport({
         host: SMTP_HOST,
         port: SMTP_PORT,
@@ -341,11 +370,10 @@ router.post("/signInWithPassword", [
       `;
 
       // Отправляем письмо
-      const info = await transporter.sendMail({
+      await transporter.sendMail({
         from: SMTP_USER,
-        to: "salimov.rent@mail.ru",
+        to: existingUser.email,
         subject: "Вход в аккаунт",
-        text: "Такой текст",
         html: html
       });
 
@@ -359,26 +387,43 @@ router.post("/signInWithPassword", [
   }
 ]);
 
-// активация почты
-router.post("/activate/:link", async (req, res) => {
-  try {
-    // const { refresh_token: refreshToken } = req.body;
-    // const data = tokenService.validateRefresh(refreshToken);
-    // const dbToken = await tokenService.findToken(refreshToken);
-    // if (isTokenInvalid(data, dbToken)) {
-    //   return res.status(401).json({ message: "Не авторизован" });
-    // }
-    // const tokens = await tokenService.generate({
-    //   _id: dbToken.user.toString()
-    // });
-    // await tokenService.save(data._id, tokens.refreshToken);
-    // res.status(200).send({ ...tokens, userId: data._id });
-  } catch (error) {
-    res.status(500).json({
-      message: "На сервере произошла ошибка. Попробуйте позже"
-    });
-  }
-});
+// // активация почты
+// router.get("/activate/:link", async (req, res) => {
+//   try {
+//     const activationLink = req.params.link;
+//     const existingUser = await User.findOne({ where: { activationLink } });
+//     console.log("activationLink", activationLink);
+//     console.log("existingUser", existingUser);
+
+//     if (!existingUser) {
+//       return res.status(400).json({
+//         error: {
+//           message:
+//             "Ссылка на активацию не найдена, запросите в своем Профиле новую ссылку",
+//           code: 400
+//         }
+//       });
+//     }
+
+//     const updatedUser = await existingUser.update(
+//       {
+//         isEmailActived: true
+//       },
+//       { where: { _id: updatedUser._id } }
+//     );
+
+//     if (!updatedUser[0]) {
+//       return res.status(404).json({ message: "Пользователь не найден" });
+//     }
+//     console.log("updatedUser", updatedUser);
+
+//     // res.send(updatedUser[1][0]);
+//   } catch (error) {
+//     res.status(500).json({
+//       message: "На сервере произошла ошибка. Попробуйте позже"
+//     });
+//   }
+// });
 
 function isTokenInvalid(data, dbToken) {
   return !data || !dbToken || data._id !== dbToken?.user?.toString();

@@ -26,6 +26,7 @@ import {
   getUsersLoadingStatus
 } from "@store/user/users.store";
 import Callback from "@layouts/callback/callback";
+import EmailActivated from "@components/pages/email-activated/email-activated";
 
 export default function AppRoutes() {
   const currentUserId = useSelector(getCurrentUserId());
@@ -58,7 +59,8 @@ export default function AppRoutes() {
     { id: 10, path: ":userId?/profileUpdate", element: <UpdateProfile /> },
     { id: 11, path: "contacts/", element: <Contacts /> },
     { id: 12, path: "companies/", element: <Companies /> },
-    { id: 12, path: "callback/", element: <Callback /> }
+    { id: 13, path: "callback/", element: <Callback /> },
+    { id: 14, path: "activate/:link", element: <EmailActivated /> }
   ];
 
   return (
