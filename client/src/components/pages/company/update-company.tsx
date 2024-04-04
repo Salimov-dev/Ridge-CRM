@@ -145,6 +145,14 @@ const UpdateCompany = React.memo(({ companyId, onClose }) => {
     isManager && setValue("objects", currentUserObjects);
   }, [contactsList]);
 
+  const handleOpenConfirm = () => {
+    setOpen(true);
+  };
+
+  const handleCloseConfirm = () => {
+    setOpen(false);
+  };
+
   const onSubmit = () => {
     setIsLoading(true);
 
@@ -178,15 +186,15 @@ const UpdateCompany = React.memo(({ companyId, onClose }) => {
   };
 
   const handleRemoveContact = (companyId) => {
-    dispatch<any>(removeCompany(companyId)).then(onClose());
-  };
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
+    setIsLoading(true);
+    dispatch<any>(removeCompany(companyId))
+      .then(onClose(), handleCloseConfirm())
+      .catch((error) => {
+        toast.error(error);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
 
   return (
@@ -210,7 +218,7 @@ const UpdateCompany = React.memo(({ companyId, onClose }) => {
       <SuccessCancelFormButtons
         onSuccess={handleSubmit(onSubmit)}
         onCancel={onClose}
-        onRemove={handleClickOpen}
+        onRemove={handleOpenConfirm}
         isUpdate={true}
         disabledRemoveButton={isCurator}
       />
@@ -222,7 +230,7 @@ const UpdateCompany = React.memo(({ companyId, onClose }) => {
       <DialogConfirm
         question="Вы уверены, что хотите удалить безвозвратно?"
         open={open}
-        onClose={handleClose}
+        onClose={handleCloseConfirm}
         onSuccessClick={() => handleRemoveContact(companyId)}
       />
       <PageDialogs state={state} setState={setState} />

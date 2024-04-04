@@ -1,15 +1,8 @@
 import { useSelector } from "react-redux";
-import styled from "@emotion/styled";
 import { Box, Typography } from "@mui/material";
-import { Link } from "react-router-dom";
 import RowTitle from "@components/common/titles/row-title";
 import { getCurrentUserData } from "@store/user/users.store";
-
-const StyledLink = styled(Link)({
-  textDecoration: "none",
-  borderBottom: "1px solid transparent",
-  transition: "border-bottom-color 0.3s"
-});
+import LinkStyled from "@components/common/link/link-styled";
 
 const AccountInfo = () => {
   const currentUserData = useSelector(getCurrentUserData());
@@ -27,7 +20,7 @@ const AccountInfo = () => {
         <Typography variant="h4">{currentUserName}</Typography>
       ) : (
         <Box sx={{ width: "fit-content" }}>
-          <StyledLink to="/profile">
+          <LinkStyled path="/profile">
             <Typography
               variant="h4"
               sx={{
@@ -40,7 +33,7 @@ const AccountInfo = () => {
             >
               Заполните свой Профиль
             </Typography>
-          </StyledLink>
+          </LinkStyled>
         </Box>
       )}
     </Box>

@@ -102,24 +102,24 @@ const UpdateManagerTask = React.memo(
         });
     };
 
+    const handleOpenConfirm = () => {
+      setOpen(true);
+    };
+
+    const handleCloseConfirm = () => {
+      setOpen(false);
+    };
+
     const handleRemoveTask = () => {
       setIsLoading(true);
       dispatch<any>(removeTask(taskId))
-        .then(onClose())
+        .then(onClose(), handleCloseConfirm())
         .catch((error) => {
           toast.error(error);
         })
         .finally(() => {
           setIsLoading(false);
         });
-    };
-
-    const handleClickOpen = () => {
-      setOpen(true);
-    };
-
-    const handleClose = () => {
-      setOpen(false);
     };
 
     useEffect(() => {
@@ -156,7 +156,7 @@ const UpdateManagerTask = React.memo(
         <SuccessCancelFormButtons
           onSuccess={handleSubmit(onSubmit)}
           onCancel={onClose}
-          onRemove={handleClickOpen}
+          onRemove={handleOpenConfirm}
           isUpdate={true}
           disabledRemoveButton={isUserManager}
         />
@@ -164,7 +164,7 @@ const UpdateManagerTask = React.memo(
           question="Вы уверены, что хотите удалить задачу менеджеру?"
           open={open}
           onSuccessClick={() => handleRemoveTask()}
-          onClose={handleClose}
+          onClose={handleCloseConfirm}
         />
         <LoaderFullWindow isLoading={isLoading} />
       </>

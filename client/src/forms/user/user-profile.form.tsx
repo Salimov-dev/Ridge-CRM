@@ -20,7 +20,7 @@ const UserProfileForm = ({ data, register, errors, setValue }) => {
             name="lastName"
             required={true}
             errors={errors?.lastName}
-            value={capitalizeFirstLetter(data?.lastName)}
+            value={capitalizeFirstLetter(data?.lastName) ?? ""}
             inputProps={{ maxLength: 150 }}
           />
           <TextFieldStyled
@@ -29,7 +29,7 @@ const UserProfileForm = ({ data, register, errors, setValue }) => {
             name="firstName"
             required={true}
             errors={errors?.firstName}
-            value={capitalizeFirstLetter(data?.firstName)}
+            value={capitalizeFirstLetter(data?.firstName) ?? ""}
             inputProps={{ maxLength: 150 }}
           />
           <TextFieldStyled
@@ -38,7 +38,7 @@ const UserProfileForm = ({ data, register, errors, setValue }) => {
             name="surName"
             required={true}
             errors={errors?.surName}
-            value={capitalizeFirstLetter(data?.surName)}
+            value={capitalizeFirstLetter(data?.surName) ?? ""}
             inputProps={{ maxLength: 150 }}
           />
           <DatePickerStyled
@@ -69,7 +69,7 @@ const UserProfileForm = ({ data, register, errors, setValue }) => {
             labelId="gender"
             required={true}
             label="Пол"
-            value={data?.gender}
+            value={data?.gender ?? ""}
             errors={errors?.gender}
           />
           <SimpleSelectField

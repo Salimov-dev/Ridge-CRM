@@ -94,16 +94,23 @@ const UpdateMeeting = React.memo(({ meetingId, onClose, isObjectPage }) => {
       });
   };
 
-  const handleRemoveMeeting = (meetingId) => {
-    dispatch<any>(removeMeeting(meetingId)).then(onClose());
-  };
-
-  const handleClickOpen = () => {
+  const handleOpenConfirm = () => {
     setOpen(true);
   };
 
-  const handleClose = () => {
+  const handleCloseConfirm = () => {
     setOpen(false);
+  };
+
+  const handleRemoveMeeting = (meetingId) => {
+    dispatch<any>(removeMeeting(meetingId))
+      .then(onClose(), handleCloseConfirm())
+      .catch((error) => {
+        toast.error(error);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
 
   return (
@@ -137,7 +144,7 @@ const UpdateMeeting = React.memo(({ meetingId, onClose, isObjectPage }) => {
       <SuccessCancelFormButtons
         onSuccess={handleSubmit(onSubmit)}
         onCancel={onClose}
-        onRemove={handleClickOpen}
+        onRemove={handleOpenConfirm}
         isUpdate={true}
       />
       <LoaderFullWindow
@@ -148,7 +155,7 @@ const UpdateMeeting = React.memo(({ meetingId, onClose, isObjectPage }) => {
       <DialogConfirm
         question="Вы уверены, что хотите удалить безвозвратно?"
         open={open}
-        onClose={handleClose}
+        onClose={handleCloseConfirm}
         onSuccessClick={() => handleRemoveMeeting(meetingId)}
       />
     </>

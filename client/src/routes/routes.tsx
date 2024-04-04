@@ -27,6 +27,7 @@ import {
 } from "@store/user/users.store";
 import Callback from "@layouts/callback/callback";
 import EmailActivated from "@components/pages/email-activated/email-activated";
+import RecoveryPassword from "@components/pages/password/recovery-password";
 
 export default function AppRoutes() {
   const currentUserId = useSelector(getCurrentUserId());
@@ -57,9 +58,9 @@ export default function AppRoutes() {
     { id: 8, path: "profile/*", element: <Profile /> },
     { id: 9, path: ":userId?/presentations", element: <Presentations /> },
     { id: 10, path: ":userId?/profileUpdate", element: <UpdateProfile /> },
-    { id: 11, path: "contacts/", element: <Contacts /> },
-    { id: 12, path: "companies/", element: <Companies /> },
-    { id: 13, path: "callback/", element: <Callback /> },
+    { id: 11, path: "contacts/*", element: <Contacts /> },
+    { id: 12, path: "companies/*", element: <Companies /> },
+    { id: 13, path: "callback/*", element: <Callback /> },
     { id: 14, path: "activate/:link", element: <EmailActivated /> }
   ];
 
@@ -68,6 +69,8 @@ export default function AppRoutes() {
       <Route path="*" element={<NoMatchRoute />} />
       <Route path="/" element={isLoggedIn ? <Objects /> : <Main />} />
       <Route path="auth/*" element={isLoggedIn ? <Objects /> : <Main />} />
+      <Route path="password/*" element={<NoMatchRoute />} />
+      <Route path="password/recovery/:link" element={<RecoveryPassword />} />
 
       {routes.map((route) => (
         <Route

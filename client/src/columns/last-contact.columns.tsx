@@ -21,10 +21,8 @@ import {
   getIsUserManager
 } from "@store/user/users.store";
 
-export const lastContactColumns = (onUpdate, onOpenContactPage) => {
+export const lastContactColumns = (onUpdate, onOpenContactPage, isManager) => {
   let columns = [];
-  const currentUserId = useSelector(getCurrentUserId());
-  const isManager = useSelector(getIsUserManager(currentUserId));
 
   const mainColumns = [
     {

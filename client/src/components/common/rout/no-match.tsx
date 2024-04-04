@@ -1,7 +1,7 @@
 import { Box, Typography, styled } from "@mui/material";
 
 const Component = styled(Box)`
-  height: 350px;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -15,7 +15,7 @@ const NoMatchRoute = () => {
         Страницы по такому адресу не существует :-(
       </Typography>
       <Typography variant="h3">
-        Проверьте вводимый адрес и попробуйте снова
+        Проверьте введенный адрес и попробуйте снова
       </Typography>
     </Component>
   );

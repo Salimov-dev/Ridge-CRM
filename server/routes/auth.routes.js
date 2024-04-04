@@ -6,8 +6,8 @@ import tokenService from "../services/token.service.js";
 import UserLicense from "../models/UserLicense.js";
 import { sequelize } from "../utils/postgre-conection.js";
 import nodemailer from "nodemailer";
-import dotenv from "dotenv";
 import { v4 as uuidv4 } from "uuid";
+import dotenv from "dotenv";
 dotenv.config();
 
 const { SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASSWORD, API_URL } = process.env;
@@ -92,9 +92,8 @@ router.post("/signUp", [
       const hashedPassword = await bcrypt.hash(password, 12);
 
       // ссылка для активации почты
-      // const activationLink = `${API_URL}/api/activate/${uuidv4()}`;
       const activationLinkId = uuidv4();
-      const activationLink = `http://localhost:5173/activate/${activationLinkId}`;
+      const activationLink = `${API_URL}/activate/${activationLinkId}`;
 
       // Create a new user with Sequelize
       const newUser = await User.create({
@@ -152,7 +151,7 @@ router.post("/signUp", [
       <p>Грядка ЦРМ</p>
       <p>https://ridge-crm.ru/</p>
       <p>Телеграм: https://t.me/ridge_crm</p>
-      <p>Почта: ridge-crm@mail.ru</p>
+      <p>Почта: ${SMTP_USER}</p>
       `;
 
       // HTML содержимое письма для администратора Грядки о регистрации нового пользователя
@@ -163,7 +162,7 @@ router.post("/signUp", [
       <p>Грядка ЦРМ</p>
       <p>https://ridge-crm.ru/</p>
       <p>Телеграм: https://t.me/ridge_crm</p>
-      <p>Почта: ridge-crm@mail.ru</p>
+      <p>Почта: ${SMTP_USER}</p>
       `;
 
       // Отправляем письмо пользователю об успешной регистрации
@@ -366,7 +365,7 @@ router.post("/signInWithPassword", [
       <p>Грядка ЦРМ</p>
       <p>https://ridge-crm.ru/</p>
       <p>Телеграм: https://t.me/ridge_crm</p>
-      <p>Почта: ridge-crm@mail.ru</p>
+      <p>Почта: ${SMTP_USER}</p>
       `;
 
       // Отправляем письмо

@@ -1,5 +1,6 @@
 import { Server } from "socket.io";
-import chalk from "chalk";
+// utils
+import { corsOptions } from "../utils/cors-options.js";
 // sockets
 import SocketObject from "./components/socket-object.js";
 import SocketMeeting from "./components/socket-meeting.js";
@@ -15,21 +16,10 @@ import SocketTeammate from "./components/socket-teammate.js";
 
 const Sockets = (server) => {
   const io = new Server(server, {
-    cors: {
-      origin: "http://localhost:5173",
-      methods: ["GET", "POST"]
-    }
+    cors: corsOptions
   });
-  // const io = new Server(server, {
-  //   cors: {
-  //     origin: "http://localhost:5173",
-  //     methods: ["GET", "POST"]
-  //   }
-  // });
 
   io.on("connection", (socket) => {
-    // console.log(chalk.blue("A user connected"));
-
     SocketUser(io, socket);
     SocketObject(io, socket);
     SocketMeeting(io, socket);
@@ -42,9 +32,7 @@ const Sockets = (server) => {
     SocketContact(io, socket);
     SocketTeammate(io, socket);
 
-    socket.on("disconnect", () => {
-      // console.log(chalk.red("User disconnected"));
-    });
+    socket.on("disconnect", () => {});
   });
 };
 

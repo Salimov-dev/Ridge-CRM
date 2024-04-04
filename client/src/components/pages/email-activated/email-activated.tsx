@@ -39,8 +39,9 @@ const EmailActivated = React.memo(() => {
         setRedirectTimer(
           setTimeout(() => {
             window.location.href = "/users";
-          }, 1000)
+          }, 1400)
         );
+        emailActivateService.clearActivationLink(activationLink);
       })
       .catch((error) => {
         const errorMessage =
@@ -61,12 +62,6 @@ const EmailActivated = React.memo(() => {
 
   useEffect(() => {
     getEmailActivate();
-  }, []);
-
-  useEffect(() => {
-    getEmailActivate();
-
-    // Очистка таймера при размонтировании компонента
     return () => {
       clearTimeout(redirectTimer);
     };

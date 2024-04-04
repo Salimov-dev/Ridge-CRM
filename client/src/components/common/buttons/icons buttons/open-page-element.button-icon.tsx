@@ -42,7 +42,8 @@ const OpenPageElementIconButton = ({
             sx={{
               width: width,
               height: height,
-              opacity: disabled ? "0.5" : "1"
+              opacity: disabled ? "0.5" : "1",
+              padding: "0 0 4px 0"
             }}
           />
         </Tooltip>

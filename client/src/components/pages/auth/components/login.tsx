@@ -12,8 +12,10 @@ import { useLocation, useNavigate } from "react-router-dom";
 import ButtonStyled from "@components/common/buttons/button-styled.button";
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
 import HeaderWithCloseButton from "@components/common/page-headers/header-with-close-button";
-import AuthForm from "@forms/user/auth-form";
 import PageDialogs from "@components/common/dialog/page-dialogs";
+import ForgotPassword from "@components/UI/forgot-password/forgot-pasword.ui";
+// forms
+import AuthForm from "@forms/user/auth-form";
 // schema
 import { loginSchema } from "@schemas/auth/login.schema";
 // store
@@ -26,7 +28,7 @@ const Component = styled(Box)`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 20px;
+  gap: 10px;
 `;
 
 const FormContainer = styled(Box)`
@@ -101,6 +103,8 @@ const Login = React.memo(({ page, onClose }) => {
           onClick={handleSubmit(onSubmit)}
         />
       </FormContainer>
+
+      <ForgotPassword />
 
       <LoaderFullWindow isLoading={isLoading} />
       <PageDialogs state={state} setState={setState} />

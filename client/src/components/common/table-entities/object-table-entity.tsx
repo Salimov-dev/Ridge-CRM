@@ -48,7 +48,7 @@ const ObjectTableEntity = ({ objects, onOpenObjectPage }) => {
               <Component key={objectId}>
                 {getObjectName(objectId)}
                 <OpenPageElementIconButton
-                  title="Открыть контакт"
+                  title="Открыть объект"
                   height="20px"
                   heightButton="20px"
                   width="16px"

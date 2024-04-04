@@ -5,6 +5,10 @@ import ButtonStyled from "@components/common/buttons/button-styled.button";
 // icons
 import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";
 import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
+import emailActivateService from "@services/email-activate/email-activate.service";
+import { toast } from "react-toastify";
+import { useState } from "react";
+import LoaderFullWindow from "@components/common/loader/loader-full-window";
 
 const Container = styled(Box)`
   display: flex;
@@ -14,7 +18,31 @@ const Container = styled(Box)`
 `;
 
 const EmailConfirmInfo = ({ user }) => {
-  const isUserActivated = user?.isEmailActivated;
+  const activationLink = user?.activationLink;
+
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleConfirmEmail = () => {
+    setIsLoading(true);
+
+    emailActivateService
+      .sendConfirmMail(activationLink)
+      .then((res) => {
+        const { content } = res;
+        toast.success(content?.message);
+      })
+      .catch((error) => {
+        const errorMessage =
+          error.response?.data?.error?.message || "Ошибка при активации почты";
+        toast.error(errorMessage);
+        throw errorMessage;
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  };
+
+  const isUserActivated = user?.isEmailActived;
   return isUserActivated ? (
     <Container>
       <CheckCircleOutlineOutlinedIcon
@@ -32,8 +60,10 @@ const EmailConfirmInfo = ({ user }) => {
         title="Подтвердить"
         style="MANAGER_TASK"
         variant="contained"
-        // onClick={handleOpenUpdateProfilePage}
+        disabled={isLoading}
+        onClick={handleConfirmEmail}
       />
+      <LoaderFullWindow color="grey" size={75} isLoading={isLoading} />
     </Container>
   );
 };

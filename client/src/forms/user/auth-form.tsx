@@ -2,13 +2,13 @@ import { useState } from "react";
 import { orderBy } from "lodash";
 import { useSelector } from "react-redux";
 import { InputAdornment, IconButton } from "@mui/material";
-import ColorPicker from "@components/common/color-picker/color-picker";
 // icons
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 // components
-import { FieldsContainer, Form } from "../../components/common/forms/styled";
-import TextFieldStyled from "../../components/common/inputs/text-field-styled";
+import ColorPicker from "@components/common/color-picker/color-picker";
+import { FieldsContainer, Form } from "@components/common/forms/styled";
+import TextFieldStyled from "@components/common/inputs/text-field-styled";
 import AutocompleteStyled from "@components/common/inputs/autocomplete-styled";
 // store
 import { getCititesList } from "@store/city/citites.store";
@@ -17,10 +17,10 @@ const AuthForm = ({
   data,
   register,
   errors,
-  color,
-  watch,
-  setValue,
-  onColorChange,
+  color = "",
+  watch = () => {},
+  setValue = () => {},
+  onColorChange = () => {},
   isRegister = false
 }) => {
   const [showPassword, setShowPassword] = useState(false);

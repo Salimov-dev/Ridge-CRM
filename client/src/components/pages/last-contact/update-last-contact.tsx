@@ -74,24 +74,24 @@ const UpdateLastContact = React.memo(({ lastContactId, onClose }) => {
       });
   };
 
+  const handleOpenConfirm = () => {
+    setOpen(true);
+  };
+
+  const handleCloseConfirm = () => {
+    setOpen(false);
+  };
+
   const handleRemoveLastContact = (lastContactId) => {
     setIsLoading(true);
     dispatch<any>(removeLastContact(lastContactId))
-      .then(onClose())
+      .then(onClose(), handleCloseConfirm())
       .catch((error) => {
         toast.error(error);
       })
       .finally(() => {
         setIsLoading(false);
       });
-  };
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
   };
 
   return (
@@ -114,14 +114,14 @@ const UpdateLastContact = React.memo(({ lastContactId, onClose }) => {
       <SuccessCancelFormButtons
         onSuccess={handleSubmit(onSubmit)}
         onCancel={onClose}
-        onRemove={handleClickOpen}
+        onRemove={handleOpenConfirm}
         isUpdate={true}
       />
       <DialogConfirm
         question="Вы уверены, что хотите удалить последний контакт?"
         open={open}
         onSuccessClick={() => handleRemoveLastContact(lastContactId)}
-        onClose={handleClose}
+        onClose={handleCloseConfirm}
       />
       <LoaderFullWindow isLoading={isLoading} />
     </>

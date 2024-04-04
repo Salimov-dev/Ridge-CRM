@@ -87,24 +87,24 @@ const UpdatePresentation = React.memo(({ presentationId, onClose }) => {
       });
   };
 
+  const handleOpenConfirm = () => {
+    setOpen(true);
+  };
+
+  const handleCloseConfirm = () => {
+    setOpen(false);
+  };
+
   const handleRemovePresentation = (presentationId) => {
     setIsLoading(true);
     dispatch<any>(removePresentation(presentationId))
-      .then(onClose())
+      .then(onClose(), handleCloseConfirm())
       .catch((error) => {
         toast.error(error);
       })
       .finally(() => {
         setIsLoading(false);
       });
-  };
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
   };
 
   return (
@@ -137,14 +137,14 @@ const UpdatePresentation = React.memo(({ presentationId, onClose }) => {
       <SuccessCancelFormButtons
         onSuccess={handleSubmit(onSubmit)}
         onCancel={onClose}
-        onRemove={handleClickOpen}
+        onRemove={handleOpenConfirm}
         isUpdate={true}
       />
       <DialogConfirm
         question="Вы уверены, что хотите удалить презентацию?"
         open={open}
         onSuccessClick={() => handleRemovePresentation(presentationId)}
-        onClose={handleClose}
+        onClose={handleCloseConfirm}
       />
       <LoaderFullWindow isLoading={isLoading} />
     </>

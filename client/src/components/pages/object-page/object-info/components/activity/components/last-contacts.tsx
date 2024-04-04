@@ -8,6 +8,7 @@ import {
   getLastContactsList,
   getLastContactsLoadingStatus
 } from "@store/last-contact/last-contact.store";
+import { getCurrentUserId, getIsUserManager } from "@store/user/users.store";
 
 const Component = styled(Box)`
   display: flex;
@@ -35,7 +36,8 @@ const LastContacts = ({
     (contact) => contact.objectId === objectId
   );
   const sortedLastContacts = lastContacts?.reverse();
-
+  const currentUserId = useSelector(getCurrentUserId());
+  const isManager = useSelector(getIsUserManager(currentUserId));
   return (
     <Component>
       <Container sx={{ alignItems: "start" }}>
@@ -61,7 +63,7 @@ const LastContacts = ({
           itemsColumns={lastContactColumns(
             onUpdate,
             onOpenContactPage,
-            isCurator
+            isManager
           )}
           isLoading={isLastContactsLoading}
           isDialogMode={true}

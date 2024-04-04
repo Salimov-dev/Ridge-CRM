@@ -64,65 +64,65 @@ const TopBarWeeklyResults = React.memo(() => {
   );
 
   return (
-    <Tooltip title="Личные результаты текущей недели" placement="bottom" arrow>
-      <ResultComponent>
+    // <Tooltip title="Личные результаты текущей недели" placement="bottom" arrow>
+    <ResultComponent>
+      <TopBarDataContainter
+        title="Объектов:"
+        elements={objects}
+        path="/objects"
+        backgroundColor="DarkOrange"
+        fontColor="white"
+        isLoading={isObjectLoading}
+      />
+      <TopBarDataContainter
+        title="Контактов:"
+        elements={contacts}
+        path="/contacts"
+        backgroundColor="OrangeRed"
+        isLoading={isContactsLoading}
+      />
+      <TopBarDataContainter
+        title="Презентаций:"
+        elements={presentations}
+        path="/presentations"
+        backgroundColor="SaddleBrown"
+        isLoading={isPresentationsLoading}
+      />
+      <TopBarDataContainter
+        title="Провести встреч:"
+        elements={meetings}
+        path="/meetings"
+        backgroundColor="RoyalBlue"
+        isLoading={isMeetingsLoading}
+      />
+      <TopBarDataContainter
+        title="Выполнить задач:"
+        elements={
+          isCurator ? currentUserTaskWithoutManagerTasks : currentUserTasks
+        }
+        path="/calendar"
+        backgroundColor="Sienna"
+        isLoading={isTasksLoading}
+      />
+      {isCurator ? (
         <TopBarDataContainter
-          title="Объектов:"
-          elements={objects}
-          path="/objects"
-          backgroundColor="DarkOrange"
-          fontColor="white"
-          isLoading={isObjectLoading}
-        />
-        <TopBarDataContainter
-          title="Контактов:"
-          elements={contacts}
-          path="/contacts"
-          backgroundColor="OrangeRed"
-          isLoading={isContactsLoading}
-        />
-        <TopBarDataContainter
-          title="Презентаций:"
-          elements={presentations}
-          path="/presentations"
-          backgroundColor="SaddleBrown"
-          isLoading={isPresentationsLoading}
-        />
-        <TopBarDataContainter
-          title="Провести встреч:"
-          elements={meetings}
-          path="/meetings"
-          backgroundColor="RoyalBlue"
-          isLoading={isMeetingsLoading}
-        />
-        <TopBarDataContainter
-          title="Выполнить задач:"
-          elements={
-            isCurator ? currentUserTaskWithoutManagerTasks : currentUserTasks
-          }
+          title="Задач Менеджерам:"
+          elements={tasksFromCurator}
           path="/calendar"
-          backgroundColor="Sienna"
+          backgroundColor="FireBrick"
           isLoading={isTasksLoading}
         />
-        {isCurator ? (
-          <TopBarDataContainter
-            title="Задач Менеджерам:"
-            elements={tasksFromCurator}
-            path="/calendar"
-            backgroundColor="FireBrick"
-            isLoading={isTasksLoading}
-          />
-        ) : (
-          <TopBarDataContainter
-            title="Задач от Куратора:"
-            elements={tasksFromCurator}
-            path="/calendar"
-            backgroundColor="FireBrick"
-            isLoading={isTasksLoading}
-          />
-        )}
-      </ResultComponent>
-    </Tooltip>
+      ) : (
+        <TopBarDataContainter
+          title="Задач от Куратора:"
+          elements={tasksFromCurator}
+          path="/calendar"
+          backgroundColor="FireBrick"
+          isLoading={isTasksLoading}
+        />
+      )}
+    </ResultComponent>
+    // </Tooltip>
   );
 });
 

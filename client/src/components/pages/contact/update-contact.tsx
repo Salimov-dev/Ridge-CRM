@@ -107,16 +107,24 @@ const UpdateContact = React.memo(({ contactId, onClose }) => {
       });
   };
 
-  const handleRemoveContact = (contactId) => {
-    dispatch<any>(removeContact(contactId)).then(onClose());
-  };
-
-  const handleClickOpen = () => {
+  const handleOpenConfirm = () => {
     setOpen(true);
   };
 
-  const handleClose = () => {
+  const handleCloseConfirm = () => {
     setOpen(false);
+  };
+
+  const handleRemoveContact = (contactId) => {
+    setIsLoading(true);
+    dispatch<any>(removeContact(contactId))
+      .then(onClose(), handleCloseConfirm())
+      .catch((error) => {
+        toast.error(error);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
 
   return (
@@ -141,7 +149,7 @@ const UpdateContact = React.memo(({ contactId, onClose }) => {
       <SuccessCancelFormButtons
         onSuccess={handleSubmit(onSubmit)}
         onCancel={onClose}
-        onRemove={handleClickOpen}
+        onRemove={handleOpenConfirm}
         isUpdate={true}
       />
       <LoaderFullWindow
@@ -153,7 +161,7 @@ const UpdateContact = React.memo(({ contactId, onClose }) => {
       <DialogConfirm
         question="Вы уверены, что хотите удалить безвозвратно?"
         open={open}
-        onClose={handleClose}
+        onClose={handleCloseConfirm}
         onSuccessClick={() => handleRemoveContact(contactId)}
       />
     </>

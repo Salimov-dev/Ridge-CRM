@@ -35,8 +35,8 @@ const TopBarDataContainter = ({
   return (
     <DataContainer>
       <Typography
-        variant="h6"
         sx={{
+          fontSize: "12px",
           cursor: "pointer",
           "&:hover": {
             color: "white"
@@ -54,7 +54,7 @@ const TopBarDataContainter = ({
           background: backgroundColor,
           color: fontColor,
           "&:hover": {
-            border: "2px solid yellow"
+            border: "1px solid yellow"
           }
         }}
         onClick={() => {
@@ -63,7 +63,9 @@ const TopBarDataContainter = ({
         }}
       >
         {!isLoading ? (
-          <Typography variant="h6">{elements?.length}шт</Typography>
+          <Typography sx={{ fontSize: "12px" }}>
+            {elements?.length}шт
+          </Typography>
         ) : (
           <Loader size={16} padding="6px" />
         )}
