@@ -154,11 +154,15 @@ export const loadUsersList = () => async (dispatch) => {
 export const createNewUser = (payload) => async (dispatch) => {
   dispatch(authRequested());
   try {
-    const data = await authService.create(payload);
-    dispatch(userCreated(data));
+    const { content } = await userService.createTeammate(payload);
+
+    dispatch(userCreated(content));
     dispatch(loadUserLicensesList());
   } catch (error) {
-    dispatch(authRequestFailed(error.message));
+    const errorMessage = error.response.data.error.message;
+
+    dispatch(authRequestFailed(errorMessage));
+    throw errorMessage;
   }
 };
 

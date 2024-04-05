@@ -29,7 +29,7 @@ const Component = styled(Box)`
 const Message = styled(Typography)`
   text-align: center;
   color: white;
-  margin-bottom: 10px;
+  margin: 6px 0 16px 0;
 `;
 
 const initialState = {

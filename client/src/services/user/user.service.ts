@@ -26,6 +26,13 @@ const userService = {
 
     return data;
   },
+  createTeammate: async (payload) => {
+    const { data } = await httpService.post(
+      userEndpoint + "create-teammate",
+      payload
+    );
+    return data;
+  },
   updateTeammate: async (payload) => {
     const { data } = await httpService.patch(
       userEndpoint + payload._id + "/update-teammate",

@@ -28,6 +28,7 @@ import {
 import Callback from "@layouts/callback/callback";
 import EmailActivated from "@components/pages/email-activated/email-activated";
 import RecoveryPassword from "@components/pages/password/recovery-password";
+import SetupPassword from "@components/pages/password/setup-password";
 
 export default function AppRoutes() {
   const currentUserId = useSelector(getCurrentUserId());
@@ -71,6 +72,10 @@ export default function AppRoutes() {
       <Route path="auth/*" element={isLoggedIn ? <Objects /> : <Main />} />
       <Route path="password/*" element={<NoMatchRoute />} />
       <Route path="password/recovery/:link" element={<RecoveryPassword />} />
+      <Route
+        path="password/setup-password/:email?/:link"
+        element={<SetupPassword />}
+      />
 
       {routes.map((route) => (
         <Route

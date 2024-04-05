@@ -4,7 +4,6 @@ import { check, validationResult } from "express-validator";
 import User from "../models/User.js";
 import tokenService from "../services/token.service.js";
 import UserLicense from "../models/UserLicense.js";
-import { sequelize } from "../utils/postgre-conection.js";
 import nodemailer from "nodemailer";
 import { v4 as uuidv4 } from "uuid";
 import dotenv from "dotenv";
@@ -95,7 +94,6 @@ router.post("/signUp", [
       const activationLinkId = uuidv4();
       const activationLink = `${API_URL}/activate/${activationLinkId}`;
 
-      // Create a new user with Sequelize
       const newUser = await User.create({
         email,
         password: hashedPassword,
@@ -109,7 +107,6 @@ router.post("/signUp", [
         userId: newUser._id
       });
 
-      // Generate tokens and save the refresh token
       const tokens = tokenService.generate({ _id: newUser._id });
       await tokenService.save(newUser._id, tokens.refreshToken);
 
@@ -187,98 +184,6 @@ router.post("/signUp", [
       res.status(500).json({
         message: "На сервере произошла ошибка. Попробуйте позже",
         error: e.message
-      });
-    }
-  }
-]);
-
-// Создание нового члена команды
-router.post("/create", [
-  check("email", "Email некорректный").isEmail(),
-  check("password", "Пароль не может быть пустым").exists().trim(),
-  async (req, res) => {
-    const addRoleToUser = (userRoles, roleId) => {
-      if (!userRoles) {
-        return [roleId];
-      }
-
-      if (!userRoles.includes(roleId)) {
-        return [...userRoles, roleId];
-      }
-
-      return userRoles;
-    };
-
-    try {
-      const errors = validationResult(req);
-
-      if (!errors.isEmpty()) {
-        return res.status(400).json({
-          error: {
-            message: "INVALID_DATA",
-            code: 400
-          }
-        });
-      }
-
-      const { email, password, role, curatorId, color, city } = req.body;
-
-      const existingUser = await User.findOne({ where: { email } });
-
-      if (existingUser) {
-        return res.status(400).json({
-          error: {
-            message: "EMAIL_EXISTS",
-            code: 400
-          }
-        });
-      }
-
-      const hashedPassword = await bcrypt.hash(password, 12);
-
-      const newUser = await User.create({
-        email,
-        password: hashedPassword,
-        role: addRoleToUser(existingUser?.role, role),
-        curatorId: curatorId,
-        color,
-        city
-      });
-
-      await UserLicense.create({
-        userId: newUser._id
-      });
-
-      let roleNewUser = "";
-
-      if (newUser?.role.includes("69gfoep3944jgjdso345002")) {
-        // Менеджер
-        roleNewUser = "managers";
-      } else if (newUser?.role.includes("69dgp34954igfj345043001")) {
-        // Наблюдатель
-        roleNewUser = "observers";
-      }
-
-      // Обновляем лицензию текущего пользователя, добавляя _id нового пользователя в соответствующий массив
-      if (roleNewUser) {
-        // Используем userId нового пользователя для обновления лицензии текущего пользователя
-        await UserLicense.update(
-          {
-            [roleNewUser]: sequelize.literal(
-              `array_append("${roleNewUser}", '${newUser._id}')`
-            )
-          },
-          {
-            where: { userId: curatorId } // Обновляем лицензию текущего пользователя, который создает нового члена команды
-          }
-        );
-      }
-
-      res.status(201).send(newUser);
-    } catch (e) {
-      console.error(e);
-      res.status(500).json({
-        message: "На сервере произошла ошибка. Попробуйте позже"
       });
     }
   }

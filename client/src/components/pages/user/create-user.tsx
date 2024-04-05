@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { yupResolver } from "@hookform/resolvers/yup";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 // components
 import TitleWithCloseButton from "@common/page-headers/header-with-close-button";
 import UserForm from "@forms/user/create-user/user-form";
@@ -55,9 +55,6 @@ const CreateUser = React.memo(({ onClose }) => {
   const handleColorChange = (color) => {
     setColor(color);
     setValue("color", color?.hex);
-    setValue("city", currentUserData?.city);
-    setValue("password", "Qwer1234");
-    setValue("curatorId", currentUserId);
   };
 
   const onSubmit = () => {
@@ -75,6 +72,14 @@ const CreateUser = React.memo(({ onClose }) => {
         setIsLoading(false);
       });
   };
+
+  useEffect(() => {
+    setValue("city", currentUserData?.city);
+  }, [currentUserData]);
+
+  useEffect(() => {
+    setValue("curatorId", currentUserId);
+  }, [currentUserId]);
 
   return (
     <Box>

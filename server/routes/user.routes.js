@@ -3,6 +3,15 @@ import User from "../models/User.js";
 import auth from "../middleware/auth.middleware.js";
 import bcrypt from "bcryptjs";
 import { roleCurator, roleManager, roleObserver } from "../utils/user-roles.js";
+import nodemailer from "nodemailer";
+import { sequelize } from "../utils/postgre-conection.js";
+import { check, validationResult } from "express-validator";
+import UserLicense from "../models/UserLicense.js";
+import { v4 as uuidv4 } from "uuid";
+import dotenv from "dotenv";
+dotenv.config();
+
+const { SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASSWORD, API_URL } = process.env;
 
 const router = express.Router();
 
@@ -138,6 +147,160 @@ router.patch("/:userId/update-teammate", auth, async (req, res) => {
     );
 
     res.status(200).json(updatedUser);
+  } catch (e) {
+    console.error(e);
+    res.status(500).json({
+      message: "На сервере произошла ошибка. Попробуйте позже"
+    });
+  }
+});
+
+// Создание нового члена команды
+router.post("/create-teammate", auth, async (req, res) => {
+  try {
+    const curatorUserId = req.user._id;
+    const curatorData = await User.findByPk(curatorUserId);
+    const curatorFirstName = curatorData.dataValues.firstName;
+    const curatorLastName = curatorData.dataValues.lastName;
+
+    if (!curatorData) {
+      return res.status(404).json({ message: "Куратор не найден" });
+    }
+
+    const { email, role, curatorId, color, city } = req.body;
+
+    const password = "gRoP07u3";
+    const existingUser = await User.findOne({ where: { email } });
+
+    if (existingUser) {
+      return res.status(400).json({
+        error: {
+          message:
+            "Пользователь с таким e-mail уже зарегистрирован! Выберите другой e-mail",
+          code: 400
+        }
+      });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 12);
+
+    const addRoleToUser = (userRoles, roleId) => {
+      if (!userRoles) {
+        return [roleId];
+      }
+
+      if (!userRoles.includes(roleId)) {
+        return [...userRoles, roleId];
+      }
+
+      return userRoles;
+    };
+
+    const setupPassLinkId = uuidv4();
+
+    const newUser = await User.create({
+      email,
+      password: hashedPassword,
+      role: addRoleToUser(existingUser?.role, role),
+      curatorId: curatorId,
+      color,
+      city,
+      setupPassLink: setupPassLinkId
+    });
+
+    await UserLicense.create({
+      userId: newUser._id
+    });
+
+    let roleNewUser = "";
+    const roleManager = "69gfoep3944jgjdso345002";
+    const roleObserver = "69dgp34954igfj345043001";
+
+    if (newUser?.role.includes(roleManager)) {
+      roleNewUser = "managers";
+    } else if (newUser?.role.includes(roleObserver)) {
+      roleNewUser = "observers";
+    }
+
+    // Обновляем лицензию текущего пользователя, добавляя _id нового пользователя в соответствующий массив
+    if (roleNewUser) {
+      // Используем userId нового пользователя для обновления лицензии текущего пользователя
+      await UserLicense.update(
+        {
+          [roleNewUser]: sequelize.literal(
+            `array_append("${roleNewUser}", '${newUser._id}')`
+          )
+        },
+        {
+          where: { userId: curatorId } // Обновляем лицензию текущего пользователя, который создает нового члена команды
+        }
+      );
+    }
+    const setupPassLink = `${API_URL}/password/setup-password/${newUser.email}/${setupPassLinkId}`;
+
+    const registrationNewUser = nodemailer.createTransport({
+      host: SMTP_HOST,
+      port: SMTP_PORT,
+      secure: false,
+      auth: {
+        user: SMTP_USER,
+        pass: SMTP_PASSWORD
+      }
+    });
+
+    const adminNotification = nodemailer.createTransport({
+      host: SMTP_HOST,
+      port: SMTP_PORT,
+      secure: false,
+      auth: {
+        user: SMTP_USER,
+        pass: SMTP_PASSWORD
+      }
+    });
+
+    // HTML содержимое письма для пользователя о регистрации
+    const htmlForNewUser = `
+      <h3>С удовольствием приветствуем Вас в Грядке ЦРМ!</h3>
+      <p>Рады видеть Вас под новым аккаунтом ${newUser.email}</p>
+      <p>Ваш куратор с аккаунтом ${curatorData.email}</p>
+      
+      <h4>Обязательно перейдите по ссылке, установите свой личный пароль и приступайте к работе в Грядке ЦРМ!!</h4>
+      <a href="${setupPassLink}">${setupPassLink}</a><br>
+      
+      <p>Желаем приятного сбора урожая!</p><br>
+      <p>----------------------------------------</p>
+      <p>Грядка ЦРМ</p>
+      <p>${API_URL}</p>
+      <p>Телеграм: https://t.me/ridge_crm</p>
+      <p>Почта: ${SMTP_USER}</p>
+      `;
+
+    // HTML содержимое письма Администратору о добавлении куратором нового члена команды
+    const htmlForAdmin = `
+      <h4>Куратор ${curatorLastName} ${curatorFirstName} с аккаунтом ${curatorData.email} добавил себе в команду нового пользователям ${newUser.email}!</h4>
+
+      <p>----------------------------------------</p>
+      <p>Грядка ЦРМ</p>
+      <p>${API_URL}</p>
+      <p>Телеграм: https://t.me/ridge_crm</p>
+      <p>Почта: ${SMTP_USER}</p>
+      `;
+
+    await registrationNewUser.sendMail({
+      from: SMTP_USER,
+      to: newUser.email,
+      subject: "Вас добавили в Грядку ЦРМ",
+      html: htmlForNewUser
+    });
+
+    await adminNotification.sendMail({
+      from: SMTP_USER,
+      to: SMTP_USER,
+      subject: "Куратор добавил нового пользователя",
+      html: htmlForAdmin
+    });
+
+    res.status(201).send(newUser);
   } catch (e) {
     console.error(e);
     res.status(500).json({

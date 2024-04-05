@@ -242,6 +242,161 @@ router.post("/confirm", [
   }
 ]);
 
+router.post("/setup-password", [
+  check("setupPassEmail", "Email некорректный").isEmail(),
+  check(
+    "setupPassword",
+    "Пароль не может быть пустым и должен содержать минимум 8 символов, одну заглавную букву и одну цифру"
+  )
+    .notEmpty()
+    .withMessage("Пароль не может быть пустым")
+    .isLength({ min: 8 })
+    .withMessage("Пароль должен содержать минимум 8 символов")
+    .matches(/^(?=.*\d)(?=.*[A-Z])/)
+    .withMessage(
+      "Пароль должен содержать как минимум одну заглавную букву и одну цифру"
+    )
+    .trim(),
+  check(
+    "confirmSetupPassword",
+    "Пароль не может быть пустым и должен содержать минимум 8 символов, одну заглавную букву и одну цифру"
+  )
+    .notEmpty()
+    .withMessage("Пароль не может быть пустым")
+    .isLength({ min: 8 })
+    .withMessage("Пароль должен содержать минимум 8 символов")
+    .matches(/^(?=.*\d)(?=.*[A-Z])/)
+    .withMessage(
+      "Пароль должен содержать как минимум одну заглавную букву и одну цифру"
+    )
+    .trim(),
+  async (req, res) => {
+    try {
+      const errors = validationResult(req);
+
+      if (!errors.isEmpty()) {
+        const setupPasswordError = errors.errors.find(
+          (error) => error.path === "setupPassword"
+        );
+        if (setupPasswordError) {
+          const passwordMessage = setupPasswordError.msg;
+          return res.status(400).json({
+            error: {
+              message: passwordMessage,
+              code: 400
+            }
+          });
+        }
+
+        const confirmSetupPasswordError = errors.errors.find(
+          (error) => error.path === "confirmNewPassword"
+        );
+        if (passwordError) {
+          const passwordMessage = confirmSetupPasswordError.msg;
+          return res.status(400).json({
+            error: {
+              message: passwordMessage,
+              code: 400
+            }
+          });
+        }
+
+        const emailError = errors.errors.find(
+          (error) => error.path === "setupPassEmail"
+        );
+        if (emailError) {
+          const emailMessage = emailError.msg;
+          return res.status(400).json({
+            error: {
+              message: emailMessage,
+              code: 400
+            }
+          });
+        }
+
+        return res.status(400).json({
+          error: {
+            message: "INVALID_DATA",
+            code: 400
+          }
+        });
+      }
+
+      const {
+        setupPassword,
+        confirmSetupPassword,
+        setupLinkId,
+        setupPassEmail
+      } = req.body;
+
+      const existingUser = await User.findOne({
+        where: { email: setupPassEmail }
+      });
+
+      const existingUserSetupLinkId = await User.findOne({
+        where: { setupPassLink: setupLinkId }
+      });
+
+      if (!existingUser || !existingUserSetupLinkId) {
+        return res.status(400).json({
+          error: {
+            message: `Такая электронная почта не найдена или неверная ссылка на установку пароля!`,
+            code: 400
+          }
+        });
+      }
+
+      const existingUserEmail = existingUser.dataValues.email;
+
+      const successSetupPassword = nodemailer.createTransport({
+        host: SMTP_HOST,
+        port: SMTP_PORT,
+        secure: false,
+        auth: {
+          user: SMTP_USER,
+          pass: SMTP_PASSWORD
+        }
+      });
+
+      const htmlForUser = `
+      <h3>Приветствуем Вас в Грядке ЦРМ!</h3>
+      <p>Вы установили новый пароль для аккаунта ${existingUserEmail}</p>
+
+      <h4>Ваш аккаунт еще НЕ АКТИВИРОВАН, обратитесь к своему Куратору для активации Вашего аккаунта</h4>
+      <h4>После активации Куратором Вашего аккаунта Вы сможете авторизоваться в Грядке ЦРМ</h4>
+
+      <p>Ваш личный пароль: ${setupPassword}</p>
+
+      <p>----------------------------------------</p>
+      <p>Грядка ЦРМ</p>
+      <p>${API_URL}</p>
+      <p>Телеграм: https://t.me/ridge_crm</p>
+      <p>Почта: ${SMTP_USER}</p>
+      `;
+
+      await successSetupPassword.sendMail({
+        from: SMTP_USER,
+        to: existingUserEmail,
+        subject: "Вами установлен новый пароль в Грядке ЦРМ",
+        html: htmlForUser
+      });
+
+      const hashedPassword = await bcrypt.hash(setupPassword, 12);
+      await existingUser.update({
+        password: hashedPassword
+      });
+
+      res.status(200).json({
+        message: "Новый пароль успешно установлен!"
+      });
+    } catch (e) {
+      res.status(500).json({
+        message: "На сервере произошла ошибка, попробуйте позже"
+      });
+    }
+  }
+]);
+
 router.post("/clearRecoveryPassLink", async (req, res) => {
   try {
     const { email, recoveryId } = req.body;
@@ -265,6 +420,37 @@ router.post("/clearRecoveryPassLink", async (req, res) => {
 
     await existingUser.update({
       recoveryPassLink: null
+    });
+  } catch (e) {
+    res.status(500).json({
+      message: "На сервере произошла ошибка, попробуйте позже"
+    });
+  }
+});
+
+router.post("/clearSetupPassLink", async (req, res) => {
+  try {
+    const { setupPassEmail, setupLinkId } = req.body;
+
+    const existingUser = await User.findOne({
+      where: { email: setupPassEmail }
+    });
+
+    const existingUserSetupLinkId = await User.findOne({
+      where: { setupPassLink: setupLinkId }
+    });
+
+    if (!existingUser || !existingUserSetupLinkId) {
+      return res.status(400).json({
+        error: {
+          message: `Такая электронная почта не найдена или неверная ссылка на установку паролям!`,
+          code: 400
+        }
+      });
+    }
+
+    await existingUser.update({
+      setupPassLink: null
     });
   } catch (e) {
     res.status(500).json({
