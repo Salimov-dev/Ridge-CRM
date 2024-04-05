@@ -218,7 +218,20 @@ router.post("/signInWithPassword", [
         });
       }
 
-      // Compare the hashed password
+      const userRoleManager = "69gfoep3944jgjdso345002";
+      const roleObserver = "69dgp34954igfj345043001";
+      const isUserRoleManager = existingUser.role.includes(userRoleManager);
+      const isUserRoleObserver = existingUser.role.includes(roleObserver);
+
+      if (!existingUser.isActive && (isUserRoleManager || isUserRoleObserver)) {
+        return res.status(400).send({
+          error: {
+            message: "Ваш аккаунт заблокирован, обратитесь к своему Куратору!",
+            code: 400
+          }
+        });
+      }
+
       const isPasswordEqual = await bcrypt.compare(
         password,
         existingUser.password

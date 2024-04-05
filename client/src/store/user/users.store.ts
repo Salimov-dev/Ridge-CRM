@@ -190,7 +190,8 @@ export const updateTeammate = (payload) => async (dispatch) => {
   try {
     const { content } = await userService.updateTeammate(payload);
 
-    socket.emit("teammateUpdated", content);
+    socket.emit("userLicenseUpdated", content?.updatedLicense);
+    socket.emit("teammateUpdated", content?.updatedUser);
   } catch (error) {
     dispatch(teammateUpdateFailed(error.message));
   }

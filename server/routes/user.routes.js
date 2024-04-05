@@ -119,13 +119,15 @@ router.patch("/:userId/update-user", auth, async (req, res) => {
 router.patch("/:userId/update-teammate", auth, async (req, res) => {
   try {
     const userId = req.params.userId;
-    const { color, role, isActive } = req.body;
+    const currentUserId = req.user._id;
+    const { _id: updatedUserId, color, role, isActive } = req.body;
 
     const addRoleToUser = (userRoles, roleId) => {
       if (!userRoles) {
         return [roleId];
       }
       userRoles = [roleId];
+
       return userRoles;
     };
 
@@ -146,7 +148,48 @@ router.patch("/:userId/update-teammate", auth, async (req, res) => {
       { where: { _id: userId } }
     );
 
-    res.status(200).json(updatedUser);
+    // Обновление лицензии текущего пользователя
+    const userLicense = await UserLicense.findOne({
+      where: { userId: currentUserId }
+    });
+
+    if (!userLicense) {
+      return res.status(404).json({
+        message: "Лицензия пользователя не найдена."
+      });
+    }
+
+    // Удаление updatedUserId из текущего массива (managers или observers)
+    let updatedManagers = [...userLicense.managers];
+    let updatedObservers = [...userLicense.observers];
+
+    if (updatedManagers.includes(updatedUserId)) {
+      updatedManagers = updatedManagers.filter((id) => id !== updatedUserId);
+    } else if (updatedObservers.includes(updatedUserId)) {
+      updatedObservers = updatedObservers.filter((id) => id !== updatedUserId);
+    }
+
+    // Добавление updatedUserId в массив с новой ролью
+    if (role === roleManager) {
+      updatedManagers.push(updatedUserId);
+    } else if (role === roleObserver) {
+      updatedObservers.push(updatedUserId);
+    }
+
+    // Обновление лицензии пользователя
+    await UserLicense.update(
+      {
+        managers: updatedManagers,
+        observers: updatedObservers
+      },
+      { where: { userId: currentUserId } }
+    );
+
+    const updatedLicense = await UserLicense.findOne({
+      where: { userId: currentUserId }
+    });
+
+    res.status(200).json({ updatedUser, updatedLicense });
   } catch (e) {
     console.error(e);
     res.status(500).json({

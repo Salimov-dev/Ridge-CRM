@@ -98,8 +98,6 @@ export const updateUserLicense = (payload) => async (dispatch) => {
   dispatch(userLicenseUpdateRequested());
   try {
     const { content } = await userLicenseService.update(payload);
-
-    socket.emit("userLicenseUpdated", content);
   } catch (error) {
     const errorMessage = error.response.data.error.message;
     dispatch(userLicenseUpdateFailed(errorMessage));

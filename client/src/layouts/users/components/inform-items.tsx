@@ -8,7 +8,7 @@ import InformItem from "./inform-item";
 // utils
 import { FormatDate } from "@utils/date/format-date";
 // store
-import { getCurrentUserId } from "@store/user/users.store";
+import { getCurrentUserId, getUsersList } from "@store/user/users.store";
 import { getUserLicensesByUserId } from "@store/user/user-license.store";
 import { makeDigitSeparator } from "@utils/data/make-digit-separator";
 // data
@@ -34,9 +34,22 @@ const InformItems = () => {
     )?.name;
     return result;
   };
+  const usersList = useSelector(getUsersList());
 
-  const managersLength = userLicense?.managers.length || 0;
-  const observersLength = userLicense?.observers.length || 0;
+  const usersManagersArray = userLicense?.managers;
+  const activeUsersManagers = usersManagersArray?.filter((userId) => {
+    const user = usersList.find((user) => user._id === userId);
+    return user && user.isActive;
+  });
+
+  const usersObserversArray = userLicense?.observers;
+  const activeUsersObservers = usersObserversArray?.filter((userId) => {
+    const user = usersList.find((user) => user._id === userId);
+    return user && user.isActive;
+  });
+
+  const managersLength = activeUsersManagers?.length || 0;
+  const observersLength = activeUsersObservers?.length || 0;
   const totalUsersLength = managersLength + observersLength + 1; // 1 добавляю в качестве лицензии текущего пользователя Куратора
 
   const licenseCost = config.licenseCost;
