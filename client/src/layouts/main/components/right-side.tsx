@@ -1,11 +1,11 @@
 import styled from "@emotion/styled";
-import backgroundImage from "@assets/main-background.png";
 import { Box, Hidden } from "@mui/material";
-import { useEffect, useState } from "react";
+import backgroundImage from "@assets/main-background.png";
 import Contacts from "./contacts";
 
 const Component = styled(Box)`
   margin: 20px 0 0 0;
+  width: 100%;
   display: flex;
   background-size: auto 100%;
   background-repeat: no-repeat;
@@ -13,34 +13,16 @@ const Component = styled(Box)`
 `;
 
 const RightSide = () => {
-  const [imageHeight, setImageHeight] = useState(0);
-
-  useEffect(() => {
-    const img = new Image();
-    img.src = backgroundImage;
-    img.onload = () => {
-      setImageHeight(img.height);
-    };
-  }, []);
-
   return (
-    <Component
-      sx={{
-        backgroundImage: `url(${backgroundImage})`,
-        width: { xs: "100%", md: "100%", lg: " 50%" },
-        height: {
-          xs: "140px",
-          sm: "300px",
-          md: "650px", // Условное выражение для настройки высоты
-          lg: "calc(100% - 20px)"
-        },
-        backgroundSize: { xs: "100%", md: "100%", lg: "auto 100%" }
-      }}
-    >
-      <Hidden lgDown>
+    <Hidden lgDown>
+      <Component
+        sx={{
+          backgroundImage: `url(${backgroundImage})`
+        }}
+      >
         <Contacts />
-      </Hidden>
-    </Component>
+      </Component>
+    </Hidden>
   );
 };
 

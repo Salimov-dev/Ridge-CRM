@@ -1,6 +1,7 @@
 import "dayjs/locale/ru";
 import React, { useState } from "react";
 import { Box, Hidden, styled } from "@mui/material";
+import backgroundImage from "@assets/main-background.png";
 // components
 import PageDialogs from "@components/common/dialog/page-dialogs";
 import { ContainerStyled } from "@components/common/container/container-styled";
@@ -33,9 +34,10 @@ const Main = React.memo(() => {
       <Hidden lgUp>
         <Contacts
           justifyContent="center"
-          padding="20px 20px 50px 20px"
+          padding="10px 20px 30px 20px"
           size="60px"
         />
+        <img src={backgroundImage} />
       </Hidden>
       <PageDialogs state={state} setState={setState} />
     </ContainerStyled>

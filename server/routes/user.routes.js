@@ -114,14 +114,12 @@ router.patch("/:userId/update-teammate", auth, async (req, res) => {
 
     const addRoleToUser = (userRoles, roleId) => {
       if (!userRoles) {
-        // Если массив ролей не определен, создаем новый массив с ролью
         return [roleId];
       }
       userRoles = [roleId];
       return userRoles;
     };
 
-    // Находим пользователя в базе данных
     const existingUser = await User.findByPk(userId);
 
     if (!existingUser) {
@@ -130,7 +128,6 @@ router.patch("/:userId/update-teammate", auth, async (req, res) => {
       });
     }
 
-    // Обновляем пользователя в базе данных
     const updatedUser = await existingUser.update(
       {
         color: color,
@@ -152,7 +149,7 @@ router.patch("/:userId/update-teammate", auth, async (req, res) => {
 // Роут для обновления текущего пароля пользователя
 router.patch("/:userId/update-password", auth, async (req, res) => {
   try {
-    const userId = req.user._id; // Получаем идентификатор пользователя из токена аутентификации
+    const userId = req.user._id;
     const { currentPassword, newPassword } = req.body;
 
     // Находим пользователя в базе данных
@@ -162,7 +159,6 @@ router.patch("/:userId/update-password", auth, async (req, res) => {
       return res.status(404).json({ message: "Пользователь не найден" });
     }
 
-    // Проверяем, соответствует ли текущий пароль, переданный в запросе, паролю в базе данных
     const isPasswordValid = await bcrypt.compare(
       currentPassword,
       user.password
@@ -172,10 +168,8 @@ router.patch("/:userId/update-password", auth, async (req, res) => {
       return res.status(401).json({ message: "Текущий пароль введен неверно" });
     }
 
-    // Хешируем новый пароль
     const hashedNewPassword = await bcrypt.hash(newPassword, 10);
 
-    // Обновляем пароль пользователя в базе данных
     await User.update(
       { password: hashedNewPassword },
       { where: { _id: userId } }

@@ -149,7 +149,7 @@ router.post("/signUp", [
 
       <p>----------------------------------------</p>
       <p>Грядка ЦРМ</p>
-      <p>https://ridge-crm.ru/</p>
+      <p>${API_URL}</p>
       <p>Телеграм: https://t.me/ridge_crm</p>
       <p>Почта: ${SMTP_USER}</p>
       `;
@@ -160,7 +160,7 @@ router.post("/signUp", [
 
       <p>----------------------------------------</p>
       <p>Грядка ЦРМ</p>
-      <p>https://ridge-crm.ru/</p>
+      <p>${API_URL}</p>
       <p>Телеграм: https://t.me/ridge_crm</p>
       <p>Почта: ${SMTP_USER}</p>
       `;
@@ -197,20 +197,15 @@ router.post("/create", [
   check("email", "Email некорректный").isEmail(),
   check("password", "Пароль не может быть пустым").exists().trim(),
   async (req, res) => {
-    // Функция для добавления роли в массив
     const addRoleToUser = (userRoles, roleId) => {
       if (!userRoles) {
-        // Если массив ролей не определен, создаем новый массив с ролью
         return [roleId];
       }
 
-      // Проверяем, есть ли роль уже в массиве
       if (!userRoles.includes(roleId)) {
-        // Если роли еще нет в массиве, добавляем ее
         return [...userRoles, roleId];
       }
 
-      // Если роль уже есть в массиве, возвращаем текущий массив
       return userRoles;
     };
 
@@ -228,7 +223,6 @@ router.post("/create", [
 
       const { email, password, role, curatorId, color, city } = req.body;
 
-      // Check if the user with the provided email already exists
       const existingUser = await User.findOne({ where: { email } });
 
       if (existingUser) {
@@ -240,10 +234,8 @@ router.post("/create", [
         });
       }
 
-      // Hash the password
       const hashedPassword = await bcrypt.hash(password, 12);
 
-      // Create a new user with Sequelize
       const newUser = await User.create({
         email,
         password: hashedPassword,
@@ -253,18 +245,17 @@ router.post("/create", [
         city
       });
 
-      // Create a user license for the new user
       await UserLicense.create({
         userId: newUser._id
       });
 
-      // Определяем массив, в который нужно добавить _id нового пользователя
       let roleNewUser = "";
+
       if (newUser?.role.includes("69gfoep3944jgjdso345002")) {
-        // Если роль нового пользователя Менеджер
+        // Менеджер
         roleNewUser = "managers";
       } else if (newUser?.role.includes("69dgp34954igfj345043001")) {
-        // Если роль нового пользователя Наблюдатель
+        // Наблюдатель
         roleNewUser = "observers";
       }
 
@@ -283,7 +274,6 @@ router.post("/create", [
         );
       }
 
-      // Send the response with tokens and user ID
       res.status(201).send(newUser);
     } catch (e) {
       console.error(e);
@@ -363,7 +353,7 @@ router.post("/signInWithPassword", [
       <p>Если это были не Вы, рекомендуем сменить пароль или обратиться в техподдержку Грядки</p><br>
       <p>----------------------------------------</p>
       <p>Грядка ЦРМ</p>
-      <p>https://ridge-crm.ru/</p>
+      <p>${API_URL}</p>
       <p>Телеграм: https://t.me/ridge_crm</p>
       <p>Почта: ${SMTP_USER}</p>
       `;
@@ -385,44 +375,6 @@ router.post("/signInWithPassword", [
     }
   }
 ]);
-
-// // активация почты
-// router.get("/activate/:link", async (req, res) => {
-//   try {
-//     const activationLink = req.params.link;
-//     const existingUser = await User.findOne({ where: { activationLink } });
-//     console.log("activationLink", activationLink);
-//     console.log("existingUser", existingUser);
-
-//     if (!existingUser) {
-//       return res.status(400).json({
-//         error: {
-//           message:
-//             "Ссылка на активацию не найдена, запросите в своем Профиле новую ссылку",
-//           code: 400
-//         }
-//       });
-//     }
-
-//     const updatedUser = await existingUser.update(
-//       {
-//         isEmailActived: true
-//       },
-//       { where: { _id: updatedUser._id } }
-//     );
-
-//     if (!updatedUser[0]) {
-//       return res.status(404).json({ message: "Пользователь не найден" });
-//     }
-//     console.log("updatedUser", updatedUser);
-
-//     // res.send(updatedUser[1][0]);
-//   } catch (error) {
-//     res.status(500).json({
-//       message: "На сервере произошла ошибка. Попробуйте позже"
-//     });
-//   }
-// });
 
 function isTokenInvalid(data, dbToken) {
   return !data || !dbToken || data._id !== dbToken?.user?.toString();

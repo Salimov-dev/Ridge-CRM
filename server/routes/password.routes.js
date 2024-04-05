@@ -30,7 +30,7 @@ router.post("/forgot/:email?", async (req, res) => {
 
     const recoveryEmailLinkId = uuidv4();
     // const recoveryEmailLink = `http://localhost:5173/password/recovery/${recoveryEmailLinkId}`;
-    const recoveryLink = `${API_URL}/password/recovery/${recoveryEmailLinkId}`;
+    const recoveryEmailLink = `${API_URL}/password/recovery/${recoveryEmailLinkId}`;
 
     const sendRecoveryPassMail = nodemailer.createTransport({
       host: SMTP_HOST,
@@ -51,7 +51,7 @@ router.post("/forgot/:email?", async (req, res) => {
 
     <p>----------------------------------------</p>
     <p>Грядка ЦРМ</p>
-    <p>https://ridge-crm.ru/</p>
+    <p>${API_URL}</p>
     <p>Телеграм: https://t.me/ridge_crm</p>
     <p>Почта: ${SMTP_USER}</p>
     `;
@@ -214,7 +214,7 @@ router.post("/confirm", [
 
       <p>----------------------------------------</p>
       <p>Грядка ЦРМ</p>
-      <p>https://ridge-crm.ru/</p>
+      <p>${API_URL}</p>
       <p>Телеграм: https://t.me/ridge_crm</p>
       <p>Почта: ${SMTP_USER}</p>
       `;

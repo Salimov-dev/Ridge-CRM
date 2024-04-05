@@ -81,7 +81,7 @@ router.post("/sendConfirmMail/:link?", auth, async (req, res) => {
 
     <p>----------------------------------------</p>
     <p>Грядка ЦРМ</p>
-    <p>https://ridge-crm.ru/</p>
+    <p>${API_URL}</p>
     <p>Телеграм: https://t.me/ridge_crm</p>
     <p>Почта: ${SMTP_USER}</p>
     `;
