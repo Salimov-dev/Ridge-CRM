@@ -23,13 +23,37 @@ const Object = sequelize.define(
       onUpdate: "CASCADE"
     },
     status: {
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
+      defaultValue: null,
+      validate: {
+        notEmpty: {
+          args: true,
+          msg: "Статус не может быть пустым значением"
+        }
+      }
     },
-
     city: { type: DataTypes.STRING },
-    district: { type: DataTypes.STRING },
+    district: {
+      type: DataTypes.STRING,
+      defaultValue: null,
+      validate: {
+        notEmpty: {
+          args: true,
+          msg: "Район не может быть пустым значением"
+        }
+      }
+    },
     metro: { type: DataTypes.STRING, defaultValue: null, allowNull: true },
-    address: { type: DataTypes.STRING },
+    address: {
+      type: DataTypes.STRING,
+      defaultValue: null,
+      validate: {
+        notEmpty: {
+          args: true,
+          msg: "Район не может быть пустым значением"
+        }
+      }
+    },
     identifier: { type: DataTypes.STRING, defaultValue: null, allowNull: true },
     latitude: { type: DataTypes.DOUBLE },
     longitude: { type: DataTypes.DOUBLE },

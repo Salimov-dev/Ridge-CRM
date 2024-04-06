@@ -55,6 +55,8 @@ const UpdateUser = React.memo(({ userId, onClose }) => {
         toast.success("Пользователь успешно изменен!");
       })
       .catch((error) => {
+        console.log("error", error);
+
         toast.error(error);
       })
       .finally(() => {
@@ -113,6 +115,7 @@ const UpdateUser = React.memo(({ userId, onClose }) => {
         onCancel={onClose}
         onRemove={handleClickOpen}
         isUpdate={true}
+        disabledRemoveButton={true}
       />
       <LoaderFullWindow
         color={colors.grey[600]}

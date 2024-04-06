@@ -147,7 +147,10 @@ export const loadUsersList = () => async (dispatch) => {
 
     dispatch(usersReceived(content));
   } catch (error) {
-    dispatch(usersFailed(error.message));
+    const errorMessage = error.response.data.error.message;
+
+    dispatch(usersFailed(errorMessage));
+    throw errorMessage;
   }
 };
 
@@ -172,7 +175,10 @@ export const updateUser = (payload) => async (dispatch) => {
     const { content } = await userService.update(payload);
     socket.emit("userUpdated", content);
   } catch (error) {
-    dispatch(userUpdateFailed(error.message));
+    const errorMessage = error.response.data.error.message;
+
+    dispatch(userUpdateFailed(errorMessage));
+    throw errorMessage;
   }
 };
 
@@ -181,7 +187,10 @@ export const updateUserUpdate = (payload) => async (dispatch) => {
   try {
     dispatch(userUpdateSuccessed(payload));
   } catch (error) {
-    dispatch(userUpdateFailed(error.message));
+    const errorMessage = error.response.data.error.message;
+
+    dispatch(userUpdateFailed(errorMessage));
+    throw errorMessage;
   }
 };
 
@@ -193,7 +202,10 @@ export const updateTeammate = (payload) => async (dispatch) => {
     socket.emit("userLicenseUpdated", content?.updatedLicense);
     socket.emit("teammateUpdated", content?.updatedUser);
   } catch (error) {
-    dispatch(teammateUpdateFailed(error.message));
+    const errorMessage = error.response.data.error.message;
+
+    dispatch(teammateUpdateFailed(errorMessage));
+    throw errorMessage;
   }
 };
 
@@ -202,7 +214,10 @@ export const updateTeammateUpdate = (payload) => async (dispatch) => {
   try {
     dispatch(teammateUpdateSuccessed(payload));
   } catch (error) {
-    dispatch(teammateUpdateFailed(error.message));
+    const errorMessage = error.response.data.error.message;
+
+    dispatch(teammateUpdateFailed(errorMessage));
+    throw errorMessage;
   }
 };
 
@@ -212,7 +227,10 @@ export const updatePassword = (payload) => async (dispatch) => {
     const { currentPassword, newPassword } = payload;
     await userService.updatePassword({ currentPassword, newPassword });
   } catch (error) {
-    dispatch(authRequestFailed(error.message));
+    const errorMessage = error.response.data.error.message;
+
+    dispatch(authRequestFailed(errorMessage));
+    throw errorMessage;
   }
 };
 

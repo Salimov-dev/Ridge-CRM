@@ -9,6 +9,7 @@ import { check, validationResult } from "express-validator";
 import UserLicense from "../models/UserLicense.js";
 import { v4 as uuidv4 } from "uuid";
 import dotenv from "dotenv";
+import { Sequelize } from "sequelize";
 dotenv.config();
 
 const { SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASSWORD, API_URL } = process.env;
@@ -109,10 +110,14 @@ router.patch("/:userId/update-user", auth, async (req, res) => {
 
     res.send(updatedUser[1][0]);
   } catch (e) {
-    console.error(e);
-    res.status(500).json({
-      message: "На сервере произошла ошибка. Попробуйте позже"
-    });
+    if (e instanceof Sequelize.ValidationError) {
+      const errorMessage = e.errors.map((error) => error.message).join(", ");
+      res.status(400).json({ error: { message: errorMessage } });
+    } else {
+      res.status(500).json({
+        message: "На сервере произошла ошибка. Попробуйте позже"
+      });
+    }
   }
 });
 
@@ -192,9 +197,14 @@ router.patch("/:userId/update-teammate", auth, async (req, res) => {
     res.status(200).json({ updatedUser, updatedLicense });
   } catch (e) {
     console.error(e);
-    res.status(500).json({
-      message: "На сервере произошла ошибка. Попробуйте позже"
-    });
+    if (e instanceof Sequelize.ValidationError) {
+      const errorMessage = e.errors.map((error) => error.message).join(", ");
+      res.status(400).json({ error: { message: errorMessage } });
+    } else {
+      res.status(500).json({
+        message: "На сервере произошла ошибка. Попробуйте позже"
+      });
+    }
   }
 });
 

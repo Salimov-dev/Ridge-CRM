@@ -26,6 +26,7 @@ const AuthForm = ({
   const [showPassword, setShowPassword] = useState(false);
   const citiesList = useSelector(getCititesList());
   const sortedCities = orderBy(citiesList, "name", ["asc"]);
+  const watchCity = watch("city");
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const handleMouseDownPassword = (
@@ -76,9 +77,9 @@ const AuthForm = ({
             register={register}
             name="city"
             options={sortedCities}
-            value={watch.city ?? ""}
+            value={watchCity}
             setValue={setValue}
-            watchItemId={watch.city}
+            watchItemId={watchCity}
             errors={errors?.city}
           />
         )}

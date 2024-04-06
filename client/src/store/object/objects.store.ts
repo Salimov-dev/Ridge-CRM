@@ -147,7 +147,10 @@ export const updateObject = (payload) => async (dispatch) => {
     dispatch(updateCompanies(content.updatedCompanies));
     socket.emit("objectUpdated", payload.newData);
   } catch (error) {
-    dispatch(objectUpdateFailed(error.message));
+    const errorMessage = error.response.data.error.message;
+
+    dispatch(objectUpdateFailed(errorMessage));
+    throw errorMessage;
   }
 };
 

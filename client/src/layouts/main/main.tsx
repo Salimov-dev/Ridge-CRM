@@ -8,7 +8,6 @@ import { ContainerStyled } from "@components/common/container/container-styled";
 import Logo from "./components/logo";
 import RightSide from "./components/right-side";
 import LeftSide from "./components/left-side";
-import Contacts from "./components/contacts";
 
 const ContentContainer = styled(Box)`
   height: 100%;
@@ -32,12 +31,7 @@ const Main = React.memo(() => {
         <RightSide />
       </ContentContainer>
       <Hidden lgUp>
-        <Contacts
-          justifyContent="center"
-          padding="10px 20px 30px 20px"
-          size="60px"
-        />
-        <img src={backgroundImage} />
+        <img src={backgroundImage} style={{ width: "100%", height: "auto" }} />
       </Hidden>
       <PageDialogs state={state} setState={setState} />
     </ContainerStyled>

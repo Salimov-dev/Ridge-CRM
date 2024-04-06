@@ -72,7 +72,7 @@ const UserForm = ({
             inputProps={{ maxLength: 100 }}
           />
         )}
-        <SelectFieldStyled
+        <SimpleSelectField
           label="Роль"
           register={register}
           name="role"

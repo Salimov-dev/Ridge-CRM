@@ -51,7 +51,7 @@ const Footer = ({
 
   useEffect(() => {
     if (!watchStatus) {
-      toast.error("Выберите статус");
+      toast.error("Статус не может быть пустым значением");
       return;
     }
     if (watchStatus !== objectStatus) {

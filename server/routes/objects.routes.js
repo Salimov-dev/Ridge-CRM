@@ -1,5 +1,5 @@
 import express from "express";
-import { Op } from "sequelize";
+import { Op, Sequelize } from "sequelize";
 import Object from "../models/Object.js";
 import User from "../models/User.js";
 import auth from "../middleware/auth.middleware.js";
@@ -330,9 +330,14 @@ router.patch("/:objectId?/edit", auth, async (req, res) => {
     });
   } catch (e) {
     console.error(e);
-    res.status(500).json({
-      message: "На сервере произошла ошибка, попробуйте позже"
-    });
+    if (e instanceof Sequelize.ValidationError) {
+      const errorMessage = e.errors.map((error) => error.message).join(", ");
+      res.status(400).json({ error: { message: errorMessage } });
+    } else {
+      res.status(500).json({
+        message: "На сервере произошла ошибка. Попробуйте позже"
+      });
+    }
   }
 });
 
