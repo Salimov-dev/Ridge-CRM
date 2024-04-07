@@ -115,10 +115,7 @@ router.post("/confirm", auth, async (req, res) => {
     const currentDate = dayjs();
     const currentLicenseStartDate = dayjs(userLicense.dateStart);
     const currentLicenseEndDate = dayjs(userLicense.dateEnd);
-    console.log(
-      "currentLicenseEndDate",
-      currentLicenseEndDate.format("DD.MM.YYYY")
-    );
+
     let newLicenseStartDate = currentLicenseStartDate;
     let newLicenseEndDate = currentLicenseEndDate;
 
@@ -137,11 +134,9 @@ router.post("/confirm", auth, async (req, res) => {
     const licenseDaysLeftQuantity = Math.floor(
       currentLicenseBalance / (subscriptionCostPerUser * totalUsersCount)
     );
-    console.log("licenseDaysLeftQuantity", licenseDaysLeftQuantity);
     const newLicenseDaysLeftQuantity = Math.floor(
       paymentSum / (subscriptionCostPerUser * totalUsersCount)
     );
-    console.log("newLicenseDaysLeftQuantity", newLicenseDaysLeftQuantity);
 
     if (isLicenseTrialType && currentLicenseBalance > 0) {
       newCurrentLicenseTypeId = activeLicenseTypeId;
@@ -150,16 +145,10 @@ router.post("/confirm", auth, async (req, res) => {
     }
 
     if (isLicenseActiveType) {
-      console.log("isLicenseActiveType", isLicenseActiveType);
-      console.log(
-        "currentLicenseEndDate",
-        currentLicenseEndDate.format("DD.MM.YYYY")
-      );
       newLicenseEndDate = currentLicenseEndDate.add(
         newLicenseDaysLeftQuantity,
         "day"
       );
-      console.log("newLicenseEndDate", newLicenseEndDate.format("DD.MM.YYYY"));
     }
 
     if (isLicenseBlockedType) {
@@ -170,10 +159,6 @@ router.post("/confirm", auth, async (req, res) => {
       );
     }
 
-    console.log(
-      "newLicenseEndDate перед update",
-      newLicenseEndDate.format("DD.MM.YYYY")
-    );
     await UserLicense.update(
       {
         balance: Sequelize.literal("balance + " + paymentSum),
@@ -191,7 +176,6 @@ router.post("/confirm", auth, async (req, res) => {
     const updatedLicense = await UserLicense.findOne({
       where: { userId }
     });
-    console.log("updatedLicense", updatedLicense);
 
     res.status(200).json(updatedLicense);
   } catch (e) {

@@ -410,7 +410,6 @@ router.post("/create-teammate", auth, lic, async (req, res) => {
       subject: "Куратор добавил нового пользователя",
       html: htmlForAdmin
     });
-    console.log("newUser", newUser);
     res.status(201).send(newUser);
   } catch (e) {
     console.error(e);

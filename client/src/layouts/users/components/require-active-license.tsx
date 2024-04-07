@@ -20,7 +20,7 @@ const RequireActiveLicense = ({ children }) => {
     return <Navigate to="/users" />;
   }
 
-  return null;
+  return children;
 };
 
 export default RequireActiveLicense;

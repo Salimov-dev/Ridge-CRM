@@ -95,8 +95,8 @@ export default function AppRoutes() {
           path={route.path}
           element={
             <RequireAuth>
-              {route.element}
-              {/* <RequireActiveLicense>{route.element}</RequireActiveLicense> */}
+              {/* {route.element} */}
+              <RequireActiveLicense>{route.element}</RequireActiveLicense>
             </RequireAuth>
           }
         />

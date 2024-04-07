@@ -91,6 +91,9 @@ router.patch("/:userLicenseId?/edit", auth, async (req, res) => {
     const trialLicenseTypeId = "71pbfi4954itj045tloop001";
     const activeLicenseTypeId = "718gkgdbn48jgfo3kktjt002";
     const blockedLicenseTypeId = "71kbjld394u5jgfdsjk4l003";
+    const isLicenseTrialType = currentLicenseTypeId === trialLicenseTypeId;
+    const isLicenseActiveType = currentLicenseTypeId === activeLicenseTypeId;
+    const isLicenseBlockedType = currentLicenseTypeId === blockedLicenseTypeId;
     let newCurrentLicenseTypeId = currentLicenseTypeId;
 
     // дата
@@ -107,21 +110,27 @@ router.patch("/:userLicenseId?/edit", auth, async (req, res) => {
       existingUserLicense.balance / (subscriptionCostPerUser * totalUsersCount)
     );
 
-    if (
-      currentLicenseTypeId === trialLicenseTypeId &&
-      currentLicenseBalance > 0
-    ) {
+    // const paymentSum = Math.floor(parseFloat(outSum));
+    // const newLicenseDaysLeftQuantity = Math.floor(
+    //   paymentSum / (subscriptionCostPerUser * totalUsersCount)
+    // );
+
+    if (isLicenseTrialType && currentLicenseBalance > 0) {
       newCurrentLicenseTypeId = activeLicenseTypeId;
       newLicenseStartDate = currentDate;
       newLicenseEndDate = currentDate.add(licenseDaysLeftQuantity, "day");
     }
 
-    if (
-      (currentLicenseTypeId === activeLicenseTypeId ||
-        currentLicenseTypeId === blockedLicenseTypeId) &&
-      currentLicenseBalance > 0
-    ) {
-      newLicenseEndDate = currentLicenseEndDate.add(
+    if (isLicenseActiveType) {
+      newLicenseEndDate = currentLicenseStartDate.add(
+        licenseDaysLeftQuantity,
+        "day"
+      );
+    }
+
+    if (isLicenseBlockedType) {
+      newLicenseStartDate = currentDate;
+      newLicenseEndDate = newLicenseStartDate.add(
         licenseDaysLeftQuantity,
         "day"
       );
@@ -130,9 +139,9 @@ router.patch("/:userLicenseId?/edit", auth, async (req, res) => {
     await UserLicense.update(
       {
         activeUsersQuantity: totalUsersCount,
-        accountType: newCurrentLicenseTypeId
-        // dateStart: newLicenseStartDate,
-        // dateEnd: newLicenseEndDate
+        accountType: newCurrentLicenseTypeId,
+        dateStart: newLicenseStartDate,
+        dateEnd: newLicenseEndDate
       },
       { where: { userId } }
     );
