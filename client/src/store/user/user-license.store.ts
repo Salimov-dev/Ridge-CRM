@@ -107,6 +107,19 @@ export const updateUserLicense = (payload) => async (dispatch) => {
   }
 };
 
+export const updateClicksOnMapInUserLicense = (payload) => async (dispatch) => {
+  dispatch(userLicenseUpdateRequested());
+  try {
+    const { content } = await userLicenseService.updateClicksOnMap(payload);
+
+    socket.emit("userLicenseUpdated", content);
+  } catch (error) {
+    const errorMessage = error.response.data.error.message;
+    dispatch(userLicenseUpdateFailed(errorMessage));
+    throw errorMessage;
+  }
+};
+
 export const updateUserLicenseUpdate = (payload) => async (dispatch) => {
   dispatch(userLicenseUpdateRequested());
   try {

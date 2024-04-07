@@ -26,6 +26,8 @@ import {
 import { paymentAmounySchema } from "@schemas/payment-amount.schema";
 import { FormatDate } from "@utils/date/format-date";
 import { removeSpacesAndConvertToNumber } from "@utils/data/remove-spaces-and-convert-to-number";
+import paymentService from "@services/payment/payment.service";
+import { useNavigate } from "react-router-dom";
 
 const initialState = {
   amount: 0
@@ -34,6 +36,7 @@ const initialState = {
 const MakePaymentPage = React.memo(({ onClose }) => {
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const {
     register,
@@ -42,8 +45,8 @@ const MakePaymentPage = React.memo(({ onClose }) => {
     formState: { errors }
   } = useForm({
     defaultValues: initialState,
-    mode: "onBlur",
-    resolver: yupResolver(paymentAmounySchema)
+    mode: "onBlur"
+    // resolver: yupResolver(paymentAmounySchema)
   });
 
   const data = watch();
@@ -66,24 +69,49 @@ const MakePaymentPage = React.memo(({ onClose }) => {
   const newLicenseDate = licenseDateEnd.add(newDaysQuantity, "day");
 
   const onSubmit = () => {
-    setIsLoading(true);
+    // setIsLoading(true);
+    console.log("data", data);
 
-    const newData = {
-      ...userLicense,
-      balance: Number(paymentAmount),
-      dateEnd: newLicenseDate
-    };
+    paymentService
+      .create({ amount: data.amount })
+      .then((res) => {
+        const { content } = res;
 
-    dispatch<any>(updateUserLicense(newData))
-      .then(() => {
-        onClose();
+        const redirectPath = content?.paymentLink;
+
+        if (redirectPath) {
+          window.location.href = redirectPath;
+        } else {
+          throw new Error("Ссылка для оплаты не получена");
+        }
+        toast.success(content?.message);
       })
       .catch((error) => {
-        toast.error(error);
+        const errorMessage =
+          error.response?.data?.message || "Ошибка при попытке оплаты";
+        toast.error(errorMessage);
+        throw errorMessage;
       })
       .finally(() => {
         setIsLoading(false);
       });
+
+    // const newData = {
+    //   ...userLicense,
+    //   balance: Number(paymentAmount),
+    //   dateEnd: newLicenseDate
+    // };
+
+    // dispatch<any>(updateUserLicense(newData))
+    //   .then(() => {
+    //     onClose();
+    //   })
+    //   .catch((error) => {
+    //     toast.error(error);
+    //   })
+    //   .finally(() => {
+    //     setIsLoading(false);
+    //   });
   };
 
   return (
@@ -106,6 +134,7 @@ const MakePaymentPage = React.memo(({ onClose }) => {
         successTitle="Оплатить"
         onSuccess={handleSubmit(onSubmit)}
         onCancel={onClose}
+        disabledRemoveButton={true}
       />
       <LoaderFullWindow isLoading={isLoading} />
     </Box>

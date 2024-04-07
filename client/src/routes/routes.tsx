@@ -29,6 +29,7 @@ import Callback from "@layouts/callback/callback";
 import EmailActivated from "@components/pages/email-activated/email-activated";
 import RecoveryPassword from "@components/pages/password/recovery-password";
 import SetupPassword from "@components/pages/password/setup-password";
+import ResultPaymentPage from "@components/pages/payment/result-payment";
 
 export default function AppRoutes() {
   const currentUserId = useSelector(getCurrentUserId());
@@ -62,7 +63,8 @@ export default function AppRoutes() {
     { id: 11, path: "contacts/*", element: <Contacts /> },
     { id: 12, path: "companies/*", element: <Companies /> },
     { id: 13, path: "callback/*", element: <Callback /> },
-    { id: 14, path: "activate/:link", element: <EmailActivated /> }
+    { id: 14, path: "activate/:link", element: <EmailActivated /> },
+    { id: 14, path: "payment", element: <ResultPaymentPage /> }
   ];
 
   return (

@@ -7,7 +7,7 @@ import { citiesArray } from "@data/cities";
 import { getCurrentUserData, getCurrentUserId } from "@store/user/users.store";
 import {
   getUserLicensesByUserId,
-  updateUserLicense
+  updateClicksOnMapInUserLicense
 } from "@store/user/user-license.store";
 
 const useFindObject = () => {
@@ -160,7 +160,7 @@ const useFindObject = () => {
         quantityClicksOnMap: userLicense?.quantityClicksOnMap - 1
       };
 
-      dispatch<any>(updateUserLicense(updatedUserLicense))
+      dispatch<any>(updateClicksOnMapInUserLicense(updatedUserLicense))
         .then(() => {})
         .catch((error) => {
           setErrors(error);

@@ -4,6 +4,7 @@ import authRoutes from "./auth.routes.js";
 import emailActivateRoutes from "./email-activate.routes.js";
 import passwordRoutes from "./password.routes.js";
 import userRoutes from "./user.routes.js";
+import paymentRoutes from "./payment.routes.js";
 import objectsRoutes from "./objects.routes.js";
 import meetings from "./meetings.routes.js";
 import tasksRoutes from "./tasks.routes.js";
@@ -18,6 +19,7 @@ const router = express.Router({ mergeParams: true });
 
 router.use("/auth", authRoutes);
 router.use("/activate", emailActivateRoutes);
+router.use("/payment", paymentRoutes);
 router.use("/password", passwordRoutes);
 router.use("/user", userRoutes);
 router.use("/objects", objectsRoutes);

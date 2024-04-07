@@ -34,6 +34,8 @@ const Sockets = (server) => {
 
     socket.on("disconnect", () => {});
   });
+
+  return io;
 };
 
 export default Sockets;

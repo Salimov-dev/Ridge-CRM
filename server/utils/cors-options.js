@@ -5,7 +5,11 @@ export const corsOptions = {
     "http://31.129.108.151",
     "https://ridge-crm.ru",
     "http://ridge-crm.ru",
-    "http://ridge-crm.ru:8080"
+    "http://ridge-crm.ru:8080",
+    "https://185.59.216.0/24",
+    "https://185.59.216.1",
+    "https://185.59.216.254",
+    "https://185.59.216.0/24 (185.59.216.1 - 185.59.216.254)"
   ],
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS",
   allowedHeaders: [

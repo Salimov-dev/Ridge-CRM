@@ -12,6 +12,7 @@ import handleUserLicenseSocket from "./actions/handle-user-license-socket";
 import handleCompanySocket from "./actions/handle-company-socket";
 import handleContactSocket from "./actions/handle-contact-socket";
 import handleTeammateSocket from "./actions/handle-teammate-socket";
+import handlePaymentSocket from "./actions/handle-payment-socket";
 
 const Sockets = () => {
   const socket = io(configFile.ioEndPoint);
@@ -27,6 +28,7 @@ const Sockets = () => {
   handleCompanySocket(socket);
   handleContactSocket(socket);
   handleTeammateSocket(socket);
+  handlePaymentSocket(socket);
 
   return null;
 };

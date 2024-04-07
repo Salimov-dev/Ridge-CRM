@@ -26,6 +26,13 @@ const userLicenseService = {
       payload
     );
     return data;
+  },
+  updateClicksOnMap: async (payload) => {
+    const { data } = await httpService.patch(
+      userLicenseEndpoint + "/" + payload._id + "/updateClicksOnMap",
+      payload
+    );
+    return data;
   }
 };
 export default userLicenseService;
