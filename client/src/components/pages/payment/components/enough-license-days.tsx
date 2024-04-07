@@ -9,11 +9,16 @@ const Component = styled(Box)`
   margin: 10px 0 4px 0;
 `;
 
-const EnoughLicenseDays = ({ newDaysQuantity }) => {
+const EnoughLicenseDays = ({ newDaysQuantity, userLicense }) => {
+  const trialLicenseTypeId = "71pbfi4954itj045tloop001";
+  const isLicenseTypeTrial = userLicense?.accountType === trialLicenseTypeId;
+
   return (
     <Component>
       <Typography variant="h5" sx={{ textAlign: "center", marginRight: "4px" }}>
-        Введенного баланса ДОПОЛНИТЕЛЬНО хватит на:
+        {isLicenseTypeTrial
+          ? "ДОПОЛНИТЕЛЬНО (от даты пополнения)  хватит на:"
+          : "Введенного баланса ДОПОЛНИТЕЛЬНО хватит на:"}
       </Typography>
       <Typography
         variant="h5"

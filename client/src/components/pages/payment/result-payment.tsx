@@ -15,6 +15,7 @@ import { updateUserLicense } from "@store/user/user-license.store";
 const ResultPaymentPage = React.memo(() => {
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState("Подождите, проверяем оплату...");
+  const [redirectTimer, setRedirectTimer] = useState(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -38,16 +39,14 @@ const ResultPaymentPage = React.memo(() => {
         .confirm({ outSum, paymentInvId: invId })
         .then((res) => {
           const { content } = res;
-          console.log("content", content);
           dispatch<any>(updateUserLicense(content))
             .then(() => {
-              const redirectPath = "/users";
+              setRedirectTimer(
+                setTimeout(() => {
+                  window.location.href = "/users";
+                }, 1400)
+              );
 
-              if (redirectPath) {
-                window.location.href = redirectPath;
-              } else {
-                throw new Error("Ссылка для оплаты не получена");
-              }
               setMessage("Оплата успешно произведена!");
               toast.success("Оплата успешно произведена!");
             })
@@ -67,6 +66,12 @@ const ResultPaymentPage = React.memo(() => {
         });
     }
   }, [outSum, invId]);
+
+  useEffect(() => {
+    return () => {
+      clearTimeout(redirectTimer);
+    };
+  }, []);
 
   return (
     <ContainerStyled>

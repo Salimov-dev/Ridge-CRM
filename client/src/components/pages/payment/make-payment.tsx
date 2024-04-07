@@ -28,6 +28,7 @@ import { FormatDate } from "@utils/date/format-date";
 import { removeSpacesAndConvertToNumber } from "@utils/data/remove-spaces-and-convert-to-number";
 import paymentService from "@services/payment/payment.service";
 import { useNavigate } from "react-router-dom";
+import { userLicenseStatusesArray } from "@data/users/user-license-statuses";
 
 const initialState = {
   amount: 0
@@ -49,29 +50,35 @@ const MakePaymentPage = React.memo(({ onClose }) => {
     // resolver: yupResolver(paymentAmounySchema)
   });
 
+  const trialLicenseTypeId = "71pbfi4954itj045tloop001";
   const data = watch();
   const currentUserId = useSelector(getCurrentUserId());
   const userLicense = useSelector(getUserLicensesByUserId(currentUserId));
+  const currentLicenseTypeId = userLicense?.accountType;
 
   const paymentAmount = removeSpacesAndConvertToNumber(watch("amount"));
 
-  const managersLength = userLicense?.managers.length;
-  const observersLength = userLicense?.observers.length;
-  const totalUsersLength = managersLength + observersLength + 1; // 1 добавляю в качестве лицензии текущего пользователя Куратора
+  // const managersLength = userLicense?.managers.length;
+  // const observersLength = userLicense?.observers.length;
+  // const totalUsersLength = managersLength + observersLength + 1; // 1 добавляю в качестве лицензии текущего пользователя Куратора
+
+  const activeUsersQuantity = userLicense?.activeUsersQuantity;
 
   const licenseCost = config.licenseCost;
-  const totalLicensesCost = totalUsersLength * licenseCost;
+  const totalLicensesCost = activeUsersQuantity * licenseCost;
 
   const currentBalace = userLicense?.balance;
   const newDaysQuantity = Math.floor(paymentAmount / totalLicensesCost);
 
+  const currentDate = dayjs();
+  const currentLicenseStartDate = dayjs(userLicense.dateStart);
   const licenseDateEnd = dayjs(userLicense?.dateEnd);
-  const newLicenseDate = licenseDateEnd.add(newDaysQuantity, "day");
+
+  const newLicenseDate = (
+    currentLicenseTypeId === trialLicenseTypeId ? currentDate : licenseDateEnd
+  ).add(newDaysQuantity, "day");
 
   const onSubmit = () => {
-    // setIsLoading(true);
-    console.log("data", data);
-
     paymentService
       .create({ amount: data.amount })
       .then((res) => {
@@ -92,26 +99,7 @@ const MakePaymentPage = React.memo(({ onClose }) => {
         toast.error(errorMessage);
         throw errorMessage;
       })
-      .finally(() => {
-        setIsLoading(false);
-      });
-
-    // const newData = {
-    //   ...userLicense,
-    //   balance: Number(paymentAmount),
-    //   dateEnd: newLicenseDate
-    // };
-
-    // dispatch<any>(updateUserLicense(newData))
-    //   .then(() => {
-    //     onClose();
-    //   })
-    //   .catch((error) => {
-    //     toast.error(error);
-    //   })
-    //   .finally(() => {
-    //     setIsLoading(false);
-    //   });
+      .finally(() => {});
   };
 
   return (
@@ -125,11 +113,17 @@ const MakePaymentPage = React.memo(({ onClose }) => {
       <CostOneLicense licenseCost={licenseCost} />
       <CurrentLicenseInfo
         currentBalace={currentBalace}
-        totalUsersLength={totalUsersLength}
+        totalUsersLength={activeUsersQuantity}
         totalLicensesCost={totalLicensesCost}
       />
-      <EnoughLicenseDays newDaysQuantity={newDaysQuantity} />
-      <EnoughLicenseDate newLicenseDate={newLicenseDate} />
+      <EnoughLicenseDays
+        newDaysQuantity={newDaysQuantity}
+        userLicense={userLicense}
+      />
+      <EnoughLicenseDate
+        newLicenseDate={newLicenseDate}
+        userLicense={userLicense}
+      />
       <SuccessCancelFormButtons
         successTitle="Оплатить"
         onSuccess={handleSubmit(onSubmit)}

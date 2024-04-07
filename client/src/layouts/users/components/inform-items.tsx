@@ -7,12 +7,12 @@ import { useSelector } from "react-redux";
 import InformItem from "./inform-item";
 // utils
 import { FormatDate } from "@utils/date/format-date";
-// store
-import { getCurrentUserId, getUsersList } from "@store/user/users.store";
-import { getUserLicensesByUserId } from "@store/user/user-license.store";
-import { makeDigitSeparator } from "@utils/data/make-digit-separator";
 // data
 import { userLicenseStatusesArray } from "@data/users/user-license-statuses";
+// store
+import { getCurrentUserId } from "@store/user/users.store";
+import { getUserLicensesByUserId } from "@store/user/user-license.store";
+import { makeDigitSeparator } from "@utils/data/make-digit-separator";
 
 const InformItemsContainer = styled(Box)`
   width: 100%;
@@ -34,30 +34,22 @@ const InformItems = () => {
     )?.name;
     return result;
   };
-  const usersList = useSelector(getUsersList());
+  const trialLicenseTypeId = "71pbfi4954itj045tloop001";
+  const currentLicenseTypeId = userLicense?.accountType;
 
-  const usersManagersArray = userLicense?.managers;
-  const activeUsersManagers = usersManagersArray?.filter((userId) => {
-    const user = usersList.find((user) => user._id === userId);
-    return user && user.isActive;
-  });
-
-  const usersObserversArray = userLicense?.observers;
-  const activeUsersObservers = usersObserversArray?.filter((userId) => {
-    const user = usersList.find((user) => user._id === userId);
-    return user && user.isActive;
-  });
-
-  const managersLength = activeUsersManagers?.length || 0;
-  const observersLength = activeUsersObservers?.length || 0;
-  const totalUsersLength = managersLength + observersLength + 1; // 1 добавляю в качестве лицензии текущего пользователя Куратора
+  const totalUsersLength = userLicense?.activeUsersQuantity;
 
   const licenseCost = config.licenseCost;
   const totalLicensesCost = totalUsersLength * licenseCost;
 
   const dateStart = dayjs(userLicense?.dateStart);
   const dateEnd = dayjs(userLicense?.dateEnd);
-  const daysDifference = dateEnd?.diff(dayjs(), "day") + 1;
+  const dateEndTrialPeriod = dayjs(userLicense?.dateTrialEnd);
+
+  const isLicenseTypeTrial = userLicense?.accountType === trialLicenseTypeId;
+  const daysDifference = (
+    isLicenseTypeTrial ? dateEndTrialPeriod : dateEnd
+  )?.diff(dateStart, "day");
 
   return (
     <InformItemsContainer>
@@ -71,10 +63,17 @@ const InformItems = () => {
         title="Дата активации подписки"
         subtitle={FormatDate(dateStart)}
       />
-      <InformItem
-        title="Дата окончания подписки"
-        subtitle={FormatDate(dateEnd)}
-      />
+      {currentLicenseTypeId === trialLicenseTypeId ? (
+        <InformItem
+          title="Дата окончания демо-доступа"
+          subtitle={FormatDate(dateEndTrialPeriod)}
+        />
+      ) : (
+        <InformItem
+          title="Дата окончания подписки"
+          subtitle={FormatDate(dateEnd)}
+        />
+      )}
       <InformItem title="Дней доступа к системе" subtitle={daysDifference} />
       <InformItem
         title="Активных пользователей"
@@ -82,8 +81,8 @@ const InformItems = () => {
         unit="шт"
       />
       <InformItem
-        title="Общая стоимость подписок"
-        subtitle={totalLicensesCost}
+        title="Общая стоимость подписки"
+        subtitle={totalLicensesCost.toString()}
         unit="₽/день"
       />
     </InformItemsContainer>

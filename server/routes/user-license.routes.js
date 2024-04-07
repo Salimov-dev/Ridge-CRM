@@ -95,8 +95,10 @@ router.patch("/:userLicenseId?/edit", auth, async (req, res) => {
 
     // дата
     const currentDate = dayjs();
-    const currentEndLicenseDate = dayjs(existingUserLicense.dateEnd);
-    let newLicenseEndDate = currentEndLicenseDate;
+    const currentLicenseStartDate = dayjs(existingUserLicense.dateStart);
+    const currentLicenseEndDate = dayjs(existingUserLicense.dateEnd);
+    let newLicenseStartDate = currentLicenseStartDate;
+    let newLicenseEndDate = currentLicenseEndDate;
 
     // баланс
     const currentLicenseBalance = existingUserLicense.balance;
@@ -110,10 +112,8 @@ router.patch("/:userLicenseId?/edit", auth, async (req, res) => {
       currentLicenseBalance > 0
     ) {
       newCurrentLicenseTypeId = activeLicenseTypeId;
-      newLicenseEndDate = currentEndLicenseDate.add(
-        licenseDaysLeftQuantity,
-        "day"
-      );
+      newLicenseStartDate = currentDate;
+      newLicenseEndDate = currentDate.add(licenseDaysLeftQuantity, "day");
     }
 
     if (
@@ -121,26 +121,27 @@ router.patch("/:userLicenseId?/edit", auth, async (req, res) => {
         currentLicenseTypeId === blockedLicenseTypeId) &&
       currentLicenseBalance > 0
     ) {
-      newLicenseEndDate = currentEndLicenseDate.add(
+      newLicenseEndDate = currentLicenseEndDate.add(
         licenseDaysLeftQuantity,
         "day"
       );
     }
 
-    // await UserLicense.update(
-    //   {
-    //     activeUsersQuantity: totalUsersCount,
-    //     accountType: newCurrentLicenseTypeId,
-    //     dateEnd: newLicenseEndDate
-    //   },
-    //   { where: { userId } }
-    // );
+    await UserLicense.update(
+      {
+        activeUsersQuantity: totalUsersCount,
+        accountType: newCurrentLicenseTypeId,
+        dateStart: newLicenseStartDate,
+        dateEnd: newLicenseEndDate
+      },
+      { where: { userId } }
+    );
 
-    // const updatedLicense = await UserLicense.findOne({
-    //   where: { userId }
-    // });
+    const updatedLicense = await UserLicense.findOne({
+      where: { userId }
+    });
 
-    // res.status(200).json(updatedLicense);
+    res.status(200).json(updatedLicense);
   } catch (e) {
     console.error(e);
     res.status(500).json({

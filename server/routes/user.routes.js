@@ -10,6 +10,7 @@ import UserLicense from "../models/UserLicense.js";
 import { v4 as uuidv4 } from "uuid";
 import dotenv from "dotenv";
 import { Sequelize } from "sequelize";
+import dayjs from "dayjs";
 dotenv.config();
 
 const { SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASSWORD, API_URL } = process.env;
@@ -181,11 +182,67 @@ router.patch("/:userId/update-teammate", auth, async (req, res) => {
       updatedObservers.push(updatedUserId);
     }
 
+    const usersList = await User.findAll();
+
+    // считаем количество активных пользователей в лицензии
+    const usersManagersArray = userLicense?.managers;
+    const activeUsersManagers = usersManagersArray?.filter((userId) => {
+      const user = usersList.find((user) => user._id === userId);
+      return user && user.isActive;
+    });
+
+    const usersObserversArray = userLicense?.observers;
+    const activeUsersObservers = usersObserversArray?.filter((userId) => {
+      const user = usersList.find((user) => user._id === userId);
+      return user && user.isActive;
+    });
+
+    const managersLength = activeUsersManagers?.length || 0;
+    const observersLength = activeUsersObservers?.length || 0;
+    const totalUsersCount = managersLength + observersLength + 1; // 1 добавляю в качестве лицензии текущего пользователя Куратора
+
+    // тип лицензии
+    const currentLicenseTypeId = userLicense.accountType;
+    const trialLicenseTypeId = "71pbfi4954itj045tloop001";
+    const activeLicenseTypeId = "718gkgdbn48jgfo3kktjt002";
+    const blockedLicenseTypeId = "71kbjld394u5jgfdsjk4l003";
+
+    // считаем новую дату окончания лицензии
+    const subscriptionCostPerUser = 25; // Стоимость подписки за одного пользователя
+    const currentDate = dayjs();
+    const currentLicenseStartDate = dayjs(userLicense.dateStart);
+    const currentLicenseEndDate = dayjs(userLicense.dateEnd);
+    const currentLicenseTrialEndDate = dayjs(userLicense.dateTrialEnd);
+
+    const licenseDaysLeftQuantity = Math.floor(
+      userLicense.balance / (subscriptionCostPerUser * totalUsersCount)
+    );
+
+    // let newLicenseEndDate = currentLicenseEndDate;
+
+    let newLicenseEndDate = currentLicenseStartDate.add(
+      licenseDaysLeftQuantity,
+      "day"
+    );
+
+    if (currentLicenseTypeId === trialLicenseTypeId) {
+      newLicenseEndDate = currentLicenseTrialEndDate;
+    }
+
+    if (currentLicenseTypeId === activeLicenseTypeId) {
+      newLicenseEndDate = currentLicenseStartDate.add(
+        licenseDaysLeftQuantity,
+        "day"
+      );
+    }
+
     // Обновление лицензии пользователя
     await UserLicense.update(
       {
+        activeUsersQuantity: totalUsersCount,
         managers: updatedManagers,
-        observers: updatedObservers
+        observers: updatedObservers,
+        dateEnd: newLicenseEndDate
       },
       { where: { userId: currentUserId } }
     );

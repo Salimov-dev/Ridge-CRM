@@ -9,11 +9,15 @@ const Component = styled(Box)`
   margin: 10px 0 4px 0;
 `;
 
-const EnoughLicenseDate = ({ newLicenseDate }) => {
+const EnoughLicenseDate = ({ newLicenseDate, userLicense }) => {
+  const trialLicenseTypeId = "71pbfi4954itj045tloop001";
+  const isLicenseTypeTrial = userLicense?.accountType === trialLicenseTypeId;
   return (
     <Component>
       <Typography variant="h5" sx={{ textAlign: "center", marginRight: "4px" }}>
-        Можно будет пользоваться до:
+        {isLicenseTypeTrial
+          ? "Можно будет пользоваться (от даты пополнения) до:"
+          : "Можно будет пользоваться до:"}
       </Typography>
       <Typography
         variant="h5"

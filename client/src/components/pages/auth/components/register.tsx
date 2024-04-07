@@ -74,7 +74,6 @@ const Register = React.memo(({ page, onClose }) => {
   });
 
   const data = watch();
-  console.log("data", data);
 
   const redirectPath = "/users";
 
