@@ -1,5 +1,6 @@
 import express from "express";
 import User from "../models/User.js";
+import lic from "../middleware/license-account-type.middleware.js";
 import auth from "../middleware/auth.middleware.js";
 import bcrypt from "bcryptjs";
 import { roleCurator, roleManager, roleObserver } from "../utils/user-roles.js";
@@ -97,7 +98,7 @@ router.get("/", auth, async (req, res) => {
   }
 });
 
-router.patch("/:userId/update-user", auth, async (req, res) => {
+router.patch("/:userId/update-user", auth, lic, async (req, res) => {
   try {
     const userId = req.params.userId;
     const updatedUser = await User.update(req.body, {
@@ -122,7 +123,7 @@ router.patch("/:userId/update-user", auth, async (req, res) => {
   }
 });
 
-router.patch("/:userId/update-teammate", auth, async (req, res) => {
+router.patch("/:userId/update-teammate", auth, lic, async (req, res) => {
   try {
     const userId = req.params.userId;
     const currentUserId = req.user._id;
@@ -266,7 +267,7 @@ router.patch("/:userId/update-teammate", auth, async (req, res) => {
 });
 
 // Создание нового члена команды
-router.post("/create-teammate", auth, async (req, res) => {
+router.post("/create-teammate", auth, lic, async (req, res) => {
   try {
     const curatorUserId = req.user._id;
     const curatorData = await User.findByPk(curatorUserId);
@@ -409,7 +410,7 @@ router.post("/create-teammate", auth, async (req, res) => {
       subject: "Куратор добавил нового пользователя",
       html: htmlForAdmin
     });
-
+    console.log("newUser", newUser);
     res.status(201).send(newUser);
   } catch (e) {
     console.error(e);

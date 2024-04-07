@@ -30,6 +30,7 @@ import EmailActivated from "@components/pages/email-activated/email-activated";
 import RecoveryPassword from "@components/pages/password/recovery-password";
 import SetupPassword from "@components/pages/password/setup-password";
 import ResultPaymentPage from "@components/pages/payment/result-payment";
+import RequireActiveLicense from "@layouts/users/components/require-active-license";
 
 export default function AppRoutes() {
   const currentUserId = useSelector(getCurrentUserId());
@@ -44,27 +45,27 @@ export default function AppRoutes() {
     { id: 4, path: "meetings/*", element: <Meetings /> },
     { id: 5, path: "calendar/*", element: <Calendar /> },
     { id: 6, path: "deals/*", element: <Deals /> },
-    {
-      id: 7,
-      path: "users/*",
-      element: !isUserLoading ? (
-        isCurator ? (
-          <Users />
-        ) : (
-          <NoMatchRoute />
-        )
-      ) : (
-        <Loader size={50} />
-      )
-    },
+    // {
+    //   id: 7,
+    //   path: "users/*",
+    //   element: !isUserLoading ? (
+    //     isCurator ? (
+    //       <Users />
+    //     ) : (
+    //       <NoMatchRoute />
+    //     )
+    //   ) : (
+    //     <Loader size={50} />
+    //   )
+    // },
     { id: 8, path: "profile/*", element: <Profile /> },
     { id: 9, path: ":userId?/presentations", element: <Presentations /> },
     { id: 10, path: ":userId?/profileUpdate", element: <UpdateProfile /> },
     { id: 11, path: "contacts/*", element: <Contacts /> },
     { id: 12, path: "companies/*", element: <Companies /> },
     { id: 13, path: "callback/*", element: <Callback /> },
-    { id: 14, path: "activate/:link", element: <EmailActivated /> },
-    { id: 14, path: "payment", element: <ResultPaymentPage /> }
+    { id: 14, path: "activate/:link", element: <EmailActivated /> }
+    // { id: 14, path: "payment", element: <ResultPaymentPage /> }
   ];
 
   return (
@@ -74,16 +75,30 @@ export default function AppRoutes() {
       <Route path="auth/*" element={isLoggedIn ? <Objects /> : <Main />} />
       <Route path="password/*" element={<NoMatchRoute />} />
       <Route path="password/recovery/:link" element={<RecoveryPassword />} />
+      <Route path="payment/*" element={<ResultPaymentPage />} />
       <Route
         path="password/setup-password/:email?/:link"
         element={<SetupPassword />}
+      />
+      <Route
+        path="Users/*"
+        element={
+          <RequireAuth>
+            <Users />
+          </RequireAuth>
+        }
       />
 
       {routes.map((route) => (
         <Route
           key={route.id}
           path={route.path}
-          element={<RequireAuth>{route.element}</RequireAuth>}
+          element={
+            <RequireAuth>
+              {route.element}
+              {/* <RequireActiveLicense>{route.element}</RequireActiveLicense> */}
+            </RequireAuth>
+          }
         />
       ))}
     </Routes>

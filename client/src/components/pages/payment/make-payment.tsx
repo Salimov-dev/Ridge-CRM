@@ -124,6 +124,14 @@ const MakePaymentPage = React.memo(({ onClose }) => {
         newLicenseDate={newLicenseDate}
         userLicense={userLicense}
       />
+      <Box
+        sx={{ background: "firebrick", padding: "10px", margin: "20px 0 0 0" }}
+      >
+        <Typography variant="h4" sx={{ textAlign: "center" }}>
+          Не закрывайте страницу оплаты до автоматического возрата в Грядку ЦРМ
+          после оплаты!
+        </Typography>
+      </Box>
       <SuccessCancelFormButtons
         successTitle="Оплатить"
         onSuccess={handleSubmit(onSubmit)}

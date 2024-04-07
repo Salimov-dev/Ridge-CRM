@@ -151,6 +151,7 @@ const UpdateContact = React.memo(({ contactId, onClose }) => {
         onCancel={onClose}
         onRemove={handleOpenConfirm}
         isUpdate={true}
+        disabledRemoveButton={true}
       />
       <LoaderFullWindow
         color={colors.grey[600]}

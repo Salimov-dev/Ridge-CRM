@@ -5,6 +5,8 @@ import { v4 as uuidv4 } from "uuid";
 import dotenv from "dotenv";
 import { Sequelize } from "sequelize";
 import CryptoJS from "crypto-js";
+import dayjs from "dayjs";
+import User from "../models/User.js";
 dotenv.config();
 
 const { ROBO_SRC, ROBO_MERCHANT_LOGIN, ROBO_DESCRIPTION, ROBO_PASS_1 } =
@@ -90,11 +92,98 @@ router.post("/confirm", auth, async (req, res) => {
 
     const userId = userLicense.userId;
 
+    // вычисление активных пользователей лицензии
+    const usersList = await User.findAll();
+
+    const usersManagersArray = userLicense?.managers;
+    const activeUsersManagers = usersManagersArray?.filter((userId) => {
+      const user = usersList.find((user) => user._id === userId);
+      return user && user.isActive;
+    });
+
+    const usersObserversArray = userLicense?.observers;
+    const activeUsersObservers = usersObserversArray?.filter((userId) => {
+      const user = usersList.find((user) => user._id === userId);
+      return user && user.isActive;
+    });
+
+    const managersLength = activeUsersManagers?.length || 0;
+    const observersLength = activeUsersObservers?.length || 0;
+    const totalUsersCount = managersLength + observersLength + 1; // 1 добавляю в качестве лицензии текущего пользователя Куратора
+
+    // дата
+    const currentDate = dayjs();
+    const currentLicenseStartDate = dayjs(userLicense.dateStart);
+    const currentLicenseEndDate = dayjs(userLicense.dateEnd);
+    console.log(
+      "currentLicenseEndDate",
+      currentLicenseEndDate.format("DD.MM.YYYY")
+    );
+    let newLicenseStartDate = currentLicenseStartDate;
+    let newLicenseEndDate = currentLicenseEndDate;
+
+    // тип лицензии
+    const trialLicenseTypeId = "71pbfi4954itj045tloop001";
+    const activeLicenseTypeId = "718gkgdbn48jgfo3kktjt002";
+    const blockedLicenseTypeId = "71kbjld394u5jgfdsjk4l003";
+    const currentLicenseTypeId = userLicense?.accountType;
+    const isLicenseTrialType = currentLicenseTypeId === trialLicenseTypeId;
+    const isLicenseActiveType = currentLicenseTypeId === activeLicenseTypeId;
+    const isLicenseBlockedType = currentLicenseTypeId === blockedLicenseTypeId;
+
+    // баланс
+    const currentLicenseBalance = userLicense.balance;
+    const subscriptionCostPerUser = 25; // Стоимость подписки за одного пользователя
+    const licenseDaysLeftQuantity = Math.floor(
+      currentLicenseBalance / (subscriptionCostPerUser * totalUsersCount)
+    );
+    console.log("licenseDaysLeftQuantity", licenseDaysLeftQuantity);
+    const newLicenseDaysLeftQuantity = Math.floor(
+      paymentSum / (subscriptionCostPerUser * totalUsersCount)
+    );
+    console.log("newLicenseDaysLeftQuantity", newLicenseDaysLeftQuantity);
+
+    if (isLicenseTrialType && currentLicenseBalance > 0) {
+      newCurrentLicenseTypeId = activeLicenseTypeId;
+      newLicenseStartDate = currentDate;
+      newLicenseEndDate = currentDate.add(licenseDaysLeftQuantity, "day");
+    }
+
+    if (isLicenseActiveType) {
+      console.log("isLicenseActiveType", isLicenseActiveType);
+      console.log(
+        "currentLicenseEndDate",
+        currentLicenseEndDate.format("DD.MM.YYYY")
+      );
+      newLicenseEndDate = currentLicenseEndDate.add(
+        newLicenseDaysLeftQuantity,
+        "day"
+      );
+      console.log("newLicenseEndDate", newLicenseEndDate.format("DD.MM.YYYY"));
+    }
+
+    if (isLicenseBlockedType) {
+      newLicenseStartDate = currentDate;
+      newLicenseEndDate = newLicenseStartDate.add(
+        licenseDaysLeftQuantity,
+        "day"
+      );
+    }
+
+    console.log(
+      "newLicenseEndDate перед update",
+      newLicenseEndDate.format("DD.MM.YYYY")
+    );
     await UserLicense.update(
       {
         balance: Sequelize.literal("balance + " + paymentSum),
         paymentAmount: null,
-        paymentInvId: null
+        paymentInvId: null,
+        activeUsersQuantity: totalUsersCount,
+        accountType: activeLicenseTypeId,
+        dateStart: newLicenseStartDate,
+        dateEnd: newLicenseEndDate
+        // dateStart: isLicenseBlockedType ? currentDate : currentLicenseStartDate
       },
       { where: { userId } }
     );
@@ -102,6 +191,7 @@ router.post("/confirm", auth, async (req, res) => {
     const updatedLicense = await UserLicense.findOne({
       where: { userId }
     });
+    console.log("updatedLicense", updatedLicense);
 
     res.status(200).json(updatedLicense);
   } catch (e) {

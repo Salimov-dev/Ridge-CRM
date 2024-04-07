@@ -46,11 +46,20 @@ const UpdateUser = React.memo(({ userId, onClose }) => {
 
   const data = watch();
 
+  const handleOpenConfirm = () => {
+    setOpen(true);
+  };
+
+  const handleCloseConfirm = () => {
+    setOpen(false);
+  };
+
   const onSubmit = () => {
     setIsLoading(true);
 
     dispatch<any>(updateTeammate(data))
       .then(() => {
+        handleCloseConfirm();
         onClose();
         toast.success("Пользователь успешно изменен!");
       })
@@ -71,14 +80,6 @@ const UpdateUser = React.memo(({ userId, onClose }) => {
 
   const handleRemoveUser = (userId) => {
     // dispatch<any>(removeUser(userId)).then(onClose());
-  };
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
   };
 
   return (
@@ -111,9 +112,9 @@ const UpdateUser = React.memo(({ userId, onClose }) => {
         />
       )}
       <SuccessCancelFormButtons
-        onSuccess={handleSubmit(onSubmit)}
+        onSuccess={handleOpenConfirm}
         onCancel={onClose}
-        onRemove={handleClickOpen}
+        // onRemove={handleClickOpen}
         isUpdate={true}
         disabledRemoveButton={true}
       />
@@ -123,11 +124,17 @@ const UpdateUser = React.memo(({ userId, onClose }) => {
         isLoading={isLoading}
       />
       <DialogConfirm
+        question="Любое изменение пользователя (статус, цвет, город и тп) воспринимается Программой как работа с Пользователем и за этот день произойдет списание платы за Подписку"
+        open={open}
+        onClose={handleCloseConfirm}
+        onSuccessClick={handleSubmit(onSubmit)}
+      />
+      {/* <DialogConfirm
         question="Вы уверены, что хотите удалить безвозвратно?"
         open={open}
         onClose={handleClose}
         onSuccessClick={() => handleRemoveUser(userId)}
-      />
+      /> */}
     </>
   );
 });

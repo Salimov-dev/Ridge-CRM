@@ -35,7 +35,12 @@ const InformItems = () => {
     return result;
   };
   const trialLicenseTypeId = "71pbfi4954itj045tloop001";
+  const activeLicenseTypeId = "718gkgdbn48jgfo3kktjt002";
+  const blockedLicenseTypeId = "71kbjld394u5jgfdsjk4l003";
   const currentLicenseTypeId = userLicense?.accountType;
+  const isLicenseTrialType = currentLicenseTypeId === trialLicenseTypeId;
+  const isLicenseActiveType = currentLicenseTypeId === activeLicenseTypeId;
+  const isLicenseBlockedType = currentLicenseTypeId === blockedLicenseTypeId;
 
   const totalUsersLength = userLicense?.activeUsersQuantity;
 
@@ -46,10 +51,11 @@ const InformItems = () => {
   const dateEnd = dayjs(userLicense?.dateEnd);
   const dateEndTrialPeriod = dayjs(userLicense?.dateTrialEnd);
 
-  const isLicenseTypeTrial = userLicense?.accountType === trialLicenseTypeId;
-  const daysDifference = (
-    isLicenseTypeTrial ? dateEndTrialPeriod : dateEnd
-  )?.diff(dateStart, "day");
+  const daysDifference =
+    (isLicenseTrialType ? dateEndTrialPeriod : dateEnd)?.diff(
+      dateStart,
+      "day"
+    ) + (isLicenseTrialType ? 1 : 0);
 
   return (
     <InformItemsContainer>
@@ -57,33 +63,47 @@ const InformItems = () => {
         title="Баланс"
         subtitle={makeDigitSeparator(userLicense?.balance)}
         unit="₽"
+        userLicense={userLicense}
       />
-      <InformItem title="Тип аккаунта" subtitle={getAccountType()} />
+      <InformItem
+        title="Тип аккаунта"
+        subtitle={getAccountType()}
+        userLicense={userLicense}
+      />
       <InformItem
         title="Дата активации подписки"
         subtitle={FormatDate(dateStart)}
+        userLicense={userLicense}
       />
       {currentLicenseTypeId === trialLicenseTypeId ? (
         <InformItem
           title="Дата окончания демо-доступа"
           subtitle={FormatDate(dateEndTrialPeriod)}
+          userLicense={userLicense}
         />
       ) : (
         <InformItem
           title="Дата окончания подписки"
           subtitle={FormatDate(dateEnd)}
+          userLicense={userLicense}
         />
       )}
-      <InformItem title="Дней доступа к системе" subtitle={daysDifference} />
+      <InformItem
+        title="Дней доступа к системе"
+        subtitle={!isLicenseBlockedType ? daysDifference : 0}
+        userLicense={userLicense}
+      />
       <InformItem
         title="Активных пользователей"
         subtitle={totalUsersLength}
         unit="шт"
+        userLicense={userLicense}
       />
       <InformItem
         title="Общая стоимость подписки"
         subtitle={totalLicensesCost.toString()}
         unit="₽/день"
+        userLicense={userLicense}
       />
     </InformItemsContainer>
   );

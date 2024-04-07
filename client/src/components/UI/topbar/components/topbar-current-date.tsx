@@ -10,6 +10,7 @@ import { makeDigitSeparator } from "@utils/data/make-digit-separator";
 // store
 import { getUserLicensesByUserId } from "@store/user/user-license.store";
 import { getCurrentUserId, getIsUserCurator } from "@store/user/users.store";
+import { userLicenseStatusesArray } from "@data/users/user-license-statuses";
 
 const Component = styled(Box)`
   width: fit-content;
@@ -34,13 +35,28 @@ const TopBarCurrentDate = () => {
   ).replace(/\.$/, "");
 
   const currentUserId = useSelector(getCurrentUserId());
-  const isCurator = useSelector(getIsUserCurator(currentUserId));
   const userLicense = useSelector(getUserLicensesByUserId(currentUserId));
+
+  const trialLicenseTypeId = "71pbfi4954itj045tloop001";
+  const blockedLicenseTypeId = "71kbjld394u5jgfdsjk4l003";
+  const currentLicenseTypeId = userLicense?.accountType;
+  const isLicenseBlockedType = currentLicenseTypeId === blockedLicenseTypeId;
+  const isLicenseTrialType = currentLicenseTypeId === trialLicenseTypeId;
+
+  const isCurator = useSelector(getIsUserCurator(currentUserId));
   const dateEnd = dayjs(userLicense?.dateEnd);
-  const daysDifference = dateEnd?.diff(dayjs(), "day") + 1;
+  const daysDifference =
+    dateEnd?.diff(dayjs(), "day") + (isLicenseTrialType ? 1 : 0);
   const licenseBalance = makeDigitSeparator(userLicense?.balance);
-  const demoLicenseId = "71pbfi4954itj045tloop001";
-  const isDemoLicense = userLicense?.accountType === demoLicenseId;
+
+  const getAccountType = () => {
+    const accountType = userLicense?.accountType;
+
+    const result = userLicenseStatusesArray.find(
+      (role) => role._id === accountType
+    )?.name;
+    return result;
+  };
 
   return (
     <Component>
@@ -62,7 +78,9 @@ const TopBarCurrentDate = () => {
             onClick={() => navigate("/users")}
           >
             <Element variant="h5">
-              {daysDifference} {pluralizeDays(daysDifference)}{" "}
+              {!isLicenseBlockedType
+                ? `${daysDifference} ${pluralizeDays(daysDifference)}`
+                : 0}
             </Element>
           </Tooltip>
           <Typography color="grey">|</Typography>
@@ -73,7 +91,8 @@ const TopBarCurrentDate = () => {
             onClick={() => navigate("/users")}
           >
             <Element variant="h5">
-              {!isDemoLicense ? `${licenseBalance}₽` : "демо"}
+              {getAccountType()}
+              {/* {!trialLicenseTypeId ? `${licenseBalance}₽` : "демо"} */}
             </Element>
           </Tooltip>
         </>

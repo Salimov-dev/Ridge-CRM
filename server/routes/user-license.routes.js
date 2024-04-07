@@ -130,9 +130,9 @@ router.patch("/:userLicenseId?/edit", auth, async (req, res) => {
     await UserLicense.update(
       {
         activeUsersQuantity: totalUsersCount,
-        accountType: newCurrentLicenseTypeId,
-        dateStart: newLicenseStartDate,
-        dateEnd: newLicenseEndDate
+        accountType: newCurrentLicenseTypeId
+        // dateStart: newLicenseStartDate,
+        // dateEnd: newLicenseEndDate
       },
       { where: { userId } }
     );

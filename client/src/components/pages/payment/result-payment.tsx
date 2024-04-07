@@ -20,6 +20,7 @@ const ResultPaymentPage = React.memo(() => {
   const navigate = useNavigate();
 
   const currentURL = window.location.href;
+
   const queryString = currentURL.split("?")[1];
 
   const paramsArray = queryString.split("&");
@@ -29,6 +30,7 @@ const ResultPaymentPage = React.memo(() => {
     const [key, value] = param.split("=");
     params[key] = value;
   });
+  const isCulturePage = paramsArray[0] === "Culture=ru";
 
   const outSum = params["OutSum"];
   const invId = params["InvId"];
@@ -39,6 +41,8 @@ const ResultPaymentPage = React.memo(() => {
         .confirm({ outSum, paymentInvId: invId })
         .then((res) => {
           const { content } = res;
+          console.log("content", content);
+
           dispatch<any>(updateUserLicense(content))
             .then(() => {
               setRedirectTimer(
@@ -86,10 +90,16 @@ const ResultPaymentPage = React.memo(() => {
           alignItems: "center"
         }}
       >
-        <Box>
-          <Loader size={50} />
-          <Typography variant="h2">{message}</Typography>
-        </Box>
+        {!isCulturePage ? (
+          <Box>
+            <Loader size={50} />
+            <Typography variant="h2">{message}</Typography>
+          </Box>
+        ) : (
+          <Typography variant="h2">
+            Продолжайте пользоваться Программой
+          </Typography>
+        )}
       </Box>
       <LoaderFullWindow isLoading={isLoading} />
     </ContainerStyled>

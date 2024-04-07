@@ -102,6 +102,7 @@ const CreateUser = React.memo(({ onClose }) => {
         successTitle="Добавить"
         onSuccess={handleSubmit(onSubmit)}
         onCancel={onClose}
+        disabledRemoveButton={true}
       />
       <LoaderFullWindow isLoading={isLoading} />
     </Box>
