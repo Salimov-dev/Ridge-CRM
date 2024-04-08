@@ -91,6 +91,7 @@ router.post("/confirm", auth, async (req, res) => {
     }
 
     const userId = userLicense.userId;
+    const currentUser = await User.findByPk(userId);
 
     // вычисление активных пользователей лицензии
     const usersList = await User.findAll();
@@ -138,20 +139,20 @@ router.post("/confirm", auth, async (req, res) => {
       paymentSum / (subscriptionCostPerUser * totalUsersCount)
     );
 
-    if (isLicenseTrialType && currentLicenseBalance > 0) {
+    if (isLicenseTrialType) {
       newCurrentLicenseTypeId = activeLicenseTypeId;
       newLicenseStartDate = currentDate;
       newLicenseEndDate = currentDate.add(licenseDaysLeftQuantity, "day");
     }
 
     if (isLicenseActiveType) {
-      newLicenseEndDate = currentLicenseEndDate.add(
-        newLicenseDaysLeftQuantity,
-        "day"
-      );
+      newLicenseEndDate = currentLicenseEndDate
+        .add(newLicenseDaysLeftQuantity, "day")
+        .subtract(1, "day");
     }
 
     if (isLicenseBlockedType) {
+      await User.update({ isActive: true }, { where: { _id: userId } });
       newLicenseStartDate = currentDate;
       newLicenseEndDate = newLicenseStartDate.add(
         licenseDaysLeftQuantity,
@@ -168,7 +169,6 @@ router.post("/confirm", auth, async (req, res) => {
         accountType: activeLicenseTypeId,
         dateStart: newLicenseStartDate,
         dateEnd: newLicenseEndDate
-        // dateStart: isLicenseBlockedType ? currentDate : currentLicenseStartDate
       },
       { where: { userId } }
     );

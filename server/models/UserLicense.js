@@ -31,11 +31,11 @@ const UserLicense = sequelize.define(
     dateStart: { type: DataTypes.DATE, defaultValue: DataTypes.NOW },
     dateEnd: {
       type: DataTypes.DATE,
-      defaultValue: () => dayjs().add(14, "day").toDate()
+      defaultValue: () => dayjs().add(13, "day").toDate()
     },
     dateTrialEnd: {
       type: DataTypes.DATE,
-      defaultValue: () => dayjs().add(14, "day").toDate()
+      defaultValue: () => dayjs().add(13, "day").toDate()
     },
     accountType: {
       type: DataTypes.STRING,

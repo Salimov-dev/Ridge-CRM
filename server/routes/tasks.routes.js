@@ -4,10 +4,11 @@ import Task from "../models/Task.js";
 import User from "../models/User.js";
 import { Op } from "sequelize";
 import { roleCurator, roleManager, roleObserver } from "../utils/user-roles.js";
+import lic from "../middleware/license-account-type.middleware.js";
 
 const router = express.Router({ mergeParams: true });
 
-router.get("/", auth, async (req, res) => {
+router.get("/", auth, lic, async (req, res) => {
   try {
     const userId = req.user._id;
     const user = await User.findByPk(userId);
@@ -84,7 +85,7 @@ router.get("/", auth, async (req, res) => {
   }
 });
 
-router.post("/create", auth, async (req, res) => {
+router.post("/create", auth, lic, async (req, res) => {
   try {
     const userId = req.user._id;
 
@@ -101,7 +102,7 @@ router.post("/create", auth, async (req, res) => {
   }
 });
 
-router.patch("/:taskId?/edit", auth, async (req, res) => {
+router.patch("/:taskId?/edit", auth, lic, async (req, res) => {
   try {
     const { taskId } = req.params;
     if (!taskId) {
@@ -127,7 +128,7 @@ router.patch("/:taskId?/edit", auth, async (req, res) => {
   }
 });
 
-router.delete("/:taskId?", auth, async (req, res) => {
+router.delete("/:taskId?", auth, lic, async (req, res) => {
   try {
     const { taskId } = req.params;
     if (!taskId) {

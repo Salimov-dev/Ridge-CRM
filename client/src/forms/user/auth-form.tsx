@@ -24,11 +24,15 @@ const AuthForm = ({
   isRegister = false
 }) => {
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
   const citiesList = useSelector(getCititesList());
   const sortedCities = orderBy(citiesList, "name", ["asc"]);
   const watchCity = watch("city");
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
+  const handleClickShowConfirmPassword = () =>
+    setShowConfirmPassword((show) => !show);
   const handleMouseDownPassword = (
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
@@ -71,6 +75,31 @@ const AuthForm = ({
             )
           }}
         />
+        {isRegister && (
+          <TextFieldStyled
+            register={register}
+            label="Подтвердите пароль"
+            type={showConfirmPassword ? "text" : "password"}
+            name="confirmPassword"
+            value={data?.confirmPassword}
+            errors={errors?.confirmPassword}
+            inputProps={{ maxLength: 20 }}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={handleClickShowConfirmPassword}
+                    onMouseDown={handleMouseDownPassword}
+                    edge="end"
+                  >
+                    {showConfirmPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              )
+            }}
+          />
+        )}
         {isRegister && (
           <AutocompleteStyled
             label="Выберите свой город"

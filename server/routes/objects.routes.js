@@ -6,10 +6,11 @@ import auth from "../middleware/auth.middleware.js";
 import { roleCurator, roleManager, roleObserver } from "../utils/user-roles.js";
 import Company from "../models/company/Company.js";
 import Contact from "../models/contact/Contact.js";
+import lic from "../middleware/license-account-type.middleware.js";
 
 const router = express.Router({ mergeParams: true });
 
-router.get("/", auth, async (req, res) => {
+router.get("/", auth, lic, async (req, res) => {
   try {
     const userId = req.user._id;
     const user = await User.findByPk(userId);
@@ -82,7 +83,7 @@ router.get("/", auth, async (req, res) => {
   }
 });
 
-router.post("/create", auth, async (req, res) => {
+router.post("/create", auth, lic, async (req, res) => {
   try {
     const userId = req.user._id;
     const { companies, contacts } = req.body;
@@ -181,7 +182,7 @@ router.post("/create", auth, async (req, res) => {
   }
 });
 
-router.get("/:objectId?", auth, async (req, res) => {
+router.get("/:objectId?", auth, lic, async (req, res) => {
   try {
     const { objectId } = req.params;
 
@@ -208,7 +209,7 @@ router.get("/:objectId?", auth, async (req, res) => {
   }
 });
 
-router.patch("/:objectId?/edit", auth, async (req, res) => {
+router.patch("/:objectId?/edit", auth, lic, async (req, res) => {
   try {
     const { objectId } = req.params;
     const { newData } = req.body;
@@ -341,7 +342,7 @@ router.patch("/:objectId?/edit", auth, async (req, res) => {
   }
 });
 
-router.patch("/update-multiple", auth, async (req, res) => {
+router.patch("/update-multiple", auth, lic, async (req, res) => {
   try {
     const { objectIds, userId } = req.body;
 
@@ -373,7 +374,7 @@ router.patch("/update-multiple", auth, async (req, res) => {
   }
 });
 
-router.delete("/:objectId?", auth, async (req, res) => {
+router.delete("/:objectId?", auth, lic, async (req, res) => {
   try {
     const { objectId } = req.params;
 

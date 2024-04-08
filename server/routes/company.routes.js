@@ -1,5 +1,6 @@
 import express from "express";
 import Company from "../models/company/Company.js";
+import lic from "../middleware/license-account-type.middleware.js";
 import auth from "../middleware/auth.middleware.js";
 import User from "../models/User.js";
 import Object from "../models/Object.js";
@@ -7,7 +8,7 @@ import Contact from "../models/contact/Contact.js";
 
 const router = express.Router({ mergeParams: true });
 
-router.get("/", auth, async (req, res) => {
+router.get("/", auth, lic, async (req, res) => {
   try {
     const userId = req.user._id;
     const user = await User.findByPk(userId);
@@ -25,7 +26,7 @@ router.get("/", auth, async (req, res) => {
   }
 });
 
-router.post("/create", auth, async (req, res) => {
+router.post("/create", auth, lic, async (req, res) => {
   try {
     const userId = req.user._id;
     const newCompany = await Company.create({
@@ -41,7 +42,7 @@ router.post("/create", auth, async (req, res) => {
   }
 });
 
-router.patch("/:companyId?/edit", auth, async (req, res) => {
+router.patch("/:companyId?/edit", auth, lic, async (req, res) => {
   try {
     const { companyId } = req.params;
     const { newData } = req.body;
@@ -274,7 +275,7 @@ router.patch("/:companyId?/edit", auth, async (req, res) => {
   }
 });
 
-router.delete("/:companyId?", auth, async (req, res) => {
+router.delete("/:companyId?", auth, lic, async (req, res) => {
   try {
     const { companyId } = req.params;
 

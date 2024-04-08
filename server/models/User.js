@@ -53,7 +53,7 @@ const User = sequelize.define(
     activationLink: { type: DataTypes.STRING, defaultValue: null },
     recoveryPassLink: { type: DataTypes.STRING, defaultValue: null },
     setupPassLink: { type: DataTypes.STRING, defaultValue: null },
-    isActive: { type: DataTypes.BOOLEAN, defaultValue: false },
+    isActive: { type: DataTypes.BOOLEAN, defaultValue: true },
     created_at: {
       type: DataTypes.DATE,
       defaultValue: DataTypes.NOW

@@ -23,16 +23,6 @@ const TeamMateTables = React.memo(
         <AccountInfo />
 
         <RowTitle
-          title="Мои Наблюдатели"
-          background="linear-gradient(to right, SteelBlue , DarkSlateBlue)"
-        />
-        <BasicTable
-          items={observerUsersWithRole}
-          itemsColumns={usersColumns(onOpenUpdateUserPage)}
-          isLoading={isLoading}
-        />
-
-        <RowTitle
           title="Мои Менеджеры"
           background="linear-gradient(to right, orange , darkorange)"
         />
@@ -44,6 +34,15 @@ const TeamMateTables = React.memo(
         />
         <BasicTable
           items={searchedUsers}
+          itemsColumns={usersColumns(onOpenUpdateUserPage)}
+          isLoading={isLoading}
+        />
+        <RowTitle
+          title="Мои Наблюдатели"
+          background="linear-gradient(to right, SteelBlue , DarkSlateBlue)"
+        />
+        <BasicTable
+          items={observerUsersWithRole}
           itemsColumns={usersColumns(onOpenUpdateUserPage)}
           isLoading={isLoading}
         />

@@ -1,5 +1,8 @@
+import Loader from "@components/common/loader/loader";
 import styled from "@emotion/styled";
 import { Box, Typography } from "@mui/material";
+import { getUserLicenseLoadingStatus } from "@store/user/user-license.store";
+import { useSelector } from "react-redux";
 
 const Component = styled(Box)`
   width: 100%;
@@ -28,6 +31,8 @@ const InformItem = ({
   color = "yellow",
   userLicense
 }) => {
+  const isUserLicenseLoading = useSelector(getUserLicenseLoadingStatus());
+
   const trialLicenseTypeId = "71pbfi4954itj045tloop001";
   const activeLicenseTypeId = "718gkgdbn48jgfo3kktjt002";
   const blockedLicenseTypeId = "71kbjld394u5jgfdsjk4l003";
@@ -48,14 +53,18 @@ const InformItem = ({
       <StyledTypography variant="h5" sx={{ fontWeight: "bold" }}>
         {title}
       </StyledTypography>
-      <Container>
-        <StyledTypography variant="h4" sx={{ color: getColorIformTerm() }}>
-          {subtitle}
-        </StyledTypography>
-        <StyledTypography variant="h4" sx={{ color: getColorIformTerm() }}>
-          {unit}
-        </StyledTypography>
-      </Container>
+      {!isUserLicenseLoading ? (
+        <Container>
+          <StyledTypography variant="h4" sx={{ color: getColorIformTerm() }}>
+            {subtitle}
+          </StyledTypography>
+          <StyledTypography variant="h4" sx={{ color: getColorIformTerm() }}>
+            {unit}
+          </StyledTypography>
+        </Container>
+      ) : (
+        <Loader />
+      )}
     </Component>
   );
 };

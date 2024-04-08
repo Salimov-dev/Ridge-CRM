@@ -43,6 +43,7 @@ const FormContainer = styled(Box)`
 const initialState = {
   email: "",
   password: "",
+  confirmPassword: "",
   city: null,
   color: null
 };

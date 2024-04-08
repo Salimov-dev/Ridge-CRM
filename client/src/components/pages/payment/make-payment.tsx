@@ -1,16 +1,15 @@
 // libraries
 import { Box, Typography } from "@mui/material";
 import { useForm } from "react-hook-form";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { yupResolver } from "@hookform/resolvers/yup";
-import React, { useState } from "react";
+import React from "react";
 import dayjs from "dayjs";
 import config from "@config/config.json";
 // components
 import TitleWithCloseButton from "@common/page-headers/header-with-close-button";
 import SuccessCancelFormButtons from "@components/common/buttons/success-cancel-form-buttons";
-import LoaderFullWindow from "@components/common/loader/loader-full-window";
 import MakePaymentForm from "@forms/make-payment/make-payment.form";
 import CostOneLicense from "./components/cost-one-license";
 import CurrentLicenseInfo from "./components/current-license-info";
@@ -18,27 +17,19 @@ import EnoughLicenseDays from "./components/enough-license-days";
 import EnoughLicenseDate from "./components/enough-license-date";
 // store
 import { getCurrentUserId } from "@store/user/users.store";
-import {
-  getUserLicensesByUserId,
-  updateUserLicense
-} from "@store/user/user-license.store";
+import { getUserLicensesByUserId } from "@store/user/user-license.store";
 // schema
 import { paymentAmounySchema } from "@schemas/payment-amount.schema";
-import { FormatDate } from "@utils/date/format-date";
+// utils
 import { removeSpacesAndConvertToNumber } from "@utils/data/remove-spaces-and-convert-to-number";
+// services
 import paymentService from "@services/payment/payment.service";
-import { useNavigate } from "react-router-dom";
-import { userLicenseStatusesArray } from "@data/users/user-license-statuses";
 
 const initialState = {
   amount: 0
 };
 
 const MakePaymentPage = React.memo(({ onClose }) => {
-  const [isLoading, setIsLoading] = useState(false);
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-
   const {
     register,
     watch,
@@ -46,8 +37,8 @@ const MakePaymentPage = React.memo(({ onClose }) => {
     formState: { errors }
   } = useForm({
     defaultValues: initialState,
-    mode: "onBlur"
-    // resolver: yupResolver(paymentAmounySchema)
+    mode: "onBlur",
+    resolver: yupResolver(paymentAmounySchema)
   });
 
   const trialLicenseTypeId = "71pbfi4954itj045tloop001";
@@ -57,10 +48,6 @@ const MakePaymentPage = React.memo(({ onClose }) => {
   const currentLicenseTypeId = userLicense?.accountType;
 
   const paymentAmount = removeSpacesAndConvertToNumber(watch("amount"));
-
-  // const managersLength = userLicense?.managers.length;
-  // const observersLength = userLicense?.observers.length;
-  // const totalUsersLength = managersLength + observersLength + 1; // 1 добавляю в качестве лицензии текущего пользователя Куратора
 
   const activeUsersQuantity = userLicense?.activeUsersQuantity;
 
@@ -138,7 +125,6 @@ const MakePaymentPage = React.memo(({ onClose }) => {
         onCancel={onClose}
         disabledRemoveButton={true}
       />
-      <LoaderFullWindow isLoading={isLoading} />
     </Box>
   );
 });

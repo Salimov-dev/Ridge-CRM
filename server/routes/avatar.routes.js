@@ -1,5 +1,6 @@
 import express from "express";
 import Company from "../models/company/Company.js";
+import lic from "../middleware/license-account-type.middleware.js";
 import auth from "../middleware/auth.middleware.js";
 import fs from "fs/promises";
 import path from "path";
@@ -8,7 +9,7 @@ import { dirname } from "path";
 
 const router = express.Router({ mergeParams: true });
 
-router.get("/:userId", auth, async (req, res) => {
+router.get("/:userId", auth, lic, async (req, res) => {
   try {
     const { userId } = req.params;
 
@@ -53,7 +54,7 @@ router.get("/:userId", auth, async (req, res) => {
   }
 });
 
-router.post("/update/:userId", auth, async (req, res) => {
+router.post("/update/:userId", auth, lic, async (req, res) => {
   try {
     res.setHeader("Content-Type", "application/json");
     const userId = req.user._id;
@@ -83,7 +84,7 @@ router.post("/update/:userId", auth, async (req, res) => {
   }
 });
 
-router.delete("/:userId", auth, async (req, res) => {
+router.delete("/:userId", auth, lic, async (req, res) => {
   try {
     const { userId } = req.params;
 

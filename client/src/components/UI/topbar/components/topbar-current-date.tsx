@@ -78,9 +78,10 @@ const TopBarCurrentDate = () => {
             onClick={() => navigate("/users")}
           >
             <Element variant="h5">
-              {!isLicenseBlockedType
+              {!isLicenseBlockedType ? licenseBalance : 0}₽
+              {/* {!isLicenseBlockedType
                 ? `${daysDifference} ${pluralizeDays(daysDifference)}`
-                : 0}
+                : 0} */}
             </Element>
           </Tooltip>
           <Typography color="grey">|</Typography>

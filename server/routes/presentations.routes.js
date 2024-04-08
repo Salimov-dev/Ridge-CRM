@@ -4,10 +4,11 @@ import User from "../models/User.js";
 import auth from "../middleware/auth.middleware.js";
 import Presentation from "../models/Presentation.js";
 import { roleCurator, roleManager, roleObserver } from "../utils/user-roles.js";
+import lic from "../middleware/license-account-type.middleware.js";
 
 const router = express.Router({ mergeParams: true });
 
-router.get("/", auth, async (req, res) => {
+router.get("/", auth, lic, async (req, res) => {
   try {
     const userId = req.user._id;
     const user = await User.findByPk(userId);
@@ -79,7 +80,7 @@ router.get("/", auth, async (req, res) => {
   }
 });
 
-router.post("/create", auth, async (req, res) => {
+router.post("/create", auth, lic, async (req, res) => {
   try {
     const userId = req.user._id;
 
@@ -96,7 +97,7 @@ router.post("/create", auth, async (req, res) => {
   }
 });
 
-router.patch("/:presentationId?/edit", auth, async (req, res) => {
+router.patch("/:presentationId?/edit", auth, lic, async (req, res) => {
   try {
     const { presentationId } = req.params;
     if (!presentationId) {
@@ -123,7 +124,7 @@ router.patch("/:presentationId?/edit", auth, async (req, res) => {
   }
 });
 
-router.delete("/:presentationId?", auth, async (req, res) => {
+router.delete("/:presentationId?", auth, lic, async (req, res) => {
   try {
     const { presentationId } = req.params;
     if (!presentationId) {

@@ -1,5 +1,6 @@
 import express from "express";
 import User from "../models/User.js";
+import lic from "../middleware/license-account-type.middleware.js";
 import auth from "../middleware/auth.middleware.js";
 import nodemailer from "nodemailer";
 import dotenv from "dotenv";
@@ -45,7 +46,7 @@ router.get("/:link?", auth, async (req, res) => {
   }
 });
 
-router.post("/sendConfirmMail/:link?", auth, async (req, res) => {
+router.post("/sendConfirmMail/:link?", auth, lic, async (req, res) => {
   try {
     const activationLinkId = req.params.link;
     const activationLink = `${API_URL}/activate/${activationLinkId}`;
@@ -103,7 +104,7 @@ router.post("/sendConfirmMail/:link?", auth, async (req, res) => {
   }
 });
 
-router.post("/clearActivationLink/:linkId?", auth, async (req, res) => {
+router.post("/clearActivationLink/:linkId?", auth, lic, async (req, res) => {
   try {
     const userId = req.user._id;
     const user = await User.findByPk(userId);

@@ -20,10 +20,17 @@ import { loadMeetingsList } from "@store/meeting/meetings.store";
 import { loadMeetingStatusesList } from "@store/meeting/meeting-status.store";
 import { loadMeetingTypesList } from "@store/meeting/meeting-types.store";
 // users
-import { getIsLoggedIn, loadUsersList } from "@store/user/users.store";
+import {
+  getCurrentUserId,
+  getIsLoggedIn,
+  loadUsersList
+} from "@store/user/users.store";
 import { loadUserStatusesList } from "@store/user-params/user-statuses.store";
 // license
-import { loadUserLicensesList } from "@store/user/user-license.store";
+import {
+  getUserLicensesByUserId,
+  loadUserLicensesList
+} from "@store/user/user-license.store";
 // company
 import { loadCompaniesList } from "@store/company/company.store";
 // tasks
@@ -47,11 +54,18 @@ interface AppLoaderProps {
 const AppLoader = ({ children }: AppLoaderProps) => {
   const dispatch = useDispatch();
   const isLoggedIn = useSelector(getIsLoggedIn());
+  const currentUserId = useSelector(getCurrentUserId());
+  const currentUserLicense = useSelector(
+    getUserLicensesByUserId(currentUserId)
+  );
+  const blockedLicenseTypeId = "71kbjld394u5jgfdsjk4l003";
+  const currentLicenseTypeId = currentUserLicense?.accountType;
+  const isLicenseBlockedType = currentLicenseTypeId === blockedLicenseTypeId;
 
   useEffect(() => {
     // cities
     dispatch<any>(loadCitiesList());
-    if (isLoggedIn) {
+    if (isLoggedIn && !isLicenseBlockedType) {
       // objects
       dispatch<any>(loadObjectsList());
       dispatch<any>(loadObjectStatusList());
@@ -90,7 +104,7 @@ const AppLoader = ({ children }: AppLoaderProps) => {
       dispatch<any>(loadContactsList());
       dispatch<any>(loadContactPositionsList());
     }
-  }, [isLoggedIn, dispatch]);
+  }, [isLoggedIn, dispatch, isLicenseBlockedType]);
 
   return children;
 };

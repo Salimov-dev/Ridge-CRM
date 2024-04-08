@@ -3,10 +3,11 @@ import Meeting from "../models/Meeting.js";
 import auth from "../middleware/auth.middleware.js";
 import User from "../models/User.js";
 import { roleCurator, roleManager, roleObserver } from "../utils/user-roles.js";
+import lic from "../middleware/license-account-type.middleware.js";
 
 const router = express.Router({ mergeParams: true });
 
-router.get("/", auth, async (req, res) => {
+router.get("/", auth, lic, async (req, res) => {
   try {
     const userId = req.user._id;
     const user = await User.findByPk(userId);
@@ -79,7 +80,7 @@ router.get("/", auth, async (req, res) => {
   }
 });
 
-router.post("/create", auth, async (req, res) => {
+router.post("/create", auth, lic, async (req, res) => {
   try {
     const userId = req.user._id;
     const newMeeting = await Meeting.create({
@@ -95,7 +96,7 @@ router.post("/create", auth, async (req, res) => {
   }
 });
 
-router.patch("/:meetingId?/edit", auth, async (req, res) => {
+router.patch("/:meetingId?/edit", auth, lic, async (req, res) => {
   try {
     const { meetingId } = req.params;
     if (!meetingId) {
@@ -122,7 +123,7 @@ router.patch("/:meetingId?/edit", auth, async (req, res) => {
   }
 });
 
-router.delete("/:meetingId?", auth, async (req, res) => {
+router.delete("/:meetingId?", auth, lic, async (req, res) => {
   try {
     const { meetingId } = req.params;
 

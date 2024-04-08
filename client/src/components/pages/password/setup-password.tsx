@@ -149,7 +149,7 @@ const SetupPassword = React.memo(() => {
           </Typography>
           <Box>
             <Typography variant="h3" sx={{ textAlign: "center" }}>
-              Обратитесь к своему Куратора для активации аккаунта,
+              Обратитесь к своему Куратору для активации аккаунта,
             </Typography>
             <Typography variant="h3" sx={{ textAlign: "center" }}>
               после этого Вы сможете авторизоваться в Грядке ЦРМ

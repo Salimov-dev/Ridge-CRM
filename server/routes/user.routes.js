@@ -227,14 +227,14 @@ router.patch("/:userId/update-teammate", auth, lic, async (req, res) => {
     );
 
     if (currentLicenseTypeId === trialLicenseTypeId) {
-      newLicenseEndDate = currentLicenseTrialEndDate;
+      newLicenseEndDate = currentLicenseTrialEndDate.subtract(1, "day");
     }
 
     if (currentLicenseTypeId === activeLicenseTypeId) {
-      newLicenseEndDate = currentLicenseStartDate.add(
-        licenseDaysLeftQuantity,
-        "day"
-      );
+      newLicenseEndDate = currentDate
+        .add(licenseDaysLeftQuantity, "day")
+        .subtract(1, "day");
+      console.log("newLicenseEndDate", newLicenseEndDate);
     }
 
     // Обновление лицензии пользователя
@@ -251,7 +251,7 @@ router.patch("/:userId/update-teammate", auth, lic, async (req, res) => {
     const updatedLicense = await UserLicense.findOne({
       where: { userId: currentUserId }
     });
-
+    console.log("updatedLicense", updatedLicense);
     res.status(200).json({ updatedUser, updatedLicense });
   } catch (e) {
     console.error(e);

@@ -1,12 +1,13 @@
 import express from "express";
 import User from "../models/User.js";
+import lic from "../middleware/license-account-type.middleware.js";
 import auth from "../middleware/auth.middleware.js";
 import LastContact from "../models/Last-contact.js";
 import { roleCurator, roleManager, roleObserver } from "../utils/user-roles.js";
 
 const router = express.Router({ mergeParams: true });
 
-router.get("/", auth, async (req, res) => {
+router.get("/", auth, lic, async (req, res) => {
   try {
     const userId = req.user._id;
     const user = await User.findByPk(userId);
@@ -78,7 +79,7 @@ router.get("/", auth, async (req, res) => {
   }
 });
 
-router.post("/create", auth, async (req, res) => {
+router.post("/create", auth, lic, async (req, res) => {
   try {
     const userId = req.user._id;
     const newLastContact = await LastContact.create({
@@ -94,7 +95,7 @@ router.post("/create", auth, async (req, res) => {
   }
 });
 
-router.patch("/:lastContactId?/edit", auth, async (req, res) => {
+router.patch("/:lastContactId?/edit", auth, lic, async (req, res) => {
   try {
     const { lastContactId } = req.params;
     if (!lastContactId) {
@@ -122,7 +123,7 @@ router.patch("/:lastContactId?/edit", auth, async (req, res) => {
   }
 });
 
-router.delete("/:lastContactId?", auth, async (req, res) => {
+router.delete("/:lastContactId?", auth, lic, async (req, res) => {
   try {
     const { lastContactId } = req.params;
     if (!lastContactId) {

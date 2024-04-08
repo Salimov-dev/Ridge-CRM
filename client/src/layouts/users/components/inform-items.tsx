@@ -47,15 +47,15 @@ const InformItems = () => {
   const licenseCost = config.licenseCost;
   const totalLicensesCost = totalUsersLength * licenseCost;
 
+  const currentDate = dayjs();
   const dateStart = dayjs(userLicense?.dateStart);
   const dateEnd = dayjs(userLicense?.dateEnd);
   const dateEndTrialPeriod = dayjs(userLicense?.dateTrialEnd);
+  const daysLeftQuantity = (
+    isLicenseTrialType ? dateEndTrialPeriod : dateEnd
+  )?.diff(currentDate, "day");
 
-  const daysDifference =
-    (isLicenseTrialType ? dateEndTrialPeriod : dateEnd)?.diff(
-      dateStart,
-      "day"
-    ) + (isLicenseTrialType ? 1 : 0);
+  const daysDifference = daysLeftQuantity + (!daysLeftQuantity ? 1 : 2);
 
   return (
     <InformItemsContainer>
@@ -75,15 +75,20 @@ const InformItems = () => {
         subtitle={FormatDate(dateStart)}
         userLicense={userLicense}
       />
+      <InformItem
+        title="Текущая дата"
+        subtitle={FormatDate(currentDate)}
+        userLicense={userLicense}
+      />
       {currentLicenseTypeId === trialLicenseTypeId ? (
         <InformItem
-          title="Дата окончания демо-доступа"
+          title="Последний день демо-доступа"
           subtitle={FormatDate(dateEndTrialPeriod)}
           userLicense={userLicense}
         />
       ) : (
         <InformItem
-          title="Дата окончания подписки"
+          title="Последний день доступа"
           subtitle={FormatDate(dateEnd)}
           userLicense={userLicense}
         />

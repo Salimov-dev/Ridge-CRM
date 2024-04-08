@@ -17,6 +17,7 @@ import http from "http";
 import config from "config";
 import fs from "fs";
 import cron from "node-cron";
+import subscriptions from "./utils/subscriptions.js";
 
 const PORT = config.get("port") ?? 8080;
 const __filename = fileURLToPath(import.meta.url);
@@ -41,7 +42,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use("/api", routes);
 app.use("/api/uploads", express.static(path.join(__dirname, "uploads")));
 
-// cron.schedule("0 * * * *", () => backupMongoDB());
+// cron.schedule("1 0 * * *", () => subscriptions()); // каждый день в 00:00
+// cron.schedule("* * * * *", () => subscriptions()); // каждую минуту
+// subscriptions();
 
 if (process.env.NODE_ENV === "production") {
   app.use("/", express.static(path.join(__dirname, "client")));
