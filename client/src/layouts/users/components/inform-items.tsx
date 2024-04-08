@@ -48,6 +48,7 @@ const InformItems = () => {
   const totalLicensesCost = totalUsersLength * licenseCost;
 
   const currentDate = dayjs();
+  // const currentDate = dayjs().add(1, "day");
   const dateStart = dayjs(userLicense?.dateStart);
   const dateEnd = dayjs(userLicense?.dateEnd);
   const dateEndTrialPeriod = dayjs(userLicense?.dateTrialEnd);
@@ -55,13 +56,21 @@ const InformItems = () => {
     isLicenseTrialType ? dateEndTrialPeriod : dateEnd
   )?.diff(currentDate, "day");
 
-  const daysDifference = daysLeftQuantity + (!daysLeftQuantity ? 1 : 2);
+  const daysDifference =
+    daysLeftQuantity +
+    (currentDate.isSame(dateEnd, "day") ||
+    currentDate.isSame(dateEndTrialPeriod, "day")
+      ? 1
+      : 2);
 
   return (
     <InformItemsContainer>
       <InformItem
         title="Баланс"
-        subtitle={makeDigitSeparator(userLicense?.balance)}
+        subtitle={(userLicense?.balance || 0)
+          .toString()
+          .replace(/\B(?=(\d{3})+(?!\d))/g, " ")}
+        // subtitle={makeDigitSeparator(userLicense?.balance)}
         unit="₽"
         userLicense={userLicense}
       />

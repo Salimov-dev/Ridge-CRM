@@ -218,6 +218,7 @@ router.patch("/:userId/update-teammate", auth, lic, async (req, res) => {
     const licenseDaysLeftQuantity = Math.floor(
       userLicense.balance / (subscriptionCostPerUser * totalUsersCount)
     );
+    console.log("licenseDaysLeftQuantity", licenseDaysLeftQuantity);
 
     // let newLicenseEndDate = currentLicenseEndDate;
 
@@ -234,7 +235,6 @@ router.patch("/:userId/update-teammate", auth, lic, async (req, res) => {
       newLicenseEndDate = currentDate
         .add(licenseDaysLeftQuantity, "day")
         .subtract(1, "day");
-      console.log("newLicenseEndDate", newLicenseEndDate);
     }
 
     // Обновление лицензии пользователя
@@ -251,7 +251,7 @@ router.patch("/:userId/update-teammate", auth, lic, async (req, res) => {
     const updatedLicense = await UserLicense.findOne({
       where: { userId: currentUserId }
     });
-    console.log("updatedLicense", updatedLicense);
+
     res.status(200).json({ updatedUser, updatedLicense });
   } catch (e) {
     console.error(e);

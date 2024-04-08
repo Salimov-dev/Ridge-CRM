@@ -63,7 +63,10 @@ const subscriptions = async () => {
         let newLicenseStartDate = currentLicenseStartDate;
         let newLicenseEndDate = currentLicenseEndDate;
 
-        if (isLicenseTrialType && currentDate > currentLicenseEndTrialDate) {
+        if (
+          (isLicenseTrialType && currentDate > currentLicenseEndTrialDate) ||
+          currentLicenseBalance < 0
+        ) {
           allUserWithCurrentUserArray.forEach(async (userId) => {
             try {
               await User.update(
@@ -85,6 +88,9 @@ const subscriptions = async () => {
           // Обновление информации о лицензии
           await UserLicense.update(
             {
+              balance: Sequelize.literal(
+                `balance - ${costsForAllActivityUsersPerDay}`
+              ),
               accountType: blockedLicenseTypeId,
               activeUsersQuantity: 0
             },
@@ -98,19 +104,20 @@ const subscriptions = async () => {
           return updatedLicense;
         }
 
-        if (isLicenseActiveType) {
-          // usersManagersArray
-          //   .concat(usersObserversArray)
-          //   .forEach(async (userId) => {
-          //     try {
-          //       await User.update(
-          //         { quantityClicksOnMap: 60 },
-          //         { where: { _id: userId } }
-          //       );
-          //     } catch (error) {
-          //       console.error("Ошибка при обновлении  пользователя:", error);
-          //     }
-          //   });
+        if (isLicenseActiveType && currentLicenseBalance > 0) {
+          allUserWithCurrentUserArray.forEach(async (userId) => {
+            try {
+              await UserLicense.update(
+                { quantityClicksOnMap: 60 },
+                { where: { userId } }
+              );
+            } catch (error) {
+              console.error(
+                "Ошибка при обновлении статуса активности пользователя:",
+                error
+              );
+            }
+          });
 
           // Обновление информации о лицензии
           await UserLicense.update(
