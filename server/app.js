@@ -42,7 +42,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use("/api", routes);
 app.use("/api/uploads", express.static(path.join(__dirname, "uploads")));
 
-// cron.schedule("1 0 * * *", () => subscriptions()); // каждый день в 00:00
+// cron.schedule("0 0 * * *", () => subscriptions()); // каждый день в 00:01
+// cron.schedule("1 0 * * *", () => subscriptions()); // каждый день в 00:01
+// cron.schedule("59 23 * * *", () => subscriptions()); //  в 23:59:59 каждый день
 // cron.schedule("* * * * *", () => subscriptions()); // каждую минуту
 // subscriptions();
 

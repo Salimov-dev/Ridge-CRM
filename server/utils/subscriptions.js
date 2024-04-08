@@ -15,8 +15,8 @@ const subscriptions = async () => {
 
     licenseList.forEach(async (userLicense) => {
       try {
-        const userId = userLicense.userId;
-        const currentUser = await User.findByPk(userId);
+        const currentUserId = userLicense.userId;
+        const currentUser = await User.findByPk(currentUserId);
 
         const currentLicenseTypeId = userLicense?.accountType;
         const isLicenseTrialType = currentLicenseTypeId === trialLicenseTypeId;
@@ -24,6 +24,13 @@ const subscriptions = async () => {
           currentLicenseTypeId === activeLicenseTypeId;
         const isLicenseBlockedType =
           currentLicenseTypeId === blockedLicenseTypeId;
+
+        // дата
+        const currentDate = dayjs();
+        const currentLicenseStartDate = dayjs(userLicense.dateStart);
+        const currentLicenseEndDate = dayjs(userLicense.dateEnd);
+        const currentLicenseEndTrialDate = dayjs(userLicense.dateTrialEnd);
+        let newLicenseStartDate = currentLicenseStartDate;
 
         // вычисление активных пользователей лицензии
         const usersManagersArray = userLicense?.managers;
@@ -38,12 +45,41 @@ const subscriptions = async () => {
           return user && user.isActive;
         });
 
-        const allCuratorUsers = [...usersManagersArray, usersObserversArray];
-        const allUserWithCurrentUserArray = [...allCuratorUsers, currentUser];
+        const allCuratorUsers = [...usersManagersArray, ...usersObserversArray];
+        const allUserWithCurrentUserArray = [
+          ...allCuratorUsers,
+          currentUser._id
+        ];
+
+        const updateTodayUsers = [];
+        for (const userId of allCuratorUsers) {
+          try {
+            const filteredUser = await User.findByPk(userId);
+            if (
+              filteredUser &&
+              filteredUser.updated_at &&
+              filteredUser.created_at &&
+              filteredUser.updated_at !== filteredUser.created_at &&
+              dayjs(filteredUser.updated_at).isSame(currentDate, "day")
+            ) {
+              updateTodayUsers.push(filteredUser);
+            }
+          } catch (error) {
+            console.error(
+              "Ошибка при обновлении поиске обновленного сегодня пользователя:",
+              error
+            );
+          }
+        }
+
+        const updateTodayUsersIds = updateTodayUsers.map((user) => user._id);
 
         const managersLength = activeUsersManagers?.length || 0;
         const observersLength = activeUsersObservers?.length || 0;
-        const totalActiveUsersQuantity = managersLength + observersLength + 1; // 1 добавляю в качестве лицензии текущего пользователя Куратора
+        const updatedTodayUsersLength = updateTodayUsersIds?.length || 0;
+        const totalActiveUsersQuantity =
+          managersLength + observersLength + updatedTodayUsersLength + 1; // 1 добавляю в качестве лицензии текущего пользователя Куратора
+        let newLicenseEndDate = currentLicenseEndDate;
 
         // баланс
         const currentLicenseBalance = userLicense.balance;
@@ -55,31 +91,28 @@ const subscriptions = async () => {
         const costsForAllActivityUsersPerDay =
           totalActiveUsersQuantity * subscriptionCostPerUser;
 
-        // дата
-        const currentDate = dayjs();
-        const currentLicenseStartDate = dayjs(userLicense.dateStart);
-        const currentLicenseEndDate = dayjs(userLicense.dateEnd);
-        const currentLicenseEndTrialDate = dayjs(userLicense.dateTrialEnd);
-        let newLicenseStartDate = currentLicenseStartDate;
-        let newLicenseEndDate = currentLicenseEndDate;
-
-        if (
-          (isLicenseTrialType && currentDate > currentLicenseEndTrialDate) ||
-          currentLicenseBalance < 0
-        ) {
+        const makeLicenseTypeIsBlock = async () => {
           allUserWithCurrentUserArray.forEach(async (userId) => {
             try {
               await User.update(
                 { isActive: false },
                 { where: { _id: userId } }
               );
+            } catch (error) {
+              console.error(
+                "Ошибка при обновлении статуса активности пользователя:",
+                error
+              );
+            }
+
+            try {
               await UserLicense.update(
                 { quantityClicksOnMap: 0 },
                 { where: { userId } }
               );
             } catch (error) {
               console.error(
-                "Ошибка при обновлении статуса активности пользователя:",
+                "Ошибка при обновлении количества кликов на карте:",
                 error
               );
             }
@@ -92,19 +125,27 @@ const subscriptions = async () => {
                 `balance - ${costsForAllActivityUsersPerDay}`
               ),
               accountType: blockedLicenseTypeId,
-              activeUsersQuantity: 0
+              activeUsersQuantity: 0,
+              dateEnd: currentDate
             },
-            { where: { userId } }
+            { where: { userId: currentUserId } }
           );
 
           const updatedLicense = await UserLicense.findOne({
-            where: { userId }
+            where: { userId: currentUserId }
           });
 
           return updatedLicense;
+        };
+
+        if (isLicenseTrialType && currentDate > currentLicenseEndTrialDate) {
+          makeLicenseTypeIsBlock();
         }
 
-        if (isLicenseActiveType && currentLicenseBalance > 0) {
+        if (
+          isLicenseActiveType &&
+          currentLicenseBalance > costsForAllActivityUsersPerDay
+        ) {
           allUserWithCurrentUserArray.forEach(async (userId) => {
             try {
               await UserLicense.update(
@@ -113,28 +154,50 @@ const subscriptions = async () => {
               );
             } catch (error) {
               console.error(
-                "Ошибка при обновлении статуса активности пользователя:",
+                "Ошибка при обновлении кол-ва кликов пользователя активной лицензии:",
                 error
               );
             }
           });
 
           // Обновление информации о лицензии
+          const newTotalActiveUsersQuantity =
+            managersLength + observersLength + 1;
+          const newUserLicenseBalance =
+            currentLicenseBalance - costsForAllActivityUsersPerDay;
+          const newLicenseDaysLeftQuantity = Math.floor(
+            newUserLicenseBalance /
+              (subscriptionCostPerUser * newTotalActiveUsersQuantity)
+          );
+          const newLicenseEndDate = updatedTodayUsersLength
+            ? currentDate
+                .add(newLicenseDaysLeftQuantity, "day")
+                .subtract(1, "day")
+            : userLicense.dateEnd;
+
           await UserLicense.update(
             {
               balance: Sequelize.literal(
                 `balance - ${costsForAllActivityUsersPerDay}`
               ),
-              quantityClicksOnMap: 60
+              quantityClicksOnMap: 60,
+              dateEnd: newLicenseEndDate
             },
-            { where: { userId } }
+            { where: { userId: currentUserId } }
           );
 
           const updatedLicense = await UserLicense.findOne({
-            where: { userId }
+            where: { userId: currentUserId }
           });
 
           return updatedLicense;
+        }
+
+        if (
+          isLicenseActiveType &&
+          currentLicenseBalance < costsForAllActivityUsersPerDay
+        ) {
+          makeLicenseTypeIsBlock();
         }
       } catch (error) {
         console.error("Ошибка при обработке баланса лицензии:", error);
@@ -142,8 +205,6 @@ const subscriptions = async () => {
     });
   } catch (e) {
     console.error("На сервере произошла ошибка, попробуйте позже:", e);
-    // Если это функция, которая выполняется асинхронно, не у вас нет доступа к res здесь.
-    // res.status(500).json({ message: "На сервере произошла ошибка, попробуйте позже" });
   }
 };
 

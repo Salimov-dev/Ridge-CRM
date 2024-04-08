@@ -162,7 +162,6 @@ router.patch("/:userLicenseId?/edit", auth, async (req, res) => {
 router.patch("/:userLicenseId?/updateClicksOnMap", auth, async (req, res) => {
   try {
     const { userLicenseId } = req.params;
-    console.log("userLicenseId", userLicenseId);
 
     if (!userLicenseId) {
       return res.status(400).json({

@@ -127,6 +127,7 @@ router.patch("/:userId/update-teammate", auth, lic, async (req, res) => {
   try {
     const userId = req.params.userId;
     const currentUserId = req.user._id;
+    const currentDate = dayjs();
     const { _id: updatedUserId, color, role, isActive } = req.body;
 
     const addRoleToUser = (userRoles, roleId) => {
@@ -150,7 +151,8 @@ router.patch("/:userId/update-teammate", auth, lic, async (req, res) => {
       {
         color: color,
         role: addRoleToUser(existingUser?.role, role),
-        isActive: isActive
+        isActive: isActive,
+        updated_at: currentDate
       },
       { where: { _id: userId } }
     );
@@ -210,7 +212,6 @@ router.patch("/:userId/update-teammate", auth, lic, async (req, res) => {
 
     // считаем новую дату окончания лицензии
     const subscriptionCostPerUser = 25; // Стоимость подписки за одного пользователя
-    const currentDate = dayjs();
     const currentLicenseStartDate = dayjs(userLicense.dateStart);
     const currentLicenseEndDate = dayjs(userLicense.dateEnd);
     const currentLicenseTrialEndDate = dayjs(userLicense.dateTrialEnd);
@@ -218,9 +219,6 @@ router.patch("/:userId/update-teammate", auth, lic, async (req, res) => {
     const licenseDaysLeftQuantity = Math.floor(
       userLicense.balance / (subscriptionCostPerUser * totalUsersCount)
     );
-    console.log("licenseDaysLeftQuantity", licenseDaysLeftQuantity);
-
-    // let newLicenseEndDate = currentLicenseEndDate;
 
     let newLicenseEndDate = currentLicenseStartDate.add(
       licenseDaysLeftQuantity,
