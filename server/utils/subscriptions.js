@@ -27,6 +27,7 @@ const subscriptions = async () => {
 
         // дата
         const currentDate = dayjs();
+        const yesterday = currentDate.subtract(1, "day");
         const currentLicenseStartDate = dayjs(userLicense.dateStart);
         const currentLicenseEndDate = dayjs(userLicense.dateEnd);
         const currentLicenseEndTrialDate = dayjs(userLicense.dateTrialEnd);
@@ -51,7 +52,7 @@ const subscriptions = async () => {
           currentUser._id
         ];
 
-        const updateTodayUsers = [];
+        const updateYesterdayUsers = [];
         for (const userId of allCuratorUsers) {
           try {
             const filteredUser = await User.findByPk(userId);
@@ -60,9 +61,9 @@ const subscriptions = async () => {
               filteredUser.updated_at &&
               filteredUser.created_at &&
               filteredUser.updated_at !== filteredUser.created_at &&
-              dayjs(filteredUser.updated_at).isSame(currentDate, "day")
+              dayjs(filteredUser.updated_at).isSame(yesterday, "day")
             ) {
-              updateTodayUsers.push(filteredUser);
+              updateYesterdayUsers.push(filteredUser);
             }
           } catch (error) {
             console.error(
@@ -72,13 +73,16 @@ const subscriptions = async () => {
           }
         }
 
-        const updateTodayUsersIds = updateTodayUsers.map((user) => user._id);
+        const updateYesterdayUsersIds = updateYesterdayUsers.map(
+          (user) => user._id
+        );
 
         const managersLength = activeUsersManagers?.length || 0;
         const observersLength = activeUsersObservers?.length || 0;
-        const updatedTodayUsersLength = updateTodayUsersIds?.length || 0;
+        const updatedYesterdayUsersLength =
+          updateYesterdayUsersIds?.length || 0;
         const totalActiveUsersQuantity =
-          managersLength + observersLength + updatedTodayUsersLength + 1; // 1 добавляю в качестве лицензии текущего пользователя Куратора
+          managersLength + observersLength + updatedYesterdayUsersLength + 1; // 1 добавляю в качестве лицензии текущего пользователя Куратора
         let newLicenseEndDate = currentLicenseEndDate;
 
         // баланс
@@ -169,7 +173,7 @@ const subscriptions = async () => {
             newUserLicenseBalance /
               (subscriptionCostPerUser * newTotalActiveUsersQuantity)
           );
-          const newLicenseEndDate = updatedTodayUsersLength
+          const newLicenseEndDate = updatedYesterdayUsersLength
             ? currentDate
                 .add(newLicenseDaysLeftQuantity, "day")
                 .subtract(1, "day")
