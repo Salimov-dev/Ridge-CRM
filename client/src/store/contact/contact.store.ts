@@ -140,7 +140,6 @@ export const updateContact = (payload) => async (dispatch) => {
   dispatch(contactUpdateRequested());
   try {
     const { content } = await contactService.update(payload);
-    console.log("content", content);
 
     dispatch(updateCompanies(content.companiesRemovedCompanies));
     dispatch(updateCompanies(content.updatedCompanies));
@@ -165,10 +164,20 @@ export const updateContacts = (payload) => async (dispatch) => {
   dispatch(contactUpdateRequested());
   try {
     dispatch(contactsUpdateSuccessed(payload));
+    socket.emit("contactsUpdated", payload);
   } catch (error) {
     dispatch(contactUpdateFailed(error.message));
   }
 };
+
+// export const updateContactsUpdate = (payload) => async (dispatch) => {
+//   dispatch(contactUpdateRequested());
+//   try {
+//     dispatch(contactsUpdateSuccessed(payload));
+//   } catch (error) {
+//     dispatch(contactUpdateFailed(error.message));
+//   }
+// };
 
 export const removeContact = (contactId) => async (dispatch) => {
   dispatch(removeContactRequested());

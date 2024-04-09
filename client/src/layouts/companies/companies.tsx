@@ -133,8 +133,8 @@ const Companies = React.memo(() => {
       <PageDialogs
         state={state}
         setState={setState}
-        videoTitle="Как пользоваться страницей с Контактами"
-        videoSrc="https://www.youtube.com/embed/zz_SjeT_-M4"
+        videoTitle="Как пользоваться страницей с Компаниями"
+        videoSrc="https://www.youtube.com/embed/aIl_VQbtyxs"
       />
     </ContainerStyled>
   );

@@ -116,7 +116,11 @@ export function createCompany(payload) {
     dispatch(companyCreateRequested());
     try {
       const { content } = await companyService.create(payload);
-      socket.emit("companyCreated", content);
+      console.log("content", content);
+
+      dispatch(updateContacts({ updatedContacts: content.updatedContacts }));
+      dispatch(updateObjects({ updatedObjects: content.updatedObjects }));
+      socket.emit("companyCreated", content.newCompany);
     } catch (error) {
       dispatch(createCompanyFailed(error.message));
     }
