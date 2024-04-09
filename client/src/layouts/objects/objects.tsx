@@ -222,6 +222,7 @@ const Objects = React.memo(() => {
         selectedObjects={state.selectedObjects}
         setRowSelection={setRowSelection}
         isObjectPage={true}
+        videoTitle="Как пользоваться Таблицей объектов"
         videoSrc="https://www.youtube.com/embed/uM2GtctKDIE"
       />
     </ContainerStyled>
