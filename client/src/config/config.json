@@ -1,5 +1,5 @@
 {
-  "apiEndpoint": "http://localhost:8080/api/",
-  "ioEndPoint": "localhost:8080",
+  "apiEndpoint": "https://ridge-crm.ru/api/",
+  "ioEndPoint": "ridge-crm.ru",
   "licenseCost": 25
 }

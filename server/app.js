@@ -12,8 +12,8 @@ import cookieParser from "cookie-parser";
 import express from "express";
 import cors from "cors";
 import path from "path";
-import http from "http";
-// import https from "https";
+// import http from "http";
+import https from "https";
 import config from "config";
 import fs from "fs";
 import cron from "node-cron";
@@ -30,8 +30,8 @@ const options = {
 };
 
 const app = express();
-const server = http.createServer(options, app);
-// const server = https.createServer(options, app);
+// const server = http.createServer(options, app);
+const server = https.createServer(options, app);
 
 Sockets(server);
 
@@ -42,8 +42,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use("/api", routes);
 app.use("/api/uploads", express.static(path.join(__dirname, "uploads")));
 
+cron.schedule("0 2 * * *", () => subscriptions()); // каждый день в 02:00
 // cron.schedule("0 0 * * *", () => subscriptions()); // каждый день в 00:00
-cron.schedule("3 0 * * *", () => subscriptions()); // каждый день в 00:01
+// cron.schedule("3 0 * * *", () => subscriptions()); // каждый день в 00:01
 // cron.schedule("59 23 * * *", () => subscriptions()); //  в 23:59:59 каждый день
 // cron.schedule("* * * * *", () => subscriptions()); // каждую минуту
 // subscriptions();
