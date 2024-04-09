@@ -14,7 +14,8 @@ import { Sequelize } from "sequelize";
 import dayjs from "dayjs";
 dotenv.config();
 
-const { SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASSWORD, API_URL } = process.env;
+const { SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASSWORD, API_URL, API_YOUTUBE } =
+  process.env;
 
 const router = express.Router();
 
@@ -382,6 +383,7 @@ router.post("/create-teammate", auth, lic, async (req, res) => {
       <p>${API_URL}</p>
       <p>Телеграм: https://t.me/ridge_crm</p>
       <p>Почта: ${SMTP_USER}</p>
+      <p>Youtube: ${API_YOUTUBE}</p>
       `;
 
     // HTML содержимое письма Администратору о добавлении куратором нового члена команды
@@ -393,6 +395,7 @@ router.post("/create-teammate", auth, lic, async (req, res) => {
       <p>${API_URL}</p>
       <p>Телеграм: https://t.me/ridge_crm</p>
       <p>Почта: ${SMTP_USER}</p>
+      <p>Youtube: ${API_YOUTUBE}</p>
       `;
 
     await registrationNewUser.sendMail({

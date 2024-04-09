@@ -8,6 +8,7 @@ pnpm-debug.log*
 lerna-debug.log*
 
 server/db
+server/uploads
 vercel.json
 default.json
 node_modules

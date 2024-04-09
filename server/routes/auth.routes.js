@@ -9,7 +9,8 @@ import { v4 as uuidv4 } from "uuid";
 import dotenv from "dotenv";
 dotenv.config();
 
-const { SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASSWORD, API_URL } = process.env;
+const { SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASSWORD, API_URL, API_YOUTUBE } =
+  process.env;
 
 const router = express.Router({ mergeParams: true });
 
@@ -149,6 +150,7 @@ router.post("/signUp", [
       <p>${API_URL}</p>
       <p>Телеграм: https://t.me/ridge_crm</p>
       <p>Почта: ${SMTP_USER}</p>
+      <p>Youtube: ${API_YOUTUBE}</p>
       `;
 
       // HTML содержимое письма для администратора Грядки о регистрации нового пользователя
@@ -160,6 +162,7 @@ router.post("/signUp", [
       <p>${API_URL}</p>
       <p>Телеграм: https://t.me/ridge_crm</p>
       <p>Почта: ${SMTP_USER}</p>
+      <p>Youtube: ${API_YOUTUBE}</p>
       `;
 
       // Отправляем письмо пользователю об успешной регистрации
@@ -269,11 +272,13 @@ router.post("/signInWithPassword", [
       }
       <p>Обнаружен вход в Грядку ЦРМ через Ваш аккаунт ${existingUser.email}</p>
       <p>Если это были не Вы, рекомендуем сменить пароль или обратиться в техподдержку Грядки</p><br>
+      
       <p>----------------------------------------</p>
       <p>Грядка ЦРМ</p>
       <p>${API_URL}</p>
       <p>Телеграм: https://t.me/ridge_crm</p>
       <p>Почта: ${SMTP_USER}</p>
+      <p>Youtube: ${API_YOUTUBE}</p>
       `;
 
       // Отправляем письмо

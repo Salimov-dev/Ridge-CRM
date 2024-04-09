@@ -7,7 +7,8 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const router = express.Router({ mergeParams: true });
-const { SMTP_HOST, SMTP_PORT, SMTP_USER, API_URL, SMTP_PASSWORD } = process.env;
+const { SMTP_HOST, SMTP_PORT, SMTP_USER, API_URL, SMTP_PASSWORD, API_YOUTUBE } =
+  process.env;
 
 router.get("/:link?", auth, async (req, res) => {
   try {
@@ -85,6 +86,7 @@ router.post("/sendConfirmMail/:link?", auth, lic, async (req, res) => {
     <p>${API_URL}</p>
     <p>Телеграм: https://t.me/ridge_crm</p>
     <p>Почта: ${SMTP_USER}</p>
+    <p>Youtube: ${API_YOUTUBE}</p>
     `;
 
     await sendConfirmMail.sendMail({
