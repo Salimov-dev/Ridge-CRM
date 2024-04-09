@@ -12,7 +12,6 @@ import { userLicenseStatusesArray } from "@data/users/user-license-statuses";
 // store
 import { getCurrentUserId } from "@store/user/users.store";
 import { getUserLicensesByUserId } from "@store/user/user-license.store";
-import { makeDigitSeparator } from "@utils/data/make-digit-separator";
 
 const InformItemsContainer = styled(Box)`
   width: 100%;
@@ -70,7 +69,6 @@ const InformItems = () => {
         subtitle={(userLicense?.balance || 0)
           .toString()
           .replace(/\B(?=(\d{3})+(?!\d))/g, " ")}
-        // subtitle={makeDigitSeparator(userLicense?.balance)}
         unit="₽"
         userLicense={userLicense}
       />

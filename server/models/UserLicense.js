@@ -23,7 +23,7 @@ const UserLicense = sequelize.define(
     },
     managers: { type: DataTypes.ARRAY(DataTypes.STRING), defaultValue: [] },
     observers: { type: DataTypes.ARRAY(DataTypes.STRING), defaultValue: [] },
-    activeUsersQuantity: { type: DataTypes.INTEGER, defaultValue: null },
+    activeUsersQuantity: { type: DataTypes.INTEGER, defaultValue: 1 },
     balance: { type: DataTypes.INTEGER, defaultValue: 0 },
     paymentAmount: { type: DataTypes.INTEGER, defaultValue: null },
     paymentInvId: { type: DataTypes.BIGINT, defaultValue: null },

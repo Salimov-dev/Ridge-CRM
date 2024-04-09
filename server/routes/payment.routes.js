@@ -128,6 +128,7 @@ router.post("/confirm", auth, async (req, res) => {
     const isLicenseTrialType = currentLicenseTypeId === trialLicenseTypeId;
     const isLicenseActiveType = currentLicenseTypeId === activeLicenseTypeId;
     const isLicenseBlockedType = currentLicenseTypeId === blockedLicenseTypeId;
+    let newCurrentLicenseTypeId = trialLicenseTypeId;
 
     // баланс
     const currentLicenseBalance = userLicense.balance;
