@@ -222,8 +222,7 @@ const Objects = React.memo(() => {
         selectedObjects={state.selectedObjects}
         setRowSelection={setRowSelection}
         isObjectPage={true}
-        videoTitle="Как пользоваться страницей с Объектами"
-        videoSrc="https://www.youtube.com/embed/zz_SjeT_-M4"
+        videoSrc="https://www.youtube.com/embed/uM2GtctKDIE"
       />
     </ContainerStyled>
   );

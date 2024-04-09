@@ -104,10 +104,10 @@ const ObjectBaloon = React.memo(({ object, onOpenObjectPage, isLoading }) => {
         }
       />
 
-      <DividerStyled />
-      <Attribute title="Контакт:" subTitle={name ? `${name}` : "-"} />
+      {/* <DividerStyled /> */}
+      {/* <Attribute title="Контакт:" subTitle={name ? `${name}` : "-"} />
       <Attribute title="Телефон:" subTitle={phone ? FormatPhone(phone) : "-"} />
-      <Attribute title="Email:" subTitle={email ? email : "-"} />
+      <Attribute title="Email:" subTitle={email ? email : "-"} /> */}
 
       <ButtonStyled
         title="Открыть страницу объекта"

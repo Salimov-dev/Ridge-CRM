@@ -5,6 +5,9 @@ const SocketObject = (io, socket) => {
   socket.on("objectUpdated", async (updatedObject) => {
     io.emit("updateObject", updatedObject);
   });
+  socket.on("objectsUpdated", async (updatedObjects) => {
+    io.emit("updateObjects", updatedObjects);
+  });
   socket.on("multipleObjectsUpdated", async (updatedObjects) => {
     io.emit("updateMultipleObjects", updatedObjects);
   });

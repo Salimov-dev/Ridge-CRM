@@ -3,7 +3,8 @@ import {
   createObjectUpdate,
   removeObjectUpdate,
   updateMultipleObjectsUpdate,
-  updateObjectUpdate
+  updateObjectUpdate,
+  updateObjectsUpdate
 } from "@store/object/objects.store.ts";
 import { getCurrentUserId, getIsUserManager } from "@store/user/users.store";
 
@@ -26,6 +27,9 @@ const handleObjectSocket = (socket) => {
   });
   socket.on("updateObject", async (updatedObject) => {
     dispatch<any>(updateObjectUpdate(updatedObject));
+  });
+  socket.on("updateObjects", async (updatedObjects) => {
+    dispatch<any>(updateObjectsUpdate(updatedObjects));
   });
   socket.on("updateMultipleObjects", async (updatedObjects) => {
     dispatch<any>(updateMultipleObjectsUpdate(updatedObjects));

@@ -117,6 +117,7 @@ const UpdateObject = React.memo(({ onClose, objectId }) => {
       <SuccessCancelFormButtons
         onSuccess={handleSubmit(onSubmit)}
         onCancel={onClose}
+        disabledRemoveButton={true}
       />
       <LoaderFullWindow isLoading={isLoading} />
       <PageDialogs state={state} setState={setState} />

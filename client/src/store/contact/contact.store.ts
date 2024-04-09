@@ -10,6 +10,7 @@ import contactService from "@services/contact/contact.service";
 import configFile from "@config/config.json";
 // store
 import { updateObjects } from "@store/object/objects.store";
+import { updateCompanies } from "@store/company/company.store";
 
 const socket = io(configFile.ioEndPoint);
 
@@ -115,7 +116,11 @@ export function createContact(payload) {
     dispatch(contactCreateRequested());
     try {
       const { content } = await contactService.create(payload);
-      socket.emit("contactCreated", content);
+      console.log("content", content);
+
+      dispatch(updateCompanies(content.updatedCompanies));
+      dispatch(updateObjects({ updatedObjects: content.updatedObjects }));
+      socket.emit("contactCreated", content.newContact);
     } catch (error) {
       dispatch(createContactFailed(error.message));
     }
@@ -138,7 +143,7 @@ export const updateContact = (payload) => async (dispatch) => {
   try {
     const { content } = await contactService.update(payload);
 
-    dispatch(updateObjects(content));
+    dispatch(updateObjects({ updatedObjects: content.updatedObjects }));
     socket.emit("contactUpdated", payload);
   } catch (error) {
     dispatch(contactUpdateFailed(error.message));

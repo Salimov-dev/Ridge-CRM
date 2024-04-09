@@ -161,6 +161,7 @@ const CreateMeeting = React.memo(
         <SuccessCancelFormButtons
           onSuccess={handleSubmit(onSubmit)}
           onCancel={onClose}
+          disabledRemoveButton={true}
         />
         <LoaderFullWindow
           color={colors.grey[600]}

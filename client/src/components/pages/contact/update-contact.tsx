@@ -54,6 +54,9 @@ const UpdateContact = React.memo(({ contactId, onClose }) => {
   });
 
   const data = watch();
+  const watchObjects = watch("objects");
+  const watchCompanies = watch("companies");
+  const isValidRemoveButton = !watchCompanies?.length && !watchObjects?.length;
 
   // передаем новые добавленные и удаленные объекты
   const newObjects = watch("objects");
@@ -151,7 +154,7 @@ const UpdateContact = React.memo(({ contactId, onClose }) => {
         onCancel={onClose}
         onRemove={handleOpenConfirm}
         isUpdate={true}
-        disabledRemoveButton={true}
+        isValidRemoveButton={!isValidRemoveButton}
       />
       <LoaderFullWindow
         color={colors.grey[600]}

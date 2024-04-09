@@ -154,6 +154,7 @@ const UpdateMyTask = React.memo(
           isEditMode={isEditMode}
           isObjectPage={isObjectPage}
           isMyTask={true}
+          watchIsCallTask={watchIsCallTask}
         />
         <SuccessCancelFormButtons
           onSuccess={handleSubmit(onSubmit)}

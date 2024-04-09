@@ -140,7 +140,7 @@ const Contacts = React.memo(() => {
         state={state}
         setState={setState}
         videoTitle="Как пользоваться страницей с Контактами"
-        videoSrc="https://www.youtube.com/embed/zz_SjeT_-M4"
+        videoSrc="https://www.youtube.com/embed/nvnfeg8O5pA"
       />
     </ContainerStyled>
   );

@@ -137,7 +137,7 @@ const ObjectForm = ({
             labelId="metro"
             itemsList={isUpdate ? sortedAllMetros : sortedMetrosForFindedObject}
             value={watchMetro ?? null}
-            disabled={!isCityHasMetro || !watchDistrict}
+            disabled={!watchDistrict}
           />
           <SelectFieldStyled
             label="Статус объекта"

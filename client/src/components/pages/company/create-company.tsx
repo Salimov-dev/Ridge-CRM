@@ -91,6 +91,7 @@ const CreateCompany = React.memo(({ onClose, isHideElement }) => {
       <SuccessCancelFormButtons
         onSuccess={handleSubmit(onSubmit)}
         onCancel={onClose}
+        disabledRemoveButton={true}
       />
       <LoaderFullWindow
         color={colors.grey[600]}

@@ -166,6 +166,15 @@ export const updateObjectUpdate = (payload) => async (dispatch) => {
 export const updateObjects = (payload) => async (dispatch) => {
   dispatch(objectUpdateRequested());
   try {
+    socket.emit("objectsUpdated", payload);
+  } catch (error) {
+    dispatch(objectUpdateFailed(error.message));
+  }
+};
+
+export const updateObjectsUpdate = (payload) => async (dispatch) => {
+  dispatch(objectUpdateRequested());
+  try {
     dispatch(objectsUpdateSuccessed(payload));
   } catch (error) {
     dispatch(objectUpdateFailed(error.message));

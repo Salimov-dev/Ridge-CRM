@@ -102,6 +102,7 @@ const CreateLastContact = React.memo(({ objectPageId, onClose }) => {
       <SuccessCancelFormButtons
         onSuccess={handleSubmit(onSubmit)}
         onCancel={onClose}
+        disabledRemoveButton={true}
       />
       <LoaderFullWindow isLoading={isLoading} />
       <PageDialogs state={state} setState={setState} />

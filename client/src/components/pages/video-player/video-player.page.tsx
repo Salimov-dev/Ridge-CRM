@@ -17,10 +17,6 @@ const VideoPlayerPage = ({ videoTitle, videoSrc, onClose }) => {
         onClose={onClose}
         background="Red"
       />
-      <Typography>
-        Скоро здесь будет обучающее видео по этой странице, а пока посмотрите
-        спидран :)
-      </Typography>
       <VideoPlayer src={videoSrc} />
     </Component>
   );

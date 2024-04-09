@@ -175,7 +175,7 @@ const Meetings = React.memo(() => {
         state={state}
         setState={setState}
         videoTitle="Как пользоваться страницей со Встречами"
-        videoSrc="https://www.youtube.com/embed/zz_SjeT_-M4"
+        videoSrc="https://www.youtube.com/embed/ywwSfkQ6McY"
       />
     </ContainerStyled>
   );

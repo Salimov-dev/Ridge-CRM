@@ -140,7 +140,7 @@ const Calendar = React.memo(() => {
         setState={setState}
         objects={actualObjects}
         videoTitle="Как пользоваться страницей с Календарем"
-        videoSrc="https://www.youtube.com/embed/zz_SjeT_-M4"
+        videoSrc="https://www.youtube.com/embed/8DoIs0htfsU"
       />
     </ContainerStyled>
   );

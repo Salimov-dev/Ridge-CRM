@@ -119,7 +119,7 @@ const MyTaskForm = ({
 
       {isEditMode ? (
         <SimpleSwitch
-          title="Задача выполненна"
+          title={watchIsCallTask ? "Звонок выполнен" : "Задача выполнена"}
           value={watchIsDone}
           padding="0px"
           onChange={(e) => {

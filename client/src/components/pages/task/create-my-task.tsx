@@ -115,6 +115,7 @@ const CreateMyTask = React.memo(
         <SuccessCancelFormButtons
           onSuccess={handleSubmit(onSubmit)}
           onCancel={onClose}
+          disabledRemoveButton={true}
         />
         <LoaderFullWindow isLoading={isLoading} />
       </>

@@ -25,13 +25,13 @@ const Buttons = ({
         variant="contained"
         onClick={onOpenCreatePresentationPage}
       />
-      <ButtonStyled
+      {/* <ButtonStyled
         title="Видео-инструкция"
         style="VIDEO_INSTR"
         variant="contained"
         icon={<SmartDisplayOutlinedIcon />}
         onClick={onOpenVideoPlayerPage}
-      />
+      /> */}
       {isInputEmpty && (
         <ClearFilterButton reset={reset} initialState={initialState} />
       )}

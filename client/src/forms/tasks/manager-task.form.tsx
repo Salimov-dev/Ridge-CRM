@@ -112,7 +112,7 @@ const ManagerTaskForm = ({
       ) : null}
       {isEditMode ? (
         <SimpleSwitch
-          title="Задача выполненна"
+          title="Задача выполнена"
           value={watchIsDone}
           isLoading={isTasksLoading}
           onChange={(e) => {

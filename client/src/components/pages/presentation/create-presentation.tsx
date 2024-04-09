@@ -116,6 +116,7 @@ const CreatePresentation = React.memo(({ objectId, onClose, isObjectPage }) => {
       <SuccessCancelFormButtons
         onSuccess={handleSubmit(onSubmit)}
         onCancel={onClose}
+        disabledRemoveButton={true}
       />
       <LoaderFullWindow isLoading={isLoading} />
     </>
