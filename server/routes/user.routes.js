@@ -315,7 +315,8 @@ router.post("/create-teammate", auth, lic, async (req, res) => {
       curatorId: curatorId,
       color,
       city,
-      setupPassLink: setupPassLinkId
+      setupPassLink: setupPassLinkId,
+      isActive: false
     });
 
     await UserLicense.create({

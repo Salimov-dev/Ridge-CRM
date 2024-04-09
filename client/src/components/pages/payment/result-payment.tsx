@@ -41,21 +41,16 @@ const ResultPaymentPage = React.memo(() => {
         .confirm({ outSum, paymentInvId: invId })
         .then((res) => {
           const { content } = res;
+          console.log("content", content);
 
-          dispatch<any>(updateUserLicense(content))
-            .then(() => {
-              setRedirectTimer(
-                setTimeout(() => {
-                  window.location.href = "/users";
-                }, 1400)
-              );
+          setRedirectTimer(
+            setTimeout(() => {
+              window.location.href = "/users";
+            }, 1400)
+          );
 
-              setMessage("Оплата успешно произведена!");
-              toast.success("Оплата успешно произведена!");
-            })
-            .catch((error) => {
-              toast.error(error);
-            });
+          setMessage("Оплата успешно произведена!");
+          toast.success("Оплата успешно произведена!");
         })
         .catch((error) => {
           const errorMessage =

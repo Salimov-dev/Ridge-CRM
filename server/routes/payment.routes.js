@@ -139,17 +139,21 @@ router.post("/confirm", auth, async (req, res) => {
     const newLicenseDaysLeftQuantity = Math.floor(
       paymentSum / (subscriptionCostPerUser * totalUsersCount)
     );
+    console.log("newLicenseDaysLeftQuantity", newLicenseDaysLeftQuantity);
 
     if (isLicenseTrialType) {
       newCurrentLicenseTypeId = activeLicenseTypeId;
       newLicenseStartDate = currentDate;
-      newLicenseEndDate = currentDate.add(licenseDaysLeftQuantity, "day");
+      newLicenseEndDate = newLicenseStartDate
+        .add(newLicenseDaysLeftQuantity, "day")
+        .subtract(1, "day");
     }
 
     if (isLicenseActiveType) {
-      newLicenseEndDate = currentLicenseEndDate
-        .add(newLicenseDaysLeftQuantity, "day")
-        .subtract(1, "day");
+      newLicenseEndDate = currentLicenseEndDate.add(
+        newLicenseDaysLeftQuantity,
+        "day"
+      );
     }
 
     if (isLicenseBlockedType) {
@@ -173,10 +177,10 @@ router.post("/confirm", auth, async (req, res) => {
       },
       { where: { userId } }
     );
-
     const updatedLicense = await UserLicense.findOne({
       where: { userId }
     });
+    console.log("updatedLicense", updatedLicense);
 
     res.status(200).json(updatedLicense);
   } catch (e) {
