@@ -116,8 +116,6 @@ export function createContact(payload) {
     dispatch(contactCreateRequested());
     try {
       const { content } = await contactService.create(payload);
-      console.log("content", content);
-
       dispatch(updateCompanies(content.updatedCompanies));
       dispatch(updateObjects({ updatedObjects: content.updatedObjects }));
       socket.emit("contactCreated", content.newContact);
@@ -142,7 +140,11 @@ export const updateContact = (payload) => async (dispatch) => {
   dispatch(contactUpdateRequested());
   try {
     const { content } = await contactService.update(payload);
+    console.log("content", content);
 
+    dispatch(updateCompanies(content.companiesRemovedCompanies));
+    dispatch(updateCompanies(content.updatedCompanies));
+    dispatch(updateObjects({ updatedObjects: content.objectsRemovedObjects }));
     dispatch(updateObjects({ updatedObjects: content.updatedObjects }));
     socket.emit("contactUpdated", payload);
   } catch (error) {
