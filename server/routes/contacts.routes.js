@@ -266,7 +266,6 @@ router.patch("/:contactId?/edit", auth, lic, async (req, res) => {
         _id: removedObjectIds
       }
     });
-    console.log("objectsRemovedObjects", objectsRemovedObjects);
 
     const companiesRemovedCompanies = await Company.findAll({
       where: {

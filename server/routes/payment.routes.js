@@ -139,7 +139,6 @@ router.post("/confirm", auth, async (req, res) => {
     const newLicenseDaysLeftQuantity = Math.floor(
       paymentSum / (subscriptionCostPerUser * totalUsersCount)
     );
-    console.log("newLicenseDaysLeftQuantity", newLicenseDaysLeftQuantity);
 
     if (isLicenseTrialType) {
       newCurrentLicenseTypeId = activeLicenseTypeId;
@@ -180,7 +179,6 @@ router.post("/confirm", auth, async (req, res) => {
     const updatedLicense = await UserLicense.findOne({
       where: { userId }
     });
-    console.log("updatedLicense", updatedLicense);
 
     res.status(200).json(updatedLicense);
   } catch (e) {

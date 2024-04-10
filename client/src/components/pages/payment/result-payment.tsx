@@ -41,7 +41,6 @@ const ResultPaymentPage = React.memo(() => {
         .confirm({ outSum, paymentInvId: invId })
         .then((res) => {
           const { content } = res;
-          console.log("content", content);
 
           setRedirectTimer(
             setTimeout(() => {

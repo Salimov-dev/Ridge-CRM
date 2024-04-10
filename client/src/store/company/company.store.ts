@@ -60,7 +60,6 @@ const companiesSlice = createSlice({
     },
     companiesUpdateSuccessed: (state, action) => {
       const updatedCompanies = action.payload;
-      console.log("action.payload", action.payload);
 
       state.entities = state.entities.map((comp) => {
         const updatedCompany = updatedCompanies.find(
@@ -116,7 +115,6 @@ export function createCompany(payload) {
     dispatch(companyCreateRequested());
     try {
       const { content } = await companyService.create(payload);
-      console.log("content", content);
 
       dispatch(updateContacts({ updatedContacts: content.updatedContacts }));
       dispatch(updateObjects({ updatedObjects: content.updatedObjects }));
