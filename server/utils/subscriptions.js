@@ -92,8 +92,12 @@ const subscriptions = async () => {
           currentLicenseBalance /
             (subscriptionCostPerUser * totalActiveUsersQuantity)
         );
+
         const costsForAllActivityUsersPerDay =
           totalActiveUsersQuantity * subscriptionCostPerUser;
+
+        const newBalanceAtNewDay =
+          currentLicenseBalance - costsForAllActivityUsersPerDay;
 
         const makeLicenseTypeIsBlock = async () => {
           allUserWithCurrentUserArray.forEach(async (userId) => {
@@ -148,7 +152,7 @@ const subscriptions = async () => {
 
         if (
           isLicenseActiveType &&
-          currentLicenseBalance > costsForAllActivityUsersPerDay
+          newBalanceAtNewDay > costsForAllActivityUsersPerDay
         ) {
           allUserWithCurrentUserArray.forEach(async (userId) => {
             try {
@@ -199,7 +203,7 @@ const subscriptions = async () => {
 
         if (
           isLicenseActiveType &&
-          currentLicenseBalance < costsForAllActivityUsersPerDay
+          newBalanceAtNewDay < costsForAllActivityUsersPerDay
         ) {
           makeLicenseTypeIsBlock();
         }

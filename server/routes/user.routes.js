@@ -217,8 +217,22 @@ router.patch("/:userId/update-teammate", auth, lic, async (req, res) => {
     const currentLicenseEndDate = dayjs(userLicense.dateEnd);
     const currentLicenseTrialEndDate = dayjs(userLicense.dateTrialEnd);
 
+    const currentLicenseBalance = userLicense.balance;
+
+    const costsForAllActivityUsersPerDay =
+      totalUsersCount * subscriptionCostPerUser;
+
+    if (currentLicenseBalance - costsForAllActivityUsersPerDay < 0) {
+      return res.status(400).json({
+        error: {
+          message: "Недостаточно баланса дял активации пользователя!",
+          code: 400
+        }
+      });
+    }
+
     const licenseDaysLeftQuantity = Math.floor(
-      userLicense.balance / (subscriptionCostPerUser * totalUsersCount)
+      currentLicenseBalance / (subscriptionCostPerUser * totalUsersCount)
     );
 
     let newLicenseEndDate = currentLicenseStartDate.add(

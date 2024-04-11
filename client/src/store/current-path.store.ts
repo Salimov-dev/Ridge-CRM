@@ -3,13 +3,13 @@ import { createSlice } from "@reduxjs/toolkit";
 const currrentPathSlice = createSlice({
   name: "currrentPath",
   initialState: {
-    entities: "",
+    entities: ""
   },
   reducers: {
     currrentPathSetted: (state, action) => {
       state.entities = action.payload;
-    },
-  },
+    }
+  }
 });
 
 const { reducer: currrentPathReducer, actions } = currrentPathSlice;
