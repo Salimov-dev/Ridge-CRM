@@ -8,7 +8,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { objectsColumns } from "@columns/objects.columns";
 // components
 import ObjectBaloon from "@components/UI/maps/object-baloon";
-import ObjectsFiltersPanel from "@components/UI/filters-panels/objects-filters-panel";
+import ObjectsFiltersPanel from "@components/UI/filters-panels/objects-layout/objects-layout.filters-panel";
 import BasicTable from "@components/common/table/basic-table";
 import HeaderLayout from "@components/common/page-headers/header-layout";
 import ItemsOnMap from "@components/common/map/items-on-map/items-on-map";
@@ -34,40 +34,21 @@ import {
   getObjectsList,
   getObjectsLoadingStatus
 } from "@store/object/objects.store";
-
-const initialState = {
-  address: "",
-  phone: "",
-  name: "",
-  company: "",
-  cadastralNumber: "",
-  fullDescription: "",
-  objectActivity: "",
-  startDate: null,
-  endDate: null,
-  selectedDistricts: [],
-  selectedCities: [],
-  selectedUsers: [],
-  selectedStatuses: [],
-  selectedCurrentRenters: [],
-  selectedEstateTypes: [],
-  selectedTradeArea: [],
-  selectedObjectProperties: [],
-  selectedObjectTypes: [],
-  selectedMetro: []
-};
+import ObjectsLayoutFiltersPanel from "@components/UI/filters-panels/objects-layout/objects-layout.filters-panel";
+import { objectsLayoutInitialState } from "@components/UI/filters-panels/objects-layout/objects-layout-initial-state.filters-panel";
 
 const Objects = React.memo(() => {
   const [rowSelection, setRowSelection] = useState([]);
 
+  // выделить состояние для диалог окон и назвать типа stateDialogPages, состояние НЕ ДЛЯ ДИАЛОГОВ окон вынести в другое состояние
   const [state, setState] = useState({
-    selectedObjects: [],
-    selectedBaloon: null,
-    rowSelection: [],
-    objectPage: false,
-    createPage: false,
-    updatePage: false,
-    objectId: null,
+    selectedObjects: [], // проверить объекты или только Ids? тогда selecteObjectIds
+    selectedBaloon: null, // selectedObjectBaloon
+    rowSelection: [], // переименовать на selecteObjectdRows
+    objectPage: false, //
+    createPage: false, // createObjectPage
+    updatePage: false, // updateObjectPage
+    objectId: null, // updatedObjectId
     createPresentationPage: false,
     transferObjectPage: false,
     videoPlayerPage: false
@@ -88,7 +69,9 @@ const Objects = React.memo(() => {
   };
 
   const { register, watch, setValue, reset } = useForm({
-    defaultValues: !!localStorageState ? formatedState : initialState,
+    defaultValues: !!localStorageState
+      ? formatedState
+      : objectsLayoutInitialState,
     mode: "onChange"
   });
 
@@ -96,25 +79,32 @@ const Objects = React.memo(() => {
   const currentUserId = useSelector(getCurrentUserId());
   const objectsSatuses = useSelector(getObjectsStatusList());
 
-  const isInputEmpty = JSON.stringify(initialState) !== JSON.stringify(data);
+  const isInputEmpty =
+    JSON.stringify(objectsLayoutInitialState) !== JSON.stringify(data);
   const isLoading = useSelector(getObjectsLoadingStatus());
   const isUsersLoading =
     useSelector(getIsLoggedIn()) && useSelector(getUsersLoadingStatus());
 
-  const isCurator = useSelector(getIsUserCurator(currentUserId));
-  const isManager = useSelector(getIsUserManager(currentUserId));
+  // перенести глубже туда где используется, а не тут
+  // сами методы переименовать на checkIsUserRoleManager
+  const isCurator = useSelector(getIsUserCurator(currentUserId)); // дописать, что если нет userId, тогда брать id текущего юзера, переменную переименовать
+  const isManager = useSelector(getIsUserManager(currentUserId)); // дописать, что если нет userId, тогда брать id текущего юзера, переменную переименовать
 
+  // перенести в таблицу, а не тут
   const isHideCheckbox = isCurator ? false : true;
 
   const objects = useSelector(getObjectsList());
 
-  const selectedObject = useSelector(getObjectById(state.selectedBaloon));
+  // перенести глубже в хук и вернуть только sortedObjects
+  const selectedObject = useSelector(getObjectById(state.selectedBaloon)); // переменную переименовать
   const searchedObjects = useSearchObject(objects, data);
   const sortedObjects = useMemo(() => {
     return orderBy(searchedObjects, ["created_at"], ["desc"]);
   }, [searchedObjects]);
+
   const modifiedObjectsData = useModifyObjectToExportExel(sortedObjects);
 
+  // выделить в отдельный метод для этого компонента dialogHandlers.objects-layout.tsx, это не хук!
   const {
     handleOpenCreateObjectPage,
     handleOpenObjectPage,
@@ -124,26 +114,32 @@ const Objects = React.memo(() => {
     handleOpenUpdateCompanyPage
   } = useDialogHandlers(setState);
 
+  // переменную переименовать и сделать отдельное состояние
   const handleSelectedBaloon = (item) => {
     setState((prevState) => ({ ...prevState, selectedBaloon: item }));
   };
 
+  // переменную переименовать и сделать отдельное состояние
   const handleSelectObjects = (objects) => {
     setState((prevState) => ({ ...prevState, selectedObjects: objects }));
   };
 
+  // вынести в отдельный хук всю работу с localStorage
   useEffect(() => {
     localStorage.setItem("search-objects-data", JSON.stringify(data));
   }, [data]);
-
   useEffect(() => {
     const hasLocalStorageData = localStorage.getItem("search-objects-data");
 
     if (hasLocalStorageData?.length) {
-      localStorage.setItem("search-objects-data", JSON.stringify(initialState));
+      localStorage.setItem(
+        "search-objects-data",
+        JSON.stringify(objectsLayoutInitialState)
+      );
     }
   }, []);
 
+  // вынести в отдельную функцию
   useEffect(() => {
     const getObjectsIdFromRowSelection = () => {
       return Object.keys(rowSelection)
@@ -167,8 +163,9 @@ const Objects = React.memo(() => {
   return (
     <ContainerStyled>
       <HeaderLayout title="Таблица объектов" />
+      {/* переименовать в ButtonsObjectsLayout, хендлеры вызвать внутри, а не передавать в парамсах */}
       <Buttons
-        initialState={initialState}
+        initialState={objectsLayoutInitialState}
         reset={reset}
         onOpenCreateObjectPage={handleOpenCreateObjectPage}
         onOpenTransferObjectPage={handleOpenTransferObjectPage}
@@ -176,6 +173,7 @@ const Objects = React.memo(() => {
         isCurator={isCurator}
         isInputEmpty={isInputEmpty}
       />
+      {/* переименовать ObjectBaloon В ObjectBalloon*/}
       <ItemsOnMap
         items={searchedObjects}
         onClick={handleSelectedBaloon}
@@ -188,7 +186,8 @@ const Objects = React.memo(() => {
           />
         }
       />
-      <ObjectsFiltersPanel
+      {/* переименовать в ObjectsLayoutFiltersPanel*/}
+      <ObjectsLayoutFiltersPanel
         data={data}
         objects={objects}
         statuses={objectsSatuses}
@@ -197,6 +196,7 @@ const Objects = React.memo(() => {
         isManager={isManager}
         isLoading={isLoading}
       />
+      {/* передать setState, а не хендлеры */}
       <BasicTable
         rowSelection={rowSelection}
         setRowSelection={setRowSelection}
@@ -216,6 +216,7 @@ const Objects = React.memo(() => {
           data={modifiedObjectsData}
         />
       )} */}
+      {/* разбить в objects-layout.page-dialogs.tsx */}
       <PageDialogs
         state={state}
         setState={setState}

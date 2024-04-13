@@ -17,7 +17,12 @@ const TaskObject = ({ task, setState }) => {
     <>
       <DividerStyled color={task?.isDone ? "darkGray" : "gray"} margin="0" />
       <Box
-        sx={{ display: "flex", gap: "4px", justifyContent: "space-between" }}
+        sx={{
+          display: "flex",
+          gap: "4px",
+          justifyContent: "space-between",
+          alignItems: "center"
+        }}
       >
         {taskObjectId && <Typography>{objectAddress}</Typography>}
         <OpenPageElementIconButton

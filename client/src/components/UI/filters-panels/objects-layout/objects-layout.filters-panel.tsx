@@ -13,7 +13,7 @@ import { objectActivityVariants } from "@data/object/object-activity-variants";
 import { getActualStatusesList } from "@utils/actual-items/get-actual-statuses-list";
 import { getActualUsersList } from "@utils/actual-items/get-actual-users-list";
 
-const ObjectsFiltersPanel = React.memo(
+const ObjectsLayoutFiltersPanel = React.memo(
   ({ setValue, objects, statuses, data, register, isManager, isLoading }) => {
     const {
       getActualCitiesList,
@@ -216,4 +216,4 @@ const ObjectsFiltersPanel = React.memo(
   }
 );
 
-export default ObjectsFiltersPanel;
+export default ObjectsLayoutFiltersPanel;

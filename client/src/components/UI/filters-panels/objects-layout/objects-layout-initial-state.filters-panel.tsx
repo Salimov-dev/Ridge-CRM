@@ -1,0 +1,21 @@
+export const objectsLayoutInitialState = {
+  address: "",
+  phone: "",
+  name: "",
+  company: "",
+  cadastralNumber: "",
+  fullDescription: "",
+  objectActivity: "",
+  startDate: null,
+  endDate: null,
+  selectedDistricts: [],
+  selectedCities: [],
+  selectedUsers: [],
+  selectedStatuses: [],
+  selectedCurrentRenters: [],
+  selectedEstateTypes: [],
+  selectedTradeArea: [],
+  selectedObjectProperties: [],
+  selectedObjectTypes: [],
+  selectedMetro: []
+};

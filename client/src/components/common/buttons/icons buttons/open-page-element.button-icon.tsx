@@ -39,12 +39,12 @@ const OpenPageElementIconButton = ({
       >
         <Tooltip title={title} placement="top-start" arrow>
           <OpenInNewOutlinedIcon
-            sx={{
-              width: width,
-              height: height,
-              opacity: disabled ? "0.5" : "1",
-              padding: "0 0 4px 0"
-            }}
+          // sx={{
+          //   width: width,
+          //   height: height,
+          //   opacity: disabled ? "0.5" : "1",
+          //   padding: "0 0 4px 0"
+          // }}
           />
         </Tooltip>
       </IconButton>
