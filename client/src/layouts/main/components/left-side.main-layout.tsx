@@ -1,9 +1,9 @@
-import ButtonStyled from "@components/common/buttons/button-styled.button";
-import styled from "@emotion/styled";
-import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
 import { Box, Hidden, Typography } from "@mui/material";
+import styled from "@emotion/styled";
+import ButtonStyled from "@components/common/buttons/button-styled.button";
+import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
 import ThumbUpAltOutlinedIcon from "@mui/icons-material/ThumbUpAltOutlined";
-import Contacts from "./contacts";
+import ContactsMainLayout from "./contacts.main-layout";
 
 const Component = styled(Box)`
   display: flex;
@@ -12,7 +12,7 @@ const Component = styled(Box)`
   padding: 2% 2% 5% 2%;
 `;
 
-const LeftSide = ({ setState }) => {
+const LeftSideMainLayout = ({ setState }) => {
   const { handleOpenAuthPage } = useDialogHandlers(setState);
 
   return (
@@ -104,7 +104,7 @@ const LeftSide = ({ setState }) => {
         />
       </Box>
       <Hidden lgUp>
-        <Contacts
+        <ContactsMainLayout
           justifyContent="center"
           padding="30px 20px 30px 20px"
           size="60px"
@@ -114,4 +114,4 @@ const LeftSide = ({ setState }) => {
   );
 };
 
-export default LeftSide;
+export default LeftSideMainLayout;

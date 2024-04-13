@@ -20,7 +20,7 @@ const Logo = styled("img")({
   }
 });
 
-const Contacts = ({
+const ContactsMainLayout = ({
   justifyContent = "end",
   padding = "20px",
   size = "80px"
@@ -62,4 +62,4 @@ const Contacts = ({
   );
 };
 
-export default Contacts;
+export default ContactsMainLayout;

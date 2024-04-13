@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import { Box, Hidden } from "@mui/material";
 import backgroundImage from "@assets/main-background.png";
-import Contacts from "./contacts";
+import Contacts from "./contacts.main-layout";
 
 const Component = styled(Box)`
   margin: 20px 0 0 0;
@@ -12,7 +12,7 @@ const Component = styled(Box)`
   background-position: left top;
 `;
 
-const RightSide = () => {
+const RightSideMainLayout = () => {
   return (
     <Hidden lgDown>
       <Component
@@ -26,4 +26,4 @@ const RightSide = () => {
   );
 };
 
-export default RightSide;
+export default RightSideMainLayout;

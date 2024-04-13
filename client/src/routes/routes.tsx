@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import { Route, Routes } from "react-router-dom";
 // layouts
-import Main from "@layouts/main/main";
+import Main from "@layouts/main/main.layout";
 import RequireAuth from "@layouts/users/components/require-auth";
 import Objects from "@layouts/objects/objects.layout";
 import ObjectsDatabase from "@layouts/objects-database/objects-database";
@@ -33,6 +33,7 @@ import ResultPaymentPage from "@components/pages/payment/result-payment";
 import RequireActiveLicense from "@layouts/users/components/require-active-license";
 import ObjectsLayout from "@layouts/objects/objects.layout";
 import MeetingsLayout from "@layouts/meetings/meetings.layout";
+import MainLayout from "@layouts/main/main.layout";
 
 export default function AppRoutes() {
   const currentUserId = useSelector(getCurrentUserId());
@@ -73,8 +74,11 @@ export default function AppRoutes() {
   return (
     <Routes>
       <Route path="*" element={<NoMatchRoute />} />
-      <Route path="/" element={isLoggedIn ? <Objects /> : <Main />} />
-      <Route path="auth/*" element={isLoggedIn ? <Objects /> : <Main />} />
+      <Route path="/" element={isLoggedIn ? <Objects /> : <MainLayout />} />
+      <Route
+        path="auth/*"
+        element={isLoggedIn ? <Objects /> : <MainLayout />}
+      />
       <Route path="password/*" element={<NoMatchRoute />} />
       <Route path="password/recovery/:link" element={<RecoveryPassword />} />
       <Route path="payment/*" element={<ResultPaymentPage />} />
