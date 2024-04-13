@@ -13,6 +13,7 @@ import { FormatDate } from "@utils/date/format-date";
 import { FormatTime } from "@utils/date/format-time";
 // hooks
 import useGetUserAvatar from "@hooks/user/use-get-user-avatar";
+import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
 // store
 import { getObjectById } from "@store/object/objects.store";
 import { getMeetingStatusNameById } from "@store/meeting/meeting-status.store";
@@ -20,19 +21,16 @@ import { getMeetingTypeNameById } from "@store/meeting/meeting-types.store";
 import { getMeetingById } from "@store/meeting/meetings.store";
 import {
   getCurrentUserId,
-  getIsUserAuthorThisEntity,
-  getIsUserManager,
-  getUserDataById
+  getIsCurrentUserRoleManager,
+  getIsUserAuthorThisEntity
 } from "@store/user/users.store";
 
-export const meetingsColumns = (
-  handleOpenUpdateMeetingPage,
-  handleOpenObjectPage,
-  isDialogPage
-) => {
+export const meetingsColumns = (setState, isDialogPage) => {
   let columns = [];
-  const currentUserId = useSelector(getCurrentUserId());
-  const isManager = useSelector(getIsUserManager(currentUserId));
+  const isCurrentUserRoleManager = useSelector(getIsCurrentUserRoleManager());
+
+  const { handleOpenUpdateMeetingPage, handleOpenObjectPage } =
+    useDialogHandlers(setState);
 
   const dateColumn = {
     header: "Дата и время встречи",
@@ -131,7 +129,7 @@ export const meetingsColumns = (
   const managerColumn = {
     id: "managerColumn",
     header: "Менеджер",
-    columns: isManager !== undefined && [
+    columns: isCurrentUserRoleManager !== undefined && [
       {
         accessorKey: "userId",
         header: "Фамилия и Имя",
@@ -242,7 +240,7 @@ export const meetingsColumns = (
     ]
   };
 
-  if (!isManager) {
+  if (!isCurrentUserRoleManager) {
     columns = [dateColumn, otherColumns, managerColumn, updateColumn];
   } else {
     columns = [dateColumn, otherColumns, updateColumn];

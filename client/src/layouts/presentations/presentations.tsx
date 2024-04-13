@@ -11,7 +11,7 @@ import PresentationsFiltersPanel from "@components/UI/filters-panels/presentatio
 import ItemsOnMap from "@components/common/map/items-on-map/items-on-map";
 import PageDialogs from "@components/common/dialog/page-dialogs";
 import { ContainerStyled } from "@components/common/container/container-styled";
-import PresentationBaloon from "@components/UI/maps/presentation-baloon";
+import PresentationBaloon from "@components/UI/maps/presentation-balloon";
 import Buttons from "./components/buttons";
 // columns
 import { presentationsColumns } from "@columns/presentations.columns";
@@ -30,6 +30,7 @@ import {
   getPresentationsList,
   getPresentationsLoadingStatus
 } from "@store/presentation/presentations.store";
+import PresentationBalloon from "@components/UI/maps/presentation-balloon";
 
 const initialState = {
   objectAddress: "",
@@ -176,7 +177,7 @@ const Presentations = React.memo(() => {
         onClick={handleSelectPresentationBaloon}
         isLoading={isLoading}
         baloon={
-          <PresentationBaloon
+          <PresentationBalloon
             presentationId={state.selectedPresentationBaloon}
             onOpenObjectPage={handleOpenObjectPage}
             onOpenUpdatePresentationPage={handleOpenUpdatePresentationPage}

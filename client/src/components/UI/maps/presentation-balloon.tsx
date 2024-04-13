@@ -14,7 +14,7 @@ import { getPresentationStatusNameById } from "@store/presentation/presentation-
 import {
   getCurrentUserId,
   getIsUserCurator,
-  getUserNameById,
+  getUserNameById
 } from "@store/user/users.store";
 
 const BaloonContainer = styled(Box)`
@@ -27,7 +27,7 @@ const BaloonContainer = styled(Box)`
   padding: 10px 0;
 `;
 
-const PresentationBaloon = React.memo(
+const PresentationBalloon = React.memo(
   ({ presentationId, onOpenObjectPage, onOpenUpdatePresentationPage }) => {
     const presentation = useSelector(getPresentationById(presentationId));
 
@@ -73,7 +73,7 @@ const PresentationBaloon = React.memo(
                 width: "100%",
                 display: "flex",
                 justifyContent: "center",
-                gap: "4px",
+                gap: "4px"
               }}
             >
               <ButtonStyled
@@ -96,4 +96,4 @@ const PresentationBaloon = React.memo(
   }
 );
 
-export default PresentationBaloon;
+export default PresentationBalloon;

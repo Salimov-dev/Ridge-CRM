@@ -1,4 +1,5 @@
-import { orderBy } from "lodash";
+import React from "react";
+import { useSelector } from "react-redux";
 // components
 import SearchField from "@common/inputs/search-field";
 import { FieldsContainer, Form } from "@components/common/forms/styled";
@@ -10,43 +11,28 @@ import { meetingDoneTypes } from "@data/meetings/meeting-done-status";
 // utils
 import { getActualUsersList } from "@utils/actual-items/get-actual-users-list";
 import { getActualStatusesList } from "@utils/actual-items/get-actual-statuses-list";
-import React from "react";
+import { getActualTypesList } from "@utils/actual-items/get-actual-types-list";
+// store
+import { getIsCurrentUserRoleManager } from "@store/user/users.store";
+import { getMeetingStatusesList } from "@store/meeting/meeting-status.store";
+import { getMeetingTypesList } from "@store/meeting/meeting-types.store";
+import {
+  getMeetingLoadingStatus,
+  getMeetingsList
+} from "@store/meeting/meetings.store";
 
-const MeetingsFiltersPanel = React.memo(
-  ({
-    data,
-    meetings,
-    statuses,
-    types,
-    register,
-    setValue,
-    isManager,
-    isLoading
-  }) => {
+const MeetingsLayoutFiltersPanel = React.memo(
+  ({ data, register, setValue }) => {
+    const meetings = useSelector(getMeetingsList());
+    const statuses = useSelector(getMeetingStatusesList());
+    const types = useSelector(getMeetingTypesList());
+
     const usersList = getActualUsersList(meetings, true);
-
     const statusesList = getActualStatusesList(meetings, statuses);
+    const typesList = getActualTypesList(meetings, types);
 
-    const getActualTypesList = () => {
-      const filteredTypes = meetings?.map((meet) => meet?.type);
-
-      const formatedTypesArray = filteredTypes?.filter((type) => type !== "");
-      const uniqueTypes = [...new Set(formatedTypesArray)];
-
-      const actualTypesArray = uniqueTypes?.map((id) => {
-        const foundObject = types?.find((type) => type._id === id);
-        return foundObject
-          ? {
-              _id: foundObject._id,
-              name: foundObject.name
-            }
-          : null;
-      });
-
-      const sortedTypes = orderBy(actualTypesArray, ["name"], ["asc"]);
-
-      return sortedTypes;
-    };
+    const isLoading = useSelector(getMeetingLoadingStatus());
+    const isCurrentUserRoleManager = useSelector(getIsCurrentUserRoleManager());
 
     return (
       <Form>
@@ -72,7 +58,7 @@ const MeetingsFiltersPanel = React.memo(
             name="selectedTypes"
             labelId="selectedTypes-label"
             label="Выбор по типу"
-            itemsList={getActualTypesList()}
+            itemsList={typesList}
             selectedItems={data.selectedTypes}
             onChange={(e) => setValue("selectedTypes", e.target.value)}
             disabled={isLoading ? true : false}
@@ -105,7 +91,7 @@ const MeetingsFiltersPanel = React.memo(
             disabled={isLoading ? true : false}
             isSelect={Boolean(data?.meetingsActivity?.length)}
           />
-          {!isManager ? (
+          {!isCurrentUserRoleManager ? (
             <MultiSelectField
               name="users"
               labelId="users-label"
@@ -122,4 +108,4 @@ const MeetingsFiltersPanel = React.memo(
   }
 );
 
-export default MeetingsFiltersPanel;
+export default MeetingsLayoutFiltersPanel;

@@ -6,7 +6,7 @@ import RequireAuth from "@layouts/users/components/require-auth";
 import Objects from "@layouts/objects/objects.layout";
 import ObjectsDatabase from "@layouts/objects-database/objects-database";
 import Statictics from "@layouts/statistics/statistics";
-import Meetings from "@layouts/meetings/meetings";
+import Meetings from "@layouts/meetings/meetings.layout";
 import Calendar from "@layouts/calendar/calendar";
 import Deals from "@layouts/deals/deals";
 import Presentations from "@layouts/presentations/presentations";
@@ -32,6 +32,7 @@ import SetupPassword from "@components/pages/password/setup-password";
 import ResultPaymentPage from "@components/pages/payment/result-payment";
 import RequireActiveLicense from "@layouts/users/components/require-active-license";
 import ObjectsLayout from "@layouts/objects/objects.layout";
+import MeetingsLayout from "@layouts/meetings/meetings.layout";
 
 export default function AppRoutes() {
   const currentUserId = useSelector(getCurrentUserId());
@@ -43,7 +44,7 @@ export default function AppRoutes() {
     { id: 1, path: "objects/*", element: <ObjectsLayout /> },
     { id: 2, path: "objectsdatabase/*", element: <ObjectsDatabase /> },
     { id: 3, path: "statictics/*", element: <Statictics /> },
-    { id: 4, path: "meetings/*", element: <Meetings /> },
+    { id: 4, path: "meetings/*", element: <MeetingsLayout /> },
     { id: 5, path: "calendar/*", element: <Calendar /> },
     { id: 6, path: "deals/*", element: <Deals /> },
     // {

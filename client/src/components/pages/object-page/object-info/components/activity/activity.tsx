@@ -64,12 +64,7 @@ const Acitivty = ({ object, objectId, setState }) => {
         object={object}
         objectId={objectId}
         onOpenCreateMeeting={handleOpenCreateMeetingPage}
-        columns={meetingsColumns(
-          handleOpenUpdateMeetingPage,
-          () => {},
-          isDialogPage,
-          isCurator
-        )}
+        columns={meetingsColumns(setState, isDialogPage)}
         isAuthorEntity={isAuthorEntity}
       />
       <LastContacts
