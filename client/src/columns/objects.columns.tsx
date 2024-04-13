@@ -21,10 +21,14 @@ import ContactTableEntity from "@components/common/table-entities/contact-table-
 import CompanyTableEntity from "@components/common/table-entities/company-table-entity";
 // hooks
 import useGetUserAvatar from "@hooks/user/use-get-user-avatar";
+import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
 // store
 import { getLastContactsList } from "@store/last-contact/last-contact.store";
 import { getDistrictName } from "@store/object-params/districts.store";
-import { getUserDataById } from "@store/user/users.store";
+import {
+  getIsCurrentUserRoleCurator,
+  getIsCurrentUserRoleManager
+} from "@store/user/users.store";
 import { getTasksList } from "@store/task/tasks.store";
 import {
   getMeetingsList,
@@ -54,14 +58,16 @@ function IndeterminateCheckbox({
   );
 }
 
-export const objectsColumns = (
-  handleOpenObjectPage,
-  handleOpenContactPage,
-  handleOpenUpdateCompanyPage,
-  isHideCheckbox,
-  isManager
-) => {
+export const objectsColumns = (setState) => {
   let columns = [];
+  const isCurrentUserRoleManager = useSelector(getIsCurrentUserRoleManager());
+  const isCurrentUserRoleCurator = useSelector(getIsCurrentUserRoleCurator());
+
+  const {
+    handleOpenObjectPage,
+    handleOpenContactPage,
+    handleOpenUpdateCompanyPage
+  } = useDialogHandlers(setState);
 
   const selectColumn = {
     id: "select",
@@ -271,7 +277,7 @@ export const objectsColumns = (
 
   const managerColumn = {
     header: "Менеджер",
-    columns: isManager !== undefined && [
+    columns: isCurrentUserRoleManager !== undefined && [
       {
         accessorKey: "userId",
         header: "Фамилия и Имя",
@@ -357,9 +363,9 @@ export const objectsColumns = (
     ]
   };
 
-  if (!isManager) {
+  if (!isCurrentUserRoleManager) {
     columns = [
-      ...(!isHideCheckbox ? [selectColumn] : []),
+      ...(isCurrentUserRoleCurator ? [selectColumn] : []),
       dateColumn,
       locationColumn,
       contactsColumn,
@@ -369,7 +375,7 @@ export const objectsColumns = (
     ];
   } else {
     columns = [
-      ...(!isHideCheckbox ? [selectColumn] : []),
+      ...(isCurrentUserRoleCurator ? [selectColumn] : []),
       dateColumn,
       locationColumn,
       contactsColumn,

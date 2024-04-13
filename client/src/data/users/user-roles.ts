@@ -23,7 +23,6 @@ const userRolesArray = [
 
 export { userRolesArray };
 
-// сделать экспорт ролей по типу
-// export const roleCuratorId = "69gfoep3944jgjdso345003";
-// export const roleManagerId = "69gfoep3944jgjdso345002";
-// export const roleObserverId = "69dgp34954igfj345043001";
+export const roleCuratorId = "69gfoep3944jgjdso345003";
+export const roleManagerId = "69gfoep3944jgjdso345002";
+export const roleObserverId = "69dgp34954igfj345043001";

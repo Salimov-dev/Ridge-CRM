@@ -7,6 +7,7 @@ import authService from "@services/user/auth-service";
 import userService from "@services/user/user.service";
 import localStorageService from "@services/user/local.storage-service";
 import { loadUserLicensesList } from "./user-license.store";
+import { roleCuratorId, roleManagerId } from "@data/users/user-roles";
 
 const socket = io(configFile.ioEndPoint);
 
@@ -259,6 +260,26 @@ export const getUserDataById = (id) => (state) => {
 
     return user;
   }
+};
+
+export const getIsCurrentUserRoleManager = () => (state) => {
+  const currentUserData = state?.users?.entities?.find(
+    (u) => u?._id === state?.users?.auth?.userId
+  );
+  const currentUserRole = currentUserData?.role;
+  const isUserRoleManager = currentUserRole?.includes(roleManagerId);
+
+  return isUserRoleManager;
+};
+
+export const getIsCurrentUserRoleCurator = () => (state) => {
+  const currentUserData = state?.users?.entities?.find(
+    (u) => u?._id === state?.users?.auth?.userId
+  );
+  const currentUserRole = currentUserData?.role;
+  const isUserRoleManager = currentUserRole?.includes(roleCuratorId);
+
+  return isUserRoleManager;
 };
 
 export const getIsUserManager = (userId) => (state) => {

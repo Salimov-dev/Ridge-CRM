@@ -5,7 +5,7 @@ import {
   getSortedRowModel,
   getPaginationRowModel,
   useReactTable,
-  SortingState,
+  SortingState
 } from "@tanstack/react-table";
 // styles
 import "./styles/styles.css";
@@ -23,7 +23,7 @@ const BasicTable = ({
   hasFooter = false,
   isLoading = false,
   isPaginate = true,
-  isDialogMode = false,
+  isDialogMode = false
 }) => {
   const [sorting, setSorting] = useState<SortingState>([]);
 
@@ -35,14 +35,14 @@ const BasicTable = ({
     columns,
     state: {
       sorting,
-      rowSelection,
+      rowSelection
     },
     enableRowSelection: true,
     onRowSelectionChange: setRowSelection,
     onSortingChange: setSorting,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
+    getPaginationRowModel: getPaginationRowModel()
   });
 
   return (

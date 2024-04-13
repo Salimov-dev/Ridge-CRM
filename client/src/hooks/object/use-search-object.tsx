@@ -141,7 +141,11 @@ const useSearchObject = (objects, data) => {
 
     // выбор по станции метро
     if (data.selectedMetro?.length) {
-      array = array?.filter((obj) => data.selectedMetro.includes(obj.metro));
+      !data.selectedMetro.includes("undefined")
+        ? (array = array?.filter((obj) =>
+            data.selectedMetro.includes(obj.metro)
+          ))
+        : (array = array?.filter((obj) => !obj.metro));
     }
 
     // выбор по менеджеру
@@ -357,7 +361,11 @@ const useSearchObject = (objects, data) => {
     return array;
   }, [data, objects]);
 
-  return searchedObjects;
+  const sortedSearchedObjects = useMemo(() => {
+    return orderBy(searchedObjects, ["created_at"], ["desc"]);
+  }, [searchedObjects]);
+
+  return sortedSearchedObjects;
 };
 
 export default useSearchObject;

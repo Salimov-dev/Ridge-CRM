@@ -3,7 +3,7 @@ import { Route, Routes } from "react-router-dom";
 // layouts
 import Main from "@layouts/main/main";
 import RequireAuth from "@layouts/users/components/require-auth";
-import Objects from "@layouts/objects/objects";
+import Objects from "@layouts/objects/objects.layout";
 import ObjectsDatabase from "@layouts/objects-database/objects-database";
 import Statictics from "@layouts/statistics/statistics";
 import Meetings from "@layouts/meetings/meetings";
@@ -31,6 +31,7 @@ import RecoveryPassword from "@components/pages/password/recovery-password";
 import SetupPassword from "@components/pages/password/setup-password";
 import ResultPaymentPage from "@components/pages/payment/result-payment";
 import RequireActiveLicense from "@layouts/users/components/require-active-license";
+import ObjectsLayout from "@layouts/objects/objects.layout";
 
 export default function AppRoutes() {
   const currentUserId = useSelector(getCurrentUserId());
@@ -39,7 +40,7 @@ export default function AppRoutes() {
   const isLoggedIn = useSelector(getIsLoggedIn());
 
   const routes = [
-    { id: 1, path: "objects/*", element: <Objects /> },
+    { id: 1, path: "objects/*", element: <ObjectsLayout /> },
     { id: 2, path: "objectsdatabase/*", element: <ObjectsDatabase /> },
     { id: 3, path: "statictics/*", element: <Statictics /> },
     { id: 4, path: "meetings/*", element: <Meetings /> },

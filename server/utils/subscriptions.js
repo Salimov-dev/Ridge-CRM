@@ -61,7 +61,8 @@ const subscriptions = async () => {
               filteredUser.updated_at &&
               filteredUser.created_at &&
               filteredUser.updated_at !== filteredUser.created_at &&
-              dayjs(filteredUser.updated_at).isSame(yesterday, "day")
+              dayjs(filteredUser.updated_at).isSame(yesterday, "day") &&
+              filteredUser.isActive === false
             ) {
               updateYesterdayUsers.push(filteredUser);
             }
@@ -99,7 +100,8 @@ const subscriptions = async () => {
         const newBalanceAtNewDay =
           currentLicenseBalance - costsForAllActivityUsersPerDay;
 
-        const makeLicenseTypeIsBlock = async () => {
+        // триальный период закончился
+        if (isLicenseTrialType && currentDate > currentLicenseEndTrialDate) {
           allUserWithCurrentUserArray.forEach(async (userId) => {
             try {
               await User.update(
@@ -129,9 +131,6 @@ const subscriptions = async () => {
           // Обновление информации о лицензии
           await UserLicense.update(
             {
-              balance: Sequelize.literal(
-                `balance - ${costsForAllActivityUsersPerDay}`
-              ),
               accountType: blockedLicenseTypeId,
               activeUsersQuantity: 0,
               dateEnd: currentDate
@@ -144,12 +143,9 @@ const subscriptions = async () => {
           });
 
           return updatedLicense;
-        };
-
-        if (isLicenseTrialType && currentDate > currentLicenseEndTrialDate) {
-          makeLicenseTypeIsBlock();
         }
 
+        // активная лицензия и баланс больше списания
         if (
           isLicenseActiveType &&
           newBalanceAtNewDay > costsForAllActivityUsersPerDay
@@ -201,11 +197,55 @@ const subscriptions = async () => {
           return updatedLicense;
         }
 
+        // активная лицензия и баланс меньше списания
         if (
           isLicenseActiveType &&
           newBalanceAtNewDay < costsForAllActivityUsersPerDay
         ) {
-          makeLicenseTypeIsBlock();
+          allUserWithCurrentUserArray.forEach(async (userId) => {
+            try {
+              await User.update(
+                { isActive: false },
+                { where: { _id: userId } }
+              );
+            } catch (error) {
+              console.error(
+                "Ошибка при обновлении статуса активности пользователя:",
+                error
+              );
+            }
+
+            try {
+              await UserLicense.update(
+                { quantityClicksOnMap: 0 },
+                { where: { userId } }
+              );
+            } catch (error) {
+              console.error(
+                "Ошибка при обновлении количества кликов на карте:",
+                error
+              );
+            }
+          });
+
+          // Обновление информации о лицензии
+          await UserLicense.update(
+            {
+              balance: Sequelize.literal(
+                `balance - ${costsForAllActivityUsersPerDay}`
+              ),
+              accountType: blockedLicenseTypeId,
+              activeUsersQuantity: 0,
+              dateEnd: currentDate
+            },
+            { where: { userId: currentUserId } }
+          );
+
+          const updatedLicense = await UserLicense.findOne({
+            where: { userId: currentUserId }
+          });
+
+          return updatedLicense;
         }
       } catch (error) {
         console.error("Ошибка при обработке баланса лицензии:", error);

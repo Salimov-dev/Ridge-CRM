@@ -4,7 +4,6 @@ import { tokens } from "@theme/theme";
 import { useSelector } from "react-redux";
 import { Box, styled } from "@mui/material";
 // components
-import { FormatPhone } from "@common/table/helpers/helpers";
 import DividerStyled from "@common/divider/divider-styled";
 import Attribute from "@common/map/baloon/attribute";
 import ButtonStyled from "@components/common/buttons/button-styled.button";
@@ -12,15 +11,17 @@ import Loader from "@components/common/loader/loader";
 import OpenPageElementIconButton from "@components/common/buttons/icons buttons/open-page-element.button-icon";
 // utils
 import { makeDigitSeparator } from "@utils/data/make-digit-separator";
+// hooks
+import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
 // store
 import { getDistrictName } from "@store/object-params/districts.store";
 import { getRentTypeNameById } from "@store/object-params/rent-types.store";
 import { getEstateTypeNameById } from "@store/object-params/estate-types.store";
 import { getObjectTypeNameById } from "@store/object-params/object-types.store";
 import { getCurrentRenterNameById } from "@store/object-params/current-renter.store";
+import { getObjectsLoadingStatus } from "@store/object/objects.store";
 import {
-  getCurrentUserId,
-  getIsUserCurator,
+  getIsCurrentUserRoleCurator,
   getUserNameById
 } from "@store/user/users.store";
 
@@ -41,26 +42,23 @@ const AddressContainer = styled(Box)`
   justify-content: space-between;
 `;
 
-const ObjectBaloon = React.memo(({ object, onOpenObjectPage, isLoading }) => {
+const ObjectBalloon = React.memo(({ object, setState }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
+  const createObjectUser = useSelector(getUserNameById(object?.userId));
+  const isLoading = useSelector(getObjectsLoadingStatus());
+  const isCurrentUserRoleCurator = useSelector(getIsCurrentUserRoleCurator());
+  const { handleOpenObjectPage } = useDialogHandlers(setState);
+
   const objectId = object?._id;
-  const manager = useSelector(getUserNameById(object?.userId));
   const city = object?.city;
-
-  const currentUserId = useSelector(getCurrentUserId());
-  const isCurator = useSelector(getIsUserCurator(currentUserId));
-
-  const district = useSelector(getDistrictName(object?.district));
   const address = object?.address;
-  const name = object?.name;
-  const phone = object?.phone;
-  const email = object?.email;
   const rentSquare = object?.rentSquare;
   const rentPrice = object?.rentPrice;
   const rentTypes = object?.rentTypes;
 
+  const district = useSelector(getDistrictName(object?.district));
   const objectType = useSelector(getObjectTypeNameById(object?.objectTypes));
   const estateType = useSelector(getEstateTypeNameById(object?.estateTypes));
   const renter = useSelector(getCurrentRenterNameById(object?.currentRenters));
@@ -76,12 +74,14 @@ const ObjectBaloon = React.memo(({ object, onOpenObjectPage, isLoading }) => {
           width="20px"
           color="black"
           colorHover="blue"
-          onClick={() => onOpenObjectPage(objectId)}
+          onClick={() => handleOpenObjectPage(objectId)}
         />
       </AddressContainer>
       <Attribute title="Район:" subTitle={district} />
       <Attribute title="Адрес:" subTitle={address} />
-      {isCurator && <Attribute title="Менеджер:" subTitle={manager} />}
+      {isCurrentUserRoleCurator && (
+        <Attribute title="Менеджер:" subTitle={createObjectUser} />
+      )}
 
       <DividerStyled />
       <Attribute title="Тип объекта:" subTitle={objectType} />
@@ -103,18 +103,12 @@ const ObjectBaloon = React.memo(({ object, onOpenObjectPage, isLoading }) => {
           rentTypes ? `${useSelector(getRentTypeNameById(rentTypes))}` : "-"
         }
       />
-
-      {/* <DividerStyled /> */}
-      {/* <Attribute title="Контакт:" subTitle={name ? `${name}` : "-"} />
-      <Attribute title="Телефон:" subTitle={phone ? FormatPhone(phone) : "-"} />
-      <Attribute title="Email:" subTitle={email ? email : "-"} /> */}
-
       <ButtonStyled
         title="Открыть страницу объекта"
         style="OBJECT"
         width="100%"
         size="small"
-        onClick={() => onOpenObjectPage(objectId)}
+        onClick={() => handleOpenObjectPage(objectId)}
       />
     </BaloonContainer>
   ) : (
@@ -122,4 +116,4 @@ const ObjectBaloon = React.memo(({ object, onOpenObjectPage, isLoading }) => {
   );
 });
 
-export default ObjectBaloon;
+export default ObjectBalloon;
