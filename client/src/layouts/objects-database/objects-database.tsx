@@ -21,6 +21,8 @@ import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
 import { getObjectsStatusList } from "@store/object-params/object-status.store";
 import {
   getCurrentUserId,
+  getIsCurrentUserRoleCurator,
+  getIsCurrentUserRoleManager,
   getIsUserCurator,
   getIsUserManager
 } from "@store/user/users.store";
@@ -28,6 +30,7 @@ import {
   getObjectsList,
   getObjectsLoadingStatus
 } from "@store/object/objects.store";
+import { objectsDatabaseColumns } from "@columns/objects-database.columns";
 
 const ChangePeriodsContainer = styled(Box)`
   width: 100%;
@@ -88,6 +91,9 @@ const ObjectsDatabase = React.memo(() => {
   const sortedObjects = useMemo(() => {
     return orderBy(searchedObjects, ["created_at"], ["asc"]);
   }, [searchedObjects]);
+
+  const isCurrentUserRoleManager = useSelector(getIsCurrentUserRoleManager());
+  const isCurrentUserRoleCurator = useSelector(getIsCurrentUserRoleCurator());
 
   const handleChangePeriod = (newPeriod) => {
     setPeriod(newPeriod);
@@ -194,11 +200,9 @@ const ObjectsDatabase = React.memo(() => {
         <BasicTable
           items={filteredObjects}
           itemsColumns={objectsColumns(
-            handleOpenObjectPage,
-            handleOpenContactPage,
-            handleOpenUpdateCompanyPage,
-            isHideCheckbox,
-            isManager
+            setState,
+            isCurrentUserRoleManager,
+            isCurrentUserRoleCurator
           )}
           isLoading={isLoading}
         />

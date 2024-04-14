@@ -25,6 +25,10 @@ import {
   getObjectsList,
   getObjectsLoadingStatus
 } from "@store/object/objects.store";
+import {
+  getIsCurrentUserRoleCurator,
+  getIsCurrentUserRoleManager
+} from "@store/user/users.store";
 
 const ObjectsLayout = React.memo(() => {
   const [rowSelection, setRowSelection] = useState([]);
@@ -67,6 +71,9 @@ const ObjectsLayout = React.memo(() => {
 
   const selectedObjectOnMap = useSelector(getObjectById(selectedBalloon));
   const sortedSearchedObjects = useSearchObject(objects, data);
+
+  const isCurrentUserRoleManager = useSelector(getIsCurrentUserRoleManager());
+  const isCurrentUserRoleCurator = useSelector(getIsCurrentUserRoleCurator());
 
   const handleSelectBalloon = (item) => {
     setSelectedBalloon(item);
@@ -125,7 +132,11 @@ const ObjectsLayout = React.memo(() => {
         rowSelection={rowSelection}
         setRowSelection={setRowSelection}
         items={sortedSearchedObjects}
-        itemsColumns={objectsColumns(setStateDialogPages)}
+        itemsColumns={objectsColumns(
+          setStateDialogPages,
+          isCurrentUserRoleManager,
+          isCurrentUserRoleCurator
+        )}
         isLoading={isLoading}
       />
       <PageDialogs

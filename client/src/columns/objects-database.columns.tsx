@@ -25,6 +25,10 @@ import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
 // store
 import { getLastContactsList } from "@store/last-contact/last-contact.store";
 import { getDistrictName } from "@store/object-params/districts.store";
+import {
+  getIsCurrentUserRoleCurator,
+  getIsCurrentUserRoleManager
+} from "@store/user/users.store";
 import { getTasksList } from "@store/task/tasks.store";
 import {
   getMeetingsList,
@@ -54,7 +58,7 @@ function IndeterminateCheckbox({
   );
 }
 
-export const objectsColumns = (
+export const objectsDatabaseColumns = (
   setState,
   isCurrentUserRoleManager,
   isCurrentUserRoleCurator

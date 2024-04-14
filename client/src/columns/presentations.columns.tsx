@@ -44,19 +44,20 @@ export const presentationsColumns = (
           const objectId = info.getValue();
           const object = useSelector(getObjectById(objectId));
           return objectId ? (
-            <Box
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between"
-              }}
-            >
-              {/* {fullAddress} */}
-              <AnyObjectTableEntity
-                object={object}
-                onOpenObjectPage={handleOpenObjectPage}
-              />
-            </Box>
+            <AlignCenter>
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between"
+                }}
+              >
+                <AnyObjectTableEntity
+                  object={object}
+                  onOpenObjectPage={handleOpenObjectPage}
+                />
+              </Box>
+            </AlignCenter>
           ) : (
             <AlignCenter>-</AlignCenter>
           );

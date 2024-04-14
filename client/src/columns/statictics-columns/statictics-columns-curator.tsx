@@ -18,6 +18,7 @@ import { Typography } from "@mui/material";
 import useGetUserAvatar from "../../hooks/user/use-get-user-avatar";
 import { getContactsList } from "@store/contact/contact.store";
 import { getWeeklyContacts } from "@utils/contacts/get-weekly-contacts";
+import { AlignCenter } from "@components/common/columns/styled";
 
 dayjs.extend(customParseFormat);
 dayjs.locale("ru");
@@ -125,11 +126,13 @@ export const staticticsColumnsCurator = [
             return isLoading ? null : avatarSrc;
           };
           return (
-            <UserNameWithAvatar
-              userId={userId}
-              avatarSrc={getAvatarSrc()}
-              isLoading={isLoading}
-            />
+            <AlignCenter>
+              <UserNameWithAvatar
+                userId={userId}
+                avatarSrc={getAvatarSrc()}
+                isLoading={isLoading}
+              />
+            </AlignCenter>
           );
         }
       },

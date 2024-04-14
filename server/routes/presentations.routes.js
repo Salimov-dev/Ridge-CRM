@@ -134,7 +134,7 @@ router.delete("/:presentationId?", auth, lic, async (req, res) => {
       });
     }
 
-    const deletedPresentation = await Meeting.findByPk(presentationId);
+    const deletedPresentation = await Presentation.findByPk(presentationId);
 
     if (!deletedPresentation) {
       return res.status(404).json({
