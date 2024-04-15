@@ -43,7 +43,7 @@ const PresentationBalloon = React.memo(({ presentationId, setState }) => {
   const objectId = presentation?.objectId;
   const objectAddress = `${object?.city}, ${object?.address}`;
 
-  const managerData = useSelector(getUserNameById(presentation?.userId));
+  const managerUserData = useSelector(getUserNameById(presentation?.userId));
   const isCurrentUserRoleCurator = useSelector(getIsCurrentUserRoleCurator());
 
   const status = useSelector(
@@ -66,7 +66,7 @@ const PresentationBalloon = React.memo(({ presentationId, setState }) => {
         <b>Дата добавления:</b> {FormatDate(presentation?.created_at)}
       </Typography>
       {isCurrentUserRoleCurator && (
-        <Attribute title="Менеджер:" subTitle={managerData} />
+        <Attribute title="Менеджер:" subTitle={managerUserData} />
       )}
       {presentation?.curatorComment && (
         <>

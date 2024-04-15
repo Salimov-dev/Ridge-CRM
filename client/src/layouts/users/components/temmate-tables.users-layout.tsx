@@ -21,20 +21,24 @@ import {
 } from "@store/user/users.store";
 
 const TeamMateTablesUsersLayout = React.memo(({ data, register, setState }) => {
-  const { handleOpenUpdateUserPage } = useDialogHandlers(setState);
-  const isLoading = useSelector(getUsersLoadingStatus());
   const users = useSelector(getUsersList());
+  const isLoading = useSelector(getUsersLoadingStatus());
+  const { handleOpenUpdateUserPage } = useDialogHandlers(setState);
 
   const currentUserId = useSelector(getCurrentUserId());
+
   const usersWithoutCurrentUser = users?.filter(
     (user) => user?._id !== currentUserId
   );
+
   const observerUsersWithRole = usersWithoutCurrentUser?.filter(
     (user) => user?.role && user?.role.includes(roleObserverId)
   );
+
   const managerUsersWithRole = usersWithoutCurrentUser?.filter(
     (user) => user?.role && user?.role.includes(roleManagerId)
   );
+
   const searchedUsers = useSearchUser({
     users: managerUsersWithRole,
     data
