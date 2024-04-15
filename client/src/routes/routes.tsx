@@ -7,13 +7,13 @@ import Objects from "@layouts/objects/objects.layout";
 import ObjectsDatabase from "@layouts/objects-database/objects-database";
 import Statictics from "@layouts/statistics/statistics";
 import Meetings from "@layouts/meetings/meetings.layout";
-import Calendar from "@layouts/calendar/calendar";
+import Calendar from "@layouts/calendar/calendar.layout";
 import Deals from "@layouts/deals/deals.layout";
 import Presentations from "@layouts/presentations/presentations";
 import Users from "@layouts/users/users";
 import Profile from "@layouts/profile/profile";
 import Contacts from "@layouts/contacts/contacts.layout";
-import Companies from "@layouts/companies/companies";
+import Companies from "@layouts/companies/companies.layout";
 // components
 import UpdateProfile from "@components/pages/user/update-profile";
 import NoMatchRoute from "@components/common/rout/no-match";
@@ -36,6 +36,7 @@ import MeetingsLayout from "@layouts/meetings/meetings.layout";
 import MainLayout from "@layouts/main/main.layout";
 import DealsLayout from "@layouts/deals/deals.layout";
 import ContactsLayout from "@layouts/contacts/contacts.layout";
+import CalendarLayout from "@layouts/calendar/calendar.layout";
 
 export default function AppRoutes() {
   const currentUserId = useSelector(getCurrentUserId());
@@ -48,7 +49,7 @@ export default function AppRoutes() {
     { id: 2, path: "objectsdatabase/*", element: <ObjectsDatabase /> },
     { id: 3, path: "statictics/*", element: <Statictics /> },
     { id: 4, path: "meetings/*", element: <MeetingsLayout /> },
-    { id: 5, path: "calendar/*", element: <Calendar /> },
+    { id: 5, path: "calendar/*", element: <CalendarLayout /> },
     { id: 6, path: "deals/*", element: <DealsLayout /> },
     // {
     //   id: 7,

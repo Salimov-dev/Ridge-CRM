@@ -21,13 +21,11 @@ import { getMeetingTypeNameById } from "@store/meeting/meeting-types.store";
 import { getMeetingById } from "@store/meeting/meetings.store";
 import {
   getCurrentUserId,
-  getIsCurrentUserRoleManager,
   getIsUserAuthorThisEntity
 } from "@store/user/users.store";
 
-export const meetingsColumns = (setState, isDialogPage) => {
+export const meetingsColumns = (setState, isCurrentUserRoleManager) => {
   let columns = [];
-  const isCurrentUserRoleManager = useSelector(getIsCurrentUserRoleManager());
 
   const { handleOpenUpdateMeetingPage, handleOpenObjectPage } =
     useDialogHandlers(setState);
@@ -108,15 +106,13 @@ export const meetingsColumns = (setState, isDialogPage) => {
               }}
             >
               {fullAddress}
-              {!isDialogPage ? (
-                <OpenPageElementIconButton
-                  title="Открыть объект"
-                  height="20px"
-                  heightButton="20px"
-                  width="20px"
-                  onClick={() => handleOpenObjectPage(objectId)}
-                />
-              ) : null}
+              <OpenPageElementIconButton
+                title="Открыть объект"
+                height="20px"
+                heightButton="20px"
+                width="20px"
+                onClick={() => handleOpenObjectPage(objectId)}
+              />
             </Box>
           ) : (
             <AlignCenter>-</AlignCenter>
@@ -241,13 +237,15 @@ export const meetingsColumns = (setState, isDialogPage) => {
   };
 
   if (!isCurrentUserRoleManager) {
-    columns = [dateColumn, otherColumns, managerColumn, updateColumn];
+    columns = [
+      dateColumn,
+      otherColumns,
+      meetingObjectColumn,
+      managerColumn,
+      updateColumn
+    ];
   } else {
-    columns = [dateColumn, otherColumns, updateColumn];
-  }
-
-  if (!isDialogPage) {
-    columns.splice(1, 0, meetingObjectColumn);
+    columns = [dateColumn, otherColumns, meetingObjectColumn, updateColumn];
   }
 
   return columns;

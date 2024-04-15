@@ -1,50 +1,42 @@
 import dayjs from "dayjs";
+import { orderBy } from "lodash";
 import { useForm } from "react-hook-form";
 import React, { useEffect, useMemo, useState } from "react";
-import { Box } from "@mui/material";
-import { orderBy } from "lodash";
 import { useSelector } from "react-redux";
-// components
-import BasicTable from "@components/common/table/basic-table";
-import HeaderLayout from "@components/common/page-headers/header-layout";
-import PresentationsFiltersPanel from "@components/UI/filters-panels/presentations-filters-panel";
-import ItemsOnMap from "@components/common/map/items-on-map/items-on-map";
-import PageDialogs from "@components/common/dialog/page-dialogs";
-import { ContainerStyled } from "@components/common/container/container-styled";
-import PresentationBaloon from "@components/UI/maps/presentation-balloon";
-import Buttons from "./components/buttons";
+// common
+import BasicTable from "@common/table/basic-table";
+import HeaderLayout from "@common/page-headers/header-layout";
+import ItemsOnMap from "@common/map/items-on-map/items-on-map";
+import PageDialogs from "@common/dialog/page-dialogs";
+import { ContainerStyled } from "@common/container/container-styled";
 // columns
 import { presentationsColumns } from "@columns/presentations.columns";
 // hooks
 import useSearchPresentation from "@hooks/presentation/use-search-presentation";
-import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
+// UI
+import PresentationBalloon from "@UI/maps/presentation-balloon";
+import { presentationsLayoutInitialState } from "@UI/initial-states/presentations-layout.initial-state";
+import ButtonsPresentationsLayout from "@UI/layout-buttons/buttons.presentations-layout";
+import PresentationsLayoutFiltersPanel from "@UI/filters-panels/presentations-layout.filters-panel";
 // store
 import { getObjectsList } from "@store/object/objects.store";
 import {
-  getCurrentUserId,
-  getIsUserCurator,
-  getIsUserManager
+  getIsCurrentUserRoleCurator,
+  getIsCurrentUserRoleManager
 } from "@store/user/users.store";
-import { getPresentationStatusList } from "@store/presentation/presentation-status.store";
 import {
   getPresentationsList,
   getPresentationsLoadingStatus
 } from "@store/presentation/presentations.store";
-import PresentationBalloon from "@components/UI/maps/presentation-balloon";
-
-const initialState = {
-  objectAddress: "",
-  curatorComment: "",
-  selectedStatuses: [],
-  selectedUsers: [],
-  startDate: null,
-  endDate: null
-};
 
 const Presentations = React.memo(() => {
-  const [state, setState] = useState({
-    selectedPresentationBaloon: null,
-    presentationsWithLocation: [],
+  const [presentationsWithLocation, setPresentationsWithLocation] = useState(
+    []
+  );
+  const [selectedPresentationBaloon, setSelectedPresentationBaloon] =
+    useState(null);
+
+  const [stateDialogPages, setStateDialogPages] = useState({
     objectPage: false,
     updateObjectPage: false,
     createPresentationPage: false,
@@ -69,47 +61,32 @@ const Presentations = React.memo(() => {
   };
 
   const { register, watch, setValue, reset } = useForm({
-    defaultValues: !!localStorageState ? formatedState : initialState,
+    defaultValues: !!localStorageState
+      ? formatedState
+      : presentationsLayoutInitialState,
     mode: "onChange"
   });
 
   const data = watch();
   const objects = useSelector(getObjectsList());
-  const currentUserId = useSelector(getCurrentUserId());
-  const presentationsStatuses = useSelector(getPresentationStatusList());
 
-  const isDialogPage = true;
-  const isCurator = useSelector(getIsUserCurator(currentUserId));
-  const isManager = useSelector(getIsUserManager(currentUserId));
   const isLoading = useSelector(getPresentationsLoadingStatus());
-  const isInputEmpty = JSON.stringify(initialState) !== JSON.stringify(data);
 
   const presentationsList = useSelector(getPresentationsList());
-
   const searchedPresentations = useSearchPresentation(presentationsList, data);
   const sortedPresentations = useMemo(() => {
     return orderBy(searchedPresentations, ["created_at"], ["desc"]);
   }, [searchedPresentations]);
 
-  const {
-    handleOpenObjectPage,
-    handleOpenCreatePresentationPage,
-    handleOpenUpdatePresentationPage,
-    handleOpenVideoPlayerPage
-  } = useDialogHandlers(setState);
+  const isCurrentUserRoleManager = useSelector(getIsCurrentUserRoleManager());
+  const isCurrentUserRoleCurator = useSelector(getIsCurrentUserRoleCurator());
 
   const handleSelectPresentationBaloon = (presentationId) => {
-    setState((prevState) => ({
-      ...prevState,
-      selectedPresentationBaloon: presentationId
-    }));
+    setSelectedPresentationBaloon(presentationId);
   };
 
   const handleSetPresentationsWithLocation = (location) => {
-    setState((prevState) => ({
-      ...prevState,
-      presentationsWithLocation: location
-    }));
+    setPresentationsWithLocation(location);
   };
 
   useEffect(() => {
@@ -124,7 +101,7 @@ const Presentations = React.memo(() => {
     if (hasLocalStorageData?.length) {
       localStorage.setItem(
         "search-presentations-data",
-        JSON.stringify(initialState)
+        JSON.stringify(presentationsLayoutInitialState)
       );
     }
   }, []);
@@ -155,7 +132,7 @@ const Presentations = React.memo(() => {
 
       if (
         JSON.stringify(presentationsWithLocationData) !==
-        JSON.stringify(state.presentationsWithLocation)
+        JSON.stringify(presentationsWithLocation)
       ) {
         handleSetPresentationsWithLocation(presentationsWithLocationData);
       }
@@ -165,50 +142,41 @@ const Presentations = React.memo(() => {
   return (
     <ContainerStyled>
       <HeaderLayout title="Презентации" />
-      <Buttons
-        initialState={initialState}
+      <ButtonsPresentationsLayout
+        data={data}
         reset={reset}
-        onOpenCreatePresentationPage={handleOpenCreatePresentationPage}
-        onOpenVideoPlayerPage={handleOpenVideoPlayerPage}
-        isInputEmpty={isInputEmpty}
+        setState={setStateDialogPages}
       />
       <ItemsOnMap
-        items={state.presentationsWithLocation}
+        items={presentationsWithLocation}
         onClick={handleSelectPresentationBaloon}
         isLoading={isLoading}
         baloon={
           <PresentationBalloon
-            presentationId={state.selectedPresentationBaloon}
-            onOpenObjectPage={handleOpenObjectPage}
-            onOpenUpdatePresentationPage={handleOpenUpdatePresentationPage}
+            presentationId={selectedPresentationBaloon}
+            setState={setStateDialogPages}
           />
         }
       />
-      <PresentationsFiltersPanel
+      <PresentationsLayoutFiltersPanel
         data={data}
-        presentations={presentationsList}
-        statuses={presentationsStatuses}
         register={register}
         setValue={setValue}
-        isManager={isManager}
-        isLoading={isLoading}
       />
       <BasicTable
         items={sortedPresentations}
         itemsColumns={presentationsColumns(
-          handleOpenObjectPage,
-          handleOpenUpdatePresentationPage,
-          isDialogPage,
-          isCurator,
-          isManager
+          setStateDialogPages,
+          isCurrentUserRoleCurator,
+          isCurrentUserRoleManager
         )}
         isLoading={isLoading}
       />
       <PageDialogs
-        state={state}
-        setState={setState}
+        state={stateDialogPages}
+        setState={setStateDialogPages}
         videoTitle="Как пользоваться страницей с Презентациями"
-        videoSrc="https://www.youtube.com/embed/zz_SjeT_-M4"
+        videoSrc="https://www.youtube.com/embed/J6Hlb3M7TdM"
       />
     </ContainerStyled>
   );

@@ -13,7 +13,7 @@
     "paths": {
       "@components/*": ["src/components/*"],
       "@common/*": ["src/components/common/*"],
-      "@ui/*": ["src/components/ui/*"],
+      "@UI/*": ["src/components/UI/*"],
       "@pages/*": ["src/components/pages/*"],
       "@columns/*": ["src/columns/*"],
       "@forms/*": ["src/forms/*"],

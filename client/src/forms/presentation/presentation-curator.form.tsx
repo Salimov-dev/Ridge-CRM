@@ -5,7 +5,7 @@ import AutocompleteStyled from "../../components/common/inputs/autocomplete-styl
 // styled
 import { FieldsContainer, Form } from "../../components/common/forms/styled";
 // store
-import { getPresentationStatusList } from "../../store/presentation/presentation-status.store";
+import { getPresentationStatusesList } from "../../store/presentation/presentation-status.store";
 import { capitalizeFirstLetter } from "@utils/data/capitalize-first-letter";
 
 const CuratorPresentationForm = ({
@@ -16,7 +16,7 @@ const CuratorPresentationForm = ({
   watch
 }) => {
   const watchStatus = watch("status");
-  const presentationStatuses = useSelector(getPresentationStatusList());
+  const presentationStatuses = useSelector(getPresentationStatusesList());
 
   return (
     <Form>

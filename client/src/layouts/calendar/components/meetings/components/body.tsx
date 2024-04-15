@@ -1,11 +1,13 @@
 import { Box, Typography, styled } from "@mui/material";
+import { useSelector } from "react-redux";
 // components
 import MeetingObject from "./meeting-object";
 import MeetingInfo from "./meeting-info";
 // utils
-import { getUserName } from "@utils/user/get-user-name";
-import { getUserNameById } from "@store/user/users.store";
-import { useSelector } from "react-redux";
+import {
+  getIsCurrentUserRoleCurator,
+  getUserNameById
+} from "@store/user/users.store";
 
 const Component = styled(Box)`
   display: flex;
@@ -13,7 +15,9 @@ const Component = styled(Box)`
   gap: 4px;
 `;
 
-const Body = ({ meet, isCurator, isSelectedDayDialog, setState }) => {
+const Body = ({ meet, isSelectedDayDialog, setState }) => {
+  const isCurrentUserRoleCurator = useSelector(getIsCurrentUserRoleCurator());
+
   return (
     <Component>
       {isSelectedDayDialog ? <MeetingInfo meet={meet} /> : null}
@@ -22,7 +26,7 @@ const Body = ({ meet, isCurator, isSelectedDayDialog, setState }) => {
           <b>Комментарий:</b> {meet?.comment}
         </Typography>
       ) : null}
-      {isCurator ? (
+      {isCurrentUserRoleCurator ? (
         <Typography>
           <b>Менеджер:</b> {useSelector(getUserNameById(meet?.userId))}
         </Typography>

@@ -1,73 +1,25 @@
-import React, { HTMLProps } from "react";
-// utils
-import { FormatDate } from "@utils/date/format-date";
 // components
 import { AlignCenter } from "@components/common/columns/styled";
 import ObjectTableEntity from "@components/common/table-entities/object-table-entity";
 import ButtonStyled from "@components/common/buttons/button-styled.button";
 import ContactTableEntity from "@components/common/table-entities/contact-table-entity";
-
-function IndeterminateCheckbox({
-  indeterminate,
-  className = "",
-  ...rest
-}: { indeterminate?: boolean } & HTMLProps) {
-  const ref = React.useRef(null!);
-
-  React.useEffect(() => {
-    if (typeof indeterminate === "boolean") {
-      ref.current.indeterminate = !rest.checked && indeterminate;
-    }
-  }, [ref, indeterminate]);
-
-  return (
-    <input
-      type="checkbox"
-      ref={ref}
-      className={className + " cursor-pointer"}
-      {...rest}
-    />
-  );
-}
+// utils
+import { FormatDate } from "@utils/date/format-date";
+// hooks
+import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
 
 export const companiesColumns = (
-  handleOpenUpdateCompanyPage,
-  isCurator,
-  isHideCheckbox,
-  handleOpenObjectPage,
-  object,
-  handleOpenContactPage
+  setState,
+  isCurrentUserRoleCurator,
+  object = {}
 ) => {
   let columns = [];
 
-  const selectColumn = {
-    id: "select",
-    header: ({ table }) => (
-      <AlignCenter>
-        <IndeterminateCheckbox
-          {...{
-            checked: table.getIsAllRowsSelected(),
-            indeterminate: table.getIsSomeRowsSelected(),
-            onChange: table.getToggleAllRowsSelectedHandler()
-          }}
-        />
-      </AlignCenter>
-    ),
-    cell: ({ row }) => (
-      <div className="px-1">
-        <AlignCenter>
-          <IndeterminateCheckbox
-            {...{
-              checked: row.getIsSelected(),
-              disabled: !row.getCanSelect(),
-              indeterminate: row.getIsSomeSelected(),
-              onChange: row.getToggleSelectedHandler()
-            }}
-          />
-        </AlignCenter>
-      </div>
-    )
-  };
+  const {
+    handleOpenObjectPage,
+    handleOpenContactPage,
+    handleOpenUpdateCompanyPage
+  } = useDialogHandlers(setState);
 
   const dateColumn = {
     accessorKey: "created_at",
@@ -145,7 +97,7 @@ export const companiesColumns = (
     }
   };
 
-  if (isCurator) {
+  if (isCurrentUserRoleCurator) {
     columns = [
       dateColumn,
       companyNameColumn,

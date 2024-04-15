@@ -8,9 +8,9 @@ import HeaderLayout from "@components/common/page-headers/header-layout";
 import PageDialogs from "@components/common/dialog/page-dialogs";
 import { ContainerStyled } from "@components/common/container/container-styled";
 import BasicTable from "@components/common/table/basic-table";
-import ContactsLayoutFiltersPanel from "@components/UI/filters-panels/contacts-layout/contacts-layout.filters-panel";
-import { contactsLayoutInitialState } from "@components/UI/filters-panels/contacts-layout/contacts-layout-initial-state.filters-panel";
-import ButtonsContactsLayout from "./components/buttons.contacts-layout";
+import ContactsLayoutFiltersPanel from "@components/UI/filters-panels/contacts-layout.filters-panel";
+import { contactsLayoutInitialState } from "@components/UI/initial-states/contacts-layout.initial-state";
+import ButtonsContactsLayout from "@components/UI/layout-buttons/buttons.contacts-layout";
 // columns
 import { contactsColumns } from "@columns/contacts.columns";
 // hooks
@@ -21,7 +21,7 @@ import { getContactsList } from "@store/contact/contact.store";
 import { getLastContactsLoadingStatus } from "@store/last-contact/last-contact.store";
 
 const ContactsLayout = React.memo(() => {
-  const [state, setState] = useState({
+  const [stateDialogPages, setStateDialogPages] = useState({
     createContactPage: false,
     openContactPage: false,
     contactId: null
@@ -77,7 +77,11 @@ const ContactsLayout = React.memo(() => {
   return (
     <ContainerStyled>
       <HeaderLayout title="Контакты" />
-      <ButtonsContactsLayout data={data} setState={setState} reset={reset} />
+      <ButtonsContactsLayout
+        data={data}
+        setState={setStateDialogPages}
+        reset={reset}
+      />
       <ContactsLayoutFiltersPanel
         data={data}
         register={register}
@@ -85,12 +89,15 @@ const ContactsLayout = React.memo(() => {
       />
       <BasicTable
         items={sortedContacts}
-        itemsColumns={contactsColumns(setState, isCurrentUserRoleManager)}
+        itemsColumns={contactsColumns(
+          setStateDialogPages,
+          isCurrentUserRoleManager
+        )}
         isLoading={isLoading}
       />
       <PageDialogs
-        state={state}
-        setState={setState}
+        state={stateDialogPages}
+        setState={setStateDialogPages}
         videoTitle="Как пользоваться страницей с Контактами"
         videoSrc="https://www.youtube.com/embed/nvnfeg8O5pA"
       />

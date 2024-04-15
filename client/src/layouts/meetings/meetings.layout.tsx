@@ -9,10 +9,10 @@ import HeaderLayout from "@components/common/page-headers/header-layout";
 import ItemsOnMap from "@components/common/map/items-on-map/items-on-map";
 import PageDialogs from "@components/common/dialog/page-dialogs";
 import { ContainerStyled } from "@components/common/container/container-styled";
-import MeetingsLayoutFiltersPanel from "@components/UI/filters-panels/meetings-layout/meetings-layout.filters-panel";
-import ButtonsMeetingsLayout from "./components/buttons.meetings-layout";
+import MeetingsLayoutFiltersPanel from "@components/UI/filters-panels/meetings-layout.filters-panel";
+import ButtonsMeetingsLayout from "../../components/UI/layout-buttons/buttons.meetings-layout";
 import MeetingBalloon from "@components/UI/maps/meeting-balloon";
-import { meetingsLayoutInitialState } from "@components/UI/filters-panels/meetings-layout/meetings-layout-initial-state.filters-panel";
+import { meetingsLayoutInitialState } from "@components/UI/initial-states/meetings-layout.initial-state";
 // hooks
 import useSearchMeeting from "@hooks/meeting/use-search-meeting";
 // columns
@@ -20,6 +20,7 @@ import { meetingsColumns } from "@columns/meetings.columns";
 // utils
 import sortingByDateAndTime from "@utils/other/sorting-by-date-and-time";
 // store
+import { getIsCurrentUserRoleManager } from "@store/user/users.store";
 import {
   getMeetingById,
   getMeetingLoadingStatus,
@@ -66,8 +67,8 @@ const MeetingsLayout = React.memo(() => {
   const searchedMeetings = useSearchMeeting(meetingsList, data);
   const sortedMeetings = sortingByDateAndTime(searchedMeetings);
 
+  const isCurrentUserRoleManager = useSelector(getIsCurrentUserRoleManager());
   const isLoading = useSelector(getMeetingLoadingStatus());
-  const isDialogPage = false;
 
   const handleChangeSelectedBalloon = (meetingId) => {
     setSelectedBalloon(meetingId);
@@ -114,7 +115,10 @@ const MeetingsLayout = React.memo(() => {
       />
       <BasicTable
         items={sortedMeetings}
-        itemsColumns={meetingsColumns(setStateDialogPages, isDialogPage)}
+        itemsColumns={meetingsColumns(
+          setStateDialogPages,
+          isCurrentUserRoleManager
+        )}
         isLoading={isLoading}
       />
       <PageDialogs

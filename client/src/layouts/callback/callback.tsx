@@ -1,7 +1,7 @@
+import { Typography } from "@mui/material";
 // components
 import HeaderLayout from "@components/common/page-headers/header-layout";
 import { ContainerStyled } from "@components/common/container/container-styled";
-import { Typography } from "@mui/material";
 
 const Callback = () => {
   return (

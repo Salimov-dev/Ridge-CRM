@@ -4,13 +4,13 @@ import { presentationStatusesArrray } from "../../data/presentations/presentatio
 const presentationStatusSlice = createSlice({
   name: "presentationStatus",
   initialState: {
-    entities: null,
+    entities: null
   },
   reducers: {
     presentationStatusLoaded: (state, action) => {
       state.entities = action.payload;
-    },
-  },
+    }
+  }
 });
 
 const { reducer: presentationStatusReducer, actions } = presentationStatusSlice;
@@ -20,7 +20,7 @@ export const loadPresentationStatusList = () => (dispatch) => {
   dispatch(presentationStatusLoaded(presentationStatusesArrray));
 };
 
-export const getPresentationStatusList = () => (state) =>
+export const getPresentationStatusesList = () => (state) =>
   state.presentationStatus.entities;
 
 export const getPresentationStatusById = (id) => (state) => {

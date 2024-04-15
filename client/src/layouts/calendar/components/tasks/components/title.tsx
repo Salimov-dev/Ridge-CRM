@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import DoneIconToggler from "./done-icon-toggler";
+import DoneIconToggler from "../../body/components/day/done-icon-toggler.calendar-layout";
 import { Box, Typography, styled } from "@mui/material";
 // components
 import UpdateElement from "@components/common/buttons/icons buttons/update-element.button-icon";

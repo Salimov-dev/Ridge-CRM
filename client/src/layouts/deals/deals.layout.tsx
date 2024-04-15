@@ -6,8 +6,8 @@ import Stages from "./components/layout-stages.deals-layout";
 import HeaderLayout from "@components/common/page-headers/header-layout";
 import PageDialogs from "@components/common/dialog/page-dialogs";
 import { ContainerStyled } from "@components/common/container/container-styled";
-import { dealsLayoutInitialState } from "@components/UI/filters-panels/deals-layout/deals-layout-initial-state.filters-panel";
-import DealsLayoutFiltersPanel from "@components/UI/filters-panels/deals-layout/deals-layout.filters-panel";
+import { dealsLayoutInitialState } from "@components/UI/initial-states/deals-layout.initial-state";
+import DealsLayoutFiltersPanel from "@components/UI/filters-panels/deals-layout.filters-panel";
 // data
 import { allowedStatuses, dealStagesArray } from "@data/deals/deals-stages";
 // hooks
@@ -16,7 +16,7 @@ import useSearchDeals from "@hooks/deals/use-search-deals";
 import { getObjectsList } from "@store/object/objects.store";
 
 const DealsLayout = React.memo(() => {
-  const [state, setState] = useState({
+  const [stateDialogPages, setStateDialogPages] = useState({
     objectPage: false,
     updatePage: false,
     objectId: null
@@ -69,10 +69,10 @@ const DealsLayout = React.memo(() => {
       />
       <Stages
         deals={searchedDeals}
-        setState={setState}
+        setState={setStateDialogPages}
         stages={dealStagesArray}
       />
-      <PageDialogs state={state} setState={setState} />
+      <PageDialogs state={stateDialogPages} setState={setStateDialogPages} />
     </ContainerStyled>
   );
 });

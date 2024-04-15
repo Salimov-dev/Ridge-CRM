@@ -9,29 +9,29 @@ import { AlignCenter } from "@components/common/columns/styled";
 import UserNameWithAvatar from "@components/common/user/user-name-with-avatar";
 import ButtonStyled from "@components/common/buttons/button-styled.button";
 import DoneStatusIcon from "@components/common/columns/done-status-icon";
+import OpenPageElementIconButton from "@components/common/buttons/icons buttons/open-page-element.button-icon";
 // store
 import { getObjectById } from "@store/object/objects.store";
 import { getTaskById } from "@store/task/tasks.store";
 import {
   getCurrentUserId,
-  getIsUserAuthorThisEntity,
-  getIsUserManager
+  getIsUserAuthorThisEntity
 } from "@store/user/users.store";
 // utils
 import { FormatDate } from "@utils/date/format-date";
 import { FormatTime } from "@utils/date/format-time";
 // hooks
 import useGetUserAvatar from "@hooks/user/use-get-user-avatar";
+import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
 
-export const tasksColumns = (
-  handleOpenUpdateMyTaskPage,
-  handleOpenUpdateManagerTaskPage,
-  handleOpenObjectPage,
-  isDialogPage
-) => {
+export const tasksColumns = (setState, isCurrentUserRoleManager) => {
   let columns = [];
-  const currentUserId = useSelector(getCurrentUserId());
-  const isManager = useSelector(getIsUserManager(currentUserId));
+
+  const {
+    handleOpenUpdateMyTaskPage,
+    handleOpenUpdateManagerTaskPage,
+    handleOpenObjectPage
+  } = useDialogHandlers(setState);
 
   const dateColumn = {
     header: "Дата и время выполнения задачи",
@@ -95,16 +95,14 @@ export const tasksColumns = (
             >
               {objectId ? (
                 <>
-                  {fullAddress}
-                  {!isDialogPage ? (
-                    <AlignCenter>
-                      <ButtonStyled
-                        title="Открыть"
-                        style="OPEN_OBJECT"
-                        onClick={() => handleOpenObjectPage(objectId)}
-                      />
-                    </AlignCenter>
-                  ) : null}
+                  {fullAddress}d
+                  <OpenPageElementIconButton
+                    title="Открыть объект"
+                    height="20px"
+                    heightButton="20px"
+                    width="20px"
+                    onClick={() => handleOpenObjectPage(objectId)}
+                  />
                 </>
               ) : (
                 <EmptyTd />
@@ -246,14 +244,10 @@ export const tasksColumns = (
     ]
   };
 
-  if (!isManager) {
-    columns = [dateColumn, otherColumns];
+  if (!isCurrentUserRoleManager) {
+    columns = [dateColumn, taskObjectColumn, otherColumns];
   } else {
-    columns = [dateColumn, otherColumns];
-  }
-
-  if (!isDialogPage) {
-    columns.splice(1, 0, taskObjectColumn);
+    columns = [dateColumn, taskObjectColumn, otherColumns];
   }
 
   columns.push(updateColumn);

@@ -5,7 +5,7 @@ import { Box, Typography } from "@mui/material";
 import { FormatTime } from "@utils/date/format-time";
 // components
 import UpdateElementIconButton from "@components/common/buttons/icons buttons/update-element.button-icon";
-import DoneIconToggler from "../../tasks/components/done-icon-toggler";
+import DoneIconToggler from "../../body/components/day/done-icon-toggler.calendar-layout";
 // store
 import { updateMeeting } from "@store/meeting/meetings.store";
 import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";

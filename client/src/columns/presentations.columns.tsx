@@ -8,23 +8,25 @@ import UserNameWithAvatar from "@components/common/user/user-name-with-avatar";
 import AnyObjectTableEntity from "@components/common/table-entities/any-object-table-entity";
 // hooks
 import useGetUserAvatar from "@hooks/user/use-get-user-avatar";
+import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
 // icons
 import CloudDoneIcon from "@mui/icons-material/CloudDone";
 import CloudOffIcon from "@mui/icons-material/CloudOff";
 // utils
 import { FormatDate } from "@utils/date/format-date";
 // store
-import { getObjectById } from "@store/object/objects.store";
 import { getPresentationStatusNameById } from "@store/presentation/presentation-status.store";
+import { getObjectById } from "@store/object/objects.store";
 
 export const presentationsColumns = (
-  handleOpenObjectPage,
-  handleOpenUpdatePresentationPage,
-  isDialogPage,
-  isCurator,
-  isManager
+  setState,
+  isCurrentUserRoleCurator,
+  isCurrentUserRoleManager
 ) => {
   let columns = [];
+
+  const { handleOpenObjectPage, handleOpenUpdatePresentationPage } =
+    useDialogHandlers(setState);
 
   const firstColumns = {
     header: "Презентация",
@@ -172,11 +174,11 @@ export const presentationsColumns = (
 
           return (
             <AlignCenter>
-              {isCurator ? (
+              {isCurrentUserRoleCurator ? (
                 <ButtonStyled
                   title="СОГЛАСОВАТЬ"
                   style="CANCEL"
-                  disabled={!isCurator}
+                  disabled={!isCurrentUserRoleCurator}
                   onClick={() =>
                     handleOpenUpdatePresentationPage(presentationId)
                   }
@@ -185,7 +187,7 @@ export const presentationsColumns = (
                 <ButtonStyled
                   title="Править"
                   style="PRESENTATION"
-                  disabled={!isCurator}
+                  disabled={!isCurrentUserRoleCurator}
                   onClick={() =>
                     handleOpenUpdatePresentationPage(presentationId)
                   }
@@ -201,7 +203,7 @@ export const presentationsColumns = (
   const managerColumn = {
     id: "managerColumn",
     header: "Менеджер",
-    columns: isManager !== undefined && [
+    columns: isCurrentUserRoleManager !== undefined && [
       {
         accessorKey: "userId",
         header: "Фамилия и Имя",
@@ -223,7 +225,7 @@ export const presentationsColumns = (
     ]
   };
 
-  if (!isManager) {
+  if (!isCurrentUserRoleManager) {
     columns = [firstColumns, considerationColumn, managerColumn, updateColumn];
   } else {
     columns = [firstColumns, considerationColumn, updateColumn];

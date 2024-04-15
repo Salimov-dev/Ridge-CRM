@@ -59,12 +59,6 @@ const useCalendar = (data, setState) => {
   };
 
   const actualTasks = getActualTasks();
-  const searchedTasks = useSearchTask(actualTasks, data);
-  const sortedTasks = useMemo(() => {
-    return orderBy(searchedTasks, ["date"], ["desc"]);
-  }, [searchedTasks]);
-
-  // ищем встречи
 
   const getMeeting = (day) => {
     const meeting = meetings?.filter(
@@ -74,23 +68,9 @@ const useCalendar = (data, setState) => {
     );
     const sortedMeetings = orderBy(meeting, ["date"], ["desc"]);
 
-    const currentUserMeetings = sortedMeetings?.filter(
-      (meet) => meet?.userId === currentUserId
-    );
-    if (isManager) {
-      return sortedMeetings;
-    }
-    if (isCurator) {
-      return sortedMeetings;
-    }
-    if (isObserver) {
-      return currentUserMeetings;
-    }
-
     return sortedMeetings;
   };
 
-  // ищем задачи
   const getTask = (day) => {
     const currentTasks = actualTasks?.filter((task) => {
       const taskDate = dayjs(task?.date);
@@ -109,21 +89,12 @@ const useCalendar = (data, setState) => {
     return sortedTasks;
   };
 
-  // обновление стейта при изменении даты текущего месяца календаря
-  const handleChangeCurrentMonth = (monthIndex) => {
-    setState((prevState) => ({
-      ...prevState,
-      currentMonth: getMonth(monthIndex)
-    }));
-  };
-
   return {
     sortedCurrentWeeklyMeetings,
     sortedTasks,
     actualTasks,
     getMeeting,
-    getTask,
-    handleChangeCurrentMonth
+    getTask
   };
 };
 
