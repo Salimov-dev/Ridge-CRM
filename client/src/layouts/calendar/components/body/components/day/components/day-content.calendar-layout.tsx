@@ -7,11 +7,6 @@ import TaskItemCalendar from "@layouts/calendar/components/tasks/tasks-item.cale
 // store
 import { getTaskLoadingStatus } from "@store/task/tasks.store";
 import { getMeetingLoadingStatus } from "@store/meeting/meetings.store";
-import {
-  getCurrentUserId,
-  getIsCurrentUserRoleCurator,
-  getIsUserCurator
-} from "@store/user/users.store";
 
 const Components = styled(Box)`
   height: 100%;

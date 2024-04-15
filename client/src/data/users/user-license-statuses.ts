@@ -14,3 +14,7 @@ const userLicenseStatusesArray = [
 ];
 
 export { userLicenseStatusesArray };
+
+export const licenseTypeTrialId = "71pbfi4954itj045tloop001";
+export const licenseTypeActiveId = "718gkgdbn48jgfo3kktjt002";
+export const licenseTypeBlockedId = "71kbjld394u5jgfdsjk4l003";

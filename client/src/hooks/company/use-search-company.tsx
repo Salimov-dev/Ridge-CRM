@@ -10,6 +10,7 @@ const useSearchCompany = (companies, data) => {
   const searchedCompanies = useMemo(() => {
     let array = companies;
 
+    // Найти по названию компании
     if (data?.company?.length) {
       array = array?.filter((comp) =>
         comp.name.toLowerCase().includes(data.company.toLowerCase())

@@ -3,9 +3,9 @@ import { Box, styled } from "@mui/material";
 import { useSelector } from "react-redux";
 import { orderBy } from "lodash";
 // components
-import DateCalendarLayout from "./date.calendar-layout";
-import DayContentCalendarLayout from "./day-content.calendar-layout";
-import ActionsIconsCalendarLayout from "@layouts/calendar/components/body/components/day/actions-icons.calendar-layout.";
+import DateCalendarLayout from "./components/date.calendar-layout";
+import DayContentCalendarLayout from "./components/day-content.calendar-layout";
+import ActionsIconsCalendarLayout from "@layouts/calendar/components/body/components/day/components/actions-icons.calendar-layout.";
 // utils
 import { chechIsCurrentDay } from "@utils/date/check-is-current-day";
 import { chechIsFutureDay } from "@utils/date/check-is-future-day";
@@ -27,7 +27,7 @@ const OneDayContainer = styled(Box)`
 
 const DayCalendarLay = ({
   day,
-  isWeekendColumn,
+  index,
   onDragOver,
   draggableDay,
   setDraggableDay,
@@ -37,6 +37,7 @@ const DayCalendarLay = ({
   const tasks = useSelector(getTasksList());
   const currentUserId = useSelector(getCurrentUserId());
 
+  const isWeekendColumn = index === 5 || index === 6;
   const isCurrentUserRoleCurator = useSelector(getIsCurrentUserRoleCurator());
   const isCurrentUserRoleManager = useSelector(getIsCurrentUserRoleManager());
   const isCurrentDay = chechIsCurrentDay(day);

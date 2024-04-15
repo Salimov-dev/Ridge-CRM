@@ -4,11 +4,15 @@ import styled from "@emotion/styled";
 import { Box } from "@mui/material";
 import { useSelector } from "react-redux";
 // components
-import InformItem from "./inform-item";
+import InformItemUsersLayout from "./inform-item.users-layout";
 // utils
 import { FormatDate } from "@utils/date/format-date";
 // data
-import { userLicenseStatusesArray } from "@data/users/user-license-statuses";
+import {
+  licenseTypeBlockedId,
+  licenseTypeTrialId,
+  userLicenseStatusesArray
+} from "@data/users/user-license-statuses";
 // store
 import { getCurrentUserId } from "@store/user/users.store";
 import { getUserLicensesByUserId } from "@store/user/user-license.store";
@@ -21,7 +25,7 @@ const InformItemsContainer = styled(Box)`
   margin-bottom: 30px;
 `;
 
-const InformItems = () => {
+const InformItemsUsersLayout = () => {
   const currentUserId = useSelector(getCurrentUserId());
   const userLicense = useSelector(getUserLicensesByUserId(currentUserId));
 
@@ -33,21 +37,16 @@ const InformItems = () => {
     )?.name;
     return result;
   };
-  const trialLicenseTypeId = "71pbfi4954itj045tloop001";
-  const activeLicenseTypeId = "718gkgdbn48jgfo3kktjt002";
-  const blockedLicenseTypeId = "71kbjld394u5jgfdsjk4l003";
+
   const currentLicenseTypeId = userLicense?.accountType;
-  const isLicenseTrialType = currentLicenseTypeId === trialLicenseTypeId;
-  const isLicenseActiveType = currentLicenseTypeId === activeLicenseTypeId;
-  const isLicenseBlockedType = currentLicenseTypeId === blockedLicenseTypeId;
+  const isLicenseTrialType = currentLicenseTypeId === licenseTypeTrialId;
+  const isLicenseBlockedType = currentLicenseTypeId === licenseTypeBlockedId;
 
   const totalUsersLength = userLicense?.activeUsersQuantity;
-
   const licenseCost = config.licenseCost;
   const totalLicensesCost = totalUsersLength * licenseCost;
 
   const currentDate = dayjs();
-  // const currentDate = dayjs().add(1, "day");
   const dateStart = dayjs(userLicense?.dateStart);
   const dateEnd = dayjs(userLicense?.dateEnd);
   const dateEndTrialPeriod = dayjs(userLicense?.dateTrialEnd);
@@ -64,7 +63,7 @@ const InformItems = () => {
 
   return (
     <InformItemsContainer>
-      <InformItem
+      <InformItemUsersLayout
         title="Баланс"
         subtitle={(userLicense?.balance || 0)
           .toString()
@@ -72,46 +71,46 @@ const InformItems = () => {
         unit="₽"
         userLicense={userLicense}
       />
-      <InformItem
+      <InformItemUsersLayout
         title="Тип аккаунта"
         subtitle={getAccountType()}
         userLicense={userLicense}
       />
-      <InformItem
+      <InformItemUsersLayout
         title="Дата активации подписки"
         subtitle={FormatDate(dateStart)}
         userLicense={userLicense}
       />
-      <InformItem
+      <InformItemUsersLayout
         title="Текущая дата"
         subtitle={FormatDate(currentDate)}
         userLicense={userLicense}
       />
-      {currentLicenseTypeId === trialLicenseTypeId ? (
-        <InformItem
+      {isLicenseTrialType ? (
+        <InformItemUsersLayout
           title="Последний день демо-доступа"
           subtitle={FormatDate(dateEndTrialPeriod)}
           userLicense={userLicense}
         />
       ) : (
-        <InformItem
+        <InformItemUsersLayout
           title="Последний день доступа"
           subtitle={FormatDate(dateEnd)}
           userLicense={userLicense}
         />
       )}
-      <InformItem
+      <InformItemUsersLayout
         title="Дней доступа к системе"
         subtitle={!isLicenseBlockedType ? daysDifference : 0}
         userLicense={userLicense}
       />
-      <InformItem
+      <InformItemUsersLayout
         title="Активных пользователей"
         subtitle={totalUsersLength}
         unit="шт"
         userLicense={userLicense}
       />
-      <InformItem
+      <InformItemUsersLayout
         title="Общая стоимость подписки"
         subtitle={totalLicensesCost.toString()}
         unit="₽/день"
@@ -121,4 +120,4 @@ const InformItems = () => {
   );
 };
 
-export default InformItems;
+export default InformItemsUsersLayout;

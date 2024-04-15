@@ -47,7 +47,7 @@ const ManagerTaskForm = ({
           register={register}
           name="date"
           label="Дата *"
-          value={watchData}
+          value={data?.date || null}
           onChange={(value) => setValue("date", value)}
           errors={errors?.date}
           minDate={getDateToday()}

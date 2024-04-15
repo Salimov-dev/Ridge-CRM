@@ -4,7 +4,7 @@ import RowTitle from "@components/common/titles/row-title";
 import { getCurrentUserData } from "@store/user/users.store";
 import LinkStyled from "@components/common/link/link-styled";
 
-const AccountInfo = () => {
+const AccountInfoUsersLayout = () => {
   const currentUserData = useSelector(getCurrentUserData());
   const currentUserName = `${currentUserData?.lastName} ${currentUserData?.firstName} ${currentUserData?.surName}`;
   const isUserNameFilledUp = currentUserName?.includes(null);
@@ -40,4 +40,4 @@ const AccountInfo = () => {
   );
 };
 
-export default AccountInfo;
+export default AccountInfoUsersLayout;

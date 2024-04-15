@@ -27,14 +27,14 @@ const MonthCalendarLayout = ({ month, setState }) => {
     <Component>
       {month?.map((row, i) => (
         <React.Fragment key={i}>
-          {row.map((day, idx) => (
+          {row.map((day, index) => (
             <DayCalendarLayout
               day={day}
-              key={idx}
+              key={index}
+              index={index}
               draggableDay={formattedDate}
               setDraggableDay={setDraggableDay}
               onDragOver={(e) => handleDragOver(e, day)}
-              isWeekendColumn={idx === 5 || idx === 6}
               setState={setState}
             />
           ))}

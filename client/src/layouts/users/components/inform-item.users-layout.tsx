@@ -1,8 +1,13 @@
-import Loader from "@components/common/loader/loader";
+import { useSelector } from "react-redux";
 import styled from "@emotion/styled";
 import { Box, Typography } from "@mui/material";
+import Loader from "@components/common/loader/loader";
 import { getUserLicenseLoadingStatus } from "@store/user/user-license.store";
-import { useSelector } from "react-redux";
+import {
+  licenseTypeActiveId,
+  licenseTypeBlockedId,
+  licenseTypeTrialId
+} from "@data/users/user-license-statuses";
 
 const Component = styled(Box)`
   width: 100%;
@@ -24,23 +29,18 @@ const StyledTypography = styled(Typography)`
   text-align: center;
 `;
 
-const InformItem = ({
+const InformItemUsersLayout = ({
   title,
   subtitle,
   unit = null,
-  color = "yellow",
   userLicense
 }) => {
   const isUserLicenseLoading = useSelector(getUserLicenseLoadingStatus());
 
-  const trialLicenseTypeId = "71pbfi4954itj045tloop001";
-  const activeLicenseTypeId = "718gkgdbn48jgfo3kktjt002";
-  const blockedLicenseTypeId = "71kbjld394u5jgfdsjk4l003";
-
   const currentLicenseTypeId = userLicense?.accountType;
-  const isLicenseTrialType = currentLicenseTypeId === trialLicenseTypeId;
-  const isLicenseActiveType = currentLicenseTypeId === activeLicenseTypeId;
-  const isLicenseBlockedType = currentLicenseTypeId === blockedLicenseTypeId;
+  const isLicenseTrialType = currentLicenseTypeId === licenseTypeTrialId;
+  const isLicenseActiveType = currentLicenseTypeId === licenseTypeActiveId;
+  const isLicenseBlockedType = currentLicenseTypeId === licenseTypeBlockedId;
 
   const getColorIformTerm = () => {
     if (isLicenseTrialType) return "yellow";
@@ -69,4 +69,4 @@ const InformItem = ({
   );
 };
 
-export default InformItem;
+export default InformItemUsersLayout;

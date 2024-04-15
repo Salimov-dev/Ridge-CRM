@@ -6,7 +6,7 @@ import { tokens } from "@theme/theme";
 import ControlPointOutlinedIcon from "@mui/icons-material/ControlPointOutlined";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 // components
-import CalendarActionIcon from "@layouts/calendar/components/body/components/day/action-icon.calendar-layout";
+import CalendarActionIcon from "./action-icon.calendar-layout";
 // hooks
 import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
 // store

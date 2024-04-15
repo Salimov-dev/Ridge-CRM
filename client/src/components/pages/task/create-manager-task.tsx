@@ -114,7 +114,7 @@ const CreateManagerTask = React.memo(
       } else {
         setValue<any>("date", null);
       }
-    }, [dateCreate]);
+    }, []);
 
     useEffect(() => {
       setValue("objectId", null);
