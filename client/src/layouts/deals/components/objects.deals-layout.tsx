@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Box, Paper, styled } from "@mui/material";
 // components
-import DealObjectAddress from "./object-address.deals";
+import DealObjectAddress from "./object-address.deals-layout";
 import UserNameWithAvatar from "@components/common/user/user-name-with-avatar";
 // data
 import { dealStagesArray } from "@data/deals/deals-stages";

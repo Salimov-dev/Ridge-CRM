@@ -4,8 +4,8 @@ import { useSelector } from "react-redux";
 import { Paper, styled } from "@mui/material";
 // components
 import Loader from "@components/common/loader/loader";
-import DealTitle from "./title.deals";
-import DealObjects from "./objects.deals";
+import DealTitle from "./title.deals-layout";
+import DealObjects from "./objects.deals-layout";
 // store
 import { getObjectsLoadingStatus } from "@store/object/objects.store";
 

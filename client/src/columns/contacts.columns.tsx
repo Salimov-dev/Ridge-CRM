@@ -1,4 +1,3 @@
-import React, { HTMLProps } from "react";
 import { useSelector } from "react-redux";
 // utils
 import { FormatDate } from "@utils/date/format-date";
@@ -12,76 +11,22 @@ import ObjectTableEntity from "@components/common/table-entities/object-table-en
 import UserNameWithAvatar from "@components/common/user/user-name-with-avatar";
 // hooks
 import useGetUserAvatar from "@hooks/user/use-get-user-avatar";
+import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
 // store
 import { getPositionNameById } from "@store/contact/contact-positions.store";
-import {
-  getCurrentUserId,
-  getIsUserManager,
-  getUserDataById
-} from "@store/user/users.store";
-
-function IndeterminateCheckbox({
-  indeterminate,
-  className = "",
-  ...rest
-}: { indeterminate?: boolean } & HTMLProps) {
-  const ref = React.useRef(null!);
-
-  React.useEffect(() => {
-    if (typeof indeterminate === "boolean") {
-      ref.current.indeterminate = !rest.checked && indeterminate;
-    }
-  }, [ref, indeterminate]);
-
-  return (
-    <input
-      type="checkbox"
-      ref={ref}
-      className={className + " cursor-pointer"}
-      {...rest}
-    />
-  );
-}
 
 export const contactsColumns = (
-  handleOpenContactPage,
-  isHideCheckbox,
-  handleOpenUpdateCompanyPage,
-  object,
-  handleOpenObjectPage
+  setState,
+  isCurrentUserRoleManager,
+  object = {}
 ) => {
   let columns = [];
-  const currentUserId = useSelector(getCurrentUserId());
-  const isManager = useSelector(getIsUserManager(currentUserId));
 
-  const selectColumn = {
-    id: "select",
-    header: ({ table }) => (
-      <AlignCenter>
-        <IndeterminateCheckbox
-          {...{
-            checked: table.getIsAllRowsSelected(),
-            indeterminate: table.getIsSomeRowsSelected(),
-            onChange: table.getToggleAllRowsSelectedHandler()
-          }}
-        />
-      </AlignCenter>
-    ),
-    cell: ({ row }) => (
-      <div className="px-1">
-        <AlignCenter>
-          <IndeterminateCheckbox
-            {...{
-              checked: row.getIsSelected(),
-              disabled: !row.getCanSelect(),
-              indeterminate: row.getIsSomeSelected(),
-              onChange: row.getToggleSelectedHandler()
-            }}
-          />
-        </AlignCenter>
-      </div>
-    )
-  };
+  const {
+    handleOpenContactPage,
+    handleOpenUpdateCompanyPage,
+    handleOpenObjectPage
+  } = useDialogHandlers(setState);
 
   const dateColumn = {
     accessorKey: "created_at",
@@ -199,7 +144,7 @@ export const contactsColumns = (
   const managerColumn = {
     id: "managerColumn",
     header: "Менеджер",
-    columns: isManager !== undefined && [
+    columns: isCurrentUserRoleManager !== undefined && [
       {
         accessorKey: "userId",
         header: "Фамилия и Имя",
@@ -241,7 +186,7 @@ export const contactsColumns = (
     }
   };
 
-  if (isManager) {
+  if (isCurrentUserRoleManager) {
     columns = [dateColumn, contactsColumn, commentColumn, openContactColumn];
   } else {
     columns = [

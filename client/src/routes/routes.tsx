@@ -8,11 +8,11 @@ import ObjectsDatabase from "@layouts/objects-database/objects-database";
 import Statictics from "@layouts/statistics/statistics";
 import Meetings from "@layouts/meetings/meetings.layout";
 import Calendar from "@layouts/calendar/calendar";
-import Deals from "@layouts/deals/deals";
+import Deals from "@layouts/deals/deals.layout";
 import Presentations from "@layouts/presentations/presentations";
 import Users from "@layouts/users/users";
 import Profile from "@layouts/profile/profile";
-import Contacts from "@layouts/contacts/contacts";
+import Contacts from "@layouts/contacts/contacts.layout";
 import Companies from "@layouts/companies/companies";
 // components
 import UpdateProfile from "@components/pages/user/update-profile";
@@ -34,6 +34,8 @@ import RequireActiveLicense from "@layouts/users/components/require-active-licen
 import ObjectsLayout from "@layouts/objects/objects.layout";
 import MeetingsLayout from "@layouts/meetings/meetings.layout";
 import MainLayout from "@layouts/main/main.layout";
+import DealsLayout from "@layouts/deals/deals.layout";
+import ContactsLayout from "@layouts/contacts/contacts.layout";
 
 export default function AppRoutes() {
   const currentUserId = useSelector(getCurrentUserId());
@@ -47,7 +49,7 @@ export default function AppRoutes() {
     { id: 3, path: "statictics/*", element: <Statictics /> },
     { id: 4, path: "meetings/*", element: <MeetingsLayout /> },
     { id: 5, path: "calendar/*", element: <Calendar /> },
-    { id: 6, path: "deals/*", element: <Deals /> },
+    { id: 6, path: "deals/*", element: <DealsLayout /> },
     // {
     //   id: 7,
     //   path: "users/*",
@@ -64,7 +66,7 @@ export default function AppRoutes() {
     { id: 8, path: "profile/*", element: <Profile /> },
     { id: 9, path: ":userId?/presentations", element: <Presentations /> },
     { id: 10, path: ":userId?/profileUpdate", element: <UpdateProfile /> },
-    { id: 11, path: "contacts/*", element: <Contacts /> },
+    { id: 11, path: "contacts/*", element: <ContactsLayout /> },
     { id: 12, path: "companies/*", element: <Companies /> },
     { id: 13, path: "callback/*", element: <Callback /> },
     { id: 14, path: "activate/:link", element: <EmailActivated /> }

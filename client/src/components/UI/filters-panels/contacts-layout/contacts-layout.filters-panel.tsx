@@ -1,3 +1,4 @@
+import { useSelector } from "react-redux";
 import React from "react";
 // components
 import SearchField from "@common/inputs/search-field";
@@ -6,12 +7,20 @@ import SearchDatePicker from "@components/common/inputs/search-date-picker";
 import MultiSelectField from "@components/common/inputs/multi-select-field";
 // utils
 import { getActualContactPositionList } from "@utils/actual-items/get-actual-contact-position-list";
+// store
+import { getLastContactsLoadingStatus } from "@store/last-contact/last-contact.store";
+import { getContactsList } from "@store/contact/contact.store";
+import { getWorkingPositionsList } from "@store/user-params/working-position.store";
 
-const ContactsFiltersPanel = React.memo(
-  ({ data, contacts, positions, register, setValue, isLoading }) => {
+const ContactsLayoutFiltersPanel = React.memo(
+  ({ data, register, setValue }) => {
+    const contactsList = useSelector(getContactsList());
+    const isLoading = useSelector(getLastContactsLoadingStatus());
+
+    const contactWorkingPositions = useSelector(getWorkingPositionsList());
     const actualContactPositions = getActualContactPositionList(
-      contacts,
-      positions
+      contactsList,
+      contactWorkingPositions
     );
 
     return (
@@ -23,7 +32,7 @@ const ContactsFiltersPanel = React.memo(
             name="name"
             value={data.name}
             inputProps={{ maxLength: 30 }}
-            disabled={isLoading ? true : false}
+            disabled={isLoading}
           />
           <SearchField
             register={register}
@@ -31,7 +40,7 @@ const ContactsFiltersPanel = React.memo(
             name="phone"
             value={data.phone}
             inputProps={{ maxLength: 30 }}
-            disabled={isLoading ? true : false}
+            disabled={isLoading}
           />
           <SearchField
             register={register}
@@ -39,7 +48,7 @@ const ContactsFiltersPanel = React.memo(
             name="email"
             value={data.email}
             inputProps={{ maxLength: 30 }}
-            disabled={isLoading ? true : false}
+            disabled={isLoading}
           />
           <SearchField
             register={register}
@@ -47,7 +56,7 @@ const ContactsFiltersPanel = React.memo(
             name="address"
             value={data.address}
             inputProps={{ maxLength: 30 }}
-            disabled={isLoading ? true : false}
+            disabled={isLoading}
           />
           <SearchField
             register={register}
@@ -55,7 +64,7 @@ const ContactsFiltersPanel = React.memo(
             name="company"
             value={data.company}
             inputProps={{ maxLength: 30 }}
-            disabled={isLoading ? true : false}
+            disabled={isLoading}
           />
         </FieldsContainer>
         <FieldsContainer>
@@ -65,7 +74,7 @@ const ContactsFiltersPanel = React.memo(
             label="Добавлены от"
             value={data.startDate}
             onChange={(value) => setValue("startDate", value)}
-            disabled={isLoading ? true : false}
+            disabled={isLoading}
           />
           <SearchDatePicker
             register={register}
@@ -73,7 +82,7 @@ const ContactsFiltersPanel = React.memo(
             label="Добавлены до"
             value={data.endDate}
             onChange={(value) => setValue("endDate", value)}
-            disabled={isLoading ? true : false}
+            disabled={isLoading}
           />
           <MultiSelectField
             name="users"
@@ -82,7 +91,7 @@ const ContactsFiltersPanel = React.memo(
             itemsList={actualContactPositions}
             selectedItems={data.selectedPositions}
             onChange={(e) => setValue("selectedPositions", e.target.value)}
-            disabled={isLoading ? true : false}
+            disabled={isLoading}
           />
         </FieldsContainer>
       </Form>
@@ -90,4 +99,4 @@ const ContactsFiltersPanel = React.memo(
   }
 );
 
-export default ContactsFiltersPanel;
+export default ContactsLayoutFiltersPanel;

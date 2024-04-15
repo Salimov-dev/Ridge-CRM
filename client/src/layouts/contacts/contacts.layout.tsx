@@ -6,39 +6,22 @@ import { useSelector } from "react-redux";
 // components
 import HeaderLayout from "@components/common/page-headers/header-layout";
 import PageDialogs from "@components/common/dialog/page-dialogs";
-import Buttons from "./components/buttons";
 import { ContainerStyled } from "@components/common/container/container-styled";
-import ContactsFiltersPanel from "@components/UI/filters-panels/contacts.filters-panel";
 import BasicTable from "@components/common/table/basic-table";
-// hooks
-import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
+import ContactsLayoutFiltersPanel from "@components/UI/filters-panels/contacts-layout/contacts-layout.filters-panel";
+import { contactsLayoutInitialState } from "@components/UI/filters-panels/contacts-layout/contacts-layout-initial-state.filters-panel";
+import ButtonsContactsLayout from "./components/buttons.contacts-layout";
 // columns
 import { contactsColumns } from "@columns/contacts.columns";
 // hooks
 import useSearchContact from "@hooks/contact/use-search-contact";
 // store
-import { getCurrentUserId, getIsUserCurator } from "@store/user/users.store";
+import { getIsCurrentUserRoleManager } from "@store/user/users.store";
 import { getContactsList } from "@store/contact/contact.store";
 import { getLastContactsLoadingStatus } from "@store/last-contact/last-contact.store";
-import { getWorkingPositionsList } from "@store/user-params/working-position.store";
 
-const initialState = {
-  name: "",
-  address: "",
-  phone: "",
-  company: "",
-  email: "",
-  startDate: null,
-  endDate: null,
-  selectedPositions: [],
-  videoPlayerPage: false
-};
-
-const Contacts = React.memo(() => {
-  const [rowSelection, setRowSelection] = useState([]);
-
+const ContactsLayout = React.memo(() => {
   const [state, setState] = useState({
-    contactPage: false,
     createContactPage: false,
     openContactPage: false,
     contactId: null
@@ -59,35 +42,22 @@ const Contacts = React.memo(() => {
   };
 
   const { register, watch, setValue, reset } = useForm({
-    defaultValues: !!localStorageState ? formatedState : initialState,
+    defaultValues: !!localStorageState
+      ? formatedState
+      : contactsLayoutInitialState,
     mode: "onChange"
   });
 
   const data = watch();
 
-  const currentUserId = useSelector(getCurrentUserId());
-  const contactsList = useSelector(getContactsList());
-  const contactsPositions = useSelector(getWorkingPositionsList());
-
   const isLoading = useSelector(getLastContactsLoadingStatus());
+  const isCurrentUserRoleManager = useSelector(getIsCurrentUserRoleManager());
 
-  const isCurator = useSelector(getIsUserCurator(currentUserId));
-  const isInputEmpty = JSON.stringify(initialState) !== JSON.stringify(data);
-  const isHideCheckbox = false;
-
+  const contactsList = useSelector(getContactsList());
   const searchedContacts = useSearchContact(contactsList, data);
-
   const sortedContacts = useMemo(() => {
     return orderBy(searchedContacts, ["created_at"], ["desc"]);
   }, [searchedContacts]);
-
-  const {
-    handleOpenCreateContactPage,
-    handleOpenContactPage,
-    handleOpenVideoPlayerPage,
-    handleOpenUpdateCompanyPage,
-    handleOpenObjectPage
-  } = useDialogHandlers(setState);
 
   useEffect(() => {
     localStorage.setItem("search-contacts-data", JSON.stringify(data));
@@ -99,7 +69,7 @@ const Contacts = React.memo(() => {
     if (hasLocalStorageData?.length) {
       localStorage.setItem(
         "search-contacts-data",
-        JSON.stringify(initialState)
+        JSON.stringify(contactsLayoutInitialState)
       );
     }
   }, []);
@@ -107,34 +77,16 @@ const Contacts = React.memo(() => {
   return (
     <ContainerStyled>
       <HeaderLayout title="Контакты" />
-      <Buttons
-        initialState={initialState}
-        reset={reset}
-        onOpenCreateContactPage={handleOpenCreateContactPage}
-        onOpenVideoPlayerPage={handleOpenVideoPlayerPage}
-        isInputEmpty={isInputEmpty}
-      />
-      <ContactsFiltersPanel
+      <ButtonsContactsLayout data={data} setState={setState} reset={reset} />
+      <ContactsLayoutFiltersPanel
         data={data}
-        contacts={contactsList}
-        positions={contactsPositions}
         register={register}
         setValue={setValue}
-        isCurator={isCurator}
-        isLoading={isLoading}
       />
       <BasicTable
         items={sortedContacts}
-        itemsColumns={contactsColumns(
-          handleOpenContactPage,
-          isHideCheckbox,
-          handleOpenUpdateCompanyPage,
-          {},
-          handleOpenObjectPage
-        )}
+        itemsColumns={contactsColumns(setState, isCurrentUserRoleManager)}
         isLoading={isLoading}
-        rowSelection={rowSelection}
-        setRowSelection={setRowSelection}
       />
       <PageDialogs
         state={state}
@@ -146,4 +98,4 @@ const Contacts = React.memo(() => {
   );
 });
 
-export default Contacts;
+export default ContactsLayout;

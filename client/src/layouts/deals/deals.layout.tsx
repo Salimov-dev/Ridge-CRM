@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 // components
-import Stages from "./components/layout-stages.deals";
+import Stages from "./components/layout-stages.deals-layout";
 import HeaderLayout from "@components/common/page-headers/header-layout";
 import PageDialogs from "@components/common/dialog/page-dialogs";
 import { ContainerStyled } from "@components/common/container/container-styled";
@@ -15,7 +15,7 @@ import useSearchDeals from "@hooks/deals/use-search-deals";
 // store
 import { getObjectsList } from "@store/object/objects.store";
 
-const Deals = React.memo(() => {
+const DealsLayout = React.memo(() => {
   const [state, setState] = useState({
     objectPage: false,
     updatePage: false,
@@ -77,4 +77,4 @@ const Deals = React.memo(() => {
   );
 });
 
-export default Deals;
+export default DealsLayout;
