@@ -5,6 +5,7 @@ const Component = styled(Box)`
   justify-content: center;
   width: 100%;
   margin-bottom: 20px;
+  padding: 8px 10px;
 `;
 
 const TitleContainer = styled(Box)`
@@ -12,8 +13,8 @@ const TitleContainer = styled(Box)`
   gap: 4px;
 `;
 
-const Title = ({ item, objects }) => {
-  const stageObjects = objects?.filter(
+const DealTitle = ({ item, deals }) => {
+  const stageObjects = deals?.filter(
     (obj) => obj?.status === item?.objectStatusId
   );
 
@@ -23,8 +24,7 @@ const Title = ({ item, objects }) => {
     <Component
       sx={{
         color: item?.txtColor,
-        backgroundColor: item?.bkgColor,
-        padding: "8px 10px"
+        backgroundColor: item?.bkgColor
       }}
     >
       <TitleContainer>
@@ -37,4 +37,4 @@ const Title = ({ item, objects }) => {
   );
 };
 
-export default Title;
+export default DealTitle;

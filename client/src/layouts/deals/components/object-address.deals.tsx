@@ -1,6 +1,8 @@
 import { useSelector } from "react-redux";
 import { Box, Typography, styled } from "@mui/material";
+// components
 import OpenPageElementIconButton from "@components/common/buttons/icons buttons/open-page-element.button-icon";
+// store
 import { getObjectAddressById } from "@store/object/objects.store";
 
 const Component = styled(Box)`
@@ -10,7 +12,7 @@ const Component = styled(Box)`
   gap: 4px;
 `;
 
-const ObjectAddress = ({ obj, onClick }) => {
+const DealObjectAddress = ({ obj, onClick }) => {
   const objectAddress = useSelector(getObjectAddressById(obj?._id));
 
   return (
@@ -27,4 +29,4 @@ const ObjectAddress = ({ obj, onClick }) => {
   );
 };
 
-export default ObjectAddress;
+export default DealObjectAddress;

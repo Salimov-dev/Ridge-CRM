@@ -11,7 +11,7 @@ import { ContainerStyled } from "@components/common/container/container-styled";
 import PageDialogs from "@components/common/dialog/page-dialogs";
 import ObjectsLayoutFiltersPanel from "@components/UI/filters-panels/objects-layout/objects-layout.filters-panel";
 import { objectsLayoutInitialState } from "@components/UI/filters-panels/objects-layout/objects-layout-initial-state.filters-panel";
-import ButtonsObjectsLayout from "./components/buttons-objects-layout";
+import ButtonsObjectsLayout from "./components/buttons.objects-layout";
 import ObjectBalloon from "@components/UI/maps/object-balloon";
 // columns
 import { objectsColumns } from "@columns/objects.columns";

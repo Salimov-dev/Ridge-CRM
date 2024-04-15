@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Box, Paper, styled } from "@mui/material";
 // components
-import ObjectAddress from "./object-address";
+import DealObjectAddress from "./object-address.deals";
 import UserNameWithAvatar from "@components/common/user/user-name-with-avatar";
 // data
 import { dealStagesArray } from "@data/deals/deals-stages";
@@ -12,7 +12,7 @@ import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
 import { updateObject } from "@store/object/objects.store";
 import {
   getCurrentUserId,
-  getIsUserManager,
+  getIsCurrentUserRoleManager,
   getUsersList
 } from "@store/user/users.store";
 
@@ -36,32 +36,31 @@ const ObjectContainer = styled(Paper)`
   border: 1px solid gray;
 `;
 
-const Objects = ({
-  objects,
+const DealObjects = ({
+  deals,
   stage,
   setState,
   draggableStageId,
-  setDraggableStageId,
-  isCurator
+  setDraggableStageId
 }) => {
   const dispatch = useDispatch();
   const users = useSelector(getUsersList());
   const currentUserId = useSelector(getCurrentUserId());
-  const isManager = useSelector(getIsUserManager(currentUserId));
-  const userAvatars = {};
+  const isCurrentUserRoleManager = useSelector(getIsCurrentUserRoleManager());
 
+  const userAvatars = {};
   users.forEach((user) => {
     const { getAvatarSrc, isLoading } = useGetUserAvatar(user._id);
     userAvatars[user._id] = { getAvatarSrc, isLoading };
   });
-
-  const { handleOpenObjectPage } = useDialogHandlers(setState);
 
   const getNewDealStage = (stageId) => {
     const stage = dealStagesArray.find((deal) => deal?._id === stageId);
     const newObjectStatus = stage?.objectStatusId;
     return newObjectStatus;
   };
+
+  const { handleOpenObjectPage } = useDialogHandlers(setState);
 
   const handleDragEnd = (obj, stage) => {
     if (stage?._id !== draggableStageId) {
@@ -80,7 +79,7 @@ const Objects = ({
 
   return (
     <Component>
-      {objects?.map((obj) => {
+      {deals?.map((obj) => {
         const isDeal = obj?.status === stage?.objectStatusId;
         const user = users?.find((user) => user?._id === obj?.userId);
         const avatarData = userAvatars[obj.userId];
@@ -93,11 +92,11 @@ const Objects = ({
             onDragEnd={() => handleDragEnd(obj, stage)}
             sx={{ cursor: isAuthorEntity ? "grab" : "default" }}
           >
-            <ObjectAddress
+            <DealObjectAddress
               obj={obj}
               onClick={() => handleOpenObjectPage(obj?._id)}
             />
-            {!isManager && (
+            {!isCurrentUserRoleManager && (
               <UserNameWithAvatar
                 userId={user._id}
                 color="black"
@@ -113,4 +112,4 @@ const Objects = ({
   );
 };
 
-export default Objects;
+export default DealObjects;

@@ -3,9 +3,9 @@ import { Grid } from "@mui/material";
 import { useSelector } from "react-redux";
 import { Paper, styled } from "@mui/material";
 // components
-import Title from "./components/title";
-import Objects from "./components/objects";
 import Loader from "@components/common/loader/loader";
+import DealTitle from "./title.deals";
+import DealObjects from "./objects.deals";
 // store
 import { getObjectsLoadingStatus } from "@store/object/objects.store";
 
@@ -20,7 +20,8 @@ const DealContainer = styled(Paper)`
   border: 2px dashed gray;
   padding: 10px;
 `;
-const Stages = ({ objects, stages, setState, isCurator }) => {
+
+const DealsLayoutStages = ({ deals, stages, setState }) => {
   const [draggableStageId, setDraggableStageId] = useState(null);
   const isLoading = useSelector(getObjectsLoadingStatus());
 
@@ -40,14 +41,13 @@ const Stages = ({ objects, stages, setState, isCurator }) => {
                 draggableStageId === stage?._id ? `1px dashed yellow` : null
             }}
           >
-            <Title item={stage} objects={objects} />
+            <DealTitle item={stage} deals={deals} />
             {!isLoading ? (
-              <Objects
+              <DealObjects
                 stage={stage}
-                objects={objects}
+                deals={deals}
                 draggableStageId={draggableStageId}
                 setDraggableStageId={setDraggableStageId}
-                isCurator={isCurator}
                 setState={setState}
               />
             ) : (
@@ -60,4 +60,4 @@ const Stages = ({ objects, stages, setState, isCurator }) => {
   );
 };
 
-export default Stages;
+export default DealsLayoutStages;

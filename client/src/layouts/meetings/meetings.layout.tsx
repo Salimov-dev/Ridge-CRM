@@ -10,7 +10,7 @@ import ItemsOnMap from "@components/common/map/items-on-map/items-on-map";
 import PageDialogs from "@components/common/dialog/page-dialogs";
 import { ContainerStyled } from "@components/common/container/container-styled";
 import MeetingsLayoutFiltersPanel from "@components/UI/filters-panels/meetings-layout/meetings-layout.filters-panel";
-import ButtonsMeetingsLayout from "./components/buttons-meetings-layout";
+import ButtonsMeetingsLayout from "./components/buttons.meetings-layout";
 import MeetingBalloon from "@components/UI/maps/meeting-balloon";
 import { meetingsLayoutInitialState } from "@components/UI/filters-panels/meetings-layout/meetings-layout-initial-state.filters-panel";
 // hooks
@@ -61,9 +61,9 @@ const MeetingsLayout = React.memo(() => {
 
   const data = watch();
 
-  const meetings = useSelector(getMeetingsList());
+  const meetingsList = useSelector(getMeetingsList());
   const selectedMeeting = useSelector(getMeetingById(selectedBalloon));
-  const searchedMeetings = useSearchMeeting(meetings, data);
+  const searchedMeetings = useSearchMeeting(meetingsList, data);
   const sortedMeetings = sortingByDateAndTime(searchedMeetings);
 
   const isLoading = useSelector(getMeetingLoadingStatus());
