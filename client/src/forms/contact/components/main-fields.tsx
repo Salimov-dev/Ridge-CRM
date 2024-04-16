@@ -7,9 +7,10 @@ import BorderColorOutlinedIcon from "@mui/icons-material/BorderColorOutlined";
 // components
 import TextFieldStyled from "@components/common/inputs/text-field-styled";
 import SelectFieldStyled from "@components/common/inputs/select-field-styled";
+// utils
+import { capitalizeFirstLetter } from "@utils/data/capitalize-first-letter";
 // store
 import { getWorkingPositionsList } from "@store/user-params/working-position.store";
-import { capitalizeFirstLetter } from "@utils/data/capitalize-first-letter";
 
 const MainFields = ({ register, data, errors, watch }) => {
   const workingPositions = useSelector(getWorkingPositionsList());

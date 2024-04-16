@@ -9,8 +9,9 @@ import BasicTable from "@components/common/table/basic-table";
 import PieStyled from "@components/common/chart/pie";
 import ChartLine from "@components/common/chart/chart-line";
 import { ContainerStyled } from "@components/common/container/container-styled";
-import { statisticsLayoutInitialState } from "@components/UI/initial-states/statistics-layout.initial-state";
 import StaticticsLayoutFiltersPanel from "@components/UI/filters-panels/statictics-layout.filters-panel";
+// initial-states
+import { statisticsLayoutInitialState } from "@initial-states/layouts/statistics-layout.initial-state";
 // hooks
 import useSearchStatictics from "@hooks/statictics/use-search-statistics";
 import useChartsStatisticsData from "@hooks/statictics/use-charts-statistics-data";

@@ -8,8 +8,9 @@ import PageDialogs from "@components/common/dialog/page-dialogs";
 import { ContainerStyled } from "@components/common/container/container-styled";
 import BasicTable from "@components/common/table/basic-table";
 import ContactsLayoutFiltersPanel from "@components/UI/filters-panels/contacts-layout.filters-panel";
-import { contactsLayoutInitialState } from "@components/UI/initial-states/contacts-layout.initial-state";
 import ButtonsContactsLayout from "@components/UI/layout-buttons/buttons.contacts-layout";
+// initial-states
+import { contactsLayoutInitialState } from "@initial-states/layouts/contacts-layout.initial-state";
 // columns
 import { contactsColumns } from "@columns/contacts.columns";
 // hooks

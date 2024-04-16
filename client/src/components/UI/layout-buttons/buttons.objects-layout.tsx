@@ -10,7 +10,8 @@ import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
 // components
 import ButtonStyled from "@components/common/buttons/button-styled.button";
 import ClearFilterButton from "@components/common/buttons/clear-filter.button";
-import { objectsLayoutInitialState } from "@components/UI/initial-states/objects-layout.initial-state";
+// initial-states
+import { objectsLayoutInitialState } from "@initial-states/layouts/objects-layout.initial-state";
 // utils
 import { getIsInputEmpty } from "@utils/other/get-is-input-empty";
 // store

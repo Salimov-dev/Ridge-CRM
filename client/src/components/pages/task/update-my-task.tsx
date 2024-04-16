@@ -8,10 +8,11 @@ import { tokens } from "@theme/theme";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useDispatch, useSelector } from "react-redux";
 // components
-import MyTaskForm from "@forms/tasks/my-task.form";
+import TaskForm from "@forms/tasks/task.form";
 import TitleWithCloseButton from "@components/common/page-headers/header-with-close-button";
 import SuccessCancelFormButtons from "@components/common/buttons/success-cancel-form-buttons";
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
+import DialogConfirm from "@components/common/dialog/dialog-confirm";
 // schema
 import { taskSchema } from "@schemas/task/task.shema";
 //utils
@@ -21,7 +22,6 @@ import { getCurrentUserId } from "@store/user/users.store";
 import { createLastContact } from "@store/last-contact/last-contact.store";
 // store
 import { getTaskById, removeTask, updateTask } from "@store/task/tasks.store";
-import DialogConfirm from "@components/common/dialog/dialog-confirm";
 
 const UpdateMyTask = React.memo(
   ({ title, taskId, objectId, onClose, isObjectPage }) => {
@@ -29,7 +29,7 @@ const UpdateMyTask = React.memo(
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
 
-    const [open, setOpen] = useState(false);
+    const [openConfirm, setOpenConfirm] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
 
     const task = useSelector(getTaskById(taskId));
@@ -110,11 +110,11 @@ const UpdateMyTask = React.memo(
     };
 
     const handleOpenConfirm = () => {
-      setOpen(true);
+      setOpenConfirm(true);
     };
 
     const handleCloseConfirm = () => {
-      setOpen(false);
+      setOpenConfirm(false);
     };
 
     const handleRemoveTask = (taskId: number) => {
@@ -143,28 +143,24 @@ const UpdateMyTask = React.memo(
           color="white"
           onClose={onClose}
         />
-        <MyTaskForm
-          task={task}
+        <TaskForm
           data={data}
           objects={currentUserObjects}
           register={register}
+          setValue={setValue}
           watch={watch}
           errors={errors}
-          setValue={setValue}
           isEditMode={isEditMode}
           isObjectPage={isObjectPage}
-          isMyTask={true}
-          watchIsCallTask={watchIsCallTask}
         />
         <SuccessCancelFormButtons
           onSuccess={handleSubmit(onSubmit)}
           onCancel={onClose}
           onRemove={handleOpenConfirm}
-          isUpdate={true}
         />
         <DialogConfirm
           question="Вы уверены, что хотите удалить свою задачу?"
-          open={open}
+          open={openConfirm}
           onSuccessClick={() => handleRemoveTask(taskId)}
           onClose={handleCloseConfirm}
         />

@@ -8,7 +8,7 @@ import ClearFilterButton from "@common/buttons/clear-filter.button";
 // data
 import { statisticPositionsArray } from "@data/statistics/statistic-positions";
 // initial-states
-import { statisticsLayoutInitialState } from "../initial-states/statistics-layout.initial-state";
+import { statisticsLayoutInitialState } from "../../../initial-states/layouts/statistics-layout.initial-state";
 // store
 import { getObjectsLoadingStatus } from "@store/object/objects.store";
 import { getIsCurrentUserRoleCurator } from "@store/user/users.store";

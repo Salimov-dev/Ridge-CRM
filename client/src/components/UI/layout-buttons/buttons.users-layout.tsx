@@ -8,7 +8,7 @@ import ClearFilterButton from "@components/common/buttons/clear-filter.button";
 import MakePaymentButton from "@components/common/buttons/make-payment.button";
 import ButtonStyled from "@components/common/buttons/button-styled.button";
 // initial-states
-import { usersLayoutInitialState } from "../initial-states/users-layout.initial-state";
+import { usersLayoutInitialState } from "@initial-states/layouts/users-layout.initial-state";
 // hooks
 import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
 

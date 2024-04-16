@@ -1,17 +1,6 @@
 import { removeSpacesAndConvertToNumber } from "@utils/data/remove-spaces-and-convert-to-number";
 import * as yup from "yup";
 
-const isValidPhone = (phone) => {
-  if (phone === "" || phone === null) {
-    return true;
-  }
-
-  const formattedPhone = String(phone).replace(/\D/g, "");
-  const validFormats = [/^7\d{10}$/, /^7\d{6}$/, /^\d{7}$/];
-
-  return validFormats.some((format) => format.test(formattedPhone));
-};
-
 export const objectSchema = yup.object().shape({
   // Объект
   status: yup.string().required("Статус обязателен для заполнения"),

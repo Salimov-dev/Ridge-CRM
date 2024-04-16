@@ -20,8 +20,7 @@ import ManagerTaskForm from "@forms/tasks/manager-task.form";
 import { getObjectsList } from "@store/object/objects.store";
 import { getTaskById, removeTask, updateTask } from "@store/task/tasks.store";
 import {
-  getCurrentUserId,
-  getIsUserManager,
+  getIsCurrentUserRoleManager,
   getUsersList
 } from "@store/user/users.store";
 
@@ -31,7 +30,7 @@ const UpdateManagerTask = React.memo(
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
 
-    const [open, setOpen] = useState(false);
+    const [openConfirm, setOpenConfirm] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
 
     const task = useSelector(getTaskById(taskId));
@@ -55,17 +54,18 @@ const UpdateManagerTask = React.memo(
     });
 
     const data = watch();
-    const managerId = task?.managerId;
     const watchManagerId = watch("managerId");
-    const currentUserId = useSelector(getCurrentUserId());
-    const isUserManager = useSelector(getIsUserManager(currentUserId));
+
+    const managerId = task?.managerId;
     const objectId = task?.objectId;
+
     const objects = useSelector(getObjectsList());
     const selectedManagerObjects = objects?.filter(
       (obj) => obj?.userId === watchManagerId
     );
 
     const users = useSelector(getUsersList());
+    const isCurrentUserRoleManager = useSelector(getIsCurrentUserRoleManager());
     const actualUsersArray = users?.map((user) => {
       const lastName = user?.lastName;
       const firstName = user?.firstName;
@@ -103,11 +103,11 @@ const UpdateManagerTask = React.memo(
     };
 
     const handleOpenConfirm = () => {
-      setOpen(true);
+      setOpenConfirm(true);
     };
 
     const handleCloseConfirm = () => {
-      setOpen(false);
+      setOpenConfirm(false);
     };
 
     const handleRemoveTask = () => {
@@ -136,13 +136,14 @@ const UpdateManagerTask = React.memo(
     return (
       <>
         <HeaderWithCloseButton
-          title={!isUserManager ? title : "Изменить задачу от Куратора"}
+          title={
+            !isCurrentUserRoleManager ? title : "Изменить задачу от Куратора"
+          }
           background={colors.task["managerTask"]}
           color="white"
           onClose={onClose}
         />
         <ManagerTaskForm
-          task={task}
           data={data}
           objects={selectedManagerObjects}
           register={register}
@@ -156,13 +157,12 @@ const UpdateManagerTask = React.memo(
         <SuccessCancelFormButtons
           onSuccess={handleSubmit(onSubmit)}
           onCancel={onClose}
+          disabledRemoveButton={isCurrentUserRoleManager}
           onRemove={handleOpenConfirm}
-          isUpdate={true}
-          disabledRemoveButton={isUserManager}
         />
         <DialogConfirm
           question="Вы уверены, что хотите удалить задачу менеджеру?"
-          open={open}
+          open={openConfirm}
           onSuccessClick={() => handleRemoveTask()}
           onClose={handleCloseConfirm}
         />

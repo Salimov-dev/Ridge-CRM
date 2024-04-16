@@ -7,7 +7,7 @@ import MultiSelectField from "@common/inputs/multi-select-field";
 import { getActualUsersList } from "@utils/actual-items/get-actual-users-list";
 import ClearFilterButton from "@common/buttons/clear-filter.button";
 // initial-state
-import { dealsLayoutInitialState } from "../initial-states/deals-layout.initial-state";
+import { dealsLayoutInitialState } from "../../../initial-states/layouts/deals-layout.initial-state";
 // store
 import { getObjectsLoadingStatus } from "@store/object/objects.store";
 import { getIsCurrentUserRoleManager } from "@store/user/users.store";

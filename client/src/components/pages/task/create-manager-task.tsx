@@ -2,7 +2,7 @@
 import { useTheme } from "@emotion/react";
 import { tokens } from "@theme/theme";
 import { toast } from "react-toastify";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import React, { useEffect, useState } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -12,25 +12,14 @@ import SuccessCancelFormButtons from "@components/common/buttons/success-cancel-
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
 // schema
 import { taskManagerSchema } from "@schemas/task/task-manager.shema";
-// utils
-import { capitalizeFirstLetter } from "@utils/data/capitalize-first-letter";
 // forms
 import ManagerTaskForm from "@forms/tasks/manager-task.form";
 // store
 import { createTask } from "@store/task/tasks.store";
-import { getObjectById, getObjectsList } from "@store/object/objects.store";
-import { getCurrentUserId, getUsersList } from "@store/user/users.store";
-
-const initialState = {
-  comment: "",
-  date: null,
-  time: null,
-  objectId: "",
-  managerId: "",
-  result: "",
-  isDone: false,
-  isCallTask: true
-};
+// initial-states
+import { taskManagerCreateInitialState } from "@initial-states/pages/task-manager-create.initial-state";
+// hooks
+import useTaskManagerCreateHook from "@hooks/task/use-task-manager-create";
 
 const CreateManagerTask = React.memo(
   ({ title, dateCreate, onClose, objectId, isObjectPage }) => {
@@ -47,51 +36,20 @@ const CreateManagerTask = React.memo(
       setValue,
       formState: { errors }
     } = useForm({
-      defaultValues: initialState,
+      defaultValues: taskManagerCreateInitialState,
       mode: "onChange",
       resolver: yupResolver(taskManagerSchema)
     });
     const data = watch();
     const watchManagerId = watch("managerId");
 
-    const users = useSelector(getUsersList());
-    const currentUserId = useSelector(getCurrentUserId());
-
-    const usersWithoutCurrentUser = users?.filter(
-      (user) => user?._id !== currentUserId
-    );
-    const userRoleManager = "69gfoep3944jgjdso345002";
-    const managerUsersWithRole = usersWithoutCurrentUser?.filter(
-      (user) => user?.role && user?.role.includes(userRoleManager)
-    );
-    const actualUsersArray = managerUsersWithRole?.map((user) => {
-      const lastName = user?.lastName;
-      const firstName = user?.firstName;
-
-      return {
-        _id: user._id,
-        name: `${lastName ? lastName : "Без"} ${
-          firstName ? firstName : "имени"
-        }`
-      };
-    });
-
-    const objectManagerId = watch("managerId");
-    const objects = useSelector(getObjectsList());
-    const managerObjects = objects?.filter(
-      (obj) => obj.userId === objectManagerId
-    );
-    const currentObject = useSelector(getObjectById(objectId));
-    const managerId = currentObject?.userId;
+    const { actualUsersArray, managerObjects, managerId } =
+      useTaskManagerCreateHook(objectId, watch);
 
     const onSubmit = () => {
       setIsLoading(true);
 
-      const newData = {
-        ...data,
-        comment: capitalizeFirstLetter(data.comment)
-      };
-      dispatch<any>(createTask(newData))
+      dispatch<any>(createTask(data))
         .then(() => {
           setIsLoading(false);
           onClose();
@@ -106,9 +64,7 @@ const CreateManagerTask = React.memo(
     useEffect(() => {
       setValue<any>("objectId", objectId);
       setValue<any>("managerId", managerId);
-    }, []);
 
-    useEffect(() => {
       if (dateCreate !== null) {
         setValue<any>("date", dateCreate);
       } else {

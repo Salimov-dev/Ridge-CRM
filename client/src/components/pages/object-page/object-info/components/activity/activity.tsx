@@ -7,7 +7,6 @@ import ObjectMeetings from "./components/object-meetings";
 import ObjectTasks from "./components/object-tasks";
 // hooks
 import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
-import useObjectInfo from "@hooks/object-info/use-object-info.hook";
 // columns
 import { tasksColumns } from "@columns/tasks.columns";
 import { meetingsColumns } from "@columns/meetings.columns";
@@ -40,7 +39,7 @@ const Acitivty = ({ object, objectId, setState }) => {
     handleOpenUpdateLastContactPage,
     handleOpenCreateMeetingPage,
     handleOpenUpdateMeetingPage
-  } = useObjectInfo(setState);
+  } = useDialogHandlers(setState);
 
   const { handleOpenContactPage } = useDialogHandlers(setState);
 

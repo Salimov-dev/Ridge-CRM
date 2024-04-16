@@ -18,7 +18,6 @@ const SuccessCancelFormButtons = ({
   onSuccess,
   onCancel,
   onRemove = () => {},
-  isUpdate = false,
   disabledSuccess = false,
   disabledRemoveButton = false,
   isValidRemoveButton = false

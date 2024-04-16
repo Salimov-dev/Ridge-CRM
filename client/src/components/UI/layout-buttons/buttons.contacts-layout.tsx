@@ -3,7 +3,8 @@ import { Box } from "@mui/material";
 // components
 import ButtonStyled from "@components/common/buttons/button-styled.button";
 import ClearFilterButton from "@components/common/buttons/clear-filter.button";
-import { contactsLayoutInitialState } from "@components/UI/initial-states/contacts-layout.initial-state";
+// initial-states
+import { contactsLayoutInitialState } from "@initial-states/layouts/contacts-layout.initial-state";
 // icons
 import SmartDisplayOutlinedIcon from "@mui/icons-material/SmartDisplayOutlined";
 // hooks

@@ -3,29 +3,29 @@ import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
 // components
 import DialogStyled from "@components/common/dialog/dialog-styled";
 import ObjectPage from "@components/pages/object-page/object-page";
-import CreateObject from "@components/pages/object/create-object/create-object";
-import UpdateObject from "@components/pages/object/update-object";
-import CreatePresentation from "@components/pages/presentation/create-presentation";
-import TransferObjectToAnotherManager from "@components/pages/transfer-object-to-another-manager/transfer-object-to-another-manager";
-import UpdateMeeting from "@components/pages/meeting/update-meeting";
-import CreateMeeting from "@components/pages/meeting/create-meeting";
-import UpdateLastContact from "@components/pages/last-contact/update-last-contact";
-import CreateLastContact from "@components/pages/last-contact/create-last-contact";
+import CreateObject from "@components/pages/object/create-object/create-object.page";
+import UpdateObject from "@components/pages/object/update-object.page";
+import CreatePresentation from "@components/pages/presentation/create-presentation.page";
+import TransferObjectToAnotherManager from "@components/pages/transfer-object-to-another-manager/transfer-object-to-another-manager.page.page";
+import UpdateMeeting from "@components/pages/meeting/update-meeting.page";
+import CreateMeeting from "@components/pages/meeting/create-meeting.page";
+import UpdateLastContact from "@components/pages/last-contact/update-last-contact.page";
+import CreateLastContact from "@components/pages/last-contact/create-last-contact.page";
 import UpdateManagerTask from "@components/pages/task/update-manager-task";
 import CreateManagerTask from "@components/pages/task/create-manager-task";
 import UpdateMyTask from "@components/pages/task/update-my-task";
 import CreateMyTask from "@components/pages/task/create-my-task";
 import UpdateAvatar from "@components/pages/user/update-avatar-user";
-import UpdatePresentation from "@components/pages/presentation/update-presentation";
+import UpdatePresentation from "@components/pages/presentation/update-presentation.page";
 import AuthPage from "@components/pages/auth/auth.page";
 import UpdateProfile from "@components/pages/user/update-profile";
 import UpdatePassword from "@components/pages/user/update-password";
 import CreateUser from "@components/pages/user/create-user";
-import MakePaymentPage from "@components/pages/payment/make-payment";
-import CreateContact from "@components/pages/contact/create-contact";
-import UpdateContact from "@components/pages/contact/update-contact";
-import CreateCompany from "@components/pages/company/create-company";
-import UpdateCompany from "@components/pages/company/update-company";
+import MakePaymentPage from "@components/pages/payment/make-payment.page";
+import CreateContact from "@components/pages/contact/create-contact.page";
+import UpdateContact from "@components/pages/contact/update-contact.page";
+import CreateCompany from "@components/pages/company/create-company.page";
+import UpdateCompany from "@components/pages/company/update-company.page";
 import Agreement from "@components/pages/agreement/agreement";
 import PersonalPolicy from "@components/pages/agreement/personal-policy";
 import UpdateUser from "@components/pages/user/update-user";
@@ -323,12 +323,7 @@ const PageDialogs = ({
 
       {/* Окна для Компании */}
       <DialogStyled
-        component={
-          <CreateCompany
-            onClose={handleCloseCreateCompanyPage}
-            isHideElement={state.isHideElement}
-          />
-        }
+        component={<CreateCompany onClose={handleCloseCreateCompanyPage} />}
         maxWidth="sm"
         onClose={handleCloseCreateCompanyPage}
         open={state.createCompanyPage}

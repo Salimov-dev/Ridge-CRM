@@ -3,7 +3,8 @@ import { Box } from "@mui/material";
 // components
 import ButtonStyled from "@components/common/buttons/button-styled.button";
 import ClearFilterButton from "@components/common/buttons/clear-filter.button";
-import { meetingsLayoutInitialState } from "@components/UI/initial-states/meetings-layout.initial-state";
+// initial-states
+import { meetingsLayoutInitialState } from "@initial-states/layouts/meetings-layout.initial-state";
 // icons
 import SmartDisplayOutlinedIcon from "@mui/icons-material/SmartDisplayOutlined";
 // utils

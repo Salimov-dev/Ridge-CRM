@@ -2,7 +2,7 @@ import "dayjs/locale/ru";
 import dayjs from "dayjs";
 import { orderBy } from "lodash";
 import { useMemo } from "react";
-import { getObjectsList } from "../../store/object/objects.store";
+import { getObjectsList } from "@store/object/objects.store";
 import { useSelector } from "react-redux";
 
 const useSearchPresentation = (presentations, data) => {

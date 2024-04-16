@@ -1,10 +1,10 @@
+import "dayjs/locale/ru";
 import dayjs from "dayjs";
 import { orderBy } from "lodash";
 import { useMemo } from "react";
 import { useSelector } from "react-redux";
-import "dayjs/locale/ru";
-import { getLastContactsList } from "../../store/last-contact/last-contact.store";
-import { getTasksList } from "../../store/task/tasks.store";
+import { getLastContactsList } from "@store/last-contact/last-contact.store";
+import { getTasksList } from "@store/task/tasks.store";
 
 const useSearchObjectDatabase = (objects, data, period) => {
   const currentDate = dayjs();

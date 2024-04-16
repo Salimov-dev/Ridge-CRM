@@ -11,7 +11,8 @@ import ObjectsDatabaseLayoutFiltersPanel from "@components/UI/filters-panels/obj
 import TitleObjectsQuantityObjectsDatabaseLayout from "./components/title-objects-quantity.objects-database-layout";
 import NoCallsControlPanelObjectsDatabase from "./components/no-calls-control-panel.objects-database-layout";
 import NeedToCallsControlPanelObjectsDatabase from "./components/need-to-calls-control-panel.objects-database-layout";
-import { objectsDatabaseLayoutInitialState } from "@components/UI/initial-states/objects-database-layout.initial-state";
+// initial-states
+import { objectsDatabaseLayoutInitialState } from "@initial-states/layouts/objects-database-layout.initial-state";
 // columns
 import { objectsColumns } from "@columns/objects.columns";
 // hooks

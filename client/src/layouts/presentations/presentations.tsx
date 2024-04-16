@@ -12,9 +12,10 @@ import { ContainerStyled } from "@common/container/container-styled";
 import { presentationsColumns } from "@columns/presentations.columns";
 // hooks
 import useSearchPresentation from "@hooks/presentation/use-search-presentation";
+// initial-states
+import { presentationsLayoutInitialState } from "@initial-states/layouts/presentations-layout.initial-state";
 // UI
 import PresentationBalloon from "@UI/maps/presentation-balloon";
-import { presentationsLayoutInitialState } from "@UI/initial-states/presentations-layout.initial-state";
 import ButtonsPresentationsLayout from "@UI/layout-buttons/buttons.presentations-layout";
 import PresentationsLayoutFiltersPanel from "@UI/filters-panels/presentations-layout.filters-panel";
 // store

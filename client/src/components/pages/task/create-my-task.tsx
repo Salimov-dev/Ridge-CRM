@@ -7,34 +7,24 @@ import { useForm } from "react-hook-form";
 import { tokens } from "@theme/theme";
 import { yupResolver } from "@hookform/resolvers/yup";
 // components
-import MyTaskForm from "@forms/tasks/my-task.form";
+import MyTaskForm from "@forms/tasks/task.form";
 import SuccessCancelFormButtons from "@components/common/buttons/success-cancel-form-buttons";
 import HeaderWithCloseButton from "@components/common/page-headers/header-with-close-button";
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
-// store
-import { createTask } from "@store/task/tasks.store";
+// initial-states
+import { taskCreateInitialState } from "@initial-states/pages/task-create.initial-state";
 // schema
 import { taskSchema } from "@schemas/task/task.shema";
+// store
 import { getCurrentUserId } from "@store/user/users.store";
 import { getObjectsList } from "@store/object/objects.store";
-
-const initialState = {
-  date: null,
-  time: null,
-  objectId: null,
-  managerId: null,
-  comment: "",
-  result: null,
-  isDone: false,
-  isCallTask: true
-};
+import { createTask } from "@store/task/tasks.store";
 
 const CreateMyTask = React.memo(
   ({
     title,
     dateCreate = null,
     onClose,
-    objects,
     objectId = "",
     isObjectPage = false
   }) => {
@@ -51,19 +41,19 @@ const CreateMyTask = React.memo(
       setValue,
       formState: { errors }
     } = useForm({
-      defaultValues: initialState,
+      defaultValues: taskCreateInitialState,
       mode: "onChange",
       resolver: yupResolver(taskSchema)
     });
     const data = watch();
-    const watchIsCallTask = watch("isCallTask");
-    const currentUserId = useSelector(getCurrentUserId());
 
+    const watchIsCallTask = watch("isCallTask");
+
+    const currentUserId = useSelector(getCurrentUserId());
     const objectsList = useSelector(getObjectsList());
     const currentUserObjects = objectsList?.filter(
       (obj) => obj?.userId === currentUserId
     );
-    const isMyTask = true;
 
     const onSubmit = () => {
       setIsLoading(true);
@@ -104,13 +94,12 @@ const CreateMyTask = React.memo(
         />
         <MyTaskForm
           data={data}
-          objects={isMyTask ? currentUserObjects : objects}
+          objects={currentUserObjects}
           register={register}
           setValue={setValue}
           watch={watch}
           errors={errors}
           isObjectPage={isObjectPage}
-          isMyTask={isMyTask}
         />
         <SuccessCancelFormButtons
           onSuccess={handleSubmit(onSubmit)}

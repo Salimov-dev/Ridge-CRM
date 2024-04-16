@@ -12,7 +12,8 @@ import { ContainerStyled } from "@components/common/container/container-styled";
 import MeetingsLayoutFiltersPanel from "@components/UI/filters-panels/meetings-layout.filters-panel";
 import ButtonsMeetingsLayout from "../../components/UI/layout-buttons/buttons.meetings-layout";
 import MeetingBalloon from "@components/UI/maps/meeting-balloon";
-import { meetingsLayoutInitialState } from "@components/UI/initial-states/meetings-layout.initial-state";
+// initial-states
+import { meetingsLayoutInitialState } from "@initial-states/layouts/meetings-layout.initial-state";
 // hooks
 import useSearchMeeting from "@hooks/meeting/use-search-meeting";
 // columns

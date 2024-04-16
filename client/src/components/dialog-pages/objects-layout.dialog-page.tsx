@@ -1,9 +1,9 @@
 import DialogStyled from "@components/common/dialog/dialog-styled";
 import ObjectPage from "@components/pages/object-page/object-page";
-import CreateObject from "@components/pages/object/create-object/create-object";
-import UpdateObject from "@components/pages/object/update-object";
-import CreatePresentation from "@components/pages/presentation/create-presentation";
-import TransferObjectToAnotherManager from "@components/pages/transfer-object-to-another-manager/transfer-object-to-another-manager";
+import CreateObject from "@components/pages/object/create-object/create-object.page";
+import UpdateObject from "@components/pages/object/update-object.page";
+import CreatePresentation from "@components/pages/presentation/create-presentation.page";
+import TransferObjectToAnotherManager from "@components/pages/transfer-object-to-another-manager/transfer-object-to-another-manager.page.page";
 import VideoPlayerPage from "@components/pages/video-player/video-player.page";
 import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
 

@@ -6,7 +6,7 @@ import SmartDisplayOutlinedIcon from "@mui/icons-material/SmartDisplayOutlined";
 import ButtonStyled from "@components/common/buttons/button-styled.button";
 import ClearFilterButton from "@components/common/buttons/clear-filter.button";
 // initial-states
-import { presentationsLayoutInitialState } from "../initial-states/presentations-layout.initial-state";
+import { presentationsLayoutInitialState } from "@initial-states/layouts/presentations-layout.initial-state";
 // hooks
 import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
 

@@ -18,3 +18,5 @@ const presentationStatusesArrray = [
 ];
 
 export { presentationStatusesArrray };
+
+export const presentationToBeAgreeStatusId = "654wqeg3469y9dfsd82dd334";

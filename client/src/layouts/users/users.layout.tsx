@@ -1,11 +1,12 @@
 // libraries
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+// initial-states
+import { usersLayoutInitialState } from "@initial-states/layouts/users-layout.initial-state";
 // components
 import PageDialogs from "@components/common/dialog/page-dialogs";
 import HeaderLayout from "@components/common/page-headers/header-layout";
 import { ContainerStyled } from "@components/common/container/container-styled";
-import { usersLayoutInitialState } from "@components/UI/initial-states/users-layout.initial-state";
 import ButtonsUsersLayout from "@UI/layout-buttons/buttons.users-layout";
 import TeamMateTablesUsersLayout from "./components/temmate-tables.users-layout";
 import InformItemsUsersLayout from "./components/inform-items.users-layout";

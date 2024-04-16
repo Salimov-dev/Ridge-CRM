@@ -6,8 +6,9 @@ import Stages from "./components/layout-stages.deals-layout";
 import HeaderLayout from "@components/common/page-headers/header-layout";
 import PageDialogs from "@components/common/dialog/page-dialogs";
 import { ContainerStyled } from "@components/common/container/container-styled";
-import { dealsLayoutInitialState } from "@components/UI/initial-states/deals-layout.initial-state";
 import DealsLayoutFiltersPanel from "@components/UI/filters-panels/deals-layout.filters-panel";
+// initial-states
+import { dealsLayoutInitialState } from "@initial-states/layouts/deals-layout.initial-state";
 // data
 import { allowedStatuses, dealStagesArray } from "@data/deals/deals-stages";
 // hooks

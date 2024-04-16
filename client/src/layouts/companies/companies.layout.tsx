@@ -9,7 +9,8 @@ import { ContainerStyled } from "@components/common/container/container-styled";
 import BasicTable from "@components/common/table/basic-table";
 import ButtonsCompaniesLayout from "../../components/UI/layout-buttons/buttons.companies-layout";
 import CompaniesLayoutFiltersPanel from "@components/UI/filters-panels/companies-layout.filters-panel";
-import { companiesLayoutInitialState } from "@components/UI/initial-states/companies-layout.initial-state";
+// initial-states
+import { companiesLayoutInitialState } from "@initial-states/layouts/companies-layout.initial-state";
 // columns
 import { companiesColumns } from "@columns/companies.columns";
 // hooks

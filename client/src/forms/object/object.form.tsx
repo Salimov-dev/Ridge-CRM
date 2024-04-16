@@ -23,6 +23,7 @@ import { capitalizeFirstLetter } from "@utils/data/capitalize-first-letter";
 import { metroListArraySPB } from "@data/metro/metro-spb";
 import { metroListArrayMSK } from "@data/metro/metro-msk";
 import { metroListArrayKZN } from "@data/metro/metro-kzn";
+import { allDistrictsList } from "@data/object/get-districts-list";
 // store
 import { getRentTypesList } from "@store/object-params/rent-types.store";
 import { getObjectTypesList } from "@store/object-params/object-types.store";
@@ -33,8 +34,6 @@ import { getCurrentRentersList } from "@store/object-params/current-renter.store
 import { getObjectConditionsList } from "@store/object-params/object-conditions.store";
 import { getTradeAreaList } from "@store/object-params/object-trade-area";
 import { getMetroList } from "@store/object-params/metro.store";
-import { hasDistrict } from "@data/object/has-district";
-import { allDistrictsList } from "@data/object/get-districts-list";
 
 const ObjectForm = ({
   data,
@@ -45,8 +44,7 @@ const ObjectForm = ({
   isUpdate = false,
   setState,
   control,
-  setValue,
-  isCityHasMetro = false
+  setValue
 }) => {
   const objectStatuses = useSelector(getObjectsStatusList());
   const sortedObjectStatuses = orderBy(objectStatuses, ["name"], ["asc"]);

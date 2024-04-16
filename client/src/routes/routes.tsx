@@ -4,35 +4,28 @@ import { Route, Routes } from "react-router-dom";
 import RequireAuth from "@routes/components/require-auth";
 import RequireActiveLicense from "@routes/components/require-active-license";
 // layouts
-import Objects from "@layouts/objects/objects.layout";
-import ObjectsDatabase from "@layouts/objects-database/objects-database.layout";
-import Statictics from "@layouts/statistics/statistics.layout";
-import Presentations from "@layouts/presentations/presentations";
 import Users from "@layouts/users/users.layout";
-import Profile from "@layouts/profile/profile.layout";
-import Companies from "@layouts/companies/companies.layout";
 import ObjectsLayout from "@layouts/objects/objects.layout";
 import MeetingsLayout from "@layouts/meetings/meetings.layout";
 import MainLayout from "@layouts/main/main.layout";
 import DealsLayout from "@layouts/deals/deals.layout";
 import ContactsLayout from "@layouts/contacts/contacts.layout";
 import CalendarLayout from "@layouts/calendar/calendar.layout";
-import Callback from "@layouts/callback/callback.layout";
-// components
-import UpdateProfile from "@components/pages/user/update-profile";
-import NoMatchRoute from "@components/common/rout/no-match";
-import EmailActivated from "@components/pages/email-activated/email-activated";
-import RecoveryPassword from "@components/pages/password/recovery-password";
-import SetupPassword from "@components/pages/password/setup-password";
-import ResultPaymentPage from "@components/pages/payment/result-payment";
-// store
-import { getIsLoggedIn } from "@store/user/users.store";
 import ObjectsDatabaseLayout from "@layouts/objects-database/objects-database.layout";
 import ProfileLayout from "@layouts/profile/profile.layout";
 import StaticticsLayout from "@layouts/statistics/statistics.layout";
 import PresentationsLayout from "@layouts/presentations/presentations";
 import CompaniesLayout from "@layouts/companies/companies.layout";
 import CallbackLayout from "@layouts/callback/callback.layout";
+// components
+import UpdateProfile from "@components/pages/user/update-profile";
+import NoMatchRoute from "@components/common/rout/no-match";
+import EmailActivated from "@components/pages/email-activated/email-activated.page";
+import RecoveryPassword from "@components/pages/password/recovery-password/recovery-password.page";
+import SetupPassword from "@components/pages/password/setup-password/setup-password.page";
+import ResultPaymentPage from "@components/pages/payment/result-payment.page";
+// store
+import { getIsLoggedIn } from "@store/user/users.store";
 
 export default function AppRoutes() {
   const isLoggedIn = useSelector(getIsLoggedIn());

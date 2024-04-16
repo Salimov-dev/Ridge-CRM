@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Box, styled } from "@mui/material";
-import Register from "./components/register";
-import Login from "./components/login";
-import Subtitle from "./components/subtitle";
+import LoginPage from "./components/login.page";
+import RegisterPage from "./components/register.page";
+import SubtitleRegisterLoginPage from "./components/subtitle.register-login-page";
 
 const Component = styled(Box)`
   height: 100%;
@@ -20,18 +20,18 @@ const AuthPage = React.memo(({ onClose, startPage = "" }) => {
   return (
     <Component>
       {page === "register" ? (
-        <Register onClose={onClose} page={page} />
+        <RegisterPage onClose={onClose} />
       ) : (
-        <Login onClose={onClose} page={page} />
+        <LoginPage onClose={onClose} />
       )}
       {page === "register" ? (
-        <Subtitle
+        <SubtitleRegisterLoginPage
           title=" Уже есть аккаунт? Нажмите, чтобы войти"
           onClick={() => setPage("login")}
           backgroundColor="fireBrick"
         />
       ) : (
-        <Subtitle
+        <SubtitleRegisterLoginPage
           title="Нет аккаунта? Пройти регистрацию"
           onClick={() => setPage("register")}
           backgroundColor="green"

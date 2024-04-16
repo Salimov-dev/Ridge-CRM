@@ -1,7 +1,7 @@
 // styled
-import { FieldsContainer, Form } from "../../components/common/forms/styled";
+import { FieldsContainer, Form } from "@components/common/forms/styled";
 // components
-import SimpleSelectField from "../../components/common/inputs/simple-select-field";
+import SimpleSelectField from "@components/common/inputs/simple-select-field";
 
 const TransferObjectToAnotherManagerForm = ({
   users,

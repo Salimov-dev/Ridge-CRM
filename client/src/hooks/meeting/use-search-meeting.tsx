@@ -1,8 +1,8 @@
 import "dayjs/locale/ru";
 import { useMemo } from "react";
 import dayjs from "dayjs";
-import getStartWeekDate from "../../utils/date/get-start-week-date";
-import getEndWeekDate from "../../utils/date/get-end-week-date";
+import getStartWeekDate from "@utils/date/get-start-week-date";
+import getEndWeekDate from "@utils/date/get-end-week-date";
 
 const useSearchMeeting = (meetings, data) => {
   const startWeek = getStartWeekDate();

@@ -11,14 +11,13 @@ import { FieldsContainer, Form } from "@components/common/forms/styled";
 // utils
 import getDateToday from "@utils/date/get-date-today";
 import { capitalizeAllFirstLetters } from "@utils/data/capitalize-all-first-letters";
+// store
 import {
-  getCurrentUserId,
-  getIsUserCurator,
-  getIsUserManager
+  getIsCurrentUserRoleCurator,
+  getIsCurrentUserRoleManager
 } from "@store/user/users.store";
 
 const ManagerTaskForm = ({
-  task = {},
   data,
   objects,
   users,
@@ -27,18 +26,14 @@ const ManagerTaskForm = ({
   watch,
   setValue,
   isObjectPage = false,
-  isTasksLoading = false,
   isEditMode = false
 }) => {
   const watchObjectId = watch("objectId", "");
   const watchManagerId = watch("managerId", "");
-  const watchData = watch("data", "");
-
   const watchIsDone = watch("isDone", false);
 
-  const currentUserId = useSelector(getCurrentUserId());
-  const isManager = useSelector(getIsUserManager(currentUserId));
-  const isCurator = useSelector(getIsUserCurator(currentUserId));
+  const isCurrentUserRoleManager = useSelector(getIsCurrentUserRoleManager());
+  const isCurrentUserRoleCurator = useSelector(getIsCurrentUserRoleCurator());
 
   return (
     <Form noValidate>
@@ -51,7 +46,7 @@ const ManagerTaskForm = ({
           onChange={(value) => setValue("date", value)}
           errors={errors?.date}
           minDate={getDateToday()}
-          disabled={isManager}
+          disabled={isCurrentUserRoleManager}
         />
         <TimePickerStyled
           register={register}
@@ -60,10 +55,10 @@ const ManagerTaskForm = ({
           value={data.time}
           setValue={setValue}
           errors={errors?.time}
-          disabled={isManager}
+          disabled={isCurrentUserRoleManager}
         />
       </FieldsContainer>
-      {isCurator && (
+      {isCurrentUserRoleCurator && (
         <SimpleSelectField
           register={register}
           name="managerId"
@@ -76,7 +71,9 @@ const ManagerTaskForm = ({
       )}
       <AutocompleteStyled
         label={
-          watchObjectId && !isCurator ? "Объект задачи" : "Задача без объекта"
+          watchObjectId && !isCurrentUserRoleCurator
+            ? "Объект задачи"
+            : "Задача без объекта"
         }
         register={register}
         name="objectId"
@@ -84,7 +81,7 @@ const ManagerTaskForm = ({
         value={watchObjectId}
         setValue={setValue}
         watchItemId={watchObjectId}
-        disabled={!objects.length || isObjectPage || !isCurator}
+        disabled={!objects.length || isObjectPage || !isCurrentUserRoleCurator}
         optionLabel={(option) => `${option?.city}, ${option?.address}`}
       />
       <TextFieldStyled
@@ -96,7 +93,7 @@ const ManagerTaskForm = ({
         multiline={true}
         errors={errors?.comment}
         inputProps={{ maxLength: 150 }}
-        disabled={isManager}
+        disabled={isCurrentUserRoleManager}
       />
       {isEditMode ? (
         <TextFieldStyled
@@ -107,14 +104,13 @@ const ManagerTaskForm = ({
           rows="2"
           multiline={true}
           inputProps={{ maxLength: 150 }}
-          disabled={isCurator}
+          disabled={isCurrentUserRoleCurator}
         />
       ) : null}
       {isEditMode ? (
         <SimpleSwitch
           title="Задача выполнена"
           value={watchIsDone}
-          isLoading={isTasksLoading}
           onChange={(e) => {
             setValue("isDone", e.target.checked);
           }}

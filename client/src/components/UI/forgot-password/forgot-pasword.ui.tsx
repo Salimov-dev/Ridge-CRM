@@ -36,7 +36,7 @@ const initialState = {
   email: ""
 };
 
-const ForgotPassword = () => {
+const ForgotPasswordUI = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [forgotPass, setForgotPass] = useState(false);
 
@@ -115,4 +115,4 @@ const ForgotPassword = () => {
   );
 };
 
-export default ForgotPassword;
+export default ForgotPasswordUI;

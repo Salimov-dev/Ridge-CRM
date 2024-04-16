@@ -6,7 +6,7 @@ import ClearFilterButton from "@components/common/buttons/clear-filter.button";
 // icons
 import SmartDisplayOutlinedIcon from "@mui/icons-material/SmartDisplayOutlined";
 // initial-states
-import { companiesLayoutInitialState } from "../initial-states/companies-layout.initial-state";
+import { companiesLayoutInitialState } from "@initial-states/layouts/companies-layout.initial-state";
 // hooks
 import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
 

@@ -1,5 +1,3 @@
-import * as dayjs from "dayjs";
-
 const useDialogHandlers = (setState) => {
   // обновление стейта при открытии страницы создания объекта
   const handleOpenCreateObjectPage = () => {

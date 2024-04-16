@@ -8,7 +8,7 @@ import ClearFilterButton from "@common/buttons/clear-filter.button";
 import { getActualUsersList } from "@utils/actual-items/get-actual-users-list";
 import { getActualStatusesList } from "@utils/actual-items/get-actual-statuses-list";
 // initial-states
-import { objectsDatabaseLayoutInitialState } from "../initial-states/objects-database-layout.initial-state";
+import { objectsDatabaseLayoutInitialState } from "../../../initial-states/layouts/objects-database-layout.initial-state";
 // store
 import { getIsCurrentUserRoleCurator } from "@store/user/users.store";
 import { getObjectsStatusList } from "@store/object-params/object-status.store";

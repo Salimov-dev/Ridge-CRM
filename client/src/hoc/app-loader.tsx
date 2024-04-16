@@ -46,6 +46,7 @@ import { loadUserRolesList } from "@store/user-params/user-role.store";
 // contact
 import { loadContactsList } from "@store/contact/contact.store";
 import { loadContactPositionsList } from "@store/contact/contact-positions.store";
+import { licenseTypeBlockedId } from "@data/users/user-license-statuses";
 
 interface AppLoaderProps {
   children: React.ReactNode;
@@ -55,12 +56,12 @@ const AppLoader = ({ children }: AppLoaderProps) => {
   const dispatch = useDispatch();
   const isLoggedIn = useSelector(getIsLoggedIn());
   const currentUserId = useSelector(getCurrentUserId());
-  const currentUserLicense = useSelector(
+  const currentUserLicenseData = useSelector(
     getUserLicensesByUserId(currentUserId)
   );
-  const blockedLicenseTypeId = "71kbjld394u5jgfdsjk4l003";
-  const currentLicenseTypeId = currentUserLicense?.accountType;
-  const isLicenseBlockedType = currentLicenseTypeId === blockedLicenseTypeId;
+
+  const currentLicenseTypeId = currentUserLicenseData?.accountType;
+  const isLicenseBlockedType = currentLicenseTypeId === licenseTypeBlockedId;
 
   useEffect(() => {
     // cities
