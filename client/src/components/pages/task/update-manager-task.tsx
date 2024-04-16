@@ -34,6 +34,8 @@ const UpdateManagerTask = React.memo(
     const [isLoading, setIsLoading] = useState(false);
 
     const task = useSelector(getTaskById(taskId));
+    const managerId = task?.managerId;
+    const objectId = task?.objectId;
 
     const formatedTask = {
       ...task,
@@ -55,9 +57,6 @@ const UpdateManagerTask = React.memo(
 
     const data = watch();
     const watchManagerId = watch("managerId");
-
-    const managerId = task?.managerId;
-    const objectId = task?.objectId;
 
     const objects = useSelector(getObjectsList());
     const selectedManagerObjects = objects?.filter(

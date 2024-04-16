@@ -1,5 +1,10 @@
+import { useSelector } from "react-redux";
 import { Box, styled } from "@mui/material";
 import ButtonStyled from "@components/common/buttons/button-styled.button";
+import {
+  getCurrentUserId,
+  getIsUserAuthorThisEntity
+} from "@store/user/users.store";
 
 const Component = styled(Box)`
   display: flex;
@@ -9,19 +14,21 @@ const Component = styled(Box)`
 
 const ButtonsPanel = ({
   object,
-  onEdit,
   onClose,
-  isEdit,
-  isAuthorEntity = true,
+  onOpenUpdateObjectPage,
   onOpenCreatePresentationPage,
-  isTopButtonsPanel = false,
-  isCloud = true
+  hasCloudButton,
+  hasAddPresentationButton
 }) => {
-  const hasCloud = !!object?.cloudLink?.length;
+  const currentUserId = useSelector(getCurrentUserId());
 
+  const isAuthorEntity = useSelector(
+    getIsUserAuthorThisEntity(currentUserId, object)
+  );
+
+  const hasCloudLink = !!object?.cloudLink?.length;
   const handleOpenCloud = () => {
     const cloudLink = object?.cloudLink;
-
     if (cloudLink) {
       window.open(cloudLink, "_blank");
     }
@@ -29,31 +36,34 @@ const ButtonsPanel = ({
 
   return (
     <Component>
-      {isEdit ? (
-        <>
-          {hasCloud ? (
-            isCloud ? (
+      <>
+        {hasCloudLink ? (
+          hasCloudButton ? (
+            <ButtonStyled
+              title="Открыть облако"
+              style="SUCCESS"
+              onClick={handleOpenCloud}
+            />
+          ) : null
+        ) : null}
+        {isAuthorEntity ? (
+          <>
+            {hasAddPresentationButton && (
               <ButtonStyled
-                title="Открыть облако"
+                title="Добавить презентацию"
                 style="SUCCESS"
-                onClick={handleOpenCloud}
+                onClick={onOpenCreatePresentationPage}
               />
-            ) : null
-          ) : null}
-          {isAuthorEntity ? (
-            <>
-              {!isTopButtonsPanel && (
-                <ButtonStyled
-                  title="Добавить презентацию"
-                  style="SUCCESS"
-                  onClick={onOpenCreatePresentationPage}
-                />
-              )}
-              <ButtonStyled title="Править" style="SUCCESS" onClick={onEdit} />
-            </>
-          ) : null}
-        </>
-      ) : null}
+            )}
+            <ButtonStyled
+              title="Править"
+              style="SUCCESS"
+              onClick={onOpenUpdateObjectPage}
+            />
+          </>
+        ) : null}
+      </>
+
       <ButtonStyled title="Закрыть" style="CANCEL" onClick={onClose} />
     </Component>
   );

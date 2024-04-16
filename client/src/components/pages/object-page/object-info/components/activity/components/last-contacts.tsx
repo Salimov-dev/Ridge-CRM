@@ -1,14 +1,22 @@
 import { useSelector } from "react-redux";
 import { Box, Typography, styled } from "@mui/material";
-import BasicTable from "@common/table/basic-table";
+// columns
 import { lastContactColumns } from "@columns/last-contact.columns";
+// components
+import BasicTable from "@common/table/basic-table";
 import ButtonStyled from "@components/common/buttons/button-styled.button";
 import RowTitle from "@components/common/titles/row-title";
+// hooks
+import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
 import {
   getLastContactsList,
   getLastContactsLoadingStatus
 } from "@store/last-contact/last-contact.store";
-import { getCurrentUserId, getIsUserManager } from "@store/user/users.store";
+import {
+  getCurrentUserId,
+  getIsCurrentUserRoleManager,
+  getIsUserAuthorThisEntity
+} from "@store/user/users.store";
 
 const Component = styled(Box)`
   display: flex;
@@ -22,22 +30,28 @@ const Container = styled(Box)`
   justify-content: space-between;
 `;
 
-const LastContacts = ({
-  objectId,
-  onOpen,
-  onUpdate,
-  isAuthorEntity,
-  onOpenContactPage,
-  isCurator
-}) => {
+const LastContacts = ({ object, setState }) => {
+  const objectId = object?._id;
+  const currentUserId = useSelector(getCurrentUserId());
+
   const lastContactsList = useSelector(getLastContactsList());
-  const isLastContactsLoading = useSelector(getLastContactsLoadingStatus());
   const lastContacts = lastContactsList?.filter(
     (contact) => contact.objectId === objectId
   );
   const sortedLastContacts = lastContacts?.reverse();
-  const currentUserId = useSelector(getCurrentUserId());
-  const isManager = useSelector(getIsUserManager(currentUserId));
+
+  const isLastContactsLoading = useSelector(getLastContactsLoadingStatus());
+  const isCurrentUserRoleManager = useSelector(getIsCurrentUserRoleManager());
+  const isAuthorEntity = useSelector(
+    getIsUserAuthorThisEntity(currentUserId, object)
+  );
+
+  const {
+    handleOpenCreateLastContactPage,
+    handleOpenUpdateLastContactPage,
+    handleOpenContactPage
+  } = useDialogHandlers(setState);
+
   return (
     <Component>
       <Container sx={{ alignItems: "start" }}>
@@ -52,7 +66,7 @@ const LastContacts = ({
             style="LAST_CONTACT"
             variant="contained"
             width="280px"
-            onClick={() => onOpen(objectId)}
+            onClick={() => handleOpenCreateLastContactPage(objectId)}
           />
         ) : null}
       </Container>
@@ -61,9 +75,9 @@ const LastContacts = ({
         <BasicTable
           items={sortedLastContacts}
           itemsColumns={lastContactColumns(
-            onUpdate,
-            onOpenContactPage,
-            isManager
+            handleOpenUpdateLastContactPage,
+            handleOpenContactPage,
+            isCurrentUserRoleManager
           )}
           isLoading={isLastContactsLoading}
           isDialogMode={true}

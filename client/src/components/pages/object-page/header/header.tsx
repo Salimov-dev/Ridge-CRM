@@ -1,8 +1,6 @@
 import { Box, Typography, styled } from "@mui/material";
-// components
 import ObjectName from "./components/object-name";
 import ButtonsPanel from "../buttons-panel/buttons-panel";
-import Loader from "@common/loader/loader";
 
 const HeaderContainer = styled(Box)`
   display: flex;
@@ -18,16 +16,14 @@ const Title = styled(Box)`
 
 const Header = ({
   object,
-  isLoading,
-  onEdit,
   onClose,
-  isEdit,
-  isAuthorEntity = true
+  onOpenUpdateObjectPage,
+  onOpenCreatePresentationPage
 }) => {
   const city = object?.city;
   const address = object?.address;
 
-  return !isLoading ? (
+  return (
     <HeaderContainer>
       <Title>
         <Typography variant="h2">Объект: </Typography>
@@ -35,16 +31,13 @@ const Header = ({
       </Title>
       <ButtonsPanel
         object={object}
-        onEdit={onEdit}
         onClose={onClose}
-        isEdit={isEdit}
-        isTopButtonsPanel={true}
-        isAuthorEntity={isAuthorEntity}
-        isCloud={false}
+        onOpenUpdateObjectPage={onOpenUpdateObjectPage}
+        onOpenCreatePresentationPage={onOpenCreatePresentationPage}
+        hasAddPresentationButton={false}
+        hasCloudButton={false}
       />
     </HeaderContainer>
-  ) : (
-    <Loader />
   );
 };
 

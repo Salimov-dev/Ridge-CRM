@@ -1,13 +1,22 @@
 import { useSelector } from "react-redux";
 import { Box, Typography, styled } from "@mui/material";
+// hooks
+import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
+// components
 import BasicTable from "@common/table/basic-table";
-import sortingByDateAndTime from "@utils/other/sorting-by-date-and-time";
 import ButtonStyled from "@components/common/buttons/button-styled.button";
 import RowTitle from "@components/common/titles/row-title";
+// utils
+import sortingByDateAndTime from "@utils/other/sorting-by-date-and-time";
+// store
 import {
   getMeetingLoadingStatus,
   getObjectMeetingsList
 } from "@store/meeting/meetings.store";
+import {
+  getCurrentUserId,
+  getIsUserAuthorThisEntity
+} from "@store/user/users.store";
 
 const Component = styled(Box)`
   display: flex;
@@ -21,18 +30,19 @@ const Title = styled(Box)`
   justify-content: space-between;
 `;
 
-const ObjectMeetings = ({
-  object,
-  objectId,
-  onOpenCreateMeeting,
-  columns,
-  isAuthorEntity = true
-}) => {
-  const isMeetingsLoading = useSelector(getMeetingLoadingStatus());
-  const address = `${object?.city}, ${object?.address}`;
+const ObjectMeetings = ({ object, setState, columns }) => {
+  const currentUserId = useSelector(getCurrentUserId());
+  const objectId = object?._id;
 
   const meetings = useSelector(getObjectMeetingsList(objectId));
   const sortedMeetings = sortingByDateAndTime(meetings);
+
+  const isMeetingsLoading = useSelector(getMeetingLoadingStatus());
+  const isAuthorEntity = useSelector(
+    getIsUserAuthorThisEntity(currentUserId, object)
+  );
+
+  const { handleOpenCreateMeetingPage } = useDialogHandlers(setState);
 
   return (
     <Component>
@@ -46,7 +56,7 @@ const ObjectMeetings = ({
           <ButtonStyled
             title="Добавить встречу"
             style="MEETING"
-            onClick={() => onOpenCreateMeeting(objectId)}
+            onClick={() => handleOpenCreateMeetingPage(objectId)}
           />
         ) : null}
       </Title>

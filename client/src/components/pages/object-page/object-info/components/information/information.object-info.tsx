@@ -9,9 +9,12 @@ import {
   estateTypeColumns,
   locationColumns
 } from "@columns/object-page.columns";
+import { getObjectsLoadingStatus } from "@store/object/objects.store";
+import { useSelector } from "react-redux";
 
-const Information = ({ object, isLoading }) => {
+const InformationObjectInfo = ({ object }) => {
   const description = object?.fullDescription;
+  const isLoading = useSelector(getObjectsLoadingStatus());
 
   return (
     <>
@@ -77,4 +80,4 @@ const Information = ({ object, isLoading }) => {
   );
 };
 
-export default Information;
+export default InformationObjectInfo;

@@ -4,18 +4,16 @@ import { useSelector } from "react-redux";
 import { Box, styled } from "@mui/material";
 // components
 import PageDialogs from "@components/common/dialog/page-dialogs";
-import Acitivty from "./components/activity/activity";
-import Contacts from "./components/contacts/contacts";
 import TabsStyled from "@components/common/tabs/tabs-styled";
-import Information from "./components/information/information";
+// utils
+import { getActualUsersList } from "@utils/actual-items/get-actual-users-list";
 // store
 import { getObjectsList } from "@store/object/objects.store";
 import {
   getCurrentUserId,
-  getIsUserCurator,
-  getUsersList
+  getIsCurrentUserRoleCurator
 } from "@store/user/users.store";
-import { getActualUsersList } from "@utils/actual-items/get-actual-users-list";
+import tabsObjectInfo from "./tabs/tabs.object-info";
 
 const Component = styled(Box)`
   display: flex;
@@ -24,7 +22,8 @@ const Component = styled(Box)`
   margin-bottom: 20px;
 `;
 
-const ObjectInfo = ({ object, objectId, isLoading }) => {
+const ObjectInfoPage = ({ object }) => {
+  const [value, setValue] = useState(0);
   const [state, setState] = useState({
     createMyTaskPage: false,
     updateMyTaskPage: false,
@@ -41,42 +40,28 @@ const ObjectInfo = ({ object, objectId, isLoading }) => {
   });
 
   const objects = useSelector(getObjectsList());
-  const usersList = getActualUsersList(objects);
-  const users = useSelector(getUsersList());
+  const actualUsersList = getActualUsersList(objects);
 
   const currentUserId = useSelector(getCurrentUserId());
-  const isCurator = useSelector(getIsUserCurator(currentUserId));
+  const isCurrentUserRoleCurator = useSelector(getIsCurrentUserRoleCurator());
+
   const currentUserObjects = objects?.filter(
     (obj) => obj?.userId === currentUserId
   );
-  const actualObjects = isCurator ? currentUserObjects : objects;
-
-  const tabs = [
-    {
-      label: "Информация",
-      component: <Information object={object} isLoading={isLoading} />
-    },
-    {
-      label: "Контакты",
-      component: <Contacts object={object} setState={setState} />
-    },
-    {
-      label: "Активность",
-      component: (
-        <Acitivty object={object} objectId={objectId} setState={setState} />
-      )
-    }
-  ];
-  const [value, setValue] = useState(0);
+  const actualObjects = isCurrentUserRoleCurator ? currentUserObjects : objects;
 
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
   return (
     <Component>
-      <TabsStyled tabs={tabs} value={value} onChange={handleTabChange} />
+      <TabsStyled
+        tabs={tabsObjectInfo(object, setState)}
+        value={value}
+        onChange={handleTabChange}
+      />
       <PageDialogs
-        users={usersList}
+        users={actualUsersList}
         state={state}
         setState={setState}
         objects={actualObjects}
@@ -85,4 +70,4 @@ const ObjectInfo = ({ object, objectId, isLoading }) => {
   );
 };
 
-export default ObjectInfo;
+export default ObjectInfoPage;

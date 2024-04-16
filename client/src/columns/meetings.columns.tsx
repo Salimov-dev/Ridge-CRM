@@ -24,7 +24,11 @@ import {
   getIsUserAuthorThisEntity
 } from "@store/user/users.store";
 
-export const meetingsColumns = (setState, isCurrentUserRoleManager) => {
+export const meetingsColumns = (
+  setState,
+  isCurrentUserRoleManager,
+  isDialogPage
+) => {
   let columns = [];
 
   const { handleOpenUpdateMeetingPage, handleOpenObjectPage } =
@@ -237,15 +241,13 @@ export const meetingsColumns = (setState, isCurrentUserRoleManager) => {
   };
 
   if (!isCurrentUserRoleManager) {
-    columns = [
-      dateColumn,
-      otherColumns,
-      meetingObjectColumn,
-      managerColumn,
-      updateColumn
-    ];
+    columns = [dateColumn, otherColumns, managerColumn, updateColumn];
   } else {
-    columns = [dateColumn, otherColumns, meetingObjectColumn, updateColumn];
+    columns = [dateColumn, otherColumns, updateColumn];
+  }
+
+  if (!isDialogPage) {
+    columns.splice(3, 0, meetingObjectColumn);
   }
 
   return columns;

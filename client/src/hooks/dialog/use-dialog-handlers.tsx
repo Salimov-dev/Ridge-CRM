@@ -103,10 +103,11 @@ const useDialogHandlers = (setState) => {
   };
 
   // обновление стейта при создании последнего контакта
-  const handleOpenCreateLastContactPage = () => {
+  const handleOpenCreateLastContactPage = (objectId) => {
     setState((prevState) => ({
       ...prevState,
-      createLastContactPage: true
+      createLastContactPage: true,
+      objectId: objectId
     }));
   };
   const handleCloseCreateLastContactPage = () => {

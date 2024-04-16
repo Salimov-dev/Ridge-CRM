@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { yupResolver } from "@hookform/resolvers/yup";
 // components
-import Loader from "@common/loader/loader";
 import ButtonsPanel from "../buttons-panel/buttons-panel";
 import AutocompleteStyled from "@common/inputs/autocomplete-styled";
 // store
@@ -14,6 +13,10 @@ import { getObjectsStatusList } from "@store/object-params/object-status.store";
 import { updateObject } from "@store/object/objects.store";
 // schemas
 import { objectPageStatusSchema } from "@schemas/object/object-page-status.schema";
+import {
+  getCurrentUserId,
+  getIsUserAuthorThisEntity
+} from "@store/user/users.store";
 
 const Component = styled(Box)`
   display: flex;
@@ -24,14 +27,17 @@ const Component = styled(Box)`
 const Footer = ({
   object,
   onClose,
-  onEdit,
-  isEdit,
-  isLoading,
-  onOpenCreatePresentationPage,
-  isAuthorEntity = true
+  onOpenUpdateObjectPage,
+  onOpenCreatePresentationPage
 }) => {
-  const [statusChanged, setStatusChanged] = useState(false);
   const dispatch = useDispatch();
+  const [statusChanged, setStatusChanged] = useState(false);
+
+  const currentUserId = useSelector(getCurrentUserId());
+  const isAuthorEntity = useSelector(
+    getIsUserAuthorThisEntity(currentUserId, object)
+  );
+
   const objectStatuses = useSelector(getObjectsStatusList());
   const sortedObjectStatuses = orderBy(objectStatuses, "name", ["asc"]);
 
@@ -61,9 +67,9 @@ const Footer = ({
     }
   }, [watchStatus, objectStatus]);
 
-  const newData = { ...object, status: watchStatus };
-
   useEffect(() => {
+    const newData = { ...object, status: watchStatus };
+
     if (statusChanged) {
       dispatch<any>(updateObject({ newData: newData }));
     }
@@ -73,7 +79,7 @@ const Footer = ({
     setValue<any>("status", objectStatus);
   }, [objectStatus]);
 
-  return !isLoading ? (
+  return (
     <Component>
       <AutocompleteStyled
         label="Изменить статус объекта"
@@ -90,14 +96,12 @@ const Footer = ({
       <ButtonsPanel
         object={object}
         onClose={onClose}
-        onEdit={onEdit}
+        onOpenUpdateObjectPage={onOpenUpdateObjectPage}
         onOpenCreatePresentationPage={onOpenCreatePresentationPage}
-        isEdit={isEdit}
-        isAuthorEntity={isAuthorEntity}
+        hasAddPresentationButton={true}
+        hasCloudButton={true}
       />
     </Component>
-  ) : (
-    <Loader />
   );
 };
 

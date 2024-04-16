@@ -5,23 +5,18 @@ import RowTitle from "@components/common/titles/row-title";
 // columns
 import { companiesColumns } from "@columns/companies.columns";
 import { contactsColumns } from "@columns/contacts.columns";
-// hooks
-import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
 // store
 import { getCompaniesList } from "@store/company/company.store";
 import { getContactsList } from "@store/contact/contact.store";
 import { getObjectsLoadingStatus } from "@store/object/objects.store";
 import {
-  getCurrentUserId,
   getIsCurrentUserRoleCurator,
-  getIsCurrentUserRoleManager,
-  getIsUserCurator
+  getIsCurrentUserRoleManager
 } from "@store/user/users.store";
 
-const Contacts = ({ object, setState }) => {
-  const currentUserId = useSelector(getCurrentUserId());
-  const objectContacts = object?.contacts.map((cont) => cont.contact);
+const ContactsObjectInfo = ({ object, setState }) => {
   const contactsList = useSelector(getContactsList());
+  const objectContacts = object?.contacts.map((cont) => cont.contact);
   const userContacts = contactsList.filter((cont) =>
     objectContacts.includes(cont._id)
   );
@@ -35,15 +30,7 @@ const Contacts = ({ object, setState }) => {
 
   const isCurrentUserRoleCurator = useSelector(getIsCurrentUserRoleCurator());
   const isCurrentUserRoleManager = useSelector(getIsCurrentUserRoleManager());
-  const isCurator = useSelector(getIsUserCurator(currentUserId));
   const isLoading = useSelector(getObjectsLoadingStatus());
-  const isHideCheckbox = true;
-
-  const {
-    handleOpenContactPage,
-    handleOpenUpdateCompanyPage,
-    handleOpenObjectPage
-  } = useDialogHandlers(setState);
 
   return (
     <>
@@ -73,4 +60,4 @@ const Contacts = ({ object, setState }) => {
   );
 };
 
-export default Contacts;
+export default ContactsObjectInfo;

@@ -3,7 +3,7 @@ import { Box } from "@mui/material";
 import { useSelector } from "react-redux";
 // components
 import Header from "./header/header";
-import ObjectInfo from "./object-info/object-info";
+import ObjectInfo from "./object-info/object-info.page";
 import Footer from "./footer/footer";
 import ItemOnMap from "@common/map/item-on-map/item-on-map";
 // store
@@ -11,20 +11,16 @@ import {
   getObjectById,
   getObjectsLoadingStatus
 } from "@store/object/objects.store";
-import {
-  getCurrentUserId,
-  getIsUserAuthorThisEntity
-} from "@store/user/users.store";
 
 const ObjectPage = React.memo(
-  ({ objectId, onClose, onEdit, onOpenCreatePresentationPage }) => {
+  ({
+    objectId,
+    onClose,
+    onOpenUpdateObjectPage,
+    onOpenCreatePresentationPage
+  }) => {
     const object = useSelector(getObjectById(objectId));
-
-    const currentUserId = useSelector(getCurrentUserId());
     const isLoading = useSelector(getObjectsLoadingStatus());
-    const isAuthorEntity = useSelector(
-      getIsUserAuthorThisEntity(currentUserId, object)
-    );
 
     const address = `${object?.city}, ${object?.address}`;
     const latitude = object?.latitude || null;
@@ -37,10 +33,8 @@ const ObjectPage = React.memo(
         <Header
           object={object}
           onClose={onClose}
-          onEdit={onEdit}
-          isLoading={isLoading}
-          isEdit={true}
-          isAuthorEntity={isAuthorEntity}
+          onOpenUpdateObjectPage={onOpenUpdateObjectPage}
+          onOpenCreatePresentationPage={onOpenCreatePresentationPage}
         />
         <ItemOnMap
           mapZoom={mapZoom}
@@ -48,15 +42,12 @@ const ObjectPage = React.memo(
           center={center}
           isLoading={isLoading}
         />
-        <ObjectInfo object={object} objectId={objectId} isLoading={isLoading} />
+        <ObjectInfo object={object} />
         <Footer
           object={object}
           onClose={onClose}
-          onEdit={onEdit}
-          isEdit={true}
+          onOpenUpdateObjectPage={onOpenUpdateObjectPage}
           onOpenCreatePresentationPage={onOpenCreatePresentationPage}
-          isLoading={isLoading}
-          isAuthorEntity={isAuthorEntity}
         />
       </Box>
     );

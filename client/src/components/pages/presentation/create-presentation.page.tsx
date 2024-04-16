@@ -7,7 +7,6 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useDispatch, useSelector } from "react-redux";
 // components
-import ManagerPresentationForm from "@forms/presentation/presentation.form";
 import SuccessCancelFormButtons from "@components/common/buttons/success-cancel-form-buttons";
 import HeaderWithCloseButton from "@common/page-headers/header-with-close-button";
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
@@ -19,6 +18,8 @@ import transformObjectsForSelect from "@utils/objects/transform-objects-for-sele
 import { presentationCreateInitialState } from "@initial-states/pages/presentation-create.initial-state";
 // data
 import { presentationToBeAgreeStatusId } from "@data/presentations/presentations-status";
+// forms
+import PresentationForm from "@forms/presentation/presentation.form";
 // store
 import { createPresentation } from "@store/presentation/presentations.store";
 import {
@@ -103,7 +104,7 @@ const CreatePresentation = React.memo(({ objectId, onClose, isObjectPage }) => {
         background={colors.presentation["primary"]}
         onClose={onClose}
       />
-      <ManagerPresentationForm
+      <PresentationForm
         data={data}
         objects={transformObjects}
         register={register}

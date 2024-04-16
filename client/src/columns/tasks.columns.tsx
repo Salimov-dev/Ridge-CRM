@@ -24,7 +24,11 @@ import { FormatTime } from "@utils/date/format-time";
 import useGetUserAvatar from "@hooks/user/use-get-user-avatar";
 import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
 
-export const tasksColumns = (setState, isCurrentUserRoleManager) => {
+export const tasksColumns = (
+  setState,
+  isCurrentUserRoleManager,
+  isDialogPage
+) => {
   let columns = [];
 
   const {
@@ -245,9 +249,13 @@ export const tasksColumns = (setState, isCurrentUserRoleManager) => {
   };
 
   if (!isCurrentUserRoleManager) {
-    columns = [dateColumn, taskObjectColumn, otherColumns];
+    columns = [dateColumn, otherColumns];
   } else {
-    columns = [dateColumn, taskObjectColumn, otherColumns];
+    columns = [dateColumn, otherColumns];
+  }
+
+  if (!isDialogPage) {
+    columns.splice(3, 0, taskObjectColumn);
   }
 
   columns.push(updateColumn);

@@ -7,7 +7,7 @@ import { useForm } from "react-hook-form";
 import { tokens } from "@theme/theme";
 import { yupResolver } from "@hookform/resolvers/yup";
 // components
-import MyTaskForm from "@forms/tasks/task.form";
+import TaskForm from "@forms/tasks/task.form";
 import SuccessCancelFormButtons from "@components/common/buttons/success-cancel-form-buttons";
 import HeaderWithCloseButton from "@components/common/page-headers/header-with-close-button";
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
@@ -92,7 +92,7 @@ const CreateMyTask = React.memo(
           background={watchIsCallTask ? "ForestGreen" : colors.task["myTask"]}
           onClose={onClose}
         />
-        <MyTaskForm
+        <TaskForm
           data={data}
           objects={currentUserObjects}
           register={register}
