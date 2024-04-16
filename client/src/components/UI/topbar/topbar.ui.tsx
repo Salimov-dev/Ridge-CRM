@@ -4,11 +4,10 @@ import dayjs from "dayjs";
 import "dayjs/locale/ru";
 import { useSelector } from "react-redux";
 import { Box, styled } from "@mui/material";
-import { useLocation } from "react-router-dom";
 // components
-import TopBarCurrentDate from "./components/topbar-current-date";
-import TopBarRightSide from "./components/topbar-right-side";
-import TopBarWeeklyResults from "./components/topbar-weekly-results";
+import TopBarCurrentDate from "./components/current-date.topbar-ui";
+import TopBarRightSide from "./components/right-side.topbar-ui";
+import TopBarWeeklyResults from "./components/weekly-results.topbar";
 // store
 import { getIsLoggedIn } from "@store/user/users.store";
 
@@ -19,13 +18,9 @@ const Component = styled(Box)`
   margin-bottom: 16px;
 `;
 
-const TopBar = React.memo(() => {
+const TopBarUI = React.memo(() => {
   dayjs.locale("ru");
   const isLoggedIn = useSelector(getIsLoggedIn());
-  const location = useLocation();
-
-  const currentPath = location.pathname;
-  const isHomePage = currentPath === "/";
 
   return (
     <Component
@@ -50,4 +45,4 @@ const TopBar = React.memo(() => {
   );
 });
 
-export default TopBar;
+export default TopBarUI;

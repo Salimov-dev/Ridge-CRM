@@ -8,7 +8,6 @@ import "./styles.css";
 import styled from "@emotion/styled";
 import "react-toastify/dist/ReactToastify.css";
 // components
-import TopBar from "./components/UI/topbar/topbar";
 import SidebarUI from "./components/UI/sidebar/sidebar.ui";
 import Footer from "./components/common/footer/footer";
 // hoc
@@ -25,6 +24,7 @@ import AppRoutes from "./routes/routes";
 import Sockets from "./sockets/sockets";
 // store
 import { getIsLoggedIn } from "@store/user/users.store";
+import TopBarUI from "./components/UI/topbar/topbar.ui";
 
 export const AppStyled = styled(Box)`
   display: flex;
@@ -75,7 +75,7 @@ function App() {
                   : "0 20px 50px 20px"
               }}
             >
-              <TopBar />
+              <TopBarUI />
               <AppRoutes />
               <Footer />
             </RightSide>

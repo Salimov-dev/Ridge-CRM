@@ -2,23 +2,23 @@ import React from "react";
 import { Box, Tooltip, Typography, styled } from "@mui/material";
 import { useSelector } from "react-redux";
 // components
-import TopBarDataContainter from "./topbar-data-container";
+import TopBarDataContainter from "./data-container.topbar-ui";
 // utils
 import { getCurrentWeekObjects } from "@utils/objects/get-current-week-objects";
 import { getCurrentWeekPresentations } from "@utils/presentations/get-current-week-presentations";
 import { getCurrentWeekMeetings } from "@utils/meetings/get-current-week-meetings";
 import { getCurrentWeekTasks } from "@utils/tasks/get-current-week-tasks";
+import { getCurrentWeekContacts } from "@utils/contacts/get-current-week-contacts";
 // store
 import { getObjectsLoadingStatus } from "@store/object/objects.store";
 import { getPresentationsLoadingStatus } from "@store/presentation/presentations.store";
 import { getMeetingLoadingStatus } from "@store/meeting/meetings.store";
 import { getTaskLoadingStatus } from "@store/task/tasks.store";
-import { getCurrentUserId, getIsUserCurator } from "@store/user/users.store";
 import {
-  getContactLoadingStatus,
-  getContactsList
-} from "@store/contact/contact.store";
-import { getCurrentWeekContacts } from "@utils/contacts/get-current-week-contacts";
+  getCurrentUserId,
+  getIsCurrentUserRoleCurator
+} from "@store/user/users.store";
+import { getContactLoadingStatus } from "@store/contact/contact.store";
 
 const ResultComponent = styled(Box)`
   display: flex;
@@ -33,20 +33,17 @@ const ResultComponent = styled(Box)`
 
 const TopBarWeeklyResults = React.memo(() => {
   const currentUserId = useSelector(getCurrentUserId());
-  const isCurator = useSelector(getIsUserCurator(currentUserId));
-
   const objects = getCurrentWeekObjects();
-  const isObjectLoading = useSelector(getObjectsLoadingStatus());
-
   const contacts = getCurrentWeekContacts();
-  const isContactsLoading = useSelector(getContactLoadingStatus());
-
   const presentations = getCurrentWeekPresentations();
-  const isPresentationsLoading = useSelector(getPresentationsLoadingStatus());
-
   const meetings = getCurrentWeekMeetings();
-  const isMeetingsLoading = useSelector(getMeetingLoadingStatus());
   const tasks = getCurrentWeekTasks();
+
+  const isCurrentUserRoleCurator = useSelector(getIsCurrentUserRoleCurator());
+  const isMeetingsLoading = useSelector(getMeetingLoadingStatus());
+  const isObjectLoading = useSelector(getObjectsLoadingStatus());
+  const isContactsLoading = useSelector(getContactLoadingStatus());
+  const isPresentationsLoading = useSelector(getPresentationsLoadingStatus());
   const isTasksLoading = useSelector(getTaskLoadingStatus());
 
   const currentUserTasks = tasks?.filter(
@@ -64,7 +61,6 @@ const TopBarWeeklyResults = React.memo(() => {
   );
 
   return (
-    // <Tooltip title="Личные результаты текущей недели" placement="bottom" arrow>
     <ResultComponent>
       <TopBarDataContainter
         title="Объектов:"
@@ -98,13 +94,15 @@ const TopBarWeeklyResults = React.memo(() => {
       <TopBarDataContainter
         title="Выполнить задач:"
         elements={
-          isCurator ? currentUserTaskWithoutManagerTasks : currentUserTasks
+          isCurrentUserRoleCurator
+            ? currentUserTaskWithoutManagerTasks
+            : currentUserTasks
         }
         path="/calendar"
         backgroundColor="Sienna"
         isLoading={isTasksLoading}
       />
-      {isCurator ? (
+      {isCurrentUserRoleCurator ? (
         <TopBarDataContainter
           title="Задач Менеджерам:"
           elements={tasksFromCurator}
@@ -122,7 +120,6 @@ const TopBarWeeklyResults = React.memo(() => {
         />
       )}
     </ResultComponent>
-    // </Tooltip>
   );
 });
 

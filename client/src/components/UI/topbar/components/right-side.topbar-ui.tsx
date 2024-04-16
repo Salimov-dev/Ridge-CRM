@@ -3,11 +3,11 @@ import { Box, styled } from "@mui/material";
 import { useSelector } from "react-redux";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 // components
-import UserMenu from "./user-menu";
 import Loader from "@common/loader/loader";
 import ButtonStyled from "@components/common/buttons/button-styled.button";
 import PageDialogs from "@components/common/dialog/page-dialogs";
 import PersonAddAlt1OutlinedIcon from "@mui/icons-material/PersonAddAlt1Outlined";
+import UserMenuTopbar from "./user-menu.topbar-ui";
 // hooks
 import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
 // store
@@ -46,7 +46,7 @@ const TopBarRightSide = () => {
     >
       {!isLoading ? (
         currentUser ? (
-          <UserMenu currentUser={currentUser} />
+          <UserMenuTopbar />
         ) : (
           <Box sx={{ width: "100%", display: "flex", gap: "4px" }}>
             <ButtonStyled

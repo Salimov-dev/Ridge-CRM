@@ -5,12 +5,12 @@ import { useNavigate } from "react-router-dom";
 // MUI
 import { Box, Button, Menu, MenuItem, styled } from "@mui/material";
 // store
+import { setCurrrentPathState } from "@store/current-path.store";
 import { getCurrentUserId, logOut } from "@store/user/users.store";
 // commponents
 import UserNameWithAvatar from "@components/common/user/user-name-with-avatar";
 // hooks
 import useGetUserAvatar from "@hooks/user/use-get-user-avatar";
-import { setCurrrentPathState } from "@store/current-path.store";
 
 const Component = styled(Box)`
   display: flex;
@@ -18,7 +18,7 @@ const Component = styled(Box)`
   margin-left: 0px;
 `;
 
-const UserMenu = () => {
+const UserMenuTopbar = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -49,9 +49,7 @@ const UserMenu = () => {
   };
 
   const handleLogOut = () => {
-    // setAnchorEl(null);
     dispatch<any>(logOut());
-    // navigate("/");
   };
 
   return (
@@ -90,4 +88,4 @@ const UserMenu = () => {
   );
 };
 
-export default UserMenu;
+export default UserMenuTopbar;
