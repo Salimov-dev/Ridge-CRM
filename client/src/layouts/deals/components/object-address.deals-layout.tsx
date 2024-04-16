@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import { Box, Typography, styled } from "@mui/material";
 // components
-import OpenPageElementIconButton from "@components/common/buttons/icons buttons/open-page-element.button-icon";
+import OpenPageElementIconButton from "@components/common/button-icons/open-page-element.button-icon";
 // store
 import { getObjectAddressById } from "@store/object/objects.store";
 

@@ -1,8 +1,11 @@
+import { Box, Typography } from "@mui/material";
+import { useSelector } from "react-redux";
 // components
-import { FormatPhone } from "@components/common/table/helpers/helpers";
-import { AlignCenter } from "@components/common/columns/styled";
+import { FormatPhone } from "@components/common/table/helpers/helpers.table";
+// styled
+import { AlignCenter } from "@styled/styled-columns";
 // data
-import { gendersArray } from "../data/genders";
+import { userGendersArray } from "@data/users/user-genders";
 // components
 import UserNameWithAvatar from "@components/common/user/user-name-with-avatar";
 // utils
@@ -10,13 +13,11 @@ import { FormatDate } from "@utils/date/format-date";
 // hooks
 import useGetUserAvatar from "@hooks/user/use-get-user-avatar";
 import ButtonStyled from "@components/common/buttons/button-styled.button";
-import { useSelector } from "react-redux";
+// store
 import { getObjectsList } from "@store/object/objects.store";
 import { getContactsList } from "@store/contact/contact.store";
 import { getCompaniesList } from "@store/company/company.store";
 import { getPresentationsList } from "@store/presentation/presentations.store";
-import { getUserStatusNameById } from "@store/user-params/user-statuses.store";
-import { Box, Typography } from "@mui/material";
 
 export const usersColumns = (onOpenUpdateUserPage) => [
   {
@@ -102,7 +103,9 @@ export const usersColumns = (onOpenUpdateUserPage) => [
         header: "Пол",
         cell: (info) => {
           const gender = info.getValue();
-          const result = gendersArray?.find((gen) => gen?._id === gender)?.name;
+          const result = userGendersArray?.find(
+            (gen) => gen?._id === gender
+          )?.name;
 
           return <AlignCenter>{gender !== null ? result : "-"}</AlignCenter>;
         }

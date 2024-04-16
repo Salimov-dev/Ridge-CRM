@@ -24,7 +24,6 @@ const SimpleSwitch = ({
   onChange,
   value,
   whiteSpace = "nowrap",
-  isLoading = false,
   padding = "5px 15px 5px 0px",
   disabled = false
 }) => {

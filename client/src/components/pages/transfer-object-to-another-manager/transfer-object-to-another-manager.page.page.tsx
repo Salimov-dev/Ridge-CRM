@@ -1,40 +1,35 @@
+import { useForm } from "react-hook-form";
+import React, { useState } from "react";
 import { Box, styled } from "@mui/material";
 import { toast } from "react-toastify";
 import { useTheme } from "@emotion/react";
 import { tokens } from "@theme/theme";
-import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useForm } from "react-hook-form";
+// components
 import DialogConfirm from "@components/common/dialog/dialog-confirm";
-import Titles from "./components/header.transfer-object-to-another-manager";
-import SelectedError from "./components/error-selected.transfer-object-to-another-manager";
-import TransferObjectToAnotherManagerForm from "@forms/transfer-object-to-another-manager/transfer-object-to-another-manager.form";
 import SuccessCancelFormButtons from "@components/common/buttons/success-cancel-form-buttons";
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
-import HeaderWithCloseButton from "@components/common/page-headers/header-with-close-button";
-import { transferObjectToAnotherManagerSchema } from "@schemas/object/transfer-object-to-aother-manager.schema";
-import transformUsersForSelect from "@utils/objects/transform-users-for-select";
-import { updateMultipleObjects } from "@store/object/objects.store";
-import {
-  getCurrentUserId,
-  getIsUserCurator,
-  getUsersList
-} from "@store/user/users.store";
-import TitlesTransferObjectToAnotherManager from "./components/header.transfer-object-to-another-manager";
-import SelectedErrorTransferObjectToAnotherManager from "./components/error-selected.transfer-object-to-another-manager";
+import HeaderWithCloseButtonForPage from "@components/common/headers/header-with-close-button.page";
 import HeaderTransferObjectToAnotherManager from "./components/header.transfer-object-to-another-manager";
 import ErrorSelectedTransferObjectToAnotherManager from "./components/error-selected.transfer-object-to-another-manager";
+// initial-states
+import { transferObjectInitialState } from "@initial-states/transfer-object/transfer-object.initial-state";
+// forms
+import TransferObjectToAnotherManagerForm from "@forms/transfer-object-to-another-manager/transfer-object-to-another-manager.form";
+// schemas
+import { transferObjectToAnotherManagerSchema } from "@schemas/object/transfer-object-to-aother-manager.schema";
+// utils
+import transformUsersForSelect from "@utils/user/transform-users-for-select";
+// store
+import { updateMultipleObjects } from "@store/object/objects.store";
+import { getUsersList } from "@store/user/users.store";
 
 const TitlesContainer = styled(Box)`
   display: flex;
   flex-direction: column;
   gap: 10px;
 `;
-
-const initialState = {
-  managerId: ""
-};
 
 const TransferObjectToAnotherManager = React.memo(
   ({
@@ -54,18 +49,17 @@ const TransferObjectToAnotherManager = React.memo(
       watch,
       handleSubmit,
       formState: { errors },
-      trigger // Добавляем trigger из react-hook-form
+      trigger
     } = useForm({
-      defaultValues: initialState,
+      defaultValues: transferObjectInitialState,
       mode: "onChange",
       resolver: yupResolver(transferObjectToAnotherManagerSchema)
     });
+
     const watchManagerId = watch("managerId", "");
 
     const users = useSelector(getUsersList());
     const transformUsers = transformUsersForSelect(users);
-    const currentUserId = useSelector(getCurrentUserId());
-    const isCurator = useSelector(getIsUserCurator(currentUserId));
 
     const onSubmit = () => {
       setIsLoading(true);
@@ -75,7 +69,7 @@ const TransferObjectToAnotherManager = React.memo(
       setRowSelection([]);
       dispatch<any>(updateMultipleObjects(objectsToTransfer, userId))
         .then(() => {
-          setOpen(false);
+          setOpenConfirm(false);
           setIsLoading(false);
           toast.success("Объекты успешно переданы другому Менеджеру!");
         })
@@ -85,27 +79,26 @@ const TransferObjectToAnotherManager = React.memo(
         });
     };
 
-    const handleClickOpen = () => {
-      trigger(); // Запускаем валидацию перед открытием окна подтверждения
+    const handleClickOpenConfirm = () => {
+      trigger();
       if (watchManagerId && !Object.keys(errors).length) {
-        setOpen(true);
+        setOpenConfirm(true);
       }
     };
 
-    const handleClose = () => {
+    const handleCloseConfirm = () => {
       setOpenConfirm(false);
     };
 
     return (
       <>
-        <HeaderWithCloseButton
+        <HeaderWithCloseButtonForPage
           title="Передать объекты"
           color="white"
           margin="0 0 20px 0"
           background="linear-gradient(to right, MediumBlue , Navy)"
           onClose={onClose}
         />
-
         <TitlesContainer>
           <HeaderTransferObjectToAnotherManager objects={objectsToTransfer} />
           {!objectsToTransfer?.length ? (
@@ -121,7 +114,7 @@ const TransferObjectToAnotherManager = React.memo(
           )}
         </TitlesContainer>
         <SuccessCancelFormButtons
-          onSuccess={handleClickOpen}
+          onSuccess={handleClickOpenConfirm}
           onCancel={onClose}
           disabledRemoveButton={true}
         />
@@ -134,7 +127,7 @@ const TransferObjectToAnotherManager = React.memo(
           question="Вы уверены, что хотите передать объекты другому Менеджеру?"
           open={openConfirm}
           onSuccessClick={handleSubmit(onSubmit)}
-          onClose={handleClose}
+          onClose={handleCloseConfirm}
         />
       </>
     );

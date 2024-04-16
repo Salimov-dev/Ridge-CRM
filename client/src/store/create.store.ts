@@ -5,12 +5,11 @@ import objectsReducer from "./object/objects.store";
 import objectTypesReducer from "./object-params/object-types.store";
 import objectStatusReducer from "./object-params/object-status.store";
 import objectConditionsReducer from "./object-params/object-conditions.store";
-import metroReducer from "./object-params/metro.store";
-import districtsReducer from "./object-params/districts.store";
-import rentTypesReducer from "./object-params/rent-types.store";
-import estateTypesReducer from "./object-params/estate-types.store";
-import currentRenterReducer from "./object-params/current-renter.store";
-import workingPositionReducer from "./user-params/working-position.store";
+import metroReducer from "./object-params/object-metro.store";
+import districtsReducer from "./object-params/object-districts.store";
+import rentTypesReducer from "./object-params/object-rent-types.store";
+import estateTypesReducer from "./object-params/object-estate-types.store";
+import currentRenterReducer from "./object-params/object-current-renter.store";
 import tradeAreaReducer from "./object-params/object-trade-area";
 import citiesReducer from "./city/citites.store";
 // company
@@ -23,7 +22,7 @@ import objectPropertiesReducer from "./object-params/object-properties";
 // users
 import usersListReducer from "./user/users.store";
 import userStatusesReducer from "./user-params/user-statuses.store";
-import userLicensesReducer from "./user/user-license.store";
+import userLicensesReducer from "./license/user-license.store";
 import userRolesReducer from "./user-params/user-role.store";
 // tasks
 import tasksReducer from "./task/tasks.store";
@@ -40,8 +39,8 @@ import avatarReducer from "./avatar/avatar.store";
 import contactsReducer from "./contact/contact.store";
 import contactPositionsReducer from "./contact/contact-positions.store";
 // other
-import monthIndexReducer from "./month-index.store";
-import currrentPathReducer from "./current-path.store";
+import monthIndexReducer from "./month-index/month-index.store";
+import currrentPathReducer from "./current-path/current-path.store";
 
 const rootReducer = combineReducers({
   // objects
@@ -52,7 +51,6 @@ const rootReducer = combineReducers({
   // objects params
   metro: metroReducer,
   districts: districtsReducer,
-  workingPosition: workingPositionReducer,
   currentRenters: currentRenterReducer,
   rentTypes: rentTypesReducer,
   estateTypes: estateTypesReducer,

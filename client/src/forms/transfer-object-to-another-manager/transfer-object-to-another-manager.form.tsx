@@ -1,5 +1,5 @@
 // styled
-import { FieldsContainer, Form } from "@components/common/forms/styled";
+import { FieldsContainer, Form } from "@styled/styled-form";
 // components
 import SimpleSelectField from "@components/common/inputs/simple-select-field";
 

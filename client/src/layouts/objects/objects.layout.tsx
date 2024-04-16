@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import React, { useEffect, useState } from "react";
 // components
 import BasicTable from "@components/common/table/basic-table";
-import HeaderLayout from "@components/common/page-headers/header-layout";
+import HeaderForLayout from "@components/common/headers/header-for-layout";
 import ItemsOnMap from "@components/common/map/items-on-map/items-on-map";
 import { ContainerStyled } from "@components/common/container/container-styled";
 import PageDialogs from "@components/common/dialog/page-dialogs";
@@ -107,7 +107,7 @@ const ObjectsLayout = React.memo(() => {
 
   return (
     <ContainerStyled>
-      <HeaderLayout title="Таблица объектов" />
+      <HeaderForLayout title="Таблица объектов" />
       <ButtonsObjectsLayout
         data={data}
         reset={reset}

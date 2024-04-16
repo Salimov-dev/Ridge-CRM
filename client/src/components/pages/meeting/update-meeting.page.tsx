@@ -10,12 +10,12 @@ import { yupResolver } from "@hookform/resolvers/yup";
 // components
 import SuccessCancelFormButtons from "@components/common/buttons/success-cancel-form-buttons";
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
-import HeaderWithCloseButton from "@components/common/page-headers/header-with-close-button";
+import HeaderWithCloseButtonForPage from "@components/common/headers/header-with-close-button.page";
 import MeetingForm from "@forms/meeting/meeting.form";
 import DialogConfirm from "@components/common/dialog/dialog-confirm";
 import ItemOnMap from "@components/common/map/item-on-map/item-on-map";
 // schema
-import { meetingSchema } from "@schemas/meeting.schema";
+import { meetingSchema } from "@schemas/meeting/meeting.schema";
 // store
 import { getObjectsList } from "@store/object/objects.store";
 import { getCurrentUserId } from "@store/user/users.store";
@@ -115,7 +115,7 @@ const UpdateMeeting = React.memo(({ meetingId, onClose, isObjectPage }) => {
 
   return (
     <>
-      <HeaderWithCloseButton
+      <HeaderWithCloseButtonForPage
         title="Изменить встречу"
         color="white"
         margin="0 0 20px 0"

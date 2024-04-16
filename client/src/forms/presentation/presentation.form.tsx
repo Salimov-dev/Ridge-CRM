@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import TextFieldStyled from "@components/common/inputs/text-field-styled";
 import AutocompleteStyled from "@components/common/inputs/autocomplete-styled";
 // styled
-import { FieldsContainer, Form } from "@components/common/forms/styled";
+import { FieldsContainer, Form } from "@styled/styled-form";
 // store
 import { getIsCurrentUserRoleCurator } from "@store/user/users.store";
 

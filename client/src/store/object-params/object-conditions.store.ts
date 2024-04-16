@@ -1,16 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { objectConditionsArray } from "../../data/object/object-conditions";
+import { objectConditionsArray } from "@data/object/object-conditions";
 
 const objectConditionsSlice = createSlice({
   name: "objectConditions",
   initialState: {
-    entities: null,
+    entities: null
   },
   reducers: {
     objectConditionsLoaded: (state, action) => {
       state.entities = action.payload;
-    },
-  },
+    }
+  }
 });
 
 const { reducer: objectConditionsReducer, actions } = objectConditionsSlice;

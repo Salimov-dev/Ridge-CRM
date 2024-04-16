@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { Box } from "@mui/material";
+import { useState } from "react";
+import { Box, styled } from "@mui/material";
 import { useSelector } from "react-redux";
 import { useFieldArray } from "react-hook-form";
 import DoNotDisturbOnOutlinedIcon from "@mui/icons-material/DoNotDisturbOnOutlined";
@@ -8,13 +8,26 @@ import AddCircleIcon from "@mui/icons-material/AddCircle";
 import AutocompleteStyled from "@components/common/inputs/autocomplete-styled";
 import RowTitle from "@components/common/titles/row-title";
 import ButtonStyled from "@components/common/buttons/button-styled.button";
-import OpenPageElementIconButton from "@components/common/buttons/icons buttons/open-page-element.button-icon";
+import OpenPageElementIconButton from "@components/common/button-icons/open-page-element.button-icon";
+import DeleteElementIcon from "@components/common/button-icons/delete-element-icon";
 import PageDialogs from "@components/common/dialog/page-dialogs";
 // hooks
 import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
 // store
 import { getCompaniesList } from "@store/company/company.store";
-import DeleteElementIcon from "@components/common/buttons/icons buttons/delete-element-icon";
+
+const FieldContainer = styled(Box)`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+`;
+
+const ButtonsContainer = styled(Box)`
+  width: 100%;
+  display: flex;
+  gap: 4px;
+`;
 
 const FieldsCompany = ({
   data,
@@ -68,14 +81,7 @@ const FieldsCompany = ({
       {fieldCompanies?.map((field, index) => {
         if (field.id) {
           return (
-            <Box
-              key={field.id}
-              sx={{
-                width: "100%",
-                display: "flex",
-                alignItems: "center"
-              }}
-            >
+            <FieldContainer key={field.id}>
               <DeleteElementIcon
                 onClick={() => handleRemoveCompany(index)}
                 error={errors?.companies}
@@ -104,13 +110,13 @@ const FieldsCompany = ({
                   handleOpenUpdateCompanyPage(data.companies?.[index].company)
                 }
               />
-            </Box>
+            </FieldContainer>
           );
         } else {
           return null;
         }
       })}
-      <Box sx={{ width: "100%", display: "flex", gap: "4px" }}>
+      <ButtonsContainer>
         <ButtonStyled
           title="Создать компанию"
           style="CREATE_NEW_COMPANY"
@@ -134,9 +140,9 @@ const FieldsCompany = ({
           size="small"
           disabled={!data?.companies?.length}
           icon={<DoNotDisturbOnOutlinedIcon />}
-          onClick={() => handleRemoveCompany(lastCompanyIndex)} // передаем функцию removePhone с аргументом
+          onClick={() => handleRemoveCompany(lastCompanyIndex)}
         />
-      </Box>
+      </ButtonsContainer>
       <PageDialogs state={openCompany} setState={setOpenCompany} />
     </>
   );

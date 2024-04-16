@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import React, { useEffect, useState } from "react";
 // components
 import BasicTable from "@components/common/table/basic-table";
-import HeaderLayout from "@components/common/page-headers/header-layout";
+import HeaderForLayout from "@components/common/headers/header-for-layout";
 import ItemsOnMap from "@components/common/map/items-on-map/items-on-map";
 import PageDialogs from "@components/common/dialog/page-dialogs";
 import { ContainerStyled } from "@components/common/container/container-styled";
@@ -19,7 +19,7 @@ import useSearchMeeting from "@hooks/meeting/use-search-meeting";
 // columns
 import { meetingsColumns } from "@columns/meetings.columns";
 // utils
-import sortingByDateAndTime from "@utils/other/sorting-by-date-and-time";
+import sortingByDateAndTime from "@utils/sort/sorting-by-date-and-time";
 // store
 import { getIsCurrentUserRoleManager } from "@store/user/users.store";
 import {
@@ -92,7 +92,7 @@ const MeetingsLayout = React.memo(() => {
 
   return (
     <ContainerStyled>
-      <HeaderLayout title="Встречи" />
+      <HeaderForLayout title="Встречи" />
       <ButtonsMeetingsLayout
         data={data}
         reset={reset}

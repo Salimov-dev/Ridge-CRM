@@ -12,7 +12,7 @@ import ItemsListSidebar from "./components/items-list.sidebar-ui";
 import {
   getCurrrentPathState,
   setCurrrentPathState
-} from "@store/current-path.store";
+} from "@store/current-path/current-path.store";
 
 const Component = styled(Box)(({ colors }) => ({
   display: "flex",

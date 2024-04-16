@@ -2,22 +2,24 @@ import "dayjs/locale/ru";
 import "dayjs/locale/ru";
 import dayjs from "dayjs";
 import { useSelector } from "react-redux";
+import { Typography } from "@mui/material";
 import customParseFormat from "dayjs/plugin/customParseFormat";
+// styled
+import { AlignCenter } from "@styled/styled-columns";
 // components
 import TableCellStatisticsColumns from "./components/table-cell.statictics-columns";
+import UserNameWithAvatar from "@components/common/user/user-name-with-avatar";
 import { useTableHeader } from "@hooks/statictics/use-table-statistics-header";
 // utils
 import { getWeeklyObjects } from "@utils/objects/get-weekly-objects";
 import { getWeeklyPresentations } from "@utils/presentations/get-weekly-presentations";
+import { getWeeklyContacts } from "@utils/contacts/get-weekly-contacts";
+// hooks
+import useGetUserAvatar from "@hooks/user/use-get-user-avatar";
 // store
 import { getObjectsList } from "@store/object/objects.store";
 import { getPresentationsList } from "@store/presentation/presentations.store";
 import { getContactsList } from "@store/contact/contact.store";
-import { getWeeklyContacts } from "@utils/contacts/get-weekly-contacts";
-import useGetUserAvatar from "@hooks/user/use-get-user-avatar";
-import { AlignCenter } from "@components/common/columns/styled";
-import UserNameWithAvatar from "@components/common/user/user-name-with-avatar";
-import { Typography } from "@mui/material";
 
 dayjs.extend(customParseFormat);
 dayjs.locale("ru");

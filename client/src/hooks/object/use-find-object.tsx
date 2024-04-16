@@ -2,13 +2,13 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 // data
-import { citiesArray } from "@data/cities";
+import { citiesArray } from "@data/object/cities";
 // store
 import { getCurrentUserData, getCurrentUserId } from "@store/user/users.store";
 import {
   getUserLicensesByUserId,
   updateClicksOnMapInUserLicense
-} from "@store/user/user-license.store";
+} from "@store/license/user-license.store";
 
 const useFindObject = () => {
   const dispatch = useDispatch();

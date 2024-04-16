@@ -1,11 +1,12 @@
 // libraries
 import { useSelector } from "react-redux";
 import { Box, Button, Tooltip, Typography } from "@mui/material";
+// styled
+import { AlignCenter } from "@styled/styled-columns";
 // components
-import { AlignCenter } from "@components/common/columns/styled";
 import ButtonStyled from "@components/common/buttons/button-styled.button";
 import UserNameWithAvatar from "@components/common/user/user-name-with-avatar";
-import AnyObjectTableEntity from "@components/common/table-entities/any-object-table-entity";
+import AnyObjectTableEntity from "@components/common/table-entities/any-object.table-entity";
 // hooks
 import useGetUserAvatar from "@hooks/user/use-get-user-avatar";
 import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";

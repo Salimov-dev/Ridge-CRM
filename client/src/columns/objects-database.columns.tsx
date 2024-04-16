@@ -1,68 +1,37 @@
 import { orderBy } from "lodash";
-import React, { HTMLProps } from "react";
 import { useSelector } from "react-redux";
 // MUI
 import { Box, Button, Tooltip, Typography } from "@mui/material";
 import CloudDoneIcon from "@mui/icons-material/CloudDone";
 import CloudOffIcon from "@mui/icons-material/CloudOff";
+// AlignCenter
+import { AlignCenter } from "@styled/styled-columns";
 // utils
 import { FormatDate } from "@utils/date/format-date";
 // components
 import Flags from "@components/common/columns/flags";
-import { AlignCenter } from "@components/common/columns/styled";
 import EmptyTd from "@components/common/columns/empty-td";
 import UserNameWithAvatar from "@components/common/user/user-name-with-avatar";
 import ButtonStyled from "@components/common/buttons/button-styled.button";
 import {
   FormatMetro,
   FormatObjectStatus
-} from "@components/common/table/helpers/helpers";
-import ContactTableEntity from "@components/common/table-entities/contact-table-entity";
-import CompanyTableEntity from "@components/common/table-entities/company-table-entity";
+} from "@components/common/table/helpers/helpers.table";
+import ContactTableEntity from "@components/common/table-entities/contact.table-entity";
+import CompanyTableEntity from "@components/common/table-entities/company.4table-entity";
 // hooks
 import useGetUserAvatar from "@hooks/user/use-get-user-avatar";
 import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
 // store
 import { getLastContactsList } from "@store/last-contact/last-contact.store";
-import { getDistrictName } from "@store/object-params/districts.store";
-import {
-  getIsCurrentUserRoleCurator,
-  getIsCurrentUserRoleManager
-} from "@store/user/users.store";
+import { getDistrictName } from "@store/object-params/object-districts.store";
 import { getTasksList } from "@store/task/tasks.store";
 import {
   getMeetingsList,
   getObjectMeetingsList
 } from "@store/meeting/meetings.store";
 
-function IndeterminateCheckbox({
-  indeterminate,
-  className = "",
-  ...rest
-}: { indeterminate?: boolean } & HTMLProps) {
-  const ref = React.useRef(null!);
-
-  React.useEffect(() => {
-    if (typeof indeterminate === "boolean") {
-      ref.current.indeterminate = !rest.checked && indeterminate;
-    }
-  }, [ref, indeterminate]);
-
-  return (
-    <input
-      type="checkbox"
-      ref={ref}
-      className={className + " cursor-pointer"}
-      {...rest}
-    />
-  );
-}
-
-export const objectsDatabaseColumns = (
-  setState,
-  isCurrentUserRoleManager,
-  isCurrentUserRoleCurator
-) => {
+export const objectsDatabaseColumns = (setState, isCurrentUserRoleManager) => {
   let columns = [];
 
   const {
@@ -70,33 +39,6 @@ export const objectsDatabaseColumns = (
     handleOpenContactPage,
     handleOpenUpdateCompanyPage
   } = useDialogHandlers(setState);
-
-  const selectColumn = {
-    id: "select",
-    header: ({ table }) => (
-      <IndeterminateCheckbox
-        {...{
-          checked: table.getIsAllRowsSelected(),
-          indeterminate: table.getIsSomeRowsSelected(),
-          onChange: table.getToggleAllRowsSelectedHandler()
-        }}
-      />
-    ),
-    cell: ({ row }) => (
-      <div className="px-1">
-        <AlignCenter>
-          <IndeterminateCheckbox
-            {...{
-              checked: row.getIsSelected(),
-              disabled: !row.getCanSelect(),
-              indeterminate: row.getIsSomeSelected(),
-              onChange: row.getToggleSelectedHandler()
-            }}
-          />
-        </AlignCenter>
-      </div>
-    )
-  };
 
   const dateColumn = {
     accessorKey: "created_at",
@@ -367,7 +309,6 @@ export const objectsDatabaseColumns = (
 
   if (!isCurrentUserRoleManager) {
     columns = [
-      ...(isCurrentUserRoleCurator ? [selectColumn] : []),
       dateColumn,
       locationColumn,
       contactsColumn,
@@ -377,7 +318,6 @@ export const objectsDatabaseColumns = (
     ];
   } else {
     columns = [
-      ...(isCurrentUserRoleCurator ? [selectColumn] : []),
       dateColumn,
       locationColumn,
       contactsColumn,

@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 // components
 import Stages from "./components/layout-stages.deals-layout";
-import HeaderLayout from "@components/common/page-headers/header-layout";
+import HeaderForLayout from "@components/common/headers/header-for-layout";
 import PageDialogs from "@components/common/dialog/page-dialogs";
 import { ContainerStyled } from "@components/common/container/container-styled";
 import DealsLayoutFiltersPanel from "@components/UI/filters-panels/deals-layout.filters-panel";
@@ -61,7 +61,7 @@ const DealsLayout = React.memo(() => {
 
   return (
     <ContainerStyled>
-      <HeaderLayout title="Сделки" />
+      <HeaderForLayout title="Сделки" />
       <DealsLayoutFiltersPanel
         data={data}
         deals={deals}

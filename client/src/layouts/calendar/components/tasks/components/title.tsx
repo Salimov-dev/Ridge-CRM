@@ -2,7 +2,7 @@ import { useDispatch } from "react-redux";
 import DoneIconToggler from "../../body/components/day/components/done-icon-toggler.calendar-layout";
 import { Box, Typography, styled } from "@mui/material";
 // components
-import UpdateElement from "@components/common/buttons/icons buttons/update-element.button-icon";
+import UpdateElement from "@components/common/button-icons/update-element.button-icon";
 // utils
 import { FormatTime } from "@utils/date/format-time";
 // hooks

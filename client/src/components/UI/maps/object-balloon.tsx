@@ -8,17 +8,17 @@ import DividerStyled from "@common/divider/divider-styled";
 import Attribute from "@common/map/baloon/attribute";
 import ButtonStyled from "@components/common/buttons/button-styled.button";
 import Loader from "@components/common/loader/loader";
-import OpenPageElementIconButton from "@components/common/buttons/icons buttons/open-page-element.button-icon";
+import OpenPageElementIconButton from "@components/common/button-icons/open-page-element.button-icon";
 // utils
 import { makeDigitSeparator } from "@utils/data/make-digit-separator";
 // hooks
 import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
 // store
-import { getDistrictName } from "@store/object-params/districts.store";
-import { getRentTypeNameById } from "@store/object-params/rent-types.store";
-import { getEstateTypeNameById } from "@store/object-params/estate-types.store";
+import { getDistrictName } from "@store/object-params/object-districts.store";
+import { getRentTypeNameById } from "@store/object-params/object-rent-types.store";
+import { getEstateTypeNameById } from "@store/object-params/object-estate-types.store";
 import { getObjectTypeNameById } from "@store/object-params/object-types.store";
-import { getCurrentRenterNameById } from "@store/object-params/current-renter.store";
+import { getCurrentRenterNameById } from "@store/object-params/object-current-renter.store";
 import { getObjectsLoadingStatus } from "@store/object/objects.store";
 import {
   getIsCurrentUserRoleCurator,

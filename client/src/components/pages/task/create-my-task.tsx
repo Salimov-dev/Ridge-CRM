@@ -9,7 +9,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 // components
 import TaskForm from "@forms/tasks/task.form";
 import SuccessCancelFormButtons from "@components/common/buttons/success-cancel-form-buttons";
-import HeaderWithCloseButton from "@components/common/page-headers/header-with-close-button";
+import HeaderWithCloseButtonForPage from "@components/common/headers/header-with-close-button.page";
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
 // initial-states
 import { taskCreateInitialState } from "@initial-states/pages/task-create.initial-state";
@@ -87,7 +87,7 @@ const CreateMyTask = React.memo(
 
     return (
       <>
-        <HeaderWithCloseButton
+        <HeaderWithCloseButtonForPage
           title={watchIsCallTask ? "Нужно совершить звонок" : title}
           background={watchIsCallTask ? "ForestGreen" : colors.task["myTask"]}
           onClose={onClose}

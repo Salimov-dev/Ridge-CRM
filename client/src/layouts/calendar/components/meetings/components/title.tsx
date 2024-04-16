@@ -4,7 +4,7 @@ import { Box, Typography } from "@mui/material";
 // utils
 import { FormatTime } from "@utils/date/format-time";
 // components
-import UpdateElementIconButton from "@components/common/buttons/icons buttons/update-element.button-icon";
+import UpdateElementIconButton from "@components/common/button-icons/update-element.button-icon";
 import DoneIconToggler from "../../body/components/day/components/done-icon-toggler.calendar-layout";
 // store
 import { updateMeeting } from "@store/meeting/meetings.store";

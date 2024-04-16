@@ -2,7 +2,7 @@ import { Box, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 // libraries
-import HeaderLayout from "@components/common/page-headers/header-layout";
+import HeaderForLayout from "@components/common/headers/header-for-layout";
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
 import { ContainerStyled } from "@components/common/container/container-styled";
 import Loader from "@components/common/loader/loader";
@@ -63,7 +63,7 @@ const ResultPaymentPage = React.memo(() => {
 
   return (
     <ContainerStyled>
-      <HeaderLayout title="Страница оплаты" />
+      <HeaderForLayout title="Страница оплаты" />
       <Box
         sx={{
           width: " 100%",

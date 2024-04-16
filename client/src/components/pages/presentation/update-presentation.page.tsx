@@ -12,9 +12,9 @@ import CuratorPresentationForm from "@forms/presentation/presentation-curator.fo
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
 import SuccessCancelFormButtons from "@components/common/buttons/success-cancel-form-buttons";
 import DialogConfirm from "@components/common/dialog/dialog-confirm";
-import HeaderWithCloseButton from "@components/common/page-headers/header-with-close-button";
+import HeaderWithCloseButtonForPage from "@components/common/headers/header-with-close-button.page";
 // schema
-import { presentationSchema } from "@schemas/presentation.schema";
+import { presentationSchema } from "@schemas/presentation/presentation.schema";
 // utils
 import transformObjectsForSelect from "@utils/objects/transform-objects-for-select";
 // store
@@ -100,7 +100,7 @@ const UpdatePresentation = React.memo(({ presentationId, onClose }) => {
 
   return (
     <>
-      <HeaderWithCloseButton
+      <HeaderWithCloseButtonForPage
         title="Редактировать презентацию"
         background={colors.presentation["primary"]}
         color="white"

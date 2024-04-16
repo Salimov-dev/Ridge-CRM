@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 // common
 import BasicTable from "@common/table/basic-table";
-import HeaderLayout from "@common/page-headers/header-layout";
+import HeaderForLayout from "@components/common/headers/header-for-layout";
 import ItemsOnMap from "@common/map/items-on-map/items-on-map";
 import PageDialogs from "@common/dialog/page-dialogs";
 import { ContainerStyled } from "@common/container/container-styled";
@@ -140,7 +140,7 @@ const PresentationsLayout = React.memo(() => {
 
   return (
     <ContainerStyled>
-      <HeaderLayout title="Презентации" />
+      <HeaderForLayout title="Презентации" />
       <ButtonsPresentationsLayout
         data={data}
         reset={reset}

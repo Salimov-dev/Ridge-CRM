@@ -4,7 +4,7 @@ import React, { useEffect } from "react";
 import { Box, styled } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 // components
-import HeaderLayout from "@components/common/page-headers/header-layout";
+import HeaderForLayout from "@components/common/headers/header-for-layout";
 import BasicTable from "@components/common/table/basic-table";
 import PieStyled from "@components/common/chart/pie";
 import ChartLine from "@components/common/chart/chart-line";
@@ -113,7 +113,7 @@ const StaticticsLayout = React.memo(() => {
 
   return (
     <ContainerStyled>
-      <HeaderLayout title="Статистика" />
+      <HeaderForLayout title="Статистика" />
       <StaticticsLayoutFiltersPanel
         data={data}
         usersList={actualUsersList}

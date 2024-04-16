@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
 import SuccessCancelFormButtons from "@components/common/buttons/success-cancel-form-buttons";
 import DialogConfirm from "@components/common/dialog/dialog-confirm";
-import HeaderWithCloseButton from "@components/common/page-headers/header-with-close-button";
+import HeaderWithCloseButtonForPage from "@components/common/headers/header-with-close-button.page";
 // schema
 import { taskSchema } from "@schemas/task/task.shema";
 // forms
@@ -134,7 +134,7 @@ const UpdateManagerTask = React.memo(
 
     return (
       <>
-        <HeaderWithCloseButton
+        <HeaderWithCloseButtonForPage
           title={
             !isCurrentUserRoleManager ? title : "Изменить задачу от Куратора"
           }

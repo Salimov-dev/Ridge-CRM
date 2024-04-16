@@ -1,16 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { objectPropertiesArray } from "../../data/object/object-properties";
+import { objectPropertiesArray } from "@data/object/object-properties";
 
 const objectPropertiesSlice = createSlice({
   name: "objectProperties",
   initialState: {
-    entities: null,
+    entities: null
   },
   reducers: {
     objectPropertiesLoaded: (state, action) => {
       state.entities = action.payload;
-    },
-  },
+    }
+  }
 });
 
 const { reducer: objectPropertiesReducer, actions } = objectPropertiesSlice;

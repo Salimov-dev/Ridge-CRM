@@ -1,16 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { meetingTypesArray } from "../../data/meetings/meeting-types";
+import { meetingTypesArray } from "@data/meetings/meeting-types";
 
 const meetingTypesSlice = createSlice({
   name: "meetingTypes",
   initialState: {
-    entities: null,
+    entities: null
   },
   reducers: {
     meetingTypesLoaded: (state, action) => {
       state.entities = action.payload;
-    },
-  },
+    }
+  }
 });
 
 const { reducer: meetingTypesReducer, actions } = meetingTypesSlice;

@@ -1,4 +1,4 @@
-import HeaderWithCloseButton from "@components/common/page-headers/header-with-close-button";
+import HeaderWithCloseButtonForPage from "@components/common/headers/header-with-close-button.page";
 import styled from "@emotion/styled";
 import { Box, Paper, Typography } from "@mui/material";
 import React from "react";
@@ -27,7 +27,7 @@ const Title = styled(Typography)`
 const PersonalPolicy = React.memo(({ onClose }) => {
   return (
     <>
-      <HeaderWithCloseButton
+      <HeaderWithCloseButtonForPage
         title="Обработка персональных данных"
         color="white"
         margin="0 0 20px 0"

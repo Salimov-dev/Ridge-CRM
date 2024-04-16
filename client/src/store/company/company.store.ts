@@ -4,7 +4,7 @@ import { createAction, createSlice } from "@reduxjs/toolkit";
 // utils
 import isOutDated from "@utils/auth/is-out-date";
 // services
-import localStorageService from "@services/user/local.storage-service";
+import localStorageService from "@services/local-storage/local.storage-service";
 import companyService from "@services/company/company.service";
 // config
 import configFile from "@config/config.json";

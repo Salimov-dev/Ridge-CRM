@@ -9,7 +9,7 @@ import { useDispatch } from "react-redux";
 // components
 import SuccessCancelFormButtons from "@components/common/buttons/success-cancel-form-buttons";
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
-import HeaderWithCloseButton from "@components/common/page-headers/header-with-close-button";
+import HeaderWithCloseButtonForPage from "@components/common/headers/header-with-close-button.page";
 import PageDialogs from "@components/common/dialog/page-dialogs";
 // forms
 import CompanyForm from "@forms/company/company.form";
@@ -72,7 +72,7 @@ const CreateCompany = React.memo(({ onClose }) => {
 
   return (
     <>
-      <HeaderWithCloseButton
+      <HeaderWithCloseButtonForPage
         title="Создать компанию"
         margin="0 0 20px 0"
         background="Crimson"

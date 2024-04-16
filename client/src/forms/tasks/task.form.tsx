@@ -1,5 +1,6 @@
+// styled
+import { FieldsContainer, Form } from "@styled/styled-form";
 // components
-import { FieldsContainer, Form } from "@components/common/forms/styled";
 import TextFieldStyled from "@components/common/inputs/text-field-styled";
 import DatePickerStyled from "@components/common/inputs/date-picker";
 import TimePickerStyled from "@components/common/inputs/time-picker";

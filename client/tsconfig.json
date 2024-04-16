@@ -30,6 +30,7 @@
       "@theme/*": ["src/theme/*"],
       "@assets/*": ["src/assets/*"],
       "@config/*": ["src/config/*"],
+      "@styled/*": ["src/styled/*"],
       "@initial-states/*": ["src/initial-states/*"]
     },
     "allowImportingTsExtensions": true,

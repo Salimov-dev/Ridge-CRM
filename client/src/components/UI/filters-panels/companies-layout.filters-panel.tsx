@@ -2,7 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 // components
 import SearchField from "@common/inputs/search-field";
-import { FieldsContainer, Form } from "@components/common/forms/styled";
+import { FieldsContainer, Form } from "@styled/styled-form";
 import SearchDatePicker from "@components/common/inputs/search-date-picker";
 // store
 import { getCompaniesLoadingStatus } from "@store/company/company.store";

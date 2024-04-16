@@ -1,6 +1,6 @@
 import { Box, styled } from "@mui/material";
 import DayOfWeek from "./day-of-week.calendar-layout";
-import { daysOfWeekArray } from "@data/day-of-week";
+import { daysOfWeekArray } from "@data/calendar/day-of-week";
 
 const Components = styled(Box)`
   display: flex;

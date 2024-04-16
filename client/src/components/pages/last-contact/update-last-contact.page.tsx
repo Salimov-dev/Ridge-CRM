@@ -11,10 +11,10 @@ import { tokens } from "@theme/theme";
 import LastContactForm from "@forms/last-contact/last-contact.form";
 import SuccessCancelFormButtons from "@components/common/buttons/success-cancel-form-buttons";
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
-import HeaderWithCloseButton from "@components/common/page-headers/header-with-close-button";
+import HeaderWithCloseButtonForPage from "@components/common/headers/header-with-close-button.page";
 import DialogConfirm from "@components/common/dialog/dialog-confirm";
 // schema
-import { lastContactSchema } from "@schemas/last-contact.schema";
+import { lastContactSchema } from "@schemas/last-contact/last-contact.schema";
 // store
 import {
   getLastContactsById,
@@ -96,7 +96,7 @@ const UpdateLastContact = React.memo(({ lastContactId, onClose }) => {
 
   return (
     <>
-      <HeaderWithCloseButton
+      <HeaderWithCloseButtonForPage
         title="Изменить последний контакт"
         background={colors.header["gold"]}
         color="black"

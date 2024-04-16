@@ -1,4 +1,4 @@
-import { FieldsContainer, Form } from "@components/common/forms/styled";
+import { FieldsContainer, Form } from "@styled/styled-form";
 import TextFieldStyled from "@components/common/inputs/text-field-styled";
 
 const ForgotPasswordForm = ({ data, register, errors }) => {

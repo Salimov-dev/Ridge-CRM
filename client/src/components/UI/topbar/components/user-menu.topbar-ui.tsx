@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 // MUI
 import { Box, Button, Menu, MenuItem, styled } from "@mui/material";
 // store
-import { setCurrrentPathState } from "@store/current-path.store";
+import { setCurrrentPathState } from "@store/current-path/current-path.store";
 import { getCurrentUserId, logOut } from "@store/user/users.store";
 // commponents
 import UserNameWithAvatar from "@components/common/user/user-name-with-avatar";

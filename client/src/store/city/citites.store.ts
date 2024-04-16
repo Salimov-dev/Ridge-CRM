@@ -1,4 +1,4 @@
-import { citiesArray } from "@data/cities";
+import { citiesArray } from "@data/object/cities";
 import { createSlice } from "@reduxjs/toolkit";
 
 const citiesSlice = createSlice({

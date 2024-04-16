@@ -11,8 +11,8 @@ import { useNavigate } from "react-router-dom";
 // components
 import ButtonStyled from "@components/common/buttons/button-styled.button";
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
-import HeaderWithCloseButton from "@components/common/page-headers/header-with-close-button";
-import AuthForm from "@forms/user/auth-form";
+import HeaderWithCloseButtonForPage from "@components/common/headers/header-with-close-button.page";
+import AuthForm from "@forms/auth/auth-form";
 import PageDialogs from "@components/common/dialog/page-dialogs";
 import PolisiesLinksRegisterPage from "./policies-links.register-page";
 // initial-states
@@ -93,7 +93,7 @@ const RegisterPage = React.memo(({ onClose }) => {
 
   return (
     <Component>
-      <HeaderWithCloseButton
+      <HeaderWithCloseButtonForPage
         title="Регистрация"
         color="white"
         margin="0 0 20px 0"

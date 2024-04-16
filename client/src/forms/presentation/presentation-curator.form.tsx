@@ -1,12 +1,13 @@
 import { useSelector } from "react-redux";
 // components
-import TextFieldStyled from "../../components/common/inputs/text-field-styled";
-import AutocompleteStyled from "../../components/common/inputs/autocomplete-styled";
+import TextFieldStyled from "@components/common/inputs/text-field-styled";
+import AutocompleteStyled from "@components/common/inputs/autocomplete-styled";
 // styled
-import { FieldsContainer, Form } from "../../components/common/forms/styled";
-// store
-import { getPresentationStatusesList } from "../../store/presentation/presentation-status.store";
+import { FieldsContainer, Form } from "@styled/styled-form";
+// utils
 import { capitalizeFirstLetter } from "@utils/data/capitalize-first-letter";
+// store
+import { getPresentationStatusesList } from "@store/presentation/presentation-status.store";
 
 const CuratorPresentationForm = ({
   data,

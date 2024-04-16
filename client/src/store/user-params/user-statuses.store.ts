@@ -1,17 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
-
-import { userStatusesArray } from "../../data/users/user-statuses";
+import { userStatusesArray } from "@data/users/user-statuses";
 
 const userStatusesSlice = createSlice({
   name: "userStatuses",
   initialState: {
-    entities: null,
+    entities: null
   },
   reducers: {
     userStatusesLoaded: (state, action) => {
       state.entities = action.payload;
-    },
-  },
+    }
+  }
 });
 
 const { reducer: userStatusesReducer, actions } = userStatusesSlice;

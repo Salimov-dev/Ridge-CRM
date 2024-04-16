@@ -2,12 +2,12 @@ import { useSelector } from "react-redux";
 import styled from "@emotion/styled";
 import { Box, Typography } from "@mui/material";
 import Loader from "@components/common/loader/loader";
-import { getUserLicenseLoadingStatus } from "@store/user/user-license.store";
+import { getUserLicenseLoadingStatus } from "@store/license/user-license.store";
 import {
   licenseTypeActiveId,
   licenseTypeBlockedId,
   licenseTypeTrialId
-} from "@data/users/user-license-statuses";
+} from "@data/license/user-license-statuses";
 
 const Component = styled(Box)`
   width: 100%;

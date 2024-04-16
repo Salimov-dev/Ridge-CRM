@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 // components
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
-import HeaderWithBackButton from "@common/page-headers/header-with-back-button";
+import HeaderWithBackButtonForPage from "@components/common/headers/header-with-back-button.page";
 import SuccessCancelFormButtons from "@components/common/buttons/success-cancel-form-buttons";
 import PageDialogs from "@components/common/dialog/page-dialogs";
 // utils
@@ -98,7 +98,7 @@ const UpdateObject = React.memo(({ onClose, objectId }) => {
 
   return (
     <>
-      <HeaderWithBackButton
+      <HeaderWithBackButtonForPage
         onClose={onClose}
         title="Править:"
         subtitle={`${object.city}, ${object.address}`}

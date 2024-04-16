@@ -1,8 +1,9 @@
+// styled
+import { AlignCenter } from "@styled/styled-columns";
 // components
-import { AlignCenter } from "@components/common/columns/styled";
-import ObjectTableEntity from "@components/common/table-entities/object-table-entity";
+import ObjectTableEntity from "@components/common/table-entities/object.table-entity";
 import ButtonStyled from "@components/common/buttons/button-styled.button";
-import ContactTableEntity from "@components/common/table-entities/contact-table-entity";
+import ContactTableEntity from "@components/common/table-entities/contact.table-entity";
 // utils
 import { FormatDate } from "@utils/date/format-date";
 // hooks
@@ -44,7 +45,7 @@ export const companiesColumns = (
 
   const objectsColumn = {
     accessorFn: (row) => row,
-    header: "Другие объекты компании",
+    header: "Объекты компании",
     enableSorting: false,
     cell: (info) => {
       const row = info.getValue();

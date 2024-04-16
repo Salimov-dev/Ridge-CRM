@@ -1,29 +1,25 @@
-import { makeDigitSeparator } from "@utils/data/make-digit-separator";
+import { useSelector } from "react-redux";
+// styled
+import { AlignCenter } from "@styled/styled-columns";
+// components
 import {
   FormatCurrentRenter,
   FormatDate,
   FormatManagerName,
-  FormatMetro,
   FormatObjectProperties,
   FormatObjectStatus,
   FormatObjectTradeArea,
-  FormatPhone,
   FormatTypeEstate,
-  FormatTypeObject,
-  FormatTypeRent,
-  FormatWorkingPosition
-} from "@components/common/table/helpers/helpers";
+  FormatTypeObject
+} from "@components/common/table/helpers/helpers.table";
 import EmptyTd from "@components/common/columns/empty-td";
-import { useSelector } from "react-redux";
-import {
-  getEstateConditionNameById,
-  getObjectConditionsList
-} from "@store/object-params/object-conditions.store";
-import { getDistrictName } from "@store/object-params/districts.store";
-import { AlignCenter } from "@components/common/columns/styled";
+// utils
 import makeToLocalString from "@utils/data/make-to-local-string";
-import { getRentTypesList } from "@store/object-params/rent-types.store";
-import { getMetroList } from "@store/object-params/metro.store";
+// store
+import { getDistrictName } from "@store/object-params/object-districts.store";
+import { getObjectConditionsList } from "@store/object-params/object-conditions.store";
+import { getRentTypesList } from "@store/object-params/object-rent-types.store";
+import { getMetroList } from "@store/object-params/object-metro.store";
 
 export const locationColumns = [
   {

@@ -7,7 +7,7 @@ import TimePickerStyled from "@components/common/inputs/time-picker";
 import SimpleSwitch from "@components/common/inputs/simple-switch";
 import AutocompleteStyled from "@components/common/inputs/autocomplete-styled";
 // styled
-import { FieldsContainer, Form } from "@components/common/forms/styled";
+import { FieldsContainer, Form } from "@styled/styled-form";
 // utils
 import getDateToday from "@utils/date/get-date-today";
 import { capitalizeAllFirstLetters } from "@utils/data/capitalize-all-first-letters";

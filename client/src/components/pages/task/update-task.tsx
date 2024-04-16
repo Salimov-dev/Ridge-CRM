@@ -9,7 +9,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useDispatch, useSelector } from "react-redux";
 // components
 import TaskForm from "@forms/tasks/task.form";
-import TitleWithCloseButton from "@components/common/page-headers/header-with-close-button";
+import TitleWithCloseButton from "@components/common/headers/header-with-close-button.page";
 import SuccessCancelFormButtons from "@components/common/buttons/success-cancel-form-buttons";
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
 import DialogConfirm from "@components/common/dialog/dialog-confirm";

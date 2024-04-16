@@ -1,5 +1,5 @@
 import React from "react";
-import { FormatManagerName } from "../table/helpers/helpers";
+import { FormatManagerName } from "../table/helpers/helpers.table";
 import { Box, Typography, styled } from "@mui/material";
 import AvatarImage from "@layouts/profile/components/avatar-image.profile-layout";
 

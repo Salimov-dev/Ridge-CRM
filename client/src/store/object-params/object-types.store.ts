@@ -1,16 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { objectTypesArray } from "../../data/object/object-types";
+import { objectTypesArray } from "@data/object/object-types";
 
 const objectTypesSlice = createSlice({
   name: "objectTypes",
   initialState: {
-    entities: null,
+    entities: null
   },
   reducers: {
     objectTypesLoaded: (state, action) => {
       state.entities = action.payload;
-    },
-  },
+    }
+  }
 });
 
 const { reducer: objectTypesReducer, actions } = objectTypesSlice;

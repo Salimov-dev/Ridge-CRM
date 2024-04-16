@@ -1,7 +1,7 @@
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Box, Typography, styled } from "@mui/material";
-import { setCurrrentPathState } from "@store/current-path.store";
+import { setCurrrentPathState } from "@store/current-path/current-path.store";
 import Loader from "@common/loader/loader";
 
 const DataContainer = styled(Box)`

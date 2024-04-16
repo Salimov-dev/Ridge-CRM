@@ -1,7 +1,9 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Box, Typography } from "@mui/material";
 import { useSelector } from "react-redux";
+import styled from "@emotion/styled";
 import { useFieldArray } from "react-hook-form";
+// icons
 import ControlPointOutlinedIcon from "@mui/icons-material/ControlPointOutlined";
 import DoNotDisturbOnOutlinedIcon from "@mui/icons-material/DoNotDisturbOnOutlined";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
@@ -10,8 +12,8 @@ import AutocompleteStyled from "@components/common/inputs/autocomplete-styled";
 import RowTitle from "@components/common/titles/row-title";
 import ButtonStyled from "@components/common/buttons/button-styled.button";
 import PageDialogs from "@components/common/dialog/page-dialogs";
-import OpenPageElementIconButton from "@components/common/buttons/icons buttons/open-page-element.button-icon";
-import DeleteElementIcon from "@components/common/buttons/icons buttons/delete-element-icon";
+import OpenPageElementIconButton from "@components/common/button-icons/open-page-element.button-icon";
+import DeleteElementIcon from "@components/common/button-icons/delete-element-icon";
 import UserNameWithAvatar from "@components/common/user/user-name-with-avatar";
 // hooks
 import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
@@ -19,6 +21,19 @@ import useGetUserAvatar from "@hooks/user/use-get-user-avatar";
 // store
 import { getContactsList } from "@store/contact/contact.store";
 import { getUsersList } from "@store/user/users.store";
+
+const FieldContainer = styled(Box)`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+`;
+
+const ButtonsContainer = styled(Box)`
+  width: 100%;
+  display: flex;
+  gap: 4px;
+`;
 
 const FieldsContact = ({
   data,
@@ -99,14 +114,7 @@ const FieldsContact = ({
 
         if (field.id) {
           return (
-            <Box
-              key={field.id}
-              sx={{
-                width: "100%",
-                display: "flex",
-                alignItems: "center"
-              }}
-            >
+            <FieldContainer key={field.id}>
               <DeleteElementIcon
                 onClick={() => handleRemoveContact(index)}
                 error={errors?.contacts}
@@ -151,13 +159,13 @@ const FieldsContact = ({
                   handleOpenContactPage(data.contacts?.[index].contact)
                 }
               />
-            </Box>
+            </FieldContainer>
           );
         } else {
           return null;
         }
       })}
-      <Box sx={{ width: "100%", display: "flex", gap: "4px" }}>
+      <ButtonsContainer>
         <ButtonStyled
           title="Создать контакт"
           style="CREATE_NEW_Contact"
@@ -183,7 +191,7 @@ const FieldsContact = ({
           icon={<DoNotDisturbOnOutlinedIcon />}
           onClick={() => handleRemoveContact(lastContactIndex)}
         />
-      </Box>
+      </ButtonsContainer>
       <PageDialogs state={openContact} setState={setOpenContact} />
     </>
   );

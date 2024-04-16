@@ -9,7 +9,7 @@ import passwordService from "@services/password/password.service";
 // components
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
 import { ContainerStyled } from "@components/common/container/container-styled";
-import HeaderLayout from "@components/common/page-headers/header-layout";
+import HeaderForLayout from "@components/common/headers/header-for-layout";
 import ButtonStyled from "@components/common/buttons/button-styled.button";
 // forms
 import RecoveryPasswordForm from "@forms/password/recovery-password.form";
@@ -96,7 +96,7 @@ const RecoveryPassword = React.memo(() => {
 
   return (
     <ContainerStyled>
-      <HeaderLayout title="Восстановление пароля" />
+      <HeaderForLayout title="Восстановление пароля" />
       <FormContainer>
         <RecoveryFormContainer>
           <RecoveryPasswordForm

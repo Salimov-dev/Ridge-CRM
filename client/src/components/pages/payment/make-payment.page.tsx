@@ -10,7 +10,7 @@ import config from "@config/config.json";
 // forms
 import MakePaymentForm from "@forms/make-payment/make-payment.form";
 // components
-import TitleWithCloseButton from "@common/page-headers/header-with-close-button";
+import TitleWithCloseButton from "@components/common/headers/header-with-close-button.page";
 import SuccessCancelFormButtons from "@components/common/buttons/success-cancel-form-buttons";
 import CostOneLicense from "./components/cost-one-license.payment";
 import CurrentLicenseInfo from "./components/current-license-info.payment";
@@ -18,15 +18,15 @@ import EnoughLicenseDays from "./components/enough-license-days.payment";
 import EnoughLicenseDate from "./components/enough-license-date.payment";
 // store
 import { getCurrentUserId } from "@store/user/users.store";
-import { getUserLicensesByUserId } from "@store/user/user-license.store";
+import { getUserLicensesByUserId } from "@store/license/user-license.store";
 // schema
-import { paymentAmounySchema } from "@schemas/payment-amount.schema";
+import { paymentAmounySchema } from "@schemas/payment/payment-amount.schema";
 // utils
 import { removeSpacesAndConvertToNumber } from "@utils/data/remove-spaces-and-convert-to-number";
 // services
 import paymentService from "@services/payment/payment.service";
 // data
-import { licenseTypeTrialId } from "@data/users/user-license-statuses";
+import { licenseTypeTrialId } from "@data/license/user-license-statuses";
 // initial-states
 import { makePaymentInitialState } from "@initial-states/payment/make-payment.initial-state";
 

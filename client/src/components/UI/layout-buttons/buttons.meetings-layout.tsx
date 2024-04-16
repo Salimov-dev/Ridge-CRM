@@ -8,7 +8,7 @@ import { meetingsLayoutInitialState } from "@initial-states/layouts/meetings-lay
 // icons
 import SmartDisplayOutlinedIcon from "@mui/icons-material/SmartDisplayOutlined";
 // utils
-import { getIsInputEmpty } from "@utils/other/get-is-input-empty";
+import { getIsInputEmpty } from "@utils/input/get-is-input-empty";
 // hooks
 import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
 

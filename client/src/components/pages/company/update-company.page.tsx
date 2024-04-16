@@ -9,7 +9,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 // components
 import SuccessCancelFormButtons from "@components/common/buttons/success-cancel-form-buttons";
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
-import HeaderWithCloseButton from "@components/common/page-headers/header-with-close-button";
+import HeaderWithCloseButtonForPage from "@components/common/headers/header-with-close-button.page";
 import PageDialogs from "@components/common/dialog/page-dialogs";
 import DialogConfirm from "@components/common/dialog/dialog-confirm";
 import UserEntityAuthor from "@components/common/user/user-entity-author";
@@ -138,7 +138,7 @@ const UpdateCompany = React.memo(({ companyId, onClose }) => {
 
   return (
     <>
-      <HeaderWithCloseButton
+      <HeaderWithCloseButtonForPage
         title="Изменить компанию"
         color="black"
         margin="0 0 20px 0"

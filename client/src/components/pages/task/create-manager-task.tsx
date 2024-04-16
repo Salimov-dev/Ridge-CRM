@@ -7,7 +7,7 @@ import { useForm } from "react-hook-form";
 import React, { useEffect, useState } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 // components
-import HeaderWithCloseButton from "@components/common/page-headers/header-with-close-button";
+import HeaderWithCloseButtonForPage from "@components/common/headers/header-with-close-button.page";
 import SuccessCancelFormButtons from "@components/common/buttons/success-cancel-form-buttons";
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
 // schema
@@ -78,7 +78,7 @@ const CreateManagerTask = React.memo(
 
     return (
       <>
-        <HeaderWithCloseButton
+        <HeaderWithCloseButtonForPage
           title={title}
           background={colors.task["managerTask"]}
           onClose={onClose}

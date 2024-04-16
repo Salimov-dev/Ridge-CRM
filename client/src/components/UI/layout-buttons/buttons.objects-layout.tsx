@@ -13,7 +13,7 @@ import ClearFilterButton from "@components/common/buttons/clear-filter.button";
 // initial-states
 import { objectsLayoutInitialState } from "@initial-states/layouts/objects-layout.initial-state";
 // utils
-import { getIsInputEmpty } from "@utils/other/get-is-input-empty";
+import { getIsInputEmpty } from "@utils/input/get-is-input-empty";
 // store
 import { getIsCurrentUserRoleCurator } from "@store/user/users.store";
 

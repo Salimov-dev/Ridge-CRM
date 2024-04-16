@@ -1,9 +1,12 @@
-import { FieldsContainer, Form } from "@components/common/forms/styled";
+import { FieldsContainer, Form } from "@styled/styled-form";
+// data
+import { companyProfilesArray } from "@data/company/company-profiles";
+// components
 import TextFieldStyled from "@components/common/inputs/text-field-styled";
 import SelectFieldStyled from "@components/common/inputs/select-field-styled";
-import { companyProfilesArray } from "@data/company-profiles";
 import FieldsObject from "@components/common/forms/dynamic-fields/fields-object";
 import FieldsContact from "@components/common/forms/dynamic-fields/fields-contact";
+// utils
 import { capitalizeFirstLetter } from "@utils/data/capitalize-first-letter";
 
 const CompanyForm = ({

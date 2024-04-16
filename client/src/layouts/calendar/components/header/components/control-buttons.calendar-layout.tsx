@@ -3,7 +3,10 @@ import { Box, Button } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import { getMonthIndexState, setMonthIndex } from "@store/month-index.store";
+import {
+  getMonthIndexState,
+  setMonthIndex
+} from "@store/month-index/month-index.store";
 import { getTaskLoadingStatus } from "@store/task/tasks.store";
 
 const ControlButtons = () => {

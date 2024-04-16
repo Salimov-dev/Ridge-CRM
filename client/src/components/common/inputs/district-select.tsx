@@ -5,11 +5,11 @@ import { Box, FormHelperText, Typography } from "@mui/material";
 // components
 import SimpleSelectField from "@components/common/inputs/simple-select-field";
 // data
-import { hasDistrict } from "@data/object/has-district";
+import { objectHasDistrict } from "@data/object/object-has-district";
 import {
   allDistrictsList,
   getFindedObjectDistrictsList
-} from "@data/object/get-districts-list";
+} from "@data/object/get-finded-object-districts-list";
 
 const Container = styled(Box)`
   width: 100%;
@@ -43,7 +43,7 @@ const DistrictSelect = ({
   return (
     <>
       <Container>
-        {!isUpdate && !hasDistrict(selectedArea) ? (
+        {!isUpdate && !objectHasDistrict(selectedArea) ? (
           <DistrictName colors={colors} errors={errors}>
             {selectedArea ? (
               selectedArea

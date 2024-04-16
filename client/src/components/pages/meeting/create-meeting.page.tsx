@@ -12,9 +12,9 @@ import MeetingForm from "@forms/meeting/meeting.form";
 import FindObjectOnMap from "@common/find-object-on-map/find-object-on-map";
 import SuccessCancelFormButtons from "@components/common/buttons/success-cancel-form-buttons";
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
-import HeaderWithCloseButton from "@components/common/page-headers/header-with-close-button";
+import HeaderWithCloseButtonForPage from "@components/common/headers/header-with-close-button.page";
 // schema
-import { meetingSchema } from "@schemas/meeting.schema";
+import { meetingSchema } from "@schemas/meeting/meeting.schema";
 // hooks
 import useFindObject from "@hooks/object/use-find-object";
 // initial-states
@@ -25,7 +25,7 @@ import { createMeeting } from "@store/meeting/meetings.store";
 import { getObjectsList } from "@store/object/objects.store";
 import { getMeetingTypesList } from "@store/meeting/meeting-types.store";
 import { getMeetingStatusesList } from "@store/meeting/meeting-status.store";
-import { getUserLicensesByUserId } from "@store/user/user-license.store";
+import { getUserLicensesByUserId } from "@store/license/user-license.store";
 
 const CreateMeeting = React.memo(
   ({ objectPageId = "", onClose, dateCreate, isObjectPage }) => {
@@ -129,7 +129,7 @@ const CreateMeeting = React.memo(
 
     return (
       <>
-        <HeaderWithCloseButton
+        <HeaderWithCloseButtonForPage
           title={getHeaderTitle()}
           color={!isEmptyFindedObject ? "white" : "black"}
           margin="0 0 20px 0"

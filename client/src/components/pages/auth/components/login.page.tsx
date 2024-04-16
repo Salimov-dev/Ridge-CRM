@@ -11,13 +11,13 @@ import { useLocation, useNavigate } from "react-router-dom";
 // components
 import ButtonStyled from "@components/common/buttons/button-styled.button";
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
-import HeaderWithCloseButton from "@components/common/page-headers/header-with-close-button";
+import HeaderWithCloseButtonForPage from "@components/common/headers/header-with-close-button.page";
 import PageDialogs from "@components/common/dialog/page-dialogs";
 import ForgotPasswordUI from "@components/UI/forgot-password/forgot-pasword.ui";
 // initial-states
 import { loginPageInitialState } from "@initial-states/auth/login-page.initial-state";
 // forms
-import AuthForm from "@forms/user/auth-form";
+import AuthForm from "@forms/auth/auth-form";
 // schema
 import { loginSchema } from "@schemas/auth/login.schema";
 // store
@@ -85,7 +85,7 @@ const LoginPage = React.memo(({ onClose }) => {
 
   return (
     <Component>
-      <HeaderWithCloseButton
+      <HeaderWithCloseButtonForPage
         title="Вход в систему"
         color="white"
         margin="0 0 20px 0"

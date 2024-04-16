@@ -1,10 +1,10 @@
 import axios from "axios";
 import configFile from "@config/config.json";
-import authService from "./user/auth-service";
-import localStorageService from "./user/local.storage-service";
+import authService from "./auth/auth-service";
+import localStorageService from "./local-storage/local.storage-service";
 
 const http = axios.create({
-  baseURL: configFile.apiEndpoint,
+  baseURL: configFile.apiEndpoint
 });
 
 http.interceptors.request.use(
@@ -18,9 +18,9 @@ http.interceptors.request.use(
         const data = await authService.refresh();
         localStorageService.setTokens(data);
       } catch (error) {
-        console.error('Token Refresh Error:', error);
-        handleUnauthorizedError(); 
-        throw error; 
+        console.error("Token Refresh Error:", error);
+        handleUnauthorizedError();
+        throw error;
       }
     }
 
@@ -28,7 +28,7 @@ http.interceptors.request.use(
     if (accessToken) {
       config.headers = {
         ...(config.headers as axios.AxiosHeaders),
-        Authorization: `Bearer ${accessToken}`,
+        Authorization: `Bearer ${accessToken}`
       };
     }
 
@@ -55,7 +55,7 @@ http.interceptors.response.use(
     }
 
     if (error.response && error.response.status === 401) {
-      handleUnauthorizedError(); 
+      handleUnauthorizedError();
     }
 
     return Promise.reject(error);
@@ -63,7 +63,7 @@ http.interceptors.response.use(
 );
 
 function handleUnauthorizedError() {
-  localStorageService.removeAuthData(); 
+  localStorageService.removeAuthData();
   window.location.href = "/";
 }
 
@@ -72,7 +72,7 @@ const httpService = {
   post: http.post,
   put: http.put,
   delete: http.delete,
-  patch: http.patch,
+  patch: http.patch
 };
 
 export default httpService;

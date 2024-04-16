@@ -2,12 +2,14 @@ import { io } from "socket.io-client";
 import { createAction, createSlice } from "@reduxjs/toolkit";
 // config
 import configFile from "@config/config.json";
-// service
-import authService from "@services/user/auth-service";
-import userService from "@services/user/user.service";
-import localStorageService from "@services/user/local.storage-service";
-import { loadUserLicensesList } from "./user-license.store";
+// data
 import { roleCuratorId, roleManagerId } from "@data/users/user-roles";
+// service
+import authService from "@services/auth/auth-service";
+import userService from "@services/user/user.service";
+import localStorageService from "@services/local-storage/local.storage-service";
+// store
+import { loadUserLicensesList } from "@store/license/user-license.store";
 
 const socket = io(configFile.ioEndPoint);
 

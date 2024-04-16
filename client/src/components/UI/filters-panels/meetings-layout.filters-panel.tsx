@@ -2,7 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 // components
 import SearchField from "@common/inputs/search-field";
-import { FieldsContainer, Form } from "@components/common/forms/styled";
+import { FieldsContainer, Form } from "@styled/styled-form";
 import MultiSelectField from "@common/inputs/multi-select-field";
 import SearchDatePicker from "@common/inputs/search-date-picker";
 import SearchSelectField from "@common/inputs/search-select-field";

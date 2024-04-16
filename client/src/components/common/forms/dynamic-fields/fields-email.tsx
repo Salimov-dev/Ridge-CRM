@@ -1,5 +1,6 @@
 import { Box, InputAdornment } from "@mui/material";
 import { useFieldArray } from "react-hook-form";
+import styled from "@emotion/styled";
 // icons
 import AlternateEmailOutlinedIcon from "@mui/icons-material/AlternateEmailOutlined";
 import ControlPointOutlinedIcon from "@mui/icons-material/ControlPointOutlined";
@@ -8,8 +9,21 @@ import DoNotDisturbOnOutlinedIcon from "@mui/icons-material/DoNotDisturbOnOutlin
 import TextFieldStyled from "@components/common/inputs/text-field-styled";
 import RowTitle from "@components/common/titles/row-title";
 import ButtonStyled from "@components/common/buttons/button-styled.button";
-import DeleteElementIcon from "@components/common/buttons/icons buttons/delete-element-icon";
+import DeleteElementIcon from "@components/common/button-icons/delete-element-icon";
 import SwitchField from "@components/common/inputs/switch-field";
+
+const FieldContainer = styled(Box)`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+`;
+
+const ButtonsContainer = styled(Box)`
+  width: 100%;
+  display: flex;
+  gap: 4px;
+`;
 
 const FieldsEmail = ({ data, register, setValue, errors, control }) => {
   const {
@@ -73,15 +87,7 @@ const FieldsEmail = ({ data, register, setValue, errors, control }) => {
       {fieldEmails?.map((field, index) => {
         if (field.id) {
           return (
-            <Box
-              key={field.id}
-              sx={{
-                width: "100%",
-                height: "100%",
-                display: "flex",
-                alignItems: "center"
-              }}
-            >
+            <FieldContainer key={field.id}>
               <DeleteElementIcon
                 onClick={() => handleRemoveEmail(index)}
                 error={errors?.emails?.[index]?.email}
@@ -106,13 +112,13 @@ const FieldsEmail = ({ data, register, setValue, errors, control }) => {
                 checked={field.isDefault || false}
                 onChange={() => handleChangeEmail(index, field.isDefault)}
               />
-            </Box>
+            </FieldContainer>
           );
         } else {
           return null;
         }
       })}
-      <Box sx={{ width: "100%", display: "flex", gap: "4px" }}>
+      <ButtonsContainer>
         <ButtonStyled
           title="Добавить почту"
           style="ADD_NEW_EMAIL"
@@ -130,7 +136,7 @@ const FieldsEmail = ({ data, register, setValue, errors, control }) => {
           icon={<DoNotDisturbOnOutlinedIcon />}
           onClick={() => handleRemoveEmail(lastEmailIndex)} // передаем функцию removePhone с аргументом
         />
-      </Box>
+      </ButtonsContainer>
     </>
   );
 };

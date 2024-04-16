@@ -1,6 +1,6 @@
 import { Box, Typography, styled } from "@mui/material";
 import DownloadIcon from "@mui/icons-material/Download";
-import { exportToExcel } from "../../../utils/objects/export-to-excel";
+import { exportToExcel } from "@utils/exel/export-to-excel";
 
 const Component = styled(Box)`
   width: 100%;

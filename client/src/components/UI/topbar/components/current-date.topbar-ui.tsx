@@ -7,12 +7,12 @@ import { useSelector } from "react-redux";
 import {
   licenseTypeBlockedId,
   userLicenseStatusesArray
-} from "@data/users/user-license-statuses";
+} from "@data/license/user-license-statuses";
 // utils
 import { capitalizeFirstLetter } from "@utils/data/capitalize-first-letter";
 import { makeDigitSeparator } from "@utils/data/make-digit-separator";
 // store
-import { getUserLicensesByUserId } from "@store/user/user-license.store";
+import { getUserLicensesByUserId } from "@store/license/user-license.store";
 import { getCurrentUserId, getIsUserCurator } from "@store/user/users.store";
 
 const Component = styled(Box)`

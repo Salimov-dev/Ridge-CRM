@@ -8,7 +8,7 @@ import passwordService from "@services/password/password.service";
 // components
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
 import { ContainerStyled } from "@components/common/container/container-styled";
-import HeaderLayout from "@components/common/page-headers/header-layout";
+import HeaderForLayout from "@components/common/headers/header-for-layout";
 import SuccessMessageSetupPassword from "./components/success-message.setup-password";
 import SetupNewPassword from "./components/setup-new-password.setup-password";
 // schemas
@@ -78,7 +78,7 @@ const SetupPassword = React.memo(() => {
 
   return (
     <ContainerStyled>
-      <HeaderLayout title="Установить новый пароль" />
+      <HeaderForLayout title="Установить новый пароль" />
       {!successResponse ? (
         <SetupNewPassword
           data={data}

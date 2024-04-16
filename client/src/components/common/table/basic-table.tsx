@@ -8,11 +8,11 @@ import {
   SortingState
 } from "@tanstack/react-table";
 // styles
-import "./styles/styles.css";
+import "@styled/styles-table.css";
 // components
-import Pagination from "./components/pagination";
-import Thead from "./components/thead";
-import Tbody from "./components/tbody";
+import Pagination from "./components/pagination.table";
+import Thead from "./components/thead.table";
+import Tbody from "./components/tbody.table.";
 import Loader from "../loader/loader";
 
 const BasicTable = ({

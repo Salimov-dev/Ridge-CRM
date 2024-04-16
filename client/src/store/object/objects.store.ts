@@ -1,4 +1,3 @@
-import { updateCompanies } from "./../company/company.store";
 import dayjs from "dayjs";
 import { io } from "socket.io-client";
 import { createAction, createSlice } from "@reduxjs/toolkit";
@@ -8,7 +7,9 @@ import configFile from "@config/config.json";
 import isOutDated from "@utils/auth/is-out-date";
 // services
 import objectService from "@services/object/object.service";
-import localStorageService from "@services/user/local.storage-service";
+import localStorageService from "@services/local-storage/local.storage-service";
+// store
+import { updateCompanies } from "@store/company/company.store";
 import { updateContacts } from "@store/contact/contact.store";
 
 const socket = io(configFile.ioEndPoint);

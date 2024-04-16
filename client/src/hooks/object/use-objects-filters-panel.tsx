@@ -1,10 +1,10 @@
 import { orderBy } from "lodash";
 import { useSelector } from "react-redux";
 import { getObjectTypesList } from "../../store/object-params/object-types.store";
-import { getDistrictsList } from "../../store/object-params/districts.store";
-import { getMetroList } from "../../store/object-params/metro.store";
-import { getCurrentRentersList } from "../../store/object-params/current-renter.store";
-import { getEstateTypesList } from "../../store/object-params/estate-types.store";
+import { getDistrictsList } from "../../store/object-params/object-districts.store";
+import { getMetroList } from "../../store/object-params/object-metro.store";
+import { getCurrentRentersList } from "../../store/object-params/object-current-renter.store";
+import { getEstateTypesList } from "../../store/object-params/object-estate-types.store";
 import { getObjectPropertiesList } from "../../store/object-params/object-properties";
 import { getTradeAreaList } from "../../store/object-params/object-trade-area";
 

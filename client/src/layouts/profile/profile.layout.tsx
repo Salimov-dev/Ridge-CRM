@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
 // components
-import HeaderLayout from "@components/common/page-headers/header-layout";
+import HeaderForLayout from "@components/common/headers/header-for-layout";
 import PageDialogs from "@components/common/dialog/page-dialogs";
 import { ContainerStyled } from "@components/common/container/container-styled";
 import Loader from "@components/common/loader/loader";
@@ -27,7 +27,7 @@ const ProfileLayout = () => {
 
   return (
     <ContainerStyled>
-      <HeaderLayout
+      <HeaderForLayout
         title={`${!isUserLoading ? userNameSelector : <Loader />}`}
       />
       <ButtonsProfileLayout setState={setState} />

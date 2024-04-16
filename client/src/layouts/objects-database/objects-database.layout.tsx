@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 // components
-import HeaderLayout from "@components/common/page-headers/header-layout";
+import HeaderForLayout from "@components/common/headers/header-for-layout";
 import BasicTable from "@components/common/table/basic-table";
 import PageDialogs from "@components/common/dialog/page-dialogs";
 import { ContainerStyled } from "@components/common/container/container-styled";
@@ -14,14 +14,11 @@ import NeedToCallsControlPanelObjectsDatabase from "./components/need-to-calls-c
 // initial-states
 import { objectsDatabaseLayoutInitialState } from "@initial-states/layouts/objects-database-layout.initial-state";
 // columns
-import { objectsColumns } from "@columns/objects.columns";
+import { objectsDatabaseColumns } from "@columns/objects-database.columns";
 // hooks
 import useSearchObjectDatabase from "@hooks/objects-database/use-search-object-database";
 // store
-import {
-  getIsCurrentUserRoleCurator,
-  getIsCurrentUserRoleManager
-} from "@store/user/users.store";
+import { getIsCurrentUserRoleManager } from "@store/user/users.store";
 import {
   getObjectsList,
   getObjectsLoadingStatus
@@ -52,7 +49,6 @@ const ObjectsDatabaseLayout = React.memo(() => {
 
   const isLoading = useSelector(getObjectsLoadingStatus());
   const isCurrentUserRoleManager = useSelector(getIsCurrentUserRoleManager());
-  const isCurrentUserRoleCurator = useSelector(getIsCurrentUserRoleCurator());
 
   const { searchedObjects, filteredObjects } = useSearchObjectDatabase(
     objects,
@@ -79,7 +75,7 @@ const ObjectsDatabaseLayout = React.memo(() => {
 
   return (
     <ContainerStyled>
-      <HeaderLayout title="Проработка базы объектов" />
+      <HeaderForLayout title="Проработка базы объектов" />
       <TitleObjectsQuantityObjectsDatabaseLayout objects={searchedObjects} />
       <ObjectsDatabaseLayoutFiltersPanel
         data={data}
@@ -97,10 +93,9 @@ const ObjectsDatabaseLayout = React.memo(() => {
       />
       <BasicTable
         items={filteredObjects}
-        itemsColumns={objectsColumns(
+        itemsColumns={objectsDatabaseColumns(
           setState,
-          isCurrentUserRoleManager,
-          isCurrentUserRoleCurator
+          isCurrentUserRoleManager
         )}
         isLoading={isLoading}
       />

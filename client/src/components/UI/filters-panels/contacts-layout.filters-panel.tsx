@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import React from "react";
 // components
 import SearchField from "@common/inputs/search-field";
-import { FieldsContainer, Form } from "@components/common/forms/styled";
+import { FieldsContainer, Form } from "@styled/styled-form";
 import SearchDatePicker from "@components/common/inputs/search-date-picker";
 import MultiSelectField from "@components/common/inputs/multi-select-field";
 // utils
@@ -10,14 +10,14 @@ import { getActualContactPositionList } from "@utils/actual-items/get-actual-con
 // store
 import { getLastContactsLoadingStatus } from "@store/last-contact/last-contact.store";
 import { getContactsList } from "@store/contact/contact.store";
-import { getWorkingPositionsList } from "@store/user-params/working-position.store";
+import { getContactPositionsList } from "@store/contact/contact-positions.store";
 
 const ContactsLayoutFiltersPanel = React.memo(
   ({ data, register, setValue }) => {
     const contactsList = useSelector(getContactsList());
     const isLoading = useSelector(getLastContactsLoadingStatus());
 
-    const contactWorkingPositions = useSelector(getWorkingPositionsList());
+    const contactWorkingPositions = useSelector(getContactPositionsList());
     const actualContactPositions = getActualContactPositionList(
       contactsList,
       contactWorkingPositions

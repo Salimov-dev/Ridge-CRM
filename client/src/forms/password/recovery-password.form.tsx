@@ -3,8 +3,9 @@ import { InputAdornment, IconButton, Box } from "@mui/material";
 // icons
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
+//styled
+import { FieldsContainer, Form } from "@styled/styled-form";
 // components
-import { FieldsContainer, Form } from "@components/common/forms/styled";
 import TextFieldStyled from "@components/common/inputs/text-field-styled";
 
 const RecoveryPasswordForm = ({ data, register, errors }) => {

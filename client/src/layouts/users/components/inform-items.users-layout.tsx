@@ -12,10 +12,10 @@ import {
   licenseTypeBlockedId,
   licenseTypeTrialId,
   userLicenseStatusesArray
-} from "@data/users/user-license-statuses";
+} from "@data/license/user-license-statuses";
 // store
 import { getCurrentUserId } from "@store/user/users.store";
-import { getUserLicensesByUserId } from "@store/user/user-license.store";
+import { getUserLicensesByUserId } from "@store/license/user-license.store";
 
 const InformItemsContainer = styled(Box)`
   width: 100%;

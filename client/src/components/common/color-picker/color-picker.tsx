@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import { Box, Typography } from "@mui/material";
 import { CirclePicker } from "react-color";
-import Errors from "../inputs/components/errors";
+import Errors from "../inputs/errors-for-input";
 const Component = styled(Box)`
   width: 100%;
   display: flex;

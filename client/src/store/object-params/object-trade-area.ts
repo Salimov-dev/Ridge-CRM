@@ -1,16 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { objectTradeAreaArray } from "../../data/object/object-trade-area";
+import { objectTradeAreaArray } from "@data/object/object-trade-area";
 
 const tradeAreaSlice = createSlice({
   name: "tradeArea",
   initialState: {
-    entities: null,
+    entities: null
   },
   reducers: {
     tradeAreaLoaded: (state, action) => {
       state.entities = action.payload;
-    },
-  },
+    }
+  }
 });
 
 const { reducer: tradeAreaReducer, actions } = tradeAreaSlice;

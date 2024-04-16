@@ -1,14 +1,11 @@
-import App from "./App.tsx";
+import { BrowserRouter } from "react-router-dom";
+import { YMaps } from "@pbe/react-yandex-maps";
+import { Provider } from "react-redux";
 import ReactDOM from "react-dom/client";
 import { Box } from "@mui/material";
+import App from "./App.tsx";
 import { createStore } from "./store/create.store.ts";
 import { CircleArrow as ScrollUpButton } from "react-scroll-up-button";
-// YMaps
-import { YMaps } from "@pbe/react-yandex-maps";
-// router
-import { BrowserRouter } from "react-router-dom";
-// providers
-import { Provider } from "react-redux";
 
 const store = createStore();
 

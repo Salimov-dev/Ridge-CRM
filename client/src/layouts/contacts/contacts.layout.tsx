@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 // components
-import HeaderLayout from "@components/common/page-headers/header-layout";
+import HeaderForLayout from "@components/common/headers/header-for-layout";
 import PageDialogs from "@components/common/dialog/page-dialogs";
 import { ContainerStyled } from "@components/common/container/container-styled";
 import BasicTable from "@components/common/table/basic-table";
@@ -73,7 +73,7 @@ const ContactsLayout = React.memo(() => {
 
   return (
     <ContainerStyled>
-      <HeaderLayout title="Контакты" />
+      <HeaderForLayout title="Контакты" />
       <ButtonsContactsLayout
         data={data}
         setState={setStateDialogPages}

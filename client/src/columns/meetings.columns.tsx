@@ -2,11 +2,12 @@ import dayjs from "dayjs";
 import { useSelector } from "react-redux";
 // mui
 import { Box, Typography } from "@mui/material";
+// styled
+import { AlignCenter } from "@styled/styled-columns";
 // components
 import DoneStatusIcon from "@components/common/columns/done-status-icon";
-import { AlignCenter } from "@components/common/columns/styled";
 import ButtonStyled from "@components/common/buttons/button-styled.button";
-import OpenPageElementIconButton from "@components/common/buttons/icons buttons/open-page-element.button-icon";
+import OpenPageElementIconButton from "@components/common/button-icons/open-page-element.button-icon";
 import UserNameWithAvatar from "@components/common/user/user-name-with-avatar";
 // utils
 import { FormatDate } from "@utils/date/format-date";

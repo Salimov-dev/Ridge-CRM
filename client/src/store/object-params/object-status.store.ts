@@ -1,16 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { objectStatusesArray } from "../../data/object/object-status.ts";
+import { objectStatusesArray } from "@data/object/object-status.ts";
 
 const objectStatusSlice = createSlice({
   name: "objectStatus",
   initialState: {
-    entities: null,
+    entities: null
   },
   reducers: {
     objectStatusLoaded: (state, action) => {
       state.entities = action.payload;
-    },
-  },
+    }
+  }
 });
 
 const { reducer: objectStatusReducer, actions } = objectStatusSlice;

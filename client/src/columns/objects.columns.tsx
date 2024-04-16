@@ -5,26 +5,27 @@ import { useSelector } from "react-redux";
 import { Box, Button, Tooltip, Typography } from "@mui/material";
 import CloudDoneIcon from "@mui/icons-material/CloudDone";
 import CloudOffIcon from "@mui/icons-material/CloudOff";
+// styled
+import { AlignCenter } from "@styled/styled-columns";
 // utils
 import { FormatDate } from "@utils/date/format-date";
 // components
 import Flags from "@components/common/columns/flags";
-import { AlignCenter } from "@components/common/columns/styled";
 import EmptyTd from "@components/common/columns/empty-td";
 import UserNameWithAvatar from "@components/common/user/user-name-with-avatar";
 import ButtonStyled from "@components/common/buttons/button-styled.button";
 import {
   FormatMetro,
   FormatObjectStatus
-} from "@components/common/table/helpers/helpers";
-import ContactTableEntity from "@components/common/table-entities/contact-table-entity";
-import CompanyTableEntity from "@components/common/table-entities/company-table-entity";
+} from "@components/common/table/helpers/helpers.table";
+import ContactTableEntity from "@components/common/table-entities/contact.table-entity";
+import CompanyTableEntity from "@components/common/table-entities/company.4table-entity";
 // hooks
 import useGetUserAvatar from "@hooks/user/use-get-user-avatar";
 import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
 // store
 import { getLastContactsList } from "@store/last-contact/last-contact.store";
-import { getDistrictName } from "@store/object-params/districts.store";
+import { getDistrictName } from "@store/object-params/object-districts.store";
 import { getTasksList } from "@store/task/tasks.store";
 import {
   getMeetingsList,

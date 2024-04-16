@@ -2,10 +2,10 @@ import React from "react";
 import { useSelector } from "react-redux";
 // components
 import SearchField from "@common/inputs/search-field";
-import { FieldsContainer, Form } from "@components/common/forms/styled";
+import { FieldsContainer, Form } from "@styled/styled-form";
 import SearchSelectField from "@common/inputs/search-select-field";
 // data
-import { gendersArray } from "@data/genders";
+import { userGendersArray } from "@data/users/user-genders";
 // store
 import { getUsersLoadingStatus } from "@store/user/users.store";
 
@@ -44,7 +44,7 @@ const UsersLayoutFiltersPanel = React.memo(({ data, register }) => {
           labelId="gender"
           label="Пол"
           value={data.gender}
-          itemsList={gendersArray}
+          itemsList={userGendersArray}
           disabled={isLoading ? true : false}
         />
       </FieldsContainer>

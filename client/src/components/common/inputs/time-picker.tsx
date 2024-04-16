@@ -3,9 +3,9 @@ import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { TimePicker } from "@mui/x-date-pickers/TimePicker";
-import Errors from "./components/errors";
 import { useTheme } from "@emotion/react";
 import { tokens } from "@theme/theme";
+import ErrorsForInput from "./errors-for-input";
 
 const FieldsContainer = styled(Box)`
   width: 100%;
@@ -23,7 +23,7 @@ const TimePickerStyled = ({
   errors = null,
   disabled = false,
   isHelperText = false,
-  required = false,
+  required = false
 }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -36,7 +36,7 @@ const TimePickerStyled = ({
           <DemoContainer
             components={["TimePicker"]}
             sx={{
-              paddingTop: "8px",
+              paddingTop: "8px"
             }}
           >
             <TimePicker
@@ -53,27 +53,27 @@ const TimePickerStyled = ({
                 width: "100%",
                 "& .MuiOutlinedInput-root": {
                   "& fieldset": {
-                    borderColor: errors ? colors.error["red"] : "gray",
+                    borderColor: errors ? colors.error["red"] : "gray"
                   },
                   "&.Mui-focused fieldset": {
-                    borderColor: errors ? "red" : "green",
-                  },
+                    borderColor: errors ? "red" : "green"
+                  }
                 },
                 "& .MuiInputLabel-root": {
-                  color: "gray",
+                  color: "gray"
                 },
                 "& label.Mui-focused": {
-                  color: "white",
+                  color: "white"
                 },
                 "& .MuiButtonBase-root": {
-                  color: value ? "white" : "gray",
-                },
+                  color: value ? "white" : "gray"
+                }
               }}
             />
           </DemoContainer>
           {isHelperText ? <FormHelperText>{helperText}</FormHelperText> : null}
         </LocalizationProvider>
-        <Errors errors={errors} padding="0 0 0 10px" />
+        <ErrorsForInput errors={errors} padding="0 0 0 10px" />
       </Box>
     </FieldsContainer>
   );

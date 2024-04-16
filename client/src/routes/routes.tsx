@@ -18,8 +18,8 @@ import PresentationsLayout from "@layouts/presentations/presentations";
 import CompaniesLayout from "@layouts/companies/companies.layout";
 import CallbackLayout from "@layouts/callback/callback.layout";
 // components
-import UpdateProfile from "@components/pages/user/update-profile";
-import NoMatchRoute from "@components/common/rout/no-match";
+import UpdateProfile from "@components/pages/profile/update-profile";
+import NoMatchPageRoute from "@components/common/route/no-match-page.route";
 import EmailActivated from "@components/pages/email-activated/email-activated.page";
 import RecoveryPassword from "@components/pages/password/recovery-password/recovery-password.page";
 import SetupPassword from "@components/pages/password/setup-password/setup-password.page";
@@ -48,7 +48,7 @@ export default function AppRoutes() {
 
   return (
     <Routes>
-      <Route path="*" element={<NoMatchRoute />} />
+      <Route path="*" element={<NoMatchPageRoute />} />
       <Route
         path="/"
         element={isLoggedIn ? <ObjectsLayout /> : <MainLayout />}
@@ -57,7 +57,7 @@ export default function AppRoutes() {
         path="auth/*"
         element={isLoggedIn ? <ObjectsLayout /> : <MainLayout />}
       />
-      <Route path="password/*" element={<NoMatchRoute />} />
+      <Route path="password/*" element={<NoMatchPageRoute />} />
       <Route path="password/recovery/:link" element={<RecoveryPassword />} />
       <Route path="payment/*" element={<ResultPaymentPage />} />
       <Route

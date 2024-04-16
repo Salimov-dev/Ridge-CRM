@@ -1,3 +1,6 @@
+import { useTheme } from "@emotion/react";
+import { tokens } from "@theme/theme";
+import styled from "@emotion/styled";
 // MUI
 import { Box } from "@mui/material";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -5,10 +8,8 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 // utils
 import getDateToday from "@utils/date/get-date-today";
-import Errors from "./components/errors";
-import { useTheme } from "@emotion/react";
-import { tokens } from "@theme/theme";
-import styled from "@emotion/styled";
+// components
+import ErrorsForInput from "./errors-for-input";
 
 const today = getDateToday();
 
@@ -68,7 +69,7 @@ const DatePickerStyled = ({
           }}
         />
       </LocalizationProvider>
-      <Errors errors={errors} padding="0 0 0 10px" />
+      <ErrorsForInput errors={errors} padding="0 0 0 10px" />
     </Component>
   );
 };

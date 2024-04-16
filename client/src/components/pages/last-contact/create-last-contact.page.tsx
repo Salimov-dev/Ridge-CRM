@@ -8,7 +8,7 @@ import { tokens } from "@theme/theme";
 import { useDispatch } from "react-redux";
 // components
 import PageDialogs from "@components/common/dialog/page-dialogs";
-import HeaderWithCloseButton from "@common/page-headers/header-with-close-button";
+import HeaderWithCloseButtonForPage from "@components/common/headers/header-with-close-button.page";
 import SuccessCancelFormButtons from "@components/common/buttons/success-cancel-form-buttons";
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
 // forms
@@ -16,7 +16,7 @@ import LastContactForm from "@forms/last-contact/last-contact.form";
 // store
 import { createLastContact } from "@store/last-contact/last-contact.store";
 // schema
-import { lastContactSchema } from "@schemas/last-contact.schema";
+import { lastContactSchema } from "@schemas/last-contact/last-contact.schema";
 // utils
 import { capitalizeFirstLetter } from "@utils/data/capitalize-first-letter";
 // initial-states
@@ -78,7 +78,7 @@ const CreateLastContact = React.memo(({ objectPageId, onClose }) => {
 
   return (
     <>
-      <HeaderWithCloseButton
+      <HeaderWithCloseButtonForPage
         title="Добавить последний контакт"
         color="white"
         margin="0 0 20px 0"

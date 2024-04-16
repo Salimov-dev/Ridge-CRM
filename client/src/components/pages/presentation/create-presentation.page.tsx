@@ -8,16 +8,16 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useDispatch, useSelector } from "react-redux";
 // components
 import SuccessCancelFormButtons from "@components/common/buttons/success-cancel-form-buttons";
-import HeaderWithCloseButton from "@common/page-headers/header-with-close-button";
+import HeaderWithCloseButtonForPage from "@components/common/headers/header-with-close-button.page";
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
 // schema
-import { presentationSchema } from "@schemas/presentation.schema";
+import { presentationSchema } from "@schemas/presentation/presentation.schema";
 // utils
 import transformObjectsForSelect from "@utils/objects/transform-objects-for-select";
 // initial-states
 import { presentationCreateInitialState } from "@initial-states/pages/presentation-create.initial-state";
 // data
-import { presentationToBeAgreeStatusId } from "@data/presentations/presentations-status";
+import { presentationToBeAgreeStatusId } from "@data/presentations/presentations-statuses";
 // forms
 import PresentationForm from "@forms/presentation/presentation.form";
 // store
@@ -97,7 +97,7 @@ const CreatePresentation = React.memo(({ objectId, onClose, isObjectPage }) => {
 
   return (
     <>
-      <HeaderWithCloseButton
+      <HeaderWithCloseButtonForPage
         title="Добавить презентацию"
         color="white"
         margin="0 0 20px 0"

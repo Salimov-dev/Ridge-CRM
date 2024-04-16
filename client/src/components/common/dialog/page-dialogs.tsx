@@ -15,12 +15,12 @@ import UpdateManagerTask from "@components/pages/task/update-manager-task";
 import CreateManagerTask from "@components/pages/task/create-manager-task";
 import UpdateTask from "@components/pages/task/update-task";
 import CreateMyTask from "@components/pages/task/create-my-task";
-import UpdateAvatar from "@components/pages/user/update-avatar-user";
+import UpdateAvatar from "@components/pages/avatar/update-avatar-user";
 import UpdatePresentation from "@components/pages/presentation/update-presentation.page";
 import AuthPage from "@components/pages/auth/auth.page";
-import UpdateProfile from "@components/pages/user/update-profile";
-import UpdatePassword from "@components/pages/user/update-password";
-import CreateUser from "@components/pages/user/create-user";
+import UpdateProfile from "@components/pages/profile/update-profile";
+import UpdatePassword from "@components/pages/password/update-password/update-password";
+import CreateUser from "@components/pages/user/create-user/create-user";
 import MakePaymentPage from "@components/pages/payment/make-payment.page";
 import CreateContact from "@components/pages/contact/create-contact.page";
 import UpdateContact from "@components/pages/contact/update-contact.page";
@@ -28,7 +28,7 @@ import CreateCompany from "@components/pages/company/create-company.page";
 import UpdateCompany from "@components/pages/company/update-company.page";
 import Agreement from "@components/pages/agreement/agreement";
 import PersonalPolicy from "@components/pages/agreement/personal-policy";
-import UpdateUser from "@components/pages/user/update-user";
+import UpdateUser from "@components/pages/user/update-user/update-user";
 import VideoPlayerPage from "@components/pages/video-player/video-player.page";
 
 const PageDialogs = ({

@@ -6,7 +6,7 @@ import configFile from "@config/config.json";
 // utils
 import isOutDated from "@utils/auth/is-out-date";
 // services
-import localStorageService from "@services/user/local.storage-service";
+import localStorageService from "@services/local-storage/local.storage-service";
 import lastContactService from "@services/last-contact/last-contact.service";
 
 const socket = io(configFile.ioEndPoint);

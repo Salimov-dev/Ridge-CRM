@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import { Box, Typography, styled } from "@mui/material";
 // store
-import { getUserLicensesByUserId } from "@store/user/user-license.store";
+import { getUserLicensesByUserId } from "@store/license/user-license.store";
 import { getCurrentUserId } from "@store/user/users.store";
 
 const Map = styled(Box)`

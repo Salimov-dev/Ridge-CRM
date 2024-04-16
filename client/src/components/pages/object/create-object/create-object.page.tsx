@@ -10,7 +10,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import ObjectForm from "@forms/object/object.form";
 import FindObjectOnMap from "@common/find-object-on-map/find-object-on-map";
 import AlertObjectInDatabase from "./components/alert-object-in-database";
-import HeaderWithCloseButton from "@components/common/page-headers/header-with-close-button";
+import HeaderWithCloseButtonForPage from "@components/common/headers/header-with-close-button.page";
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
 import SuccessCancelFormButtons from "@components/common/buttons/success-cancel-form-buttons";
 import PageDialogs from "@components/common/dialog/page-dialogs";
@@ -23,11 +23,11 @@ import { removeSpacesAndConvertToNumber } from "@utils/data/remove-spaces-and-co
 // initial-states
 import { objectCreateInitialState } from "@initial-states/pages/object-create.initial-state";
 // data
-import { hasDistrict } from "@data/object/has-district";
+import { objectHasDistrict } from "@data/object/object-has-district";
 // store
 import { createObject, getObjectsList } from "@store/object/objects.store";
 import { getCurrentUserId } from "@store/user/users.store";
-import { getUserLicensesByUserId } from "@store/user/user-license.store";
+import { getUserLicensesByUserId } from "@store/license/user-license.store";
 
 const CreateObject = React.memo(({ onClose }) => {
   const dispatch = useDispatch();
@@ -146,7 +146,7 @@ const CreateObject = React.memo(({ onClose }) => {
       selectedArea?.includes("Казань")
     ) {
       setValue("district", null);
-    } else if (hasDistrict(selectedArea)) {
+    } else if (objectHasDistrict(selectedArea)) {
       setValue("metro", null);
       setValue("district", null);
     } else {
@@ -166,7 +166,7 @@ const CreateObject = React.memo(({ onClose }) => {
 
   return (
     <>
-      <HeaderWithCloseButton
+      <HeaderWithCloseButtonForPage
         title={getHeaderTitle()}
         color={!isFindedObject ? "white" : "black"}
         margin="0 0 20px 0"

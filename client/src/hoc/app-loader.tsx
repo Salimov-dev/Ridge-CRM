@@ -5,13 +5,12 @@ import { loadObjectsList } from "@store/object/objects.store";
 import { loadObjectStatusList } from "@store/object-params/object-status.store";
 import { loadObjectTypesList } from "@store/object-params/object-types.store";
 // objects params
-import { loadMetroList } from "@store/object-params/metro.store";
-import { loadDistrictsList } from "@store/object-params/districts.store";
-import { loadWorkingPositionList } from "@store/user-params/working-position.store";
-import { loadCurrentRentersList } from "@store/object-params/current-renter.store";
+import { loadMetroList } from "@store/object-params/object-metro.store";
+import { loadDistrictsList } from "@store/object-params/object-districts.store";
+import { loadCurrentRentersList } from "@store/object-params/object-current-renter.store";
 import { loadObjectConditionsList } from "@store/object-params/object-conditions.store";
-import { loadRentTypesList } from "@store/object-params/rent-types.store";
-import { loadEstateTypesList } from "@store/object-params/estate-types.store";
+import { loadRentTypesList } from "@store/object-params/object-rent-types.store";
+import { loadEstateTypesList } from "@store/object-params/object-estate-types.store";
 import { loadObjectPropertiesList } from "@store/object-params/object-properties";
 import { loadTradeAreaList } from "@store/object-params/object-trade-area";
 import { loadCitiesList } from "@store/city/citites.store";
@@ -30,7 +29,7 @@ import { loadUserStatusesList } from "@store/user-params/user-statuses.store";
 import {
   getUserLicensesByUserId,
   loadUserLicensesList
-} from "@store/user/user-license.store";
+} from "@store/license/user-license.store";
 // company
 import { loadCompaniesList } from "@store/company/company.store";
 // tasks
@@ -46,7 +45,7 @@ import { loadUserRolesList } from "@store/user-params/user-role.store";
 // contact
 import { loadContactsList } from "@store/contact/contact.store";
 import { loadContactPositionsList } from "@store/contact/contact-positions.store";
-import { licenseTypeBlockedId } from "@data/users/user-license-statuses";
+import { licenseTypeBlockedId } from "@data/license/user-license-statuses";
 
 interface AppLoaderProps {
   children: React.ReactNode;
@@ -75,7 +74,6 @@ const AppLoader = ({ children }: AppLoaderProps) => {
       // objects params
       dispatch<any>(loadMetroList());
       dispatch<any>(loadDistrictsList());
-      dispatch<any>(loadWorkingPositionList());
       dispatch<any>(loadCurrentRentersList());
       dispatch<any>(loadRentTypesList());
       dispatch<any>(loadEstateTypesList());

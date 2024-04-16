@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 // components
-import { FieldsContainer, Form } from "@common/forms/styled";
+import { FieldsContainer, Form } from "@styled/styled-form";
 import MultiSelectField from "@common/inputs/multi-select-field";
 import ClearFilterButton from "@common/buttons/clear-filter.button";
 // utils

@@ -5,20 +5,33 @@ import { useFieldArray } from "react-hook-form";
 import ControlPointOutlinedIcon from "@mui/icons-material/ControlPointOutlined";
 import DoNotDisturbOnOutlinedIcon from "@mui/icons-material/DoNotDisturbOnOutlined";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
+import styled from "@emotion/styled";
 // components
 import AutocompleteStyled from "@components/common/inputs/autocomplete-styled";
 import RowTitle from "@components/common/titles/row-title";
 import ButtonStyled from "@components/common/buttons/button-styled.button";
-import OpenPageElementIconButton from "@components/common/buttons/icons buttons/open-page-element.button-icon";
+import OpenPageElementIconButton from "@components/common/button-icons/open-page-element.button-icon";
 import PageDialogs from "@components/common/dialog/page-dialogs";
-import DeleteElementIcon from "@components/common/buttons/icons buttons/delete-element-icon";
+import DeleteElementIcon from "@components/common/button-icons/delete-element-icon";
+import UserNameWithAvatar from "@components/common/user/user-name-with-avatar";
 // hooks
 import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
 import useGetUserAvatar from "@hooks/user/use-get-user-avatar";
 // store
 import { getObjectsList } from "@store/object/objects.store";
 import { getUsersList } from "@store/user/users.store";
-import UserNameWithAvatar from "@components/common/user/user-name-with-avatar";
+
+const FieldContainer = styled(Box)`
+  width: 100%;
+  display: flex;
+  align-items: center;
+`;
+
+const ButtonsContainer = styled(Box)`
+  width: 100%;
+  display: flex;
+  gap: 4px;
+`;
 
 const FieldsObject = ({
   data,
@@ -46,14 +59,14 @@ const FieldsObject = ({
   const watchObjectId = watch("objectId");
   const lastObjectIndex = fieldObjects.length - 1;
   const objectsList = useSelector(getObjectsList());
+  const userAvatars = {};
+  const users = useSelector(getUsersList());
 
   const filteredObjects = objectsList?.filter(
     (object) =>
       !fieldObjects.some((fieldCompany) => fieldCompany.object === object._id)
   );
 
-  const userAvatars = {};
-  const users = useSelector(getUsersList());
   users.forEach((user) => {
     const { getAvatarSrc, isLoading } = useGetUserAvatar(user._id);
     userAvatars[user._id] = { getAvatarSrc, isLoading };
@@ -96,14 +109,7 @@ const FieldsObject = ({
 
         if (field.id) {
           return (
-            <Box
-              key={field.id}
-              sx={{
-                width: "100%",
-                display: "flex",
-                alignItems: "center"
-              }}
-            >
+            <FieldContainer key={field.id}>
               <DeleteElementIcon
                 onClick={() => handleRemoveObject(index)}
                 error={errors?.objects}
@@ -145,13 +151,13 @@ const FieldsObject = ({
                   handleOpenObjectPage(data?.objects?.[index]?.object)
                 }
               />
-            </Box>
+            </FieldContainer>
           );
         } else {
           return null;
         }
       })}
-      <Box sx={{ width: "100%", display: "flex", gap: "4px" }}>
+      <ButtonsContainer>
         <ButtonStyled
           title="Создать объект"
           style="CREATE_NEW_OBJECT"
@@ -178,7 +184,7 @@ const FieldsObject = ({
           icon={<DoNotDisturbOnOutlinedIcon />}
           onClick={() => handleRemoveObject(lastObjectIndex)} // передаем функцию removePhone с аргументом
         />
-      </Box>
+      </ButtonsContainer>
       <PageDialogs state={openObject} setState={setOpenObject} />
     </>
   );

@@ -1,13 +1,7 @@
+import styled from "@emotion/styled";
 import { useFieldArray } from "react-hook-form";
-import {
-  Box,
-  FormControlLabel,
-  FormHelperText,
-  InputAdornment,
-  Switch
-} from "@mui/material";
+import { Box, FormHelperText, InputAdornment } from "@mui/material";
 // icons
-import HighlightOffOutlinedIcon from "@mui/icons-material/HighlightOffOutlined";
 import PhoneIphoneOutlinedIcon from "@mui/icons-material/PhoneIphoneOutlined";
 import ControlPointOutlinedIcon from "@mui/icons-material/ControlPointOutlined";
 import DoNotDisturbOnOutlinedIcon from "@mui/icons-material/DoNotDisturbOnOutlined";
@@ -15,9 +9,21 @@ import DoNotDisturbOnOutlinedIcon from "@mui/icons-material/DoNotDisturbOnOutlin
 import TextFieldStyled from "@components/common/inputs/text-field-styled";
 import RowTitle from "@components/common/titles/row-title";
 import ButtonStyled from "@components/common/buttons/button-styled.button";
-import DeleteElementIcon from "@components/common/buttons/icons buttons/delete-element-icon";
-import SimpleSwitch from "@components/common/inputs/simple-switch";
+import DeleteElementIcon from "@components/common/button-icons/delete-element-icon";
 import SwitchField from "@components/common/inputs/switch-field";
+
+const FieldContainer = styled(Box)`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+`;
+
+const ButtonsContainer = styled(Box)`
+  width: 100%;
+  display: flex;
+  gap: 4px;
+`;
 
 const FieldsPhone = ({ data, register, setValue, errors, control }) => {
   const {
@@ -81,15 +87,7 @@ const FieldsPhone = ({ data, register, setValue, errors, control }) => {
       {fieldPhones?.map((field, index) => {
         if (field.id) {
           return (
-            <Box
-              key={field.id}
-              sx={{
-                width: "100%",
-                height: "100%",
-                display: "flex",
-                alignItems: "center"
-              }}
-            >
+            <FieldContainer key={field.id}>
               <DeleteElementIcon
                 onClick={() => handleRemovePhone(index)}
                 error={errors?.phones?.[index]?.phone}
@@ -118,7 +116,7 @@ const FieldsPhone = ({ data, register, setValue, errors, control }) => {
                 checked={field.isDefault || false}
                 onChange={() => handleChangePhone(index, field.isDefault)}
               />
-            </Box>
+            </FieldContainer>
           );
         } else {
           return null;
@@ -128,7 +126,7 @@ const FieldsPhone = ({ data, register, setValue, errors, control }) => {
         Вводите номер телефона только в форматах 79045554433, 78129998877,
         9995544
       </FormHelperText>
-      <Box sx={{ width: "100%", display: "flex", gap: "4px" }}>
+      <ButtonsContainer>
         <ButtonStyled
           title="Добавить телефон"
           style="ADD_SOME_NEW"
@@ -146,7 +144,7 @@ const FieldsPhone = ({ data, register, setValue, errors, control }) => {
           icon={<DoNotDisturbOnOutlinedIcon />}
           onClick={() => handleRemovePhone(lastPhoneIndex)} // передаем функцию removePhone с аргументом
         />
-      </Box>
+      </ButtonsContainer>
     </>
   );
 };

@@ -1,26 +1,26 @@
 import { useMemo } from "react";
 import { useSelector } from "react-redux";
 // utils
-import { FormatDate } from "../../utils/date/format-date";
+import { FormatDate } from "@utils/date/format-date";
 // store
-import { getObjectsStatusList } from "../../store/object-params/object-status.store";
-import { getUsersList } from "../../store/user/users.store";
-import { getDistrictsList } from "../../store/object-params/districts.store";
-import { getMetroList } from "../../store/object-params/metro.store";
-import { getWorkingPositionsList } from "../../store/user-params/working-position.store";
-import { getRentTypesList } from "../../store/object-params/rent-types.store";
-import { getCurrentRentersList } from "../../store/object-params/current-renter.store";
-import { getObjectConditionsList } from "../../store/object-params/object-conditions.store";
-import { getEstateTypesList } from "../../store/object-params/estate-types.store";
-import { getObjectTypesList } from "../../store/object-params/object-types.store";
-import { getObjectPropertiesList } from "../../store/object-params/object-properties";
+import { getObjectsStatusList } from "@store/object-params/object-status.store";
+import { getUsersList } from "@store/user/users.store";
+import { getDistrictsList } from "@store/object-params/object-districts.store";
+import { getMetroList } from "@store/object-params/object-metro.store";
+import { getContactPositionsList } from "@store/contact/contact-positions.store";
+import { getRentTypesList } from "@store/object-params/object-rent-types.store";
+import { getCurrentRentersList } from "@store/object-params/object-current-renter.store";
+import { getObjectConditionsList } from "@store/object-params/object-conditions.store";
+import { getEstateTypesList } from "@store/object-params/object-estate-types.store";
+import { getObjectTypesList } from "@store/object-params/object-types.store";
+import { getObjectPropertiesList } from "@store/object-params/object-properties";
 
 const useModifyObjectToExportExel = (objects) => {
   const statusesList = useSelector(getObjectsStatusList());
   const users = useSelector(getUsersList());
   const districts = useSelector(getDistrictsList());
   const metros = useSelector(getMetroList());
-  const workingPositions = useSelector(getWorkingPositionsList());
+  const workingPositions = useSelector(getContactPositionsList());
   const rentTypes = useSelector(getRentTypesList());
 
   const currentRenters = useSelector(getCurrentRentersList());

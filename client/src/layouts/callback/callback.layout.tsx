@@ -1,12 +1,12 @@
 import { Typography } from "@mui/material";
 // components
-import HeaderLayout from "@components/common/page-headers/header-layout";
+import HeaderForLayout from "@components/common/headers/header-for-layout";
 import { ContainerStyled } from "@components/common/container/container-styled";
 
 const CallbackLayout = () => {
   return (
     <ContainerStyled>
-      <HeaderLayout title="Связаться с разработчиком" />
+      <HeaderForLayout title="Связаться с разработчиком" />
       <Typography variant="h4" sx={{ marginBottom: "20px" }}>
         Есть пожелания или предложения?
       </Typography>

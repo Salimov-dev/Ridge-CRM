@@ -1,4 +1,7 @@
 import { orderBy } from "lodash";
+import { useTheme } from "@emotion/react";
+import { tokens } from "@theme/theme";
+import ErrorsForInput from "./errors-for-input";
 import {
   styled,
   FormControl,
@@ -8,9 +11,6 @@ import {
   OutlinedInput,
   ListItemText
 } from "@mui/material";
-import { useTheme } from "@emotion/react";
-import { tokens } from "@theme/theme";
-import Errors from "./components/errors";
 
 const StyledSelect = styled(Select)(({ theme, colors, items }) => ({
   "&.Mui-focused": {
@@ -83,7 +83,7 @@ const SelectFieldStyled = ({
           </MenuItem>
         ))}
       </StyledSelect>
-      <Errors errors={errors} />
+      <ErrorsForInput errors={errors} />
     </FormControl>
   );
 };

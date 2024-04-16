@@ -1,11 +1,11 @@
 // styled
-import { FieldsContainer, Form } from "@components/common/forms/styled";
+import { FieldsContainer, Form } from "@styled/styled-form";
 // components
 import FieldsPhone from "@components/common/forms/dynamic-fields/fields-phone";
 import FieldsEmail from "@components/common/forms/dynamic-fields/fields-email";
 import FieldsCompany from "@components/common/forms/dynamic-fields/fields-company";
 import FieldsObject from "@components/common/forms/dynamic-fields/fields-object";
-import MainFields from "./components/main-fields";
+import MainFieldsContactForm from "./components/main-fields.contact-form";
 
 const ContactForm = ({
   data,
@@ -20,7 +20,7 @@ const ContactForm = ({
     <>
       <Form noValidate>
         <FieldsContainer sx={{ flexDirection: "column" }}>
-          <MainFields
+          <MainFieldsContactForm
             register={register}
             data={data}
             errors={errors}

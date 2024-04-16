@@ -1,4 +1,4 @@
-import { updateUserLicenseUpdate } from "@store/user/user-license.store";
+import { updateUserLicenseUpdate } from "@store/license/user-license.store";
 import { useDispatch } from "react-redux";
 
 const handleUserLicenseSocket = (socket) => {

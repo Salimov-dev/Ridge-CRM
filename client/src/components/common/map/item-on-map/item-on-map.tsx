@@ -6,7 +6,7 @@ import Loader from "@components/common/loader/loader";
 import { Map, Placemark } from "@pbe/react-yandex-maps";
 import target from "@assets/map/target.png";
 // styles
-import "./styles.css";
+import "@styled/styles-map.css";
 
 const MapContainer = styled(Box)`
   width: 100%;

@@ -5,7 +5,7 @@ import BasicTable from "@common/table/basic-table";
 import ButtonStyled from "@components/common/buttons/button-styled.button";
 import RowTitle from "@components/common/titles/row-title";
 // utils
-import sortingByDateAndTime from "@utils/other/sorting-by-date-and-time";
+import sortingByDateAndTime from "@utils/sort/sorting-by-date-and-time";
 // hooks
 import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
 import {

@@ -3,12 +3,13 @@ import "dayjs/locale/ru";
 import { useSelector } from "react-redux";
 // mui
 import { Box, Typography } from "@mui/material";
+// styled
+import { AlignCenter } from "@styled/styled-columns";
 // components
 import EmptyTd from "@components/common/columns/empty-td";
 import UserNameWithAvatar from "@components/common/user/user-name-with-avatar";
 import ButtonStyled from "@components/common/buttons/button-styled.button";
-import { AlignCenter } from "@components/common/columns/styled";
-import ContactTableEntity from "@components/common/table-entities/contact-table-entity";
+import ContactTableEntity from "@components/common/table-entities/contact.table-entity";
 // hooks
 import useGetUserAvatar from "@hooks/user/use-get-user-avatar";
 // utils
@@ -17,8 +18,7 @@ import { FormatDate } from "@utils/date/format-date";
 import { getLastContactsById } from "@store/last-contact/last-contact.store";
 import {
   getCurrentUserId,
-  getIsUserAuthorThisEntity,
-  getIsUserManager
+  getIsUserAuthorThisEntity
 } from "@store/user/users.store";
 
 export const lastContactColumns = (onUpdate, onOpenContactPage, isManager) => {
