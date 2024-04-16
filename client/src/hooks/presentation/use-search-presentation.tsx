@@ -1,5 +1,6 @@
 import "dayjs/locale/ru";
 import dayjs from "dayjs";
+import { orderBy } from "lodash";
 import { useMemo } from "react";
 import { getObjectsList } from "../../store/object/objects.store";
 import { useSelector } from "react-redux";
@@ -12,7 +13,6 @@ const useSearchPresentation = (presentations, data) => {
 
     const searchObjectsByAddress = (objects, searchTerm) => {
       return objects.filter((obj) => {
-
         if (obj) {
           const fullAddress = `${obj.city}, ${obj.address}`;
           return fullAddress.toLowerCase().includes(searchTerm);
@@ -75,7 +75,11 @@ const useSearchPresentation = (presentations, data) => {
     return array;
   }, [data, presentations]);
 
-  return searchedPresentations;
+  const sortedSearchedPresentations = useMemo(() => {
+    return orderBy(searchedPresentations, ["created_at"], ["desc"]);
+  }, [searchedPresentations]);
+
+  return { searchedPresentations: sortedSearchedPresentations };
 };
 
 export default useSearchPresentation;

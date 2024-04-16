@@ -1,7 +1,6 @@
 import dayjs from "dayjs";
-import { orderBy } from "lodash";
 import { useForm } from "react-hook-form";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 // components
 import HeaderLayout from "@components/common/page-headers/header-layout";
@@ -54,10 +53,7 @@ const ContactsLayout = React.memo(() => {
   const isCurrentUserRoleManager = useSelector(getIsCurrentUserRoleManager());
 
   const contactsList = useSelector(getContactsList());
-  const searchedContacts = useSearchContact(contactsList, data);
-  const sortedContacts = useMemo(() => {
-    return orderBy(searchedContacts, ["created_at"], ["desc"]);
-  }, [searchedContacts]);
+  const { searchedContacts } = useSearchContact(contactsList, data);
 
   useEffect(() => {
     localStorage.setItem("search-contacts-data", JSON.stringify(data));
@@ -88,7 +84,7 @@ const ContactsLayout = React.memo(() => {
         setValue={setValue}
       />
       <BasicTable
-        items={sortedContacts}
+        items={searchedContacts}
         itemsColumns={contactsColumns(
           setStateDialogPages,
           isCurrentUserRoleManager

@@ -1,7 +1,6 @@
 import dayjs from "dayjs";
-import { orderBy } from "lodash";
 import { useForm } from "react-hook-form";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 // common
 import BasicTable from "@common/table/basic-table";
@@ -70,14 +69,13 @@ const Presentations = React.memo(() => {
   const data = watch();
   const objects = useSelector(getObjectsList());
 
-  const isLoading = useSelector(getPresentationsLoadingStatus());
-
   const presentationsList = useSelector(getPresentationsList());
-  const searchedPresentations = useSearchPresentation(presentationsList, data);
-  const sortedPresentations = useMemo(() => {
-    return orderBy(searchedPresentations, ["created_at"], ["desc"]);
-  }, [searchedPresentations]);
+  const { searchedPresentations } = useSearchPresentation(
+    presentationsList,
+    data
+  );
 
+  const isLoading = useSelector(getPresentationsLoadingStatus());
   const isCurrentUserRoleManager = useSelector(getIsCurrentUserRoleManager());
   const isCurrentUserRoleCurator = useSelector(getIsCurrentUserRoleCurator());
 
@@ -164,7 +162,7 @@ const Presentations = React.memo(() => {
         setValue={setValue}
       />
       <BasicTable
-        items={sortedPresentations}
+        items={searchedPresentations}
         itemsColumns={presentationsColumns(
           setStateDialogPages,
           isCurrentUserRoleCurator,

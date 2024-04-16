@@ -9,7 +9,7 @@ import ObjectsDatabase from "@layouts/objects-database/objects-database.layout";
 import Statictics from "@layouts/statistics/statistics";
 import Presentations from "@layouts/presentations/presentations";
 import Users from "@layouts/users/users.layout";
-import Profile from "@layouts/profile/profile";
+import Profile from "@layouts/profile/profile.layout";
 import Companies from "@layouts/companies/companies.layout";
 import ObjectsLayout from "@layouts/objects/objects.layout";
 import MeetingsLayout from "@layouts/meetings/meetings.layout";
@@ -28,6 +28,7 @@ import ResultPaymentPage from "@components/pages/payment/result-payment";
 // store
 import { getIsLoggedIn } from "@store/user/users.store";
 import ObjectsDatabaseLayout from "@layouts/objects-database/objects-database.layout";
+import ProfileLayout from "@layouts/profile/profile.layout";
 
 export default function AppRoutes() {
   const isLoggedIn = useSelector(getIsLoggedIn());
@@ -39,7 +40,7 @@ export default function AppRoutes() {
     { id: 4, path: "meetings/*", element: <MeetingsLayout /> },
     { id: 5, path: "calendar/*", element: <CalendarLayout /> },
     { id: 6, path: "deals/*", element: <DealsLayout /> },
-    { id: 7, path: "profile/*", element: <Profile /> },
+    { id: 7, path: "profile/*", element: <ProfileLayout /> },
     { id: 8, path: ":userId?/presentations", element: <Presentations /> },
     { id: 9, path: ":userId?/profileUpdate", element: <UpdateProfile /> },
     { id: 10, path: "contacts/*", element: <ContactsLayout /> },

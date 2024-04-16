@@ -1,7 +1,6 @@
 import dayjs from "dayjs";
 import { useForm } from "react-hook-form";
 import React, { useEffect, useMemo, useState } from "react";
-import { orderBy } from "lodash";
 import { useSelector } from "react-redux";
 // components
 import HeaderLayout from "@components/common/page-headers/header-layout";
@@ -60,10 +59,7 @@ const CompaniesLayout = React.memo(() => {
   const isCurrentUserRoleCurator = useSelector(getIsCurrentUserRoleCurator());
 
   const companiesList = useSelector(getCompaniesList());
-  const searchedCompanies = useSearchCompany(companiesList, data);
-  const sortedCompanies = useMemo(() => {
-    return orderBy(searchedCompanies, ["created_at"], ["desc"]);
-  }, [searchedCompanies]);
+  const { searchedCompanies } = useSearchCompany(companiesList, data);
 
   useEffect(() => {
     localStorage.setItem("search-Companies-data", JSON.stringify(data));
@@ -94,7 +90,7 @@ const CompaniesLayout = React.memo(() => {
         setValue={setValue}
       />
       <BasicTable
-        items={sortedCompanies}
+        items={searchedCompanies}
         itemsColumns={companiesColumns(
           setStateDialogPages,
           isCurrentUserRoleCurator

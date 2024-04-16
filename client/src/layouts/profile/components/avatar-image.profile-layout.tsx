@@ -10,7 +10,7 @@ const Avatar = styled("img")({
   borderRadius: "50%"
 });
 
-const AvatarImage = ({
+const AvatarImageProfileLayout = ({
   avatarSrc,
   width = "150px",
   height = "150px",
@@ -29,4 +29,4 @@ const AvatarImage = ({
   );
 };
 
-export default AvatarImage;
+export default AvatarImageProfileLayout;

@@ -1,6 +1,7 @@
 import "dayjs/locale/ru";
 import { useMemo } from "react";
 import dayjs from "dayjs";
+import { orderBy } from "lodash";
 import { useSelector } from "react-redux";
 import { getObjectsList } from "@store/object/objects.store";
 
@@ -51,7 +52,11 @@ const useSearchCompany = (companies, data) => {
     return array;
   }, [data, companies]);
 
-  return searchedCompanies;
+  const sortedCompanies = useMemo(() => {
+    return orderBy(searchedCompanies, ["created_at"], ["desc"]);
+  }, [searchedCompanies]);
+
+  return { searchedCompanies: sortedCompanies };
 };
 
 export default useSearchCompany;

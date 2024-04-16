@@ -1,7 +1,7 @@
 import React from "react";
 import { FormatManagerName } from "../table/helpers/helpers";
 import { Box, Typography, styled } from "@mui/material";
-import AvatarImage from "@layouts/profile/components/avatar-image";
+import AvatarImage from "@layouts/profile/components/avatar-image.profile-layout";
 
 const Component = styled(Box)`
   display: flex;

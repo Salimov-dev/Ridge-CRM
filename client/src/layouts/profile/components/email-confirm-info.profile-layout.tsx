@@ -17,7 +17,7 @@ const Container = styled(Box)`
   margin: 0 0 10px 0;
 `;
 
-const EmailConfirmInfo = ({ user }) => {
+const EmailConfirmInfoProfileLayout = ({ user }) => {
   const activationLink = user?.activationLink;
 
   const [isLoading, setIsLoading] = useState(false);
@@ -68,4 +68,4 @@ const EmailConfirmInfo = ({ user }) => {
   );
 };
 
-export default EmailConfirmInfo;
+export default EmailConfirmInfoProfileLayout;

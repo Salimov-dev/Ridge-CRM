@@ -21,7 +21,7 @@ const Container = styled(Box)`
   margin: 30px 0 10px 0;
 `;
 
-const UserProfileInfo = ({ user }) => {
+const UserProfileLayoutInfo = ({ user }) => {
   const userDataArrayMain = [
     { name: "Почта", value: user?.email || "Не задано" },
     { name: "Статус", value: useSelector(getUserStatusNameById(user?.status)) },
@@ -63,4 +63,4 @@ const UserProfileInfo = ({ user }) => {
   );
 };
 
-export default UserProfileInfo;
+export default UserProfileLayoutInfo;

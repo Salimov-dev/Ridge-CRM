@@ -1,13 +1,13 @@
 import { useDispatch, useSelector } from "react-redux";
 import styled from "@emotion/styled";
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 // hooks
 import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
 import useGetUserAvatar from "@hooks/user/use-get-user-avatar";
 // components
-import AvatarImage from "./avatar-image";
 import DialogConfirm from "@components/common/dialog/dialog-confirm";
-import AvatarButtons from "./avatar-buttons";
+import AvatarButtonsProfileLayout from "./avatar-buttons.profile-layout.tsx";
+import AvatarImageProfileLayout from "./avatar-image.profile-layout";
 // store
 import { getCurrentUserId } from "@store/user/users.store";
 import {
@@ -22,7 +22,7 @@ const AvatarContainer = styled(Box)`
   gap: 6px;
 `;
 
-const Avatar = ({ state, setState }) => {
+const AvatarProfileLayout = ({ state, setState }) => {
   const dispatch = useDispatch();
   const isUserLoading = useSelector(getUserAvatarsLoadingStatus());
   const currentUserId = useSelector(getCurrentUserId());
@@ -44,8 +44,11 @@ const Avatar = ({ state, setState }) => {
   return (
     <>
       <AvatarContainer>
-        <AvatarImage avatarSrc={avatarSrc} isLoading={isUserLoading} />
-        <AvatarButtons
+        <AvatarImageProfileLayout
+          avatarSrc={avatarSrc}
+          isLoading={isUserLoading}
+        />
+        <AvatarButtonsProfileLayout
           handleOpenUpdateUserAvatarPage={handleOpenUpdateUserAvatarPage}
           handleClickOpenConfirmDialog={handleClickOpenConfirmDialog}
           avatarSrc={avatarSrc}
@@ -61,4 +64,4 @@ const Avatar = ({ state, setState }) => {
   );
 };
 
-export default Avatar;
+export default AvatarProfileLayout;

@@ -1,6 +1,7 @@
 import "dayjs/locale/ru";
 import { useMemo } from "react";
 import dayjs from "dayjs";
+import { orderBy } from "lodash";
 import { useSelector } from "react-redux";
 import { getObjectsList } from "@store/object/objects.store";
 import { getCompaniesList } from "@store/company/company.store";
@@ -106,7 +107,11 @@ const useSearchContact = (contacts, data) => {
     return array;
   }, [data, contacts]);
 
-  return searchedContacts;
+  const sortedContacts = useMemo(() => {
+    return orderBy(searchedContacts, ["created_at"], ["desc"]);
+  }, [searchedContacts]);
+
+  return { searchedContacts: sortedContacts };
 };
 
 export default useSearchContact;

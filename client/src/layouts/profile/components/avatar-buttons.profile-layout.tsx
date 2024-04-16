@@ -10,7 +10,7 @@ const Component = styled(Box)`
   margin-bottom: 4px;
 `;
 
-const AvatarButtons = ({
+const AvatarButtonsProfileLayout = ({
   handleOpenUpdateUserAvatarPage,
   handleClickOpenConfirmDialog,
   avatarSrc
@@ -40,4 +40,4 @@ const AvatarButtons = ({
   );
 };
 
-export default AvatarButtons;
+export default AvatarButtonsProfileLayout;

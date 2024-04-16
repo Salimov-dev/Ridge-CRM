@@ -13,7 +13,7 @@ const ButtonsContainer = styled(Box)`
   margin-bottom: 30px;
 `;
 
-const ProfileButtons = ({ setState }) => {
+const ButtonsProfileLayout = ({ setState }) => {
   const { handleOpenUpdateProfilePage, handleOpenUpdatePasswordPage } =
     useDialogHandlers(setState);
 
@@ -36,4 +36,4 @@ const ProfileButtons = ({ setState }) => {
   );
 };
 
-export default ProfileButtons;
+export default ButtonsProfileLayout;
