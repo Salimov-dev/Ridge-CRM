@@ -2,7 +2,12 @@ import { Box, IconButton, Typography } from "@mui/material";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import { useNavigate } from "react-router-dom";
 
-const Header = ({ isCollapsed, setIsCollapsed, colors, setSelected }) => {
+const HeaderSidebar = ({
+  isCollapsed,
+  setIsCollapsed,
+  colors,
+  setSelected
+}) => {
   const navigate = useNavigate();
   return (
     <Box
@@ -15,11 +20,10 @@ const Header = ({ isCollapsed, setIsCollapsed, colors, setSelected }) => {
         color: colors.grey[100],
         cursor: "pointer",
         "&:hover": {
-          color: "yellow",
-        },
+          color: "yellow"
+        }
       }}
     >
-      {/* <Typography sx={{}}>Грядка</Typography> */}
       {!isCollapsed && (
         <Box
           display="flex"
@@ -39,4 +43,4 @@ const Header = ({ isCollapsed, setIsCollapsed, colors, setSelected }) => {
   );
 };
 
-export default Header;
+export default HeaderSidebar;

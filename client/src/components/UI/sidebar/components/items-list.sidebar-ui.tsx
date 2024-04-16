@@ -1,6 +1,9 @@
+import { useSelector } from "react-redux";
 // components
-import Item from "./item";
-import ItemsTitle from "./items-title";
+import ItemSidebar from "./item.sidebar-ui";
+import ItemsTitleSidebar from "./items-title.sidebar-ui";
+// store
+import { getIsCurrentUserRoleCurator } from "@store/user/users.store";
 // icons
 import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
 import GroupsOutlinedIcon from "@mui/icons-material/GroupsOutlined";
@@ -13,17 +16,17 @@ import DatasetOutlinedIcon from "@mui/icons-material/DatasetOutlined";
 import ContactPhoneOutlinedIcon from "@mui/icons-material/ContactPhoneOutlined";
 import HandshakeOutlinedIcon from "@mui/icons-material/HandshakeOutlined";
 
-const ItemsList = ({
+const ItemSidebarsListSidebar = ({
   selected,
   setSelected,
   colors,
-  isCurator,
   isCollapsed
 }) => {
+  const isCurrentUserRoleCurator = useSelector(getIsCurrentUserRoleCurator());
   return (
     <>
-      {isCurator && (
-        <Item
+      {isCurrentUserRoleCurator && (
+        <ItemSidebar
           title="Команда"
           to="/users"
           icon={<PeopleOutlinedIcon />}
@@ -31,59 +34,59 @@ const ItemsList = ({
           setSelected={setSelected}
         />
       )}
-      <ItemsTitle
+      <ItemsTitleSidebar
         title="Меню"
         colors={colors.grey[300]}
         isCollapsed={isCollapsed}
       />
-      <Item
+      <ItemSidebar
         title="Объекты"
         to="/objects"
         icon={<BusinessOutlinedIcon />}
         selected={selected}
         setSelected={setSelected}
       />
-      <Item
+      <ItemSidebar
         title="Сделки"
         to="/deals"
         icon={<BusinessCenterOutlinedIcon />}
         selected={selected}
         setSelected={setSelected}
       />
-      <Item
+      <ItemSidebar
         title="Встречи"
         to="/meetings"
         icon={<GroupsOutlinedIcon />}
         selected={selected}
         setSelected={setSelected}
       />
-      <Item
+      <ItemSidebar
         title="Презентации"
         to="/presentations"
         icon={<AssignmentOutlinedIcon />}
         selected={selected}
         setSelected={setSelected}
       />
-      <Item
+      <ItemSidebar
         title="Контакты"
         to="/contacts"
         icon={<ContactPhoneOutlinedIcon />}
         selected={selected}
         setSelected={setSelected}
       />
-      <Item
+      <ItemSidebar
         title="Компании"
         to="/companies"
         icon={<HandshakeOutlinedIcon />}
         selected={selected}
         setSelected={setSelected}
       />
-      <ItemsTitle
+      <ItemsTitleSidebar
         title="Активность"
         colors={colors.grey[300]}
         isCollapsed={isCollapsed}
       />
-      <Item
+      <ItemSidebar
         title="Статистика"
         to="/statictics"
         icon={<DonutSmallOutlinedIcon />}
@@ -91,7 +94,7 @@ const ItemsList = ({
         setSelected={setSelected}
       />
 
-      <Item
+      <ItemSidebar
         title="Проработка базы объектов"
         to="/objectsdatabase"
         icon={<DatasetOutlinedIcon />}
@@ -99,7 +102,7 @@ const ItemsList = ({
         setSelected={setSelected}
       />
 
-      <Item
+      <ItemSidebar
         title="Календарь"
         to="/calendar"
         icon={<CalendarTodayOutlinedIcon />}
@@ -110,4 +113,4 @@ const ItemsList = ({
   );
 };
 
-export default ItemsList;
+export default ItemSidebarsListSidebar;

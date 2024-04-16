@@ -6,10 +6,9 @@ import { Sidebar as ProSidebar, Menu } from "react-pro-sidebar";
 // theme
 import { tokens } from "@theme/theme";
 // components
-import Header from "./components/header";
-import ItemsList from "./components/items-list";
+import HeaderSidebar from "./components/header.sidebar-ui";
+import ItemsListSidebar from "./components/items-list.sidebar-ui";
 // store
-import { getCurrentUserId, getIsUserCurator } from "@store/user/users.store";
 import {
   getCurrrentPathState,
   setCurrrentPathState
@@ -57,7 +56,7 @@ const CountryColors = styled(Box)`
   );
 `;
 
-const Sidebar = React.memo(() => {
+const SidebarUI = React.memo(() => {
   const dispatch = useDispatch();
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -66,8 +65,6 @@ const Sidebar = React.memo(() => {
   const [isCollapsed, setIsCollapsed] = useState(true);
 
   const currentPath = useSelector(getCurrrentPathState());
-  const currentUserId = useSelector(getCurrentUserId());
-  const isCurator = useSelector(getIsUserCurator(currentUserId));
 
   const handleSetCollapsed = (value) => {
     setIsCollapsed(value);
@@ -86,17 +83,16 @@ const Sidebar = React.memo(() => {
       <CountryColors />
       <ProSidebar collapsed={isCollapsed}>
         <Menu>
-          <Header
+          <HeaderSidebar
             isCollapsed={isCollapsed}
             setIsCollapsed={handleSetCollapsed}
             colors={colors}
             setSelected={setSelected}
           />
-          <ItemsList
+          <ItemsListSidebar
             selected={selected}
             setSelected={setSelected}
             colors={colors}
-            isCurator={isCurator}
             isCollapsed={isCollapsed}
           />
         </Menu>
@@ -106,4 +102,4 @@ const Sidebar = React.memo(() => {
   );
 });
 
-export default Sidebar;
+export default SidebarUI;

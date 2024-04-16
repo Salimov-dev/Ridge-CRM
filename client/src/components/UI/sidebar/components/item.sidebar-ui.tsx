@@ -3,7 +3,7 @@ import { Box, Tooltip, Typography, useTheme } from "@mui/material";
 import { Link } from "react-router-dom";
 import { tokens } from "@theme/theme";
 
-const Item = ({ title, to, icon, selected, setSelected }) => {
+const ItemSidebar = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
@@ -32,4 +32,4 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
   );
 };
 
-export default Item;
+export default ItemSidebar;

@@ -9,7 +9,7 @@ import styled from "@emotion/styled";
 import "react-toastify/dist/ReactToastify.css";
 // components
 import TopBar from "./components/UI/topbar/topbar";
-import Sidebar from "./components/UI/sidebar/sidebar";
+import SidebarUI from "./components/UI/sidebar/sidebar.ui";
 import Footer from "./components/common/footer/footer";
 // hoc
 import AppLoader from "./hoc/app-loader";
@@ -65,7 +65,7 @@ function App() {
               //   : "100vh"
             }}
           >
-            <Sidebar />
+            <SidebarUI />
             <RightSide
               sx={{
                 padding: isHomePage
