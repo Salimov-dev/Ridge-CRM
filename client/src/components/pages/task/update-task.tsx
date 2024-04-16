@@ -23,7 +23,7 @@ import { createLastContact } from "@store/last-contact/last-contact.store";
 // store
 import { getTaskById, removeTask, updateTask } from "@store/task/tasks.store";
 
-const UpdateMyTask = React.memo(
+const UpdateTask = React.memo(
   ({ title, taskId, objectId, onClose, isObjectPage }) => {
     const dispatch = useDispatch();
     const theme = useTheme();
@@ -170,4 +170,4 @@ const UpdateMyTask = React.memo(
   }
 );
 
-export default UpdateMyTask;
+export default UpdateTask;

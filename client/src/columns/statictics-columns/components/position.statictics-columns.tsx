@@ -8,12 +8,18 @@ const Container = styled(Box)`
   color: white;
 `;
 
-const Position = ({ onlyTitle, item, title, background, color = "white" }) => {
+const PositionStatisticsColumns = ({
+  onlyTitle,
+  item,
+  title,
+  background,
+  color = "white"
+}) => {
   return (
     <Container
       sx={{
         background: background,
-        color: color,
+        color: color
       }}
     >
       {onlyTitle ? <Typography>{title}</Typography> : item?.length}
@@ -21,4 +27,4 @@ const Position = ({ onlyTitle, item, title, background, color = "white" }) => {
   );
 };
 
-export default Position;
+export default PositionStatisticsColumns;

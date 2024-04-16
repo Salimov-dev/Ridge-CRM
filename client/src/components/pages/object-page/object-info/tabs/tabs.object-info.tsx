@@ -2,7 +2,7 @@ import AcitivtyObjectPage from "../components/activity/activity.object-info";
 import ContactsObjectInfo from "../components/contacts/contacts.object-info";
 import InformationObjectInfo from "../components/information/information.object-info";
 
-const tabsObjectInfo = (object, setState) => {
+const tabsObjectInfoPage = (object, setState) => {
   return [
     {
       label: "Информация",
@@ -19,4 +19,4 @@ const tabsObjectInfo = (object, setState) => {
   ];
 };
 
-export default tabsObjectInfo;
+export default tabsObjectInfoPage;

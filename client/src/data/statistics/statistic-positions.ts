@@ -14,3 +14,7 @@ const statisticPositionsArray = [
 ];
 
 export { statisticPositionsArray };
+
+export const statisticPositionObject = "91dfgiuqh2314ugdfh2144213";
+export const statisticPositionContact = "91dfgiu76fh2384hgf4599565";
+export const statisticPositionPresentation = "91dfgiu76fh2384hgf4599565";

@@ -1,9 +1,14 @@
 import { useSelector } from "react-redux";
 import { Box } from "@mui/material";
-import Position from "./position";
 import { loadStaticticPositions } from "@store/statictics/statictics-positions.store";
+import PositionStatisticsColumns from "./position.statictics-columns";
+import {
+  statisticPositionContact,
+  statisticPositionObject,
+  statisticPositionPresentation
+} from "@data/statistics/statistic-positions";
 
-const TableCell = ({
+const TableCellStatisticsColumns = ({
   objects = [],
   contacts = [],
   presentations = [],
@@ -11,15 +16,18 @@ const TableCell = ({
   isLastWeek = false
 }) => {
   const staticticPositions = useSelector(loadStaticticPositions());
-  const isObjects = staticticPositions?.includes("91dfgiuqh2314ugdfh2144213"); // Объекты
-  const isContacts = staticticPositions?.includes(
-    "91dfgiuqhufj23gh23j854h99" // Контакты
+  const positionIsObjects = staticticPositions?.includes(
+    statisticPositionObject
   );
-  const isPresentations = staticticPositions?.includes(
-    "91dfgiu76fh2384hgf4599565" // Презентации
+  const positionIsContacts = staticticPositions?.includes(
+    statisticPositionContact
+  );
+  const positionIsPresentations = staticticPositions?.includes(
+    statisticPositionPresentation
   );
 
-  const isShowAll = !isObjects && !isContacts && !isPresentations;
+  const isShowAllPositions =
+    !positionIsObjects && !positionIsContacts && !positionIsPresentations;
 
   return (
     <Box
@@ -32,8 +40,8 @@ const TableCell = ({
         padding: isLastWeek ? "4px" : "none"
       }}
     >
-      {isShowAll || isObjects ? (
-        <Position
+      {isShowAllPositions || positionIsObjects ? (
+        <PositionStatisticsColumns
           onlyTitle={onlyTitle}
           item={objects}
           title="Объекты"
@@ -42,8 +50,8 @@ const TableCell = ({
         />
       ) : null}
 
-      {isShowAll || isContacts ? (
-        <Position
+      {isShowAllPositions || positionIsContacts ? (
+        <PositionStatisticsColumns
           onlyTitle={onlyTitle}
           item={contacts}
           title="Контакты"
@@ -51,8 +59,8 @@ const TableCell = ({
         />
       ) : null}
 
-      {isShowAll || isPresentations ? (
-        <Position
+      {isShowAllPositions || positionIsPresentations ? (
+        <PositionStatisticsColumns
           onlyTitle={onlyTitle}
           item={presentations}
           title="Презентации"
@@ -63,4 +71,4 @@ const TableCell = ({
   );
 };
 
-export default TableCell;
+export default TableCellStatisticsColumns;

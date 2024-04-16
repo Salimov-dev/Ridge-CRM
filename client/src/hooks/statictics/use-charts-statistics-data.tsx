@@ -1,6 +1,6 @@
 import dayjs from "dayjs";
 // columns
-import useTableHeader from "@columns/statictics-columns/hooks/use-table-header";
+import useTableHeader from "@hooks/statictics/use-table-statistics-header";
 // data
 import { objectStatusesArray } from "@data/object/object-status";
 // utils

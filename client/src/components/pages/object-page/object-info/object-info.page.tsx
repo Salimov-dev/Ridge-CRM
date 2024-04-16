@@ -1,10 +1,11 @@
 // libraries
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Box, styled } from "@mui/material";
 // components
 import PageDialogs from "@components/common/dialog/page-dialogs";
 import TabsStyled from "@components/common/tabs/tabs-styled";
+import tabsObjectInfoPage from "./tabs/tabs.object-info";
 // utils
 import { getActualUsersList } from "@utils/actual-items/get-actual-users-list";
 // store
@@ -13,7 +14,6 @@ import {
   getCurrentUserId,
   getIsCurrentUserRoleCurator
 } from "@store/user/users.store";
-import tabsObjectInfo from "./tabs/tabs.object-info";
 
 const Component = styled(Box)`
   display: flex;
@@ -39,6 +39,7 @@ const ObjectInfoPage = ({ object }) => {
     meetingId: ""
   });
 
+  const objectId = object?._id;
   const objects = useSelector(getObjectsList());
   const actualUsersList = getActualUsersList(objects);
 
@@ -53,10 +54,17 @@ const ObjectInfoPage = ({ object }) => {
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
+
+  useEffect(() => {
+    if (objectId) {
+      setState((prevState) => ({ ...prevState, objectId: objectId }));
+    }
+  }, []);
+
   return (
     <Component>
       <TabsStyled
-        tabs={tabsObjectInfo(object, setState)}
+        tabs={tabsObjectInfoPage(object, setState)}
         value={value}
         onChange={handleTabChange}
       />

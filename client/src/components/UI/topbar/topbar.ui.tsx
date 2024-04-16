@@ -7,7 +7,7 @@ import { Box, styled } from "@mui/material";
 // components
 import TopBarCurrentDate from "./components/current-date.topbar-ui";
 import TopBarRightSide from "./components/right-side.topbar-ui";
-import TopBarWeeklyResults from "./components/weekly-results.topbar";
+import TopBarWeeklyResults from "./components/weekly-results.topbar-ui";
 // store
 import { getIsLoggedIn } from "@store/user/users.store";
 

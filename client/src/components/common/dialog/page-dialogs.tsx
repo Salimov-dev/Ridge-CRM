@@ -13,7 +13,7 @@ import UpdateLastContact from "@components/pages/last-contact/update-last-contac
 import CreateLastContact from "@components/pages/last-contact/create-last-contact.page";
 import UpdateManagerTask from "@components/pages/task/update-manager-task";
 import CreateManagerTask from "@components/pages/task/create-manager-task";
-import UpdateMyTask from "@components/pages/task/update-my-task";
+import UpdateTask from "@components/pages/task/update-task";
 import CreateMyTask from "@components/pages/task/create-my-task";
 import UpdateAvatar from "@components/pages/user/update-avatar-user";
 import UpdatePresentation from "@components/pages/presentation/update-presentation.page";
@@ -162,7 +162,7 @@ const PageDialogs = ({
         open={state.updateMyTaskPage}
         maxWidth="sm"
         component={
-          <UpdateMyTask
+          <UpdateTask
             title="Изменить свою задачу"
             taskId={state.taskId}
             objectId={state.objectId}

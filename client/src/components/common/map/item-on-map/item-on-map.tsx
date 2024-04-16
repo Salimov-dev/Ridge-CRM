@@ -1,10 +1,10 @@
 // MUI
 import { Box, styled } from "@mui/material";
 // components
-import Loader from "../../loader/loader";
+import Loader from "@components/common/loader/loader";
 // yandex map
 import { Map, Placemark } from "@pbe/react-yandex-maps";
-import target from "../../../../assets/map/target.png";
+import target from "@assets/map/target.png";
 // styles
 import "./styles.css";
 
@@ -26,30 +26,28 @@ const ItemOnMap = ({ hintContent, center, mapZoom, isLoading }) => {
           defaultState={{
             center: center,
             zoom: mapZoom,
-            controls: ["zoomControl", "searchControl"],
+            controls: ["zoomControl", "searchControl"]
           }}
           modules={[
             "geoObject.addon.hint",
             "control.ZoomControl",
-            "control.SearchControl",
+            "control.SearchControl"
           ]}
           options={{
-            suppressMapOpenBlock: true,
+            suppressMapOpenBlock: true
           }}
         >
           <Placemark
             modules={["geoObject.addon.hint"]}
-      
             options={{
               iconLayout: "default#image",
               iconImageHref: target,
               iconImageSize: [40, 40],
-              iconImageOffset: [-20, -40],
-  
+              iconImageOffset: [-20, -40]
             }}
             geometry={center}
             properties={{
-              hintContent: hintContent,
+              hintContent: hintContent
             }}
           />
         </Map>

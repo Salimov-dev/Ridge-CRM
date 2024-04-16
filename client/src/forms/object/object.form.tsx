@@ -33,7 +33,6 @@ import { getObjectPropertiesList } from "@store/object-params/object-properties"
 import { getCurrentRentersList } from "@store/object-params/current-renter.store";
 import { getObjectConditionsList } from "@store/object-params/object-conditions.store";
 import { getTradeAreaList } from "@store/object-params/object-trade-area";
-import { getMetroList } from "@store/object-params/metro.store";
 
 const ObjectForm = ({
   data,
@@ -77,19 +76,18 @@ const ObjectForm = ({
   const watchObjectProperties = watch("objectProperties");
   const watchObjectTradeArea = watch("tradeArea");
   const watchCloudLink = watch("cloudLink");
+  const watchCity = watch("city");
 
   const getObjectMetrosList = () => {
-    if (selectedArea?.includes("Санкт-Петербург")) {
+    let area = selectedArea ? selectedArea : watchCity;
+    if (area?.includes("Санкт-Петербург")) {
       return metroListArraySPB;
-    } else if (selectedArea?.includes("Москва")) {
+    } else if (area?.includes("Москва")) {
       return metroListArrayMSK;
-    } else if (selectedArea?.includes("Казань")) {
+    } else if (area?.includes("Казань")) {
       return metroListArrayKZN;
     }
   };
-
-  const metroList = useSelector(getMetroList());
-  const sortedAllMetros = orderBy(metroList, ["name"], ["asc"]);
   const sortedMetrosForFindedObject = orderBy(
     getObjectMetrosList(),
     ["name"],
@@ -133,7 +131,7 @@ const ObjectForm = ({
             register={register}
             name="metro"
             labelId="metro"
-            itemsList={isUpdate ? sortedAllMetros : sortedMetrosForFindedObject}
+            itemsList={sortedMetrosForFindedObject}
             value={watchMetro ?? null}
             disabled={!watchDistrict}
           />

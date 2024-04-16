@@ -1,21 +1,21 @@
 import "dayjs/locale/ru";
 import "dayjs/locale/ru";
 import dayjs from "dayjs";
+import { Typography } from "@mui/material";
 import { useSelector } from "react-redux";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 // components
-import TableCell from "./components/table-cell";
-import UserNameWithAvatar from "../../components/common/user/user-name-with-avatar";
+import TableCellStatisticsColumns from "./components/table-cell.statictics-columns";
+import UserNameWithAvatar from "@components/common/user/user-name-with-avatar";
 // hooks
-import { useTableHeader } from "./hooks/use-table-header";
+import { useTableHeader } from "@hooks/statictics/use-table-statistics-header";
 // utils
-import { getWeeklyObjects } from "../../utils/objects/get-weekly-objects";
-import { getWeeklyPresentations } from "../../utils/presentations/get-weekly-presentations";
+import { getWeeklyObjects } from "@utils/objects/get-weekly-objects";
+import { getWeeklyPresentations } from "@utils/presentations/get-weekly-presentations";
 // store
-import { getObjectsList } from "../../store/object/objects.store";
-import { getPresentationsList } from "../../store/presentation/presentations.store";
-import { Typography } from "@mui/material";
-import useGetUserAvatar from "../../hooks/user/use-get-user-avatar";
+import { getObjectsList } from "@store/object/objects.store";
+import { getPresentationsList } from "@store/presentation/presentations.store";
+import useGetUserAvatar from "@hooks/user/use-get-user-avatar";
 import { getContactsList } from "@store/contact/contact.store";
 import { getWeeklyContacts } from "@utils/contacts/get-weekly-contacts";
 import { AlignCenter } from "@components/common/columns/styled";
@@ -57,7 +57,7 @@ const generateMonthHeaders = () => {
         });
 
         return (
-          <TableCell
+          <TableCellStatisticsColumns
             objects={currentMonthObjects}
             contacts={currentMonthContacts}
             presentations={currentMonthPresentations}
@@ -97,7 +97,7 @@ const generateMonthHeaders = () => {
         });
 
         return (
-          <TableCell
+          <TableCellStatisticsColumns
             objects={currentMonthObjects}
             contacts={currentMonthContacts}
             presentations={currentMonthPresentations}
@@ -141,10 +141,10 @@ export const staticticsColumnsCurator = [
         header: "Позиция",
         enableSorting: false,
         footer: () => {
-          return <TableCell onlyTitle={true} />;
+          return <TableCellStatisticsColumns onlyTitle={true} />;
         },
         cell: () => {
-          return <TableCell onlyTitle={true} />;
+          return <TableCellStatisticsColumns onlyTitle={true} />;
         }
       },
       {
@@ -189,7 +189,7 @@ export const staticticsColumnsCurator = [
           });
 
           return (
-            <TableCell
+            <TableCellStatisticsColumns
               objects={currentMonthObjects}
               contacts={currentMonthContacts}
               presentations={currentMonthPresentations}
@@ -245,7 +245,7 @@ export const staticticsColumnsCurator = [
           );
 
           return (
-            <TableCell
+            <TableCellStatisticsColumns
               objects={currentMonthObjects}
               contacts={currentMonthContacts}
               presentations={currentMonthPresentations}
@@ -302,7 +302,7 @@ export const staticticsColumnsCurator = [
           );
 
           return (
-            <TableCell
+            <TableCellStatisticsColumns
               objects={weeklyObjects}
               contacts={weeklyContacts}
               presentations={weeklyPresentations}
@@ -354,7 +354,7 @@ export const staticticsColumnsCurator = [
           );
 
           return (
-            <TableCell
+            <TableCellStatisticsColumns
               objects={weeklyObjects}
               contacts={weeklyContacts}
               presentations={weeklyPresentations}
@@ -404,7 +404,7 @@ export const staticticsColumnsCurator = [
             contacts
           );
           return (
-            <TableCell
+            <TableCellStatisticsColumns
               objects={weeklyObjects}
               contacts={weeklyContacts}
               presentations={weeklyPresentations}
@@ -458,7 +458,7 @@ export const staticticsColumnsCurator = [
           );
 
           return (
-            <TableCell
+            <TableCellStatisticsColumns
               objects={weeklyObjects}
               contacts={weeklyContacts}
               presentations={weeklyPresentations}
@@ -509,7 +509,7 @@ export const staticticsColumnsCurator = [
           );
 
           return (
-            <TableCell
+            <TableCellStatisticsColumns
               objects={weeklyObjects}
               contacts={weeklyContacts}
               presentations={weeklyPresentations}
@@ -563,7 +563,7 @@ export const staticticsColumnsCurator = [
           );
 
           return (
-            <TableCell
+            <TableCellStatisticsColumns
               objects={weeklyObjects}
               contacts={weeklyContacts}
               presentations={weeklyPresentations}
@@ -616,7 +616,7 @@ export const staticticsColumnsCurator = [
           );
 
           return (
-            <TableCell
+            <TableCellStatisticsColumns
               objects={weeklyObjects}
               contacts={weeklyContacts}
               presentations={weeklyPresentations}
@@ -665,7 +665,7 @@ export const staticticsColumnsCurator = [
           );
 
           return (
-            <TableCell
+            <TableCellStatisticsColumns
               objects={weeklyObjects}
               contacts={weeklyContacts}
               presentations={weeklyPresentations}
