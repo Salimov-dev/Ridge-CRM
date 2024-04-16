@@ -1,10 +1,4 @@
-import { CircularProgress, Box, styled } from "@mui/material";
-
-const Components = styled(Box)`
-  display: flex;
-  justifycontent: center;
-  align-items: center;
-`;
+import { CircularProgress, Box } from "@mui/material";
 
 const Loader = ({
   size = 25,
@@ -14,15 +8,18 @@ const Loader = ({
   padding = "30px 0"
 }) => {
   return (
-    <Components
+    <Box
       sx={{
         width: { width },
         height: { height },
-        padding: padding
+        padding: padding,
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center"
       }}
     >
       <CircularProgress sx={{ color: color }} size={size} />
-    </Components>
+    </Box>
   );
 };
 
