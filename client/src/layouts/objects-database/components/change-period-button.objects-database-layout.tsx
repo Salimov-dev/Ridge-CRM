@@ -1,12 +1,12 @@
 import { Button, Typography } from "@mui/material";
 
-const ChangePeriodButton = ({
+const ChangePeriodButtonObjectsDatabase = ({
   width = "100%",
   text,
   period,
   selectedPeriod,
   color = "inherit",
-  onChangePeriod
+  onClick
 }) => {
   return (
     <Button
@@ -15,13 +15,14 @@ const ChangePeriodButton = ({
       sx={{
         width: width,
         color: color,
-        border: period === selectedPeriod ? "2px solid yellow" : "1px solid green",
+        border:
+          period === selectedPeriod ? "2px solid yellow" : "1px solid green"
       }}
-      onClick={() => onChangePeriod(selectedPeriod)}
+      onClick={onClick}
     >
       <Typography>{text}</Typography>
     </Button>
   );
 };
 
-export default ChangePeriodButton;
+export default ChangePeriodButtonObjectsDatabase;

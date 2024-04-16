@@ -5,7 +5,7 @@ import RequireAuth from "@routes/components/require-auth";
 import RequireActiveLicense from "@routes/components/require-active-license";
 // layouts
 import Objects from "@layouts/objects/objects.layout";
-import ObjectsDatabase from "@layouts/objects-database/objects-database";
+import ObjectsDatabase from "@layouts/objects-database/objects-database.layout";
 import Statictics from "@layouts/statistics/statistics";
 import Presentations from "@layouts/presentations/presentations";
 import Users from "@layouts/users/users.layout";
@@ -27,13 +27,14 @@ import SetupPassword from "@components/pages/password/setup-password";
 import ResultPaymentPage from "@components/pages/payment/result-payment";
 // store
 import { getIsLoggedIn } from "@store/user/users.store";
+import ObjectsDatabaseLayout from "@layouts/objects-database/objects-database.layout";
 
 export default function AppRoutes() {
   const isLoggedIn = useSelector(getIsLoggedIn());
 
   const routes = [
     { id: 1, path: "objects/*", element: <ObjectsLayout /> },
-    { id: 2, path: "objectsdatabase/*", element: <ObjectsDatabase /> },
+    { id: 2, path: "objectsdatabase/*", element: <ObjectsDatabaseLayout /> },
     { id: 3, path: "statictics/*", element: <Statictics /> },
     { id: 4, path: "meetings/*", element: <MeetingsLayout /> },
     { id: 5, path: "calendar/*", element: <CalendarLayout /> },

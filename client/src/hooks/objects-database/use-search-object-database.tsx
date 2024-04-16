@@ -280,7 +280,14 @@ const useSearchObjectDatabase = (objects, data, period) => {
     return orderBy(filteredObjects, ["created_at"], ["desc"]);
   }, [filteredObjects]);
 
-  return { searchedObjects, filteredObjects: sortedFilteredObjects };
+  const searchedSortedObjects = useMemo(() => {
+    return orderBy(searchedObjects, ["created_at"], ["asc"]);
+  }, [searchedObjects]);
+
+  return {
+    searchedObjects: searchedSortedObjects,
+    filteredObjects: sortedFilteredObjects
+  };
 };
 
 export default useSearchObjectDatabase;

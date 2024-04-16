@@ -11,7 +11,12 @@ import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
 import { getCompaniesList } from "@store/company/company.store";
 import { getContactsList } from "@store/contact/contact.store";
 import { getObjectsLoadingStatus } from "@store/object/objects.store";
-import { getCurrentUserId, getIsUserCurator } from "@store/user/users.store";
+import {
+  getCurrentUserId,
+  getIsCurrentUserRoleCurator,
+  getIsCurrentUserRoleManager,
+  getIsUserCurator
+} from "@store/user/users.store";
 
 const Contacts = ({ object, setState }) => {
   const currentUserId = useSelector(getCurrentUserId());
@@ -28,6 +33,8 @@ const Contacts = ({ object, setState }) => {
     objectCompanies.includes(cont._id)
   );
 
+  const isCurrentUserRoleCurator = useSelector(getIsCurrentUserRoleCurator());
+  const isCurrentUserRoleManager = useSelector(getIsCurrentUserRoleManager());
   const isCurator = useSelector(getIsUserCurator(currentUserId));
   const isLoading = useSelector(getObjectsLoadingStatus());
   const isHideCheckbox = true;
@@ -47,13 +54,7 @@ const Contacts = ({ object, setState }) => {
       />
       <BasicTable
         items={userContacts}
-        itemsColumns={contactsColumns(
-          handleOpenContactPage,
-          isHideCheckbox,
-          handleOpenUpdateCompanyPage,
-          object,
-          handleOpenObjectPage
-        )}
+        itemsColumns={contactsColumns(setState, isCurrentUserRoleManager)}
         isLoading={isLoading}
         isDialogMode={true}
       />
@@ -64,14 +65,7 @@ const Contacts = ({ object, setState }) => {
       />
       <BasicTable
         items={userCompanies}
-        itemsColumns={companiesColumns(
-          handleOpenUpdateCompanyPage,
-          isCurator,
-          isHideCheckbox,
-          handleOpenObjectPage,
-          object,
-          handleOpenContactPage
-        )}
+        itemsColumns={companiesColumns(setState, isCurrentUserRoleCurator)}
         isLoading={isLoading}
         isDialogMode={true}
       />

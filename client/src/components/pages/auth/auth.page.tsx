@@ -32,7 +32,7 @@ const AuthPage = React.memo(({ onClose, startPage = "" }) => {
         />
       ) : (
         <Subtitle
-          title="  Нет аккаунта? Пройти регистрацию"
+          title="Нет аккаунта? Пройти регистрацию"
           onClick={() => setPage("register")}
           backgroundColor="green"
         />
