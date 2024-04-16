@@ -48,7 +48,7 @@ const DayCalendarLay = ({
   );
 
   const getMeetings = (day) => {
-    const currentUserMeetings = tasks?.filter(
+    const currentUserMeetings = meetings?.filter(
       (task) => task?.userId === currentUserId
     );
     const actualMeetings = isCurrentUserRoleCurator

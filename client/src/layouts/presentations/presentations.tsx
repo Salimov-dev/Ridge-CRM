@@ -28,7 +28,7 @@ import {
   getPresentationsLoadingStatus
 } from "@store/presentation/presentations.store";
 
-const Presentations = React.memo(() => {
+const PresentationsLayout = React.memo(() => {
   const [presentationsWithLocation, setPresentationsWithLocation] = useState(
     []
   );
@@ -180,4 +180,4 @@ const Presentations = React.memo(() => {
   );
 });
 
-export default Presentations;
+export default PresentationsLayout;

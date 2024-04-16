@@ -6,7 +6,7 @@ import { objectStatusesArray } from "@data/object/object-status";
 // utils
 import { getWeeklyObjects } from "@utils/objects/get-weekly-objects";
 
-const useData = (objects) => {
+const useChartsStatisticsData = (objects) => {
   const currentDate = dayjs();
 
   // текущая неделя месяца
@@ -119,4 +119,4 @@ const useData = (objects) => {
   return { chartData, pieData };
 };
 
-export default useData;
+export default useChartsStatisticsData;

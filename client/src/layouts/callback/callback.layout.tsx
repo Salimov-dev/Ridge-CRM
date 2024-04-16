@@ -3,7 +3,7 @@ import { Typography } from "@mui/material";
 import HeaderLayout from "@components/common/page-headers/header-layout";
 import { ContainerStyled } from "@components/common/container/container-styled";
 
-const Callback = () => {
+const CallbackLayout = () => {
   return (
     <ContainerStyled>
       <HeaderLayout title="Связаться с разработчиком" />
@@ -16,4 +16,4 @@ const Callback = () => {
   );
 };
 
-export default Callback;
+export default CallbackLayout;

@@ -6,7 +6,7 @@ import RequireActiveLicense from "@routes/components/require-active-license";
 // layouts
 import Objects from "@layouts/objects/objects.layout";
 import ObjectsDatabase from "@layouts/objects-database/objects-database.layout";
-import Statictics from "@layouts/statistics/statistics";
+import Statictics from "@layouts/statistics/statistics.layout";
 import Presentations from "@layouts/presentations/presentations";
 import Users from "@layouts/users/users.layout";
 import Profile from "@layouts/profile/profile.layout";
@@ -17,7 +17,7 @@ import MainLayout from "@layouts/main/main.layout";
 import DealsLayout from "@layouts/deals/deals.layout";
 import ContactsLayout from "@layouts/contacts/contacts.layout";
 import CalendarLayout from "@layouts/calendar/calendar.layout";
-import Callback from "@layouts/callback/callback";
+import Callback from "@layouts/callback/callback.layout";
 // components
 import UpdateProfile from "@components/pages/user/update-profile";
 import NoMatchRoute from "@components/common/rout/no-match";
@@ -29,6 +29,10 @@ import ResultPaymentPage from "@components/pages/payment/result-payment";
 import { getIsLoggedIn } from "@store/user/users.store";
 import ObjectsDatabaseLayout from "@layouts/objects-database/objects-database.layout";
 import ProfileLayout from "@layouts/profile/profile.layout";
+import StaticticsLayout from "@layouts/statistics/statistics.layout";
+import PresentationsLayout from "@layouts/presentations/presentations";
+import CompaniesLayout from "@layouts/companies/companies.layout";
+import CallbackLayout from "@layouts/callback/callback.layout";
 
 export default function AppRoutes() {
   const isLoggedIn = useSelector(getIsLoggedIn());
@@ -36,26 +40,29 @@ export default function AppRoutes() {
   const routes = [
     { id: 1, path: "objects/*", element: <ObjectsLayout /> },
     { id: 2, path: "objectsdatabase/*", element: <ObjectsDatabaseLayout /> },
-    { id: 3, path: "statictics/*", element: <Statictics /> },
+    { id: 3, path: "statictics/*", element: <StaticticsLayout /> },
     { id: 4, path: "meetings/*", element: <MeetingsLayout /> },
     { id: 5, path: "calendar/*", element: <CalendarLayout /> },
     { id: 6, path: "deals/*", element: <DealsLayout /> },
     { id: 7, path: "profile/*", element: <ProfileLayout /> },
-    { id: 8, path: ":userId?/presentations", element: <Presentations /> },
+    { id: 8, path: ":userId?/presentations", element: <PresentationsLayout /> },
     { id: 9, path: ":userId?/profileUpdate", element: <UpdateProfile /> },
     { id: 10, path: "contacts/*", element: <ContactsLayout /> },
-    { id: 11, path: "companies/*", element: <Companies /> },
-    { id: 12, path: "callback/*", element: <Callback /> },
+    { id: 11, path: "companies/*", element: <CompaniesLayout /> },
+    { id: 12, path: "callback/*", element: <CallbackLayout /> },
     { id: 13, path: "activate/:link", element: <EmailActivated /> }
   ];
 
   return (
     <Routes>
       <Route path="*" element={<NoMatchRoute />} />
-      <Route path="/" element={isLoggedIn ? <Objects /> : <MainLayout />} />
+      <Route
+        path="/"
+        element={isLoggedIn ? <ObjectsLayout /> : <MainLayout />}
+      />
       <Route
         path="auth/*"
-        element={isLoggedIn ? <Objects /> : <MainLayout />}
+        element={isLoggedIn ? <ObjectsLayout /> : <MainLayout />}
       />
       <Route path="password/*" element={<NoMatchRoute />} />
       <Route path="password/recovery/:link" element={<RecoveryPassword />} />

@@ -9,15 +9,17 @@ import BasicTable from "@components/common/table/basic-table";
 import PieStyled from "@components/common/chart/pie";
 import ChartLine from "@components/common/chart/chart-line";
 import { ContainerStyled } from "@components/common/container/container-styled";
-import StaticticsFiltersPanel from "@components/UI/filters-panels/statictics-filters-panel";
+import { statisticsLayoutInitialState } from "@components/UI/initial-states/statistics-layout.initial-state";
+import StaticticsLayoutFiltersPanel from "@components/UI/filters-panels/statictics-layout.filters-panel";
 // hooks
-import useData from "./hooks/use-data";
 import useSearchStatictics from "@hooks/statictics/use-search-statistics";
+import useChartsStatisticsData from "@hooks/statictics/use-charts-statistics-data";
 // columns
 import { staticticsColumnsCurator } from "@columns/statictics-columns/statictics-columns-curator";
 import { staticticsColumns } from "@columns/statictics-columns/statictics-columns";
 // utils
 import { getUsersWithoutCurrentUser } from "@utils/user/get-users-without-current-user";
+import { getActualUsersList } from "@utils/actual-items/get-actual-users-list";
 // store
 import { setStaticticPositions } from "@store/statictics/statictics-positions.store";
 import {
@@ -27,7 +29,7 @@ import {
 import {
   getCurrentUserData,
   getCurrentUserId,
-  getIsUserCurator,
+  getIsCurrentUserRoleCurator,
   getUsersList
 } from "@store/user/users.store";
 
@@ -36,54 +38,50 @@ const ChartsContainer = styled(Box)`
   height: 420px;
 `;
 
-const initialState = {
-  selectedUsers: [],
-  selectedPositions: [],
-  withoutCurator: false
-};
-
-const Statictics = React.memo(() => {
+const StaticticsLayout = React.memo(() => {
   const dispatch = useDispatch();
   const localStorageState = JSON.parse(
     localStorage.getItem("search-statictics-data")
   );
 
-  const { register, watch, setValue, reset } = useForm({
+  const { watch, setValue, reset } = useForm({
     defaultValues: Boolean(localStorageState)
       ? localStorageState
-      : initialState,
+      : statisticsLayoutInitialState,
     mode: "onBlur"
   });
 
   const data = watch();
   const selectedPositions = watch("selectedPositions");
-  const withoutCurator = watch("withoutCurator");
-
-  const usersList = useSelector(getUsersList());
-
-  const usersWithoutCurrentUser = getUsersWithoutCurrentUser();
+  const withoutCuratorSwitch = watch("withoutCuratorSwitch");
 
   const currentUserId = useSelector(getCurrentUserId());
-  const currentUserData = useSelector(getCurrentUserData(currentUserId));
-  const isCurator = useSelector(getIsUserCurator(currentUserId));
-
-  const users = isCurator
-    ? withoutCurator
-      ? usersWithoutCurrentUser
-      : usersList
-    : usersWithoutCurrentUser;
+  const isCurrentUserRoleCurator = useSelector(getIsCurrentUserRoleCurator());
+  const isObjectsLoading = useSelector(getObjectsLoadingStatus());
 
   const objectsList = useSelector(getObjectsList());
-
   const objectsWithoutCurrentUser = objectsList?.filter(
     (obj) => obj?.userId !== currentUserId
   );
-  const objects = withoutCurator ? objectsWithoutCurrentUser : objectsList;
+  const objects = withoutCuratorSwitch
+    ? objectsWithoutCurrentUser
+    : objectsList;
 
-  const isObjectsLoading = useSelector(getObjectsLoadingStatus());
-  const isInputEmpty = JSON.stringify(initialState) !== JSON.stringify(data);
+  const usersList = useSelector(getUsersList());
+  const usersWithoutCurrentUser = getUsersWithoutCurrentUser();
+  const currentUserData = useSelector(getCurrentUserData());
+  const users = isCurrentUserRoleCurator
+    ? withoutCuratorSwitch
+      ? usersWithoutCurrentUser
+      : usersList
+    : usersWithoutCurrentUser;
+  const actualUsersList = getActualUsersList(
+    withoutCuratorSwitch ? objectsWithoutCurrentUser : objects
+  );
 
-  const columns = isCurator ? staticticsColumnsCurator : staticticsColumns;
+  const columns = isCurrentUserRoleCurator
+    ? staticticsColumnsCurator
+    : staticticsColumns;
 
   const { searchedObjects, searchedUsers } = useSearchStatictics(
     objects,
@@ -91,7 +89,7 @@ const Statictics = React.memo(() => {
     data
   );
 
-  const { chartData, pieData } = useData(searchedObjects);
+  const { chartData, pieData } = useChartsStatisticsData(searchedObjects);
 
   useEffect(() => {
     localStorage.setItem("search-statictics-data", JSON.stringify(data));
@@ -107,7 +105,7 @@ const Statictics = React.memo(() => {
     if (hasLocalStorageData?.length) {
       localStorage.setItem(
         "search-statictics-data",
-        JSON.stringify(initialState)
+        JSON.stringify(statisticsLayoutInitialState)
       );
     }
   }, []);
@@ -115,30 +113,20 @@ const Statictics = React.memo(() => {
   return (
     <ContainerStyled>
       <HeaderLayout title="Статистика" />
-      {isCurator && (
-        <StaticticsFiltersPanel
-          data={data}
-          objects={objects}
-          initialState={initialState}
-          objectsWithoutCurrentUser={objectsWithoutCurrentUser}
-          withoutCurator={withoutCurator}
-          register={register}
-          reset={reset}
-          setValue={setValue}
-          isInputEmpty={isInputEmpty}
-          isLoading={isObjectsLoading}
-        />
-      )}
-
+      <StaticticsLayoutFiltersPanel
+        data={data}
+        usersList={actualUsersList}
+        reset={reset}
+        setValue={setValue}
+      />
       <ChartsContainer>
         <ChartLine data={chartData} />
         <PieStyled data={pieData} />
       </ChartsContainer>
-
       <BasicTable
-        items={isCurator ? searchedUsers : [currentUserData]}
+        items={isCurrentUserRoleCurator ? searchedUsers : [currentUserData]}
         itemsColumns={columns}
-        hasFooter={isCurator && true}
+        hasFooter={isCurrentUserRoleCurator && true}
         isLoading={isObjectsLoading}
         isPaginate={false}
       />
@@ -146,4 +134,4 @@ const Statictics = React.memo(() => {
   );
 });
 
-export default Statictics;
+export default StaticticsLayout;
