@@ -3,6 +3,7 @@ import { Box } from "@mui/material";
 import TelegramIcon from "@assets/telegram_logo.png";
 import YoutubeIcon from "@assets/youtube_logo.png";
 import MailIcon from "@assets/mail_logo.png";
+import VkIcon from "@assets/vk_logo.png";
 
 const IconsContainer = styled(Box)`
   width: 100%;
@@ -25,6 +26,10 @@ const IconsContactMainLayout = ({
   padding = "20px",
   size = "80px"
 }) => {
+  const handleVkClick = () => {
+    window.open("https://vk.com/ridgecrm", "_blank");
+  };
+
   const handleTelegramClick = () => {
     window.open("https://t.me/ridge_crm", "_blank");
   };
@@ -36,6 +41,7 @@ const IconsContactMainLayout = ({
   const handleYoutubeClick = () => {
     window.open("https://www.youtube.com/@ridge_crm", "_blank");
   };
+
   return (
     <IconsContainer
       sx={{
@@ -43,6 +49,11 @@ const IconsContactMainLayout = ({
         padding: padding
       }}
     >
+      <Logo
+        src={VkIcon}
+        onClick={handleVkClick}
+        style={{ width: size, height: size }}
+      />
       <Logo
         src={TelegramIcon}
         onClick={handleTelegramClick}
