@@ -41,6 +41,7 @@ const CreateManagerTask = React.memo(
       resolver: yupResolver(taskManagerSchema)
     });
     const data = watch();
+
     const watchManagerId = watch("managerId");
 
     const { actualUsersArray, managerObjects, managerId } =

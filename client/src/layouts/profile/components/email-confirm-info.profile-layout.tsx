@@ -1,14 +1,15 @@
 import styled from "@emotion/styled";
 import { Typography, Box } from "@mui/material";
+import { toast } from "react-toastify";
+import { useState } from "react";
 // components
 import ButtonStyled from "@components/common/buttons/button-styled.button";
+import LoaderFullWindow from "@components/common/loader/loader-full-window";
 // icons
 import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";
 import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
+// services
 import emailActivateService from "@services/email-activate/email-activate.service";
-import { toast } from "react-toastify";
-import { useState } from "react";
-import LoaderFullWindow from "@components/common/loader/loader-full-window";
 
 const Container = styled(Box)`
   display: flex;

@@ -2,6 +2,8 @@ import { Box, Typography, styled } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
+import configFile from "@config/config.json";
+import { io } from "socket.io-client";
 // services
 import emailActivateService from "@services/email-activate/email-activate.service";
 // components
@@ -21,6 +23,8 @@ const Message = styled(Typography)`
   text-align: center;
 `;
 
+const socket = io(configFile.ioEndPoint);
+
 const EmailActivated = React.memo(() => {
   const [error, setError] = useState(null);
   const [successResponse, setSuccessResponse] = useState(null);
@@ -34,6 +38,8 @@ const EmailActivated = React.memo(() => {
       .get(activationLink)
       .then((response) => {
         const { content } = response;
+
+        socket.emit("userUpdated", content?.updatedUser);
         setSuccessResponse(content.message);
 
         setRedirectTimer(

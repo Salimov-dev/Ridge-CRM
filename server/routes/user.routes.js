@@ -321,6 +321,7 @@ router.post("/create-teammate", auth, lic, async (req, res) => {
     };
 
     const setupPassLinkId = uuidv4();
+    const activationLinkId = uuidv4();
 
     const newUser = await User.create({
       email,
@@ -330,6 +331,7 @@ router.post("/create-teammate", auth, lic, async (req, res) => {
       color,
       city,
       setupPassLink: setupPassLinkId,
+      activationLink: activationLinkId,
       isActive: false
     });
 
@@ -362,6 +364,7 @@ router.post("/create-teammate", auth, lic, async (req, res) => {
       );
     }
     const setupPassLink = `${API_URL}/password/setup-password/${newUser.email}/${setupPassLinkId}`;
+    const activationLink = `${API_URL}/activate/${activationLinkId}`;
 
     const registrationNewUser = nodemailer.createTransport({
       host: SMTP_HOST,
@@ -391,6 +394,7 @@ router.post("/create-teammate", auth, lic, async (req, res) => {
       
       <h4>Обязательно перейдите по ссылке, установите свой личный пароль и приступайте к работе в Грядке ЦРМ!!</h4>
       <a href="${setupPassLink}">${setupPassLink}</a><br>
+      <h4>После активации аккаунта обязательно подтвердить свою почту в своём Профиле</h4>
       
       <p>Желаем приятного сбора урожая!</p><br>
       <p>----------------------------------------</p>

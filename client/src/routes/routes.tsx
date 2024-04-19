@@ -24,6 +24,7 @@ import EmailActivated from "@components/pages/email-activated/email-activated.pa
 import RecoveryPassword from "@components/pages/password/recovery-password/recovery-password.page";
 import SetupPassword from "@components/pages/password/setup-password/setup-password.page";
 import ResultPaymentPage from "@components/pages/payment/result-payment.page";
+import RequireUserRoleCurator from "./components/require-user-role-curator";
 // store
 import { getIsLoggedIn } from "@store/user/users.store";
 
@@ -68,7 +69,9 @@ export default function AppRoutes() {
         path="Users/*"
         element={
           <RequireAuth>
-            <Users />
+            <RequireUserRoleCurator>
+              <Users />
+            </RequireUserRoleCurator>
           </RequireAuth>
         }
       />

@@ -30,8 +30,8 @@ router.post("/create", auth, lic, async (req, res) => {
   try {
     const userId = req.user._id;
     const data = req.body;
-    const contacts = data.contacts; // Предполагается, что данные о контактах передаются в теле запроса
-    const objects = data.objects; // Предполагается, что данные об объектах передаются в теле запроса
+    const contacts = data.contacts;
+    const objects = data.objects;
 
     const newCompany = await Company.create({
       ...req.body,

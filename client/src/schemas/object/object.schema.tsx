@@ -148,5 +148,21 @@ export const objectSchema = yup.object().shape({
     })
     .nullable(),
   // Облако
-  cloudLink: yup.string().url("Введите корректный URL адрес").nullable()
+  cloudLink: yup.string().url("Введите корректный URL адрес").nullable(),
+  companies: yup
+    .array()
+    .of(
+      yup.object().shape({
+        company: yup.string().required("Выберите компанию")
+      })
+    )
+    .nullable(),
+  contacts: yup
+    .array()
+    .of(
+      yup.object().shape({
+        contact: yup.string().required("Выберите контакт")
+      })
+    )
+    .nullable()
 });

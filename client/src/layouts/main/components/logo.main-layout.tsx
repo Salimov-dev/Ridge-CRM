@@ -8,9 +8,6 @@ const Component = styled(Box)`
   align-items: center;
   margin-top: -30px;
   margin-bottom: 30px;
-  &:hover {
-    cursor: pointer;
-  }
 `;
 
 const Link = styled.a`
@@ -21,11 +18,7 @@ const Link = styled.a`
 const LogoMainLayout = () => {
   return (
     <Component>
-      <Link
-        href="https://ridge-crm.ru/"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
+      <Link href="https://ridge-crm.ru/" rel="noopener noreferrer">
         <Typography
           sx={{
             fontWeight: "700",

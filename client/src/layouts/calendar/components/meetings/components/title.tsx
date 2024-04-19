@@ -1,11 +1,13 @@
 import { styled } from "@mui/system";
 import { useDispatch } from "react-redux";
-import { Box, Typography } from "@mui/material";
+import { Box, Tooltip, Typography } from "@mui/material";
 // utils
 import { FormatTime } from "@utils/date/format-time";
 // components
 import UpdateElementIconButton from "@components/common/button-icons/update-element.button-icon";
 import DoneIconToggler from "../../body/components/day/components/done-icon-toggler.calendar-layout";
+// icons
+import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 // store
 import { updateMeeting } from "@store/meeting/meetings.store";
 import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
@@ -43,21 +45,28 @@ const Title = ({ meet, currentUserId, setState }) => {
       <Typography sx={{ textDecoration: "underline" }}>
         <b>Встреча в: {FormatTime(meet.time)}</b>
       </Typography>
-      <ButtonsContainer>
-        {isAuthor ? (
+      {isAuthor ? (
+        <ButtonsContainer>
           <UpdateElementIconButton
             onClick={() => handleOpenUpdateMeetingPage(meetingId)}
             isDone={isMeetingDone}
           />
-        ) : null}
-        {isAuthor ? (
+
           <DoneIconToggler
             item={meet}
             onDoneItem={handleDoneMeeting}
             onNotDoneItem={handleNotDoneMeeting}
           />
-        ) : null}
-      </ButtonsContainer>
+        </ButtonsContainer>
+      ) : (
+        <Tooltip
+          title="Встреча другого пользователя"
+          placement="top-start"
+          arrow
+        >
+          <PersonOutlineOutlinedIcon />
+        </Tooltip>
+      )}
     </Component>
   );
 };

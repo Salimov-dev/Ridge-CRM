@@ -1,6 +1,9 @@
+import { roleCurator } from "../utils/user-roles";
+
 const roleMiddleware = (req, res, next) => {
   const user = req.user;
-  if (user && user.role === "CURATOR") {
+  const userRole = user.role;
+  if (userRole.includes(roleCurator)) {
     next();
   } else {
     return res
@@ -9,4 +12,4 @@ const roleMiddleware = (req, res, next) => {
   }
 };
 
-export default roleMiddleware
+export default roleMiddleware;

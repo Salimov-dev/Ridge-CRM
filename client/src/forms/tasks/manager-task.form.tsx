@@ -66,24 +66,29 @@ const ManagerTaskForm = ({
           label="Менеджер"
           itemsList={users}
           value={watchManagerId}
+          errors={errors?.managerId}
           disabled={isObjectPage}
         />
       )}
-      <AutocompleteStyled
-        label={
-          watchObjectId && !isCurrentUserRoleCurator
-            ? "Объект задачи"
-            : "Задача без объекта"
-        }
-        register={register}
-        name="objectId"
-        options={objects}
-        value={watchObjectId}
-        setValue={setValue}
-        watchItemId={watchObjectId}
-        disabled={!objects.length || isObjectPage || !isCurrentUserRoleCurator}
-        optionLabel={(option) => `${option?.city}, ${option?.address}`}
-      />
+      {watchManagerId ? (
+        <AutocompleteStyled
+          label={
+            watchObjectId && !isCurrentUserRoleCurator
+              ? "Объект задачи"
+              : "Задача без объекта"
+          }
+          register={register}
+          name="objectId"
+          options={objects}
+          value={watchObjectId}
+          setValue={setValue}
+          watchItemId={watchObjectId}
+          disabled={
+            !objects.length || isObjectPage || !isCurrentUserRoleCurator
+          }
+          optionLabel={(option) => `${option?.city}, ${option?.address}`}
+        />
+      ) : null}
       <TextFieldStyled
         register={register}
         label="Комментарий"

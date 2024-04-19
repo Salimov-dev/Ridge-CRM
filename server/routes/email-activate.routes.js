@@ -39,7 +39,11 @@ router.get("/:link?", auth, async (req, res) => {
       isEmailActived: true
     });
 
-    res.status(200).json({ message: "Почта успешно активирована, спасибо!" });
+    const updatedUser = await User.findByPk(existingUser._id);
+
+    res
+      .status(200)
+      .json({ message: "Почта успешно активирована, спасибо!", updatedUser });
   } catch (e) {
     res.status(500).json({
       message: "На сервере произошла ошибка, попробуйте позже"
