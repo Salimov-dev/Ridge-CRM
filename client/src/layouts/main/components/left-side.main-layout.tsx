@@ -16,6 +16,7 @@ const Component = styled(Box)`
 const Link = styled.a`
   color: white;
   text-decoration: none;
+  width: 100%;
 `;
 
 const LeftSideMainLayout = ({ setState }) => {
@@ -81,35 +82,46 @@ const LeftSideMainLayout = ({ setState }) => {
 
         <Link onClick={handleOpenPersonalPolicyPage} rel="noopener noreferrer">
           <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              gap: "6px",
-              color: "LightSalmon",
-              fontSize: { xs: "14px", sm: "20px", lg: "24px" },
-              lineHeight: "1.4",
-              textAlign: { xs: "center", lg: "start" },
-              border: "1px solid GreenYellow",
-              borderRadius: "4px",
-              padding: "12px",
-              "&:hover": {
-                cursor: "pointer",
-                textDecoration: "underline",
-                background: "firebrick",
-                color: "white"
-              }
-            }}
+            sx={{ width: "100%", display: "flex", justifyContent: "center" }}
           >
-            <LockPersonOutlinedIcon sx={{ width: "34px", height: "34px" }} />
-            <Typography
+            <Box
               sx={{
-                fontSize: { xs: "14px", sm: "20px", lg: "24px" },
+                width: { sm: "fit-content", lg: "100%" },
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: "4px",
+                color: "LightSalmon",
+                fontSize: { xs: "14px", sm: "18px", lg: "24px" },
                 lineHeight: "1.4",
-                textAlign: { xs: "center", lg: "start" }
+                textAlign: { xs: "center", lg: "start" },
+                border: "1px solid GreenYellow",
+                borderRadius: "4px",
+                padding: "12px",
+                "&:hover": {
+                  cursor: "pointer",
+                  textDecoration: "underline",
+                  background: "firebrick",
+                  color: "white"
+                }
               }}
             >
-              Соответствует ФЗ "О персональных данных"
-            </Typography>
+              <LockPersonOutlinedIcon
+                sx={{
+                  width: { sm: "22px", lg: "34px" },
+                  height: { sm: "22px", lg: "34px" }
+                }}
+              />
+              <Typography
+                sx={{
+                  fontSize: { xs: "14px", sm: "20px", lg: "24px" },
+                  lineHeight: "1.4",
+                  textAlign: { xs: "center", lg: "start" }
+                }}
+              >
+                Соответствует ФЗ "О персональных данных"
+              </Typography>
+            </Box>
           </Box>
         </Link>
 
@@ -127,7 +139,7 @@ const LeftSideMainLayout = ({ setState }) => {
           </Typography>
           <Typography
             sx={{
-              color: "GreenYellow",
+              color: "LightSalmon",
               fontSize: { xs: "12px", sm: "16px", lg: "20px" },
               lineHeight: "1.4",
               textAlign: { xs: "center", lg: "start" }

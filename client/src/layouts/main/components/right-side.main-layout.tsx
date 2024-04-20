@@ -5,7 +5,7 @@ import IconsContactMainLayout from "./contacts.main-layout";
 
 const Component = styled(Box)`
   margin: 20px 0 0 0;
-  width: 100%;
+  width: 70%;
   display: flex;
   background-size: auto 100%;
   background-repeat: no-repeat;
