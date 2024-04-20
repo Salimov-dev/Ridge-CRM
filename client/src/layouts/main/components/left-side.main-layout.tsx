@@ -4,6 +4,7 @@ import ButtonStyled from "@components/common/buttons/button-styled.button";
 import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
 import ThumbUpAltOutlinedIcon from "@mui/icons-material/ThumbUpAltOutlined";
 import ContactsMainLayout from "./contacts.main-layout";
+import LockPersonOutlinedIcon from "@mui/icons-material/LockPersonOutlined";
 
 const Component = styled(Box)`
   display: flex;
@@ -77,6 +78,41 @@ const LeftSideMainLayout = ({ setState }) => {
           карты, назначайте встречи, контролируйте этапы переговоров,
           качественно и своевременно прорабатывайте каждые объект и контакт
         </Typography>
+
+        <Link onClick={handleOpenPersonalPolicyPage} rel="noopener noreferrer">
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              gap: "6px",
+              color: "LightSalmon",
+              fontSize: { xs: "14px", sm: "20px", lg: "24px" },
+              lineHeight: "1.4",
+              textAlign: { xs: "center", lg: "start" },
+              border: "1px solid GreenYellow",
+              borderRadius: "4px",
+              padding: "12px",
+              "&:hover": {
+                cursor: "pointer",
+                textDecoration: "underline",
+                background: "firebrick",
+                color: "white"
+              }
+            }}
+          >
+            <LockPersonOutlinedIcon sx={{ width: "34px", height: "34px" }} />
+            <Typography
+              sx={{
+                fontSize: { xs: "14px", sm: "20px", lg: "24px" },
+                lineHeight: "1.4",
+                textAlign: { xs: "center", lg: "start" }
+              }}
+            >
+              Соответствует ФЗ "О персональных данных"
+            </Typography>
+          </Box>
+        </Link>
+
         <Box>
           <Typography
             sx={{
@@ -101,25 +137,9 @@ const LeftSideMainLayout = ({ setState }) => {
           </Typography>
         </Box>
 
-        <Link onClick={handleOpenPersonalPolicyPage} rel="noopener noreferrer">
-          <Typography
-            sx={{
-              color: "firebrick",
-              fontSize: { xs: "14px", sm: "20px", lg: "24px" },
-              lineHeight: "1.4",
-              textAlign: { xs: "center", lg: "start" },
-              "&:hover": {
-                cursor: "pointer",
-                textDecoration: "underline"
-              }
-            }}
-          >
-            Соответствует ФЗ "О персональных данных"
-          </Typography>
-        </Link>
         <Typography
           sx={{
-            fontSize: { xs: "16px", sm: "22px", lg: "28px" },
+            fontSize: { xs: "12px", sm: "16px", lg: "22px" },
             lineHeight: "1.4",
             color: "DodgerBlue"
           }}
