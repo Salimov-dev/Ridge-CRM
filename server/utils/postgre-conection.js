@@ -1,13 +1,13 @@
 import chalk from "chalk";
 import { Sequelize } from "sequelize";
-import getDatabaseConfig from "./get-database-config.js";
+import config from "config";
 
 export const sequelize = new Sequelize(
-  getDatabaseConfig().DB_NAME,
-  getDatabaseConfig().DB_USER,
-  getDatabaseConfig().DB_PASSWORD,
+  config.get("DB_NAME"),
+  config.get("DB_USER"),
+  config.get("DB_PASSWORD"),
   {
-    host: getDatabaseConfig().DB_HOST,
+    host: config.get("DB_HOST"),
     dialect: "postgres"
   }
 );
@@ -17,7 +17,7 @@ const postgreConnection = () => {
     .authenticate()
     .then(() => {
       console.log(chalk.red("PostgreSQL connected"));
-      return sequelize.sync();
+      return sequelize.sync(); // Synchronize models with the database
     })
     .then(() => {
       console.log(chalk.green("Models synchronized with the database"));
