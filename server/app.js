@@ -18,6 +18,7 @@ import config from "config";
 import fs from "fs";
 import cron from "node-cron";
 import subscriptions from "./utils/subscriptions.js";
+import getConnectionProtocol from "./utils/get-connection-protocol.js";
 
 const PORT = config.get("port") ?? 8080;
 const __filename = fileURLToPath(import.meta.url);
@@ -31,7 +32,7 @@ const options = {
 
 const app = express();
 // const server = http.createServer(options, app);
-const server = https.createServer(options, app);
+const server = getConnectionProtocol().createServer(options, app);
 
 Sockets(server);
 

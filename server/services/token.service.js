@@ -3,7 +3,6 @@ import config from "config";
 import Token from "../models/Token.js";
 
 class TokenService {
-  // return: accessToken, refreshToken, expiresIn
   generate(payload) {
     const accessToken = jwt.sign(payload, config.get("accessSecret"), {
       expiresIn: "15d"
