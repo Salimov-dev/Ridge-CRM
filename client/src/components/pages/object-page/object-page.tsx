@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Box } from "@mui/material";
 import { useSelector } from "react-redux";
 // components
@@ -17,7 +17,8 @@ const ObjectPage = React.memo(
     objectId,
     onClose,
     onOpenUpdateObjectPage,
-    onOpenCreatePresentationPage
+    onOpenCreatePresentationPage,
+    setState
   }) => {
     const object = useSelector(getObjectById(objectId));
     const isLoading = useSelector(getObjectsLoadingStatus());
@@ -27,6 +28,15 @@ const ObjectPage = React.memo(
     const longitude = object?.longitude || null;
     const mapZoom = object?.zoom || null;
     const center = [latitude, longitude];
+
+    useEffect(() => {
+      return () => {
+        setState((prevState) => ({
+          ...prevState,
+          objectId: null
+        }));
+      };
+    }, []);
 
     return (
       <Box>

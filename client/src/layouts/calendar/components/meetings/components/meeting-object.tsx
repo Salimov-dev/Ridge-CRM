@@ -26,6 +26,7 @@ const MeetingObject = ({ meet, setState }) => {
           color="Gainsboro"
           colorHover="white"
           width="20px"
+          padding="0 0 0 10px"
           onClick={() => handleOpenObjectPage(meetingObjectId)}
         />
       </Box>

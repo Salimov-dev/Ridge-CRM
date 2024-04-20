@@ -2,14 +2,18 @@
 import { Navigate, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 // Store
-import { getIsCurrentUserRoleCurator } from "@store/user/users.store";
+import {
+  getIsCurrentUserRoleCurator,
+  getUsersLoadingStatus
+} from "@store/user/users.store";
 
 const RequireUserRoleCurator = ({ children }) => {
   const location = useLocation();
 
+  const isLoading = useSelector(getUsersLoadingStatus());
   const isUserRoleCurator = useSelector(getIsCurrentUserRoleCurator());
 
-  if (!isUserRoleCurator) {
+  if (!isLoading && !isUserRoleCurator) {
     return <Navigate to="/" state={{ path: location.pathname }} />;
   }
 

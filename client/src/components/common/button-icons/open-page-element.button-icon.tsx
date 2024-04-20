@@ -16,7 +16,8 @@ const OpenPageElementIconButton = ({
   height = "16px",
   heightButton = "auto",
   color = "white",
-  colorHover = "yellow"
+  colorHover = "yellow",
+  padding
 }) => {
   return (
     <Components>
@@ -24,6 +25,7 @@ const OpenPageElementIconButton = ({
         onClick={onClick}
         disabled={disabled}
         sx={{
+          padding: padding,
           height: heightButton,
           color: color,
           "&:disabled": {

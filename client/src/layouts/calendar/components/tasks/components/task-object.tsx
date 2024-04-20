@@ -29,6 +29,7 @@ const TaskObject = ({ task, setState }) => {
           color="Gainsboro"
           colorHover="white"
           width="20px"
+          padding="0 0 0 10px"
           onClick={() => handleOpenObjectPage(taskObjectId)}
         />
       </Box>

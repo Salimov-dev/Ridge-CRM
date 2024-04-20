@@ -1,14 +1,13 @@
 import jwt from "jsonwebtoken";
-import config from "config";
 import Token from "../models/Token.js";
+import getDatabaseConfig from "../utils/get-database-config.js";
 
 class TokenService {
-  // return: accessToken, refreshToken, expiresIn
   generate(payload) {
-    const accessToken = jwt.sign(payload, config.get("accessSecret"), {
+    const accessToken = jwt.sign(payload, getDatabaseConfig().accessSecret, {
       expiresIn: "15d"
     });
-    const refreshToken = jwt.sign(payload, config.get("refreshSecret"));
+    const refreshToken = jwt.sign(payload, getDatabaseConfig().refreshSecret);
     return { accessToken, refreshToken, expiresIn: 3600 * 12 * 24 };
   }
 
@@ -25,7 +24,7 @@ class TokenService {
 
   validateRefresh(refreshToken) {
     try {
-      return jwt.verify(refreshToken, config.get("refreshSecret"));
+      return jwt.verify(refreshToken, getDatabaseConfig().refreshSecret);
     } catch (e) {
       return null;
     }
@@ -33,7 +32,7 @@ class TokenService {
 
   validateAccess(accessToken) {
     try {
-      return jwt.verify(accessToken, config.get("accessSecret"));
+      return jwt.verify(accessToken, getDatabaseConfig().accessSecret);
     } catch (e) {
       return null;
     }

@@ -84,6 +84,7 @@ const PageDialogs = ({
             onOpenUpdateObjectPage={handleOpenUpdateObjectPage}
             onOpenCreatePresentationPage={handleOpenCreatePresentationPage}
             objectId={state.objectId}
+            setState={setState}
           />
         }
         onClose={handleCloseObjectPage}

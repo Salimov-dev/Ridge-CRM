@@ -1,10 +1,3 @@
-import routes from "./routes/index.js";
-// utils
-import { corsOptions } from "./utils/cors-options.js";
-import postgreConnection from "./utils/postgre-conection.js";
-// sockets
-import Sockets from "./sockets/sockets.js";
-// modules
 import chalk from "chalk";
 import { dirname } from "path";
 import { fileURLToPath } from "url";
@@ -12,14 +5,21 @@ import cookieParser from "cookie-parser";
 import express from "express";
 import cors from "cors";
 import path from "path";
-import http from "http";
-// import https from "https";
-import config from "config";
 import fs from "fs";
 import cron from "node-cron";
+// sockets
+import Sockets from "./sockets/sockets.js";
+// routes
+import routes from "./routes/index.js";
+// utils
+import { corsOptions } from "./utils/cors-options.js";
+import postgreConnection from "./utils/postgre-conection.js";
 import subscriptions from "./utils/subscriptions.js";
+import getDatabaseConfig from "./utils/get-database-config.js";
+import getConnectionProtocol from "./utils/get-connection-protocol.js";
 
-const PORT = config.get("port") ?? 8080;
+const PORT = getDatabaseConfig().port ?? 8080;
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
@@ -30,8 +30,7 @@ const options = {
 };
 
 const app = express();
-const server = http.createServer(options, app);
-// const server = https.createServer(options, app);
+const server = getConnectionProtocol().createServer(options, app);
 
 Sockets(server);
 
@@ -39,6 +38,7 @@ app.use(cors(corsOptions));
 app.use(express.json({ limit: "50mb" }));
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: false }));
+
 app.use("/api", routes);
 app.use("/api/uploads", express.static(path.join(__dirname, "uploads")));
 
