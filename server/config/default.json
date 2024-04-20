@@ -1,0 +1,10 @@
+{
+  "port": "8080",
+  "accessSecret": "the best secure key",
+  "refreshSecret": "super puper refresh key",
+  "DB_NAME": "ridge",
+  "DB_USER": "postgres",
+  "DB_PASSWORD": "irangelspb87",
+  "DB_HOST": "localhost",
+  "DB_ROOT": "5432"
+}

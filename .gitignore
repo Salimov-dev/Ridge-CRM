@@ -10,12 +10,10 @@ lerna-debug.log*
 server/db
 server/uploads
 vercel.json
-default.json
 node_modules
 dist
 dist-ssr
 *.local
-.default.json
 
 # Editor directories and files
 .vscode/*
