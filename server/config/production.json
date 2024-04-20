@@ -1,0 +1,10 @@
+{
+  "port": "8080",
+  "accessSecret": "the best secure key",
+  "refreshSecret": "super puper refresh key",
+  "DB_NAME": "ridge_db",
+  "DB_USER": "main_user",
+  "DB_PASSWORD": "HuVcs4jO&s3F",
+  "DB_HOST": "scogusbokgoy.beget.app",
+  "DB_ROOT": "5432"
+}
