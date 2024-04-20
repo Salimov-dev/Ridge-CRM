@@ -56,10 +56,10 @@ export const meetingsColumns = (
           const formattedDate = FormatDate(date);
           const dayOfWeek = dayjs(date).locale("ru").format("dd");
           return (
-            <AlignCenter>
+            <Box sx={{ display: "flex", justifyContent: "center", gap: "6px" }}>
               <Typography>{formattedDate}</Typography>
               <Typography>{dayOfWeek}</Typography>
-            </AlignCenter>
+            </Box>
           );
         }
       },

@@ -18,7 +18,8 @@ const ContentContainer = styled(Box)`
 const MainLayout = React.memo(() => {
   const [state, setState] = useState({
     loginPage: false,
-    registerPage: false
+    registerPage: false,
+    personalPolicyPage: false
   });
 
   return (

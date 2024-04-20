@@ -1,31 +1,31 @@
-import routes from "./routes/index.js";
-// utils
-import { corsOptions } from "./utils/cors-options.js";
-import postgreConnection from "./utils/postgre-conection.js";
-// sockets
-import Sockets from "./sockets/sockets.js";
-// modules
 import chalk from "chalk";
 import { dirname } from "path";
 import { fileURLToPath } from "url";
 import cookieParser from "cookie-parser";
 import express from "express";
+import cron from "node-cron";
+import config from "config";
 import cors from "cors";
 import path from "path";
-import config from "config";
 import fs from "fs";
-import cron from "node-cron";
-import subscriptions from "./utils/subscriptions.js";
+// sockets
+import Sockets from "./sockets/sockets.js";
+// routes
+import routes from "./routes/index.js";
+// utils
 import getConnectionProtocol from "./utils/get-connection-protocol.js";
+import postgreConnection from "./utils/postgre-conection.js";
+import { corsOptions } from "./utils/cors-options.js";
+import subscriptions from "./utils/subscriptions.js";
 
 const PORT = config.get("port") ?? 8080;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 const options = {
-  key: fs.readFileSync(path.resolve(__dirname, "cert.key")), // Путь к закрытому ключу SSL
-  cert: fs.readFileSync(path.resolve(__dirname, "cert.crt")), // Путь к SSL-сертификату
-  ca: fs.readFileSync(path.resolve(__dirname, "cert_ca.crt")) // Путь к промежуточному SSL-сертификату
+  key: fs.readFileSync(path.resolve(__dirname, "cert.key")),
+  cert: fs.readFileSync(path.resolve(__dirname, "cert.crt")),
+  ca: fs.readFileSync(path.resolve(__dirname, "cert_ca.crt"))
 };
 
 const app = express();
@@ -40,7 +40,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use("/api", routes);
 app.use("/api/uploads", express.static(path.join(__dirname, "uploads")));
 
-cron.schedule("0 0 * * *", () => subscriptions()); // каждый день в 00:00
+cron.schedule("0 0 * * *", () => subscriptions()); // списание на лицензии каждый день в 00:00
 
 if (process.env.NODE_ENV === "production") {
   app.use("/", express.static(path.join(__dirname, "client")));

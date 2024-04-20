@@ -12,8 +12,14 @@ const Component = styled(Box)`
   padding: 2% 2% 5% 2%;
 `;
 
+const Link = styled.a`
+  color: white;
+  text-decoration: none;
+`;
+
 const LeftSideMainLayout = ({ setState }) => {
-  const { handleOpenAuthPage } = useDialogHandlers(setState);
+  const { handleOpenAuthPage, handleOpenPersonalPolicyPage } =
+    useDialogHandlers(setState);
 
   return (
     <Component
@@ -27,7 +33,7 @@ const LeftSideMainLayout = ({ setState }) => {
           flexDirection: "column",
           justifyContent: "space-between",
           alignItems: { xs: "center", lg: "start" },
-          gap: { xs: "30px", sm: "40px", lg: "50px" }
+          gap: { xs: "30px", sm: "40px", lg: "40px" }
         }}
       >
         <Typography
@@ -71,18 +77,46 @@ const LeftSideMainLayout = ({ setState }) => {
           карты, назначайте встречи, контролируйте этапы переговоров,
           качественно и своевременно прорабатывайте каждые объект и контакт
         </Typography>
-        <Typography
-          sx={{
-            color: "GreenYellow",
-            fontSize: { xs: "12px", sm: "16px", lg: "20px" },
-            lineHeight: "1.4",
-            textAlign: { xs: "center", lg: "start" }
-          }}
-        >
-          Полностью Российская разработка. Сервер и База Данных расположены в
-          Санкт-Петербурге
-        </Typography>
+        <Box>
+          <Typography
+            sx={{
+              color: "GreenYellow",
+              fontSize: { xs: "12px", sm: "16px", lg: "20px" },
+              lineHeight: "1.4",
+              textAlign: { xs: "center", lg: "start" }
+            }}
+          >
+            Полностью Российская разработка. Сервер и База Данных расположены в
+            Санкт-Петербурге
+          </Typography>
+          <Typography
+            sx={{
+              color: "GreenYellow",
+              fontSize: { xs: "12px", sm: "16px", lg: "20px" },
+              lineHeight: "1.4",
+              textAlign: { xs: "center", lg: "start" }
+            }}
+          >
+            Работает в любом городе РФ
+          </Typography>
+        </Box>
 
+        <Link onClick={handleOpenPersonalPolicyPage} rel="noopener noreferrer">
+          <Typography
+            sx={{
+              color: "firebrick",
+              fontSize: { xs: "14px", sm: "20px", lg: "24px" },
+              lineHeight: "1.4",
+              textAlign: { xs: "center", lg: "start" },
+              "&:hover": {
+                cursor: "pointer",
+                textDecoration: "underline"
+              }
+            }}
+          >
+            Соответствует ФЗ "О персональных данных"
+          </Typography>
+        </Link>
         <Typography
           sx={{
             fontSize: { xs: "16px", sm: "22px", lg: "28px" },

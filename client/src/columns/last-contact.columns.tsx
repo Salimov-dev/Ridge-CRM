@@ -75,7 +75,8 @@ export const lastContactColumns = (onUpdate, onOpenContactPage, isManager) => {
           {
             id: "manager",
             accessorKey: "userId",
-            header: "Фамилия и Имя",
+            header: "Менеджер",
+            enableSorting: false,
             cell: (info) => {
               const userId = info.getValue();
               const { getAvatarSrc, isLoading } = useGetUserAvatar(userId);
