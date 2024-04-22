@@ -100,6 +100,7 @@ router.patch("/:userLicenseId?/edit", auth, async (req, res) => {
     const currentDate = dayjs();
     const currentLicenseStartDate = dayjs(existingUserLicense.dateStart);
     const currentLicenseEndDate = dayjs(existingUserLicense.dateEnd);
+    const currentLicenseTrialEndDate = dayjs(existingUserLicense.dateTrialEnd);
     let newLicenseStartDate = currentLicenseStartDate;
     let newLicenseEndDate = currentLicenseEndDate;
 
@@ -131,12 +132,25 @@ router.patch("/:userLicenseId?/edit", auth, async (req, res) => {
       );
     }
 
+    // кол-во оставшихся дней
+    const daysLeftQuantity =
+      (isLicenseTrialType
+        ? currentLicenseTrialEndDate
+        : newLicenseEndDate
+      )?.diff(currentDate, "day") + 1;
+
+    const daysDifference =
+      daysLeftQuantity +
+      (currentDate.isSame(newLicenseEndDate, "day") ||
+        currentDate.isSame(currentLicenseTrialEndDate, "day"));
+
     await UserLicense.update(
       {
         activeUsersQuantity: totalUsersCount,
         accountType: newCurrentLicenseTypeId,
         dateStart: newLicenseStartDate,
-        dateEnd: newLicenseEndDate
+        dateEnd: newLicenseEndDate,
+        accessDaysQuantity: !isLicenseBlockedType ? daysDifference : 0
       },
       { where: { userId } }
     );
