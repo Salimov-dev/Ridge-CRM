@@ -252,17 +252,12 @@ router.patch("/:userId/update-teammate", auth, lic, async (req, res) => {
         .subtract(1, "day");
     }
 
-    // кол-во оставшихся дней
+    // кол-во оставшихся дней +1 текущий день
     const daysLeftQuantity =
       (isLicenseTrialType
         ? currentLicenseTrialEndDate
         : newLicenseEndDate
       )?.diff(currentDate, "day") + 1;
-
-    const daysDifference =
-      daysLeftQuantity +
-      (currentDate.isSame(newLicenseEndDate, "day") ||
-        currentDate.isSame(currentLicenseTrialEndDate, "day"));
 
     // Обновление лицензии пользователя
     await UserLicense.update(
@@ -271,7 +266,7 @@ router.patch("/:userId/update-teammate", auth, lic, async (req, res) => {
         managers: updatedManagers,
         observers: updatedObservers,
         dateEnd: newLicenseEndDate,
-        accessDaysQuantity: !isLicenseBlockedType ? daysDifference : 0
+        accessDaysQuantity: !isLicenseBlockedType ? daysLeftQuantity : 0
       },
       { where: { userId: currentUserId } }
     );
