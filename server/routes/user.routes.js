@@ -253,9 +253,11 @@ router.patch("/:userId/update-teammate", auth, lic, async (req, res) => {
     }
 
     // кол-во оставшихся дней
-    const daysLeftQuantity = (
-      isLicenseTrialType ? currentLicenseTrialEndDate : newLicenseEndDate
-    )?.diff(currentDate, "day");
+    const daysLeftQuantity =
+      (isLicenseTrialType
+        ? currentLicenseTrialEndDate
+        : newLicenseEndDate
+      )?.diff(currentDate, "day") + 1;
 
     const daysDifference =
       daysLeftQuantity +
