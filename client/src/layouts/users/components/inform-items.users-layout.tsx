@@ -52,16 +52,7 @@ const InformItemsUsersLayout = () => {
   const dateEnd = dayjs(userLicense?.dateEnd);
   const dateEndTrialPeriod = dayjs(userLicense?.dateTrialEnd);
 
-  const daysLeftQuantity = (
-    isLicenseTrialType ? dateEndTrialPeriod : dateEnd
-  )?.diff(currentDate, "day");
-
-  const daysDifference =
-    daysLeftQuantity +
-    (currentDate.isSame(dateEnd, "day") ||
-    currentDate.isSame(dateEndTrialPeriod, "day")
-      ? 1
-      : 2);
+  const daysDifference = userLicense?.accessDaysQuantity;
 
   return (
     <InformItemsContainer>

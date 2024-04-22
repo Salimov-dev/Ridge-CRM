@@ -28,6 +28,7 @@ const UserLicense = sequelize.define(
     paymentAmount: { type: DataTypes.INTEGER, defaultValue: null },
     paymentInvId: { type: DataTypes.BIGINT, defaultValue: null },
     quantityClicksOnMap: { type: DataTypes.INTEGER, defaultValue: 60 },
+    accessDaysQuantity: { type: DataTypes.INTEGER, defaultValue: 14 },
     dateStart: { type: DataTypes.DATE, defaultValue: DataTypes.NOW },
     dateEnd: {
       type: DataTypes.DATE,

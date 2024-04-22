@@ -210,11 +210,13 @@ router.patch("/:userId/update-teammate", auth, lic, async (req, res) => {
     const trialLicenseTypeId = "71pbfi4954itj045tloop001";
     const activeLicenseTypeId = "718gkgdbn48jgfo3kktjt002";
     const blockedLicenseTypeId = "71kbjld394u5jgfdsjk4l003";
+    const isLicenseTrialType = currentLicenseTypeId === trialLicenseTypeId;
+    const isLicenseActiveType = currentLicenseTypeId === activeLicenseTypeId;
+    const isLicenseBlockedType = currentLicenseTypeId === blockedLicenseTypeId;
 
     // считаем новую дату окончания лицензии
     const subscriptionCostPerUser = 25; // Стоимость подписки за одного пользователя
     const currentLicenseStartDate = dayjs(userLicense.dateStart);
-    const currentLicenseEndDate = dayjs(userLicense.dateEnd);
     const currentLicenseTrialEndDate = dayjs(userLicense.dateTrialEnd);
 
     const currentLicenseBalance = userLicense.balance;
@@ -250,13 +252,24 @@ router.patch("/:userId/update-teammate", auth, lic, async (req, res) => {
         .subtract(1, "day");
     }
 
+    // кол-во оставшихся дней
+    const daysLeftQuantity = (
+      isLicenseTrialType ? currentLicenseTrialEndDate : newLicenseEndDate
+    )?.diff(currentDate, "day");
+
+    const daysDifference =
+      daysLeftQuantity +
+      (currentDate.isSame(newLicenseEndDate, "day") ||
+        currentDate.isSame(currentLicenseTrialEndDate, "day"));
+
     // Обновление лицензии пользователя
     await UserLicense.update(
       {
         activeUsersQuantity: totalUsersCount,
         managers: updatedManagers,
         observers: updatedObservers,
-        dateEnd: newLicenseEndDate
+        dateEnd: newLicenseEndDate,
+        accessDaysQuantity: !isLicenseBlockedType ? daysDifference : 0
       },
       { where: { userId: currentUserId } }
     );
