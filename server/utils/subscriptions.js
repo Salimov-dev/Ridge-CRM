@@ -100,6 +100,30 @@ const subscriptions = async () => {
         const newBalanceAtNewDay =
           currentLicenseBalance - costsForAllActivityUsersPerDay;
 
+        // триальный период НЕ закончился
+        if (isLicenseTrialType && currentDate <= currentLicenseEndTrialDate) {
+          // кол-во оставшихся дней +1 текущий день
+          const daysLeftQuantity =
+            currentLicenseEndTrialDate?.diff(currentDate, "day") + 1;
+
+          // Обновление информации о лицензии
+          await UserLicense.update(
+            {
+              accountType: blockedLicenseTypeId,
+              activeUsersQuantity: 0,
+              dateEnd: currentDate,
+              accessDaysQuantity: daysLeftQuantity
+            },
+            { where: { userId: currentUserId } }
+          );
+
+          const updatedLicense = await UserLicense.findOne({
+            where: { userId: currentUserId }
+          });
+
+          return updatedLicense;
+        }
+
         // триальный период закончился
         if (isLicenseTrialType && currentDate > currentLicenseEndTrialDate) {
           allUserWithCurrentUserArray.forEach(async (userId) => {
@@ -133,7 +157,8 @@ const subscriptions = async () => {
             {
               accountType: blockedLicenseTypeId,
               activeUsersQuantity: 0,
-              dateEnd: currentDate
+              dateEnd: currentDate,
+              accessDaysQuantity: 0
             },
             { where: { userId: currentUserId } }
           );
@@ -179,13 +204,18 @@ const subscriptions = async () => {
                 .subtract(1, "day")
             : userLicense.dateEnd;
 
+          // кол-во оставшихся дней +1 текущий день
+          const daysLeftQuantity =
+            newLicenseEndDate?.diff(currentDate, "day") + 1;
+
           await UserLicense.update(
             {
               balance: Sequelize.literal(
                 `balance - ${costsForAllActivityUsersPerDay}`
               ),
               quantityClicksOnMap: 60,
-              dateEnd: newLicenseEndDate
+              dateEnd: newLicenseEndDate,
+              accessDaysQuantity: daysLeftQuantity
             },
             { where: { userId: currentUserId } }
           );
@@ -217,7 +247,7 @@ const subscriptions = async () => {
 
             try {
               await UserLicense.update(
-                { quantityClicksOnMap: 0 },
+                { quantityClicksOnMap: 0, accessDaysQuantity: 0 },
                 { where: { userId } }
               );
             } catch (error) {
@@ -236,7 +266,8 @@ const subscriptions = async () => {
               ),
               accountType: blockedLicenseTypeId,
               activeUsersQuantity: 0,
-              dateEnd: currentDate
+              dateEnd: currentDate,
+              accessDaysQuantity: 0
             },
             { where: { userId: currentUserId } }
           );
