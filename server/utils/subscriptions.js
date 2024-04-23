@@ -102,16 +102,11 @@ const subscriptions = async () => {
 
         // триальный период НЕ закончился
         if (isLicenseTrialType && currentDate <= currentLicenseEndTrialDate) {
-          // кол-во оставшихся дней +1 текущий день
           const daysLeftQuantity =
             currentLicenseEndTrialDate?.diff(currentDate, "day") + 1;
 
-          // Обновление информации о лицензии
           await UserLicense.update(
             {
-              accountType: blockedLicenseTypeId,
-              activeUsersQuantity: 0,
-              dateEnd: currentDate,
               accessDaysQuantity: daysLeftQuantity
             },
             { where: { userId: currentUserId } }
