@@ -193,11 +193,13 @@ const subscriptions = async () => {
             newUserLicenseBalance /
               (subscriptionCostPerUser * newTotalActiveUsersQuantity)
           );
-          const newLicenseEndDate = updatedYesterdayUsersLength
-            ? currentDate
-                .add(newLicenseDaysLeftQuantity, "day")
-                .subtract(1, "day")
-            : userLicense.dateEnd;
+          const newLicenseEndDate = dayjs(
+            updatedYesterdayUsersLength
+              ? currentDate
+                  .add(newLicenseDaysLeftQuantity, "day")
+                  .subtract(1, "day")
+              : userLicense.dateEnd
+          );
 
           // кол-во оставшихся дней +1 текущий день
           const daysLeftQuantity =
