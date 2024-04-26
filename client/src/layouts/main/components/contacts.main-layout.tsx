@@ -6,8 +6,6 @@ import MailIcon from "@assets/mail_logo.png";
 import VkIcon from "@assets/vk_logo.png";
 
 const IconsContainer = styled(Box)`
-  width: 100%;
-  height: 100%;
   display: flex;
   align-items: end;
   bottom: 0;
@@ -38,20 +36,12 @@ const IconsContactMainLayout = ({
   justifyContent = "end",
   padding = "20px"
 }) => {
-  const handleVkClick = () => {
-    window.open("https://vk.com/ridgecrm", "_blank");
-  };
-
-  const handleTelegramClick = () => {
-    window.open("https://t.me/ridge_crm", "_blank");
-  };
-
-  const handleMailClick = () => {
+  const handleSendMail = () => {
     window.location.href = "mailto:ridge-crm@mail.ru";
   };
 
-  const handleYoutubeClick = () => {
-    window.open("https://www.youtube.com/@ridge_crm", "_blank");
+  const handleOpenLink = (link) => {
+    window.open(link, "_blank");
   };
 
   return (
@@ -63,10 +53,19 @@ const IconsContactMainLayout = ({
         gap: { xs: "10px", md: "20px" }
       }}
     >
-      <Logo src={VkIcon} onClick={handleVkClick} />
-      <Logo src={TelegramIcon} onClick={handleTelegramClick} />
-      <Logo src={YoutubeIcon} onClick={handleYoutubeClick} />
-      <Logo src={MailIcon} onClick={handleMailClick} />
+      <Logo
+        src={VkIcon}
+        onClick={() => handleOpenLink("https://vk.com/ridgecrm")}
+      />
+      <Logo
+        src={TelegramIcon}
+        onClick={() => handleOpenLink("https://t.me/ridge_crm")}
+      />
+      <Logo
+        src={YoutubeIcon}
+        onClick={() => handleOpenLink("https://www.youtube.com/@ridge_crm")}
+      />
+      <Logo src={MailIcon} onClick={handleSendMail} />
     </IconsContainer>
   );
 };
