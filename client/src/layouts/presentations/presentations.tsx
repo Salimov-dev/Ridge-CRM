@@ -34,7 +34,7 @@ const PresentationsLayout = React.memo(() => {
     []
   );
   const [selectedPresentationBaloon, setSelectedPresentationBaloon] =
-    useState(null);
+    useState("");
 
   const [stateDialogPages, setStateDialogPages] = useState({
     objectPage: false,
@@ -80,7 +80,7 @@ const PresentationsLayout = React.memo(() => {
   const isCurrentUserRoleManager = useSelector(getIsCurrentUserRoleManager());
   const isCurrentUserRoleCurator = useSelector(getIsCurrentUserRoleCurator());
 
-  const handleSelectPresentationBaloon = (presentationId) => {
+  const handleSelectPresentationBaloon = (presentationId: string) => {
     setSelectedPresentationBaloon(presentationId);
   };
 
