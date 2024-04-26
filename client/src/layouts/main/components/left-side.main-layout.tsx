@@ -5,6 +5,7 @@ import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
 import ThumbUpAltOutlinedIcon from "@mui/icons-material/ThumbUpAltOutlined";
 import ContactsMainLayout from "./contacts.main-layout";
 import LockPersonOutlinedIcon from "@mui/icons-material/LockPersonOutlined";
+import useWindowWidth from "@hooks/window-width/use-window-width";
 
 const Component = styled(Box)`
   display: flex;
@@ -20,6 +21,8 @@ const Link = styled.a`
 `;
 
 const LeftSideMainLayout = ({ setState }) => {
+  const windowWidth = useWindowWidth();
+
   const { handleOpenAuthPage, handleOpenPersonalPolicyPage } =
     useDialogHandlers(setState);
 
@@ -106,12 +109,14 @@ const LeftSideMainLayout = ({ setState }) => {
                 }
               }}
             >
-              <LockPersonOutlinedIcon
-                sx={{
-                  width: { sm: "22px", lg: "34px" },
-                  height: { sm: "22px", lg: "34px" }
-                }}
-              />
+              {windowWidth > 600 && (
+                <LockPersonOutlinedIcon
+                  sx={{
+                    width: { sm: "22px", lg: "34px" },
+                    height: { sm: "22px", lg: "34px" }
+                  }}
+                />
+              )}
               <Typography
                 sx={{
                   fontSize: { xs: "14px", sm: "20px", lg: "24px" },

@@ -9,6 +9,8 @@ import { tokens } from "@theme/theme";
 // components
 import HeaderSidebar from "./components/header.sidebar-ui";
 import ItemsListSidebar from "./components/items-list.sidebar-ui";
+// hooks
+import useWindowWidth from "@hooks/window-width/use-window-width";
 // store
 import {
   getCurrrentPathState,
@@ -70,11 +72,14 @@ const SidebarUI = React.memo(() => {
   const [selected, setSelected] = useState(null);
   const [isCollapsed, setIsCollapsed] = useState(true);
 
+  const windowWidth = useWindowWidth();
   const currentPath = useSelector(getCurrrentPathState());
 
   const handleSetCollapsed = (value) => {
     setIsCollapsed(value);
   };
+
+  const sidebarShow = windowWidth > 600;
 
   useEffect(() => {
     setSelected(currentPath);
@@ -87,26 +92,29 @@ const SidebarUI = React.memo(() => {
   return (
     <Component colors={colors}>
       <CountryColors />
-      <ProSidebar collapsed={isCollapsed}>
-        <Menu>
-          <HeaderSidebar
-            isCollapsed={isCollapsed}
-            setIsCollapsed={handleSetCollapsed}
-            colors={colors}
-            setSelected={setSelected}
-          />
-          <ItemsListSidebar
-            selected={selected}
-            setSelected={setSelected}
-            colors={colors}
-            isCollapsed={isCollapsed}
-          />
-        </Menu>
 
-        <Link href="https://ridge-crm.ru/" rel="noopener noreferrer">
-          <RidgeName>Г Р Я Д К А</RidgeName>
-        </Link>
-      </ProSidebar>
+      {sidebarShow && (
+        <ProSidebar collapsed={isCollapsed}>
+          <Menu>
+            <HeaderSidebar
+              isCollapsed={isCollapsed}
+              setIsCollapsed={handleSetCollapsed}
+              colors={colors}
+              setSelected={setSelected}
+            />
+            <ItemsListSidebar
+              selected={selected}
+              setSelected={setSelected}
+              colors={colors}
+              isCollapsed={isCollapsed}
+            />
+          </Menu>
+
+          <Link href="https://ridge-crm.ru/" rel="noopener noreferrer">
+            <RidgeName>Г Р Я Д К А</RidgeName>
+          </Link>
+        </ProSidebar>
+      )}
     </Component>
   );
 });

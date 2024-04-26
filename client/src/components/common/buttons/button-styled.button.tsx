@@ -1,4 +1,5 @@
 import { useTheme } from "@emotion/react";
+import useWindowWidth from "@hooks/window-width/use-window-width";
 import { Button } from "@mui/material";
 import { getIsLoggedIn } from "@store/user/users.store";
 import { tokens } from "@theme/theme";
@@ -25,12 +26,10 @@ const ButtonStyled = ({
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const isLoggedIn = useSelector(getIsLoggedIn());
+  const windowWidth = useWindowWidth();
 
   let color = "white";
-  // let colorHover = "black";
   let borderColor = colors.grey[700];
-  // let background = colors.grey[700];
-  // let backgroundHover = colors.green["darkGreen"];
 
   if (style === "OBJECT") {
     colorHover = "white";
@@ -111,7 +110,10 @@ const ButtonStyled = ({
   if (style === "TRY_DEMO") {
     background = "ForestGreen";
     colorHover = "white";
+    width = windowWidth > 600 ? "fit-content" : "100%";
+    padding = windowWidth > 600 ? "20px" : "10px";
     backgroundHover = colors.green["darkGreen"];
+    icon = windowWidth > 600 ? icon : null;
   }
 
   if (style === "CONTACT") {
