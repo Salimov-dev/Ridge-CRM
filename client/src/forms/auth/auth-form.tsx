@@ -111,6 +111,7 @@ const AuthForm = ({
             setValue={setValue}
             watchItemId={watchCity}
             errors={errors?.city}
+            maxHeightListBox="16rem"
           />
         )}
       </FieldsContainer>

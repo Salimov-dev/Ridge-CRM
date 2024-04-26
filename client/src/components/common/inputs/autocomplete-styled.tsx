@@ -21,6 +21,7 @@ const AutocompleteStyled = ({
   label,
   errors = null,
   width = "100%",
+  maxHeightListBox = "8rem",
   optionLabel = (option) => option.name
 }) => {
   const theme = useTheme();
@@ -47,7 +48,9 @@ const AutocompleteStyled = ({
         renderInput={(params) => <TextField {...params} label={label} />}
         getOptionLabel={optionLabel}
         isOptionEqualToValue={(option, value) => option._id === value?._id}
-        ListboxProps={{ style: { background: "#2f2f2f", maxHeight: "10rem" } }}
+        ListboxProps={{
+          style: { background: "#2f2f2f", maxHeight: maxHeightListBox }
+        }}
         disabled={disabled}
         noOptionsText="Нет совпадений"
         clearOnBlur={false}

@@ -38,7 +38,7 @@ const PresentationForm = ({
           setValue={setValue}
           watchItemId={watchObjectId}
           errors={errors?.objectId}
-          disabled={isObjectPage || isCurrentUserRoleCurator}
+          disabled={isObjectPage}
         />
         <TextFieldStyled
           register={register}
