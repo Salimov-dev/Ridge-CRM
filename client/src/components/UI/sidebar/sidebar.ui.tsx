@@ -1,7 +1,8 @@
 // libraries
 import React, { useState, useEffect } from "react";
+import styled from "@emotion/styled";
 import { useDispatch, useSelector } from "react-redux";
-import { Box, styled, useTheme } from "@mui/material";
+import { Box, useTheme } from "@mui/material";
 import { Sidebar as ProSidebar, Menu } from "react-pro-sidebar";
 // theme
 import { tokens } from "@theme/theme";
@@ -56,6 +57,11 @@ const CountryColors = styled(Box)`
   );
 `;
 
+const Link = styled.a`
+  color: white;
+  text-decoration: none;
+`;
+
 const SidebarUI = React.memo(() => {
   const dispatch = useDispatch();
   const theme = useTheme();
@@ -96,7 +102,10 @@ const SidebarUI = React.memo(() => {
             isCollapsed={isCollapsed}
           />
         </Menu>
-        <RidgeName>Г Р Я Д К А</RidgeName>
+
+        <Link href="https://ridge-crm.ru/" rel="noopener noreferrer">
+          <RidgeName>Г Р Я Д К А</RidgeName>
+        </Link>
       </ProSidebar>
     </Component>
   );

@@ -114,6 +114,7 @@ const UpdatePresentation = React.memo(({ presentationId, onClose }) => {
           errors={errors}
           watch={watch}
           setValue={setValue}
+          isAuthorEntity={isAuthorEntity}
         />
       ) : (
         <CuratorPresentationForm

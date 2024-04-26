@@ -10,7 +10,8 @@ const IconsContainer = styled(Box)`
   height: 100%;
   display: flex;
   align-items: end;
-  gap: 26px;
+  bottom: 0;
+  right: 0;
 `;
 
 const Logo = styled("img")({
@@ -18,13 +19,24 @@ const Logo = styled("img")({
   cursor: "pointer",
   "&:hover": {
     transform: "scale(1.1)"
+  },
+  "@media screen and (max-width: 755px)": {
+    width: "40px",
+    height: "40px"
+  },
+  "@media screen and (min-width: 756px) and (max-width: 1199px)": {
+    width: "60px",
+    height: "60px"
+  },
+  "@media screen and (min-width: 1200px)": {
+    width: "80px",
+    height: "80px"
   }
 });
 
 const IconsContactMainLayout = ({
   justifyContent = "end",
-  padding = "20px",
-  size = "80px"
+  padding = "20px"
 }) => {
   const handleVkClick = () => {
     window.open("https://vk.com/ridgecrm", "_blank");
@@ -46,29 +58,15 @@ const IconsContactMainLayout = ({
     <IconsContainer
       sx={{
         justifyContent: justifyContent,
-        padding: padding
+        padding: padding,
+        position: { md: "static", lg: "fixed" },
+        gap: { xs: "10px", md: "20px" }
       }}
     >
-      <Logo
-        src={VkIcon}
-        onClick={handleVkClick}
-        style={{ width: size, height: size }}
-      />
-      <Logo
-        src={TelegramIcon}
-        onClick={handleTelegramClick}
-        style={{ width: size, height: size }}
-      />
-      <Logo
-        src={YoutubeIcon}
-        onClick={handleYoutubeClick}
-        style={{ width: size, height: size }}
-      />
-      <Logo
-        src={MailIcon}
-        onClick={handleMailClick}
-        style={{ width: size, height: size }}
-      />
+      <Logo src={VkIcon} onClick={handleVkClick} />
+      <Logo src={TelegramIcon} onClick={handleTelegramClick} />
+      <Logo src={YoutubeIcon} onClick={handleYoutubeClick} />
+      <Logo src={MailIcon} onClick={handleMailClick} />
     </IconsContainer>
   );
 };

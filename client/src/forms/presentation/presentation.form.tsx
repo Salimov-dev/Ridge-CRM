@@ -2,10 +2,13 @@ import { useSelector } from "react-redux";
 // components
 import TextFieldStyled from "@components/common/inputs/text-field-styled";
 import AutocompleteStyled from "@components/common/inputs/autocomplete-styled";
+// utils
+import { capitalizeFirstLetter } from "@utils/data/capitalize-first-letter";
 // styled
 import { FieldsContainer, Form } from "@styled/styled-form";
 // store
 import { getIsCurrentUserRoleCurator } from "@store/user/users.store";
+import { getPresentationStatusesList } from "@store/presentation/presentation-status.store";
 
 const PresentationForm = ({
   objects,
@@ -14,9 +17,13 @@ const PresentationForm = ({
   errors,
   setValue,
   watch,
-  isObjectPage = false
+  isObjectPage = false,
+  isAuthorEntity = false
 }) => {
   const watchObjectId = watch("objectId");
+  const watchStatus = watch("status");
+
+  const presentationStatuses = useSelector(getPresentationStatusesList());
   const isCurrentUserRoleCurator = useSelector(getIsCurrentUserRoleCurator());
 
   return (
@@ -41,6 +48,30 @@ const PresentationForm = ({
           errors={errors?.cloudLink}
           inputProps={{ maxLength: 150 }}
         />
+        {isAuthorEntity && isCurrentUserRoleCurator ? (
+          <>
+            <AutocompleteStyled
+              label="Статус объекта *"
+              register={register}
+              name="status"
+              options={presentationStatuses}
+              value={watchStatus ?? ""}
+              setValue={setValue}
+              watchItemId={watchStatus}
+              errors={errors?.status}
+            />
+            <TextFieldStyled
+              register={register}
+              label="Комментарий куратора"
+              name="curatorComment"
+              rows="6"
+              multiline={true}
+              value={capitalizeFirstLetter(data?.curatorComment)}
+              errors={errors?.curatorComment}
+              inputProps={{ maxLength: 500 }}
+            />
+          </>
+        ) : null}
       </FieldsContainer>
     </Form>
   );

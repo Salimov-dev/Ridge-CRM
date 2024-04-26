@@ -7,6 +7,7 @@ const Component = styled(Box)`
   margin: 20px 0 0 0;
   width: 70%;
   display: flex;
+  position: relative;
   background-size: auto 100%;
   background-repeat: no-repeat;
   background-position: left top;
