@@ -156,7 +156,7 @@ const LeftSideMainLayout = ({ setState }) => {
 
         <Typography
           sx={{
-            fontSize: { xs: "12px", sm: "16px", lg: "22px" },
+            fontSize: { xs: "16px", sm: "18px", lg: "22px" },
             lineHeight: "1.4",
             color: "DodgerBlue"
           }}

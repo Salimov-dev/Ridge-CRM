@@ -1,60 +1,171 @@
 import { createContext, useState, useMemo } from "react";
 import { createTheme } from "@mui/material/styles";
+import { Theme as MuiTheme } from "@mui/material/styles";
+
+declare module "@emotion/react" {
+  export interface Theme extends MuiTheme {}
+}
+
+type TokensFunction = (mode: string) => {
+  green: {
+    green: string;
+    seaGreen: string;
+    darkGreen: string;
+    mediumSeaGreen: string;
+  };
+  sidebar: {
+    menuItemActive: string;
+  };
+  background: {
+    primary: string;
+    secondary: string;
+  };
+  error: {
+    red: string;
+    gold: string;
+  };
+  header: {
+    gold: string;
+  };
+  success: {
+    mediumSeaGreen: string;
+    darkGreen: string;
+  };
+  cancel: {
+    fireBrick: string;
+    red: string;
+    indianRed: string;
+    lightCoral: string;
+  };
+  task: {
+    myTask: string;
+    myTaskHover: string;
+    managerTask: string;
+    managerTaskHover: string;
+  };
+  lastContact: {
+    primary: string;
+    hover: string;
+  };
+  presentation: {
+    primary: string;
+    hover: string;
+  };
+  meeting: {
+    primary: string;
+    hover: string;
+  };
+  grey: {
+    100: string;
+    200: string;
+    300: string;
+    400: string;
+    500: string;
+    600: string;
+    700: string;
+    800: string;
+    900: string;
+  };
+  primary: {
+    100: string;
+    200: string;
+    300: string;
+    400: string;
+    500: string;
+    600: string;
+    700: string;
+    800: string;
+    900: string;
+  };
+  greenAccent: {
+    100: string;
+    200: string;
+    300: string;
+    400: string;
+    500: string;
+    600: string;
+    700: string;
+    800: string;
+    900: string;
+  };
+  redAccent: {
+    100: string;
+    200: string;
+    300: string;
+    400: string;
+    500: string;
+    600: string;
+    700: string;
+    800: string;
+    900: string;
+  };
+  blueAccent: {
+    100: string;
+    200: string;
+    300: string;
+    400: string;
+    500: string;
+    600: string;
+    700: string;
+    800: string;
+    900: string;
+  };
+};
 
 // color design tokens export
-export const tokens = (mode) => ({
+export const tokens: TokensFunction = (mode) => ({
   ...(mode === "dark"
     ? {
         green: {
           green: "#008000",
           seaGreen: "#2E8B57",
           darkGreen: "#006400",
-          mediumSeaGreen: "#3CB371",
+          mediumSeaGreen: "#3CB371"
         },
         sidebar: {
-          menuItemActive: "#868dfb",
+          menuItemActive: "yellow"
         },
         background: {
           primary: "#141B2D",
-          secondary: "#1F2A40",
+          secondary: "#1F2A40"
         },
         error: {
           red: "#F44336",
-          gold: "#FFD700",
+          gold: "#FFD700"
         },
         header: {
-          gold: "#FFD700",
+          gold: "#FFD700"
         },
         success: {
           mediumSeaGreen: "#3CB371",
-          darkGreen: "#006400",
+          darkGreen: "#006400"
         },
         cancel: {
           fireBrick: "#B22222",
           red: "#FF0000",
           indianRed: "#CD5C5C",
-          lightCoral: "#F08080",
+          lightCoral: "#F08080"
         },
         entities: {
-          object: "#228B22",
+          object: "#228B22"
         },
         task: {
           myTask: "#FF8C00", // DarkOrange
           myTaskHover: "#FFA500", // Orange
           managerTask: "#DC143C", // Crimson
-          managerTaskHover: "#FF0000", // Red
+          managerTaskHover: "#FF0000" // Red
         },
         lastContact: {
           primary: "#8B4513", // SaddleBrown,
-          hover: "#A0522D", // Sienna,
+          hover: "#A0522D" // Sienna,
         },
         presentation: {
           primary: "#8B4513", // SaddleBrown,
-          hover: "#A0522D", // Sienna,
+          hover: "#A0522D" // Sienna,
         },
         meeting: {
           primary: "#4169E1", // RoyalBlue,
-          hover: "#6495ED", // CornflowerBlue,
+          hover: "#6495ED" // CornflowerBlue,
         },
         grey: {
           100: "#e0e0e0",
@@ -65,7 +176,7 @@ export const tokens = (mode) => ({
           600: "#525252",
           700: "#3d3d3d",
           800: "#292929",
-          900: "#141414",
+          900: "#141414"
         },
         primary: {
           100: "#d0d1d5",
@@ -76,7 +187,7 @@ export const tokens = (mode) => ({
           600: "#101624",
           700: "#0c101b",
           800: "#080b12",
-          900: "#040509",
+          900: "#040509"
         },
         greenAccent: {
           100: "#dbf5ee",
@@ -87,7 +198,7 @@ export const tokens = (mode) => ({
           600: "#3da58a",
           700: "#2e7c67",
           800: "#1e5245",
-          900: "#0f2922",
+          900: "#0f2922"
         },
         redAccent: {
           100: "#f8dcdb",
@@ -98,7 +209,7 @@ export const tokens = (mode) => ({
           600: "#af3f3b",
           700: "#832f2c",
           800: "#58201e",
-          900: "#2c100f",
+          900: "#2c100f"
         },
         blueAccent: {
           100: "#e1e2fe",
@@ -109,57 +220,57 @@ export const tokens = (mode) => ({
           600: "#535ac8",
           700: "#3e4396",
           800: "#2a2d64",
-          900: "#151632",
-        },
+          900: "#151632"
+        }
       }
     : {
         green: {
           green: "#008000",
           seaGreen: "#2E8B57",
           darkGreen: "#006400",
-          mediumSeaGreen: "#3CB371",
+          mediumSeaGreen: "#3CB371"
         },
         sidebar: {
-          menuItemActive: "#868dfb",
+          menuItemActive: "#868dfb"
         },
         background: {
           primary: "#141B2D",
-          secondary: "#1F2A40",
+          secondary: "#1F2A40"
         },
         error: {
           red: "#F44336",
-          gold: "#FFD700",
+          gold: "#FFD700"
         },
         header: {
-          gold: "#FFD700",
+          gold: "#FFD700"
         },
         success: {
           mediumSeaGreen: "#3CB371",
-          darkGreen: "#006400",
+          darkGreen: "#006400"
         },
         cancel: {
           fireBrick: "#B22222",
           red: "#FF0000",
           indianRed: "#CD5C5C",
-          lightCoral: "#F08080",
+          lightCoral: "#F08080"
         },
         task: {
           myTask: "#FF8C00", // DarkOrange
           myTaskHover: "#FFA500", // Orange
           managerTask: "#DC143C", // Crimson
-          managerTaskHover: "#FF0000", // Red
+          managerTaskHover: "#FF0000" // Red
         },
         meeting: {
           primary: "#4169E1", // RoyalBlue,
-          hover: "#6495ED", // CornflowerBlue,
+          hover: "#6495ED" // CornflowerBlue,
         },
         presentation: {
           primary: "#8B4513", // SaddleBrown,
-          hover: "#A0522D", // Sienna,
+          hover: "#A0522D" // Sienna,
         },
         lastContact: {
           primary: "8B4513", // SaddleBrown,
-          hover: "A0522D", // Sienna,
+          hover: "A0522D" // Sienna,
         },
         grey: {
           100: "#141414",
@@ -170,7 +281,7 @@ export const tokens = (mode) => ({
           600: "#858585",
           700: "#a3a3a3",
           800: "#c2c2c2",
-          900: "#e0e0e0",
+          900: "#e0e0e0"
         },
         primary: {
           100: "#040509",
@@ -181,7 +292,7 @@ export const tokens = (mode) => ({
           600: "#1F2A40",
           700: "#727681",
           800: "#a1a4ab",
-          900: "#d0d1d5",
+          900: "#d0d1d5"
         },
         greenAccent: {
           100: "#0f2922",
@@ -192,7 +303,7 @@ export const tokens = (mode) => ({
           600: "#70d8bd",
           700: "#94e2cd",
           800: "#b7ebde",
-          900: "#dbf5ee",
+          900: "#dbf5ee"
         },
         redAccent: {
           100: "#2c100f",
@@ -203,7 +314,7 @@ export const tokens = (mode) => ({
           600: "#e2726e",
           700: "#e99592",
           800: "#f1b9b7",
-          900: "#f8dcdb",
+          900: "#f8dcdb"
         },
         blueAccent: {
           100: "#151632",
@@ -214,13 +325,66 @@ export const tokens = (mode) => ({
           600: "#868dfb",
           700: "#a4a9fc",
           800: "#c3c6fd",
-          900: "#e1e2fe",
-        },
-      }),
+          900: "#e1e2fe"
+        }
+      })
 });
 
-// mui theme settings
-export const themeSettings = (mode) => {
+interface Theme {
+  palette: {
+    mode: string;
+    primary: {
+      main: string;
+    };
+    secondary: {
+      main: string;
+    };
+    neutral: {
+      dark: string;
+      main: string;
+      light: string;
+    };
+    background: {
+      default: string;
+    };
+  };
+  a: {
+    color: string;
+  };
+  zIndex: {
+    modal: number;
+  };
+  typography: {
+    fontFamily: string;
+    fontSize: number;
+    h1: {
+      fontFamily: string;
+      fontSize: number;
+    };
+    h2: {
+      fontFamily: string;
+      fontSize: number;
+    };
+    h3: {
+      fontFamily: string;
+      fontSize: number;
+    };
+    h4: {
+      fontFamily: string;
+      fontSize: number;
+    };
+    h5: {
+      fontFamily: string;
+      fontSize: number;
+    };
+    h6: {
+      fontFamily: string;
+      fontSize: number;
+    };
+  };
+}
+
+export const themeSettings = (mode: string): Theme => {
   const colors = tokens(mode);
   return {
     palette: {
@@ -229,78 +393,78 @@ export const themeSettings = (mode) => {
         ? {
             // palette values for dark mode
             primary: {
-              main: colors.primary[500],
+              main: colors.primary[500]
             },
             secondary: {
-              main: colors.greenAccent[500],
+              main: colors.greenAccent[500]
             },
             neutral: {
               dark: colors.grey[700],
               main: colors.grey[500],
-              light: colors.grey[100],
+              light: colors.grey[100]
             },
             background: {
-              default: colors.primary[500],
-            },
+              default: colors.primary[500]
+            }
           }
         : {
             // palette values for light mode
             primary: {
-              main: colors.primary[100],
+              main: colors.primary[100]
             },
             secondary: {
-              main: colors.greenAccent[500],
+              main: colors.greenAccent[500]
             },
             neutral: {
               dark: colors.grey[700],
               main: colors.grey[500],
-              light: colors.grey[100],
+              light: colors.grey[100]
             },
             background: {
-              default: "#fcfcfc",
-            },
-          }),
+              default: "#fcfcfc"
+            }
+          })
     },
     a: {
-      color: "white",
+      color: "white"
     },
     zIndex: {
-      modal: 999000, // Устанавливаем zIndex по умолчанию для модальных окон
+      modal: 999000 // Устанавливаем zIndex по умолчанию для модальных окон
     },
     typography: {
       fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
       fontSize: 12,
       h1: {
         fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
-        fontSize: 40,
+        fontSize: 40
       },
       h2: {
         fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
-        fontSize: 32,
+        fontSize: 32
       },
       h3: {
         fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
-        fontSize: 24,
+        fontSize: 24
       },
       h4: {
         fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
-        fontSize: 20,
+        fontSize: 20
       },
       h5: {
         fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
-        fontSize: 16,
+        fontSize: 16
       },
       h6: {
         fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
-        fontSize: 14,
-      },
-    },
+        fontSize: 14
+      }
+    }
   };
 };
 
 // context for color mode
 export const ColorModeContext = createContext({
-  toggleColorMode: () => {},
+  toggleColorMode: () => {}
 });
 
 export const useMode = () => {
@@ -309,7 +473,7 @@ export const useMode = () => {
   const colorMode = useMemo(
     () => ({
       toggleColorMode: () =>
-        setMode((prev) => (prev === "light" ? "dark" : "light")),
+        setMode((prev) => (prev === "light" ? "dark" : "light"))
     }),
     []
   );

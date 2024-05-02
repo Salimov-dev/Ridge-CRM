@@ -1,5 +1,5 @@
 // libraries
-import { useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Box, styled } from "@mui/material";
 // components
@@ -8,6 +8,11 @@ import TabsStyled from "@components/common/tabs/tabs-styled";
 import tabsObjectInfoPage from "./tabs/tabs.object-info";
 // utils
 import { getActualUsersList } from "@utils/actual-items/get-actual-users-list";
+// types
+import { IDialogPagesState } from "src/types/dialog-pages/dialog-pages-state.interface";
+import { IObject } from "src/types/object/object.interface";
+// initial-states
+import { dialogePagesState } from "@initial-states/dialog-pages-state/dialog-pages.state";
 // store
 import { getObjectsList } from "@store/object/objects.store";
 import {
@@ -21,23 +26,13 @@ const Component = styled(Box)`
   gap: 12px;
   margin-bottom: 20px;
 `;
+interface ObjectInfoPageProps {
+  object: IObject;
+}
 
-const ObjectInfoPage = ({ object }) => {
-  const [value, setValue] = useState(0);
-  const [state, setState] = useState({
-    createMyTaskPage: false,
-    updateMyTaskPage: false,
-    createManagerTaskPage: false,
-    updateManagerTaskPage: false,
-    createLastContactPage: false,
-    updateLastContactPage: false,
-    createMeetingPage: false,
-    updateMeetingPage: false,
-    taskId: "",
-    objectId: "",
-    lastContactId: "",
-    meetingId: ""
-  });
+const ObjectInfoPage: FC<ObjectInfoPageProps> = ({ object }) => {
+  const [stateDialogPages, setStateDialogPages] =
+    useState<IDialogPagesState>(dialogePagesState);
 
   const objectId = object?._id;
   const objects = useSelector(getObjectsList());
@@ -46,32 +41,28 @@ const ObjectInfoPage = ({ object }) => {
   const currentUserId = useSelector(getCurrentUserId());
   const isCurrentUserRoleCurator = useSelector(getIsCurrentUserRoleCurator());
 
+  // const currentUserObjects = useSelector(getCurrentUserObjects());
   const currentUserObjects = objects?.filter(
     (obj) => obj?.userId === currentUserId
   );
   const actualObjects = isCurrentUserRoleCurator ? currentUserObjects : objects;
 
-  const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
-    setValue(newValue);
-  };
-
   useEffect(() => {
     if (objectId) {
-      setState((prevState) => ({ ...prevState, objectId: objectId }));
+      setStateDialogPages((prevState) => ({
+        ...prevState,
+        objectId: objectId
+      }));
     }
   }, []);
 
   return (
     <Component>
-      <TabsStyled
-        tabs={tabsObjectInfoPage(object, setState)}
-        value={value}
-        onChange={handleTabChange}
-      />
+      <TabsStyled tabs={tabsObjectInfoPage({ object, setStateDialogPages })} />
       <PageDialogs
         users={actualUsersList}
-        state={state}
-        setState={setState}
+        state={stateDialogPages}
+        setState={setStateDialogPages}
         objects={actualObjects}
       />
     </Component>

@@ -1,5 +1,7 @@
 import styled from "@emotion/styled";
 import { Box } from "@mui/material";
+import { Dispatch, FC, SetStateAction } from "react";
+import { UseFormReset } from "react-hook-form";
 // icons
 import SmartDisplayOutlinedIcon from "@mui/icons-material/SmartDisplayOutlined";
 // components
@@ -9,6 +11,11 @@ import ClearFilterButton from "@components/common/buttons/clear-filter.button";
 import { presentationsLayoutInitialState } from "@initial-states/layouts/presentations-layout.initial-state";
 // hooks
 import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
+// types
+import { IDialogPagesState } from "src/types/dialog-pages/dialog-pages-state.interface";
+import { IPresentation } from "src/types/presentation/presentation.interface";
+// utils
+import { getIsInputEmpty } from "@utils/input/get-is-input-empty";
 
 const Component = styled(Box)`
   display: flex;
@@ -16,12 +23,22 @@ const Component = styled(Box)`
   margin-bottom: 4px;
 `;
 
-const ButtonsPresentationsLayout = ({ data, reset, setState }) => {
-  const isInputEmpty =
-    JSON.stringify(presentationsLayoutInitialState) !== JSON.stringify(data);
+interface ButtonsPresentationsLayoutProps {
+  data: IPresentation;
+  reset: UseFormReset<IPresentation>;
+  setState: Dispatch<SetStateAction<IDialogPagesState>>;
+}
+
+const ButtonsPresentationsLayout: FC<ButtonsPresentationsLayoutProps> = ({
+  data,
+  reset,
+  setState
+}) => {
+  const isInputEmpty = getIsInputEmpty(data, presentationsLayoutInitialState);
 
   const { handleOpenCreatePresentationPage, handleOpenVideoPlayerPage } =
     useDialogHandlers(setState);
+
   return (
     <Component>
       <ButtonStyled

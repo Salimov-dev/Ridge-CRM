@@ -21,12 +21,9 @@ const AutocompleteStyled = ({
   label,
   errors = null,
   width = "100%",
-  maxHeightListBox = "8rem",
+  maxHeightListBox = "12rem",
   optionLabel = (option) => option.name
 }) => {
-  const theme = useTheme();
-  const colors = tokens(theme.palette.mode);
-
   return (
     <Component>
       <Autocomplete

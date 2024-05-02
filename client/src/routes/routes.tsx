@@ -14,7 +14,7 @@ import CalendarLayout from "@layouts/calendar/calendar.layout";
 import ObjectsDatabaseLayout from "@layouts/objects-database/objects-database.layout";
 import ProfileLayout from "@layouts/profile/profile.layout";
 import StaticticsLayout from "@layouts/statistics/statistics.layout";
-import PresentationsLayout from "@layouts/presentations/presentations";
+import PresentationsLayout from "@layouts/presentations/presentations.layout";
 import CompaniesLayout from "@layouts/companies/companies.layout";
 import CallbackLayout from "@layouts/callback/callback.layout";
 // components

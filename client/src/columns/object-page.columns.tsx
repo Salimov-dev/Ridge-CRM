@@ -14,7 +14,7 @@ import {
 } from "@components/common/table/helpers/helpers.table";
 import EmptyTd from "@components/common/columns/empty-td";
 // utils
-import makeToLocalString from "@utils/data/make-to-local-string";
+import { makeDigitSeparator } from "@utils/data/make-digit-separator";
 // store
 import { getDistrictName } from "@store/object-params/object-districts.store";
 import { getObjectConditionsList } from "@store/object-params/object-conditions.store";
@@ -280,7 +280,7 @@ export const commercialTermsColumns = [
     cell: (info) => {
       const square = info.getValue();
       return square ? (
-        <AlignCenter>{`${makeToLocalString(square)}м²`}</AlignCenter>
+        <AlignCenter>{`${makeDigitSeparator(square)}м²`}</AlignCenter>
       ) : (
         <EmptyTd />
       );
@@ -293,7 +293,7 @@ export const commercialTermsColumns = [
     cell: (info) => {
       const price = info.getValue();
       return price ? (
-        <AlignCenter>{`${makeToLocalString(price)}₽`}</AlignCenter>
+        <AlignCenter>{`${makeDigitSeparator(price)}₽`}</AlignCenter>
       ) : (
         <EmptyTd />
       );
@@ -307,12 +307,13 @@ export const commercialTermsColumns = [
       const object = info.getValue();
       const rentPrice = Number(object?.rentPrice);
       const rentSquare = Number(object?.rentSquare);
-      const priceForMetr = Math.round(rentPrice / rentSquare);
-
-      const result = makeToLocalString(priceForMetr);
-      if (priceForMetr) {
+      if (rentPrice && rentSquare) {
+        const priceForMetr = Math.round(rentPrice / rentSquare);
+        const result = makeDigitSeparator(priceForMetr);
         return <AlignCenter>{`${result}₽/м²`}</AlignCenter>;
-      } else return <EmptyTd />;
+      } else {
+        return <EmptyTd />;
+      }
     }
   },
   {
@@ -322,7 +323,7 @@ export const commercialTermsColumns = [
     cell: (info) => {
       const indexing = info.getValue();
       return indexing ? (
-        <AlignCenter>{`${makeToLocalString(indexing)}%`}</AlignCenter>
+        <AlignCenter>{`${makeDigitSeparator(indexing)}%`}</AlignCenter>
       ) : (
         <EmptyTd />
       );
@@ -348,7 +349,7 @@ export const commercialTermsColumns = [
     cell: (info) => {
       const securityDeposit = info.getValue();
       return securityDeposit ? (
-        <AlignCenter>{`${makeToLocalString(securityDeposit)}₽`}</AlignCenter>
+        <AlignCenter>{`${makeDigitSeparator(securityDeposit)}₽`}</AlignCenter>
       ) : (
         <EmptyTd />
       );
@@ -361,7 +362,7 @@ export const commercialTermsColumns = [
     cell: (info) => {
       const advanseDeposit = info?.getValue()?.advanseDeposit;
       return advanseDeposit ? (
-        <AlignCenter>{`${makeToLocalString(advanseDeposit)}₽`}</AlignCenter>
+        <AlignCenter>{`${makeDigitSeparator(advanseDeposit)}₽`}</AlignCenter>
       ) : (
         <EmptyTd />
       );
@@ -370,11 +371,12 @@ export const commercialTermsColumns = [
   {
     accessorFn: (row) => row,
     header: "Комиссия",
+    enableSorting: false,
     cell: (info) => {
       const object = info.getValue();
       const agentComission = object?.agentComission;
       return agentComission ? (
-        <AlignCenter>{`${makeToLocalString(agentComission)}%`}</AlignCenter>
+        <AlignCenter>{`${makeDigitSeparator(agentComission)}%`}</AlignCenter>
       ) : (
         <EmptyTd />
       );

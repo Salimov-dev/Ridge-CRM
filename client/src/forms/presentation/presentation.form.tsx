@@ -1,7 +1,17 @@
 import { useSelector } from "react-redux";
+import { FC } from "react";
+import {
+  FieldErrors,
+  UseFormRegister,
+  UseFormSetValue,
+  UseFormWatch
+} from "react-hook-form";
 // components
 import TextFieldStyled from "@components/common/inputs/text-field-styled";
 import AutocompleteStyled from "@components/common/inputs/autocomplete-styled";
+// types
+import { IPresentation } from "src/types/presentation/presentation.interface";
+import { IObject } from "src/types/object/object.interface";
 // utils
 import { capitalizeFirstLetter } from "@utils/data/capitalize-first-letter";
 // styled
@@ -10,7 +20,18 @@ import { FieldsContainer, Form } from "@styled/styled-form";
 import { getIsCurrentUserRoleCurator } from "@store/user/users.store";
 import { getPresentationStatusesList } from "@store/presentation/presentation-status.store";
 
-const PresentationForm = ({
+interface PresentationFormProps {
+  objects: IObject[];
+  data: IPresentation;
+  register: UseFormRegister<IPresentation>;
+  errors: FieldErrors<IPresentation>;
+  watch: UseFormWatch<IPresentation>;
+  setValue: UseFormSetValue<IPresentation>;
+  isObjectPage?: boolean;
+  isAuthorEntity: boolean;
+}
+
+const PresentationForm: FC<PresentationFormProps> = ({
   objects,
   data,
   register,
@@ -20,11 +41,15 @@ const PresentationForm = ({
   isObjectPage = false,
   isAuthorEntity = false
 }) => {
-  const watchObjectId = watch("objectId");
-  const watchStatus = watch("status");
+  const watchObjectId: string = watch("objectId");
+  const watchStatus: string = watch("status");
 
-  const presentationStatuses = useSelector(getPresentationStatusesList());
-  const isCurrentUserRoleCurator = useSelector(getIsCurrentUserRoleCurator());
+  const presentationStatuses: string[] = useSelector(
+    getPresentationStatusesList()
+  );
+  const isCurrentUserRoleCurator: boolean = useSelector(
+    getIsCurrentUserRoleCurator()
+  );
 
   return (
     <Form>
@@ -39,6 +64,7 @@ const PresentationForm = ({
           watchItemId={watchObjectId}
           errors={errors?.objectId}
           disabled={isObjectPage}
+          maxHeightListBox="8rem"
         />
         <TextFieldStyled
           register={register}

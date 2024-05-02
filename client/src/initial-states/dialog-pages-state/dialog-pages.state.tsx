@@ -1,0 +1,20 @@
+export const dialogePagesState = {
+  objectPage: false,
+  updateObjectPage: false,
+  createPresentationPage: false,
+  updatePresentationPage: false,
+  objectId: "",
+  presentationId: "",
+  videoPlayerPage: false,
+  createMyTaskPage: false,
+  updateMyTaskPage: false,
+  createManagerTaskPage: false,
+  updateManagerTaskPage: false,
+  createLastContactPage: false,
+  updateLastContactPage: false,
+  createMeetingPage: false,
+  updateMeetingPage: false,
+  taskId: "",
+  lastContactId: "",
+  meetingId: ""
+};

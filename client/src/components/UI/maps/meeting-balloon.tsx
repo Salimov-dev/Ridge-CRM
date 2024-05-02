@@ -2,7 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { Box, Divider, Typography, styled } from "@mui/material";
 // components
-import Attribute from "@common/map/baloon/attribute";
+import Attribute from "@components/common/map/balloon/row-item.map";
 import DividerStyled from "@common/divider/divider-styled";
 import ButtonStyled from "@components/common/buttons/button-styled.button";
 // utils

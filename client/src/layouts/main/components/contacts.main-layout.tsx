@@ -50,7 +50,7 @@ const IconsContactMainLayout = ({
         justifyContent: justifyContent,
         padding: padding,
         position: { md: "static", lg: "fixed" },
-        gap: { xs: "10px", md: "20px" }
+        gap: { xs: "16px", md: "20px" }
       }}
     >
       <Logo

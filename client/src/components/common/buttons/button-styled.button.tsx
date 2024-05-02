@@ -3,25 +3,45 @@ import useWindowWidth from "@hooks/window-width/use-window-width";
 import { Button } from "@mui/material";
 import { getIsLoggedIn } from "@store/user/users.store";
 import { tokens } from "@theme/theme";
+import { FC } from "react";
 import { useSelector } from "react-redux";
 
-const ButtonStyled = ({
+interface ButtonStyledProps {
+  title: string;
+  height?: string;
+  onClick: () => void;
+  style?: string;
+  disabled?: boolean;
+  variant?: "text" | "outlined" | "contained";
+  size?: "small" | "medium" | "large";
+  width?: string;
+  icon?: React.ReactNode;
+  fontSize?: string;
+  padding?: string;
+  border?: string;
+  background?: string;
+  backgroundHover?: string;
+  colorHover?: string;
+  margin?: string;
+}
+
+const ButtonStyled: FC<ButtonStyledProps> = ({
   title = "title",
   height = "auto",
   onClick = () => {},
-  style,
-  size = "medium",
+  style = "",
   disabled = false,
   variant = "outlined",
   width = "min-content",
-  icon = null,
+  icon = "",
   fontSize = "auto",
   padding = "auto",
-  border = null,
-  background = null,
-  backgroundHover = null,
-  colorHover = null,
-  margin = "0"
+  border = "",
+  background = "",
+  backgroundHover = "",
+  colorHover = "",
+  margin = "0",
+  size = "medium"
 }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -123,7 +143,6 @@ const ButtonStyled = ({
   }
 
   if (style === "ADD_SOME_NEW") {
-    background = null;
     color = "LimeGreen";
     colorHover = "white";
     backgroundHover = "DarkGreen";
@@ -131,7 +150,6 @@ const ButtonStyled = ({
   }
 
   if (style === "REMOVE_SOME_NEW") {
-    background = null;
     color = "Tomato";
     colorHover = "white";
     backgroundHover = "OrangeRed";
@@ -139,7 +157,6 @@ const ButtonStyled = ({
   }
 
   if (style === "ADD_NEW_EMAIL") {
-    background = null;
     color = "orange";
     colorHover = "white";
     backgroundHover = "DarkOrange";
@@ -147,7 +164,6 @@ const ButtonStyled = ({
   }
 
   if (style === "ADD_NEW_OBJECT") {
-    background = null;
     color = "SkyBlue";
     colorHover = "white";
     backgroundHover = "RoyalBlue";
@@ -155,7 +171,6 @@ const ButtonStyled = ({
   }
 
   if (style === "CREATE_NEW_OBJECT") {
-    background = null;
     color = "Aquamarine";
     colorHover = "white";
     backgroundHover = "CadetBlue";
@@ -169,7 +184,6 @@ const ButtonStyled = ({
   }
 
   if (style === "ADD_NEW_COMPANY") {
-    background = null;
     color = "Gold";
     colorHover = "white";
     backgroundHover = "Tomato";
@@ -177,7 +191,6 @@ const ButtonStyled = ({
   }
 
   if (style === "CREATE_NEW_COMPANY") {
-    background = null;
     color = "Gainsboro";
     colorHover = "white";
     backgroundHover = "SaddleBrown";
@@ -185,7 +198,6 @@ const ButtonStyled = ({
   }
 
   if (style === "CREATE_NEW_Contact") {
-    background = null;
     color = "GreenYellow";
     colorHover = "white";
     backgroundHover = "ForestGreen";
@@ -193,7 +205,6 @@ const ButtonStyled = ({
   }
 
   if (style === "ADD_NEW_Contact") {
-    background = null;
     color = "Orange";
     colorHover = "white";
     backgroundHover = "DarkOrange";
@@ -208,11 +219,11 @@ const ButtonStyled = ({
   }
 
   if (style === "DELETE_ICON") {
-    background = null;
-    color = null;
-    colorHover = null;
-    backgroundHover = null;
-    border = null;
+    background = "";
+    color = "";
+    colorHover = "";
+    backgroundHover = "";
+    border = "";
   }
 
   if (style === "VIDEO_INSTR") {
@@ -227,8 +238,8 @@ const ButtonStyled = ({
       variant={variant}
       onClick={onClick}
       disabled={disabled}
-      size={size}
       startIcon={icon}
+      size={size}
       sx={{
         padding: padding,
         fontSize: fontSize,

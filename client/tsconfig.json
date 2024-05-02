@@ -31,6 +31,7 @@
       "@assets/*": ["src/assets/*"],
       "@config/*": ["src/config/*"],
       "@styled/*": ["src/styled/*"],
+      "@interfaces/*": ["src/interfaces/*"],
       "@initial-states/*": ["src/initial-states/*"]
     },
     "allowImportingTsExtensions": true,

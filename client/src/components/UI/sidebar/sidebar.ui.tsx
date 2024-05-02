@@ -1,7 +1,7 @@
 // libraries
 import React, { useState, useEffect } from "react";
 import styled from "@emotion/styled";
-import { useDispatch, useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
 import { Box, useTheme } from "@mui/material";
 import { Sidebar as ProSidebar, Menu } from "react-pro-sidebar";
 // theme
@@ -11,11 +11,6 @@ import HeaderSidebar from "./components/header.sidebar-ui";
 import ItemsListSidebar from "./components/items-list.sidebar-ui";
 // hooks
 import useWindowWidth from "@hooks/window-width/use-window-width";
-// store
-import {
-  getCurrrentPathState,
-  setCurrrentPathState
-} from "@store/current-path/current-path.store";
 
 const Component = styled(Box)(({ colors }) => ({
   display: "flex",
@@ -65,7 +60,6 @@ const Link = styled.a`
 `;
 
 const SidebarUI = React.memo(() => {
-  const dispatch = useDispatch();
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
@@ -73,21 +67,17 @@ const SidebarUI = React.memo(() => {
   const [isCollapsed, setIsCollapsed] = useState(true);
 
   const windowWidth = useWindowWidth();
-  const currentPath = useSelector(getCurrrentPathState());
+  const sidebarShow = windowWidth > 600;
+
+  const { pathname: currentPath } = useLocation();
 
   const handleSetCollapsed = (value) => {
     setIsCollapsed(value);
   };
 
-  const sidebarShow = windowWidth > 600;
-
   useEffect(() => {
     setSelected(currentPath);
   }, [currentPath]);
-
-  useEffect(() => {
-    dispatch<any>(setCurrrentPathState(window.location.pathname));
-  }, [selected]);
 
   return (
     <Component colors={colors}>

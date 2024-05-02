@@ -16,7 +16,7 @@ import CreateManagerTask from "@components/pages/task/create-manager-task";
 import UpdateTask from "@components/pages/task/update-task";
 import CreateMyTask from "@components/pages/task/create-my-task";
 import UpdateAvatar from "@components/pages/avatar/update-avatar-user";
-import UpdatePresentation from "@components/pages/presentation/update-presentation.page";
+import UpdatePresentation from "@components/pages/presentation/update-presentation/update-presentation.page";
 import AuthPage from "@components/pages/auth/auth.page";
 import UpdateProfile from "@components/pages/profile/update-profile";
 import UpdatePassword from "@components/pages/password/update-password/update-password";

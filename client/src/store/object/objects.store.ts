@@ -11,6 +11,9 @@ import localStorageService from "@services/local-storage/local.storage-service";
 // store
 import { updateCompanies } from "@store/company/company.store";
 import { updateContacts } from "@store/contact/contact.store";
+import { useSelector } from "react-redux";
+import { getCurrentUserId } from "@store/user/users.store";
+import { IObject } from "src/types/object/object.interface";
 
 const socket = io(configFile.ioEndPoint);
 
@@ -244,6 +247,15 @@ export const getObjectAddressById = (objectId) => (state) => {
     );
     const fullAddress = `${object?.city}, ${object?.address}`;
     return fullAddress;
+  }
+};
+
+export const getCurrentUserObjects = () => (state) => {
+  const currentUserId = useSelector(getCurrentUserId());
+  if (state?.objects?.entities) {
+    return state?.objects?.entities?.filter(
+      (obj: IObject) => obj?.userId === currentUserId
+    );
   }
 };
 

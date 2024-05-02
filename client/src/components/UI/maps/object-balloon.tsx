@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import { Box, styled } from "@mui/material";
 // components
 import DividerStyled from "@common/divider/divider-styled";
-import Attribute from "@common/map/baloon/attribute";
+import Attribute from "@components/common/map/balloon/row-item.map";
 import ButtonStyled from "@components/common/buttons/button-styled.button";
 import Loader from "@components/common/loader/loader";
 import OpenPageElementIconButton from "@components/common/button-icons/open-page-element.button-icon";

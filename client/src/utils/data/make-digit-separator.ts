@@ -1,9 +1,21 @@
 export const makeDigitSeparator = (data) => {
-  data = String(data);
+  const formData = String(data)
+    .replace(/[^\d.]+/g, "")
+    .replace(/(\..*)\./g, "$1");
 
-  const result = data
-    ?.replace(/[^\d]/g, "")
-    ?.replace(/\B(?=(?:\d{3})+(?!\d))/g, " ");
+  const [integerPart, decimalPart] = formData.split(".");
+
+  let formattedDecimalPart = "";
+  if (decimalPart !== undefined) {
+    formattedDecimalPart = "." + decimalPart.slice(0, 3);
+  }
+
+  const formattedIntegerPart = integerPart.replace(
+    /\B(?=(\d{3})+(?!\d))/g,
+    " "
+  );
+
+  const result = formattedIntegerPart + formattedDecimalPart;
 
   return result;
 };

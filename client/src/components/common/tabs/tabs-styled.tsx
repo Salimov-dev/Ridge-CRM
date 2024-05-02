@@ -1,6 +1,20 @@
 import { Box, Tab, Tabs } from "@mui/material";
+import { useState } from "react";
 
-const TabsStyled = ({ tabs, value, onChange }) => {
+interface TabsStyledProps {
+  tabs: {
+    label: string;
+    component: React.ReactNode;
+  }[];
+}
+
+const TabsStyled = ({ tabs }: TabsStyledProps) => {
+  const [value, setValue] = useState<number>(0);
+
+  const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
+    setValue(newValue);
+  };
+
   return (
     <Box sx={{ width: "100%" }}>
       <Box
@@ -8,7 +22,7 @@ const TabsStyled = ({ tabs, value, onChange }) => {
       >
         <Tabs
           value={value}
-          onChange={onChange}
+          onChange={handleTabChange}
           aria-label="tabs"
           sx={{
             "& .MuiTabs-indicator": {

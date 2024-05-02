@@ -1,7 +1,7 @@
+import { tokens } from "@theme/theme";
 import { useEffect, useState } from "react";
 import { useTheme } from "@emotion/react";
 import { Box, TextField, styled, FormHelperText } from "@mui/material";
-import { tokens } from "@theme/theme";
 import { makeDigitSeparator } from "@utils/data/make-digit-separator";
 
 const StyledTextField = styled(TextField)(({ colors }) => ({
@@ -44,36 +44,12 @@ const TextFieldStyled = ({
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
-  const [value, setValue] = useState(initialValue); // Используем локальный state для значения
+  const [value, setValue] = useState<string | null>(initialValue);
 
-  // Функция для обработки введенных значений с десятичной точкой
-  const handleChange = (event) => {
-    let newValue = event.target.value;
-
-    // Если значение должно быть числом и введено не число, просто обновляем состояние
-    if (valueAsNumber && isNaN(Number(newValue))) {
-      setValue(newValue);
-      return;
-    }
-
-    // Если valueAsNumber=true, исключаем все символы кроме цифр и точки
-    if (valueAsNumber) {
-      newValue = newValue.replace(/[^\d.]/g, "");
-    }
-
-    // Если newValue пустая строка, устанавливаем значение в null
-    if (newValue === "") {
-      setValue("");
-    } else {
-      // Иначе, обновляем значение поля ввода
-      setValue(newValue);
-    }
-  };
-
-  // Эффект, который применяет разделение разрядов к значению поля ввода, если необходимо
   useEffect(() => {
     if (valueAsNumber) {
-      setValue(makeDigitSeparator(initialValue));
+      const formatedData = makeDigitSeparator(initialValue);
+      setValue(formatedData);
     } else {
       setValue(initialValue);
     }
@@ -90,7 +66,7 @@ const TextFieldStyled = ({
         label={label}
         rows={rows}
         InputProps={InputProps}
-        inputProps={{ ...inputProps, onChange: handleChange }}
+        inputProps={{ ...inputProps }}
         multiline={multiline}
         error={!!errors}
         subtitle={errors?.message}

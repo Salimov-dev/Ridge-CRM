@@ -37,6 +37,7 @@ export default defineConfig({
       "@assets": path.resolve(__dirname, "./src/assets"),
       "@config": path.resolve(__dirname, "./src/config"),
       "@styled": path.resolve(__dirname, "./src/styled"),
+      "@interfaces": path.resolve(__dirname, "./src/interfaces"),
       "@initial-states": path.resolve(__dirname, "./src/initial-states")
     }
   }
