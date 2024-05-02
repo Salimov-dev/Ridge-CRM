@@ -1,30 +1,55 @@
 import { tokens } from "@theme/theme";
-import { useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { useTheme } from "@emotion/react";
 import { Box, TextField, styled, FormHelperText } from "@mui/material";
 import { makeDigitSeparator } from "@utils/data/make-digit-separator";
+import { UseFormRegister } from "react-hook-form";
+import { ITheme } from "src/types/theme/theme.types";
 
-const StyledTextField = styled(TextField)(({ colors }) => ({
-  minWidth: "30px",
-  width: "100%",
-  "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
-    borderColor: colors.green["green"],
-    color: "white"
-  },
-  "& .MuiInputLabel-root": {
-    color: colors.grey[400],
-    "&.Mui-focused": {
+interface TextFieldStyledProps {
+  register: UseFormRegister<any>;
+  label: string;
+  name: string;
+  value: string | null;
+  rows?: string;
+  errors: any;
+  multiline?: boolean;
+  InputProps?: any;
+  inputProps?: any;
+  valueAsNumber?: boolean;
+  disabled?: boolean;
+  isHelperText?: boolean;
+  subtitle?: string;
+  required?: boolean;
+}
+
+interface StyledTextFieldProps {
+  colors: ITheme;
+}
+
+const StyledTextField = styled(TextField)(
+  ({ colors }: StyledTextFieldProps) => ({
+    minWidth: "30px",
+    width: "100%",
+    "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
+      borderColor: colors.green["green"],
       color: "white"
+    },
+    "& .MuiInputLabel-root": {
+      color: colors.grey[400],
+      "&.Mui-focused": {
+        color: "white"
+      }
+    },
+    "& .MuiInputLabel-outlined.MuiInputLabel-shrink": {
+      transform: "translate(14px, -6px) scale(0.75)",
+      backgroundColor: "transparent",
+      padding: "0 5px"
     }
-  },
-  "& .MuiInputLabel-outlined.MuiInputLabel-shrink": {
-    transform: "translate(14px, -6px) scale(0.75)",
-    backgroundColor: "transparent",
-    padding: "0 5px"
-  }
-}));
+  })
+);
 
-const TextFieldStyled = ({
+const TextFieldStyled: FC<TextFieldStyledProps> = ({
   register,
   label,
   name,
@@ -34,7 +59,6 @@ const TextFieldStyled = ({
   errors = null,
   InputProps = {},
   inputProps = {},
-  type = "text",
   valueAsNumber = false,
   disabled = false,
   isHelperText = false,
@@ -60,7 +84,6 @@ const TextFieldStyled = ({
       <StyledTextField
         {...register(name)}
         variant="outlined"
-        type={type}
         id={name}
         value={value}
         label={label}
@@ -69,10 +92,8 @@ const TextFieldStyled = ({
         inputProps={{ ...inputProps }}
         multiline={multiline}
         error={!!errors}
-        subtitle={errors?.message}
         disabled={disabled}
         required={required}
-        onWheel={(e) => e.target.blur()}
         colors={colors}
       />
       {isHelperText ? <FormHelperText>{subtitle}</FormHelperText> : null}

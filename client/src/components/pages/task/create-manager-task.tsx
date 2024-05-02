@@ -42,8 +42,6 @@ const CreateManagerTask = React.memo(
     });
     const data = watch();
 
-    const watchManagerId = watch("managerId");
-
     const { actualUsersArray, managerObjects, managerId } =
       useTaskManagerCreateHook(objectId, watch);
 
@@ -63,19 +61,21 @@ const CreateManagerTask = React.memo(
     };
 
     useEffect(() => {
-      setValue<any>("objectId", objectId);
-      setValue<any>("managerId", managerId);
-
-      if (dateCreate !== null) {
-        setValue<any>("date", dateCreate);
-      } else {
-        setValue<any>("date", null);
+      if (objectId) {
+        setValue("objectId", objectId);
       }
-    }, []);
+      if (managerId) {
+        setValue("managerId", managerId);
+      }
+    }, [objectId, managerId]);
 
     useEffect(() => {
-      setValue("objectId", null);
-    }, [watchManagerId]);
+      if (dateCreate !== null) {
+        setValue("date", dateCreate);
+      } else {
+        setValue("date", null);
+      }
+    }, [dateCreate]);
 
     return (
       <>
