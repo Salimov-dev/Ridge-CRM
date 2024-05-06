@@ -1,14 +1,27 @@
-const useDialogHandlers = (setState) => {
+import { Dispatch, SetStateAction } from "react";
+import { IDialogPagesState } from "src/types/dialog-pages/dialog-pages-state.interface";
+
+interface UseDialogHandlers {
+  setState: Dispatch<SetStateAction<any>>;
+}
+
+const useDialogHandlers = (setState: UseDialogHandlers["setState"]) => {
   // обновление стейта при открытии страницы создания объекта
   const handleOpenCreateObjectPage = () => {
-    setState((prevState) => ({ ...prevState, createPage: true }));
+    setState((prevState: IDialogPagesState) => ({
+      ...prevState,
+      createPage: true
+    }));
   };
   const handleCloseCreateObjectPage = () => {
-    setState((prevState) => ({ ...prevState, createPage: false }));
+    setState((prevState: IDialogPagesState) => ({
+      ...prevState,
+      createPage: false
+    }));
   };
 
   // обновление стейта при открытии страницы объекта
-  const handleOpenObjectPage = (objectId) => {
+  const handleOpenObjectPage = (objectId: string) => {
     setState((prevState) => ({
       ...prevState,
       objectPage: true,
@@ -28,7 +41,7 @@ const useDialogHandlers = (setState) => {
   };
 
   // обновление стейта при открытии окна создания презентации
-  const handleOpenCreatePresentationPage = () => {
+  const handleOpenCreatePresentationPage = (): void => {
     setState((prevState) => ({ ...prevState, createPresentationPage: true }));
   };
   const handleCloseCreatePresentationPage = () => {
@@ -36,7 +49,7 @@ const useDialogHandlers = (setState) => {
   };
 
   // обновление стейта при открытии страницы обновления объекта
-  const handleOpenUpdatePresentationPage = (presentationId) => {
+  const handleOpenUpdatePresentationPage = (presentationId: string): void => {
     setState((prevState) => ({
       ...prevState,
       updatePresentationPage: true,

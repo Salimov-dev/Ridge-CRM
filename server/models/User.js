@@ -19,32 +19,12 @@ const User = sequelize.define(
     gender: { type: DataTypes.STRING, defaultValue: null },
     birthday: { type: DataTypes.STRING, defaultValue: null },
     status: { type: DataTypes.STRING, defaultValue: "64da6448547d1cfcd04b001" }, // статус "Активный"
-    // city: {
-    //   type: DataTypes.ARRAY(DataTypes.STRING),
-    //   defaultValue: null,
-    //   validate: {
-    //     notEmpty: {
-    //       args: true,
-    //       msg: "Город не может быть пустым значением"
-    //     }
-    //   }
-    // },
     city: { type: DataTypes.STRING, defaultValue: null },
     color: { type: DataTypes.STRING, defaultValue: null },
     role: {
       type: DataTypes.ARRAY(DataTypes.STRING),
       defaultValue: ["69gfoep3944jgjdso345003"] // роль по умолчанию "Куратор"
     },
-    // role: {
-    //   type: DataTypes.ARRAY(DataTypes.STRING),
-    //   defaultValue: ["69gfoep3944jgjdso345003"], // роль по умолчанию "Куратор"
-    //   validate: {
-    //     notEmpty: {
-    //       args: true,
-    //       msg: "Роль не может быть пустым значением"
-    //     }
-    //   }
-    // },
     firstName: { type: DataTypes.STRING, defaultValue: null },
     surName: { type: DataTypes.STRING, defaultValue: null },
     lastName: { type: DataTypes.STRING, defaultValue: null },

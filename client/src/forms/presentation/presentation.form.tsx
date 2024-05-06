@@ -40,7 +40,7 @@ const PresentationForm: FC<PresentationFormProps> = ({
   watch,
   isObjectPage = false,
   isAuthorEntity = false
-}) => {
+}): JSX.Element => {
   const watchObjectId: string = watch("objectId");
   const watchStatus: string = watch("status");
 

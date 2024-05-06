@@ -1,5 +1,5 @@
 // libraries
-import React, { useState } from "react";
+import React, { FC, KeyboardEvent, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
@@ -23,6 +23,10 @@ import { loginSchema } from "@schemas/auth/login.schema";
 // store
 import { login } from "@store/user/users.store";
 
+interface LoginPageProps {
+  onClose: () => void;
+}
+
 const Component = styled(Box)`
   height: 100%;
   width: 100%;
@@ -42,7 +46,7 @@ const FormContainer = styled(Box)`
   flex-direction: column;
 `;
 
-const LoginPage = React.memo(({ onClose }) => {
+const LoginPage: FC<LoginPageProps> = React.memo(({ onClose }): JSX.Element => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
@@ -50,7 +54,7 @@ const LoginPage = React.memo(({ onClose }) => {
   const [stateDialogPages, setStateDialogPages] = useState({
     registerPage: false
   });
-  const dispatch = useDispatch();
+  const dispatch: any = useDispatch();
   const navigate = useNavigate();
 
   const {
@@ -68,14 +72,20 @@ const LoginPage = React.memo(({ onClose }) => {
   const location = useLocation();
   const redirectPath = location.state?.path || "/objects";
 
+  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      onSubmit();
+    }
+  };
+
   const onSubmit = () => {
     setIsLoading(true);
-    dispatch<any>(login(data))
+    dispatch(login(data))
       .then(() => {
         navigate(redirectPath, { replace: true });
         onClose();
       })
-      .catch((error) => {
+      .catch((error: string) => {
         toast.error(error);
       })
       .finally(() => {
@@ -84,7 +94,7 @@ const LoginPage = React.memo(({ onClose }) => {
   };
 
   return (
-    <Component>
+    <Component onKeyDown={(e) => handleKeyDown(e)}>
       <HeaderWithCloseButtonForPage
         title="Вход в систему"
         color="white"

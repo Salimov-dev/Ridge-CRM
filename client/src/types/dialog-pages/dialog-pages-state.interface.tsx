@@ -1,4 +1,5 @@
 export interface IDialogPagesState {
+  createPage: boolean;
   objectPage: boolean;
   updateObjectPage: boolean;
   createPresentationPage: boolean;

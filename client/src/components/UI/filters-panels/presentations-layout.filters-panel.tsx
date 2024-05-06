@@ -1,5 +1,6 @@
-import React from "react";
+import React, { FC } from "react";
 import { useSelector } from "react-redux";
+import { UseFormRegister, UseFormSetValue } from "react-hook-form";
 // components
 import SearchField from "@common/inputs/search-field";
 import { FieldsContainer, Form } from "@styled/styled-form";
@@ -8,6 +9,8 @@ import SearchDatePicker from "@common/inputs/search-date-picker";
 // utils
 import { getActualUsersList } from "@utils/actual-items/get-actual-users-list";
 import { getActualStatusesList } from "@utils/actual-items/get-actual-statuses-list";
+// types
+import { IPresentationsLayoutInitialState } from "src/types/initial-state/presentations-layout-init-state.types";
 // store
 import { getIsCurrentUserRoleManager } from "@store/user/users.store";
 import { getPresentationStatusesList } from "@store/presentation/presentation-status.store";
@@ -16,8 +19,14 @@ import {
   getPresentationsLoadingStatus
 } from "@store/presentation/presentations.store";
 
-const PresentationsLayoutFiltersPanel = React.memo(
-  ({ data, register, setValue }) => {
+interface PresentationsLayoutFiltersPanelProps {
+  data: IPresentationsLayoutInitialState;
+  register: UseFormRegister<IPresentationsLayoutInitialState>;
+  setValue: UseFormSetValue<IPresentationsLayoutInitialState>;
+}
+
+const PresentationsLayoutFiltersPanel: FC<PresentationsLayoutFiltersPanelProps> =
+  React.memo(({ data, register, setValue }): JSX.Element => {
     const presentationsList = useSelector(getPresentationsList());
     const presentationsStatuses = useSelector(getPresentationStatusesList());
     const usersList = getActualUsersList(presentationsList);
@@ -65,7 +74,7 @@ const PresentationsLayoutFiltersPanel = React.memo(
             name="startDate"
             label="Добавлены от"
             value={data.startDate}
-            onChange={(value) => setValue("startDate", value)}
+            onChange={(value: string | null) => setValue("startDate", value)}
             disabled={isLoading}
           />
           <SearchDatePicker
@@ -73,7 +82,7 @@ const PresentationsLayoutFiltersPanel = React.memo(
             name="endDate"
             label="Добавлены до"
             value={data.endDate}
-            onChange={(value) => setValue("endDate", value)}
+            onChange={(value: string | null) => setValue("endDate", value)}
             disabled={isLoading}
           />
           {!isCurrentUserRoleManager ? (
@@ -90,7 +99,6 @@ const PresentationsLayoutFiltersPanel = React.memo(
         </FieldsContainer>
       </Form>
     );
-  }
-);
+  });
 
 export default PresentationsLayoutFiltersPanel;

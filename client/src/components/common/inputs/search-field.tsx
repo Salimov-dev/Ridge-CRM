@@ -1,34 +1,49 @@
 import { TextField, styled } from "@mui/material";
+import { UseFormRegister } from "react-hook-form";
+import { FC } from "react";
 
-const StyledTextField = styled(TextField)(({ theme }) => ({
-  minWidth: "30px",
-  width: "100%",
-  "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
-    borderColor: "green",
-    color: "white",
-  },
-  "& .MuiInputLabel-root": {
-    color: "gray",
-    "&.Mui-focused": {
-      color: "white",
+interface SearchFieldProps {
+  register: UseFormRegister<any>;
+  label: string;
+  name: string;
+  value: string;
+  inputProps: any;
+  disabled: boolean;
+}
+
+const StyledTextField = styled(TextField)<{ value?: string }>(
+  ({ theme, value }) => ({
+    minWidth: "30px",
+    width: "100%",
+    "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
+      borderColor: "green",
+      color: "white"
     },
-  },
-  "& .MuiInputLabel-outlined.MuiInputLabel-shrink": {
-    transform: "translate(14px, -6px) scale(0.75)",
-    backgroundColor: theme.palette.background.default,
-    padding: "0 5px",
-  },
-}));
+    "& .MuiInputLabel-root": {
+      color: value?.length ? "white" : "gray",
+      "&.Mui-focused": {
+        color: "white"
+      }
+    },
+    "& .MuiInputLabel-outlined.MuiInputLabel-shrink": {
+      transform: "translate(14px, -6px) scale(0.75)",
+      backgroundColor: theme.palette.background.default,
+      padding: "0 5px"
+    },
+    "& .MuiOutlinedInput-notchedOutline": {
+      borderColor: value?.length ? "green" : "gray"
+    }
+  })
+);
 
-const SearchField = ({
+const SearchField: FC<SearchFieldProps> = ({
   register,
   label,
   name,
   value,
   inputProps,
-  disabled = false,
+  disabled = false
 }) => {
-
   return (
     <StyledTextField
       {...register(name)}
@@ -40,14 +55,6 @@ const SearchField = ({
       value={value}
       disabled={disabled}
       inputProps={inputProps}
-      sx={{
-        "& .MuiOutlinedInput-notchedOutline": {
-          borderColor: value?.length ? "green" : "gray",
-        },
-        "& .MuiInputLabel-root": {
-          color: value?.length ? "white" : "gray",
-        },
-      }}
     />
   );
 };

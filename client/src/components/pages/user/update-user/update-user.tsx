@@ -20,7 +20,7 @@ import UserForm from "@forms/user/user-form";
 import { getUserDataById, updateTeammate } from "@store/user/users.store";
 
 const UpdateUser = React.memo(({ userId, onClose }) => {
-  const dispatch = useDispatch();
+  const dispatch: any = useDispatch();
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
@@ -57,13 +57,15 @@ const UpdateUser = React.memo(({ userId, onClose }) => {
   const onSubmit = () => {
     setIsLoading(true);
 
-    dispatch<any>(updateTeammate(data))
+    console.log("data", data);
+
+    dispatch(updateTeammate(data))
       .then(() => {
         handleCloseConfirm();
         onClose();
         toast.success("Пользователь успешно изменен!");
       })
-      .catch((error) => {
+      .catch((error: string) => {
         toast.error(error);
       })
       .finally(() => {

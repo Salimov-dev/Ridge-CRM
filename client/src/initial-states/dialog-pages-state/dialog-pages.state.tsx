@@ -1,4 +1,5 @@
 export const dialogePagesState = {
+  createPage: false,
   objectPage: false,
   updateObjectPage: false,
   createPresentationPage: false,

@@ -21,6 +21,7 @@ interface TextFieldStyledProps {
   isHelperText?: boolean;
   subtitle?: string;
   required?: boolean;
+  type?: "text" | "password" | "number" | "search";
 }
 
 interface StyledTextFieldProps {
@@ -63,7 +64,8 @@ const TextFieldStyled: FC<TextFieldStyledProps> = ({
   disabled = false,
   isHelperText = false,
   subtitle = "",
-  required = false
+  required = false,
+  type = "text"
 }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -95,6 +97,7 @@ const TextFieldStyled: FC<TextFieldStyledProps> = ({
         disabled={disabled}
         required={required}
         colors={colors}
+        type={type}
       />
       {isHelperText ? <FormHelperText>{subtitle}</FormHelperText> : null}
       <FormHelperText sx={{ color: "yellow", paddingLeft: "10px" }}>

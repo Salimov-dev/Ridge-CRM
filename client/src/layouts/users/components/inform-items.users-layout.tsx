@@ -14,7 +14,7 @@ import {
   userLicenseStatusesArray
 } from "@data/license/user-license-statuses";
 // store
-import { getCurrentUserId } from "@store/user/users.store";
+import { getCurrentUserId, getUsersList } from "@store/user/users.store";
 import { getUserLicensesByUserId } from "@store/license/user-license.store";
 
 const InformItemsContainer = styled(Box)`
@@ -53,6 +53,8 @@ const InformItemsUsersLayout = () => {
   const dateEndTrialPeriod = dayjs(userLicense?.dateTrialEnd);
 
   const daysDifference = userLicense?.accessDaysQuantity;
+
+  console.log("users", useSelector(getUsersList()));
 
   return (
     <InformItemsContainer>

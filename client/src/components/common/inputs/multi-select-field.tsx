@@ -1,3 +1,4 @@
+import { FC } from "react";
 import {
   styled,
   FormControl,
@@ -6,19 +7,26 @@ import {
   MenuItem,
   Checkbox,
   OutlinedInput,
-  ListItemText
+  ListItemText,
+  SelectChangeEvent
 } from "@mui/material";
 
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-const MenuProps = {
-  PaperProps: {
-    style: {
-      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250
-    }
-  }
-};
+interface MultiSelectFieldProps {
+  onChange: (e: SelectChangeEvent<any>) => void;
+  itemsList: IItem[];
+  selectedItems: string[];
+  name: string;
+  labelId: string;
+  label: string;
+  disabled?: boolean;
+  isItemValueId?: boolean;
+  minWidth?: string;
+}
+
+interface IItem {
+  _id: string;
+  name: string;
+}
 
 const StyledSelect = styled(Select)(() => ({
   "&.Mui-focused": {
@@ -28,7 +36,7 @@ const StyledSelect = styled(Select)(() => ({
   }
 }));
 
-const MultiSelectField = ({
+const MultiSelectField: FC<MultiSelectFieldProps> = ({
   onChange,
   itemsList,
   selectedItems,
@@ -38,8 +46,13 @@ const MultiSelectField = ({
   disabled = false,
   isItemValueId = true,
   minWidth = "100px"
-}) => {
-  function checkArrayElements(arr) {
+}): JSX.Element => {
+  const itemsWithId: boolean = checkArrayElements(itemsList);
+  const selectedItemsArray: string[] = Array.isArray(selectedItems)
+    ? selectedItems
+    : [];
+
+  function checkArrayElements(arr: unknown[]): boolean {
     for (const element of arr) {
       if (typeof element !== "string") {
         return true;
@@ -47,8 +60,6 @@ const MultiSelectField = ({
     }
     return false;
   }
-  const itemsWithId = checkArrayElements(itemsList);
-  const selectedItemsArray = Array.isArray(selectedItems) ? selectedItems : [];
 
   return (
     <FormControl sx={{ minWidth: minWidth, width: "100%" }}>
@@ -73,11 +84,12 @@ const MultiSelectField = ({
         onChange={onChange}
         disabled={disabled}
         input={<OutlinedInput label={label} />}
-        renderValue={(selected) => {
-          const uniqueSelected = [...new Set(selected)];
+        renderValue={(selected: string[] | unknown) => {
+          const uniqueSelected = [...new Set(selected as string[])];
           const selectedItemsNames = uniqueSelected?.map((elementID) => {
             const item = itemsList?.find(
-              (item) => (isItemValueId ? item?._id : item?.name) === elementID
+              (item: IItem) =>
+                (isItemValueId ? item?._id : item?.name) === elementID
             );
             return item ? item?.name : "";
           });
@@ -85,7 +97,6 @@ const MultiSelectField = ({
             ? selectedItemsNames?.join(", ")
             : uniqueSelected?.join(", ");
         }}
-        MenuProps={MenuProps}
         sx={{
           "& .MuiOutlinedInput-notchedOutline": {
             borderColor: selectedItems?.length ? "green" : "gray"
@@ -95,7 +106,7 @@ const MultiSelectField = ({
           }
         }}
       >
-        {itemsList?.map((item, index) =>
+        {itemsList?.map((item: IItem, index: number) =>
           itemsWithId ? (
             <MenuItem
               key={`item-${item?._id}`}
@@ -116,16 +127,13 @@ const MultiSelectField = ({
               />
             </MenuItem>
           ) : (
-            <MenuItem key={`item-${index}`} value={item}>
+            <MenuItem key={`item-${index}`} value={item?.name}>
               <Checkbox
-                key={`checkbox-${index}`} // Ensure a unique key for the Checkbox
-                checked={selectedItems?.indexOf(item) > -1}
+                key={`checkbox-${index}`}
+                checked={selectedItems?.indexOf(item.name) > -1}
                 sx={{ color: "white !important" }}
               />
-              <ListItemText
-                key={`text-${index}`} // Ensure a unique key for the ListItemText
-                primary={item}
-              />
+              <ListItemText key={`text-${index}`} primary={<span>item</span>} />
             </MenuItem>
           )
         )}

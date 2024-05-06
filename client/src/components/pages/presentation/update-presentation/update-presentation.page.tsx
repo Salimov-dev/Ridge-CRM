@@ -15,7 +15,7 @@ import UpdatePresentationPageForms from "./components/update-presentation-page-f
 // schema
 import { presentationSchema } from "@schemas/presentation/presentation.schema";
 // hooks
-import useRemoveItem from "@hooks/use-remove-item";
+import useRemoveItem from "@hooks/item/use-remove-item";
 // store
 import {
   getPresentationById,
@@ -32,7 +32,7 @@ const UpdatePresentation: FC<UpdatePresentationProps> = React.memo(
   ({ presentationId, onClose }) => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
-    const dispatch = useDispatch();
+    const dispatch: any = useDispatch();
 
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const presentation = useSelector(getPresentationById(presentationId));

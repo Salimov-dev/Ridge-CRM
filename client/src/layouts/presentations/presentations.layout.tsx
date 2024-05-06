@@ -16,7 +16,7 @@ import ButtonsPresentationsLayout from "@UI/layout-buttons/buttons.presentations
 // types
 import { IDialogPagesState } from "src/types/dialog-pages/dialog-pages-state.interface";
 
-const PresentationsLayout = React.memo(() => {
+const PresentationsLayout = React.memo((): JSX.Element => {
   const [stateDialogPages, setStateDialogPages] =
     useState<IDialogPagesState>(dialogePagesState);
 

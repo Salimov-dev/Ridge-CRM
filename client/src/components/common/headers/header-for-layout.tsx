@@ -1,36 +1,57 @@
 import { Box, Typography, styled } from "@mui/material";
+import { FC } from "react";
 
-const Component = styled(Box)`
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 20px;
-  margin-right: 50px;
-`;
+interface HeaderForLayoutProps {
+  title: string;
+  background?: string;
+  color?: string;
+  margin?: string;
+  justifyContent?: string;
+  width?: string;
+}
 
-const HeaderForLayout = ({
+interface StyledProps {
+  background?: string;
+  color?: string;
+  margin?: string;
+  justifyContent?: string;
+  width?: string;
+}
+
+const Component = styled(Box)(({ margin, justifyContent }: StyledProps) => ({
+  margin: margin,
+  justifyContent: justifyContent,
+  display: "flex",
+  alignItems: "center",
+  gap: "8px",
+  marginBottom: "20px",
+  marginRight: "50px"
+}));
+
+const Title = styled(Typography)(
+  ({ width, background, color }: StyledProps) => ({
+    color: color,
+    background: background,
+    width: width,
+    padding: "0px 8px",
+    textAlign: "center",
+    borderRadius: "4px"
+  })
+);
+
+const HeaderForLayout: FC<HeaderForLayoutProps> = ({
   title,
   background = "linear-gradient(to right, DarkOrange , OrangeRed)",
   color = "white",
   margin = "0 0 20px 0",
   justifyContent = "start",
   width = "inherit"
-}) => {
+}): JSX.Element => {
   return (
-    <Component sx={{ margin: margin, justifyContent: justifyContent }}>
-      <Typography
-        variant="h2"
-        sx={{
-          width: width,
-          background: background,
-          color: color,
-          padding: "0px 8px",
-          textAlign: "center",
-          borderRadius: "4px"
-        }}
-      >
+    <Component margin={margin} justifyContent={justifyContent}>
+      <Title variant="h2" width={width} background={background} color={color}>
         {title}
-      </Typography>
+      </Title>
     </Component>
   );
 };

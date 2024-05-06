@@ -1,10 +1,13 @@
-import { useTheme } from "@emotion/react";
-import useWindowWidth from "@hooks/window-width/use-window-width";
-import { Button } from "@mui/material";
-import { getIsLoggedIn } from "@store/user/users.store";
-import { tokens } from "@theme/theme";
 import { FC } from "react";
+import { useTheme } from "@emotion/react";
+import { Button } from "@mui/material";
+import { tokens } from "@theme/theme";
 import { useSelector } from "react-redux";
+// hooks
+import useWindowWidth from "@hooks/window-width/use-window-width";
+import { getIsLoggedIn } from "@store/user/users.store";
+// types
+import { ButtonTypes } from "src/types/button/button.types";
 
 interface ButtonStyledProps {
   title: string;
@@ -12,7 +15,7 @@ interface ButtonStyledProps {
   onClick: () => void;
   style?: string;
   disabled?: boolean;
-  variant?: "text" | "outlined" | "contained";
+  variant?: ButtonTypes;
   size?: "small" | "medium" | "large";
   width?: string;
   icon?: React.ReactNode;
@@ -42,7 +45,7 @@ const ButtonStyled: FC<ButtonStyledProps> = ({
   colorHover = "",
   margin = "0",
   size = "medium"
-}) => {
+}): JSX.Element => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const isLoggedIn = useSelector(getIsLoggedIn());

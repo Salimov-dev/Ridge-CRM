@@ -8,30 +8,37 @@ interface useRemoveItemProps {
   setIsLoading: (isLoading: boolean) => void;
 }
 
+interface useRemoveItemReturnType {
+  openConfirm: boolean;
+  handleOpenConfirm: () => void;
+  handleCloseConfirm: () => void;
+  handleRemoveItem: () => void;
+}
+
 const useRemoveItem = ({
   onRemove,
   onClose,
   setIsLoading
-}: useRemoveItemProps) => {
-  const [openConfirm, setOpenConfirm] = useState(false);
-  const dispatch = useDispatch();
+}: useRemoveItemProps): useRemoveItemReturnType => {
+  const [openConfirm, setOpenConfirm] = useState<boolean>(false);
+  const dispatch: any = useDispatch();
 
-  const handleOpenConfirm = () => {
+  const handleOpenConfirm = (): void => {
     setOpenConfirm(true);
   };
 
-  const handleCloseConfirm = () => {
+  const handleCloseConfirm = (): void => {
     setOpenConfirm(false);
   };
 
-  const handleRemoveItem = () => {
+  const handleRemoveItem = (): void => {
     setIsLoading(true);
     dispatch(onRemove)
       .then(() => {
         onClose();
         handleCloseConfirm();
       })
-      .catch((error) => {
+      .catch((error: string) => {
         toast.error(error);
       })
       .finally(() => {

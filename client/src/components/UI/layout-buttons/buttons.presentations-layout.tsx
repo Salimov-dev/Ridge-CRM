@@ -33,8 +33,11 @@ const ButtonsPresentationsLayout: FC<ButtonsPresentationsLayoutProps> = ({
   data,
   reset,
   setState
-}) => {
-  const isInputEmpty = getIsInputEmpty(data, presentationsLayoutInitialState);
+}): JSX.Element => {
+  const isInputEmpty = getIsInputEmpty({
+    data: data,
+    initialState: presentationsLayoutInitialState
+  });
 
   const { handleOpenCreatePresentationPage, handleOpenVideoPlayerPage } =
     useDialogHandlers(setState);

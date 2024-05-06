@@ -1,5 +1,5 @@
 import { io } from "socket.io-client";
-import { createAction, createSlice } from "@reduxjs/toolkit";
+import { Dispatch, createAction, createSlice } from "@reduxjs/toolkit";
 // config
 import configFile from "@config/config.json";
 // data
@@ -10,26 +10,42 @@ import userService from "@services/user/user.service";
 import localStorageService from "@services/local-storage/local.storage-service";
 // store
 import { loadUserLicensesList } from "@store/license/user-license.store";
+// types
+import { IUser } from "src/types/user/user.types";
+import { ILogin } from "src/types/auth/login.types";
+import { IRegister } from "src/types/auth/register.types";
+import { IPasswordUpdate } from "src/types/password/password-update.types";
+import { IStoreState } from "src/types/store/store-state.types";
 
 const socket = io(configFile.ioEndPoint);
 
-const initialState = localStorageService.getAccessToken()
-  ? {
-      entities: [],
-      isLoading: true,
-      error: null,
-      auth: { userId: localStorageService.getUserId() },
-      isLoggedIn: true,
-      dataLoaded: false
-    }
-  : {
-      entities: [],
-      isLoading: false,
-      error: null,
-      auth: null,
-      isLoggedIn: false,
-      dataLoaded: false
-    };
+interface IUserStoreInitialState {
+  entities: IUser[];
+  isLoading: boolean;
+  error: any;
+  auth: { userId: string | null };
+  isLoggedIn: boolean;
+  dataLoaded: boolean;
+}
+
+const initialState: IUserStoreInitialState =
+  localStorageService.getAccessToken()
+    ? {
+        entities: [],
+        isLoading: true,
+        error: null,
+        auth: { userId: localStorageService.getUserId() },
+        isLoggedIn: true,
+        dataLoaded: false
+      }
+    : {
+        entities: [],
+        isLoading: false,
+        error: null,
+        auth: { userId: null },
+        isLoggedIn: false,
+        dataLoaded: false
+      };
 
 const usersListSlice = createSlice({
   name: "users",
@@ -68,7 +84,7 @@ const usersListSlice = createSlice({
     userLoggedOut: (state) => {
       state.entities = [];
       state.isLoggedIn = false;
-      state.auth = null;
+      state.auth = { userId: null };
       state.dataLoaded = false;
     },
     userUpdateSuccessed: (state, action) => {
@@ -103,15 +119,15 @@ const teammateUpdateFailed = createAction("users/teammateUpdateFailed");
 const userUpdateRequested = createAction("users/userUpdateRequested");
 const teammateUpdateRequested = createAction("users/teammateUpdateRequested");
 
-export const login = (payload) => async (dispatch) => {
+export const login = (payload: ILogin) => async (dispatch: Dispatch) => {
   dispatch(authRequested());
   try {
     const data = await authService.login(payload);
 
     localStorageService.setTokens(data);
     dispatch(authRequestSuccess({ userId: data.userId }));
-    dispatch(loadUsersList());
-  } catch (error) {
+    loadUsersList();
+  } catch (error: any) {
     const errorMessage = error.response.data.error.message;
 
     dispatch(authRequestFailed(errorMessage));
@@ -119,7 +135,7 @@ export const login = (payload) => async (dispatch) => {
   }
 };
 
-export const signUp = (payload) => async (dispatch) => {
+export const signUp = (payload: IRegister) => async (dispatch: Dispatch) => {
   dispatch(authRequested());
   try {
     const registerData = await authService.register(payload);
@@ -129,8 +145,8 @@ export const signUp = (payload) => async (dispatch) => {
 
     localStorageService.setTokens(data);
     dispatch(authRequestSuccess({ userId: data.userId }));
-    dispatch(loadUsersList());
-  } catch (error) {
+    loadUsersList();
+  } catch (error: any) {
     const errorMessage = error.response.data.error.message;
 
     dispatch(authRequestFailed(errorMessage));
@@ -138,18 +154,18 @@ export const signUp = (payload) => async (dispatch) => {
   }
 };
 
-export const logOut = () => (dispatch) => {
+export const logOut = () => (dispatch: Dispatch) => {
   localStorageService.removeAuthData();
   dispatch(userLoggedOut());
 };
 
-export const loadUsersList = () => async (dispatch) => {
+export const loadUsersList = () => async (dispatch: Dispatch) => {
   dispatch(usersRequested());
   try {
     const { content } = await userService.get();
 
     dispatch(usersReceived(content));
-  } catch (error) {
+  } catch (error: any) {
     const errorMessage = error.response.data.error.message;
 
     dispatch(usersFailed(errorMessage));
@@ -157,14 +173,14 @@ export const loadUsersList = () => async (dispatch) => {
   }
 };
 
-export const createNewUser = (payload) => async (dispatch) => {
+export const createNewUser = (payload: IUser) => async (dispatch: Dispatch) => {
   dispatch(authRequested());
   try {
     const { content } = await userService.createTeammate(payload);
 
     dispatch(userCreated(content));
-    dispatch(loadUserLicensesList());
-  } catch (error) {
+    loadUserLicensesList();
+  } catch (error: any) {
     const errorMessage = error.response.data.error.message;
 
     dispatch(authRequestFailed(errorMessage));
@@ -172,12 +188,12 @@ export const createNewUser = (payload) => async (dispatch) => {
   }
 };
 
-export const updateUser = (payload) => async (dispatch) => {
+export const updateUser = (payload: IUser) => async (dispatch: Dispatch) => {
   dispatch(userUpdateRequested());
   try {
     const { content } = await userService.update(payload);
     socket.emit("userUpdated", content);
-  } catch (error) {
+  } catch (error: any) {
     const errorMessage = error.response.data.error.message;
 
     dispatch(userUpdateFailed(errorMessage));
@@ -185,69 +201,74 @@ export const updateUser = (payload) => async (dispatch) => {
   }
 };
 
-export const updateUserUpdate = (payload) => async (dispatch) => {
-  dispatch(userUpdateRequested());
-  try {
-    dispatch(userUpdateSuccessed(payload));
-  } catch (error) {
-    const errorMessage = error.response.data.error.message;
+export const updateUserUpdate =
+  (payload: IUser) => async (dispatch: Dispatch) => {
+    dispatch(userUpdateRequested());
+    try {
+      dispatch(userUpdateSuccessed(payload));
+    } catch (error: any) {
+      const errorMessage = error.response.data.error.message;
 
-    dispatch(userUpdateFailed(errorMessage));
-    throw errorMessage;
-  }
-};
+      dispatch(userUpdateFailed(errorMessage));
+      throw errorMessage;
+    }
+  };
 
-export const updateTeammate = (payload) => async (dispatch) => {
-  dispatch(teammateUpdateRequested());
-  try {
-    const { content } = await userService.updateTeammate(payload);
+export const updateTeammate =
+  (payload: IUser) => async (dispatch: Dispatch) => {
+    dispatch(teammateUpdateRequested());
+    try {
+      const { content } = await userService.updateTeammate(payload);
 
-    socket.emit("userLicenseUpdated", content?.updatedLicense);
-    socket.emit("teammateUpdated", content?.updatedUser);
-  } catch (error) {
-    const errorMessage = error.response.data.error.message;
+      socket.emit("userLicenseUpdated", content?.updatedLicense);
+      socket.emit("teammateUpdated", content?.updatedUser);
+    } catch (error: any) {
+      const errorMessage = error.response.data.error.message;
 
-    dispatch(teammateUpdateFailed(errorMessage));
-    throw errorMessage;
-  }
-};
+      dispatch(teammateUpdateFailed(errorMessage));
+      throw errorMessage;
+    }
+  };
 
-export const updateTeammateUpdate = (payload) => async (dispatch) => {
-  dispatch(teammateUpdateRequested());
-  try {
-    dispatch(teammateUpdateSuccessed(payload));
-  } catch (error) {
-    const errorMessage = error.response.data.error.message;
+export const updateTeammateUpdate =
+  (payload: IUser) => async (dispatch: Dispatch) => {
+    dispatch(teammateUpdateRequested());
+    try {
+      dispatch(teammateUpdateSuccessed(payload));
+    } catch (error: any) {
+      const errorMessage = error.response.data.error.message;
 
-    dispatch(teammateUpdateFailed(errorMessage));
-    throw errorMessage;
-  }
-};
+      dispatch(teammateUpdateFailed(errorMessage));
+      throw errorMessage;
+    }
+  };
 
-export const updatePassword = (payload) => async (dispatch) => {
-  dispatch(authRequested());
-  try {
-    const { currentPassword, newPassword } = payload;
-    await userService.updatePassword({ currentPassword, newPassword });
-  } catch (error) {
-    const errorMessage = error.response.data.error.message;
+export const updatePassword =
+  (payload: IPasswordUpdate) => async (dispatch: Dispatch) => {
+    dispatch(authRequested());
+    try {
+      const { currentPassword, newPassword } = payload;
+      await userService.updatePassword({ currentPassword, newPassword });
+    } catch (error: any) {
+      const errorMessage = error.response.data.error.message;
 
-    dispatch(authRequestFailed(errorMessage));
-    throw errorMessage;
-  }
-};
+      dispatch(authRequestFailed(errorMessage));
+      throw errorMessage;
+    }
+  };
 
-export const getUsersList = () => (state) => state?.users?.entities;
+export const getUsersList = () => (state: IStoreState) =>
+  state?.users?.entities;
 
-export const getCurrentUserData = () => (state) => {
+export const getCurrentUserData = () => (state: IStoreState) => {
   return state?.users?.entities
     ? state?.users?.entities?.find((u) => u?._id === state?.users?.auth?.userId)
     : null;
 };
 
-export const getUserNameById = (id) => (state) => {
+export const getUserNameById = (userId: string) => (state: IStoreState) => {
   if (state?.users?.entities) {
-    const user = state?.users?.entities.find((user) => user._id === id);
+    const user = state?.users?.entities.find((user) => user._id === userId);
     const isFullName = user?.lastName && user?.firstName;
     const result = `${user?.lastName} ${user?.firstName}`;
 
@@ -256,15 +277,15 @@ export const getUserNameById = (id) => (state) => {
   return;
 };
 
-export const getUserDataById = (id) => (state) => {
+export const getUserDataById = (userId: string) => (state: IStoreState) => {
   if (state?.users?.entities) {
-    const user = state.users.entities.find((user) => user._id === id);
+    const user = state.users.entities.find((user) => user._id === userId);
 
     return user;
   }
 };
 
-export const getIsCurrentUserRoleManager = () => (state) => {
+export const getIsCurrentUserRoleManager = () => (state: IStoreState) => {
   const currentUserData = state?.users?.entities?.find(
     (u) => u?._id === state?.users?.auth?.userId
   );
@@ -274,7 +295,7 @@ export const getIsCurrentUserRoleManager = () => (state) => {
   return isUserRoleManager;
 };
 
-export const getIsCurrentUserRoleCurator = () => (state) => {
+export const getIsCurrentUserRoleCurator = () => (state: IStoreState) => {
   const currentUserData = state?.users?.entities?.find(
     (u) => u?._id === state?.users?.auth?.userId
   );
@@ -284,7 +305,7 @@ export const getIsCurrentUserRoleCurator = () => (state) => {
   return isUserRoleManager;
 };
 
-export const getIsUserManager = (userId) => (state) => {
+export const getIsUserManager = (userId: string) => (state: IStoreState) => {
   const user = state.users.entities?.find((user) => user?._id === userId);
   const userRole = user?.role;
 
@@ -294,7 +315,7 @@ export const getIsUserManager = (userId) => (state) => {
   return isManager;
 };
 
-export const getIsUserCurator = (userId) => (state) => {
+export const getIsUserCurator = (userId: string) => (state: IStoreState) => {
   const user = state.users.entities?.find((user) => user?._id === userId);
   const userRole = user?.role;
 
@@ -304,8 +325,10 @@ export const getIsUserCurator = (userId) => (state) => {
   return isCurator;
 };
 
-export const getIsUserObserver = (userId) => (state) => {
-  const user = state.users.entities?.find((user) => user?._id === userId);
+export const getIsUserObserver = (userId: string) => (state: IStoreState) => {
+  const user = state.users.entities?.find(
+    (user: IUser) => user?._id === userId
+  );
   const userRole = user?.role;
 
   const roleCurator = "69dgp34954igfj345043001";
@@ -314,16 +337,23 @@ export const getIsUserObserver = (userId) => (state) => {
   return isObserver;
 };
 
-export const getIsUserAuthorThisEntity = (userId, entity) => (state) => {
-  const user = state.users.entities?.find((user) => user?._id === userId);
-  const isUserAuthorThisEntity = entity?.userId === user?._id;
-  return isUserAuthorThisEntity;
-};
+export const getIsUserAuthorThisEntity =
+  (userId: string, entity: any) => (state: IStoreState) => {
+    const user = state.users.entities?.find(
+      (user: IUser) => user?._id === userId
+    );
+    const isUserAuthorThisEntity = entity?.userId === user?._id;
+    return isUserAuthorThisEntity;
+  };
 
-export const getIsLoggedIn = () => (state) => state.users.isLoggedIn;
-export const getDataStatus = () => (state) => state.users.dataLoaded;
-export const getUsersLoadingStatus = () => (state) => state.users.isLoading;
-export const getCurrentUserId = () => (state) => state?.users?.auth?.userId;
-export const getAuthErrors = () => (state) => state.users.error;
+export const getIsLoggedIn = () => (state: IStoreState) =>
+  state.users.isLoggedIn;
+export const getDataStatus = () => (state: IStoreState) =>
+  state.users.dataLoaded;
+export const getUsersLoadingStatus = () => (state: IStoreState) =>
+  state.users.isLoading;
+export const getCurrentUserId = () => (state: IStoreState) =>
+  state?.users?.auth?.userId;
+export const getAuthErrors = () => (state: IStoreState) => state.users.error;
 
 export default usersListReducer;
