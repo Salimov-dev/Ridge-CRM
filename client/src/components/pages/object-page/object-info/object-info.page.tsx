@@ -10,7 +10,7 @@ import tabsObjectInfoPage from "./tabs/tabs.object-info";
 import { getActualUsersList } from "@utils/actual-items/get-actual-users-list";
 // types
 import { IDialogPagesState } from "src/types/dialog-pages/dialog-pages-state.interface";
-import { IObject } from "src/types/object/object.interface";
+import { IObject } from "@interfaces/object/object.interface";
 // initial-states
 import { dialogePagesState } from "@initial-states/dialog-pages-state/dialog-pages.state";
 // store

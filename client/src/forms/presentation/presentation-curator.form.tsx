@@ -16,7 +16,7 @@ import { capitalizeFirstLetter } from "@utils/data/capitalize-first-letter";
 // store
 import { getPresentationStatusesList } from "@store/presentation/presentation-status.store";
 // types
-import { IPresentation } from "src/types/presentation/presentation.interface";
+import { IPresentation } from "@interfaces/presentation/presentation.interfaces";
 
 interface CuratorPresentationFormProps {
   data: IPresentation;

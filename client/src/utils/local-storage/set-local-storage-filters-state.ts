@@ -1,19 +1,17 @@
 import { useEffect } from "react";
 
-interface ISetLocalStorageStateProps {
+interface SetLocalStorageStateProps {
   title: string;
-  data: Record<string, any>;
+  data: Record<string, string | string[] | null>;
 }
 
 const setLocalStorageFiltersState = ({
   title,
   data
-}: ISetLocalStorageStateProps) => {
+}: SetLocalStorageStateProps): void => {
   useEffect(() => {
     localStorage.setItem(title, JSON.stringify(data));
   }, [data]);
-
-  return { setLocalStorageFiltersState };
 };
 
 export default setLocalStorageFiltersState;

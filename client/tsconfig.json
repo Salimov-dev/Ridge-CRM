@@ -32,7 +32,8 @@
       "@config/*": ["src/config/*"],
       "@styled/*": ["src/styled/*"],
       "@interfaces/*": ["src/interfaces/*"],
-      "@initial-states/*": ["src/initial-states/*"]
+      "@initial-states/*": ["src/initial-states/*"],
+      "@dialog-handlers/*": ["src/dialog-handlers/*"]
     },
     "allowImportingTsExtensions": true,
     "resolveJsonModule": true,

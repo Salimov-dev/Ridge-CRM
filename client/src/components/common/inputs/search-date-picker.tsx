@@ -1,19 +1,31 @@
+import { FC } from "react";
+import { UseFormRegister } from "react-hook-form";
 // MUI
 import { Box, FormHelperText } from "@mui/material";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 
-const SearchDatePicker = ({
+interface SearchDatePickerProps {
+  register: UseFormRegister<any>;
+  name: string;
+  label: string;
+  value: unknown;
+  onChange: any;
+  helperText?: string;
+  disabled?: boolean;
+  color?: string;
+}
+
+const SearchDatePicker: FC<SearchDatePickerProps> = ({
   register,
   name,
   label,
   value,
   onChange,
   helperText = "",
-  errors = null,
   disabled = false,
-  color = "Crimson",
+  color = "Crimson"
 }) => {
   return (
     <Box sx={{ width: "100%", marginBottom: "-3px" }}>
@@ -23,33 +35,30 @@ const SearchDatePicker = ({
           label={label}
           value={value}
           onChange={onChange}
-          error={!!errors}
           disabled={disabled}
           sx={{
             width: "100%",
             "& .MuiOutlinedInput-root": {
               "& fieldset": {
-                borderColor: errors ? "Crimson" : value ? "green" : "gray",
+                borderColor: value ? "green" : "gray"
               },
               "&.Mui-focused fieldset": {
-                borderColor: "green",
-              },
+                borderColor: "green"
+              }
             },
             "& .MuiInputLabel-root": {
-              color: "gray",
+              color: "gray"
             },
             "& label.Mui-focused": {
-              color: "white",
+              color: "white"
             },
             "& .MuiButtonBase-root": {
-              color: value ? "white" : "gray",
-            },
+              color: value ? "white" : "gray"
+            }
           }}
         />
       </LocalizationProvider>
-      <FormHelperText sx={{ color: color }}>
-        {errors ? errors?.message : helperText}
-      </FormHelperText>
+      <FormHelperText sx={{ color: color }}>{helperText}</FormHelperText>
     </Box>
   );
 };

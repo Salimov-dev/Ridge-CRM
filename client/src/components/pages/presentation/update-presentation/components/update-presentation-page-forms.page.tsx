@@ -6,8 +6,8 @@ import PresentationForm from "@forms/presentation/presentation.form";
 // utils
 import transformObjectsForSelect from "@utils/objects/transform-objects-for-select";
 // interface
-import { IObject } from "src/types/object/object.interface";
-import { IPresentation } from "src/types/presentation/presentation.interface";
+import { IObject } from "@interfaces/object/object.interface";
+import { IPresentation } from "@interfaces/presentation/presentation.interfaces";
 // store
 import { getObjectsList } from "@store/object/objects.store";
 import {

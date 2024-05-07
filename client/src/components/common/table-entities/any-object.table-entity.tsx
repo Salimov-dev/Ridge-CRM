@@ -15,7 +15,7 @@ const Component = styled(Box)`
 
 const AnyObjectTableEntity = ({ object, onOpenObjectPage }) => {
   const objectsList = useSelector(getObjectsList());
-  const objectId = object._id;
+  const objectId = object?._id;
 
   const getObjectName = (objectId) => {
     const foundObject = objectsList?.find((item) => item._id === objectId);

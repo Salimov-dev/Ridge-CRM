@@ -14,20 +14,22 @@ import getLocalStorageFiltersState from "@utils/local-storage/get-local-storage-
 // UI
 import ButtonsPresentationsLayout from "@UI/layout-buttons/buttons.presentations-layout";
 // types
-import { IDialogPagesState } from "src/types/dialog-pages/dialog-pages-state.interface";
+import { IPresentationDialogsState } from "@interfaces/presentation/presentation.interfaces";
 
 const PresentationsLayout = React.memo((): JSX.Element => {
   const [stateDialogPages, setStateDialogPages] =
-    useState<IDialogPagesState>(dialogePagesState);
+    useState<IPresentationDialogsState>(dialogePagesState);
 
   const { localStorageData, formatedState } = getLocalStorageFiltersState({
     title: "search-presentations-data"
   });
 
+  const defaultValues = localStorageData
+    ? formatedState
+    : presentationsLayoutInitialState;
+
   const { register, watch, setValue, reset } = useForm({
-    defaultValues: localStorageData
-      ? formatedState
-      : presentationsLayoutInitialState,
+    defaultValues: defaultValues,
     mode: "onChange"
   });
 

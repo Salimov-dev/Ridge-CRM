@@ -1,10 +1,17 @@
 import dayjs from "dayjs";
 
-interface IGetLocalStorageStateProps {
+interface GetLocalStorageStateProps {
   title: string;
 }
 
-const getLocalStorageFiltersState = ({ title }: IGetLocalStorageStateProps) => {
+interface GetLocalStorageStateReturnValue {
+  localStorageData: string | null;
+  formatedState: Record<string, string | string[] | null>;
+}
+
+const getLocalStorageFiltersState = ({
+  title
+}: GetLocalStorageStateProps): GetLocalStorageStateReturnValue => {
   const localStorageData = localStorage.getItem(title);
 
   if (localStorageData) {
@@ -22,7 +29,7 @@ const getLocalStorageFiltersState = ({ title }: IGetLocalStorageStateProps) => {
     return { localStorageData, formatedState };
   }
 
-  return {};
+  return { localStorageData: null, formatedState: {} };
 };
 
 export default getLocalStorageFiltersState;

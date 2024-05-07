@@ -1,6 +1,9 @@
+type IData = Record<string, string | string[] | null>;
+type IInitialState = Record<string, string | string[] | null>;
+
 interface GetIsInputEmptyProps {
-  data: unknown;
-  initialState: unknown;
+  data: IData;
+  initialState: IInitialState;
 }
 
 export const getIsInputEmpty = ({
@@ -10,7 +13,7 @@ export const getIsInputEmpty = ({
   if (typeof data === "object" && typeof initialState === "object") {
     return JSON.stringify(initialState) !== JSON.stringify(data);
   } else {
-    console.log("ERROR: data and initialState must be objects");
+    console.log("ОШИБКА: data и initialState должны быть объектами");
     return true;
   }
 };

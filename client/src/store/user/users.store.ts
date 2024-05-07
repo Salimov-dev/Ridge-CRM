@@ -15,7 +15,6 @@ import { IUser } from "src/types/user/user.types";
 import { ILogin } from "src/types/auth/login.types";
 import { IRegister } from "src/types/auth/register.types";
 import { IPasswordUpdate } from "src/types/password/password-update.types";
-import { IStoreState } from "src/types/store/store-state.types";
 
 const socket = io(configFile.ioEndPoint);
 
@@ -26,6 +25,10 @@ interface IUserStoreInitialState {
   auth: { userId: string | null };
   isLoggedIn: boolean;
   dataLoaded: boolean;
+}
+
+export interface IStoreState {
+  users: IUserStoreInitialState;
 }
 
 const initialState: IUserStoreInitialState =
@@ -285,25 +288,37 @@ export const getUserDataById = (userId: string) => (state: IStoreState) => {
   }
 };
 
-export const getIsCurrentUserRoleManager = () => (state: IStoreState) => {
-  const currentUserData = state?.users?.entities?.find(
-    (u) => u?._id === state?.users?.auth?.userId
-  );
-  const currentUserRole = currentUserData?.role;
-  const isUserRoleManager = currentUserRole?.includes(roleManagerId);
+export const getIsCurrentUserRoleManager =
+  () =>
+  (state: IStoreState): boolean => {
+    const currentUserData = state?.users?.entities?.find(
+      (u) => u?._id === state?.users?.auth?.userId
+    );
 
-  return isUserRoleManager;
-};
+    if (currentUserData) {
+      const currentUserRole = currentUserData?.role;
+      const isUserRoleManager = currentUserRole?.includes(roleManagerId);
+      return isUserRoleManager;
+    }
 
-export const getIsCurrentUserRoleCurator = () => (state: IStoreState) => {
-  const currentUserData = state?.users?.entities?.find(
-    (u) => u?._id === state?.users?.auth?.userId
-  );
-  const currentUserRole = currentUserData?.role;
-  const isUserRoleManager = currentUserRole?.includes(roleCuratorId);
+    return false;
+  };
 
-  return isUserRoleManager;
-};
+export const getIsCurrentUserRoleCurator =
+  () =>
+  (state: IStoreState): boolean => {
+    const currentUserData = state?.users?.entities?.find(
+      (u) => u?._id === state?.users?.auth?.userId
+    );
+
+    if (currentUserData) {
+      const currentUserRole = currentUserData?.role;
+      const isUserRoleManager = currentUserRole?.includes(roleCuratorId);
+      return isUserRoleManager;
+    }
+
+    return false;
+  };
 
 export const getIsUserManager = (userId: string) => (state: IStoreState) => {
   const user = state.users.entities?.find((user) => user?._id === userId);

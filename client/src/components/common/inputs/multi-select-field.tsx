@@ -13,8 +13,8 @@ import {
 
 interface MultiSelectFieldProps {
   onChange: (e: SelectChangeEvent<any>) => void;
-  itemsList: IItem[];
-  selectedItems: string[];
+  itemsList: IItem[] | any;
+  selectedItems: any;
   name: string;
   labelId: string;
   label: string;
@@ -25,7 +25,7 @@ interface MultiSelectFieldProps {
 
 interface IItem {
   _id: string;
-  name: string;
+  name: string | null;
 }
 
 const StyledSelect = styled(Select)(() => ({
@@ -88,10 +88,10 @@ const MultiSelectField: FC<MultiSelectFieldProps> = ({
           const uniqueSelected = [...new Set(selected as string[])];
           const selectedItemsNames = uniqueSelected?.map((elementID) => {
             const item = itemsList?.find(
-              (item: IItem) =>
+              (item: any) =>
                 (isItemValueId ? item?._id : item?.name) === elementID
             );
-            return item ? item?.name : "";
+            return item ? item?.name : "Нет значения";
           });
           return itemsWithId
             ? selectedItemsNames?.join(", ")
@@ -106,7 +106,7 @@ const MultiSelectField: FC<MultiSelectFieldProps> = ({
           }
         }}
       >
-        {itemsList?.map((item: IItem, index: number) =>
+        {itemsList?.map((item: any, index: number) =>
           itemsWithId ? (
             <MenuItem
               key={`item-${item?._id}`}
@@ -123,7 +123,9 @@ const MultiSelectField: FC<MultiSelectFieldProps> = ({
               />
               <ListItemText
                 key={`text-${item?._id}`}
-                primary={<span>{item?.name}</span>}
+                primary={
+                  <span>{item?.name ? item?.name : "Нет значения"}</span>
+                }
               />
             </MenuItem>
           ) : (

@@ -8,9 +8,7 @@ import MultiSelectField from "@common/inputs/multi-select-field";
 import SearchDatePicker from "@common/inputs/search-date-picker";
 // utils
 import { getActualUsersList } from "@utils/actual-items/get-actual-users-list";
-import { getActualStatusesList } from "@utils/actual-items/get-actual-statuses-list";
-// types
-import { IPresentationsLayoutInitialState } from "src/types/initial-state/presentations-layout-init-state.types";
+import { getUniqueItemsList } from "@utils/actual-items/get-uniq-items-list";
 // store
 import { getIsCurrentUserRoleManager } from "@store/user/users.store";
 import { getPresentationStatusesList } from "@store/presentation/presentation-status.store";
@@ -19,10 +17,12 @@ import {
   getPresentationsLoadingStatus
 } from "@store/presentation/presentations.store";
 
+type IData = Record<string, string | string[] | null>;
+
 interface PresentationsLayoutFiltersPanelProps {
-  data: IPresentationsLayoutInitialState;
-  register: UseFormRegister<IPresentationsLayoutInitialState>;
-  setValue: UseFormSetValue<IPresentationsLayoutInitialState>;
+  data: IData;
+  register: UseFormRegister<IData>;
+  setValue: UseFormSetValue<IData>;
 }
 
 const PresentationsLayoutFiltersPanel: FC<PresentationsLayoutFiltersPanelProps> =
@@ -34,17 +34,18 @@ const PresentationsLayoutFiltersPanel: FC<PresentationsLayoutFiltersPanelProps> 
     const isLoading = useSelector(getPresentationsLoadingStatus());
     const isCurrentUserRoleManager = useSelector(getIsCurrentUserRoleManager());
 
-    const statusesList = getActualStatusesList(
-      presentationsList,
-      presentationsStatuses
-    );
+    const statusesList = getUniqueItemsList({
+      position: "status",
+      itemsArray: presentationsList,
+      positionsArray: presentationsStatuses
+    });
 
     return (
       <Form>
         <FieldsContainer>
           <SearchField
             register={register}
-            label="Найти по адресу"
+            label="Найти по адресу объекта из презентации"
             name="objectAddress"
             value={data.objectAddress}
             inputProps={{ maxLength: 30 }}

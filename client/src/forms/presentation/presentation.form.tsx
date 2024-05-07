@@ -10,8 +10,8 @@ import {
 import TextFieldStyled from "@components/common/inputs/text-field-styled";
 import AutocompleteStyled from "@components/common/inputs/autocomplete-styled";
 // types
-import { IPresentation } from "src/types/presentation/presentation.interface";
-import { IObject } from "src/types/object/object.interface";
+import { IPresentation } from "@interfaces/presentation/presentation.interfaces";
+import { IObject } from "@interfaces/object/object.interface";
 // utils
 import { capitalizeFirstLetter } from "@utils/data/capitalize-first-letter";
 // styled

@@ -2,16 +2,18 @@ import { TextField, styled } from "@mui/material";
 import { UseFormRegister } from "react-hook-form";
 import { FC } from "react";
 
+type Value = string | string[] | null;
+
 interface SearchFieldProps {
   register: UseFormRegister<any>;
   label: string;
   name: string;
-  value: string;
+  value: Value;
   inputProps: any;
   disabled: boolean;
 }
 
-const StyledTextField = styled(TextField)<{ value?: string }>(
+const StyledTextField = styled(TextField)<{ value?: Value }>(
   ({ theme, value }) => ({
     minWidth: "30px",
     width: "100%",

@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import { Box } from "@mui/material";
-import { Dispatch, FC, SetStateAction } from "react";
 import { UseFormReset } from "react-hook-form";
+import { Dispatch, FC, SetStateAction } from "react";
 // icons
 import SmartDisplayOutlinedIcon from "@mui/icons-material/SmartDisplayOutlined";
 // components
@@ -9,13 +9,13 @@ import ButtonStyled from "@components/common/buttons/button-styled.button";
 import ClearFilterButton from "@components/common/buttons/clear-filter.button";
 // initial-states
 import { presentationsLayoutInitialState } from "@initial-states/layouts/presentations-layout.initial-state";
-// hooks
-import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
-// types
-import { IDialogPagesState } from "src/types/dialog-pages/dialog-pages-state.interface";
-import { IPresentation } from "src/types/presentation/presentation.interface";
 // utils
 import { getIsInputEmpty } from "@utils/input/get-is-input-empty";
+// interfaces
+import { IPresentationDialogsState } from "@interfaces/presentation/presentation.interfaces";
+// dialog-handlers
+import presentationDialogsState from "@dialog-handlers/presentation.dialog-handlers";
+import videoPlayerDialogsState from "@dialog-handlers/video-player.dialog-handlers";
 
 const Component = styled(Box)`
   display: flex;
@@ -23,10 +23,12 @@ const Component = styled(Box)`
   margin-bottom: 4px;
 `;
 
+type IData = Record<string, string | string[] | null>;
+
 interface ButtonsPresentationsLayoutProps {
-  data: IPresentation;
-  reset: UseFormReset<IPresentation>;
-  setState: Dispatch<SetStateAction<IDialogPagesState>>;
+  data: IData;
+  reset: UseFormReset<IData>;
+  setState: Dispatch<SetStateAction<IPresentationDialogsState>>;
 }
 
 const ButtonsPresentationsLayout: FC<ButtonsPresentationsLayoutProps> = ({
@@ -39,8 +41,11 @@ const ButtonsPresentationsLayout: FC<ButtonsPresentationsLayoutProps> = ({
     initialState: presentationsLayoutInitialState
   });
 
-  const { handleOpenCreatePresentationPage, handleOpenVideoPlayerPage } =
-    useDialogHandlers(setState);
+  const { handleOpenCreatePresentationPage } = presentationDialogsState({
+    setState
+  });
+
+  const { handleOpenVideoPlayerPage } = videoPlayerDialogsState({ setState });
 
   return (
     <Component>

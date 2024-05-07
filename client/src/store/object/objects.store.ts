@@ -13,7 +13,7 @@ import { updateCompanies } from "@store/company/company.store";
 import { updateContacts } from "@store/contact/contact.store";
 import { useSelector } from "react-redux";
 import { getCurrentUserId } from "@store/user/users.store";
-import { IObject } from "src/types/object/object.interface";
+import { IObject } from "@interfaces/object/object.interface";
 
 const socket = io(configFile.ioEndPoint);
 

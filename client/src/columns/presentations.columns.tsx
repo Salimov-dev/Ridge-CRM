@@ -1,5 +1,5 @@
-// libraries
 import { useSelector } from "react-redux";
+import { Dispatch, SetStateAction } from "react";
 import { Box, Button, Tooltip, Typography } from "@mui/material";
 // styled
 import { AlignCenter } from "@styled/styled-columns";
@@ -18,12 +18,23 @@ import { FormatDate } from "@utils/date/format-date";
 // store
 import { getPresentationStatusNameById } from "@store/presentation/presentation-status.store";
 import { getObjectById } from "@store/object/objects.store";
+// interfaces
+import {
+  IPresentationDialogsState,
+  PresentationAgreementStatuses
+} from "@interfaces/presentation/presentation.interfaces";
 
-export const presentationsColumns = (
+interface PresentationsColumnsProps {
+  isCurrentUserRoleManager: boolean;
+  isCurrentUserRoleCurator: boolean;
+  setState: Dispatch<SetStateAction<IPresentationDialogsState>>;
+}
+
+export const presentationsColumns = ({
   setState,
   isCurrentUserRoleCurator,
   isCurrentUserRoleManager
-) => {
+}: PresentationsColumnsProps) => {
   let columns = [];
 
   const { handleOpenObjectPage, handleOpenUpdatePresentationPage } =
@@ -35,7 +46,7 @@ export const presentationsColumns = (
       {
         accessorKey: "created_at",
         header: "Дата",
-        cell: (info) => {
+        cell: (info: { getValue: () => any }) => {
           const date = info.getValue();
           return <AlignCenter>{FormatDate(date)}</AlignCenter>;
         }
@@ -43,7 +54,7 @@ export const presentationsColumns = (
       {
         accessorKey: "objectId",
         header: "Объект презентации",
-        cell: (info) => {
+        cell: (info: { getValue: () => any }) => {
           const objectId = info.getValue();
           const object = useSelector(getObjectById(objectId));
           return objectId ? (
@@ -69,14 +80,14 @@ export const presentationsColumns = (
       {
         accessorKey: "cloudLink",
         header: "Облако",
-        cell: (info) => {
+        cell: (info: { getValue: () => any }) => {
           const cloudLink = info.getValue();
 
           const handleOpenCloud = () => {
             const cloudLink = info.getValue();
 
             if (cloudLink) {
-              window.open(cloudLink, "_blank"); // Открывает ссылку в новой вкладке браузера
+              window.open(cloudLink, "_blank");
             }
           };
           return cloudLink?.length ? (
@@ -101,31 +112,26 @@ export const presentationsColumns = (
 
   const considerationColumn = {
     id: "considerationColumn",
-    header: "Рассмотрение",
+    header: "Согласование",
     columns: [
       {
         accessorKey: "status",
         header: "Статус рассмотрения",
-        cell: (info) => {
+        cell: (info: { getValue: () => any }) => {
           const status = info.getValue();
           const name = useSelector(getPresentationStatusNameById(status));
 
           const getColor = () => {
-            const toBeAgreed = "654wqeg3469y9dfsd82dd334";
-            const refused = "654wqeporew325iugfu43005";
-            const agreed = "654wqepvmq49450iqw23fd68";
-            const finalize = "654wqe92hc0siq123of00q99";
-
-            if (status === toBeAgreed) {
+            if (status === PresentationAgreementStatuses.ToBeAgreed) {
               return "orange";
             }
-            if (status === refused) {
+            if (status === PresentationAgreementStatuses.Refused) {
               return "red";
             }
-            if (status === agreed) {
+            if (status === PresentationAgreementStatuses.Agreed) {
               return "green";
             }
-            if (status === finalize) {
+            if (status === PresentationAgreementStatuses.Finalize) {
               return "blue";
             }
           };
@@ -151,7 +157,7 @@ export const presentationsColumns = (
       {
         accessorKey: "curatorComment",
         header: "Комментарий Куратора",
-        cell: (info) => {
+        cell: (info: { getValue: () => any }) => {
           const curatorComment = info.getValue();
           return curatorComment ? (
             <AlignCenter>{curatorComment}</AlignCenter>
@@ -170,7 +176,7 @@ export const presentationsColumns = (
       {
         accessorKey: "_id",
         header: "Презентация",
-        cell: (info) => {
+        cell: (info: { getValue: () => any }) => {
           const presentationId = info.getValue();
 
           return (
@@ -208,7 +214,7 @@ export const presentationsColumns = (
       {
         accessorKey: "userId",
         header: "Фамилия и Имя",
-        cell: (info) => {
+        cell: (info: { getValue: () => any }) => {
           const userId = info.getValue();
           const { getAvatarSrc, isLoading } = useGetUserAvatar(userId);
 

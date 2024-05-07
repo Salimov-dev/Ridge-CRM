@@ -41,6 +41,7 @@ app.use("/api", routes);
 app.use("/api/uploads", express.static(path.join(__dirname, "uploads")));
 
 cron.schedule("0 0 * * *", () => subscriptions()); // списание на лицензии каждый день в 00:00
+// cron.schedule("* * * * *", () => subscriptions()); // списание на лицензии каждую минуту
 
 if (process.env.NODE_ENV === "production") {
   app.use("/", express.static(path.join(__dirname, "client")));

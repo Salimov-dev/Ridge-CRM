@@ -38,7 +38,8 @@ export default defineConfig({
       "@config": path.resolve(__dirname, "./src/config"),
       "@styled": path.resolve(__dirname, "./src/styled"),
       "@interfaces": path.resolve(__dirname, "./src/interfaces"),
-      "@initial-states": path.resolve(__dirname, "./src/initial-states")
+      "@initial-states": path.resolve(__dirname, "./src/initial-states"),
+      "@dialog-handlers": path.resolve(__dirname, "./src/dialog-handlers")
     }
   }
 });
