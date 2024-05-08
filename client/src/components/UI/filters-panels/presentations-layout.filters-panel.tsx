@@ -66,6 +66,7 @@ const PresentationsLayoutFiltersPanel: FC<PresentationsLayoutFiltersPanelProps> 
             itemsList={statusesList}
             selectedItems={data.selectedStatuses}
             onChange={(e) => setValue("selectedStatuses", e.target.value)}
+            isLoading={isLoading}
             disabled={isLoading}
           />
         </FieldsContainer>
@@ -94,6 +95,7 @@ const PresentationsLayoutFiltersPanel: FC<PresentationsLayoutFiltersPanelProps> 
               itemsList={usersList}
               selectedItems={data.selectedUsers}
               onChange={(e) => setValue("selectedUsers", e.target.value)}
+              isLoading={isLoading}
               disabled={isLoading}
             />
           ) : null}

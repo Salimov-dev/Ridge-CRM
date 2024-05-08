@@ -20,6 +20,7 @@ interface MultiSelectFieldProps {
   label: string;
   disabled?: boolean;
   isItemValueId?: boolean;
+  isLoading?: boolean;
   minWidth?: string;
 }
 
@@ -28,11 +29,25 @@ interface IItem {
   name: string | null;
 }
 
-const StyledSelect = styled(Select)(() => ({
+interface StyledSelectProps {
+  selection: string[];
+}
+
+const StyledCheckbox = styled(Checkbox)(() => ({
+  color: "white !important"
+}));
+
+const StyledSelect = styled(Select)(({ selection }: StyledSelectProps) => ({
   "&.Mui-focused": {
     "& .MuiOutlinedInput-notchedOutline": {
       borderColor: "green"
     }
+  },
+  "& .MuiOutlinedInput-notchedOutline": {
+    borderColor: selection?.length ? "green" : "gray"
+  },
+  "& .MuiInputLabel-root": {
+    color: selection?.length ? "white" : "gray"
   }
 }));
 
@@ -45,7 +60,8 @@ const MultiSelectField: FC<MultiSelectFieldProps> = ({
   label,
   disabled = false,
   isItemValueId = true,
-  minWidth = "100px"
+  minWidth = "100px",
+  isLoading = false
 }): JSX.Element => {
   const itemsWithId: boolean = checkArrayElements(itemsList);
   const selectedItemsArray: string[] = Array.isArray(selectedItems)
@@ -83,9 +99,11 @@ const MultiSelectField: FC<MultiSelectFieldProps> = ({
         value={selectedItemsArray}
         onChange={onChange}
         disabled={disabled}
+        selection={selectedItems}
         input={<OutlinedInput label={label} />}
         renderValue={(selected: string[] | unknown) => {
           const uniqueSelected = [...new Set(selected as string[])];
+
           const selectedItemsNames = uniqueSelected?.map((elementID) => {
             const item = itemsList?.find(
               (item: any) =>
@@ -93,17 +111,12 @@ const MultiSelectField: FC<MultiSelectFieldProps> = ({
             );
             return item ? item?.name : "Нет значения";
           });
-          return itemsWithId
+
+          const totalItems = itemsWithId
             ? selectedItemsNames?.join(", ")
             : uniqueSelected?.join(", ");
-        }}
-        sx={{
-          "& .MuiOutlinedInput-notchedOutline": {
-            borderColor: selectedItems?.length ? "green" : "gray"
-          },
-          "& .MuiInputLabel-root": {
-            color: selectedItems?.length ? "white" : "gray"
-          }
+
+          return !isLoading ? totalItems : "Загрузка...";
         }}
       >
         {itemsList?.map((item: any, index: number) =>
@@ -112,14 +125,13 @@ const MultiSelectField: FC<MultiSelectFieldProps> = ({
               key={`item-${item?._id}`}
               value={isItemValueId ? item?._id : item?.name}
             >
-              <Checkbox
+              <StyledCheckbox
                 key={`checkbox-${item?._id}`}
                 checked={
                   selectedItems?.indexOf(
                     isItemValueId ? item?._id : item?.name
                   ) > -1
                 }
-                sx={{ color: "white !important" }}
               />
               <ListItemText
                 key={`text-${item?._id}`}
@@ -130,10 +142,9 @@ const MultiSelectField: FC<MultiSelectFieldProps> = ({
             </MenuItem>
           ) : (
             <MenuItem key={`item-${index}`} value={item?.name}>
-              <Checkbox
+              <StyledCheckbox
                 key={`checkbox-${index}`}
                 checked={selectedItems?.indexOf(item.name) > -1}
-                sx={{ color: "white !important" }}
               />
               <ListItemText key={`text-${index}`} primary={<span>item</span>} />
             </MenuItem>

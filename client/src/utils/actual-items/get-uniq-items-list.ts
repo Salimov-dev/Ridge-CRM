@@ -32,7 +32,7 @@ export const getUniqueItemsList = ({
           _id: foundObject._id,
           name: foundObject.name
         }
-      : { _id: null, name: "Не указано" };
+      : { _id: null, name: "Нет значения" };
   });
 
   const sortedPositions = orderBy(actualStatusesArray, ["name"], ["asc"]);
