@@ -38,7 +38,7 @@ import { loadTasksList } from "@store/task/tasks.store";
 import { loadLastContactsList } from "@store/last-contact/last-contact.store";
 // presentation
 import { loadPresentationsList } from "@store/presentation/presentations.store";
-import { loadPresentationStatusList } from "@store/presentation/presentation-status.store";
+import { loadPresentationStatusList } from "@store/presentation/presentation-statuses.store";
 // avatar
 import { loadAvatarList } from "@store/avatar/avatar.store";
 import { loadUserRolesList } from "@store/user-params/user-role.store";

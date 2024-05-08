@@ -1,8 +1,8 @@
 import { Dispatch, SetStateAction } from "react";
-import { IPresentationDialogsState } from "@interfaces/presentation/presentation.interfaces";
+import { IDialogPagesState } from "@interfaces/state/dialog-pages-state.interface";
 
 interface IPresentationDialogsStateProps {
-  setState: Dispatch<SetStateAction<IPresentationDialogsState>>;
+  setState: Dispatch<SetStateAction<IDialogPagesState>>;
 }
 
 const presentationDialogsState = ({

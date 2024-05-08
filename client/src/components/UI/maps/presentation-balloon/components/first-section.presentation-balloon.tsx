@@ -6,7 +6,7 @@ import DividerStyled from "@components/common/divider/divider-styled";
 // store
 import { getObjectAddressById } from "@store/object/objects.store";
 import { getPresentationById } from "@store/presentation/presentations.store";
-import { getPresentationStatusNameById } from "@store/presentation/presentation-status.store";
+import { getPresentationStatusNameById } from "@store/presentation/presentation-statuses.store";
 
 interface FirstSectionPresentationBalloonProps {
   presentationId: string;

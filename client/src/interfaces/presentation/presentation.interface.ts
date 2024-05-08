@@ -2,7 +2,7 @@ export interface IPresentation {
   _id: string;
   userId: string;
   objectId: string;
-  status: string;
+  status: PresentationAgreementStatuses;
   result: string | null;
   cloudLink: string | null;
   curatorComment: string;
@@ -14,14 +14,9 @@ export interface IPresentation {
   longitude?: number;
 }
 
-export interface IPresentationDialogsState {
-  createPage: boolean;
-  objectPage: boolean;
-  updateObjectPage: boolean;
-  createPresentationPage: boolean;
-  updatePresentationPage: boolean;
-  videoPlayerPage: boolean;
+export interface IPresentationCreateInitState {
   objectId: string;
+  cloudLink: string | null;
 }
 
 export enum PresentationAgreementStatuses {

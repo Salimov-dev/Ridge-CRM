@@ -11,7 +11,7 @@ import { getActualUsersList } from "@utils/actual-items/get-actual-users-list";
 import { getUniqueItemsList } from "@utils/actual-items/get-uniq-items-list";
 // store
 import { getIsCurrentUserRoleManager } from "@store/user/users.store";
-import { getPresentationStatusesList } from "@store/presentation/presentation-status.store";
+import { getPresentationStatusesList } from "@store/presentation/presentation-statuses.store";
 import {
   getPresentationsList,
   getPresentationsLoadingStatus

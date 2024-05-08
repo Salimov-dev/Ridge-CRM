@@ -1,4 +1,4 @@
-import { IUser } from "../user/user.types";
+import { IUser } from "./user.interface";
 
 export interface IUserStoreInitialState {
   entities: IUser[];

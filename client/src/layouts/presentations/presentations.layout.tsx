@@ -2,7 +2,6 @@ import { useForm } from "react-hook-form";
 import React, { useState } from "react";
 // components
 import HeaderForLayout from "@components/common/headers/header-for-layout";
-import PageDialogs from "@common/dialog/page-dialogs";
 import { ContainerStyled } from "@common/container/container-styled";
 import PresentationsLayoutContent from "./components/presentations-layout-content";
 // initial-states
@@ -13,12 +12,14 @@ import setLocalStorageFiltersState from "@utils/local-storage/set-local-storage-
 import getLocalStorageFiltersState from "@utils/local-storage/get-local-storage-filters-state";
 // UI
 import ButtonsPresentationsLayout from "@UI/layout-buttons/buttons.presentations-layout";
-// types
-import { IPresentationDialogsState } from "@interfaces/presentation/presentation.interfaces";
+// interfaces
+import { IDialogPagesState } from "@interfaces/state/dialog-pages-state.interface";
+// dialogs
+import DialogPages from "@dialogs/dialog-pages";
 
 const PresentationsLayout = React.memo((): JSX.Element => {
   const [stateDialogPages, setStateDialogPages] =
-    useState<IPresentationDialogsState>(dialogePagesState);
+    useState<IDialogPagesState>(dialogePagesState);
 
   const { localStorageData, formatedState } = getLocalStorageFiltersState({
     title: "search-presentations-data"
@@ -54,7 +55,7 @@ const PresentationsLayout = React.memo((): JSX.Element => {
         setValue={setValue}
         setStateDialogPages={setStateDialogPages}
       />
-      <PageDialogs
+      <DialogPages
         state={stateDialogPages}
         setState={setStateDialogPages}
         videoTitle="Как пользоваться страницей с Презентациями"

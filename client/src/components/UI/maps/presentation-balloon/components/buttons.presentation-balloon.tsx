@@ -4,17 +4,17 @@ import { Dispatch, SetStateAction } from "react";
 // components
 import ButtonStyled from "@components/common/buttons/button-styled.button";
 // dialog-handlers
-import presentationDialogsState from "@dialog-handlers/presentation.dialog-handlers";
+import presentationDialogsState from "@dialogs/dialog-handlers/presentation.dialog-handlers";
 // hooks
 import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
 // interfaces
-import { IPresentationDialogsState } from "@interfaces/presentation/presentation.interfaces";
+import { IDialogPagesState } from "@interfaces/state/dialog-pages-state.interface";
 // store
 import { getPresentationById } from "@store/presentation/presentations.store";
 
 interface ButtonsPresentationBalloonProps {
   presentationId: string;
-  setState: Dispatch<SetStateAction<IPresentationDialogsState>>;
+  setState: Dispatch<SetStateAction<IDialogPagesState>>;
 }
 
 const ButtonsContainer = styled(Box)`

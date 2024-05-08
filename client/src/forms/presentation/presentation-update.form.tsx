@@ -1,3 +1,4 @@
+import { FC } from "react";
 import { useSelector } from "react-redux";
 import {
   FieldErrors,
@@ -5,7 +6,6 @@ import {
   UseFormSetValue,
   UseFormWatch
 } from "react-hook-form";
-import { FC } from "react";
 // components
 import TextFieldStyled from "@components/common/inputs/text-field-styled";
 import AutocompleteStyled from "@components/common/inputs/autocomplete-styled";
@@ -14,19 +14,22 @@ import { FieldsContainer, Form } from "@styled/styled-form";
 // utils
 import { capitalizeFirstLetter } from "@utils/data/capitalize-first-letter";
 // store
-import { getPresentationStatusesList } from "@store/presentation/presentation-status.store";
+import { getPresentationStatusesList } from "@store/presentation/presentation-statuses.store";
 // types
-import { IPresentation } from "@interfaces/presentation/presentation.interfaces";
+import { IPresentation } from "@interfaces/presentation/presentation.interface";
+import { IObject } from "@interfaces/object/object.interface";
 
-interface CuratorPresentationFormProps {
+interface PresentationUpdateFormProps {
   data: IPresentation;
+  objects: IObject[];
   register: UseFormRegister<IPresentation>;
   errors: FieldErrors<IPresentation>;
   watch: UseFormWatch<IPresentation>;
   setValue: UseFormSetValue<IPresentation>;
 }
 
-const CuratorPresentationForm: FC<CuratorPresentationFormProps> = ({
+const PresentationUpdateForm: FC<PresentationUpdateFormProps> = ({
+  objects,
   data,
   register,
   errors,
@@ -34,19 +37,42 @@ const CuratorPresentationForm: FC<CuratorPresentationFormProps> = ({
   watch
 }) => {
   const watchStatus: string = watch("status");
-  const presentationStatuses: string[] = useSelector(
-    getPresentationStatusesList()
-  );
+  const watchObjectId: string = watch("objectId");
+
+  const presentationStatuses = useSelector(getPresentationStatusesList());
 
   return (
     <Form>
       <FieldsContainer sx={{ flexDirection: "column" }}>
         <AutocompleteStyled
+          label="Объект"
+          register={register}
+          name="objectId"
+          options={objects}
+          value={data.objectId}
+          setValue={setValue}
+          watchItemId={watchObjectId}
+          errors={errors?.objectId}
+          disabled={true}
+          maxHeightListBox="8rem"
+          optionLabel={(option: IObject) =>
+            `${option?.city}, ${option?.address}`
+          }
+        />
+        <TextFieldStyled
+          register={register}
+          label="Ссылка на презентацию в облаке"
+          name="cloudLink"
+          value={data?.cloudLink}
+          errors={errors?.cloudLink}
+          inputProps={{ maxLength: 150 }}
+        />
+        <AutocompleteStyled
           label="Статус презентации *"
           register={register}
           name="status"
           options={presentationStatuses}
-          value={watchStatus ?? ""}
+          value={watchStatus}
           setValue={setValue}
           watchItemId={watchStatus}
           errors={errors?.status}
@@ -58,7 +84,7 @@ const CuratorPresentationForm: FC<CuratorPresentationFormProps> = ({
           name="curatorComment"
           rows="6"
           multiline={true}
-          value={capitalizeFirstLetter(data?.curatorComment)}
+          value={capitalizeFirstLetter(data?.curatorComment) ?? ""}
           errors={errors?.curatorComment}
           inputProps={{ maxLength: 500 }}
         />
@@ -67,4 +93,4 @@ const CuratorPresentationForm: FC<CuratorPresentationFormProps> = ({
   );
 };
 
-export default CuratorPresentationForm;
+export default PresentationUpdateForm;

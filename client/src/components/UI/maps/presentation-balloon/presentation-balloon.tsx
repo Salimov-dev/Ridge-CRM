@@ -5,7 +5,7 @@ import ButtonsPresentationBalloon from "./components/buttons.presentation-balloo
 import FirstSectionPresentationBalloon from "./components/first-section.presentation-balloon";
 import SecondSectionPresentationBalloon from "./components/second-section.presentation-balloon";
 // interfaces
-import { IPresentationDialogsState } from "@interfaces/presentation/presentation.interfaces";
+import { IDialogPagesState } from "@interfaces/state/dialog-pages-state.interface";
 
 const BaloonContainer = styled(Box)`
   width: 100%;
@@ -19,7 +19,7 @@ const BaloonContainer = styled(Box)`
 
 interface PresentationBalloonProps {
   presentationId: string;
-  setState: Dispatch<SetStateAction<IPresentationDialogsState>>;
+  setState: Dispatch<SetStateAction<IDialogPagesState>>;
 }
 
 const PresentationBalloon: FC<PresentationBalloonProps> = React.memo(

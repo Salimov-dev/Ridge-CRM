@@ -12,10 +12,10 @@ import { presentationsLayoutInitialState } from "@initial-states/layouts/present
 // utils
 import { getIsInputEmpty } from "@utils/input/get-is-input-empty";
 // interfaces
-import { IPresentationDialogsState } from "@interfaces/presentation/presentation.interfaces";
+import { IDialogPagesState } from "@interfaces/state/dialog-pages-state.interface";
 // dialog-handlers
-import presentationDialogsState from "@dialog-handlers/presentation.dialog-handlers";
-import videoPlayerDialogsState from "@dialog-handlers/video-player.dialog-handlers";
+import presentationDialogsState from "@dialogs/dialog-handlers/presentation.dialog-handlers";
+import videoTrainingDialogsState from "@dialogs/dialog-handlers/video-training.dialog-handlers";
 
 const Component = styled(Box)`
   display: flex;
@@ -28,7 +28,7 @@ type IData = Record<string, string | string[] | null>;
 interface ButtonsPresentationsLayoutProps {
   data: IData;
   reset: UseFormReset<IData>;
-  setState: Dispatch<SetStateAction<IPresentationDialogsState>>;
+  setState: Dispatch<SetStateAction<IDialogPagesState>>;
 }
 
 const ButtonsPresentationsLayout: FC<ButtonsPresentationsLayoutProps> = ({
@@ -45,7 +45,7 @@ const ButtonsPresentationsLayout: FC<ButtonsPresentationsLayoutProps> = ({
     setState
   });
 
-  const { handleOpenVideoPlayerPage } = videoPlayerDialogsState({ setState });
+  const { handleOpenVideoPlayerPage } = videoTrainingDialogsState({ setState });
 
   return (
     <Component>

@@ -11,12 +11,16 @@ import LoaderFullWindow from "@components/common/loader/loader-full-window";
 import SuccessCancelFormButtons from "@components/common/buttons/success-cancel-form-buttons";
 import DialogConfirm from "@components/common/dialog/dialog-confirm";
 import HeaderWithCloseButtonForPage from "@components/common/headers/header-with-close-button.page";
-import UpdatePresentationPageForms from "./components/update-presentation-page-forms.page";
 // schema
 import { presentationSchema } from "@schemas/presentation/presentation.schema";
 // hooks
 import useRemoveItem from "@hooks/item/use-remove-item";
+// forms
+import PresentationUpdateForm from "@forms/presentation/presentation-update.form";
+// interfaces
+import { IObject } from "@interfaces/object/object.interface";
 // store
+import { getObjectsList } from "@store/object/objects.store";
 import {
   getPresentationById,
   removePresentation,
@@ -29,13 +33,14 @@ interface UpdatePresentationProps {
 }
 
 const UpdatePresentation: FC<UpdatePresentationProps> = React.memo(
-  ({ presentationId, onClose }) => {
+  ({ presentationId, onClose }): JSX.Element => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
     const dispatch: any = useDispatch();
 
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const presentation = useSelector(getPresentationById(presentationId));
+    const objects: IObject[] = useSelector(getObjectsList());
 
     const {
       register,
@@ -85,11 +90,12 @@ const UpdatePresentation: FC<UpdatePresentationProps> = React.memo(
           color="white"
           onClose={onClose}
         />
-        <UpdatePresentationPageForms
+        <PresentationUpdateForm
           data={data}
-          watch={watch}
-          errors={errors}
+          objects={objects}
           register={register}
+          errors={errors}
+          watch={watch}
           setValue={setValue}
         />
         <SuccessCancelFormButtons

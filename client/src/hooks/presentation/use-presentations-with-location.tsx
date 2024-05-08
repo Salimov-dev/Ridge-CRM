@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 // interfaces
 import { IObject } from "@interfaces/object/object.interface";
-import { IPresentation } from "@interfaces/presentation/presentation.interfaces";
+import { IPresentation } from "@interfaces/presentation/presentation.interface";
 // store
 import { getObjectsList } from "@store/object/objects.store";
 

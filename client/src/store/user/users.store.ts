@@ -11,10 +11,10 @@ import localStorageService from "@services/local-storage/local.storage-service";
 // store
 import { loadUserLicensesList } from "@store/license/user-license.store";
 // types
-import { IUser } from "src/types/user/user.types";
-import { ILogin } from "src/types/auth/login.types";
-import { IRegister } from "src/types/auth/register.types";
-import { IPasswordUpdate } from "src/types/password/password-update.types";
+import { IUser } from "@interfaces/users/user.interface";
+import { ILogin } from "@interfaces/auth/login.interface";
+import { IRegister } from "@interfaces/auth/register.interface";
+import { IPasswordUpdate } from "@interfaces/password/password-update.interface";
 
 const socket = io(configFile.ioEndPoint);
 
@@ -353,7 +353,7 @@ export const getIsUserObserver = (userId: string) => (state: IStoreState) => {
 };
 
 export const getIsUserAuthorThisEntity =
-  (userId: string, entity: any) => (state: IStoreState) => {
+  (userId: string | null, entity: any) => (state: IStoreState) => {
     const user = state.users.entities?.find(
       (user: IUser) => user?._id === userId
     );

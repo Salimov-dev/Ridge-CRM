@@ -30,8 +30,28 @@ import Agreement from "@components/pages/agreement/agreement";
 import PersonalPolicy from "@components/pages/agreement/personal-policy";
 import UpdateUser from "@components/pages/user/update-user/update-user";
 import VideoPlayerPage from "@components/pages/video-training/video-training.page";
+import PresentationPageDialogs from "./dialog-pages/presentation.dialog-pages";
+import PresentationDialogPages from "./dialog-pages/presentation.dialog-pages";
+import { Dispatch, SetStateAction } from "react";
+import { IDialogPagesState } from "@interfaces/state/dialog-pages-state.interface";
+import VideoTrainingDialogPages from "./dialog-pages/video-training.dialog-pages";
+import { boolean } from "yup";
+import { IObject } from "@interfaces/object/object.interface";
+import { IUser } from "@interfaces/users/user.interface";
 
-const PageDialogs = ({
+interface DialogPagesProps {
+  state: IDialogPagesState;
+  setState: Dispatch<SetStateAction<IDialogPagesState>>;
+  objects?: IObject[];
+  users?: IUser[];
+  selectedObjects?: string[];
+  setRowSelection?: () => void;
+  videoTitle?: string;
+  videoSrc?: string;
+  isObjectPage?: boolean;
+}
+
+const DialogPages = ({
   state,
   setState,
   objects = [],
@@ -41,7 +61,7 @@ const PageDialogs = ({
   videoTitle = "",
   videoSrc = "",
   isObjectPage = false
-}) => {
+}: DialogPagesProps) => {
   const {
     handleCloseCreateObjectPage,
     handleOpenUpdateObjectPage,
@@ -77,6 +97,18 @@ const PageDialogs = ({
 
   return (
     <>
+      <PresentationDialogPages
+        state={state}
+        setState={setState}
+        isObjectPage={isObjectPage}
+      />
+      <VideoTrainingDialogPages
+        state={state}
+        setState={setState}
+        videoTitle={videoTitle}
+        videoSrc={videoSrc}
+      />
+
       <DialogStyled
         component={
           <ObjectPage
@@ -106,29 +138,7 @@ const PageDialogs = ({
         onClose={handleCloseUpdateObjectPage}
         open={state.updatePage}
       />
-      <DialogStyled
-        component={
-          <CreatePresentation
-            onClose={handleCloseCreatePresentationPage}
-            objectId={state.objectId}
-            isObjectPage={isObjectPage}
-          />
-        }
-        onClose={handleCloseCreatePresentationPage}
-        maxWidth="sm"
-        open={state.createPresentationPage}
-      />
-      <DialogStyled
-        component={
-          <UpdatePresentation
-            onClose={handleCloseUpdatePresentationPage}
-            presentationId={state.presentationId}
-          />
-        }
-        onClose={handleCloseUpdatePresentationPage}
-        maxWidth="sm"
-        open={state.updatePresentationPage}
-      />
+
       <DialogStyled
         onClose={handleCloseTransferObjectPage}
         open={state.transferObjectPage}
@@ -356,22 +366,8 @@ const PageDialogs = ({
         maxWidth="xl"
         open={state.personalPolicyPage}
       />
-
-      {/* Окно для диалога с видео */}
-      <DialogStyled
-        component={
-          <VideoPlayerPage
-            onClose={handleCloseVideoPlayerPage}
-            videoTitle={videoTitle}
-            videoSrc={videoSrc}
-          />
-        }
-        onClose={handleCloseVideoPlayerPage}
-        maxWidth="lg"
-        open={state.videoPlayerPage}
-      />
     </>
   );
 };
 
-export default PageDialogs;
+export default DialogPages;

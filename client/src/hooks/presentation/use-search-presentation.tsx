@@ -4,7 +4,7 @@ import { orderBy } from "lodash";
 import { useMemo } from "react";
 import { useSelector } from "react-redux";
 // interfaces
-import { IPresentation } from "@interfaces/presentation/presentation.interfaces";
+import { IPresentation } from "@interfaces/presentation/presentation.interface";
 import { IObject } from "@interfaces/object/object.interface";
 // store
 import { getObjectsList } from "@store/object/objects.store";

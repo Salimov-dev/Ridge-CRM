@@ -27,7 +27,10 @@ const Presentation = sequelize.define(
       },
       defaultValue: null
     },
-    status: { type: DataTypes.STRING },
+    status: {
+      type: DataTypes.STRING,
+      defaultValue: "654wqeg3469y9dfsd82dd334"
+    },
     result: { type: DataTypes.STRING },
     cloudLink: { type: DataTypes.STRING },
     curatorComment: { type: DataTypes.STRING },

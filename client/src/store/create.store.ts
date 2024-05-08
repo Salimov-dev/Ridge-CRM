@@ -30,7 +30,7 @@ import tasksReducer from "./task/tasks.store";
 import lastContactReducer from "./last-contact/last-contact.store";
 // presentations
 import presentationsReducer from "./presentation/presentations.store";
-import presentationStatusReducer from "./presentation/presentation-status.store";
+import presentationStatusesReducer from "./presentation/presentation-statuses.store";
 // statictic
 import staticticPositionsReducer from "./statictics/statictics-positions.store";
 // avatar
@@ -75,7 +75,7 @@ const rootReducer = combineReducers({
   currrentPath: currrentPathReducer,
   // presentations
   presentations: presentationsReducer,
-  presentationStatus: presentationStatusReducer,
+  presentationStatus: presentationStatusesReducer,
   //statictic
   staticticPositions: staticticPositionsReducer,
   // avatar

@@ -1,7 +1,7 @@
 import { createContext, useState, useMemo } from "react";
 import { createTheme } from "@mui/material/styles";
 import { Theme as MuiTheme } from "@mui/material/styles";
-import { ITheme, TokensFunction } from "src/types/theme/theme.types";
+import { ITheme, TokensFunction } from "@interfaces/theme/theme.interface";
 
 declare module "@emotion/react" {
   export interface Theme extends MuiTheme {}

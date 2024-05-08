@@ -13,10 +13,8 @@ import { presentationsColumns } from "@columns/presentations.columns";
 import useSearchPresentation from "@hooks/presentation/use-search-presentation";
 import usePresentationsWithLocation from "@hooks/presentation/use-presentations-with-location";
 // interfaces
-import {
-  IPresentation,
-  IPresentationDialogsState
-} from "@interfaces/presentation/presentation.interfaces";
+import { IPresentation } from "@interfaces/presentation/presentation.interface";
+import { IDialogPagesState } from "@interfaces/state/dialog-pages-state.interface";
 // store
 import {
   getPresentationsList,
@@ -33,7 +31,7 @@ interface IPresentationsLayoutContent {
   data: IData;
   register: UseFormRegister<IData>;
   setValue: UseFormSetValue<IData>;
-  setStateDialogPages: Dispatch<SetStateAction<IPresentationDialogsState>>;
+  setStateDialogPages: Dispatch<SetStateAction<IDialogPagesState>>;
 }
 
 const PresentationsLayoutContent: FC<IPresentationsLayoutContent> = ({

@@ -16,18 +16,16 @@ import CloudOffIcon from "@mui/icons-material/CloudOff";
 // utils
 import { FormatDate } from "@utils/date/format-date";
 // store
-import { getPresentationStatusNameById } from "@store/presentation/presentation-status.store";
+import { getPresentationStatusNameById } from "@store/presentation/presentation-statuses.store";
 import { getObjectById } from "@store/object/objects.store";
 // interfaces
-import {
-  IPresentationDialogsState,
-  PresentationAgreementStatuses
-} from "@interfaces/presentation/presentation.interfaces";
+import { PresentationAgreementStatuses } from "@interfaces/presentation/presentation.interface";
+import { IDialogPagesState } from "@interfaces/state/dialog-pages-state.interface";
 
 interface PresentationsColumnsProps {
   isCurrentUserRoleManager: boolean;
   isCurrentUserRoleCurator: boolean;
-  setState: Dispatch<SetStateAction<IPresentationDialogsState>>;
+  setState: Dispatch<SetStateAction<IDialogPagesState>>;
 }
 
 export const presentationsColumns = ({
@@ -46,6 +44,7 @@ export const presentationsColumns = ({
       {
         accessorKey: "created_at",
         header: "Дата",
+        enableSorting: false,
         cell: (info: { getValue: () => any }) => {
           const date = info.getValue();
           return <AlignCenter>{FormatDate(date)}</AlignCenter>;
@@ -54,6 +53,7 @@ export const presentationsColumns = ({
       {
         accessorKey: "objectId",
         header: "Объект презентации",
+        enableSorting: false,
         cell: (info: { getValue: () => any }) => {
           const objectId = info.getValue();
           const object = useSelector(getObjectById(objectId));
@@ -80,6 +80,7 @@ export const presentationsColumns = ({
       {
         accessorKey: "cloudLink",
         header: "Облако",
+        enableSorting: false,
         cell: (info: { getValue: () => any }) => {
           const cloudLink = info.getValue();
 
@@ -113,6 +114,7 @@ export const presentationsColumns = ({
   const considerationColumn = {
     id: "considerationColumn",
     header: "Согласование",
+    enableSorting: false,
     columns: [
       {
         accessorKey: "status",
@@ -157,6 +159,7 @@ export const presentationsColumns = ({
       {
         accessorKey: "curatorComment",
         header: "Комментарий Куратора",
+        enableSorting: false,
         cell: (info: { getValue: () => any }) => {
           const curatorComment = info.getValue();
           return curatorComment ? (
@@ -176,6 +179,7 @@ export const presentationsColumns = ({
       {
         accessorKey: "_id",
         header: "Презентация",
+        enableSorting: false,
         cell: (info: { getValue: () => any }) => {
           const presentationId = info.getValue();
 
@@ -214,6 +218,7 @@ export const presentationsColumns = ({
       {
         accessorKey: "userId",
         header: "Фамилия и Имя",
+        enableSorting: false,
         cell: (info: { getValue: () => any }) => {
           const userId = info.getValue();
           const { getAvatarSrc, isLoading } = useGetUserAvatar(userId);

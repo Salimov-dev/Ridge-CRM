@@ -6,8 +6,8 @@ import { useSelector } from "react-redux";
 // hooks
 import useWindowWidth from "@hooks/window-width/use-window-width";
 import { getIsLoggedIn } from "@store/user/users.store";
-// types
-import { ButtonTypes } from "src/types/button/button.types";
+// interfaces
+import { ButtonTypes } from "@interfaces/button/button.interface";
 
 interface ButtonStyledProps {
   title: string;

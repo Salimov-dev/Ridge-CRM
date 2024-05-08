@@ -4,7 +4,7 @@ import { useTheme } from "@emotion/react";
 import { Box, TextField, styled, FormHelperText } from "@mui/material";
 import { makeDigitSeparator } from "@utils/data/make-digit-separator";
 import { UseFormRegister } from "react-hook-form";
-import { ITheme } from "src/types/theme/theme.types";
+import { ITheme } from "@interfaces/theme/theme.interface";
 
 interface TextFieldStyledProps {
   register: UseFormRegister<any>;
