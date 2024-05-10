@@ -4,7 +4,7 @@ import { Dispatch, SetStateAction } from "react";
 // components
 import ButtonStyled from "@components/common/buttons/button-styled.button";
 // dialog-handlers
-import presentationDialogsState from "@dialogs/dialog-handlers/presentation.dialog-handlers";
+import presentationDialogsState from "@dialogs/dialog-handlers/presentations.dialog-handlers";
 // hooks
 import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
 // interfaces

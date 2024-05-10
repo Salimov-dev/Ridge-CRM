@@ -14,14 +14,8 @@ import { getIsInputEmpty } from "@utils/input/get-is-input-empty";
 // interfaces
 import { IDialogPagesState } from "@interfaces/state/dialog-pages-state.interface";
 // dialog-handlers
-import presentationDialogsState from "@dialogs/dialog-handlers/presentation.dialog-handlers";
 import videoTrainingDialogsState from "@dialogs/dialog-handlers/video-training.dialog-handlers";
-
-const Component = styled(Box)`
-  display: flex;
-  gap: 4px;
-  margin-bottom: 4px;
-`;
+import presentationsDialogsState from "@dialogs/dialog-handlers/presentations.dialog-handlers";
 
 type IData = Record<string, string | string[] | null>;
 
@@ -30,6 +24,12 @@ interface ButtonsPresentationsLayoutProps {
   reset: UseFormReset<IData>;
   setState: Dispatch<SetStateAction<IDialogPagesState>>;
 }
+
+const Component = styled(Box)`
+  display: flex;
+  gap: 4px;
+  margin-bottom: 4px;
+`;
 
 const ButtonsPresentationsLayout: FC<ButtonsPresentationsLayoutProps> = ({
   data,
@@ -41,7 +41,7 @@ const ButtonsPresentationsLayout: FC<ButtonsPresentationsLayoutProps> = ({
     initialState: presentationsLayoutInitialState
   });
 
-  const { handleOpenCreatePresentationPage } = presentationDialogsState({
+  const { handleOpenCreatePresentationPage } = presentationsDialogsState({
     setState
   });
 

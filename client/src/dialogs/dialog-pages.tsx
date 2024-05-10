@@ -30,14 +30,16 @@ import Agreement from "@components/pages/agreement/agreement";
 import PersonalPolicy from "@components/pages/agreement/personal-policy";
 import UpdateUser from "@components/pages/user/update-user/update-user";
 import VideoPlayerPage from "@components/pages/video-training/video-training.page";
-import PresentationPageDialogs from "./dialog-pages/presentation.dialog-pages";
-import PresentationDialogPages from "./dialog-pages/presentation.dialog-pages";
+import PresentationPageDialogs from "./dialog-pages/presentations.dialog-pages";
+import PresentationDialogPages from "./dialog-pages/presentations.dialog-pages";
 import { Dispatch, SetStateAction } from "react";
 import { IDialogPagesState } from "@interfaces/state/dialog-pages-state.interface";
 import VideoTrainingDialogPages from "./dialog-pages/video-training.dialog-pages";
-import { boolean } from "yup";
 import { IObject } from "@interfaces/object/object.interface";
 import { IUser } from "@interfaces/users/user.interface";
+import PresentationsDialogPages from "./dialog-pages/presentations.dialog-pages";
+import MeetingsDialogPages from "./dialog-pages/meetings.dialog-pages";
+import ObjectsDialogPages from "./dialog-pages/objects.dialog-pages";
 
 interface DialogPagesProps {
   state: IDialogPagesState;
@@ -97,11 +99,14 @@ const DialogPages = ({
 
   return (
     <>
-      <PresentationDialogPages
+      <ObjectsDialogPages
         state={state}
         setState={setState}
-        isObjectPage={isObjectPage}
+        selectedObjects={selectedObjects}
+        setRowSelection={setRowSelection}
       />
+      <MeetingsDialogPages state={state} setState={setState} />
+      <PresentationsDialogPages state={state} setState={setState} />
       <VideoTrainingDialogPages
         state={state}
         setState={setState}
@@ -109,7 +114,7 @@ const DialogPages = ({
         videoSrc={videoSrc}
       />
 
-      <DialogStyled
+      {/* <DialogStyled
         component={
           <ObjectPage
             onClose={handleCloseObjectPage}
@@ -151,7 +156,7 @@ const DialogPages = ({
             setRowSelection={setRowSelection}
           />
         }
-      />
+      /> */}
       <DialogStyled
         component={
           <CreateMyTask
@@ -234,7 +239,7 @@ const DialogPages = ({
         open={state.updateLastContactPage}
         maxWidth="sm"
       />
-      <DialogStyled
+      {/* <DialogStyled
         component={
           <CreateMeeting
             onClose={handleCloseCreateMeetingPage}
@@ -258,7 +263,7 @@ const DialogPages = ({
         onClose={handleCloseUpdateMeetingPage}
         maxWidth="md"
         open={state.updateMeetingPage}
-      />
+      /> */}
       <DialogStyled
         component={<UpdateAvatar onClose={handleCloseUpdateUserAvatarPage} />}
         maxWidth="sm"

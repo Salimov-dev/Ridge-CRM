@@ -1,6 +1,7 @@
 export const dialogePagesState = {
   createPage: false,
   objectPage: false,
+  updatePage: false,
   updateObjectPage: false,
   createPresentationPage: false,
   updatePresentationPage: false,
@@ -17,5 +18,6 @@ export const dialogePagesState = {
   updateMeetingPage: false,
   taskId: "",
   lastContactId: "",
-  meetingId: ""
+  meetingId: "",
+  transferObjectPage: false
 };

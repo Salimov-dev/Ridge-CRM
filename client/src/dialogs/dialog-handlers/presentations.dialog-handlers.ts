@@ -5,7 +5,7 @@ interface IPresentationDialogsStateProps {
   setState: Dispatch<SetStateAction<IDialogPagesState>>;
 }
 
-const presentationDialogsState = ({
+const presentationsDialogsState = ({
   setState
 }: IPresentationDialogsStateProps) => {
   const handleOpenCreatePresentationPage = (): void => {
@@ -44,4 +44,4 @@ const presentationDialogsState = ({
   };
 };
 
-export default presentationDialogsState;
+export default presentationsDialogsState;

@@ -1,61 +1,32 @@
 // libraries
-import dayjs from "dayjs";
 import { useForm } from "react-hook-form";
-import { useSelector } from "react-redux";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 // components
-import BasicTable from "@components/common/table/basic-table";
 import HeaderForLayout from "@components/common/headers/header-for-layout";
-import ItemsOnMap from "@components/common/map/items-on-map/items-on-map";
-import PageDialogs from "@components/common/dialog/page-dialogs";
 import { ContainerStyled } from "@components/common/container/container-styled";
-import MeetingsLayoutFiltersPanel from "@components/UI/filters-panels/meetings-layout.filters-panel";
 import ButtonsMeetingsLayout from "../../components/UI/layout-buttons/buttons.meetings-layout";
-import MeetingBalloon from "@components/UI/maps/meeting-balloon";
+import MeetingsLayoutContent from "./components/content.meetings-layout";
+// dialogs
+import DialogPages from "@dialogs/dialog-pages";
 // initial-states
 import { meetingsLayoutInitialState } from "@initial-states/layouts/meetings-layout.initial-state";
-// hooks
-import useSearchMeeting from "@hooks/meeting/use-search-meeting";
-// columns
-import { meetingsColumns } from "@columns/meetings.columns";
+import { dialogePagesState } from "@initial-states/dialog-pages-state/dialog-pages.state";
+// interfaces
+import { IDialogPagesState } from "@interfaces/state/dialog-pages-state.interface";
 // utils
-import sortingByDateAndTime from "@utils/sort/sorting-by-date-and-time";
-// store
-import { getIsCurrentUserRoleManager } from "@store/user/users.store";
-import {
-  getMeetingById,
-  getMeetingLoadingStatus,
-  getMeetingsList
-} from "@store/meeting/meetings.store";
+import getLocalStorageFiltersState from "@utils/local-storage/get-local-storage-filters-state";
+import setLocalStorageFiltersState from "@utils/local-storage/set-local-storage-filters-state";
 
 const MeetingsLayout = React.memo(() => {
-  const [selectedBalloon, setSelectedBalloon] = useState([]);
-  const [stateDialogPages, setStateDialogPages] = useState({
-    objectPage: false,
-    updatePage: false,
-    createMeetingPage: false,
-    updateMeetingPage: false,
-    objectId: null,
-    meetingId: "",
-    videoPlayerPage: false
+  const [stateDialogPages, setStateDialogPages] =
+    useState<IDialogPagesState>(dialogePagesState);
+
+  const { localStorageData, formatedState } = getLocalStorageFiltersState({
+    title: "search-meetings-data"
   });
 
-  const localStorageState = JSON.parse(
-    localStorage.getItem("search-meetings-data")
-  );
-
-  const formatedState = {
-    ...localStorageState,
-    startDate: localStorageState?.startDate
-      ? dayjs(localStorageState?.startDate)
-      : null,
-    endDate: localStorageState?.endDate
-      ? dayjs(localStorageState?.endDate)
-      : null
-  };
-
   const { register, watch, setValue, reset } = useForm({
-    defaultValues: !!localStorageState
+    defaultValues: localStorageData
       ? formatedState
       : meetingsLayoutInitialState,
     mode: "onChange"
@@ -63,32 +34,10 @@ const MeetingsLayout = React.memo(() => {
 
   const data = watch();
 
-  const meetingsList = useSelector(getMeetingsList());
-  const selectedMeeting = useSelector(getMeetingById(selectedBalloon));
-  const searchedMeetings = useSearchMeeting(meetingsList, data);
-  const sortedMeetings = sortingByDateAndTime(searchedMeetings);
-
-  const isCurrentUserRoleManager = useSelector(getIsCurrentUserRoleManager());
-  const isLoading = useSelector(getMeetingLoadingStatus());
-
-  const handleChangeSelectedBalloon = (meetingId) => {
-    setSelectedBalloon(meetingId);
-  };
-
-  useEffect(() => {
-    localStorage.setItem("search-meetings-data", JSON.stringify(data));
-  }, [data]);
-
-  useEffect(() => {
-    const hasLocalStorageData = localStorage.getItem("search-meetings-data");
-
-    if (hasLocalStorageData?.length) {
-      localStorage.setItem(
-        "search-meetings-data",
-        JSON.stringify(meetingsLayoutInitialState)
-      );
-    }
-  }, []);
+  setLocalStorageFiltersState({
+    title: "search-meetings-data",
+    data: data
+  });
 
   return (
     <ContainerStyled>
@@ -98,31 +47,13 @@ const MeetingsLayout = React.memo(() => {
         reset={reset}
         setState={setStateDialogPages}
       />
-      <ItemsOnMap
-        items={searchedMeetings}
-        onClick={handleChangeSelectedBalloon}
-        isLoading={isLoading}
-        baloon={
-          <MeetingBalloon
-            meeting={selectedMeeting}
-            setState={setStateDialogPages}
-          />
-        }
-      />
-      <MeetingsLayoutFiltersPanel
+      <MeetingsLayoutContent
         data={data}
         register={register}
         setValue={setValue}
+        setStateDialogPages={setStateDialogPages}
       />
-      <BasicTable
-        items={sortedMeetings}
-        itemsColumns={meetingsColumns(
-          setStateDialogPages,
-          isCurrentUserRoleManager
-        )}
-        isLoading={isLoading}
-      />
-      <PageDialogs
+      <DialogPages
         state={stateDialogPages}
         setState={setStateDialogPages}
         videoTitle="Как пользоваться страницей со Встречами"

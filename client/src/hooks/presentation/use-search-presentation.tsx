@@ -8,18 +8,16 @@ import { IPresentation } from "@interfaces/presentation/presentation.interface";
 import { IObject } from "@interfaces/object/object.interface";
 // store
 import { getObjectsList } from "@store/object/objects.store";
+import { getPresentationsList } from "@store/presentation/presentations.store";
 
 type IData = Record<string, string | string[] | null>;
 
 interface IUseSearchPresentation {
-  presentations: IPresentation[];
   data: IData;
 }
 
-const useSearchPresentation = ({
-  presentations,
-  data
-}: IUseSearchPresentation) => {
+const useSearchPresentation = ({ data }: IUseSearchPresentation) => {
+  const presentations: IPresentation[] = useSelector(getPresentationsList());
   const objects: IObject[] = useSelector(getObjectsList());
 
   const searchedPresentations = useMemo<IPresentation[]>(() => {
@@ -84,17 +82,17 @@ const useSearchPresentation = ({
     const endDate = dayjs(data.endDate as string).endOf("day");
 
     if (data.startDate && data.endDate) {
-      array = array?.filter((obj) => {
-        const objectCreatedDate = dayjs(obj.created_at);
+      array = array?.filter((pres) => {
+        const presCreatedDate = dayjs(pres.created_at);
         return (
-          objectCreatedDate.isAfter(startDate) &&
-          objectCreatedDate.isBefore(endDate)
+          presCreatedDate.isAfter(startDate) &&
+          presCreatedDate.isBefore(endDate)
         );
       });
     } else if (data.startDate) {
-      array = array?.filter((obj) => dayjs(obj.created_at) >= startDate);
+      array = array?.filter((pres) => dayjs(pres.created_at) >= startDate);
     } else if (data.endDate) {
-      array = array?.filter((obj) => dayjs(obj?.created_at) <= endDate);
+      array = array?.filter((pres) => dayjs(pres?.created_at) <= endDate);
     }
 
     return array;

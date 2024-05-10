@@ -1,84 +1,106 @@
 import "dayjs/locale/ru";
-import { useMemo } from "react";
 import dayjs from "dayjs";
-import getStartWeekDate from "@utils/date/get-start-week-date";
-import getEndWeekDate from "@utils/date/get-end-week-date";
+import { useMemo } from "react";
+import { useSelector } from "react-redux";
+// interfaces
+import { IMeeting } from "@interfaces/meeting/meeting.interface";
+// store
+import { getMeetingsList } from "@store/meeting/meetings.store";
+// utils
+import sortingByDateAndTime from "@utils/sort/sorting-by-date-and-time";
 
-const useSearchMeeting = (meetings, data) => {
-  const startWeek = getStartWeekDate();
-  const endWeek = getEndWeekDate();
+type IData = Record<string, string | string[] | null>;
+
+interface IUseSearchMeeting {
+  data: IData;
+}
+
+function isSearchQuery(searchQuery: string | string[]): searchQuery is string {
+  if (typeof searchQuery === "string") {
+    return true;
+  } else if (Array.isArray(searchQuery)) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+const useSearchMeeting = ({ data }: IUseSearchMeeting) => {
+  const meetings: IMeeting[] = useSelector(getMeetingsList());
 
   const searchedMeetings = useMemo(() => {
     let array = meetings;
 
+    // НАЙТИ ПО РЕЗУЛЬТАТУ ВСТРЕЧИ
     if (data?.result) {
-      array = array?.filter((task) =>
-        task?.result?.toLowerCase().includes(data?.result?.toLowerCase())
-      );
+      const searchQuery = data.result;
+      if (isSearchQuery(searchQuery)) {
+        return (array = array?.filter((task) =>
+          task?.result?.toLowerCase().includes(searchQuery.toLowerCase())
+        ));
+      } else {
+        return "";
+      }
     }
 
+    // ФИЛЬТРАЦИЯ ПО СТАТУСУ ВСТРЕЧИ
     if (data.selectedStatuses?.length) {
-      array = array?.filter((obj) =>
-        data.selectedStatuses.includes(obj.status)
-      );
+      const searchQuery = data.selectedStatuses;
+      if (isSearchQuery(searchQuery)) {
+        return (array = array?.filter((obj) =>
+          searchQuery.includes(obj.status)
+        ));
+      } else {
+        return [];
+      }
     }
 
+    // ФИЛЬТРАЦИЯ ПО МЕНЕДЖЕРУ, СОЗДАВШЕГО ВСТРЕЧУ
     if (data.selectedUsers?.length) {
-      array = array?.filter((obj) => data.selectedUsers.includes(obj.userId));
+      const searchQuery = data.selectedUsers;
+      if (isSearchQuery(searchQuery)) {
+        return (array = array?.filter((obj) =>
+          searchQuery.includes(obj.userId)
+        ));
+      } else {
+        return [];
+      }
     }
 
+    // ФИЛЬТРАЦИЯ ПО ТИПУ ВСТРЕЧИ
     if (data.selectedTypes?.length) {
-      array = array?.filter((obj) => data.selectedTypes.includes(obj.type));
+      const searchQuery = data.selectedTypes;
+      if (isSearchQuery(searchQuery)) {
+        return (array = array?.filter((obj) => searchQuery.includes(obj.type)));
+      } else {
+        return [];
+      }
     }
+
+    // ФИЛЬТРАЦИЯ ПО ДАТЕ СОЗДАНИЯ ВСТРЕЧИ
+    const startDate = dayjs(data.startDate as string);
+    const endDate = dayjs(data.endDate as string).endOf("day");
 
     if (data.startDate && data.endDate) {
-      const startDate = dayjs(data.startDate);
-      const endDate = dayjs(data.endDate).endOf("day");
-
-      array = array?.filter((item) => {
-        const itemDate = dayjs(item.date);
-        return itemDate.isBetween(startDate, endDate, null, "[]");
+      array = array?.filter((meet) => {
+        const meetCreatedDate = dayjs(meet.date);
+        return (
+          meetCreatedDate.isAfter(startDate) &&
+          meetCreatedDate.isBefore(endDate)
+        );
       });
     } else if (data.startDate) {
-      const selectedDate = dayjs(data.startDate);
-      array = array?.filter((item) => dayjs(item.date) >= selectedDate);
+      array = array?.filter((meet) => dayjs(meet.date) >= startDate);
     } else if (data.endDate) {
-      const endDate = dayjs(data.endDate).endOf("day");
-      array = array?.filter((item) => dayjs(item?.date) <= endDate);
-    }
-
-    // Все актуальные
-    if (data.meetingsActivity === "534gfsdtgfd3245tgdgfd") {
-      array = array?.filter((meet) => meet?.isDone !== true);
-    }
-
-    // Актуальные на этой неделе
-    if (data.meetingsActivity === "8734qfdsggb2534tgfdfs") {
-      array = array?.filter(
-        (meet) =>
-          dayjs(meet.date).isBetween(startWeek, endWeek) &&
-          meet?.isDone !== true
-      );
-    }
-
-    // Проведенные на этой неделе
-    if (data.meetingsActivity === "987645erasg1243tgfdsg3") {
-      array = array?.filter(
-        (meet) =>
-          meet?.isDone === true &&
-          dayjs(meet.date).isBetween(startWeek, endWeek)
-      );
-    }
-
-    // Проведенные за всё время
-    if (data.meetingsActivity === "87634gsdf23gfds3425r43") {
-      array = array?.filter((meet) => meet?.isDone === true);
+      array = array?.filter((meet) => dayjs(meet?.date) <= endDate);
     }
 
     return array;
   }, [data, meetings]);
 
-  return searchedMeetings;
+  const sortedMeetings = sortingByDateAndTime(searchedMeetings);
+
+  return { searchedMeetings: sortedMeetings };
 };
 
 export default useSearchMeeting;

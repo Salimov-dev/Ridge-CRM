@@ -11,6 +11,7 @@ import CalendarActionIcon from "./action-icon.calendar-layout";
 import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
 // store
 import { getCurrentUserId, getIsUserCurator } from "@store/user/users.store";
+import meetingsDialogsState from "@dialogs/dialog-handlers/meetings.dialog-handlers";
 
 const ActionsContainer = styled(Box)`
   width: 100%;
@@ -30,10 +31,14 @@ const ActionsIconsCalendarLayout = ({
   const currentUserId = useSelector(getCurrentUserId());
   const isCurator = useSelector(getIsUserCurator(currentUserId));
 
+  const { handleOpenCreateMeetingPage } = meetingsDialogsState({
+    setState
+  });
+
   const {
     handleOpenCreateManagerTaskPage,
-    handleOpenCreateMyTaskPage,
-    handleOpenCreateMeetingPage
+    handleOpenCreateMyTaskPage
+    // handleOpenCreateMeetingPage
   } = useDialogHandlers(setState);
 
   return (

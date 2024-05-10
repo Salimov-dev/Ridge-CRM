@@ -3,7 +3,7 @@ import React, { useState } from "react";
 // components
 import HeaderForLayout from "@components/common/headers/header-for-layout";
 import { ContainerStyled } from "@common/container/container-styled";
-import PresentationsLayoutContent from "./components/presentations-layout-content";
+import PresentationsLayoutContent from "./components/content.presentations-layout";
 // initial-states
 import { presentationsLayoutInitialState } from "@initial-states/layouts/presentations-layout.initial-state";
 import { dialogePagesState } from "@initial-states/dialog-pages-state/dialog-pages.state";

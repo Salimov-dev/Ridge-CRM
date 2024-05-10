@@ -13,13 +13,9 @@ import { presentationsColumns } from "@columns/presentations.columns";
 import useSearchPresentation from "@hooks/presentation/use-search-presentation";
 import usePresentationsWithLocation from "@hooks/presentation/use-presentations-with-location";
 // interfaces
-import { IPresentation } from "@interfaces/presentation/presentation.interface";
 import { IDialogPagesState } from "@interfaces/state/dialog-pages-state.interface";
 // store
-import {
-  getPresentationsList,
-  getPresentationsLoadingStatus
-} from "@store/presentation/presentations.store";
+import { getPresentationsLoadingStatus } from "@store/presentation/presentations.store";
 import {
   getIsCurrentUserRoleCurator,
   getIsCurrentUserRoleManager
@@ -40,33 +36,22 @@ const PresentationsLayoutContent: FC<IPresentationsLayoutContent> = ({
   setValue,
   setStateDialogPages
 }): JSX.Element => {
-  const [selectedPresentationIdBalloon, setSelectedPresentationIdBalloon] =
-    useState<string>("");
-
-  const presentationsList: IPresentation[] = useSelector(
-    getPresentationsList()
-  );
+  const [selectedPresentationId, setSelectedPresentationId] = useState("");
 
   const { searchedPresentations } = useSearchPresentation({
-    presentations: presentationsList,
-    data: data
+    data
   });
 
   const { presentationsWithLocation } = usePresentationsWithLocation({
     presentations: searchedPresentations
   });
 
-  const isLoading: boolean = useSelector(getPresentationsLoadingStatus());
-
-  const isCurrentUserRoleManager: boolean = useSelector(
-    getIsCurrentUserRoleManager()
-  );
-  const isCurrentUserRoleCurator: boolean = useSelector(
-    getIsCurrentUserRoleCurator()
-  );
+  const isLoading = useSelector(getPresentationsLoadingStatus());
+  const isCurrentUserRoleManager = useSelector(getIsCurrentUserRoleManager());
+  const isCurrentUserRoleCurator = useSelector(getIsCurrentUserRoleCurator());
 
   const handleSelectPresentationBalloon = (presentationId: string): void => {
-    setSelectedPresentationIdBalloon(presentationId);
+    setSelectedPresentationId(presentationId);
   };
 
   return (
@@ -77,7 +62,7 @@ const PresentationsLayoutContent: FC<IPresentationsLayoutContent> = ({
         isLoading={isLoading}
         baloon={
           <PresentationBalloon
-            presentationId={selectedPresentationIdBalloon}
+            presentationId={selectedPresentationId}
             setState={setStateDialogPages}
           />
         }

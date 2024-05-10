@@ -81,16 +81,6 @@ const MeetingsLayoutFiltersPanel = React.memo(
             onChange={(value) => setValue("endDate", value)}
             disabled={isLoading ? true : false}
           />
-          <SearchSelectField
-            register={register}
-            name="meetingsActivity"
-            labelId="meetingsActivity"
-            label="Выбор по активности"
-            itemsList={meetingDoneTypes}
-            value={data.meetingsActivity}
-            disabled={isLoading ? true : false}
-            isSelect={Boolean(data?.meetingsActivity?.length)}
-          />
           {!isCurrentUserRoleManager ? (
             <MultiSelectField
               name="users"

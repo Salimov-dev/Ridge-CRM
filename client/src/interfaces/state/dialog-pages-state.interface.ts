@@ -1,5 +1,6 @@
 export interface IDialogPagesState {
   createPage: boolean;
+  updatePage: boolean;
   objectPage: boolean;
   updateObjectPage: boolean;
   createPresentationPage: boolean;
@@ -18,4 +19,5 @@ export interface IDialogPagesState {
   taskId: string;
   lastContactId: string;
   meetingId: string;
+  transferObjectPage: boolean;
 }

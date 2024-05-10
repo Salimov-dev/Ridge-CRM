@@ -4,20 +4,18 @@ import DialogStyled from "@components/common/dialog/dialog-styled";
 import CreatePresentation from "@components/pages/presentation/create-presentation/create-presentation.page";
 import UpdatePresentation from "@components/pages/presentation/update-presentation/update-presentation.page";
 // dialogs
-import presentationDialogsState from "@dialogs/dialog-handlers/presentation.dialog-handlers";
+import presentationDialogsState from "@dialogs/dialog-handlers/presentations.dialog-handlers";
 // interfaces
 import { IDialogPagesState } from "@interfaces/state/dialog-pages-state.interface";
 
-interface PresentationDialogPagesProps {
+interface PresentationsDialogPagesProps {
   state: IDialogPagesState;
   setState: Dispatch<SetStateAction<IDialogPagesState>>;
-  isObjectPage: boolean;
 }
 
-const PresentationDialogPages: FC<PresentationDialogPagesProps> = ({
+const PresentationsDialogPages: FC<PresentationsDialogPagesProps> = ({
   state,
-  setState,
-  isObjectPage
+  setState
 }) => {
   const {
     handleCloseCreatePresentationPage,
@@ -31,7 +29,7 @@ const PresentationDialogPages: FC<PresentationDialogPagesProps> = ({
           <CreatePresentation
             onClose={handleCloseCreatePresentationPage}
             objectId={state.objectId}
-            isObjectPage={isObjectPage}
+            isObjectPage={!state?.objectId}
           />
         }
         onClose={handleCloseCreatePresentationPage}
@@ -53,4 +51,4 @@ const PresentationDialogPages: FC<PresentationDialogPagesProps> = ({
   );
 };
 
-export default PresentationDialogPages;
+export default PresentationsDialogPages;
