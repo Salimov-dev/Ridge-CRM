@@ -3,14 +3,19 @@ import { IObject } from "@interfaces/object/object.interface";
 import AcitivtyObjectPage from "../components/activity/activity.object-info";
 import ContactsObjectInfo from "../components/contacts/contacts.object-info";
 import InformationObjectInfo from "../components/information/information.object-info";
-import { IDialogPagesState } from "src/types/dialog-pages/dialog-pages-state.interface";
+import { IDialogPagesState } from "@interfaces/state/dialog-pages-state.interface";
 
 interface TabsProps {
+  state: IDialogPagesState;
   object: IObject;
   setStateDialogPages: Dispatch<SetStateAction<IDialogPagesState>>;
 }
 
-const tabsObjectInfoPage = ({ object, setStateDialogPages }: TabsProps) => {
+const tabsObjectInfoPage = ({
+  object,
+  state,
+  setStateDialogPages
+}: TabsProps) => {
   return [
     {
       label: "Информация",
@@ -25,7 +30,11 @@ const tabsObjectInfoPage = ({ object, setStateDialogPages }: TabsProps) => {
     {
       label: "Активность",
       component: (
-        <AcitivtyObjectPage object={object} setState={setStateDialogPages} />
+        <AcitivtyObjectPage
+          object={object}
+          state={state}
+          setState={setStateDialogPages}
+        />
       )
     }
   ];

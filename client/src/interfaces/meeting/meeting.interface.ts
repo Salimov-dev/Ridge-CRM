@@ -3,24 +3,34 @@ export interface IMeeting {
   userId: string;
   objectId: string;
   status: MeetingStatuses;
-  result: string | null;
+  result?: string | null;
   city: string;
   address: string;
   latitude: number;
   longitude: number;
-  zoom: number;
-  isDone: boolean;
+  zoom?: number;
+  isDone?: boolean;
   type: MeetingTypes;
-  date: string;
-  time: string;
+  date: string | Date;
+  time: string | Date;
   comment: string;
   created_at: string;
   updated_at: string;
 }
 
 export interface IMeetingCreateInitState {
+  address: string | null;
+  city: string | null;
+  comment: string;
+  date: string | Date | null;
+  latitude: number | null;
+  longitude: number | null;
+  result: string | null;
+  status: string;
+  time: string | Date | null;
+  type: string;
   objectId: string;
-  cloudLink: string | null;
+  isDone?: boolean;
 }
 
 export enum MeetingStatuses {

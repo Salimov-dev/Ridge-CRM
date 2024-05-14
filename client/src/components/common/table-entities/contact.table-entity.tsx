@@ -8,6 +8,7 @@ import EmptyTd from "../columns/empty-td";
 // store
 import { getContactById, getContactsList } from "@store/contact/contact.store";
 import { getCurrentUserId, getIsUserManager } from "@store/user/users.store";
+import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
 
 const Component = styled(Box)`
   display: flex;
@@ -15,10 +16,12 @@ const Component = styled(Box)`
   justify-content: center;
 `;
 
-const ContactTableEntity = ({ contacts, onOpenContactPage }) => {
+const ContactTableEntity = ({ contacts, setState }) => {
   const contactsList = useSelector(getContactsList());
   const currentUserId = useSelector(getCurrentUserId());
   const isManager = useSelector(getIsUserManager(currentUserId));
+
+  const { handleOpenContactPage } = useDialogHandlers(setState);
 
   const currentUserContacts = contacts?.filter((cont) => {
     const contact = useSelector(getContactById(cont.contact));
@@ -48,7 +51,7 @@ const ContactTableEntity = ({ contacts, onOpenContactPage }) => {
                   height="20px"
                   heightButton="20px"
                   width="16px"
-                  onClick={() => onOpenContactPage(contactId)}
+                  onClick={() => handleOpenContactPage(contactId)}
                 />
               </Component>
             )

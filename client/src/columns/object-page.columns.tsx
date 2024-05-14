@@ -11,7 +11,7 @@ import {
   FormatObjectTradeArea,
   FormatTypeEstate,
   FormatTypeObject
-} from "@components/common/table/helpers/helpers.table";
+} from "@utils/table/helpers.table";
 import EmptyTd from "@components/common/columns/empty-td";
 // utils
 import { makeDigitSeparator } from "@utils/data/make-digit-separator";

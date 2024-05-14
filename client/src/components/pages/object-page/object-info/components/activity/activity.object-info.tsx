@@ -16,7 +16,7 @@ const Component = styled(Box)`
   flex-direction: column;
 `;
 
-const AcitivtyObjectPage = ({ object, setState }) => {
+const AcitivtyObjectPage = ({ object, state, setState }) => {
   const isDialogPage = true;
   const isCurrentUserRoleManager = useSelector(getIsCurrentUserRoleManager());
 
@@ -30,11 +30,11 @@ const AcitivtyObjectPage = ({ object, setState }) => {
       <ObjectMeetings
         object={object}
         setState={setState}
-        columns={meetingsColumns(
-          setState,
-          isCurrentUserRoleManager,
-          isDialogPage
-        )}
+        columns={meetingsColumns({
+          state: state,
+          setState: setState,
+          isCurrentUserRoleManager: isCurrentUserRoleManager
+        })}
       />
       <LastContacts object={object} setState={setState} />
     </Component>

@@ -13,12 +13,9 @@ import Flags from "@components/common/columns/flags";
 import EmptyTd from "@components/common/columns/empty-td";
 import UserNameWithAvatar from "@components/common/user/user-name-with-avatar";
 import ButtonStyled from "@components/common/buttons/button-styled.button";
-import {
-  FormatMetro,
-  FormatObjectStatus
-} from "@components/common/table/helpers/helpers.table";
+import { FormatMetro, FormatObjectStatus } from "@utils/table/helpers.table";
 import ContactTableEntity from "@components/common/table-entities/contact.table-entity";
-import CompanyTableEntity from "@components/common/table-entities/company.4table-entity";
+import CompanyTableEntity from "@components/common/table-entities/company.table-entity";
 // hooks
 import useGetUserAvatar from "@hooks/user/use-get-user-avatar";
 import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";

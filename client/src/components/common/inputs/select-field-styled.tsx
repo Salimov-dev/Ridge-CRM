@@ -9,10 +9,36 @@ import {
   Select,
   MenuItem,
   OutlinedInput,
-  ListItemText
+  ListItemText,
+  Theme
 } from "@mui/material";
+import { FC } from "react";
+import { UseFormRegister } from "react-hook-form";
+import { ITheme } from "@interfaces/theme/theme.interface";
 
-const StyledSelect = styled(Select)(({ theme, colors, items }) => ({
+interface SelectFieldStyledProps {
+  label: string;
+  register: UseFormRegister<any>;
+  name: string;
+  labelId: string;
+  required?: boolean;
+  itemsList?: Record<string, any>;
+  value: string | null;
+  errors?: any;
+  disabled?: boolean;
+  selectedItems?: string[];
+}
+
+interface StyledSelectProps {
+  theme: ITheme;
+  colors: ITheme;
+}
+
+interface StyledInputLabelProps {
+  theme: Theme;
+}
+
+const StyledSelect = styled(Select)(({ theme, colors }: StyledSelectProps) => ({
   "&.Mui-focused": {
     "& .MuiOutlinedInput-notchedOutline": {
       borderColor: colors.green["green"]
@@ -22,24 +48,21 @@ const StyledSelect = styled(Select)(({ theme, colors, items }) => ({
     marginTop: "-5px",
     height: "24px !important"
   },
-  "& .MuiOutlinedInput-notchedOutline": {
-    borderColor: items ? colors.green["green"] : colors.grey[400]
-  },
-  "& .MuiInputLabel-root": {
-    color: items ? "white" : colors.grey[400]
-  },
+
   zIndex: theme.zIndex.modal + 1
 }));
 
-const StyledInputLabel = styled(InputLabel)(({ theme, colors }) => ({
-  color: "gray !important",
-  "&.Mui-focused": {
-    color: "white !important"
-  },
-  zIndex: theme.zIndex.modal + 1
-}));
+const StyledInputLabel = styled(InputLabel)(
+  ({ theme }: StyledInputLabelProps) => ({
+    color: "gray !important",
+    "&.Mui-focused": {
+      color: "white !important"
+    },
+    zIndex: theme.zIndex.modal + 1
+  })
+);
 
-const SelectFieldStyled = ({
+const SelectFieldStyled: FC<SelectFieldStyledProps> = ({
   register,
   name,
   labelId,
@@ -48,8 +71,7 @@ const SelectFieldStyled = ({
   required = false,
   value,
   disabled = false,
-  errors = null,
-  selectedItems = null
+  errors = null
 }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -57,7 +79,7 @@ const SelectFieldStyled = ({
 
   return (
     <FormControl sx={{ minWidth: "200px", width: "100%" }}>
-      <StyledInputLabel required={required} id={labelId} colors={colors}>
+      <StyledInputLabel required={required} id={labelId} theme={theme}>
         {label}
       </StyledInputLabel>
 
@@ -71,7 +93,6 @@ const SelectFieldStyled = ({
         disabled={disabled}
         defaultValue=""
         error={!!errors}
-        items={selectedItems}
         colors={colors}
       >
         <MenuItem value="">

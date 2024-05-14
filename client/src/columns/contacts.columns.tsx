@@ -5,9 +5,9 @@ import { FormatDate } from "@utils/date/format-date";
 import { AlignCenter } from "@styled/styled-columns";
 // components
 import EmptyTd from "@components/common/columns/empty-td";
-import { FormatPhone } from "@components/common/table/helpers/helpers.table";
+import { FormatPhone } from "@utils/table/helpers.table";
 import ButtonStyled from "@components/common/buttons/button-styled.button";
-import CompanyTableEntity from "@components/common/table-entities/company.4table-entity";
+import CompanyTableEntity from "@components/common/table-entities/company.table-entity";
 import ObjectTableEntity from "@components/common/table-entities/object.table-entity";
 import UserNameWithAvatar from "@components/common/user/user-name-with-avatar";
 // hooks

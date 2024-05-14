@@ -43,7 +43,7 @@ const HeaderForLayout: FC<HeaderForLayoutProps> = ({
   title,
   background = "linear-gradient(to right, DarkOrange , OrangeRed)",
   color = "white",
-  margin = "0 0 20px 0",
+  margin = "0",
   justifyContent = "start",
   width = "inherit"
 }): JSX.Element => {

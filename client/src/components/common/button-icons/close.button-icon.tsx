@@ -1,6 +1,6 @@
 import CloseIcon from "@mui/icons-material/Close";
 
-const CloseButtonIconButton = ({ onClose }) => {
+const CloseButtonIconButton = ({ onClose, margin = "0" }) => {
   return (
     <CloseIcon
       onClick={onClose}
@@ -10,7 +10,8 @@ const CloseButtonIconButton = ({ onClose }) => {
         cursor: "pointer",
         color: "gray",
         transition: "color 0.2s ease",
-        "&:hover": { color: "white" },
+        margin: margin,
+        "&:hover": { color: "white" }
       }}
     />
   );

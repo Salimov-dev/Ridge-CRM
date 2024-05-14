@@ -1,8 +1,8 @@
 import { Dispatch, FC, SetStateAction } from "react";
 // components
 import DialogStyled from "@components/common/dialog/dialog-styled";
-import CreateMeeting from "@components/pages/meeting/create-meeting.page";
-import UpdateMeeting from "@components/pages/meeting/update-meeting.page";
+import CreateMeeting from "@components/pages/meeting/create-meeting/create-meeting.page";
+import UpdateMeeting from "@components/pages/meeting/update-meeting/update-meeting.page";
 // dialogs;
 import meetingsDialogsState from "@dialogs/dialog-handlers/meetings.dialog-handlers";
 // interfaces
@@ -24,12 +24,7 @@ const MeetingsDialogPages: FC<MeetingsDialogPagesProps> = ({
     <>
       <DialogStyled
         component={
-          <CreateMeeting
-            onClose={handleCloseCreateMeetingPage}
-            objectPageId={state.objectId}
-            isObjectPage={!state?.objectId}
-            dateCreate={state.dateCreate}
-          />
+          <CreateMeeting onClose={handleCloseCreateMeetingPage} state={state} />
         }
         maxWidth="lg"
         onClose={handleCloseCreateMeetingPage}
@@ -38,9 +33,9 @@ const MeetingsDialogPages: FC<MeetingsDialogPagesProps> = ({
       <DialogStyled
         component={
           <UpdateMeeting
+            state={state}
             meetingId={state.meetingId}
             onClose={handleCloseUpdateMeetingPage}
-            isObjectPage={!state?.objectId}
           />
         }
         onClose={handleCloseUpdateMeetingPage}

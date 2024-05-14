@@ -3,10 +3,20 @@ import {
   FormControl,
   FormControlLabel,
   FormGroup,
+  SelectChangeEvent,
   Switch,
   styled
 } from "@mui/material";
-import { useState } from "react";
+import { FC, useState } from "react";
+
+interface SimpleSwitchProps {
+  title: string;
+  onChange: (e: SelectChangeEvent<any>) => void;
+  value: boolean | undefined;
+  whiteSpace?: string;
+  padding?: string;
+  disabled?: boolean;
+}
 
 const Component = styled(Box)`
   width: 100%;
@@ -19,18 +29,19 @@ const FormControlSyled = styled(FormControl)`
   justify-content: start;
 `;
 
-const SimpleSwitch = ({
+const SimpleSwitch: FC<SimpleSwitchProps> = ({
   title,
   onChange,
   value,
   whiteSpace = "nowrap",
   padding = "5px 15px 5px 0px",
   disabled = false
-}) => {
+}): JSX.Element => {
   const [checked, setChecked] = useState(value);
 
-  const handleChange = (event) => {
-    setChecked(event.target.checked);
+  const handleChange = (event: SelectChangeEvent<any>) => {
+    const target = event.target as HTMLInputElement;
+    setChecked(target.checked);
     if (onChange) {
       onChange(event);
     }
@@ -38,7 +49,7 @@ const SimpleSwitch = ({
 
   return (
     <Component>
-      <FormControlSyled component="fieldset" sx={{ padding: padding }}>
+      <FormControlSyled sx={{ padding: padding }}>
         <FormGroup aria-label="position" row sx={{ width: "100%" }}>
           <FormControlLabel
             control={

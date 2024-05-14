@@ -5,11 +5,11 @@ import { Box, FormHelperText, Typography } from "@mui/material";
 // components
 import SimpleSelectField from "@components/common/inputs/simple-select-field";
 // data
-import { objectHasDistrict } from "@data/object/object-has-district";
+import { objectHasDistrict } from "@utils/objects/object-has-district";
 import {
   allDistrictsList,
   getFindedObjectDistrictsList
-} from "@data/object/get-finded-object-districts-list";
+} from "@utils/objects/get-finded-object-districts-list";
 
 const Container = styled(Box)`
   width: 100%;

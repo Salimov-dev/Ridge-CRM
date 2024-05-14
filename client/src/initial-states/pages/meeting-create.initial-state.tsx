@@ -1,4 +1,6 @@
-export const meetingCreateInitialState = {
+import { IMeetingCreateInitState } from "@interfaces/meeting/meeting.interface";
+
+export const meetingCreateInitialState: IMeetingCreateInitState = {
   status: "",
   type: "",
   date: null,
@@ -8,5 +10,7 @@ export const meetingCreateInitialState = {
   city: "",
   address: "",
   latitude: null,
-  longitude: null
+  longitude: null,
+  objectId: "",
+  isDone: false
 };

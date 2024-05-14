@@ -1,8 +1,21 @@
 import { useTheme } from "@emotion/react";
 import { FormHelperText } from "@mui/material";
 import { tokens } from "@theme/theme";
+import { FC } from "react";
 
-const ErrorsForInput = ({ errors, padding = "0", color, fontSize }) => {
+interface ErrorsForInputProps {
+  errors: any;
+  padding?: string;
+  color?: string;
+  fontSize?: string;
+}
+
+const ErrorsForInput: FC<ErrorsForInputProps> = ({
+  errors,
+  padding = "0",
+  color,
+  fontSize
+}) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   return (

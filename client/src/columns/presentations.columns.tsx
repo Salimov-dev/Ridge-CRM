@@ -174,11 +174,11 @@ export const presentationsColumns = ({
 
   const updateColumn = {
     id: "updateColumn",
-    header: "Согласование",
+    header: "-",
     columns: [
       {
         accessorKey: "_id",
-        header: "Презентация",
+        header: "Согласование",
         enableSorting: false,
         cell: (info: { getValue: () => any }) => {
           const presentationId = info.getValue();

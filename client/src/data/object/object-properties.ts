@@ -4,10 +4,6 @@ const objectPropertiesArray = [
     name: "Первый этаж"
   },
   {
-    _id: "64d95331576aa746bb3d28ef",
-    name: "Цоколь"
-  },
-  {
     _id: "64d95339576aa746bb3d28f0",
     name: "Подвал"
   },

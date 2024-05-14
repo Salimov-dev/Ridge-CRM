@@ -13,15 +13,14 @@ import { presentationsLayoutInitialState } from "@initial-states/layouts/present
 import { getIsInputEmpty } from "@utils/input/get-is-input-empty";
 // interfaces
 import { IDialogPagesState } from "@interfaces/state/dialog-pages-state.interface";
+import { IDataProps } from "@interfaces/data/data-props.type";
 // dialog-handlers
 import videoTrainingDialogsState from "@dialogs/dialog-handlers/video-training.dialog-handlers";
 import presentationsDialogsState from "@dialogs/dialog-handlers/presentations.dialog-handlers";
 
-type IData = Record<string, string | string[] | null>;
-
 interface ButtonsPresentationsLayoutProps {
-  data: IData;
-  reset: UseFormReset<IData>;
+  data: IDataProps;
+  reset: UseFormReset<IDataProps>;
   setState: Dispatch<SetStateAction<IDialogPagesState>>;
 }
 

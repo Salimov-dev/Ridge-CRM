@@ -5,8 +5,7 @@ import { Dispatch, SetStateAction } from "react";
 import ButtonStyled from "@components/common/buttons/button-styled.button";
 // dialog-handlers
 import presentationDialogsState from "@dialogs/dialog-handlers/presentations.dialog-handlers";
-// hooks
-import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
+import objectsDialogsState from "@dialogs/dialog-handlers/objects.dialog-handlers";
 // interfaces
 import { IDialogPagesState } from "@interfaces/state/dialog-pages-state.interface";
 // store
@@ -32,7 +31,7 @@ const ButtonsPresentationBalloon = ({
   const presentation = useSelector(getPresentationById(presentationId));
 
   const objectId = presentation?.objectId;
-  const { handleOpenObjectPage } = useDialogHandlers(setState);
+  const { handleOpenObjectPage } = objectsDialogsState({ setState });
 
   const { handleOpenUpdatePresentationPage } = presentationDialogsState({
     setState

@@ -1,6 +1,8 @@
 import styled from "@emotion/styled";
 import { Box } from "@mui/material";
 import { useSelector } from "react-redux";
+import { UseFormReset } from "react-hook-form";
+import { Dispatch, FC, SetStateAction } from "react";
 // icons
 import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
 import SyncAltOutlinedIcon from "@mui/icons-material/SyncAltOutlined";
@@ -14,8 +16,17 @@ import ClearFilterButton from "@components/common/buttons/clear-filter.button";
 import { objectsLayoutInitialState } from "@initial-states/layouts/objects-layout.initial-state";
 // utils
 import { getIsInputEmpty } from "@utils/input/get-is-input-empty";
+// interfaces
+import { IDataProps } from "@interfaces/data/data-props.type";
+import { IDialogPagesState } from "@interfaces/state/dialog-pages-state.interface";
 // store
 import { getIsCurrentUserRoleCurator } from "@store/user/users.store";
+
+interface ButtonsObjectsLayoutProps {
+  data: IDataProps;
+  reset: UseFormReset<IDataProps>;
+  setState: Dispatch<SetStateAction<IDialogPagesState>>;
+}
 
 const Component = styled(Box)`
   display: flex;
@@ -23,8 +34,15 @@ const Component = styled(Box)`
   margin-bottom: 4px;
 `;
 
-const ButtonsObjectsLayout = ({ data, reset, setState }) => {
-  const isInputEmpty = getIsInputEmpty(data, objectsLayoutInitialState);
+const ButtonsObjectsLayout: FC<ButtonsObjectsLayoutProps> = ({
+  data,
+  reset,
+  setState
+}) => {
+  const isInputEmpty = getIsInputEmpty({
+    data: data,
+    initialState: objectsLayoutInitialState
+  });
   const isCurrentUserRoleCurator = useSelector(getIsCurrentUserRoleCurator());
 
   const {

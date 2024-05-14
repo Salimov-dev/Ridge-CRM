@@ -6,14 +6,13 @@ import { useSelector } from "react-redux";
 // interfaces
 import { IPresentation } from "@interfaces/presentation/presentation.interface";
 import { IObject } from "@interfaces/object/object.interface";
+import { IDataProps } from "@interfaces/data/data-props.type";
 // store
 import { getObjectsList } from "@store/object/objects.store";
 import { getPresentationsList } from "@store/presentation/presentations.store";
 
-type IData = Record<string, string | string[] | null>;
-
 interface IUseSearchPresentation {
-  data: IData;
+  data: IDataProps;
 }
 
 const useSearchPresentation = ({ data }: IUseSearchPresentation) => {
@@ -54,7 +53,7 @@ const useSearchPresentation = ({ data }: IUseSearchPresentation) => {
       });
     }
 
-    // ПОИСК ПО КОММЕНТАРИЮ КУР
+    // ПОИСК ПО КОММЕНТАРИЮ КУРАТОРА
     if (data?.curatorComment?.length) {
       array = array.filter((pres) => {
         const searchQuery =

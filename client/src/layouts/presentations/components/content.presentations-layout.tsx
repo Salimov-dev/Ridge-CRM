@@ -14,6 +14,7 @@ import useSearchPresentation from "@hooks/presentation/use-search-presentation";
 import usePresentationsWithLocation from "@hooks/presentation/use-presentations-with-location";
 // interfaces
 import { IDialogPagesState } from "@interfaces/state/dialog-pages-state.interface";
+import { IDataProps } from "@interfaces/data/data-props.type";
 // store
 import { getPresentationsLoadingStatus } from "@store/presentation/presentations.store";
 import {
@@ -21,12 +22,10 @@ import {
   getIsCurrentUserRoleManager
 } from "@store/user/users.store";
 
-type IData = Record<string, string | string[] | null>;
-
 interface IPresentationsLayoutContent {
-  data: IData;
-  register: UseFormRegister<IData>;
-  setValue: UseFormSetValue<IData>;
+  data: IDataProps;
+  register: UseFormRegister<IDataProps>;
+  setValue: UseFormSetValue<IDataProps>;
   setStateDialogPages: Dispatch<SetStateAction<IDialogPagesState>>;
 }
 

@@ -7,8 +7,8 @@ import CreateObject from "@components/pages/object/create-object/create-object.p
 import UpdateObject from "@components/pages/object/update-object.page";
 import CreatePresentation from "@components/pages/presentation/create-presentation/create-presentation.page";
 import TransferObjectToAnotherManager from "@components/pages/transfer-object-to-another-manager/transfer-object-to-another-manager.page.page";
-import UpdateMeeting from "@components/pages/meeting/update-meeting.page";
-import CreateMeeting from "@components/pages/meeting/create-meeting.page";
+import UpdateMeeting from "@components/pages/meeting/update-meeting/update-meeting.page";
+import CreateMeeting from "@components/pages/meeting/create-meeting/create-meeting.page";
 import UpdateLastContact from "@components/pages/last-contact/update-last-contact.page";
 import CreateLastContact from "@components/pages/last-contact/create-last-contact.page";
 import UpdateManagerTask from "@components/pages/task/update-manager-task";

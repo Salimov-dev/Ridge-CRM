@@ -5,6 +5,7 @@ import { Box, TextField, styled, FormHelperText } from "@mui/material";
 import { makeDigitSeparator } from "@utils/data/make-digit-separator";
 import { UseFormRegister } from "react-hook-form";
 import { ITheme } from "@interfaces/theme/theme.interface";
+import ErrorsForInput from "./errors-for-input";
 
 interface TextFieldStyledProps {
   register: UseFormRegister<any>;
@@ -12,7 +13,7 @@ interface TextFieldStyledProps {
   name: string;
   value: string | null;
   rows?: string;
-  errors: any;
+  errors?: any;
   multiline?: boolean;
   InputProps?: any;
   inputProps?: any;
@@ -100,9 +101,7 @@ const TextFieldStyled: FC<TextFieldStyledProps> = ({
         type={type}
       />
       {isHelperText ? <FormHelperText>{subtitle}</FormHelperText> : null}
-      <FormHelperText sx={{ color: "yellow", paddingLeft: "10px" }}>
-        {errors?.message}
-      </FormHelperText>
+      <ErrorsForInput errors={errors} padding="0 0 0 10px" />
     </Box>
   );
 };

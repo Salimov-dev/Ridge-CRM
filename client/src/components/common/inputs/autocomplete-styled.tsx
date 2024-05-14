@@ -1,12 +1,13 @@
 import { FC } from "react";
 import styled from "@emotion/styled";
 import { UseFormRegister, UseFormSetValue } from "react-hook-form";
-import { Autocomplete, Box, FormHelperText, TextField } from "@mui/material";
+import { Autocomplete, Box, TextField } from "@mui/material";
+import ErrorsForInput from "./errors-for-input";
 
 interface AutocompleteStyledProps {
   register: UseFormRegister<any>;
   name: string;
-  value: any;
+  value: string | null;
   options: any;
   watchItemId: string;
   setValue: UseFormSetValue<any>;
@@ -102,8 +103,10 @@ const AutocompleteStyled: FC<AutocompleteStyledProps> = ({
         clearIcon={null}
         renderInput={(params) => <TextField {...params} label={label} />}
         getOptionLabel={optionLabel}
-        isOptionEqualToValue={(option: any, value) => option._id === value?._id}
-        onChange={(event, newValue) =>
+        isOptionEqualToValue={(option: any, value: any) =>
+          option._id === value?._id
+        }
+        onChange={(event, newValue: any) =>
           setValue(name, newValue ? newValue._id : null)
         }
         ListboxProps={{
@@ -117,9 +120,7 @@ const AutocompleteStyled: FC<AutocompleteStyledProps> = ({
             : null
         }
       />
-      <FormHelperText sx={{ color: "yellow", paddingLeft: "10px" }}>
-        {errors?.message}
-      </FormHelperText>
+      <ErrorsForInput errors={errors} padding="0 0 0 10px" />
     </Component>
   );
 };

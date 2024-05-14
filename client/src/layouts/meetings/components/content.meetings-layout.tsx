@@ -20,6 +20,7 @@ type IData = Record<string, string | string[] | null>;
 
 interface IMeetingsLayoutContent {
   data: IData;
+  state: IDialogPagesState;
   register: UseFormRegister<IData>;
   setValue: UseFormSetValue<IData>;
   setStateDialogPages: Dispatch<SetStateAction<IDialogPagesState>>;
@@ -27,6 +28,7 @@ interface IMeetingsLayoutContent {
 
 const MeetingsLayoutContent: FC<IMeetingsLayoutContent> = ({
   data,
+  state,
   register,
   setValue,
   setStateDialogPages
@@ -64,10 +66,11 @@ const MeetingsLayoutContent: FC<IMeetingsLayoutContent> = ({
       />
       <BasicTable
         items={searchedMeetings}
-        itemsColumns={meetingsColumns(
-          setStateDialogPages,
-          isCurrentUserRoleManager
-        )}
+        itemsColumns={meetingsColumns({
+          state: state,
+          setState: setStateDialogPages,
+          isCurrentUserRoleManager: isCurrentUserRoleManager
+        })}
         isLoading={isLoading}
       />
     </>

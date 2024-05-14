@@ -23,7 +23,7 @@ import { capitalizeFirstLetter } from "@utils/data/capitalize-first-letter";
 import { metroListArraySPB } from "@data/metro/metro-spb";
 import { metroListArrayMSK } from "@data/metro/metro-msk";
 import { metroListArrayKZN } from "@data/metro/metro-kzn";
-import { allDistrictsList } from "@data/object/get-finded-object-districts-list";
+import { allDistrictsList } from "@utils/objects/get-finded-object-districts-list";
 // store
 import { getRentTypesList } from "@store/object-params/object-rent-types.store";
 import { getObjectTypesList } from "@store/object-params/object-types.store";

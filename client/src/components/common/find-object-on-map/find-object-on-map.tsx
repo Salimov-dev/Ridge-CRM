@@ -69,12 +69,14 @@ const FindObjectOnMap = () => {
   return (
     <Map>
       {!quantityClicksOnMap && <BlockMapContainer></BlockMapContainer>}
+
       <ClickNumbersContainer>
         <ClickNumbers variant="h2" sx={{ marginBottom: "-8px" }}>
           {quantityClicksOnMap}
         </ClickNumbers>
         <ClickNumbers variant="h7">{renderClickText()}</ClickNumbers>
       </ClickNumbersContainer>
+
       <Box
         sx={{ width: "100%", height: "100%", marginBottom: "12px" }}
         id="findObject"

@@ -1,5 +1,6 @@
 import dayjs from "dayjs";
 import { useSelector } from "react-redux";
+import { Dispatch, SetStateAction } from "react";
 // mui
 import { Box, Typography } from "@mui/material";
 // styled
@@ -7,14 +8,16 @@ import { AlignCenter } from "@styled/styled-columns";
 // components
 import DoneStatusIcon from "@components/common/columns/done-status-icon";
 import ButtonStyled from "@components/common/buttons/button-styled.button";
-import OpenPageElementIconButton from "@components/common/button-icons/open-page-element.button-icon";
 import UserNameWithAvatar from "@components/common/user/user-name-with-avatar";
+import AnyObjectTableEntity from "@components/common/table-entities/any-object.table-entity";
 // utils
 import { FormatDate } from "@utils/date/format-date";
 import { FormatTime } from "@utils/date/format-time";
 // hooks
 import useGetUserAvatar from "@hooks/user/use-get-user-avatar";
 import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
+// interfaces
+import { IDialogPagesState } from "@interfaces/state/dialog-pages-state.interface";
 // store
 import { getObjectById } from "@store/object/objects.store";
 import { getMeetingStatusNameById } from "@store/meeting/meeting-status.store";
@@ -24,25 +27,34 @@ import {
   getCurrentUserId,
   getIsUserAuthorThisEntity
 } from "@store/user/users.store";
+import { Row } from "react-table";
 
-export const meetingsColumns = (
+interface MeetingsColumnsProps {
+  state: IDialogPagesState;
+  isCurrentUserRoleManager: boolean;
+  setState: Dispatch<SetStateAction<IDialogPagesState>>;
+}
+
+export const meetingsColumns = ({
+  state,
   setState,
-  isCurrentUserRoleManager,
-  isDialogPage
-) => {
+  isCurrentUserRoleManager
+}: MeetingsColumnsProps) => {
   let columns = [];
+
+  const isObjectPage = state?.objectPage;
 
   const { handleOpenUpdateMeetingPage, handleOpenObjectPage } =
     useDialogHandlers(setState);
 
   const dateColumn = {
-    header: "Дата и время встречи",
+    header: "Дата, время и место встречи",
     columns: [
       {
         accessorKey: "isDone",
         header: "",
         enableSorting: false,
-        cell: (info) => {
+        cell: (info: { getValue: () => any }) => {
           const isDone = info.getValue();
           return <DoneStatusIcon isDone={isDone} />;
         }
@@ -51,7 +63,7 @@ export const meetingsColumns = (
         accessorKey: "date",
         header: "Дата встречи",
         enableSorting: false,
-        cell: (info) => {
+        cell: (info: { getValue: () => any }) => {
           const date = info.getValue();
           const formattedDate = FormatDate(date);
           const dayOfWeek = dayjs(date).locale("ru").format("dd");
@@ -67,16 +79,16 @@ export const meetingsColumns = (
         accessorKey: "time",
         header: "Время",
         enableSorting: false,
-        cell: (info) => {
+        cell: (info: { getValue: () => any }) => {
           const time = info.getValue();
           return <AlignCenter>{FormatTime(time)}</AlignCenter>;
         }
       },
       {
-        accessorFn: (row) => row,
+        accessorFn: (row: Row) => row,
         header: "Адрес встречи",
         enableSorting: false,
-        cell: (info) => {
+        cell: (info: { getValue: () => any }) => {
           const meeting = info.getValue();
           return (
             <AlignCenter>
@@ -95,12 +107,11 @@ export const meetingsColumns = (
     columns: [
       {
         accessorKey: "objectId",
-        header: "Объект встречи",
+        header: "Адрес объекта",
         enableSorting: false,
-        cell: (info) => {
+        cell: (info: { getValue: () => any }) => {
           const objectId = info.getValue();
           const object = useSelector(getObjectById(objectId));
-          const fullAddress = `${object?.city}, ${object?.address}`;
 
           return objectId ? (
             <Box
@@ -110,13 +121,9 @@ export const meetingsColumns = (
                 justifyContent: "start"
               }}
             >
-              {fullAddress}
-              <OpenPageElementIconButton
-                title="Открыть объект"
-                height="20px"
-                heightButton="20px"
-                width="20px"
-                onClick={() => handleOpenObjectPage(objectId)}
+              <AnyObjectTableEntity
+                object={object}
+                onOpenObjectPage={handleOpenObjectPage}
               />
             </Box>
           ) : (
@@ -134,7 +141,8 @@ export const meetingsColumns = (
       {
         accessorKey: "userId",
         header: "Фамилия и Имя",
-        cell: (info) => {
+        enableSorting: false,
+        cell: (info: { getValue: () => any }) => {
           const userId = info.getValue();
           const { getAvatarSrc, isLoading } = useGetUserAvatar(userId);
 
@@ -159,7 +167,7 @@ export const meetingsColumns = (
         accessorKey: "type",
         header: "Тип",
         enableSorting: false,
-        cell: (info) => {
+        cell: (info: { getValue: () => any }) => {
           const type = info.getValue();
 
           const name = useSelector(getMeetingTypeNameById(type));
@@ -171,7 +179,7 @@ export const meetingsColumns = (
         accessorKey: "status",
         header: "Статус",
         enableSorting: false,
-        cell: (info) => {
+        cell: (info: { getValue: () => any }) => {
           const status = info.getValue();
           const name = useSelector(getMeetingStatusNameById(status));
           return <AlignCenter>{name}</AlignCenter>;
@@ -181,7 +189,7 @@ export const meetingsColumns = (
         accessorKey: "comment",
         header: "Комментарий",
         enableSorting: false,
-        cell: (info) => {
+        cell: (info: { getValue: () => any }) => {
           const comment = info.getValue();
           return <AlignCenter>{comment}</AlignCenter>;
         }
@@ -190,7 +198,7 @@ export const meetingsColumns = (
         accessorKey: "result",
         header: "Результат",
         enableSorting: false,
-        cell: (info) => {
+        cell: (info: { getValue: () => any }) => {
           const result = info.getValue();
           return result ? (
             <AlignCenter>{result}</AlignCenter>
@@ -203,7 +211,7 @@ export const meetingsColumns = (
         accessorKey: "created_at",
         header: "Дата создания встречи",
         enableSorting: false,
-        cell: (info) => {
+        cell: (info: { getValue: () => any }) => {
           const date = info.getValue();
           return <AlignCenter>{FormatDate(date)}</AlignCenter>;
         }
@@ -212,13 +220,13 @@ export const meetingsColumns = (
   };
 
   const updateColumn = {
-    header: "Встреча",
+    header: "-",
     columns: [
       {
         accessorKey: "_id",
         header: "Править",
         enableSorting: false,
-        cell: (info) => {
+        cell: (info: { getValue: () => any }) => {
           const meetingId = info.getValue();
           const meeting = useSelector(getMeetingById(meetingId));
           const currentUserId = useSelector(getCurrentUserId());
@@ -247,7 +255,7 @@ export const meetingsColumns = (
     columns = [dateColumn, otherColumns, updateColumn];
   }
 
-  if (!isDialogPage) {
+  if (!isObjectPage) {
     columns.splice(3, 0, meetingObjectColumn);
   }
 

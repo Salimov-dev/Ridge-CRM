@@ -1,4 +1,5 @@
 // libraries
+import { UseFormSetValue } from "react-hook-form";
 import { useMemo, useState } from "react";
 import {
   getCoreRowModel,
@@ -14,6 +15,19 @@ import Pagination from "./components/pagination.table";
 import Thead from "./components/thead.table";
 import Tbody from "./components/tbody.table.";
 import Loader from "../loader/loader";
+// interfaces
+import { RowSelection } from "@interfaces/table/row-selection.type";
+
+interface BasicTableProps {
+  items: Record<string, any>;
+  itemsColumns: any;
+  rowSelection?: RowSelection;
+  setRowSelection?: UseFormSetValue<RowSelection>;
+  hasFooter?: boolean;
+  isLoading?: boolean;
+  isPaginate?: boolean;
+  isDialogMode?: boolean;
+}
 
 const BasicTable = ({
   items,
@@ -24,7 +38,7 @@ const BasicTable = ({
   isLoading = false,
   isPaginate = true,
   isDialogMode = false
-}) => {
+}: BasicTableProps) => {
   const [sorting, setSorting] = useState<SortingState>([]);
 
   const data = useMemo(() => items || [], [items]);

@@ -1,11 +1,13 @@
 import React, { FC } from "react";
 import { useSelector } from "react-redux";
 import { UseFormRegister, UseFormSetValue } from "react-hook-form";
+import { FieldsContainer, Form } from "@styled/styled-form";
 // components
 import SearchField from "@common/inputs/search-field";
-import { FieldsContainer, Form } from "@styled/styled-form";
 import MultiSelectField from "@common/inputs/multi-select-field";
 import SearchDatePicker from "@common/inputs/search-date-picker";
+// interfaces
+import { IDataProps } from "@interfaces/data/data-props.type";
 // utils
 import { getActualUsersList } from "@utils/actual-items/get-actual-users-list";
 import { getUniqueItemsList } from "@utils/actual-items/get-uniq-items-list";
@@ -17,18 +19,17 @@ import {
   getPresentationsLoadingStatus
 } from "@store/presentation/presentations.store";
 
-type IData = Record<string, string | string[] | null>;
-
 interface PresentationsLayoutFiltersPanelProps {
-  data: IData;
-  register: UseFormRegister<IData>;
-  setValue: UseFormSetValue<IData>;
+  data: IDataProps;
+  register: UseFormRegister<IDataProps>;
+  setValue: UseFormSetValue<IDataProps>;
 }
 
 const PresentationsLayoutFiltersPanel: FC<PresentationsLayoutFiltersPanelProps> =
   React.memo(({ data, register, setValue }): JSX.Element => {
     const presentationsList = useSelector(getPresentationsList());
     const presentationsStatuses = useSelector(getPresentationStatusesList());
+
     const usersList = getActualUsersList(presentationsList);
 
     const isLoading = useSelector(getPresentationsLoadingStatus());

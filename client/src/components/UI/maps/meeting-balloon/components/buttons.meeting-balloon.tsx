@@ -10,7 +10,7 @@ import { IDialogPagesState } from "@interfaces/state/dialog-pages-state.interfac
 import { IMeeting } from "@interfaces/meeting/meeting.interface";
 // dialogs
 import meetingsDialogsState from "@dialogs/dialog-handlers/meetings.dialog-handlers";
-import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
+import objectsDialogsState from "@dialogs/dialog-handlers/objects.dialog-handlers";
 
 interface ButtonsMeetingBalloonProps {
   meetingId: string;
@@ -33,7 +33,7 @@ const ButtonsMeetingBalloon: FC<ButtonsMeetingBalloonProps> = ({
   const objectId: string = meeting?.objectId;
 
   const { handleOpenUpdateMeetingPage } = meetingsDialogsState({ setState });
-  const { handleOpenObjectPage } = useDialogHandlers(setState);
+  const { handleOpenObjectPage } = objectsDialogsState({ setState });
 
   return (
     <ButtonsContainer>

@@ -8,21 +8,11 @@ import { IMeeting } from "@interfaces/meeting/meeting.interface";
 import { getMeetingsList } from "@store/meeting/meetings.store";
 // utils
 import sortingByDateAndTime from "@utils/sort/sorting-by-date-and-time";
-
-type IData = Record<string, string | string[] | null>;
+import { isSearchQuery } from "@interfaces/search-query/is-search-query.type-guard";
+import { IDataProps } from "@interfaces/data/data-props.type";
 
 interface IUseSearchMeeting {
-  data: IData;
-}
-
-function isSearchQuery(searchQuery: string | string[]): searchQuery is string {
-  if (typeof searchQuery === "string") {
-    return true;
-  } else if (Array.isArray(searchQuery)) {
-    return true;
-  } else {
-    return false;
-  }
+  data: IDataProps;
 }
 
 const useSearchMeeting = ({ data }: IUseSearchMeeting) => {

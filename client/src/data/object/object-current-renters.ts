@@ -9,7 +9,7 @@ const objectCurrentRentersArray = [
   },
   {
     _id: "64d95201576aa746bb3d28d1",
-    name: "Продуктовый"
+    name: "Продукты"
   },
   {
     _id: "64d95209576aa746bb3d28d2",
@@ -18,10 +18,6 @@ const objectCurrentRentersArray = [
   {
     _id: "64d95213576aa746bb3d28d3",
     name: "Медицина"
-  },
-  {
-    _id: "64d95219576aa746bb3d28d4",
-    name: "Аптека"
   },
   {
     _id: "64d95222576aa746bb3d28d5",
@@ -38,10 +34,6 @@ const objectCurrentRentersArray = [
   {
     _id: "64d9f2f8a012ofdp432hfs32",
     name: "Другое"
-  },
-  {
-    _id: "649foau2384305jfrg834052",
-    name: "Разное"
   }
 ];
 

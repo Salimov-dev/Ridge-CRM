@@ -1,76 +1,62 @@
 import { orderBy } from "lodash";
-import React, { HTMLProps } from "react";
+import { Dispatch, SetStateAction } from "react";
 import { useSelector } from "react-redux";
+import { Row } from "react-table";
 // MUI
-import { Box, Button, Tooltip, Typography } from "@mui/material";
+import { Box, Button, Tooltip, Typography, styled } from "@mui/material";
 import CloudDoneIcon from "@mui/icons-material/CloudDone";
 import CloudOffIcon from "@mui/icons-material/CloudOff";
 // styled
 import { AlignCenter } from "@styled/styled-columns";
 // utils
 import { FormatDate } from "@utils/date/format-date";
+import { IndeterminateCheckbox } from "@utils/table/indeterminate-checkbox";
+import { FormatMetro, FormatObjectStatus } from "@utils/table/helpers.table";
 // components
 import Flags from "@components/common/columns/flags";
 import EmptyTd from "@components/common/columns/empty-td";
 import UserNameWithAvatar from "@components/common/user/user-name-with-avatar";
 import ButtonStyled from "@components/common/buttons/button-styled.button";
-import {
-  FormatMetro,
-  FormatObjectStatus
-} from "@components/common/table/helpers/helpers.table";
 import ContactTableEntity from "@components/common/table-entities/contact.table-entity";
-import CompanyTableEntity from "@components/common/table-entities/company.4table-entity";
+import CompanyTableEntity from "@components/common/table-entities/company.table-entity";
 // hooks
 import useGetUserAvatar from "@hooks/user/use-get-user-avatar";
-import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
+// interfaces
+import { IDialogPagesState } from "@interfaces/state/dialog-pages-state.interface";
+import { IMeeting } from "@interfaces/meeting/meeting.interface";
+import { ILastContact } from "@interfaces/last-contact/last-contact.interface";
+// dialog-handlers
+import objectsDialogsState from "@dialogs/dialog-handlers/objects.dialog-handlers";
 // store
 import { getLastContactsList } from "@store/last-contact/last-contact.store";
 import { getDistrictName } from "@store/object-params/object-districts.store";
-import { getTasksList } from "@store/task/tasks.store";
-import {
-  getMeetingsList,
-  getObjectMeetingsList
-} from "@store/meeting/meetings.store";
+import { getMeetingsList } from "@store/meeting/meetings.store";
 
-function IndeterminateCheckbox({
-  indeterminate,
-  className = "",
-  ...rest
-}: { indeterminate?: boolean } & HTMLProps) {
-  const ref = React.useRef(null!);
-
-  React.useEffect(() => {
-    if (typeof indeterminate === "boolean") {
-      ref.current.indeterminate = !rest.checked && indeterminate;
-    }
-  }, [ref, indeterminate]);
-
-  return (
-    <input
-      type="checkbox"
-      ref={ref}
-      className={className + " cursor-pointer"}
-      {...rest}
-    />
-  );
+interface ObjectsColumnsProps {
+  isCurrentUserRoleManager: boolean;
+  isCurrentUserRoleCurator: boolean;
+  setState: Dispatch<SetStateAction<IDialogPagesState>>;
 }
 
-export const objectsColumns = (
+const AddressWithFlags = styled(Box)`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+`;
+
+export const objectsColumns = ({
   setState,
   isCurrentUserRoleManager,
   isCurrentUserRoleCurator
-) => {
+}: ObjectsColumnsProps) => {
   let columns = [];
 
-  const {
-    handleOpenObjectPage,
-    handleOpenContactPage,
-    handleOpenUpdateCompanyPage
-  } = useDialogHandlers(setState);
+  const { handleOpenObjectPage } = objectsDialogsState({ setState });
 
   const selectColumn = {
     id: "select",
-    header: ({ table }) => (
+    header: ({ table }: any) => (
       <IndeterminateCheckbox
         {...{
           checked: table.getIsAllRowsSelected(),
@@ -79,7 +65,7 @@ export const objectsColumns = (
         }}
       />
     ),
-    cell: ({ row }) => (
+    cell: ({ row }: any) => (
       <div className="px-1">
         <AlignCenter>
           <IndeterminateCheckbox
@@ -99,7 +85,7 @@ export const objectsColumns = (
     accessorKey: "created_at",
     header: "Дата",
     enableSorting: false,
-    cell: (info) => {
+    cell: (info: { getValue: () => any }) => {
       const date = info.getValue();
       return <AlignCenter>{FormatDate(date)}</AlignCenter>;
     }
@@ -111,7 +97,7 @@ export const objectsColumns = (
       {
         accessorKey: "city",
         header: "Город",
-        cell: (info) => {
+        cell: (info: { getValue: () => any }) => {
           const city = info.getValue();
           return city;
         }
@@ -119,7 +105,7 @@ export const objectsColumns = (
       {
         accessorKey: "district",
         header: "Район",
-        cell: (info) => {
+        cell: (info: { getValue: () => any }) => {
           const district = info.getValue();
           const distName = useSelector(getDistrictName(district));
 
@@ -129,7 +115,7 @@ export const objectsColumns = (
       {
         accessorKey: "metro",
         header: "Метро",
-        cell: (info) => {
+        cell: (info: { getValue: () => any }) => {
           const metro = info.getValue();
           return metro ? (
             <AlignCenter>{FormatMetro(metro)}</AlignCenter>
@@ -139,37 +125,18 @@ export const objectsColumns = (
         }
       },
       {
-        accessorFn: (row) => row,
+        accessorFn: (row: Row) => row,
         header: "Адрес",
-        cell: (info) => {
+        cell: (info: { getValue: () => any }) => {
           const object = info.getValue();
           const objectId = object?._id;
-          const meetings = useSelector(getObjectMeetingsList(objectId));
-          const tasksList = useSelector(getTasksList());
-          const tasks = tasksList?.filter((task) => task.objectId === objectId);
-          const lastContactsList = useSelector(getLastContactsList());
-          const lastContacts = lastContactsList?.filter(
-            (contact) => contact.objectId === objectId
-          );
 
           if (objectId) {
             return (
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  gap: "12px"
-                }}
-              >
+              <AddressWithFlags>
                 <Typography>{object?.address}</Typography>
-                <Flags
-                  meetings={meetings}
-                  tasks={tasks}
-                  lastContacts={lastContacts}
-                  onClick={() => handleOpenObjectPage(objectId)}
-                />
-              </Box>
+                <Flags objectId={objectId} setState={setState} />
+              </AddressWithFlags>
             );
           } else return null;
         }
@@ -184,28 +151,20 @@ export const objectsColumns = (
         accessorKey: "contacts",
         header: "Контакты",
         enableSorting: false,
-        cell: (info) => {
+        cell: (info: { getValue: () => any }) => {
           const contacts = info.getValue();
 
-          return (
-            <ContactTableEntity
-              contacts={contacts}
-              onOpenContactPage={handleOpenContactPage}
-            />
-          );
+          return <ContactTableEntity contacts={contacts} setState={setState} />;
         }
       },
       {
         accessorKey: "companies",
         header: "Связан с компаниями",
         enableSorting: false,
-        cell: (info) => {
+        cell: (info: { getValue: () => any }) => {
           const companies = info.getValue();
           return (
-            <CompanyTableEntity
-              companies={companies}
-              onOpenCompanyPage={handleOpenUpdateCompanyPage}
-            />
+            <CompanyTableEntity companies={companies} setState={setState} />
           );
         }
       }
@@ -216,14 +175,15 @@ export const objectsColumns = (
     header: "Последние контакты",
     columns: [
       {
-        accessorFn: (row) => row,
+        accessorFn: (row: Row) => row,
         header: "Встреча",
-        cell: (info) => {
+        cell: (info: { getValue: () => any }) => {
           const object = info.getValue();
           const objectId = object?._id;
+
           const meetingsList = useSelector(getMeetingsList());
           const objectMeetings = meetingsList?.filter(
-            (meet) => meet.objectId === objectId
+            (meet: IMeeting) => meet.objectId === objectId
           );
           const isObjectMeetings = Boolean(objectMeetings?.length);
           const sortedObjectMeetings = orderBy(
@@ -243,14 +203,14 @@ export const objectsColumns = (
         }
       },
       {
-        accessorFn: (row) => row,
+        accessorFn: (row: Row) => row,
         header: "Звонок",
-        cell: (info) => {
+        cell: (info: { getValue: () => any }) => {
           const object = info.getValue();
           const objectId = object?._id;
           const lastContactsList = useSelector(getLastContactsList());
           const lastContacts = lastContactsList?.filter(
-            (contact) => contact.objectId === objectId
+            (contact: ILastContact) => contact.objectId === objectId
           );
           const sortedLastContacts = orderBy(lastContacts, "date", ["desc"]);
           const isSortedLastContacts = Boolean(sortedLastContacts?.length);
@@ -280,7 +240,7 @@ export const objectsColumns = (
       {
         accessorKey: "userId",
         header: "Фамилия и Имя",
-        cell: (info) => {
+        cell: (info: { getValue: () => any }) => {
           const userId = info.getValue();
           const { getAvatarSrc, isLoading } = useGetUserAvatar(userId);
 
@@ -304,7 +264,7 @@ export const objectsColumns = (
       {
         accessorKey: "status",
         header: "Статус",
-        cell: (info) => {
+        cell: (info: { getValue: () => any }) => {
           const status = info.getValue();
           return <AlignCenter>{FormatObjectStatus(status)}</AlignCenter>;
         }
@@ -312,14 +272,14 @@ export const objectsColumns = (
       {
         accessorKey: "cloudLink",
         header: "Облако",
-        cell: (info) => {
+        cell: (info: { getValue: () => any }) => {
           const cloudLink = info.getValue();
 
           const handleOpenCloud = () => {
             const cloudLink = info.getValue();
 
             if (cloudLink) {
-              window.open(cloudLink, "_blank"); // Открывает ссылку в новой вкладке браузера
+              window.open(cloudLink, "_blank");
             }
           };
           return cloudLink?.length ? (
@@ -343,7 +303,7 @@ export const objectsColumns = (
         accessorKey: "_id",
         header: "Объект",
         enableSorting: false,
-        cell: (info) => {
+        cell: (info: { getValue: () => any }) => {
           const objectId = info.getValue();
 
           return (

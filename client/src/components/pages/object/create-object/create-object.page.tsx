@@ -23,7 +23,7 @@ import { removeSpacesAndConvertToNumber } from "@utils/data/remove-spaces-and-co
 // initial-states
 import { objectCreateInitialState } from "@initial-states/pages/object-create.initial-state";
 // data
-import { objectHasDistrict } from "@data/object/object-has-district";
+import { objectHasDistrict } from "@utils/objects/object-has-district";
 // store
 import { createObject, getObjectsList } from "@store/object/objects.store";
 import { getCurrentUserId } from "@store/user/users.store";

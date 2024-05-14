@@ -97,7 +97,6 @@ const Object = sequelize.define(
       allowNull: true
     },
     rentTypes: { type: DataTypes.STRING, defaultValue: null, allowNull: true },
-
     currentRenters: { type: DataTypes.STRING },
     objectConditions: {
       type: DataTypes.STRING,

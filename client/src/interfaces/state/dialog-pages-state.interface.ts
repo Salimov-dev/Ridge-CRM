@@ -6,8 +6,9 @@ export interface IDialogPagesState {
   createPresentationPage: boolean;
   updatePresentationPage: boolean;
   videoPlayerPage: boolean;
-  objectId: string;
+  objectId: string | null;
   presentationId: string;
+  dateCreate: string;
   createMyTaskPage: boolean;
   updateMyTaskPage: boolean;
   createManagerTaskPage: boolean;

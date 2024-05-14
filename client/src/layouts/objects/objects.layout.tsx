@@ -1,86 +1,51 @@
 // libraries
-import dayjs from "dayjs";
 import { useForm } from "react-hook-form";
-import { useSelector } from "react-redux";
 import React, { useEffect, useState } from "react";
 // components
-import BasicTable from "@components/common/table/basic-table";
+import DialogPages from "@dialogs/dialog-pages";
 import HeaderForLayout from "@components/common/headers/header-for-layout";
-import ItemsOnMap from "@components/common/map/items-on-map/items-on-map";
 import { ContainerStyled } from "@components/common/container/container-styled";
-import PageDialogs from "@components/common/dialog/page-dialogs";
-import ObjectsLayoutFiltersPanel from "@components/UI/filters-panels/objects-layout.filters-panel";
-import ButtonsObjectsLayout from "../../components/UI/layout-buttons/buttons.objects-layout";
-import ObjectBalloon from "@components/UI/maps/object-balloon";
+import ButtonsObjectsLayout from "@components/UI/layout-buttons/buttons.objects-layout";
 // initial-states
 import { objectsLayoutInitialState } from "@initial-states/layouts/objects-layout.initial-state";
-// columns
-import { objectsColumns } from "@columns/objects.columns";
+import { dialogePagesState } from "@initial-states/dialog-pages-state/dialog-pages.state";
+// columninterfacess
+import { IDialogPagesState } from "@interfaces/state/dialog-pages-state.interface";
+import { RowSelection } from "@interfaces/table/row-selection.type";
 // utils
 import { getItemsIdsFromRowSelection } from "@utils/table/get-items-Ids-from-row-selection";
+import getLocalStorageFiltersState from "@utils/local-storage/get-local-storage-filters-state";
+import setLocalStorageFiltersState from "@utils/local-storage/set-local-storage-filters-state";
 // hooks
 import useSearchObject from "@hooks/object/use-search-object";
 // store
-import {
-  getObjectById,
-  getObjectsList,
-  getObjectsLoadingStatus
-} from "@store/object/objects.store";
-import {
-  getIsCurrentUserRoleCurator,
-  getIsCurrentUserRoleManager
-} from "@store/user/users.store";
+import ObjectsLayoutContent from "./components/content.objects-layout";
 
 const ObjectsLayout = React.memo(() => {
-  const [rowSelection, setRowSelection] = useState([]);
-  const [selectedRowObjects, setSelectedRowObjects] = useState([]);
-  const [selectedBalloon, setSelectedBalloon] = useState([]);
-  const [stateDialogPages, setStateDialogPages] = useState({
-    objectPage: false,
-    createPage: false,
-    updatePage: false,
-    objectId: null,
-    createPresentationPage: false,
-    transferObjectPage: false,
-    videoPlayerPage: false
+  const [rowSelection, setRowSelection] = useState<RowSelection>([]);
+  const [selectedRowObjects, setSelectedRowObjects] = useState<string[]>([]);
+  const [stateDialogPages, setStateDialogPages] =
+    useState<IDialogPagesState>(dialogePagesState);
+
+  const { localStorageData, formatedState } = getLocalStorageFiltersState({
+    title: "search-objects-data"
   });
 
-  const localStorageState = JSON.parse(
-    localStorage.getItem("search-objects-data")
-  );
-
-  const formatedState = {
-    ...localStorageState,
-    startDate: localStorageState?.startDate
-      ? dayjs(localStorageState?.startDate)
-      : null,
-    endDate: localStorageState?.endDate
-      ? dayjs(localStorageState?.endDate)
-      : null
-  };
-
   const { register, watch, setValue, reset } = useForm({
-    defaultValues: !!localStorageState
-      ? formatedState
-      : objectsLayoutInitialState,
+    defaultValues: localStorageData ? formatedState : objectsLayoutInitialState,
     mode: "onChange"
   });
 
   const data = watch();
-  const objects = useSelector(getObjectsList());
-  const isLoading = useSelector(getObjectsLoadingStatus());
 
-  const selectedObjectOnMap = useSelector(getObjectById(selectedBalloon));
-  const sortedSearchedObjects = useSearchObject(objects, data);
+  const sortedSearchedObjects = useSearchObject({ data });
 
-  const isCurrentUserRoleManager = useSelector(getIsCurrentUserRoleManager());
-  const isCurrentUserRoleCurator = useSelector(getIsCurrentUserRoleCurator());
+  setLocalStorageFiltersState({
+    title: "search-objects-data",
+    data: data
+  });
 
-  const handleSelectBalloon = (item) => {
-    setSelectedBalloon(item);
-  };
-
-  const handleSelectRowObjects = (objects) => {
+  const handleSelectRowObjects = (objects: string[]) => {
     setSelectedRowObjects(objects);
   };
 
@@ -90,21 +55,6 @@ const ObjectsLayout = React.memo(() => {
     );
   }, [rowSelection]);
 
-  useEffect(() => {
-    localStorage.setItem("search-objects-data", JSON.stringify(data));
-  }, [data]);
-
-  useEffect(() => {
-    const hasLocalStorageData = localStorage.getItem("search-objects-data");
-
-    if (hasLocalStorageData?.length) {
-      localStorage.setItem(
-        "search-objects-data",
-        JSON.stringify(objectsLayoutInitialState)
-      );
-    }
-  }, []);
-
   return (
     <ContainerStyled>
       <HeaderForLayout title="Таблица объектов" />
@@ -113,39 +63,20 @@ const ObjectsLayout = React.memo(() => {
         reset={reset}
         setState={setStateDialogPages}
       />
-      <ItemsOnMap
-        items={sortedSearchedObjects}
-        onClick={handleSelectBalloon}
-        isLoading={isLoading}
-        baloon={
-          <ObjectBalloon
-            object={selectedObjectOnMap}
-            setState={setStateDialogPages}
-          />
-        }
-      />
-      <ObjectsLayoutFiltersPanel
+      <ObjectsLayoutContent
         data={data}
         register={register}
         setValue={setValue}
-      />
-      <BasicTable
+        setStateDialogPages={setStateDialogPages}
         rowSelection={rowSelection}
         setRowSelection={setRowSelection}
-        items={sortedSearchedObjects}
-        itemsColumns={objectsColumns(
-          setStateDialogPages,
-          isCurrentUserRoleManager,
-          isCurrentUserRoleCurator
-        )}
-        isLoading={isLoading}
+        objects={sortedSearchedObjects}
       />
-      <PageDialogs
+      <DialogPages
         state={stateDialogPages}
         setState={setStateDialogPages}
         selectedObjects={selectedRowObjects}
         setRowSelection={setRowSelection}
-        isObjectPage={true}
         videoTitle="Как пользоваться Таблицей объектов"
         videoSrc="https://www.youtube.com/embed/i7INzzNfG1o"
       />

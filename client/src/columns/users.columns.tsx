@@ -1,7 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import { useSelector } from "react-redux";
 // components
-import { FormatPhone } from "@components/common/table/helpers/helpers.table";
+import { FormatPhone } from "@utils/table/helpers.table";
 // styled
 import { AlignCenter } from "@styled/styled-columns";
 // data

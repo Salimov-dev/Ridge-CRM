@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { allDistrictsList } from "@data/object/get-finded-object-districts-list";
+import { allDistrictsList } from "@utils/objects/get-finded-object-districts-list";
 
 const districtsSlice = createSlice({
   name: "districts",

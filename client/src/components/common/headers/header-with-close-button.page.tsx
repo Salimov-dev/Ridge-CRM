@@ -13,10 +13,10 @@ const Component = styled(Box)`
 
 const HeaderWithCloseButtonForPage = ({
   title = "",
-  onClose,
+  onClose = () => {},
   background = "",
   color = "white",
-  margin = "0 0 20px 0"
+  margin = "0"
 }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -27,9 +27,8 @@ const HeaderWithCloseButtonForPage = ({
         title={title}
         background={background ? background : colors.header["gold"]}
         color={color}
-        margin="0px"
       />
-      <CloseButtonIconButton onClose={onClose} />
+      <CloseButtonIconButton onClose={onClose} margin="0 0 20px 0" />
     </Component>
   );
 };

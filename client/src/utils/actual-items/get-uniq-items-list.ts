@@ -3,7 +3,7 @@ import { orderBy } from "lodash";
 interface GetUniqueItemsListProps {
   position: string;
   itemsArray: Record<string, any>;
-  positionsArray: Record<string, any>;
+  positionsArray: IPosition[] | null;
 }
 
 interface IPosition {
@@ -35,7 +35,12 @@ export const getUniqueItemsList = ({
       : { _id: null, name: "Нет значения" };
   });
 
-  const sortedPositions = orderBy(actualStatusesArray, ["name"], ["asc"]);
+  const uniqueStatuses = actualStatusesArray.filter(
+    (status, index, self) =>
+      status._id !== null || self.findIndex((s) => s._id === null) === index
+  );
+
+  const sortedPositions = orderBy(uniqueStatuses, ["name"], ["asc"]);
 
   return sortedPositions;
 };

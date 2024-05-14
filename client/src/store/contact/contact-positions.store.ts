@@ -1,4 +1,4 @@
-import { userContactPositionsArray } from "@data/users/user-contact-positions";
+import { contactPositionsArray } from "@data/contact/contact-positions";
 import { createSlice } from "@reduxjs/toolkit";
 
 const contactPositionsSlice = createSlice({
@@ -17,7 +17,7 @@ const { reducer: contactPositionsReducer, actions } = contactPositionsSlice;
 const { contactPositionsLoaded } = actions;
 
 export const loadContactPositionsList = () => async (dispatch) => {
-  dispatch(contactPositionsLoaded(userContactPositionsArray));
+  dispatch(contactPositionsLoaded(contactPositionsArray));
 };
 
 export const getContactPositionsList = () => (state) =>

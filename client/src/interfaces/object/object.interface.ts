@@ -5,8 +5,8 @@ export interface IObject {
   cadastralNumber: string;
   city: string;
   cloudLink: string;
-  companies: string[];
-  contacts: string[];
+  companies: Company[];
+  contacts: Contact[];
   created_at: string;
   currentRenters: string;
   district: string;
@@ -38,3 +38,6 @@ export interface IObject {
   zoom: number;
   _id: string;
 }
+
+type Contact = { contact: string };
+type Company = { company: string };

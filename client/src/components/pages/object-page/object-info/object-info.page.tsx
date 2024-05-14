@@ -19,6 +19,7 @@ import {
   getCurrentUserId,
   getIsCurrentUserRoleCurator
 } from "@store/user/users.store";
+import DialogPages from "@dialogs/dialog-pages";
 
 const Component = styled(Box)`
   display: flex;
@@ -30,7 +31,7 @@ interface ObjectInfoPageProps {
   object: IObject;
 }
 
-const ObjectInfoPage: FC<ObjectInfoPageProps> = ({ object }) => {
+const ObjectInfoPage: FC<ObjectInfoPageProps> = ({ state, object }) => {
   const [stateDialogPages, setStateDialogPages] =
     useState<IDialogPagesState>(dialogePagesState);
 
@@ -58,8 +59,10 @@ const ObjectInfoPage: FC<ObjectInfoPageProps> = ({ object }) => {
 
   return (
     <Component>
-      <TabsStyled tabs={tabsObjectInfoPage({ object, setStateDialogPages })} />
-      <PageDialogs
+      <TabsStyled
+        tabs={tabsObjectInfoPage({ object, state, setStateDialogPages })}
+      />
+      <DialogPages
         users={actualUsersList}
         state={stateDialogPages}
         setState={setStateDialogPages}

@@ -1,11 +1,19 @@
 import React, { Dispatch, FC, SetStateAction } from "react";
 import { Box, styled } from "@mui/material";
+import { useSelector } from "react-redux";
 // components
 import ButtonsPresentationBalloon from "./components/buttons.presentation-balloon";
 import FirstSectionPresentationBalloon from "./components/first-section.presentation-balloon";
 import SecondSectionPresentationBalloon from "./components/second-section.presentation-balloon";
+import Loader from "@components/common/loader/loader";
 // interfaces
 import { IDialogPagesState } from "@interfaces/state/dialog-pages-state.interface";
+import { getPresentationsLoadingStatus } from "@store/presentation/presentations.store";
+
+interface PresentationBalloonProps {
+  presentationId: string;
+  setState: Dispatch<SetStateAction<IDialogPagesState>>;
+}
 
 const BaloonContainer = styled(Box)`
   width: 100%;
@@ -17,14 +25,11 @@ const BaloonContainer = styled(Box)`
   padding: 10px 0;
 `;
 
-interface PresentationBalloonProps {
-  presentationId: string;
-  setState: Dispatch<SetStateAction<IDialogPagesState>>;
-}
-
 const PresentationBalloon: FC<PresentationBalloonProps> = React.memo(
   ({ presentationId, setState }) => {
-    return (
+    const isLoading = useSelector(getPresentationsLoadingStatus());
+
+    return !isLoading ? (
       <BaloonContainer>
         <FirstSectionPresentationBalloon presentationId={presentationId} />
         <SecondSectionPresentationBalloon presentationId={presentationId} />
@@ -33,6 +38,8 @@ const PresentationBalloon: FC<PresentationBalloonProps> = React.memo(
           setState={setState}
         />
       </BaloonContainer>
+    ) : (
+      <Loader color="darkOrange" height="140px" />
     );
   }
 );

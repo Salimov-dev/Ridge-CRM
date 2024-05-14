@@ -5,6 +5,7 @@ import OpenPageElementIconButton from "../button-icons/open-page-element.button-
 import { AlignCenter } from "../../../styled/styled-columns";
 import { getCompaniesList } from "@store/company/company.store";
 import EmptyTd from "../columns/empty-td";
+import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
 
 const Component = styled(Box)`
   display: flex;
@@ -12,8 +13,10 @@ const Component = styled(Box)`
   justify-content: center;
 `;
 
-const CompanyTableEntity = ({ companies, onOpenCompanyPage }) => {
+const CompanyTableEntity = ({ companies, setState }) => {
   const companiesList = useSelector(getCompaniesList());
+
+  const { handleOpenUpdateCompanyPage } = useDialogHandlers(setState);
 
   return (
     <AlignCenter sx={{ display: "flex", flexDirection: "column" }}>
@@ -36,7 +39,7 @@ const CompanyTableEntity = ({ companies, onOpenCompanyPage }) => {
                 height="16px"
                 heightButton="12px"
                 width="16px"
-                onClick={() => onOpenCompanyPage(companyId)}
+                onClick={() => handleOpenUpdateCompanyPage(companyId)}
               />
             </Component>
           );

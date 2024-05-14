@@ -51,6 +51,7 @@ const MeetingsLayout = React.memo(() => {
         data={data}
         register={register}
         setValue={setValue}
+        state={stateDialogPages}
         setStateDialogPages={setStateDialogPages}
       />
       <DialogPages

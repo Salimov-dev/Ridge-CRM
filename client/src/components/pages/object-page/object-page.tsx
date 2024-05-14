@@ -14,6 +14,7 @@ import {
 
 const ObjectPage = React.memo(
   ({
+    state,
     objectId,
     onClose,
     onOpenUpdateObjectPage,
@@ -52,7 +53,7 @@ const ObjectPage = React.memo(
           center={center}
           isLoading={isLoading}
         />
-        <ObjectInfo object={object} />
+        <ObjectInfo object={object} state={state} />
         <Footer
           object={object}
           onClose={onClose}

@@ -3,359 +3,198 @@ import dayjs from "dayjs";
 import { useMemo } from "react";
 import { orderBy } from "lodash";
 import { useSelector } from "react-redux";
+// interfaces
+import { IObject } from "@interfaces/object/object.interface";
+import { IDataProps } from "@interfaces/data/data-props.type";
+import { isSearchQuery } from "@interfaces/search-query/is-search-query.type-guard";
+import { IContact } from "@interfaces/contact/contact.inteface";
+import { ICompany } from "@interfaces/company/company.inteface";
 // store
-import { getMeetingsList } from "@store/meeting/meetings.store";
-import { getTasksList } from "@store/task/tasks.store";
-import { getLastContactsList } from "@store/last-contact/last-contact.store";
 import { getContactsList } from "@store/contact/contact.store";
 import { getCompaniesList } from "@store/company/company.store";
+import { getObjectsList } from "@store/object/objects.store";
 
-const useSearchObject = (objects, data) => {
-  const meetings = useSelector(getMeetingsList());
-  const tasks = useSelector(getTasksList());
-  const lastContacts = useSelector(getLastContactsList());
+interface IUseSearchObject {
+  data: IDataProps;
+}
+
+const useSearchObject = ({ data }: IUseSearchObject) => {
+  const objects: IObject[] = useSelector(getObjectsList());
   const contacts = useSelector(getContactsList());
   const companies = useSelector(getCompaniesList());
-
-  const hasMeetings = (objectId) => {
-    const objectsWithMeetings = meetings.filter(
-      (meet) => meet?.objectId === objectId
-    );
-    const hasMeeting = objectsWithMeetings.length > 0;
-
-    return hasMeeting;
-  };
-
-  const hasTasks = (objectId) => {
-    const objectsWithTasks = tasks.filter(
-      (task) => task?.objectId === objectId
-    );
-    const hasTasks = objectsWithTasks.length > 0;
-
-    return hasTasks;
-  };
-
-  const hasLastContact = (objectId) => {
-    const objectsWithLastContact = lastContacts?.filter(
-      (contact) => contact?.objectId === objectId
-    );
-    const hasLastContact = objectsWithLastContact?.length > 0;
-
-    return hasLastContact;
-  };
 
   const searchedObjects = useMemo(() => {
     let array = objects;
 
-    // выбор по адресу
-    if (data?.address?.length) {
-      array = array?.filter((obj) =>
-        obj?.address?.toLowerCase()?.includes(data?.address.toLowerCase())
-      );
+    // ПОИСК ПО АДРЕСУ
+    if (data?.address) {
+      const searchQuery = data.address;
+      if (isSearchQuery(searchQuery)) {
+        return (array = array?.filter((obj) =>
+          obj?.address?.toLowerCase().includes(searchQuery.toLowerCase())
+        ));
+      }
     }
 
-    // выбор по телефону
+    // ПОИСК ПО ТЕЛЕФОНУ ИЗ КОНТАКТА
     if (data?.phone?.length) {
-      const findedContacts = contacts?.filter((cont) => {
-        const findedPhones = cont.phones?.filter((phone) =>
-          phone?.phone.includes(String(data?.phone))
+      const findedContacts: IContact[] = contacts?.filter((cont: IContact) => {
+        const findedPhones = cont.phones?.filter((phones) =>
+          phones?.phone.includes(String(data?.phone))
         );
-        // Возвращаем true, если есть совпадения
         return findedPhones?.length > 0;
       });
-
-      // Получаем массив идентификаторов контактов
-      const contactIds = findedContacts?.map((cont) => cont._id);
-
-      // Возвращаем только те объекты из array, у которых в contacts есть id контактов из contactIds
+      const contactIds = findedContacts?.map((cont: IContact) => cont._id);
       const result = array?.filter((obj) =>
-        obj.contacts.some((contact) => contactIds?.includes(contact.contact))
+        obj.contacts.some((elem) => contactIds?.includes(elem.contact))
       );
 
       return result;
     }
 
-    // выбор по компании
-    if (data?.company?.length) {
-      const findedCompanies = companies?.filter((comp) => {
-        const findedNames = comp.name
-          ?.toLowerCase()
-          .includes(data?.company.toLowerCase());
-        // Возвращаем true, если есть совпадения
-        return findedNames; // Возвращаем булево значение, а не длину массива
+    // ПОИСК ПО ИМЕНИ КОНТАКТА
+    if (data?.name?.length) {
+      const searchQuery = data.name;
+      const findedContacts: IContact[] = contacts?.filter((cont: IContact) => {
+        if (isSearchQuery(searchQuery)) {
+          const findedNames = cont.name
+            ?.toLowerCase()
+            .includes(searchQuery.toLowerCase());
+
+          return findedNames;
+        }
       });
+      const contactIds = findedContacts?.map((cont: IContact) => cont._id);
+      const result = array?.filter((obj) =>
+        obj.contacts.some((contact) => contactIds?.includes(contact.contact))
+      );
+      return result;
+    }
 
-      // Получаем массив идентификаторов контактов
-      const companyIds = findedCompanies?.map((comp) => comp._id);
+    // ПОИСК ПО ИМЕНИ КОМПАНИИ
+    if (data?.company?.length) {
+      const searchQuery = data.company;
+      const findedCompanies: ICompany[] = companies?.filter(
+        (comp: ICompany) => {
+          if (isSearchQuery(searchQuery)) {
+            const findedNames = comp.name
+              ?.toLowerCase()
+              .includes(searchQuery.toLowerCase());
 
-      // Возвращаем только те объекты из array, у которых в companies есть id контактов из contactIds
+            return findedNames;
+          }
+        }
+      );
+      const companyIds = findedCompanies?.map((comp: ICompany) => comp._id);
       const result = array?.filter((obj) =>
         obj.companies.some((company) => companyIds?.includes(company.company))
       );
-
       return result;
     }
 
-    // выбор по имени
-    if (data?.name?.length) {
-      const findedContacts = contacts?.filter((cont) => {
-        const findedNames = cont.name
-          ?.toLowerCase()
-          .includes(data?.name.toLowerCase());
-        // Возвращаем true, если есть совпадения
-        return findedNames; // Возвращаем булево значение, а не длину массива
-      });
-
-      // Получаем массив идентификаторов контактов
-      const contactIds = findedContacts?.map((cont) => cont._id);
-
-      // Возвращаем только те объекты из array, у которых в contacts есть id контактов из contactIds
-      const result = array?.filter((obj) =>
-        obj.contacts.some((contact) => contactIds?.includes(contact.contact))
-      );
-
-      return result;
-    }
-
-    // выбор по кадастровому
-    if (data?.cadastralNumber?.length) {
-      array = array?.filter((obj) =>
-        obj.cadastralNumber.includes(data.cadastralNumber)
-      );
-    }
-
-    // выбор по описанию
+    // ПОИСК В ОПИСАНИИ ОБЪЕКТА
     if (data?.fullDescription?.length) {
-      const searchTerm = data.fullDescription.toLowerCase();
+      const searchQuery = data.fullDescription;
+      if (isSearchQuery(searchQuery)) {
+        return (array = array?.filter((obj) =>
+          obj?.fullDescription
+            ?.toLowerCase()
+            .includes(searchQuery.toLowerCase())
+        ));
+      }
+    }
+
+    // ФИЛЬТРАЦИЯ ПО НАСЕЛЕННОМУ ПУНКТУ
+    if (data.selectedCities?.length) {
+      array = array?.filter((obj) => data.selectedCities?.includes(obj?.city));
+    }
+
+    // ФИЛЬТРАЦИЯ ПО РАЙОНУ
+    if (data.selectedDistricts?.length) {
       array = array?.filter((obj) =>
-        obj.fullDescription.toLowerCase().includes(searchTerm)
+        data.selectedDistricts?.includes(obj?.district)
       );
     }
 
-    // object params
+    // ФИЛЬТРАЦИЯ ПО СТАНЦИИ МЕТРО
+    if (data.selectedMetro?.length) {
+      array = array?.filter((obj) => data.selectedMetro?.includes(obj?.metro));
+    }
+
+    // ФИЛЬТРАЦИЯ ПО СТАТУСУ ОБЪЕКТА
     if (data.selectedStatuses?.length) {
       array = array?.filter((obj) =>
-        data.selectedStatuses.includes(obj.status)
+        data.selectedStatuses?.includes(obj?.status)
       );
     }
 
-    // выбор по станции метро
-    if (data.selectedMetro?.length) {
-      !data.selectedMetro.includes("undefined")
-        ? (array = array?.filter((obj) =>
-            data.selectedMetro.includes(obj.metro)
-          ))
-        : (array = array?.filter((obj) => !obj.metro));
+    // ПОИСК ПО КАДАСТРОВОМУ НОМЕРУ
+    if (data?.cadastralNumber?.length) {
+      const searchQuery = data.cadastralNumber;
+      if (isSearchQuery(searchQuery)) {
+        return (array = array?.filter((obj) =>
+          obj?.cadastralNumber
+            ?.toLowerCase()
+            .includes(searchQuery.toLowerCase())
+        ));
+      }
     }
 
-    // выбор по менеджеру
-    if (data.selectedUsers?.length) {
-      array = array?.filter((obj) => data.selectedUsers?.includes(obj?.userId));
-    }
-
-    // Текущий арендатор
-    if (data.selectedCurrentRenters?.length) {
-      array = array?.filter((obj) =>
-        data.selectedCurrentRenters?.includes(obj?.currentRenters)
-      );
-    }
-    // Тип недвижимости
+    // ФИЛЬТРАЦИЯ ПО ТИПУ НЕДВИЖИМОСТИ
     if (data.selectedEstateTypes?.length) {
       array = array?.filter((obj) =>
         data.selectedEstateTypes?.includes(obj?.estateTypes)
       );
     }
-    // Тип объекта
+
+    // ФИЛЬТРАЦИЯ ПО ТИПУ ОБЪЕКТА
     if (data.selectedObjectTypes?.length) {
       array = array?.filter((obj) =>
         data.selectedObjectTypes?.includes(obj?.objectTypes)
       );
     }
-    // Расположение объекта
+
+    // ФИЛЬТРАЦИЯ ПО РАСПОЛОЖЕНИЮ ОБЪЕКТА
     if (data.selectedObjectProperties?.length) {
       array = array?.filter((obj) =>
-        data.selectedObjectProperties?.includes(
-          obj?.objectProperties || "undefined"
-        )
+        data.selectedObjectProperties?.includes(obj?.objectProperties)
       );
     }
-    // Тип торговой площади
+
+    // ФИЛЬТРАЦИЯ ПО ТИПУ ТОРГОВОЙ ПЛОЩАДИ
     if (data.selectedTradeArea?.length) {
       array = array?.filter((obj) =>
-        data.selectedTradeArea?.includes(obj?.tradeArea || "undefined")
+        data.selectedTradeArea?.includes(obj?.tradeArea)
       );
     }
 
-    // Фильтр для выбранных районов и городов
-    if (data.selectedDistricts?.length) {
+    // ФИЛЬТРАЦИЯ ПО ТЕКУЩЕМУ АРЕНДАТОРУ
+    if (data.selectedCurrentRenters?.length) {
       array = array?.filter((obj) =>
-        data.selectedDistricts.includes(obj.district)
+        data.selectedCurrentRenters?.includes(obj?.currentRenters)
       );
-
-      // Обновляем список выбранных городов на основе отфильтрованных районов
-      const filteredCities = data.selectedDistricts?.reduce(
-        (cities, district) => {
-          return cities.concat(
-            array
-              ?.filter((obj) => obj.district === district)
-              .map((obj) => obj.city)
-          );
-        },
-        []
-      );
-
-      // Фильтруем города исходя из списка отфильтрованных городов
-      if (data.selectedCities?.length) {
-        array = array?.filter((obj) => filteredCities?.includes(obj.city));
-      } else {
-        array = array?.filter((obj) =>
-          data.selectedDistricts?.includes(obj.district)
-        );
-      }
-    } else if (data.selectedCities?.length) {
-      array = array?.filter((obj) => data.selectedCities?.includes(obj.city));
     }
 
-    // выбор по времени добавления
-    if (data.startDate && data.endDate) {
-      const startDate = dayjs(data.startDate);
-      const endDate = dayjs(data.endDate).endOf("day");
+    // ФИЛЬТРАЦИЯ ПО ДАТЕ СОЗДАНИЯ ОБЪЕКТА
+    const startDate = dayjs(data.startDate as string);
+    const endDate = dayjs(data.endDate as string).endOf("day");
 
+    if (data.startDate && data.endDate) {
       array = array?.filter((obj) => {
-        const objDate = dayjs(obj.created_at);
-        return objDate.isBetween(startDate, endDate, null, "[]");
+        const objCreatedDate = dayjs(obj.created_at);
+        return (
+          objCreatedDate.isAfter(startDate) && objCreatedDate.isBefore(endDate)
+        );
       });
     } else if (data.startDate) {
-      const selectedDate = dayjs(data.startDate);
-      array = array?.filter((obj) => dayjs(obj.created_at) >= selectedDate);
+      array = array?.filter((obj) => dayjs(obj.created_at) >= startDate);
     } else if (data.endDate) {
-      const endDate = dayjs(data.endDate).endOf("day");
       array = array?.filter((obj) => dayjs(obj?.created_at) <= endDate);
     }
 
-    // c номером телефона
-    if (data.objectActivity === "534gdfsg2356hgd213mnbv") {
-      array = array?.filter((obj) => obj?.phone);
-    }
-    // без номера телефона
-    if (data.objectActivity === "976hd324gfdsg324534543") {
-      array = array?.filter((obj) => !obj?.phone);
-    }
-    // с задачами
-    if (data.objectActivity === "gf87634gdsfgsdf345tgdf") {
-      array = array?.filter((obj) => hasTasks(obj._id));
-    }
-    // без задач
-    if (data.objectActivity === "93254435gdf354yrt54hgh") {
-      array = array?.filter((obj) => !hasTasks(obj._id));
-    }
-    // со встречами
-    if (data.objectActivity === "7653gfdsgsd23fgdsgdfg") {
-      array = array?.filter((obj) => hasMeetings(obj._id));
-    }
-    // без встреч
-    if (data.objectActivity === "95459gdj239t54jgh95445") {
-      array = array?.filter((obj) => !hasMeetings(obj._id));
-    }
-    // с последним звонком
-    if (data.objectActivity === "765gdf2345ytrhgfd2354") {
-      array = array?.filter((obj) => hasLastContact(obj._id));
-    }
-    // без последнего звонка
-    if (data.objectActivity === "5149gjgnvmzofhwey45568") {
-      array = array?.filter((obj) => !hasLastContact(obj._id));
-    }
-    // без активности
-    if (data.objectActivity === "hgfd235654hjf324543qre") {
-      array = array?.filter(
-        (obj) => !hasMeetings(obj._id) && !hasTasks(obj._id)
-      );
-    }
-    // дублирующиеся адреса
-    if (data.objectActivity === "01df84jgfdh2349gj39999") {
-      const countList = array?.reduce(function (p, c) {
-        const fullAddress = `${c.city}, ${c.address}`;
-        p[fullAddress] = (p[fullAddress] || 0) + 1;
-        return p;
-      }, {});
-
-      const result = array?.filter(function (obj) {
-        const fullAddress = `${obj.city}, ${obj.address}`;
-        return countList[fullAddress] > 1;
-      });
-
-      return result;
-    }
-
-    // Фильтр для "Звонок от 1 до 2 месяцев"
-    if (data.objectActivity === "hgfd23560ogpa213jfdj3432") {
-      const currentDate = dayjs();
-      array = array?.filter((obj) => {
-        const objectId = obj?._id;
-        const lastContactsList = lastContacts?.filter(
-          (contact) => contact.objectId === objectId
-        );
-        const sortedLastContacts = orderBy(lastContactsList, "date", ["desc"]);
-        const lastContact = sortedLastContacts[0]?.date;
-
-        if (!lastContact) {
-          return false; // Если нет информации о последнем звонке, объект не попадает в фильтр
-        }
-
-        const lastContactDate = dayjs(lastContact);
-
-        return lastContactDate.isBetween(
-          currentDate.subtract(2, "months"),
-          currentDate.subtract(1, "months")
-        );
-      });
-    }
-
-    // Фильтр для "Звонок от 2 до 3 месяцев"
-    if (data.objectActivity === "hgfd23560ogpa213jfdj3511") {
-      const currentDate = dayjs();
-      array = array?.filter((obj) => {
-        const objectId = obj?._id;
-        const lastContactsList = lastContacts?.filter(
-          (contact) => contact.objectId === objectId
-        );
-        const sortedLastContacts = orderBy(lastContactsList, "date", ["desc"]);
-        const lastContact = sortedLastContacts[0]?.date;
-
-        if (!lastContact) {
-          return false; // Если нет информации о последнем звонке, объект не попадает в фильтр
-        }
-
-        const lastContactDate = dayjs(lastContact);
-
-        return lastContactDate.isBetween(
-          currentDate.subtract(3, "months"),
-          currentDate.subtract(2, "months")
-        );
-      });
-    }
-
-    // Фильтр для "Звонок от 3 месяцев"
-    if (data.objectActivity === "hgfd23560ogpa213jfdj0934") {
-      const currentDate = dayjs();
-      array = array?.filter((obj) => {
-        const objectId = obj?._id;
-        const lastContactsList = lastContacts?.filter(
-          (contact) => contact.objectId === objectId
-        );
-        const sortedLastContacts = orderBy(lastContactsList, "date", ["desc"]);
-        const lastContact = sortedLastContacts[0]?.date;
-
-        if (!lastContact) {
-          return false; // Если нет информации о последнем звонке, объект не попадает в фильтр
-        }
-
-        const lastContactDate = dayjs(lastContact);
-
-        // Проверяем, что разница между текущей датой и датой последнего контакта
-        // составляет более 3 месяцев
-        return lastContactDate.isBefore(currentDate.subtract(3, "months"));
-      });
+    // выбор по менеджеру
+    if (data.selectedUsers?.length) {
+      array = array?.filter((obj) => data.selectedUsers?.includes(obj?.userId));
     }
 
     return array;
