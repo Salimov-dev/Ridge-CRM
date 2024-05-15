@@ -20,5 +20,7 @@ export const dialogePagesState = {
   taskId: "",
   lastContactId: "",
   meetingId: "",
-  transferObjectPage: false
+  transferObjectPage: false,
+  createCompanyPage: false,
+  updateCompanyPage: false
 };

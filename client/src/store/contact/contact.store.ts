@@ -1,6 +1,6 @@
 import { io } from "socket.io-client";
 import { createSelector } from "reselect";
-import { createAction, createSlice } from "@reduxjs/toolkit";
+import { Dispatch, createAction, createSlice } from "@reduxjs/toolkit";
 // utils
 import isOutDated from "@utils/auth/is-out-date";
 // services
@@ -11,26 +11,41 @@ import configFile from "@config/config.json";
 // store
 import { updateObjects } from "@store/object/objects.store";
 import { updateCompanies } from "@store/company/company.store";
+import { IContact } from "@interfaces/contact/contact.inteface";
 
 const socket = io(configFile.ioEndPoint);
 
-const initialState = localStorageService.getAccessToken()
-  ? {
-      entities: null,
-      isLoading: true,
-      error: null,
-      isLoggedIn: true,
-      dataLoaded: false,
-      lastFetch: null
-    }
-  : {
-      entities: null,
-      isLoading: false,
-      error: null,
-      isLoggedIn: false,
-      dataLoaded: false,
-      lastFetch: null
-    };
+interface IContactsStoreInitialState {
+  entities: IContact[];
+  isLoading: boolean;
+  error: any;
+  isLoggedIn: boolean;
+  dataLoaded: boolean;
+  lastFetch: string | null;
+}
+
+interface IStoreState {
+  contacts: IContactsStoreInitialState;
+}
+
+const initialState: IContactsStoreInitialState =
+  localStorageService.getAccessToken()
+    ? {
+        entities: [],
+        isLoading: true,
+        error: null,
+        isLoggedIn: true,
+        dataLoaded: false,
+        lastFetch: null
+      }
+    : {
+        entities: [],
+        isLoading: false,
+        error: null,
+        isLoggedIn: false,
+        dataLoaded: false,
+        lastFetch: null
+      };
 
 const contactsSlice = createSlice({
   name: "contacts",
@@ -98,131 +113,121 @@ const {
   contactRemoved
 } = actions;
 
-export const loadContactsList = () => async (dispatch, getState) => {
-  const { lastFetch } = getState().contacts;
-  if (isOutDated(lastFetch)) {
-    dispatch(contactsRequested());
-    try {
-      const { content } = await contactService.get();
-      dispatch(contactsReceived(content));
-    } catch (error) {
-      contactsFailed(error.message);
+export const loadContactsList =
+  () =>
+  async (
+    dispatch: Dispatch,
+    getState: () => { (): any; new (): any; contacts: { lastFetch: any } }
+  ) => {
+    const { lastFetch } = getState().contacts;
+    if (isOutDated(lastFetch)) {
+      dispatch(contactsRequested());
+      try {
+        const { content } = await contactService.get();
+        dispatch(contactsReceived(content));
+      } catch (error: any) {
+        contactsFailed(error.message);
+      }
     }
-  }
-};
+  };
 
-export function createContact(payload) {
-  return async function (dispatch) {
+export function createContact(payload: IContact) {
+  return async function (dispatch: Dispatch) {
     dispatch(contactCreateRequested());
     try {
       const { content } = await contactService.create(payload);
       dispatch(updateCompanies(content.updatedCompanies));
       dispatch(updateObjects({ updatedObjects: content.updatedObjects }));
       socket.emit("contactCreated", content.newContact);
-    } catch (error) {
+    } catch (error: any) {
       dispatch(createContactFailed(error.message));
     }
   };
 }
 
-export function createContactUpdate(payload) {
-  return async function (dispatch) {
+export function createContactUpdate(payload: IContact) {
+  return async function (dispatch: Dispatch) {
     dispatch(contactCreateRequested());
     try {
       dispatch(contactCreated(payload));
-    } catch (error) {
+    } catch (error: any) {
       dispatch(createContactFailed(error.message));
     }
   };
 }
 
-export const updateContact = (payload) => async (dispatch) => {
-  dispatch(contactUpdateRequested());
-  try {
-    const { content } = await contactService.update(payload);
+export const updateContact =
+  (payload: IContact) => async (dispatch: Dispatch) => {
+    dispatch(contactUpdateRequested());
+    try {
+      const { content } = await contactService.update(payload);
 
-    dispatch(updateCompanies(content.companiesRemovedCompanies));
-    dispatch(updateCompanies(content.updatedCompanies));
-    dispatch(updateObjects({ updatedObjects: content.objectsRemovedObjects }));
-    dispatch(updateObjects({ updatedObjects: content.updatedObjects }));
-    socket.emit("contactUpdated", payload);
-  } catch (error) {
-    dispatch(contactUpdateFailed(error.message));
-  }
-};
+      dispatch(updateCompanies(content.companiesRemovedCompanies));
+      dispatch(updateCompanies(content.updatedCompanies));
+      dispatch(
+        updateObjects({ updatedObjects: content.objectsRemovedObjects })
+      );
+      dispatch(updateObjects({ updatedObjects: content.updatedObjects }));
+      socket.emit("contactUpdated", payload);
+    } catch (error: any) {
+      dispatch(contactUpdateFailed(error.message));
+    }
+  };
 
-export const updateContactUpdate = (payload) => async (dispatch) => {
+export const updateContactUpdate = (payload) => async (dispatch: Dispatch) => {
   dispatch(contactUpdateRequested());
   try {
     dispatch(contactUpdateSuccessed(payload.newData));
-  } catch (error) {
+  } catch (error: any) {
     dispatch(contactUpdateFailed(error.message));
   }
 };
 
-export const updateContacts = (payload) => async (dispatch) => {
-  dispatch(contactUpdateRequested());
-  try {
-    dispatch(contactsUpdateSuccessed(payload));
-    socket.emit("contactsUpdated", payload);
-  } catch (error) {
-    dispatch(contactUpdateFailed(error.message));
-  }
-};
+export const updateContacts =
+  (payload: IContact) => async (dispatch: Dispatch) => {
+    dispatch(contactUpdateRequested());
+    try {
+      dispatch(contactsUpdateSuccessed(payload));
+      socket.emit("contactsUpdated", payload);
+    } catch (error: any) {
+      dispatch(contactUpdateFailed(error.message));
+    }
+  };
 
-// export const updateContactsUpdate = (payload) => async (dispatch) => {
-//   dispatch(contactUpdateRequested());
-//   try {
-//     dispatch(contactsUpdateSuccessed(payload));
-//   } catch (error) {
-//     dispatch(contactUpdateFailed(error.message));
-//   }
-// };
+export const removeContact =
+  (contactId: string) => async (dispatch: Dispatch) => {
+    dispatch(removeContactRequested());
+    try {
+      await contactService.remove(contactId);
+      socket.emit("contactDeleted", contactId);
+    } catch (error: any) {
+      dispatch(removeContactFailed(error.message));
+    }
+  };
 
-export const removeContact = (contactId) => async (dispatch) => {
-  dispatch(removeContactRequested());
-  try {
-    await contactService.remove(contactId);
-    socket.emit("contactDeleted", contactId);
-  } catch (error) {
-    dispatch(removeContactFailed(error.message));
-  }
-};
+export const removeContactUpdate =
+  (contactId: string) => async (dispatch: Dispatch) => {
+    dispatch(removeContactRequested());
+    try {
+      dispatch(contactRemoved(contactId));
+    } catch (error: any) {
+      dispatch(removeContactFailed(error.message));
+    }
+  };
 
-export const removeContactUpdate = (contactId) => async (dispatch) => {
-  dispatch(removeContactRequested());
-  try {
-    dispatch(contactRemoved(contactId));
-  } catch (error) {
-    dispatch(removeContactFailed(error.message));
-  }
-};
-
-export const getObjectContactsList = (contactId) =>
-  createSelector(
-    (state) => state?.contacts?.entities,
-    (contacts) => contacts?.filter((cont) => cont?.contactId === contactId)
-  );
-
-export const getContactById = (id) => (state) => {
+export const getContactById = (contactId: string) => (state: IStoreState) => {
   if (state.contacts.entities) {
-    return state.contacts.entities.find((cont) => cont._id === id);
+    return state.contacts.entities.find((cont) => cont._id === contactId);
   }
 };
 
-export const getContactsBycontactId = (contactId) => (state) => {
-  if (state.contacts.entities) {
-    return state.contacts.entities.filter(
-      (cont) => cont.contactId === contactId
-    );
-  }
-};
+export const getContactsList = () => (state: IStoreState) =>
+  state.contacts.entities;
 
-export const getContactsList = () => (state) => state.contacts.entities;
-
-export const getContactLoadingStatus = () => (state) =>
+export const getContactLoadingStatus = () => (state: IStoreState) =>
   state.contacts.isLoading;
 
-export const getDataContactsStatus = () => (state) => state.contacts.dataLoaded;
+export const getDataContactsStatus = () => (state: IStoreState) =>
+  state.contacts.dataLoaded;
 
 export default contactsReducer;

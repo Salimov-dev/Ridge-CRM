@@ -1,4 +1,4 @@
-export const removeSpacesAndConvertToNumber = (str) => {
+export const removeSpacesAndConvertToNumber = (str: string) => {
   if (str === null || typeof str !== "string") {
     return null;
   }

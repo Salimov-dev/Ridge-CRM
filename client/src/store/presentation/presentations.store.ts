@@ -1,5 +1,5 @@
 import { io } from "socket.io-client";
-import { createAction, createSlice } from "@reduxjs/toolkit";
+import { Dispatch, createAction, createSlice } from "@reduxjs/toolkit";
 // config
 import configFile from "@config/config.json";
 // utils
@@ -7,26 +7,42 @@ import isOutDated from "@utils/auth/is-out-date";
 // services
 import localStorageService from "@services/local-storage/local.storage-service";
 import presentationsService from "@services/presentation/presentations.service";
+// interfaces
+import { IPresentation } from "@interfaces/presentation/presentation.interface";
 
 const socket = io(configFile.ioEndPoint);
 
-const initialState = localStorageService.getAccessToken()
-  ? {
-      entities: null,
-      isLoading: true,
-      error: null,
-      isLoggedIn: true,
-      dataLoaded: false,
-      lastFetch: null
-    }
-  : {
-      entities: null,
-      isLoading: false,
-      error: null,
-      isLoggedIn: false,
-      dataLoaded: false,
-      lastFetch: null
-    };
+interface IPresentationStoreInitialState {
+  entities: IPresentation[];
+  isLoading: boolean;
+  error: any;
+  isLoggedIn: boolean;
+  dataLoaded: boolean;
+  lastFetch: string | null;
+}
+
+interface IStoreState {
+  presentations: IPresentationStoreInitialState;
+}
+
+const initialState: IPresentationStoreInitialState =
+  localStorageService.getAccessToken()
+    ? {
+        entities: [],
+        isLoading: true,
+        error: null,
+        isLoggedIn: true,
+        dataLoaded: false,
+        lastFetch: null
+      }
+    : {
+        entities: [],
+        isLoading: false,
+        error: null,
+        isLoggedIn: false,
+        dataLoaded: false,
+        lastFetch: null
+      };
 
 const presentationsSlice = createSlice({
   name: "presentations",
@@ -96,100 +112,109 @@ const {
   presentationRemoved
 } = actions;
 
-export const loadPresentationsList = () => async (dispatch, getState) => {
-  const { lastFetch } = getState().presentations;
-  if (isOutDated(lastFetch)) {
-    dispatch(presentationsRequested());
-    try {
-      const { content } = await presentationsService.get();
+export const loadPresentationsList =
+  () =>
+  async (
+    dispatch: Dispatch,
+    getState: () => { (): any; new (): any; presentations: { lastFetch: any } }
+  ) => {
+    const { lastFetch } = getState().presentations;
+    if (isOutDated(lastFetch)) {
+      dispatch(presentationsRequested());
+      try {
+        const { content } = await presentationsService.get();
 
-      dispatch(presentationsReceived(content));
-    } catch (error) {
-      presentationsFailed(error.message);
+        dispatch(presentationsReceived(content));
+      } catch (error: any) {
+        presentationsFailed(error.message);
+      }
     }
-  }
-};
+  };
 
-export function createPresentation(payload) {
-  return async function (dispatch) {
+export function createPresentation(payload: IPresentation) {
+  return async function (dispatch: Dispatch) {
     dispatch(presentationCreateRequested());
     try {
       const { content } = await presentationsService.create(payload);
       socket.emit("presentationCreated", content);
-    } catch (error) {
+    } catch (error: any) {
       dispatch(createPresentationFailed(error.message));
     }
   };
 }
 
-export function createPresentationUpdate(payload) {
-  return async function (dispatch) {
+export function createPresentationUpdate(payload: IPresentation) {
+  return async function (dispatch: Dispatch) {
     dispatch(presentationCreateRequested());
     try {
       dispatch(presentationCreated(payload));
-    } catch (error) {
+    } catch (error: any) {
       dispatch(createPresentationFailed(error.message));
     }
   };
 }
 
-export const updatePresentation = (payload) => async (dispatch) => {
-  dispatch(presentationUpdateRequested());
-  try {
-    await presentationsService.update(payload);
-    socket.emit("presentationUpdated", payload);
-  } catch (error) {
-    dispatch(presentationUpdateFailed(error.message));
-  }
-};
+export const updatePresentation =
+  (payload: IPresentation) => async (dispatch: Dispatch) => {
+    dispatch(presentationUpdateRequested());
+    try {
+      await presentationsService.update(payload);
+      socket.emit("presentationUpdated", payload);
+    } catch (error: any) {
+      dispatch(presentationUpdateFailed(error.message));
+    }
+  };
 
-export const updatePresentationUpdate = (payload) => async (dispatch) => {
-  dispatch(presentationUpdateRequested());
-  try {
-    dispatch(presentationUpdateSuccessed(payload));
-  } catch (error) {
-    dispatch(presentationUpdateFailed(error.message));
-  }
-};
+export const updatePresentationUpdate =
+  (payload: IPresentation) => async (dispatch: Dispatch) => {
+    dispatch(presentationUpdateRequested());
+    try {
+      dispatch(presentationUpdateSuccessed(payload));
+    } catch (error: any) {
+      dispatch(presentationUpdateFailed(error.message));
+    }
+  };
 
-export const removePresentation = (presentationsId) => async (dispatch) => {
-  dispatch(removePresentationRequested());
-  try {
-    await presentationsService.remove(presentationsId);
-    socket.emit("presentationDeleted", presentationsId);
-  } catch (error) {
-    dispatch(removePresentationFailed(error.message));
-  }
-};
-
-export const removePresentationUpdate =
-  (presentationsId) => async (dispatch) => {
+export const removePresentation =
+  (presentationsId: string) => async (dispatch: Dispatch) => {
     dispatch(removePresentationRequested());
     try {
-      dispatch(presentationRemoved(presentationsId));
-    } catch (error) {
+      await presentationsService.remove(presentationsId);
+      socket.emit("presentationDeleted", presentationsId);
+    } catch (error: any) {
       dispatch(removePresentationFailed(error.message));
     }
   };
 
-export const getPresentationById = (id) => (state) => {
+export const removePresentationUpdate =
+  (presentationsId: string) => async (dispatch: Dispatch) => {
+    dispatch(removePresentationRequested());
+    try {
+      dispatch(presentationRemoved(presentationsId));
+    } catch (error: any) {
+      dispatch(removePresentationFailed(error.message));
+    }
+  };
+
+export const getPresentationById = (id) => (state: IStoreState) => {
   if (state.presentations.entities) {
     return state.presentations.entities.find((contact) => contact._id === id);
   }
 };
 
-export const getPresentationsByObjectId = (objectId) => (state) => {
-  if (state.presentations.entities) {
-    return state.presentations.entities.filter(
-      (contact) => contact.objectId === objectId
-    );
-  }
-};
+export const getPresentationsByObjectId =
+  (objectId: string) => (state: IStoreState) => {
+    if (state.presentations.entities) {
+      return state.presentations.entities.filter(
+        (contact) => contact.objectId === objectId
+      );
+    }
+  };
 
-export const getPresentationsList = () => (state) =>
+export const getPresentationsList = () => (state: IStoreState) =>
   state.presentations.entities;
 
-export const getPresentationsLoadingStatus = () => (state) =>
+export const getPresentationsLoadingStatus = () => (state: IStoreState) =>
   state.presentations.isLoading;
 
 export default presentationsReducer;

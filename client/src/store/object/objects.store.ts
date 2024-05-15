@@ -1,6 +1,8 @@
 import dayjs from "dayjs";
 import { io } from "socket.io-client";
-import { createAction, createSlice } from "@reduxjs/toolkit";
+import { useSelector } from "react-redux";
+import isBetween from "dayjs/plugin/isBetween";
+import { Dispatch, createAction, createSlice } from "@reduxjs/toolkit";
 // config
 import configFile from "@config/config.json";
 // utils
@@ -8,33 +10,50 @@ import isOutDated from "@utils/auth/is-out-date";
 // services
 import objectService from "@services/object/object.service";
 import localStorageService from "@services/local-storage/local.storage-service";
+// interfaces
+import { IObject } from "@interfaces/object/object.interface";
 // store
 import { updateCompanies } from "@store/company/company.store";
 import { updateContacts } from "@store/contact/contact.store";
-import { useSelector } from "react-redux";
 import { getCurrentUserId } from "@store/user/users.store";
-import { IObject } from "@interfaces/object/object.interface";
 
 const socket = io(configFile.ioEndPoint);
+dayjs.extend(isBetween);
 
-const initialState = localStorageService.getAccessToken()
-  ? {
-      entities: null,
-      isLoading: true,
-      error: null,
-      isLoggedIn: true,
-      dataLoaded: false,
-      lastFetch: null,
-      auth: { userId: localStorageService.getUserId() }
-    }
-  : {
-      entities: null,
-      isLoading: false,
-      error: null,
-      isLoggedIn: false,
-      dataLoaded: false,
-      lastFetch: null
-    };
+interface IObjectsStoreInitialState {
+  entities: IObject[];
+  isLoading: boolean;
+  error: any;
+  isLoggedIn: boolean;
+  dataLoaded: boolean;
+  lastFetch: string | null;
+  auth: { userId: string | null };
+}
+
+interface IStoreState {
+  objects: IObjectsStoreInitialState;
+}
+
+const initialState: IObjectsStoreInitialState =
+  localStorageService.getAccessToken()
+    ? {
+        entities: [],
+        isLoading: true,
+        error: null,
+        isLoggedIn: true,
+        dataLoaded: false,
+        lastFetch: null,
+        auth: { userId: localStorageService.getUserId() }
+      }
+    : {
+        entities: [],
+        isLoading: false,
+        error: null,
+        isLoggedIn: false,
+        dataLoaded: false,
+        lastFetch: null,
+        auth: { userId: null }
+      };
 
 const objectsSlice = createSlice({
   name: "objects",
@@ -68,7 +87,7 @@ const objectsSlice = createSlice({
 
       state.entities = state.entities.map((obj) => {
         const updatedObject = updatedObjects.find(
-          (updatedObj) => updatedObj._id === obj._id
+          (updatedObj: IObject) => updatedObj._id === obj._id
         );
         if (updatedObject) {
           return updatedObject;
@@ -108,49 +127,56 @@ const {
   objectRemoved
 } = actions;
 
-export const loadObjectsList = () => async (dispatch, getState) => {
-  const { lastFetch } = getState().objects;
-  if (isOutDated(lastFetch)) {
-    dispatch(objectsRequested());
-    try {
-      const { content } = await objectService.get();
-      dispatch(objectsReceived(content));
-    } catch (error) {
-      objectsFailed(error.message);
+export const loadObjectsList =
+  () =>
+  async (
+    dispatch: Dispatch,
+    getState: () => { (): any; new (): any; objects: { lastFetch: any } }
+  ) => {
+    const { lastFetch } = getState().objects;
+    if (isOutDated(lastFetch)) {
+      dispatch(objectsRequested());
+      try {
+        const { content } = await objectService.get();
+        dispatch(objectsReceived(content));
+      } catch (error: any) {
+        objectsFailed(error.message);
+      }
     }
-  }
-};
+  };
 
-export const createObject = (payload) => async (dispatch) => {
-  dispatch(objectCreateRequested());
-  try {
-    const { content } = await objectService.create(payload);
+export const createObject =
+  (payload: IObject) => async (dispatch: Dispatch) => {
+    dispatch(objectCreateRequested());
+    try {
+      const { content } = await objectService.create(payload);
 
-    dispatch(updateContacts(content.updatedContacts));
-    dispatch(updateCompanies(content.updatedCompanies));
-    socket.emit("objectCreated", content.newObject);
-  } catch (error) {
-    dispatch(createObjectFailed(error.message));
-  }
-};
+      dispatch(updateContacts(content.updatedContacts));
+      dispatch(updateCompanies(content.updatedCompanies));
+      socket.emit("objectCreated", content.newObject);
+    } catch (error: any) {
+      dispatch(createObjectFailed(error.message));
+    }
+  };
 
-export const createObjectUpdate = (payload) => async (dispatch) => {
-  dispatch(objectCreateRequested());
-  try {
-    dispatch(objectCreated(payload));
-  } catch (error) {
-    dispatch(createObjectFailed(error.message));
-  }
-};
+export const createObjectUpdate =
+  (payload: IObject) => async (dispatch: Dispatch) => {
+    dispatch(objectCreateRequested());
+    try {
+      dispatch(objectCreated(payload));
+    } catch (error: any) {
+      dispatch(createObjectFailed(error.message));
+    }
+  };
 
-export const updateObject = (payload) => async (dispatch) => {
+export const updateObject = (payload) => async (dispatch: Dispatch) => {
   dispatch(objectUpdateRequested());
   try {
     const { content } = await objectService.update(payload);
 
     dispatch(updateCompanies(content.updatedCompanies));
     socket.emit("objectUpdated", payload.newData);
-  } catch (error) {
+  } catch (error: any) {
     const errorMessage = error.response.data.error.message;
 
     dispatch(objectUpdateFailed(errorMessage));
@@ -158,35 +184,38 @@ export const updateObject = (payload) => async (dispatch) => {
   }
 };
 
-export const updateObjectUpdate = (payload) => async (dispatch) => {
-  dispatch(objectUpdateRequested());
-  try {
-    dispatch(objectUpdateSuccessed(payload));
-  } catch (error) {
-    dispatch(objectUpdateFailed(error.message));
-  }
-};
+export const updateObjectUpdate =
+  (payload: IObject) => async (dispatch: Dispatch) => {
+    dispatch(objectUpdateRequested());
+    try {
+      dispatch(objectUpdateSuccessed(payload));
+    } catch (error: any) {
+      dispatch(objectUpdateFailed(error.message));
+    }
+  };
 
-export const updateObjects = (payload) => async (dispatch) => {
-  dispatch(objectUpdateRequested());
-  try {
-    socket.emit("objectsUpdated", payload);
-  } catch (error) {
-    dispatch(objectUpdateFailed(error.message));
-  }
-};
+export const updateObjects =
+  (payload: IObject) => async (dispatch: Dispatch) => {
+    dispatch(objectUpdateRequested());
+    try {
+      socket.emit("objectsUpdated", payload);
+    } catch (error: any) {
+      dispatch(objectUpdateFailed(error.message));
+    }
+  };
 
-export const updateObjectsUpdate = (payload) => async (dispatch) => {
-  dispatch(objectUpdateRequested());
-  try {
-    dispatch(objectsUpdateSuccessed(payload));
-  } catch (error) {
-    dispatch(objectUpdateFailed(error.message));
-  }
-};
+export const updateObjectsUpdate =
+  (payload: IObject) => async (dispatch: Dispatch) => {
+    dispatch(objectUpdateRequested());
+    try {
+      dispatch(objectsUpdateSuccessed(payload));
+    } catch (error: any) {
+      dispatch(objectUpdateFailed(error.message));
+    }
+  };
 
 export const updateMultipleObjects =
-  (objectIds, userId) => async (dispatch) => {
+  (objectIds: string, userId: string) => async (dispatch: Dispatch) => {
     try {
       const updatedObjects = await objectService.updateMultiple(
         objectIds,
@@ -195,62 +224,65 @@ export const updateMultipleObjects =
       const result = updatedObjects?.content;
       socket.emit("multipleObjectsUpdated", result);
       return result;
-    } catch (error) {
+    } catch (error: any) {
       dispatch(objectUpdateMultipleObjectsFailed(error.message));
     }
   };
 
-export const updateMultipleObjectsUpdate = () => async (dispatch) => {
+export const updateMultipleObjectsUpdate = () => async (dispatch: Dispatch) => {
   try {
     const { content } = await objectService.get();
     dispatch(objectsReceived(content));
-  } catch (error) {
+  } catch (error: any) {
     dispatch(multipleObjectsUpdateFailed(error.message));
   }
 };
 
-export const removeObject = (objectId) => async (dispatch) => {
-  dispatch(objectRemoveRequested());
-  try {
-    const { content } = await objectService.remove(objectId);
-    const updatedCompanies = content?.updatedCompanies;
+export const removeObject =
+  (objectId: string) => async (dispatch: Dispatch) => {
+    dispatch(objectRemoveRequested());
+    try {
+      const { content } = await objectService.remove(objectId);
+      const updatedCompanies = content?.updatedCompanies;
 
-    dispatch(updateCompanies(updatedCompanies));
-    socket.emit("objectDeleted", objectId);
-  } catch (error) {
-    dispatch(objectRemoveFailed(error.message));
-  }
-};
+      dispatch(updateCompanies(updatedCompanies));
+      socket.emit("objectDeleted", objectId);
+    } catch (error: any) {
+      dispatch(objectRemoveFailed(error.message));
+    }
+  };
 
-export const removeObjectUpdate = (objectId) => async (dispatch) => {
-  dispatch(objectRemoveRequested());
-  try {
-    dispatch(objectRemoved(objectId));
-  } catch (error) {
-    dispatch(objectRemoveFailed(error.message));
-  }
-};
+export const removeObjectUpdate =
+  (objectId: string) => async (dispatch: Dispatch) => {
+    dispatch(objectRemoveRequested());
+    try {
+      dispatch(objectRemoved(objectId));
+    } catch (error: any) {
+      dispatch(objectRemoveFailed(error.message));
+    }
+  };
 
-export const getObjectById = (objectId) => (state) => {
+export const getObjectById = (objectId: string) => (state: IStoreState) => {
   if (state?.objects?.entities) {
     return state?.objects?.entities?.find((obj) => obj?._id === objectId);
   }
 };
 
-export const getObjectAddressById = (objectId) => (state) => {
-  if (!objectId) {
-    return null;
-  }
-  if (state?.objects?.entities) {
-    const object = state?.objects?.entities?.find(
-      (obj) => obj?._id === objectId
-    );
-    const fullAddress = `${object?.city}, ${object?.address}`;
-    return fullAddress;
-  }
-};
+export const getObjectAddressById =
+  (objectId: string) => (state: IStoreState) => {
+    if (!objectId) {
+      return null;
+    }
+    if (state?.objects?.entities) {
+      const object = state?.objects?.entities?.find(
+        (obj) => obj?._id === objectId
+      );
+      const fullAddress = `${object?.city}, ${object?.address}`;
+      return fullAddress;
+    }
+  };
 
-export const getCurrentUserObjects = () => (state) => {
+export const getCurrentUserObjects = () => (state: IStoreState) => {
   const currentUserId = useSelector(getCurrentUserId());
   if (state?.objects?.entities) {
     return state?.objects?.entities?.filter(
@@ -259,7 +291,7 @@ export const getCurrentUserObjects = () => (state) => {
   }
 };
 
-export const getObjectsWeeklyList = () => (state) => {
+export const getObjectsWeeklyList = () => (state: IStoreState) => {
   const currentDate = dayjs();
   const objects = state.objects.entities;
 
@@ -273,8 +305,11 @@ export const getObjectsWeeklyList = () => (state) => {
   return weeklyObjects;
 };
 
-export const getObjectsList = () => (state) => state.objects.entities;
-export const getObjectsLoadingStatus = () => (state) => state.objects.isLoading;
-export const getDataObjectsStatus = () => (state) => state.objects.dataLoaded;
+export const getObjectsList = () => (state: IStoreState) =>
+  state.objects.entities;
+export const getObjectsLoadingStatus = () => (state: IStoreState) =>
+  state.objects.isLoading;
+export const getDataObjectsStatus = () => (state: IStoreState) =>
+  state.objects.dataLoaded;
 
 export default objectsReducer;

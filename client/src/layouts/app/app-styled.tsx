@@ -17,21 +17,21 @@ import AppRoutes from "@routes/routes";
 // store
 import { getIsLoggedIn } from "@store/user/users.store";
 
-export const Component = styled(Box)`
-  display: flex;
-  min-height: 100vh;
-`;
+export const Component = styled(Box)(() => ({
+  display: "flex",
+  minHeight: "100vh"
+}));
 
-export const RightSide = styled(Box)`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  width: 100%;
-  background-image: url(${grassImage});
-  background-repeat: repeat-x;
-  background-size: auto 35px;
-  background-position: bottom;
-`;
+export const RightSide = styled(Box)(() => ({
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "space-between",
+  width: "100%",
+  backgroundImage: `url(${grassImage})`,
+  backgroundRepeat: "repeat-x",
+  backgroundSize: "auto 35px",
+  backgroundPosition: "bottom"
+}));
 
 const AppStyled = () => {
   const location = useLocation();
@@ -41,11 +41,7 @@ const AppStyled = () => {
   const isLoggedIn = useSelector(getIsLoggedIn());
 
   return (
-    <Component
-      sx={{
-        minWidth: isLoggedIn ? "1400px" : "100%"
-      }}
-    >
+    <Component sx={{ minWidth: isLoggedIn ? "1400px" : "100%" }}>
       <SidebarUI />
       <RightSide
         sx={{

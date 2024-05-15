@@ -21,4 +21,6 @@ export interface IDialogPagesState {
   lastContactId: string;
   meetingId: string;
   transferObjectPage: boolean;
+  createCompanyPage: boolean;
+  updateCompanyPage: boolean;
 }

@@ -11,6 +11,21 @@ import {
 } from "@mui/material";
 import { useTheme } from "@emotion/react";
 import { tokens } from "@theme/theme";
+import { FC } from "react";
+import { UseFormRegister } from "react-hook-form";
+
+interface SimpleSelectFieldProps {
+  label: string;
+  register: UseFormRegister<any>;
+  name: string;
+  labelId: string;
+  required?: boolean;
+  itemsList?: Record<string, any>;
+  value: string | null;
+  errors?: any;
+  disabled?: boolean;
+  selectedItems?: string[];
+}
 
 const StyledSelect = styled(Select)(({ theme }) => ({
   "&.Mui-focused": {
@@ -25,7 +40,7 @@ const StyledSelect = styled(Select)(({ theme }) => ({
   zIndex: theme.zIndex.modal + 1
 }));
 
-const SimpleSelectField = ({
+const SimpleSelectField: FC<SimpleSelectFieldProps> = ({
   register,
   name,
   labelId,

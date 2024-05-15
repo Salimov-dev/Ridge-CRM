@@ -5,8 +5,8 @@ export interface IObject {
   cadastralNumber: string;
   city: string;
   cloudLink: string;
-  companies: Company[];
-  contacts: Contact[];
+  companies: CompanyType[];
+  contacts: ContactType[];
   created_at: string;
   currentRenters: string;
   district: string;
@@ -39,5 +39,38 @@ export interface IObject {
   _id: string;
 }
 
-type Contact = { contact: string };
-type Company = { company: string };
+export interface IObjectCreateInitState {
+  status: string;
+  contact: string;
+  fullDescription: string;
+  city: string;
+  address: string;
+  district: string;
+  metro: string;
+  identifier: string;
+  rentPrice: string;
+  securityDeposit: string;
+  advanseDeposit: string;
+  agentComission: string;
+  rentSquare: string;
+  rentalHolidays: string;
+  indexingAnnual: string;
+  rentTypes: string;
+  currentRenters: string;
+  objectConditions: string;
+  estateTypes: string;
+  objectTypes: string;
+  tradeArea: string;
+  premisesHeight: string;
+  premisesFloor: string;
+  parkingQuantity: string;
+  electricityKw: string;
+  waterSuply: string;
+  cadastralNumber: string;
+  loadingArea: string;
+  objectProperties: string;
+  cloudLink: string;
+}
+
+export type ContactType = { contact: string };
+export type CompanyType = { company: string };

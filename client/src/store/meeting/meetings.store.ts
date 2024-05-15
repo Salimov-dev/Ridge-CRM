@@ -1,6 +1,6 @@
 import { io } from "socket.io-client";
 import { createSelector } from "reselect";
-import { createAction, createSlice } from "@reduxjs/toolkit";
+import { Dispatch, createAction, createSlice } from "@reduxjs/toolkit";
 // utils
 import isOutDated from "@utils/auth/is-out-date";
 // services
@@ -8,26 +8,41 @@ import localStorageService from "@services/local-storage/local.storage-service";
 import meetingsService from "@services/meeting/meetings.service";
 // config
 import configFile from "@config/config.json";
+import { IMeeting } from "@interfaces/meeting/meeting.interface";
 
 const socket = io(configFile.ioEndPoint);
 
-const initialState = localStorageService.getAccessToken()
-  ? {
-      entities: null,
-      isLoading: true,
-      error: null,
-      isLoggedIn: true,
-      dataLoaded: false,
-      lastFetch: null
-    }
-  : {
-      entities: null,
-      isLoading: false,
-      error: null,
-      isLoggedIn: false,
-      dataLoaded: false,
-      lastFetch: null
-    };
+interface IMeetingStoreInitialState {
+  entities: IMeeting[];
+  isLoading: boolean;
+  error: any;
+  isLoggedIn: boolean;
+  dataLoaded: boolean;
+  lastFetch: string | null;
+}
+
+interface IStoreState {
+  meetings: IMeetingStoreInitialState;
+}
+
+const initialState: IMeetingStoreInitialState =
+  localStorageService.getAccessToken()
+    ? {
+        entities: [],
+        isLoading: true,
+        error: null,
+        isLoggedIn: true,
+        dataLoaded: false,
+        lastFetch: null
+      }
+    : {
+        entities: [],
+        isLoading: false,
+        error: null,
+        isLoggedIn: false,
+        dataLoaded: false,
+        lastFetch: null
+      };
 
 const meetingsSlice = createSlice({
   name: "meetings",
@@ -81,103 +96,121 @@ const {
   meetingRemoved
 } = actions;
 
-export const loadMeetingsList = () => async (dispatch, getState) => {
-  const { lastFetch } = getState().meetings;
-  if (isOutDated(lastFetch)) {
-    dispatch(meetingsRequested());
-    try {
-      const { content } = await meetingsService.get();
-      dispatch(meetingsReceived(content));
-    } catch (error) {
-      meetingsFailed(error.message);
-    }
-  }
-};
+export const loadMeetingsList =
+  () =>
+  async (
+    dispatch: Dispatch,
+    getState: () => { (): any; new (): any; meetings: { lastFetch: any } }
+  ) => {
+    const { lastFetch } = getState().meetings;
 
-export function createMeeting(payload) {
-  return async function (dispatch) {
+    if (isOutDated(lastFetch)) {
+      console.log("lastFetch", lastFetch);
+      dispatch(meetingsRequested());
+      try {
+        const { content } = await meetingsService.get();
+        dispatch(meetingsReceived(content));
+      } catch (error: any) {
+        meetingsFailed(error.message);
+      }
+    }
+  };
+
+export function createMeeting(payload: IMeeting) {
+  return async function (dispatch: Dispatch) {
     dispatch(meetingCreateRequested());
     try {
       const { content } = await meetingsService.create(payload);
       socket.emit("meetingCreated", content);
-    } catch (error) {
+    } catch (error: any) {
       dispatch(createMeetingFailed(error.message));
     }
   };
 }
 
-export function createMeetingUpdate(payload) {
-  return async function (dispatch) {
+export function createMeetingUpdate(payload: IMeeting) {
+  return async function (dispatch: Dispatch) {
     dispatch(meetingCreateRequested());
     try {
       dispatch(meetingCreated(payload));
-    } catch (error) {
+    } catch (error: any) {
       dispatch(createMeetingFailed(error.message));
     }
   };
 }
 
-export const updateMeeting = (payload) => async (dispatch) => {
-  dispatch(meetingUpdateRequested());
-  try {
-    await meetingsService.update(payload);
-    socket.emit("meetingUpdated", payload);
-  } catch (error) {
-    dispatch(meetingUpdateFailed(error.message));
-  }
-};
+export const updateMeeting =
+  (payload: IMeeting) => async (dispatch: Dispatch) => {
+    dispatch(meetingUpdateRequested());
+    try {
+      await meetingsService.update(payload);
+      socket.emit("meetingUpdated", payload);
+    } catch (error: any) {
+      dispatch(meetingUpdateFailed(error.message));
+    }
+  };
 
-export const updateMeetingUpdate = (payload) => async (dispatch) => {
-  dispatch(meetingUpdateRequested());
-  try {
-    dispatch(meetingUpdateSuccessed(payload));
-  } catch (error) {
-    dispatch(meetingUpdateFailed(error.message));
-  }
-};
+export const updateMeetingUpdate =
+  (payload: IMeeting) => async (dispatch: Dispatch) => {
+    dispatch(meetingUpdateRequested());
+    try {
+      dispatch(meetingUpdateSuccessed(payload));
+    } catch (error: any) {
+      dispatch(meetingUpdateFailed(error.message));
+    }
+  };
 
-export const removeMeeting = (meetingId) => async (dispatch) => {
-  dispatch(removeMeetingRequested());
-  try {
-    await meetingsService.remove(meetingId);
-    socket.emit("meetingDeleted", meetingId);
-  } catch (error) {
-    dispatch(removeMeetingFailed(error.message));
-  }
-};
+export const removeMeeting =
+  (meetingId: string) => async (dispatch: Dispatch) => {
+    dispatch(removeMeetingRequested());
+    try {
+      await meetingsService.remove(meetingId);
+      socket.emit("meetingDeleted", meetingId);
+    } catch (error: any) {
+      dispatch(removeMeetingFailed(error.message));
+    }
+  };
 
-export const removeMeetingUpdate = (meetingId) => async (dispatch) => {
-  dispatch(removeMeetingRequested());
-  try {
-    dispatch(meetingRemoved(meetingId));
-  } catch (error) {
-    dispatch(removeMeetingFailed(error.message));
-  }
-};
+export const removeMeetingUpdate =
+  (meetingId: string) => async (dispatch: Dispatch) => {
+    dispatch(removeMeetingRequested());
+    try {
+      dispatch(meetingRemoved(meetingId));
+    } catch (error: any) {
+      dispatch(removeMeetingFailed(error.message));
+    }
+  };
 
-export const getObjectMeetingsList = (objectId) =>
+export const getObjectMeetingsList = (objectId: string) =>
   createSelector(
-    (state) => state?.meetings?.entities,
+    (state: IStoreState) => state?.meetings?.entities,
     (meetings) => meetings?.filter((meet) => meet?.objectId === objectId)
   );
 
-export const getMeetingById = (id) => (state) => {
+export const getMeetingById = (meetingId: string) => (state: IStoreState) => {
   if (state.meetings.entities) {
-    return state.meetings.entities.find((meet) => meet._id === id);
+    return state.meetings.entities.find(
+      (meet: IMeeting) => meet._id === meetingId
+    );
   }
 };
 
-export const getMeetingsByObjectId = (objectId) => (state) => {
-  if (state.meetings.entities) {
-    return state.meetings.entities.filter((meet) => meet.objectId === objectId);
-  }
-};
+export const getMeetingsByObjectId =
+  (objectId: string) => (state: IStoreState) => {
+    if (state.meetings.entities) {
+      return state.meetings.entities.filter(
+        (meet) => meet.objectId === objectId
+      );
+    }
+  };
 
-export const getMeetingsList = () => (state) => state.meetings.entities;
+export const getMeetingsList = () => (state: IStoreState) =>
+  state.meetings.entities;
 
-export const getMeetingLoadingStatus = () => (state) =>
+export const getMeetingLoadingStatus = () => (state: IStoreState) =>
   state.meetings.isLoading;
 
-export const getDataMeetingsStatus = () => (state) => state.meetings.dataLoaded;
+export const getDataMeetingsStatus = () => (state: IStoreState) =>
+  state.meetings.dataLoaded;
 
 export default meetingsReducer;

@@ -27,7 +27,7 @@ interface IUserStoreInitialState {
   dataLoaded: boolean;
 }
 
-export interface IStoreState {
+interface IStoreState {
   users: IUserStoreInitialState;
 }
 

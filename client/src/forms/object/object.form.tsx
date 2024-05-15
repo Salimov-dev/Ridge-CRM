@@ -1,5 +1,13 @@
+import {
+  Control,
+  FieldErrors,
+  UseFormRegister,
+  UseFormSetValue,
+  UseFormWatch
+} from "react-hook-form";
 import { useSelector } from "react-redux";
 import { orderBy } from "lodash";
+import { Dispatch, FC, SetStateAction } from "react";
 // MUI
 import { InputAdornment } from "@mui/material";
 import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
@@ -24,6 +32,9 @@ import { metroListArraySPB } from "@data/metro/metro-spb";
 import { metroListArrayMSK } from "@data/metro/metro-msk";
 import { metroListArrayKZN } from "@data/metro/metro-kzn";
 import { allDistrictsList } from "@utils/objects/get-finded-object-districts-list";
+// interfaces
+import { IObjectCreateInitState } from "@interfaces/object/object.interface";
+import { IDialogPagesState } from "@interfaces/state/dialog-pages-state.interface";
 // store
 import { getRentTypesList } from "@store/object-params/object-rent-types.store";
 import { getObjectTypesList } from "@store/object-params/object-types.store";
@@ -34,17 +45,29 @@ import { getCurrentRentersList } from "@store/object-params/object-current-rente
 import { getObjectConditionsList } from "@store/object-params/object-conditions.store";
 import { getTradeAreaList } from "@store/object-params/object-trade-area";
 
-const ObjectForm = ({
+interface ObjectFormProps {
+  data: IObjectCreateInitState;
+  register: UseFormRegister<IObjectCreateInitState>;
+  errors: FieldErrors<IObjectCreateInitState>;
+  watch: UseFormWatch<IObjectCreateInitState>;
+  setValue: UseFormSetValue<IObjectCreateInitState>;
+  isUpdatePage?: boolean;
+  selectedArea?: any;
+  setState: Dispatch<SetStateAction<IDialogPagesState>>;
+  control?: Control<IObjectCreateInitState>;
+}
+
+const ObjectForm: FC<ObjectFormProps> = ({
   data,
   register,
   errors,
-  selectedArea = "",
   watch,
-  isUpdate = false,
+  setValue,
+  isUpdatePage = false,
+  selectedArea = "",
   setState,
-  control,
-  setValue
-}) => {
+  control
+}): JSX.Element => {
   const objectStatuses = useSelector(getObjectsStatusList());
   const sortedObjectStatuses = orderBy(objectStatuses, ["name"], ["asc"]);
   const currentRenters = useSelector(getCurrentRentersList());
@@ -108,7 +131,7 @@ const ObjectForm = ({
           margin="14px 0 -8px 0"
         />
         <FieldsContainer>
-          {isUpdate && !districtIsId ? (
+          {isUpdatePage && !districtIsId ? (
             <TextFieldStyled
               register={register}
               label="Район"
@@ -122,8 +145,8 @@ const ObjectForm = ({
               selectedArea={selectedArea}
               errors={errors}
               watchDistrict={watchDistrict}
-              isUpdate={isUpdate}
-              disabled={isUpdate && true}
+              isUpdatePage={isUpdatePage}
+              disabled={isUpdatePage && true}
             />
           )}
           <SelectFieldStyled
