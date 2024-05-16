@@ -1,10 +1,26 @@
 import { useSelector } from "react-redux";
 import { Box, styled } from "@mui/material";
+import { Dispatch, FC, SetStateAction } from "react";
+// components
 import ButtonStyled from "@components/common/buttons/button-styled.button";
+// dialogs
+import objectsDialogsState from "@dialogs/dialog-handlers/objects.dialog-handlers";
+import presentationsDialogsState from "@dialogs/dialog-handlers/presentations.dialog-handlers";
+// interfaces
+import { IObject } from "@interfaces/object/object.interface";
+import { IDialogPagesState } from "@interfaces/state/dialog-pages-state.interface";
+// store
 import {
   getCurrentUserId,
   getIsUserAuthorThisEntity
 } from "@store/user/users.store";
+
+interface ButtonsPanelObjectPageProps {
+  object: IObject;
+  setState: Dispatch<SetStateAction<IDialogPagesState>>;
+  hasCloudButton?: boolean;
+  hasAddPresentationButton?: boolean;
+}
 
 const Component = styled(Box)`
   display: flex;
@@ -12,14 +28,12 @@ const Component = styled(Box)`
   margin-left: 20px;
 `;
 
-const ButtonsPanel = ({
+const ButtonsPanelObjectPage: FC<ButtonsPanelObjectPageProps> = ({
   object,
-  onClose,
-  onOpenUpdateObjectPage,
-  onOpenCreatePresentationPage,
-  hasCloudButton,
-  hasAddPresentationButton
-}) => {
+  setState,
+  hasCloudButton = true,
+  hasAddPresentationButton = true
+}): JSX.Element => {
   const currentUserId = useSelector(getCurrentUserId());
 
   const isAuthorEntity = useSelector(
@@ -33,6 +47,13 @@ const ButtonsPanel = ({
       window.open(cloudLink, "_blank");
     }
   };
+
+  const { handleOpenUpdateObjectPage, handleCloseObjectPage } =
+    objectsDialogsState({ setState });
+
+  const { handleOpenCreatePresentationPage } = presentationsDialogsState({
+    setState
+  });
 
   return (
     <Component>
@@ -52,21 +73,25 @@ const ButtonsPanel = ({
               <ButtonStyled
                 title="Добавить презентацию"
                 style="SUCCESS"
-                onClick={onOpenCreatePresentationPage}
+                onClick={handleOpenCreatePresentationPage}
               />
             )}
             <ButtonStyled
               title="Править"
               style="SUCCESS"
-              onClick={onOpenUpdateObjectPage}
+              onClick={handleOpenUpdateObjectPage}
             />
           </>
         ) : null}
       </>
 
-      <ButtonStyled title="Закрыть" style="CANCEL" onClick={onClose} />
+      <ButtonStyled
+        title="Закрыть"
+        style="CANCEL"
+        onClick={handleCloseObjectPage}
+      />
     </Component>
   );
 };
 
-export default ButtonsPanel;
+export default ButtonsPanelObjectPage;

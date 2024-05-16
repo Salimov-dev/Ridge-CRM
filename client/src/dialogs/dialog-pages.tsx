@@ -46,7 +46,7 @@ interface DialogPagesProps {
   state: IDialogPagesState;
   setState: Dispatch<SetStateAction<IDialogPagesState>>;
   objects?: IObject[];
-  users?: IUser[];
+  users?: any;
   selectedObjects?: string[];
   setRowSelection?: Dispatch<SetStateAction<RowSelection>>;
   videoTitle?: string;
@@ -66,22 +66,12 @@ const DialogPages = ({
   isObjectPage = false
 }: DialogPagesProps) => {
   const {
-    handleCloseCreateObjectPage,
-    handleOpenUpdateObjectPage,
-    handleCloseUpdateObjectPage,
-    handleCloseObjectPage,
-    handleOpenCreatePresentationPage,
-    handleCloseCreatePresentationPage,
-    handleCloseUpdatePresentationPage,
-    handleCloseTransferObjectPage,
     handleCloseCreateMyTaskPage,
     handleCloseUpdateMyTaskPage,
     handleCloseCreateManagerTaskPage,
     handleCloseUpdateManagerTaskPage,
     handleCloseCreateLastContactPage,
     handleCloseUpdateLastContactPage,
-    handleCloseCreateMeetingPage,
-    handleCloseUpdateMeetingPage,
     handleCloseUpdateUserAvatarPage,
     handleCloseAuthPage,
     handleCloseUpdateProfilePage,
@@ -94,8 +84,7 @@ const DialogPages = ({
     handleCloseUpdateCompanyPage,
     handleCloseAgreementPage,
     handleClosePersonalPolicyPage,
-    handleCloseUpdateUserPage,
-    handleCloseVideoPlayerPage
+    handleCloseUpdateUserPage
   } = useDialogHandlers(setState);
 
   return (
@@ -115,49 +104,6 @@ const DialogPages = ({
         videoSrc={videoSrc}
       />
 
-      {/* <DialogStyled
-        component={
-          <ObjectPage
-            onClose={handleCloseObjectPage}
-            onOpenUpdateObjectPage={handleOpenUpdateObjectPage}
-            onOpenCreatePresentationPage={handleOpenCreatePresentationPage}
-            objectId={state.objectId}
-            setState={setState}
-          />
-        }
-        onClose={handleCloseObjectPage}
-        open={state.objectPage}
-        maxWidth="xl"
-      />
-      <DialogStyled
-        component={<CreateObject onClose={handleCloseCreateObjectPage} />}
-        onClose={handleCloseCreateObjectPage}
-        open={state.createPage}
-      />
-      <DialogStyled
-        component={
-          <UpdateObject
-            onClose={handleCloseUpdateObjectPage}
-            objectId={state.objectId}
-          />
-        }
-        onClose={handleCloseUpdateObjectPage}
-        open={state.updatePage}
-      />
-
-      <DialogStyled
-        onClose={handleCloseTransferObjectPage}
-        open={state.transferObjectPage}
-        maxWidth="sm"
-        component={
-          <TransferObjectToAnotherManager
-            title="Передать объекты"
-            objectsToTransfer={selectedObjects}
-            onClose={handleCloseTransferObjectPage}
-            setRowSelection={setRowSelection}
-          />
-        }
-      /> */}
       <DialogStyled
         component={
           <CreateMyTask
@@ -240,31 +186,6 @@ const DialogPages = ({
         open={state.updateLastContactPage}
         maxWidth="sm"
       />
-      {/* <DialogStyled
-        component={
-          <CreateMeeting
-            onClose={handleCloseCreateMeetingPage}
-            objectPageId={state.objectId}
-            isObjectPage={!state?.objectId}
-            dateCreate={state.dateCreate}
-          />
-        }
-        maxWidth="lg"
-        onClose={handleCloseCreateMeetingPage}
-        open={state.createMeetingPage}
-      />
-      <DialogStyled
-        component={
-          <UpdateMeeting
-            meetingId={state.meetingId}
-            onClose={handleCloseUpdateMeetingPage}
-            isObjectPage={!state?.objectId}
-          />
-        }
-        onClose={handleCloseUpdateMeetingPage}
-        maxWidth="md"
-        open={state.updateMeetingPage}
-      /> */}
       <DialogStyled
         component={<UpdateAvatar onClose={handleCloseUpdateUserAvatarPage} />}
         maxWidth="sm"

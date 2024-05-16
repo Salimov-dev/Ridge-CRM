@@ -105,7 +105,6 @@ export const loadMeetingsList =
     const { lastFetch } = getState().meetings;
 
     if (isOutDated(lastFetch)) {
-      console.log("lastFetch", lastFetch);
       dispatch(meetingsRequested());
       try {
         const { content } = await meetingsService.get();

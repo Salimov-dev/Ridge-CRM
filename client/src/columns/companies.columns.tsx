@@ -1,32 +1,36 @@
+import { Dispatch, SetStateAction } from "react";
+import { Row } from "react-table";
 // styled
 import { AlignCenter } from "@styled/styled-columns";
 // components
-import ObjectTableEntity from "@components/common/table-entities/object.table-entity";
+import ObjectTableEntity from "@components/common/table-entities/object/object.table-entity";
 import ButtonStyled from "@components/common/buttons/button-styled.button";
 import ContactTableEntity from "@components/common/table-entities/contact.table-entity";
 // utils
 import { FormatDate } from "@utils/date/format-date";
 // hooks
 import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
+// interfaces
+import { IDialogPagesState } from "@interfaces/state/dialog-pages-state.interface";
 
-export const companiesColumns = (
+interface CompaniesColumnsProps {
+  isCurrentUserRoleCurator: boolean;
+  setState: Dispatch<SetStateAction<IDialogPagesState>>;
+}
+
+export const companiesColumns = ({
   setState,
-  isCurrentUserRoleCurator,
-  object = {}
-) => {
+  isCurrentUserRoleCurator
+}: CompaniesColumnsProps) => {
   let columns = [];
 
-  const {
-    handleOpenObjectPage,
-    handleOpenContactPage,
-    handleOpenUpdateCompanyPage
-  } = useDialogHandlers(setState);
+  const { handleOpenUpdateCompanyPage } = useDialogHandlers(setState);
 
   const dateColumn = {
     accessorKey: "created_at",
     header: "Дата",
     enableSorting: false,
-    cell: (info) => {
+    cell: (info: { getValue: () => any }) => {
       const date = info.getValue();
       return <AlignCenter>{FormatDate(date)}</AlignCenter>;
     }
@@ -36,7 +40,7 @@ export const companiesColumns = (
     accessorKey: "name",
     header: "Название",
     enableSorting: false,
-    cell: (info) => {
+    cell: (info: { getValue: () => any }) => {
       const name = info.getValue();
 
       return <AlignCenter>{name}</AlignCenter>;
@@ -44,21 +48,14 @@ export const companiesColumns = (
   };
 
   const objectsColumn = {
-    accessorFn: (row) => row,
+    accessorFn: (row: Row) => row,
     header: "Объекты компании",
     enableSorting: false,
-    cell: (info) => {
+    cell: (info: { getValue: () => any }) => {
       const row = info.getValue();
       const objects = row.objects;
-      const objectId = object?._id;
-      const filteredObject = objects?.filter((obj) => obj.object !== objectId);
 
-      return (
-        <ObjectTableEntity
-          objects={filteredObject}
-          onOpenObjectPage={handleOpenObjectPage}
-        />
-      );
+      return <ObjectTableEntity objects={objects} setState={setState} />;
     }
   };
 
@@ -66,15 +63,10 @@ export const companiesColumns = (
     accessorKey: "contacts",
     header: "Контакты",
     enableSorting: false,
-    cell: (info) => {
+    cell: (info: { getValue: () => any }) => {
       const contacts = info.getValue();
 
-      return (
-        <ContactTableEntity
-          contacts={contacts}
-          onOpenContactPage={handleOpenContactPage}
-        />
-      );
+      return <ContactTableEntity contacts={contacts} setState={setState} />;
     }
   };
 
@@ -82,7 +74,7 @@ export const companiesColumns = (
     accessorKey: "_id",
     header: "Компания",
     enableSorting: false,
-    cell: (info) => {
+    cell: (info: { getValue: () => any }) => {
       const companyId = info.getValue();
 
       return (

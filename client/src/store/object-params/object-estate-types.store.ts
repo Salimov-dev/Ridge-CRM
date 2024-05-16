@@ -1,5 +1,13 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { Dispatch, createSlice } from "@reduxjs/toolkit";
 import { objectEstateTypesArray } from "@data/object/object-estate-types";
+
+interface IEstateTypesStoreInitialState {
+  entities: { _id: string; name: string }[];
+}
+
+interface IStoreState {
+  estateTypes: IEstateTypesStoreInitialState;
+}
 
 const estateTypesSlice = createSlice({
   name: "estateTypes",
@@ -16,13 +24,14 @@ const estateTypesSlice = createSlice({
 const { reducer: estateTypesReducer, actions } = estateTypesSlice;
 const { estateTypesLoaded } = actions;
 
-export const loadEstateTypesList = () => (dispatch) => {
+export const loadEstateTypesList = () => (dispatch: Dispatch) => {
   dispatch(estateTypesLoaded(objectEstateTypesArray));
 };
 
-export const getEstateTypesList = () => (state) => state.estateTypes.entities;
+export const getEstateTypesList = () => (state: IStoreState) =>
+  state.estateTypes.entities;
 
-export const getEstateTypeNameById = (id) => (state) => {
+export const getEstateTypeNameById = (id: string) => (state: IStoreState) => {
   const estateType = state?.estateTypes?.entities?.find(
     (type) => type?._id === id
   );

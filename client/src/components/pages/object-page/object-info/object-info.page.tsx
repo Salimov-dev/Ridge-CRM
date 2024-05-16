@@ -3,14 +3,15 @@ import { FC, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Box, styled } from "@mui/material";
 // components
-import PageDialogs from "@components/common/dialog/page-dialogs";
 import TabsStyled from "@components/common/tabs/tabs-styled";
 import tabsObjectInfoPage from "./tabs/tabs.object-info";
 // utils
 import { getActualUsersList } from "@utils/actual-items/get-actual-users-list";
-// types
-import { IDialogPagesState } from "src/types/dialog-pages/dialog-pages-state.interface";
+// interfaces
+import { IDialogPagesState } from "@interfaces/state/dialog-pages-state.interface";
 import { IObject } from "@interfaces/object/object.interface";
+// dialogs
+import DialogPages from "@dialogs/dialog-pages";
 // initial-states
 import { dialogePagesState } from "@initial-states/dialog-pages-state/dialog-pages.state";
 // store
@@ -19,7 +20,6 @@ import {
   getCurrentUserId,
   getIsCurrentUserRoleCurator
 } from "@store/user/users.store";
-import DialogPages from "@dialogs/dialog-pages";
 
 const Component = styled(Box)`
   display: flex;
@@ -28,7 +28,8 @@ const Component = styled(Box)`
   margin-bottom: 20px;
 `;
 interface ObjectInfoPageProps {
-  object: IObject;
+  object: IObject | null;
+  state: IDialogPagesState;
 }
 
 const ObjectInfoPage: FC<ObjectInfoPageProps> = ({ state, object }) => {
@@ -42,7 +43,6 @@ const ObjectInfoPage: FC<ObjectInfoPageProps> = ({ state, object }) => {
   const currentUserId = useSelector(getCurrentUserId());
   const isCurrentUserRoleCurator = useSelector(getIsCurrentUserRoleCurator());
 
-  // const currentUserObjects = useSelector(getCurrentUserObjects());
   const currentUserObjects = objects?.filter(
     (obj) => obj?.userId === currentUserId
   );

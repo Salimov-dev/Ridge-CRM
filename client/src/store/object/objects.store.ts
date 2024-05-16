@@ -262,11 +262,17 @@ export const removeObjectUpdate =
     }
   };
 
-export const getObjectById = (objectId: string) => (state: IStoreState) => {
-  if (state?.objects?.entities) {
-    return state?.objects?.entities?.find((obj) => obj?._id === objectId);
-  }
-};
+export const getObjectById =
+  (objectId: string | null) => (state: IStoreState) => {
+    if (state?.objects?.entities) {
+      const object = state?.objects?.entities?.find(
+        (obj) => obj?._id === objectId
+      );
+      return object !== undefined ? object : null;
+    } else {
+      return null;
+    }
+  };
 
 export const getObjectAddressById =
   (objectId: string) => (state: IStoreState) => {

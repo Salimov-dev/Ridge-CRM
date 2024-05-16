@@ -1,5 +1,13 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { Dispatch, createSlice } from "@reduxjs/toolkit";
 import { allDistrictsList } from "@utils/objects/get-finded-object-districts-list";
+
+interface IDistrictsStoreInitialState {
+  entities: { _id: string; name: string }[];
+}
+
+interface IStoreState {
+  districts: IDistrictsStoreInitialState;
+}
 
 const districtsSlice = createSlice({
   name: "districts",
@@ -16,13 +24,14 @@ const districtsSlice = createSlice({
 const { reducer: districtsReducer, actions } = districtsSlice;
 const { districtsLoaded } = actions;
 
-export const loadDistrictsList = () => async (dispatch) => {
+export const loadDistrictsList = () => async (dispatch: Dispatch) => {
   dispatch(districtsLoaded(allDistrictsList()));
 };
 
-export const getDistrictsList = () => (state) => state.districts.entities;
+export const getDistrictsList = () => (state: IStoreState) =>
+  state.districts.entities;
 
-export const getDistrictName = (district) => (state) => {
+export const getDistrictName = (district: string) => (state: IStoreState) => {
   const idRegex = /^[0-9a-fA-F]+$/;
 
   if (idRegex.test(district)) {

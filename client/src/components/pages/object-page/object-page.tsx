@@ -1,26 +1,27 @@
-import React, { useEffect } from "react";
+import React, { Dispatch, FC, SetStateAction, useEffect } from "react";
 import { Box } from "@mui/material";
 import { useSelector } from "react-redux";
 // components
-import Header from "./header/header";
 import ObjectInfo from "./object-info/object-info.page";
-import Footer from "./footer/footer";
 import ItemOnMap from "@common/map/item-on-map/item-on-map";
+import HeaderObjectPage from "./header/header.object-page";
+import FooterObjectPage from "./footer/footer.object-page";
+// interfaces
+import { IDialogPagesState } from "@interfaces/state/dialog-pages-state.interface";
 // store
 import {
   getObjectById,
   getObjectsLoadingStatus
 } from "@store/object/objects.store";
 
-const ObjectPage = React.memo(
-  ({
-    state,
-    objectId,
-    onClose,
-    onOpenUpdateObjectPage,
-    onOpenCreatePresentationPage,
-    setState
-  }) => {
+interface ObjectPageProps {
+  state: IDialogPagesState;
+  setState: Dispatch<SetStateAction<IDialogPagesState>>;
+}
+
+const ObjectPage: FC<ObjectPageProps> = React.memo(
+  ({ state, setState }): JSX.Element => {
+    const objectId = state?.objectId;
     const object = useSelector(getObjectById(objectId));
     const isLoading = useSelector(getObjectsLoadingStatus());
 
@@ -41,12 +42,7 @@ const ObjectPage = React.memo(
 
     return (
       <Box>
-        <Header
-          object={object}
-          onClose={onClose}
-          onOpenUpdateObjectPage={onOpenUpdateObjectPage}
-          onOpenCreatePresentationPage={onOpenCreatePresentationPage}
-        />
+        <HeaderObjectPage object={object} setState={setState} />
         <ItemOnMap
           mapZoom={mapZoom}
           hintContent={address}
@@ -54,12 +50,7 @@ const ObjectPage = React.memo(
           isLoading={isLoading}
         />
         <ObjectInfo object={object} state={state} />
-        <Footer
-          object={object}
-          onClose={onClose}
-          onOpenUpdateObjectPage={onOpenUpdateObjectPage}
-          onOpenCreatePresentationPage={onOpenCreatePresentationPage}
-        />
+        <FooterObjectPage object={object} setState={setState} />
       </Box>
     );
   }

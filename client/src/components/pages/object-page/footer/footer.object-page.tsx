@@ -1,22 +1,30 @@
 import { orderBy } from "lodash";
 import { useForm } from "react-hook-form";
 import { Box, styled } from "@mui/material";
-import { useEffect, useState } from "react";
+import { Dispatch, FC, SetStateAction, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { yupResolver } from "@hookform/resolvers/yup";
 // components
-import ButtonsPanel from "../buttons-panel/buttons-panel";
 import AutocompleteStyled from "@common/inputs/autocomplete-styled";
+import ButtonsPanelObjectPage from "../buttons-panel/buttons-panel.object-page";
+// interfaces
+import { IObject } from "@interfaces/object/object.interface";
+import { IDialogPagesState } from "@interfaces/state/dialog-pages-state.interface";
+// schemas
+import { objectPageStatusSchema } from "@schemas/object/object-page-status.schema";
 // store
 import { getObjectsStatusList } from "@store/object-params/object-status.store";
 import { updateObject } from "@store/object/objects.store";
-// schemas
-import { objectPageStatusSchema } from "@schemas/object/object-page-status.schema";
 import {
   getCurrentUserId,
   getIsUserAuthorThisEntity
 } from "@store/user/users.store";
+
+interface ObjectPageProps {
+  object: IObject | null;
+  setState: Dispatch<SetStateAction<IDialogPagesState>>;
+}
 
 const Component = styled(Box)`
   display: flex;
@@ -24,12 +32,10 @@ const Component = styled(Box)`
   gap: 4px;
 `;
 
-const Footer = ({
+const FooterObjectPage: FC<ObjectPageProps> = ({
   object,
-  onClose,
-  onOpenUpdateObjectPage,
-  onOpenCreatePresentationPage
-}) => {
+  setState
+}): JSX.Element => {
   const dispatch = useDispatch();
   const [statusChanged, setStatusChanged] = useState(false);
 
@@ -93,16 +99,9 @@ const Footer = ({
         errors={errors?.status}
         disabled={!isAuthorEntity}
       />
-      <ButtonsPanel
-        object={object}
-        onClose={onClose}
-        onOpenUpdateObjectPage={onOpenUpdateObjectPage}
-        onOpenCreatePresentationPage={onOpenCreatePresentationPage}
-        hasAddPresentationButton={true}
-        hasCloudButton={true}
-      />
+      <ButtonsPanelObjectPage object={object} setState={setState} />
     </Component>
   );
 };
 
-export default Footer;
+export default FooterObjectPage;

@@ -1,7 +1,11 @@
+import { useSelector } from "react-redux";
+import { FC } from "react";
 import { Box } from "@mui/material";
 // components
 import BasicTable from "@components/common/table/basic-table";
 import RowTitle from "@components/common/titles/row-title";
+// interfaces
+import { IObject } from "@interfaces/object/object.interface";
 // columns
 import {
   commercialTermsColumns,
@@ -9,10 +13,16 @@ import {
   estateTypeColumns,
   locationColumns
 } from "@columns/object-page.columns";
+// store
 import { getObjectsLoadingStatus } from "@store/object/objects.store";
-import { useSelector } from "react-redux";
 
-const InformationObjectInfo = ({ object }) => {
+interface InformationObjectInfoProps {
+  object: IObject | null;
+}
+
+const InformationObjectInfo: FC<InformationObjectInfoProps> = ({
+  object
+}): JSX.Element => {
   const description = object?.fullDescription;
   const isLoading = useSelector(getObjectsLoadingStatus());
 
@@ -30,6 +40,7 @@ const InformationObjectInfo = ({ object }) => {
         isPaginate={false}
         isDialogMode={true}
       />
+
       <RowTitle
         title="Объект"
         background="linear-gradient(to right, ForestGreen, DarkGreen)"

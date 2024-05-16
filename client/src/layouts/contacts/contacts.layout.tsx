@@ -19,6 +19,7 @@ import useSearchContact from "@hooks/contact/use-search-contact";
 import { getIsCurrentUserRoleManager } from "@store/user/users.store";
 import { getContactsList } from "@store/contact/contact.store";
 import { getLastContactsLoadingStatus } from "@store/last-contact/last-contact.store";
+import DialogPages from "@dialogs/dialog-pages";
 
 const ContactsLayout = React.memo(() => {
   const [stateDialogPages, setStateDialogPages] = useState({
@@ -86,13 +87,13 @@ const ContactsLayout = React.memo(() => {
       />
       <BasicTable
         items={searchedContacts}
-        itemsColumns={contactsColumns(
-          setStateDialogPages,
-          isCurrentUserRoleManager
-        )}
+        itemsColumns={contactsColumns({
+          setState: setStateDialogPages,
+          isCurrentUserRoleManager: isCurrentUserRoleManager
+        })}
         isLoading={isLoading}
       />
-      <PageDialogs
+      <DialogPages
         state={stateDialogPages}
         setState={setStateDialogPages}
         videoTitle="Как пользоваться страницей с Контактами"

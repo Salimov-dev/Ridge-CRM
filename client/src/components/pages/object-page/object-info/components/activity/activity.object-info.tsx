@@ -10,13 +10,26 @@ import { tasksColumns } from "@columns/tasks.columns";
 import { meetingsColumns } from "@columns/meetings.columns";
 // hooks
 import { getIsCurrentUserRoleManager } from "@store/user/users.store";
+import { Dispatch, FC, SetStateAction } from "react";
+import { IDialogPagesState } from "@interfaces/state/dialog-pages-state.interface";
+import { IObject } from "@interfaces/object/object.interface";
+
+interface AcitivtyObjectPageProps {
+  object: IObject | null;
+  state: IDialogPagesState;
+  setState: Dispatch<SetStateAction<IDialogPagesState>>;
+}
 
 const Component = styled(Box)`
   display: flex;
   flex-direction: column;
 `;
 
-const AcitivtyObjectPage = ({ object, state, setState }) => {
+const AcitivtyObjectPage: FC<AcitivtyObjectPageProps> = ({
+  object,
+  state,
+  setState
+}): JSX.Element => {
   const isDialogPage = true;
   const isCurrentUserRoleManager = useSelector(getIsCurrentUserRoleManager());
 

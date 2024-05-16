@@ -1,5 +1,13 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { Dispatch, createSlice } from "@reduxjs/toolkit";
 import { objectPropertiesArray } from "@data/object/object-properties";
+
+interface IObjectPropertiesStoreInitialState {
+  entities: { _id: string; name: string }[];
+}
+
+interface IStoreState {
+  objectProperties: IObjectPropertiesStoreInitialState;
+}
 
 const objectPropertiesSlice = createSlice({
   name: "objectProperties",
@@ -16,20 +24,21 @@ const objectPropertiesSlice = createSlice({
 const { reducer: objectPropertiesReducer, actions } = objectPropertiesSlice;
 const { objectPropertiesLoaded } = actions;
 
-export const loadObjectPropertiesList = () => async (dispatch) => {
+export const loadObjectPropertiesList = () => async (dispatch: Dispatch) => {
   dispatch(objectPropertiesLoaded(objectPropertiesArray));
 };
 
-export const getObjectPropertiesList = () => (state) =>
+export const getObjectPropertiesList = () => (state: IStoreState) =>
   state.objectProperties.entities;
 
-export const getObjectPropertiesNameById = (id) => (state) => {
-  const rentType = state?.objectProperties?.entities?.find(
-    (type) => type?._id === id
-  );
-  const result = rentType?.name;
+export const getObjectPropertiesNameById =
+  (id: string) => (state: IStoreState) => {
+    const rentType = state?.objectProperties?.entities?.find(
+      (type) => type?._id === id
+    );
+    const result = rentType?.name;
 
-  return result;
-};
+    return result;
+  };
 
 export default objectPropertiesReducer;

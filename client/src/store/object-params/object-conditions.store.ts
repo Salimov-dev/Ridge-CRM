@@ -1,5 +1,13 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { Dispatch, createSlice } from "@reduxjs/toolkit";
 import { objectConditionsArray } from "@data/object/object-conditions";
+
+interface IObjectConditionsStoreInitialState {
+  entities: { _id: string; name: string }[];
+}
+
+interface IStoreState {
+  objectConditions: IObjectConditionsStoreInitialState;
+}
 
 const objectConditionsSlice = createSlice({
   name: "objectConditions",
@@ -16,20 +24,21 @@ const objectConditionsSlice = createSlice({
 const { reducer: objectConditionsReducer, actions } = objectConditionsSlice;
 const { objectConditionsLoaded } = actions;
 
-export const loadObjectConditionsList = () => (dispatch) => {
+export const loadObjectConditionsList = () => (dispatch: Dispatch) => {
   dispatch(objectConditionsLoaded(objectConditionsArray));
 };
 
-export const getObjectConditionsList = () => (state) =>
+export const getObjectConditionsList = () => (state: IStoreState) =>
   state.objectConditions.entities;
 
-export const getEstateConditionNameById = (id) => (state) => {
-  const objectConditions = state?.objectConditions?.entities?.find(
-    (cond) => cond?._id === id
-  );
-  const result = objectConditions?.name;
+export const getEstateConditionNameById =
+  (id: string) => (state: IStoreState) => {
+    const objectConditions = state?.objectConditions?.entities?.find(
+      (cond) => cond?._id === id
+    );
+    const result = objectConditions?.name;
 
-  return result;
-};
+    return result;
+  };
 
 export default objectConditionsReducer;

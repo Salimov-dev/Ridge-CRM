@@ -1,6 +1,16 @@
+import { Dispatch, FC, SetStateAction } from "react";
 import { Box, Typography, styled } from "@mui/material";
+// components
 import ObjectName from "./components/object-name";
-import ButtonsPanel from "../buttons-panel/buttons-panel";
+import ButtonsPanelObjectPage from "../buttons-panel/buttons-panel.object-page";
+// interfaces
+import { IObject } from "@interfaces/object/object.interface";
+import { IDialogPagesState } from "@interfaces/state/dialog-pages-state.interface";
+
+interface HeaderObjectPageProps {
+  object: IObject | null;
+  setState: Dispatch<SetStateAction<IDialogPagesState>>;
+}
 
 const HeaderContainer = styled(Box)`
   display: flex;
@@ -14,12 +24,10 @@ const Title = styled(Box)`
   gap: 8px;
 `;
 
-const Header = ({
+const HeaderObjectPage: FC<HeaderObjectPageProps> = ({
   object,
-  onClose,
-  onOpenUpdateObjectPage,
-  onOpenCreatePresentationPage
-}) => {
+  setState
+}): JSX.Element => {
   const city = object?.city;
   const address = object?.address;
 
@@ -29,11 +37,9 @@ const Header = ({
         <Typography variant="h2">Объект: </Typography>
         <ObjectName city={city} address={address} />
       </Title>
-      <ButtonsPanel
+      <ButtonsPanelObjectPage
         object={object}
-        onClose={onClose}
-        onOpenUpdateObjectPage={onOpenUpdateObjectPage}
-        onOpenCreatePresentationPage={onOpenCreatePresentationPage}
+        setState={setState}
         hasAddPresentationButton={false}
         hasCloudButton={false}
       />
@@ -41,4 +47,4 @@ const Header = ({
   );
 };
 
-export default Header;
+export default HeaderObjectPage;

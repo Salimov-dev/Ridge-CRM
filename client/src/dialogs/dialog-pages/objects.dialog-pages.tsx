@@ -7,7 +7,6 @@ import UpdateObject from "@components/pages/object/update-object.page";
 import TransferObjectToAnotherManager from "@components/pages/transfer-object-to-another-manager/transfer-object-to-another-manager.page.page";
 // dialogs
 import objectsDialogsState from "@dialogs/dialog-handlers/objects.dialog-handlers";
-import presentationsDialogsState from "@dialogs/dialog-handlers/presentations.dialog-handlers";
 // interfaces
 import { IDialogPagesState } from "@interfaces/state/dialog-pages-state.interface";
 import { RowSelection } from "@interfaces/table/row-selection.type";
@@ -28,28 +27,14 @@ const ObjectsDialogPages: FC<ObjectsDialogPagesProps> = ({
   const {
     handleCloseCreateObjectPage,
     handleCloseObjectPage,
-    handleOpenUpdateObjectPage,
     handleCloseUpdateObjectPage,
     handleCloseTransferObjectPage
   } = objectsDialogsState({ setState });
 
-  const { handleOpenCreatePresentationPage } = presentationsDialogsState({
-    setState
-  });
-
   return (
     <>
       <DialogStyled
-        component={
-          <ObjectPage
-            onClose={handleCloseObjectPage}
-            onOpenUpdateObjectPage={handleOpenUpdateObjectPage}
-            onOpenCreatePresentationPage={handleOpenCreatePresentationPage}
-            objectId={state.objectId}
-            state={state}
-            setState={setState}
-          />
-        }
+        component={<ObjectPage state={state} setState={setState} />}
         onClose={handleCloseObjectPage}
         open={state.objectPage}
         maxWidth="xl"

@@ -1,5 +1,13 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { Dispatch, createSlice } from "@reduxjs/toolkit";
 import { objectRentTypesArray } from "@data/object/object-rent-types";
+
+interface IRentTypesStoreInitialState {
+  entities: { _id: string; name: string }[];
+}
+
+interface IStoreState {
+  rentTypes: IRentTypesStoreInitialState;
+}
 
 const rentTypesSlice = createSlice({
   name: "rentTypes",
@@ -16,13 +24,14 @@ const rentTypesSlice = createSlice({
 const { reducer: rentTypesReducer, actions } = rentTypesSlice;
 const { rentTypesLoaded } = actions;
 
-export const loadRentTypesList = () => async (dispatch) => {
+export const loadRentTypesList = () => async (dispatch: Dispatch) => {
   dispatch(rentTypesLoaded(objectRentTypesArray));
 };
 
-export const getRentTypesList = () => (state) => state.rentTypes.entities;
+export const getRentTypesList = () => (state: IStoreState) =>
+  state.rentTypes.entities;
 
-export const getRentTypeNameById = (id) => (state) => {
+export const getRentTypeNameById = (id: string) => (state: IStoreState) => {
   const rentType = state?.rentTypes?.entities?.find((type) => type?._id === id);
   const result = rentType?.name;
 

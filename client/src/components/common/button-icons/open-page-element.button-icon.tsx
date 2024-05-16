@@ -1,5 +1,16 @@
 import { Box, IconButton, Tooltip, styled } from "@mui/material";
 import OpenInNewOutlinedIcon from "@mui/icons-material/OpenInNewOutlined";
+import { FC } from "react";
+
+interface OpenPageElementIconButtonProps {
+  onClick: () => void;
+  title: string;
+  disabled?: boolean;
+  heightButton?: string;
+  color?: string;
+  colorHover?: string;
+  padding?: string;
+}
 
 const Components = styled(Box)`
   display: flex;
@@ -8,12 +19,10 @@ const Components = styled(Box)`
   align-items: center;
 `;
 
-const OpenPageElementIconButton = ({
+const OpenPageElementIconButton: FC<OpenPageElementIconButtonProps> = ({
   onClick,
   disabled = false,
   title = "Открыть объект",
-  width = "16px",
-  height = "16px",
   heightButton = "auto",
   color = "white",
   colorHover = "yellow",
@@ -40,14 +49,7 @@ const OpenPageElementIconButton = ({
         }}
       >
         <Tooltip title={title} placement="top-start" arrow>
-          <OpenInNewOutlinedIcon
-          // sx={{
-          //   width: width,
-          //   height: height,
-          //   opacity: disabled ? "0.5" : "1",
-          //   padding: "0 0 4px 0"
-          // }}
-          />
+          <OpenInNewOutlinedIcon />
         </Tooltip>
       </IconButton>
     </Components>

@@ -1,3 +1,4 @@
+import { Row } from "react-table";
 import dayjs from "dayjs";
 import { useSelector } from "react-redux";
 import { Dispatch, SetStateAction } from "react";
@@ -9,15 +10,16 @@ import { AlignCenter } from "@styled/styled-columns";
 import DoneStatusIcon from "@components/common/columns/done-status-icon";
 import ButtonStyled from "@components/common/buttons/button-styled.button";
 import UserNameWithAvatar from "@components/common/user/user-name-with-avatar";
-import AnyObjectTableEntity from "@components/common/table-entities/any-object.table-entity";
+import ObjectTableEntity from "@components/common/table-entities/object/object.table-entity";
 // utils
 import { FormatDate } from "@utils/date/format-date";
 import { FormatTime } from "@utils/date/format-time";
 // hooks
 import useGetUserAvatar from "@hooks/user/use-get-user-avatar";
-import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
 // interfaces
 import { IDialogPagesState } from "@interfaces/state/dialog-pages-state.interface";
+// dialogs
+import meetingsDialogsState from "@dialogs/dialog-handlers/meetings.dialog-handlers";
 // store
 import { getObjectById } from "@store/object/objects.store";
 import { getMeetingStatusNameById } from "@store/meeting/meeting-status.store";
@@ -27,7 +29,6 @@ import {
   getCurrentUserId,
   getIsUserAuthorThisEntity
 } from "@store/user/users.store";
-import { Row } from "react-table";
 
 interface MeetingsColumnsProps {
   state: IDialogPagesState;
@@ -44,8 +45,7 @@ export const meetingsColumns = ({
 
   const isObjectPage = state?.objectPage;
 
-  const { handleOpenUpdateMeetingPage, handleOpenObjectPage } =
-    useDialogHandlers(setState);
+  const { handleOpenUpdateMeetingPage } = meetingsDialogsState({ setState });
 
   const dateColumn = {
     header: "Дата, время и место встречи",
@@ -112,23 +112,7 @@ export const meetingsColumns = ({
         cell: (info: { getValue: () => any }) => {
           const objectId = info.getValue();
           const object = useSelector(getObjectById(objectId));
-
-          return objectId ? (
-            <Box
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "start"
-              }}
-            >
-              <AnyObjectTableEntity
-                object={object}
-                onOpenObjectPage={handleOpenObjectPage}
-              />
-            </Box>
-          ) : (
-            <AlignCenter>-</AlignCenter>
-          );
+          return <ObjectTableEntity object={object} setState={setState} />;
         }
       }
     ]

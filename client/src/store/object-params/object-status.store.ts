@@ -1,5 +1,13 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { Dispatch, createSlice } from "@reduxjs/toolkit";
 import { objectStatusesArray } from "@data/object/object-status.ts";
+
+interface IObjectStatusStoreInitialState {
+  entities: { _id: string; name: string }[];
+}
+
+interface IStoreState {
+  objectStatus: IObjectStatusStoreInitialState;
+}
 
 const objectStatusSlice = createSlice({
   name: "objectStatus",
@@ -16,14 +24,14 @@ const objectStatusSlice = createSlice({
 const { reducer: objectStatusReducer, actions } = objectStatusSlice;
 const { objectStatusLoaded } = actions;
 
-export const loadObjectStatusList = () => (dispatch) => {
+export const loadObjectStatusList = () => (dispatch: Dispatch) => {
   dispatch(objectStatusLoaded(objectStatusesArray));
 };
 
-export const getObjectsStatusList = () => (state) =>
+export const getObjectsStatusList = () => (state: IStoreState) =>
   state.objectStatus.entities;
 
-export const getObjectStatusNameById = (id) => (state) => {
+export const getObjectStatusNameById = (id: string) => (state: IStoreState) => {
   if (state?.objectStatus.entities) {
     const obj = state.objectStatus.entities.find(
       (status) => status?._id === id

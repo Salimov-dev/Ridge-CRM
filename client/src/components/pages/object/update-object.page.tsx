@@ -25,7 +25,7 @@ import { getObjectById, updateObject } from "@store/object/objects.store";
 
 interface UpdateObjectProps {
   onClose: () => void;
-  objectId: string;
+  objectId: string | null;
 }
 
 const UpdateObject: FC<UpdateObjectProps> = React.memo(

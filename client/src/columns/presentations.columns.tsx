@@ -6,10 +6,9 @@ import { AlignCenter } from "@styled/styled-columns";
 // components
 import ButtonStyled from "@components/common/buttons/button-styled.button";
 import UserNameWithAvatar from "@components/common/user/user-name-with-avatar";
-import AnyObjectTableEntity from "@components/common/table-entities/any-object.table-entity";
+import ObjectTableEntity from "@components/common/table-entities/object/object.table-entity";
 // hooks
 import useGetUserAvatar from "@hooks/user/use-get-user-avatar";
-import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
 // icons
 import CloudDoneIcon from "@mui/icons-material/CloudDone";
 import CloudOffIcon from "@mui/icons-material/CloudOff";
@@ -21,6 +20,8 @@ import { getObjectById } from "@store/object/objects.store";
 // interfaces
 import { PresentationAgreementStatuses } from "@interfaces/presentation/presentation.interface";
 import { IDialogPagesState } from "@interfaces/state/dialog-pages-state.interface";
+// dialogs
+import presentationsDialogsState from "@dialogs/dialog-handlers/presentations.dialog-handlers";
 
 interface PresentationsColumnsProps {
   isCurrentUserRoleManager: boolean;
@@ -35,8 +36,9 @@ export const presentationsColumns = ({
 }: PresentationsColumnsProps) => {
   let columns = [];
 
-  const { handleOpenObjectPage, handleOpenUpdatePresentationPage } =
-    useDialogHandlers(setState);
+  const { handleOpenUpdatePresentationPage } = presentationsDialogsState({
+    setState
+  });
 
   const firstColumns = {
     header: "Презентация",
@@ -57,24 +59,7 @@ export const presentationsColumns = ({
         cell: (info: { getValue: () => any }) => {
           const objectId = info.getValue();
           const object = useSelector(getObjectById(objectId));
-          return objectId ? (
-            <AlignCenter>
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between"
-                }}
-              >
-                <AnyObjectTableEntity
-                  object={object}
-                  onOpenObjectPage={handleOpenObjectPage}
-                />
-              </Box>
-            </AlignCenter>
-          ) : (
-            <AlignCenter>-</AlignCenter>
-          );
+          return <ObjectTableEntity object={object} setState={setState} />;
         }
       },
       {
