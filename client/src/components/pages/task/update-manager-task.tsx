@@ -1,7 +1,7 @@
 // liraries
 import dayjs from "dayjs";
 import { toast } from "react-toastify";
-import React, { useEffect, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useTheme } from "@emotion/react";
@@ -16,6 +16,8 @@ import HeaderWithCloseButtonForPage from "@components/common/headers/header-with
 import { taskSchema } from "@schemas/task/task.shema";
 // forms
 import ManagerTaskForm from "@forms/tasks/manager-task.form";
+// interfaces
+import { IDialogPagesState } from "@interfaces/state/dialog-pages-state.interface";
 // store
 import { getObjectsList } from "@store/object/objects.store";
 import { getTaskById, removeTask, updateTask } from "@store/task/tasks.store";
@@ -24,8 +26,13 @@ import {
   getUsersList
 } from "@store/user/users.store";
 
-const UpdateManagerTask = React.memo(
-  ({ title, onClose, taskId, isObjectPage }) => {
+interface UpdateManagerTaskProps {
+  state: IDialogPagesState;
+  onClose: () => void;
+}
+
+const UpdateManagerTask: FC<UpdateManagerTaskProps> = React.memo(
+  ({ state, onClose }): JSX.Element => {
     const dispatch = useDispatch();
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
@@ -33,6 +40,7 @@ const UpdateManagerTask = React.memo(
     const [openConfirm, setOpenConfirm] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
 
+    const taskId = state.taskId;
     const task = useSelector(getTaskById(taskId));
     const managerId = task?.managerId;
     const objectId = task?.objectId;
@@ -56,28 +64,10 @@ const UpdateManagerTask = React.memo(
     });
 
     const data = watch();
-    const watchManagerId = watch("managerId");
 
-    const objects = useSelector(getObjectsList());
-    const selectedManagerObjects = objects?.filter(
-      (obj) => obj?.userId === watchManagerId
-    );
-
-    const users = useSelector(getUsersList());
     const isCurrentUserRoleManager = useSelector(getIsCurrentUserRoleManager());
-    const actualUsersArray = users?.map((user) => {
-      const lastName = user?.lastName;
-      const firstName = user?.firstName;
 
-      return {
-        _id: user._id,
-        name: `${lastName ? lastName : "Без"} ${
-          firstName ? firstName : "имени"
-        }`
-      };
-    });
-
-    const onSubmit = (data) => {
+    const onSubmit = () => {
       setIsLoading(true);
 
       const transformedDate = dayjs(data.date).format(
@@ -93,7 +83,7 @@ const UpdateManagerTask = React.memo(
           onClose();
           toast.success("Задача менеджеру успешно изменена!");
         })
-        .catch((error) => {
+        .catch((error: string) => {
           toast.error(error);
         })
         .finally(() => {
@@ -113,7 +103,7 @@ const UpdateManagerTask = React.memo(
       setIsLoading(true);
       dispatch<any>(removeTask(taskId))
         .then(onClose(), handleCloseConfirm())
-        .catch((error) => {
+        .catch((error: string) => {
           toast.error(error);
         })
         .finally(() => {
@@ -136,7 +126,9 @@ const UpdateManagerTask = React.memo(
       <>
         <HeaderWithCloseButtonForPage
           title={
-            !isCurrentUserRoleManager ? title : "Изменить задачу от Куратора"
+            !isCurrentUserRoleManager
+              ? "Изменить задачу менеджеру"
+              : "Изменить задачу от Куратора"
           }
           background={colors.task["managerTask"]}
           color="white"
@@ -144,14 +136,12 @@ const UpdateManagerTask = React.memo(
         />
         <ManagerTaskForm
           data={data}
-          objects={selectedManagerObjects}
           register={register}
           setValue={setValue}
           watch={watch}
           errors={errors}
-          users={actualUsersArray}
-          isEditMode={true}
-          isObjectPage={isObjectPage}
+          isUpdatePage={true}
+          isObjectPage={!!objectId}
         />
         <SuccessCancelFormButtons
           onSuccess={handleSubmit(onSubmit)}

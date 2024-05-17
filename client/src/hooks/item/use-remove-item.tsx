@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 
 interface useRemoveItemProps {
-  onRemove: (itemId: string) => void;
+  onRemove: any;
   onClose: () => void;
   setIsLoading: (isLoading: boolean) => void;
 }

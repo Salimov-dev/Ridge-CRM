@@ -11,7 +11,6 @@ import { usersColumns } from "@columns/users.columns";
 // data
 import { roleManagerId, roleObserverId } from "@data/users/user-roles";
 // hooks
-import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
 import useSearchUser from "@hooks/user/use-search-user";
 // store
 import {
@@ -19,11 +18,12 @@ import {
   getUsersList,
   getUsersLoadingStatus
 } from "@store/user/users.store";
+import usersDialogsState from "@dialogs/dialog-handlers/users.dialog-handlers";
 
 const TeamMateTablesUsersLayout = React.memo(({ data, register, setState }) => {
   const users = useSelector(getUsersList());
   const isLoading = useSelector(getUsersLoadingStatus());
-  const { handleOpenUpdateUserPage } = useDialogHandlers(setState);
+  const { handleOpenUpdateUserPage } = usersDialogsState({ setState });
 
   const currentUserId = useSelector(getCurrentUserId());
 

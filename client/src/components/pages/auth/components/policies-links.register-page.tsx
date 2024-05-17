@@ -1,10 +1,10 @@
-import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
+import mainLayoutDialogsState from "@dialogs/dialog-handlers/main-layout.dialog-handlers";
 import { Box, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 
 const PolisiesLinksRegisterPage = ({ setState }) => {
   const { handleOpenAgreementPage, handleOpenPersonalPolicyPage } =
-    useDialogHandlers(setState);
+    mainLayoutDialogsState({ setState });
 
   return (
     <Box sx={{ width: "90%", textAlign: "center" }}>

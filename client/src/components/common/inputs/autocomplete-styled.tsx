@@ -9,7 +9,7 @@ interface AutocompleteStyledProps {
   name: string;
   value: string | null;
   options: any;
-  watchItemId: string;
+  watchItemId?: string | null;
   setValue: UseFormSetValue<any>;
   disabled?: boolean;
   label: string;

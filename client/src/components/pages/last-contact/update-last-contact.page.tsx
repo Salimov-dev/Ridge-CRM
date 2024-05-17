@@ -1,6 +1,6 @@
 // libraries
 import dayjs from "dayjs";
-import React, { useState } from "react";
+import React, { FC, useState } from "react";
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
@@ -15,6 +15,10 @@ import HeaderWithCloseButtonForPage from "@components/common/headers/header-with
 import DialogConfirm from "@components/common/dialog/dialog-confirm";
 // schema
 import { lastContactSchema } from "@schemas/last-contact/last-contact.schema";
+// hooks
+import useRemoveItem from "@hooks/item/use-remove-item";
+// interfaces
+import { IDialogPagesState } from "@interfaces/state/dialog-pages-state.interface";
 // store
 import {
   getLastContactsById,
@@ -22,109 +26,109 @@ import {
   updateLastContact
 } from "@store/last-contact/last-contact.store";
 
-const UpdateLastContact = React.memo(({ lastContactId, onClose }) => {
-  const dispatch = useDispatch();
-  const theme = useTheme();
-  const colors = tokens(theme.palette.mode);
+interface UpdateLastContactProps {
+  state: IDialogPagesState;
+  onClose: () => void;
+}
 
-  const [openConfirm, setOpenConfirm] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+const UpdateLastContact: FC<UpdateLastContactProps> = React.memo(
+  ({ state, onClose }): JSX.Element => {
+    const dispatch = useDispatch();
+    const theme = useTheme();
+    const colors = tokens(theme.palette.mode);
 
-  const lastContact = useSelector(getLastContactsById(lastContactId));
+    const [isLoading, setIsLoading] = useState(false);
 
-  const formatedLastContact = {
-    ...lastContact,
-    date: lastContact?.date ? dayjs(lastContact?.date) : null,
-    dateMyTask: null,
-    timeMyTaks: null,
-    commentMyTask: ""
-  };
+    const lastContactId = state.lastContactId;
+    const lastContact = useSelector(getLastContactsById(lastContactId));
 
-  const {
-    register,
-    watch,
-    handleSubmit,
-    control,
-    formState: { errors },
-    setValue
-  } = useForm({
-    defaultValues: formatedLastContact,
-    mode: "onChange",
-    resolver: yupResolver(lastContactSchema)
-  });
+    const formatedLastContact = {
+      ...lastContact,
+      date: lastContact?.date ? dayjs(lastContact?.date) : null,
+      dateMyTask: null,
+      timeMyTaks: null,
+      commentMyTask: ""
+    };
 
-  const data = watch();
+    const {
+      register,
+      watch,
+      handleSubmit,
+      control,
+      formState: { errors },
+      setValue
+    } = useForm({
+      defaultValues: formatedLastContact,
+      mode: "onChange",
+      resolver: yupResolver(lastContactSchema)
+    });
 
-  const onSubmit = (data) => {
-    setIsLoading(true);
+    const data = watch();
 
-    const transformedDate = dayjs(data.date).format("YYYY-MM-DDTHH:mm:ss.SSSZ");
-    const newData = { ...data, date: transformedDate };
+    const onSubmit = () => {
+      setIsLoading(true);
 
-    dispatch<any>(updateLastContact(newData))
-      .then(() => {
-        onClose();
-        toast.success("Последний контакт успешно изменен!");
-      })
-      .catch((error) => {
-        toast.error(error);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-  };
+      const transformedDate = dayjs(data.date).format(
+        "YYYY-MM-DDTHH:mm:ss.SSSZ"
+      );
+      const newData = { ...data, date: transformedDate };
 
-  const handleOpenConfirm = () => {
-    setOpenConfirm(true);
-  };
+      dispatch<any>(updateLastContact(newData))
+        .then(() => {
+          onClose();
+          toast.success("Последний контакт успешно изменен!");
+        })
+        .catch((error: string) => {
+          toast.error(error);
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
+    };
 
-  const handleCloseConfirm = () => {
-    setOpenConfirm(false);
-  };
+    const {
+      openConfirm,
+      handleOpenConfirm,
+      handleCloseConfirm,
+      handleRemoveItem
+    } = useRemoveItem({
+      onRemove: removeLastContact(lastContactId),
+      onClose,
+      setIsLoading
+    });
 
-  const handleRemoveLastContact = (lastContactId) => {
-    setIsLoading(true);
-    dispatch<any>(removeLastContact(lastContactId))
-      .then(onClose(), handleCloseConfirm())
-      .catch((error) => {
-        toast.error(error);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-  };
-
-  return (
-    <>
-      <HeaderWithCloseButtonForPage
-        title="Изменить последний контакт"
-        background={colors.header["gold"]}
-        color="black"
-        onClose={onClose}
-        margin="0 0 20px 0"
-      />
-      <LastContactForm
-        data={data}
-        register={register}
-        errors={errors}
-        setValue={setValue}
-        control={control}
-        watch={watch}
-      />
-      <SuccessCancelFormButtons
-        onSuccess={handleSubmit(onSubmit)}
-        onCancel={onClose}
-        onRemove={handleOpenConfirm}
-      />
-      <DialogConfirm
-        question="Вы уверены, что хотите удалить последний контакт?"
-        open={openConfirm}
-        onSuccessClick={() => handleRemoveLastContact(lastContactId)}
-        onClose={handleCloseConfirm}
-      />
-      <LoaderFullWindow isLoading={isLoading} />
-    </>
-  );
-});
+    return (
+      <>
+        <HeaderWithCloseButtonForPage
+          title="Изменить последний контакт"
+          background={colors.header["gold"]}
+          color="black"
+          onClose={onClose}
+          margin="0 0 20px 0"
+        />
+        <LastContactForm
+          data={data}
+          register={register}
+          errors={errors}
+          setValue={setValue}
+          control={control}
+          watch={watch}
+        />
+        <SuccessCancelFormButtons
+          onSuccess={handleSubmit(onSubmit)}
+          onCancel={onClose}
+          onRemove={handleOpenConfirm}
+        />
+        <DialogConfirm
+          question="Вы уверены, что хотите удалить последний контакт?"
+          open={openConfirm}
+          onSuccessClick={handleRemoveItem}
+          onClose={handleCloseConfirm}
+        />
+        <LoaderFullWindow isLoading={isLoading} />
+      </>
+    );
+  }
+);
 
 export default UpdateLastContact;

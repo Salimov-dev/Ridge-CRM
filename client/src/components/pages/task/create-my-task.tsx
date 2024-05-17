@@ -1,6 +1,6 @@
 // libraries
 import { toast } from "react-toastify";
-import React, { useEffect, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useTheme } from "@emotion/react";
 import { useForm } from "react-hook-form";
@@ -19,18 +19,18 @@ import { taskSchema } from "@schemas/task/task.shema";
 import { getCurrentUserId } from "@store/user/users.store";
 import { getObjectsList } from "@store/object/objects.store";
 import { createTask } from "@store/task/tasks.store";
+import { IDialogPagesState } from "@interfaces/state/dialog-pages-state.interface";
 
-const CreateMyTask = React.memo(
-  ({
-    title,
-    dateCreate = null,
-    onClose,
-    objectId = "",
-    isObjectPage = false
-  }) => {
-    const dispatch = useDispatch();
+interface CreateMyTaskProps {
+  state: IDialogPagesState;
+  onClose: () => void;
+}
+
+const CreateMyTask: FC<CreateMyTaskProps> = React.memo(
+  ({ onClose, state }): JSX.Element => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
+    const dispatch: any = useDispatch();
 
     const [isLoading, setIsLoading] = useState(false);
 
@@ -43,12 +43,13 @@ const CreateMyTask = React.memo(
     } = useForm({
       defaultValues: taskCreateInitialState,
       mode: "onChange",
-      resolver: yupResolver(taskSchema)
+      resolver: yupResolver<any>(taskSchema)
     });
     const data = watch();
 
     const watchIsCallTask = watch("isCallTask");
-
+    const objectId = state.objectId;
+    const dateCreate = state.dateCreate;
     const currentUserId = useSelector(getCurrentUserId());
     const objectsList = useSelector(getObjectsList());
     const currentUserObjects = objectsList?.filter(
@@ -58,12 +59,12 @@ const CreateMyTask = React.memo(
     const onSubmit = () => {
       setIsLoading(true);
 
-      dispatch<any>(createTask(data))
+      dispatch(createTask(data))
         .then(() => {
           onClose();
           toast.success("Задача себе успешно создана!");
         })
-        .catch((error) => {
+        .catch((error: string) => {
           toast.error(error);
         })
         .finally(() => {
@@ -72,7 +73,7 @@ const CreateMyTask = React.memo(
     };
 
     useEffect(() => {
-      if (isObjectPage) {
+      if (objectId) {
         setValue<any>("objectId", objectId);
       }
     }, [objectId]);
@@ -88,7 +89,9 @@ const CreateMyTask = React.memo(
     return (
       <>
         <HeaderWithCloseButtonForPage
-          title={watchIsCallTask ? "Нужно совершить звонок" : title}
+          title={
+            watchIsCallTask ? "Нужно совершить звонок" : "Добавить себе задачу"
+          }
           background={watchIsCallTask ? "ForestGreen" : colors.task["myTask"]}
           onClose={onClose}
         />
@@ -99,7 +102,7 @@ const CreateMyTask = React.memo(
           setValue={setValue}
           watch={watch}
           errors={errors}
-          isObjectPage={isObjectPage}
+          isObjectPage={!!objectId}
         />
         <SuccessCancelFormButtons
           onSuccess={handleSubmit(onSubmit)}

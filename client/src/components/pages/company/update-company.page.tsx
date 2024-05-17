@@ -1,7 +1,7 @@
 // libraries
 import { useTheme } from "@emotion/react";
 import { tokens } from "@theme/theme";
-import React, { useEffect, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
@@ -10,7 +10,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import SuccessCancelFormButtons from "@components/common/buttons/success-cancel-form-buttons";
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
 import HeaderWithCloseButtonForPage from "@components/common/headers/header-with-close-button.page";
-import PageDialogs from "@components/common/dialog/page-dialogs";
 import DialogConfirm from "@components/common/dialog/dialog-confirm";
 import UserEntityAuthor from "@components/common/user/user-entity-author";
 // schemas
@@ -19,6 +18,11 @@ import { companySchema } from "@schemas/company/company.shema";
 import CompanyForm from "@forms/company/company.form";
 // hooks
 import useUpdateCompany from "@hooks/company/use-update-company";
+import useRemoveItem from "@hooks/item/use-remove-item";
+// interfaces
+import { IDialogPagesState } from "@interfaces/state/dialog-pages-state.interface";
+// initial-states
+import { dialogePagesState } from "@initial-states/dialog-pages-state/dialog-pages.state";
 // store
 import { getContactsList } from "@store/contact/contact.store";
 import {
@@ -30,150 +34,145 @@ import {
   getIsCurrentUserRoleCurator,
   getIsCurrentUserRoleManager
 } from "@store/user/users.store";
+import DialogPages from "@dialogs/dialog-pages";
 
-const UpdateCompany = React.memo(({ companyId, onClose }) => {
-  const dispatch = useDispatch();
-  const theme = useTheme();
-  const colors = tokens(theme.palette.mode);
+interface UpdateCompanyProps {
+  state: IDialogPagesState;
+  onClose: () => void;
+}
 
-  const [openConfirm, setOpenConfirm] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [stateDialogPages, setStateDialogPages] = useState({
-    objectPage: false,
-    createPage: false,
-    updatePage: false,
-    createCompanyPage: false,
-    contactId: null
-  });
+const UpdateCompany: FC<UpdateCompanyProps> = React.memo(
+  ({ state, onClose }): JSX.Element => {
+    const dispatch = useDispatch();
+    const theme = useTheme();
+    const colors = tokens(theme.palette.mode);
 
-  const company = useSelector(getCompanyById(companyId));
+    const [isLoading, setIsLoading] = useState(false);
+    const [stateDialogPages, setStateDialogPages] =
+      useState<IDialogPagesState>(dialogePagesState);
 
-  const {
-    register,
-    watch,
-    handleSubmit,
-    control,
-    formState: { errors },
-    setValue
-  } = useForm({
-    defaultValues: company,
-    mode: "onChange",
-    resolver: yupResolver(companySchema)
-  });
+    const companyId = state.companyId;
+    const company = useSelector(getCompanyById(companyId));
 
-  const data = watch();
-  const isCurrentUserRoleManager = useSelector(getIsCurrentUserRoleManager());
-  const isCurrentUserRoleCurator = useSelector(getIsCurrentUserRoleCurator());
-  const contactsList = useSelector(getContactsList());
+    const {
+      register,
+      watch,
+      handleSubmit,
+      control,
+      formState: { errors },
+      setValue
+    } = useForm({
+      defaultValues: company,
+      mode: "onChange",
+      resolver: yupResolver(companySchema)
+    });
 
-  const {
-    currentUserContacts,
-    currentUserObjects,
-    othertUsersContacts,
-    othertUsersObjects,
-    previousObjects,
-    removedObjects,
-    addedObjects,
-    previousContacts,
-    removedContacts,
-    addedContacts
-  } = useUpdateCompany(data, company, watch);
+    const data = watch();
 
-  useEffect(() => {
-    isCurrentUserRoleManager && setValue("contacts", currentUserContacts);
-    isCurrentUserRoleManager && setValue("objects", currentUserObjects);
-  }, [contactsList]);
+    const contactsList = useSelector(getContactsList());
+    const isCurrentUserRoleManager = useSelector(getIsCurrentUserRoleManager());
+    const isCurrentUserRoleCurator = useSelector(getIsCurrentUserRoleCurator());
 
-  const handleOpenConfirm = () => {
-    setOpenConfirm(true);
-  };
+    const {
+      currentUserContacts,
+      currentUserObjects,
+      othertUsersContacts,
+      othertUsersObjects,
+      previousObjects,
+      removedObjects,
+      addedObjects,
+      previousContacts,
+      removedContacts,
+      addedContacts
+    } = useUpdateCompany(data, company, watch);
 
-  const handleCloseConfirm = () => {
-    setOpenConfirm(false);
-  };
+    const onSubmit = () => {
+      setIsLoading(true);
 
-  const onSubmit = () => {
-    setIsLoading(true);
+      const newData = {
+        ...data,
+        contacts: data.contacts.concat(othertUsersContacts),
+        objects: data.objects.concat(othertUsersObjects)
+      };
 
-    const newData = {
-      ...data,
-      contacts: data.contacts.concat(othertUsersContacts),
-      objects: data.objects.concat(othertUsersObjects)
+      dispatch<any>(
+        updateCompany({
+          newData,
+          previousObjects,
+          removedObjects,
+          addedObjects,
+          previousContacts,
+          removedContacts,
+          addedContacts
+        })
+      )
+        .then(() => {
+          onClose();
+          toast.success("Компания успешно изменена!");
+        })
+        .catch((error: string) => {
+          toast.error(error);
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
     };
 
-    dispatch<any>(
-      updateCompany({
-        newData,
-        previousObjects,
-        removedObjects,
-        addedObjects,
-        previousContacts,
-        removedContacts,
-        addedContacts
-      })
-    )
-      .then(() => {
-        onClose();
-        toast.success("Компания успешно изменена!");
-      })
-      .catch((error) => {
-        toast.error(error);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-  };
+    const {
+      openConfirm,
+      handleOpenConfirm,
+      handleCloseConfirm,
+      handleRemoveItem
+    } = useRemoveItem({
+      onRemove: removeCompany(companyId),
+      onClose,
+      setIsLoading
+    });
 
-  const handleRemoveContact = (companyId) => {
-    setIsLoading(true);
-    dispatch<any>(removeCompany(companyId))
-      .then(onClose(), handleCloseConfirm())
-      .catch((error) => {
-        toast.error(error);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-  };
+    useEffect(() => {
+      isCurrentUserRoleManager && setValue("contacts", currentUserContacts);
+      isCurrentUserRoleManager && setValue("objects", currentUserObjects);
+    }, [contactsList]);
 
-  return (
-    <>
-      <HeaderWithCloseButtonForPage
-        title="Изменить компанию"
-        color="black"
-        margin="0 0 20px 0"
-        onClose={onClose}
-      />
-      <CompanyForm
-        data={data}
-        watch={watch}
-        control={control}
-        errors={errors}
-        register={register}
-        setValue={setValue}
-        setState={setStateDialogPages}
-      />
-      <UserEntityAuthor title="Компанию создал" userId={company?.userId} />
-      <SuccessCancelFormButtons
-        onSuccess={handleSubmit(onSubmit)}
-        onCancel={onClose}
-        onRemove={handleOpenConfirm}
-        disabledRemoveButton={isCurrentUserRoleCurator}
-      />
-      <LoaderFullWindow
-        color={colors.grey[600]}
-        size={75}
-        isLoading={isLoading}
-      />
-      <DialogConfirm
-        question="Вы уверены, что хотите удалить безвозвратно?"
-        open={openConfirm}
-        onClose={handleCloseConfirm}
-        onSuccessClick={() => handleRemoveContact(companyId)}
-      />
-      <PageDialogs state={stateDialogPages} setState={setStateDialogPages} />
-    </>
-  );
-});
+    return (
+      <>
+        <HeaderWithCloseButtonForPage
+          title="Изменить компанию"
+          color="black"
+          margin="0 0 20px 0"
+          onClose={onClose}
+        />
+        <CompanyForm
+          data={data}
+          watch={watch}
+          control={control}
+          errors={errors}
+          register={register}
+          setValue={setValue}
+          setState={setStateDialogPages}
+        />
+        <UserEntityAuthor title="Компанию создал" userId={company?.userId} />
+        <SuccessCancelFormButtons
+          onSuccess={handleSubmit(onSubmit)}
+          onCancel={onClose}
+          onRemove={handleOpenConfirm}
+          disabledRemoveButton={isCurrentUserRoleCurator}
+        />
+        <LoaderFullWindow
+          color={colors.grey[600]}
+          size={75}
+          isLoading={isLoading}
+        />
+        <DialogConfirm
+          question="Вы уверены, что хотите удалить безвозвратно?"
+          open={openConfirm}
+          onClose={handleCloseConfirm}
+          onSuccessClick={handleRemoveItem}
+        />
+        <DialogPages state={stateDialogPages} setState={setStateDialogPages} />
+      </>
+    );
+  }
+);
 
 export default UpdateCompany;

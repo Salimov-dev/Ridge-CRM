@@ -3,9 +3,9 @@ import styled from "@emotion/styled";
 // components
 import ButtonStyled from "@components/common/buttons/button-styled.button";
 // hooks
-import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
 // icons
 import HttpsIcon from "@mui/icons-material/Https";
+import usersDialogsState from "@dialogs/dialog-handlers/users.dialog-handlers";
 
 const ButtonsContainer = styled(Box)`
   display: flex;
@@ -15,7 +15,7 @@ const ButtonsContainer = styled(Box)`
 
 const ButtonsProfileLayout = ({ setState }) => {
   const { handleOpenUpdateProfilePage, handleOpenUpdatePasswordPage } =
-    useDialogHandlers(setState);
+    usersDialogsState({ setState });
 
   return (
     <ButtonsContainer>

@@ -1,10 +1,12 @@
-export const taskManagerCreateInitialState = {
-  comment: "",
+import { IManagerTaskCreateInitState } from "@interfaces/task/task.interface";
+
+export const taskManagerCreateInitialState: IManagerTaskCreateInitState = {
   date: null,
   time: null,
-  objectId: "",
-  managerId: "",
-  result: "",
+  comment: "",
+  objectId: null,
+  managerId: null,
+  result: null,
   isDone: false,
   isCallTask: true
 };

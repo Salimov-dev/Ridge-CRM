@@ -1,7 +1,14 @@
-import { useState } from "react";
+import { Dispatch, FC, SetStateAction, useState } from "react";
 import { Box, styled } from "@mui/material";
 import { useSelector } from "react-redux";
-import { useFieldArray } from "react-hook-form";
+import {
+  Control,
+  FieldErrors,
+  UseFormRegister,
+  UseFormSetValue,
+  UseFormWatch,
+  useFieldArray
+} from "react-hook-form";
 import DoNotDisturbOnOutlinedIcon from "@mui/icons-material/DoNotDisturbOnOutlined";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 // components
@@ -10,11 +17,22 @@ import RowTitle from "@components/common/titles/row-title";
 import ButtonStyled from "@components/common/buttons/button-styled.button";
 import OpenPageElementIconButton from "@components/common/button-icons/open-page-element.button-icon";
 import DeleteElementIcon from "@components/common/button-icons/delete-element-icon";
-import PageDialogs from "@components/common/dialog/page-dialogs";
-// hooks
-import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
+// interfaces
+import { IDialogPagesState } from "@interfaces/state/dialog-pages-state.interface";
 // store
 import { getCompaniesList } from "@store/company/company.store";
+// dialogs
+import companiesDialogsState from "@dialogs/dialog-handlers/companies.dialog-handlers";
+
+interface FieldsCompanyProps {
+  data: any;
+  register: UseFormRegister<any>;
+  setValue: UseFormSetValue<any>;
+  watch: UseFormWatch<any>;
+  errors: FieldErrors<any>;
+  setState: Dispatch<SetStateAction<IDialogPagesState>>;
+  control?: Control<any>;
+}
 
 const FieldContainer = styled(Box)`
   width: 100%;
@@ -29,7 +47,7 @@ const ButtonsContainer = styled(Box)`
   gap: 4px;
 `;
 
-const FieldsCompany = ({
+const FieldsCompany: FC<FieldsCompanyProps> = ({
   data,
   register,
   setValue,
@@ -37,16 +55,11 @@ const FieldsCompany = ({
   errors,
   setState,
   control
-}) => {
-  const [openCompany, setOpenCompany] = useState({
-    companyPage: false,
-    companyId: false
-  });
-
+}): JSX.Element => {
   const watchCompanyId = watch("companyId");
 
-  const { handleOpenCreateCompanyPage } = useDialogHandlers(setState);
-  const { handleOpenUpdateCompanyPage } = useDialogHandlers(setOpenCompany);
+  const { handleOpenCreateCompanyPage, handleOpenUpdateCompanyPage } =
+    companiesDialogsState({ setState });
 
   const {
     fields: fieldCompanies,
@@ -123,7 +136,7 @@ const FieldsCompany = ({
           width="100%"
           size="small"
           icon={<AddCircleIcon />}
-          onClick={handleOpenCreateCompanyPage}
+          onClick={() => handleOpenCreateCompanyPage()}
         />
         <ButtonStyled
           title="Добавить компанию"
@@ -143,7 +156,6 @@ const FieldsCompany = ({
           onClick={() => handleRemoveCompany(lastCompanyIndex)}
         />
       </ButtonsContainer>
-      <PageDialogs state={openCompany} setState={setOpenCompany} />
     </>
   );
 };

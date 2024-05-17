@@ -28,7 +28,11 @@ const LogoMainLayout = () => {
         >
           Г Р Я Д К А
         </Typography>
-        <Typography sx={{ fontSize: { xs: "7px", sm: "10px", lg: "12px" } }}>
+        <Typography
+          sx={{
+            fontSize: { xs: "6px", sm: "9px", lg: "12px", textAlign: "center" }
+          }}
+        >
           НАША СИСТЕМА АВТОМАТИЗАЦИИ ДЛЯ ОТДЕЛОВ РАЗВИТИЯ
         </Typography>
       </Link>

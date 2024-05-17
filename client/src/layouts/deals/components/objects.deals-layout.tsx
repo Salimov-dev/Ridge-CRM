@@ -7,7 +7,6 @@ import UserNameWithAvatar from "@components/common/user/user-name-with-avatar";
 import { dealStagesArray } from "@data/deals/deals-stages";
 // hooks
 import useGetUserAvatar from "@hooks/user/use-get-user-avatar";
-import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
 // store
 import { updateObject } from "@store/object/objects.store";
 import {
@@ -15,6 +14,7 @@ import {
   getIsCurrentUserRoleManager,
   getUsersList
 } from "@store/user/users.store";
+import objectsDialogsState from "@dialogs/dialog-handlers/objects.dialog-handlers";
 
 const Component = styled(Box)`
   width: 100%;
@@ -60,7 +60,7 @@ const DealObjects = ({
     return newObjectStatus;
   };
 
-  const { handleOpenObjectPage } = useDialogHandlers(setState);
+  const { handleOpenObjectPage } = objectsDialogsState(setState);
 
   const handleDragEnd = (obj, stage) => {
     if (stage?._id !== draggableStageId) {

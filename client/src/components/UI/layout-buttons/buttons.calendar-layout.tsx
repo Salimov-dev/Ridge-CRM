@@ -8,7 +8,9 @@ import SmartDisplayOutlinedIcon from "@mui/icons-material/SmartDisplayOutlined";
 // store
 import { getIsCurrentUserRoleCurator } from "@store/user/users.store";
 // hooks
-import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
+import tasksDialogsState from "@dialogs/dialog-handlers/tasks.dialog-handlers";
+import meetingsDialogsState from "@dialogs/dialog-handlers/meetings.dialog-handlers";
+import videoTrainingDialogsState from "@dialogs/dialog-handlers/video-training.dialog-handlers";
 
 const Component = styled(Box)`
   display: flex;
@@ -19,12 +21,11 @@ const Component = styled(Box)`
 const ButtonsCalendarLayout = ({ setState }) => {
   const isCurrentUserRoleCurator = useSelector(getIsCurrentUserRoleCurator());
 
-  const {
-    handleOpenCreateMyTaskPage,
-    handleOpenCreateManagerTaskPage,
-    handleOpenCreateMeetingPage,
-    handleOpenVideoPlayerPage
-  } = useDialogHandlers(setState);
+  const { handleOpenCreateMyTaskPage, handleOpenCreateManagerTaskPage } =
+    tasksDialogsState({ setState });
+  const { handleOpenCreateMeetingPage } = meetingsDialogsState({ setState });
+  const { handleOpenVideoPlayerPage } = videoTrainingDialogsState({ setState });
+
   return (
     <Component>
       <ButtonStyled

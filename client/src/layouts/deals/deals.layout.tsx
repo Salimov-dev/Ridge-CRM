@@ -4,7 +4,6 @@ import { useSelector } from "react-redux";
 // components
 import Stages from "./components/layout-stages.deals-layout";
 import HeaderForLayout from "@components/common/headers/header-for-layout";
-import PageDialogs from "@components/common/dialog/page-dialogs";
 import { ContainerStyled } from "@components/common/container/container-styled";
 import DealsLayoutFiltersPanel from "@components/UI/filters-panels/deals-layout.filters-panel";
 // initial-states
@@ -15,6 +14,7 @@ import { allowedStatuses, dealStagesArray } from "@data/deals/deals-stages";
 import useSearchDeals from "@hooks/deals/use-search-deals";
 // store
 import { getObjectsList } from "@store/object/objects.store";
+import DialogPages from "@dialogs/dialog-pages";
 
 const DealsLayout = React.memo(() => {
   const [stateDialogPages, setStateDialogPages] = useState({
@@ -73,7 +73,7 @@ const DealsLayout = React.memo(() => {
         setState={setStateDialogPages}
         stages={dealStagesArray}
       />
-      <PageDialogs state={stateDialogPages} setState={setStateDialogPages} />
+      <DialogPages state={stateDialogPages} setState={setStateDialogPages} />
     </ContainerStyled>
   );
 });

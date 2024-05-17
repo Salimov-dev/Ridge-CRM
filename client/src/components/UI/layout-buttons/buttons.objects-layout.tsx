@@ -8,7 +8,6 @@ import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOu
 import SyncAltOutlinedIcon from "@mui/icons-material/SyncAltOutlined";
 import SmartDisplayOutlinedIcon from "@mui/icons-material/SmartDisplayOutlined";
 // hooks
-import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
 // components
 import ButtonStyled from "@components/common/buttons/button-styled.button";
 import ClearFilterButton from "@components/common/buttons/clear-filter.button";
@@ -21,6 +20,8 @@ import { IDataProps } from "@interfaces/data/data-props.type";
 import { IDialogPagesState } from "@interfaces/state/dialog-pages-state.interface";
 // store
 import { getIsCurrentUserRoleCurator } from "@store/user/users.store";
+import objectsDialogsState from "@dialogs/dialog-handlers/objects.dialog-handlers";
+import videoTrainingDialogsState from "@dialogs/dialog-handlers/video-training.dialog-handlers";
 
 interface ButtonsObjectsLayoutProps {
   data: IDataProps;
@@ -45,11 +46,10 @@ const ButtonsObjectsLayout: FC<ButtonsObjectsLayoutProps> = ({
   });
   const isCurrentUserRoleCurator = useSelector(getIsCurrentUserRoleCurator());
 
-  const {
-    handleOpenCreateObjectPage,
-    handleOpenTransferObjectPage,
-    handleOpenVideoPlayerPage
-  } = useDialogHandlers(setState);
+  const { handleOpenCreateObjectPage, handleOpenTransferObjectPage } =
+    objectsDialogsState({ setState });
+
+  const { handleOpenVideoPlayerPage } = videoTrainingDialogsState({ setState });
 
   return (
     <Component>

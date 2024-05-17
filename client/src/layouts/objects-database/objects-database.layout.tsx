@@ -5,7 +5,6 @@ import { useSelector } from "react-redux";
 // components
 import HeaderForLayout from "@components/common/headers/header-for-layout";
 import BasicTable from "@components/common/table/basic-table";
-import PageDialogs from "@components/common/dialog/page-dialogs";
 import { ContainerStyled } from "@components/common/container/container-styled";
 import ObjectsDatabaseLayoutFiltersPanel from "@components/UI/filters-panels/objects-database-layout.filters-panel";
 import TitleObjectsQuantityObjectsDatabaseLayout from "./components/title-objects-quantity.objects-database-layout";
@@ -23,6 +22,7 @@ import {
   getObjectsList,
   getObjectsLoadingStatus
 } from "@store/object/objects.store";
+import DialogPages from "@dialogs/dialog-pages";
 
 const ObjectsDatabaseLayout = React.memo(() => {
   const [period, setPeriod] = useState("fromOneMonthToTwo");
@@ -99,7 +99,7 @@ const ObjectsDatabaseLayout = React.memo(() => {
         )}
         isLoading={isLoading}
       />
-      <PageDialogs state={state} setState={setState} />
+      <DialogPages state={state} setState={setState} />
     </ContainerStyled>
   );
 });

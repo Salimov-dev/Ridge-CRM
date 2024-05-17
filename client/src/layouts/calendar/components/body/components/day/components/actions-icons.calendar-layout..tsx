@@ -8,10 +8,10 @@ import AccessTimeIcon from "@mui/icons-material/AccessTime";
 // components
 import CalendarActionIcon from "./action-icon.calendar-layout";
 // hooks
-import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
 // store
 import { getCurrentUserId, getIsUserCurator } from "@store/user/users.store";
 import meetingsDialogsState from "@dialogs/dialog-handlers/meetings.dialog-handlers";
+import tasksDialogsState from "@dialogs/dialog-handlers/tasks.dialog-handlers";
 
 const ActionsContainer = styled(Box)`
   width: 100%;
@@ -35,11 +35,8 @@ const ActionsIconsCalendarLayout = ({
     setState
   });
 
-  const {
-    handleOpenCreateManagerTaskPage,
-    handleOpenCreateMyTaskPage
-    // handleOpenCreateMeetingPage
-  } = useDialogHandlers(setState);
+  const { handleOpenCreateManagerTaskPage, handleOpenCreateMyTaskPage } =
+    tasksDialogsState({ setState });
 
   return (
     <ActionsContainer>

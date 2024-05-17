@@ -1,3 +1,11 @@
+import {
+  Control,
+  FieldErrors,
+  UseFormRegister,
+  UseFormSetValue,
+  UseFormWatch
+} from "react-hook-form";
+import { Dispatch, FC, SetStateAction } from "react";
 // styled
 import { FieldsContainer, Form } from "@styled/styled-form";
 // components
@@ -6,8 +14,21 @@ import FieldsEmail from "@components/common/forms/dynamic-fields/fields-email";
 import FieldsCompany from "@components/common/forms/dynamic-fields/fields-company";
 import FieldsObject from "@components/common/forms/dynamic-fields/fields-object";
 import MainFieldsContactForm from "./components/main-fields.contact-form";
+// interfaces
+import { IDialogPagesState } from "@interfaces/state/dialog-pages-state.interface";
+import { IContactCreateInitState } from "@interfaces/contact/contact.inteface";
 
-const ContactForm = ({
+interface MeetingCreateFormProps {
+  data: IContactCreateInitState;
+  register: UseFormRegister<IContactCreateInitState>;
+  errors: FieldErrors<IContactCreateInitState>;
+  watch: UseFormWatch<IContactCreateInitState>;
+  setValue: UseFormSetValue<IContactCreateInitState>;
+  control: Control<IContactCreateInitState>;
+  setState: Dispatch<SetStateAction<IDialogPagesState>>;
+}
+
+const ContactForm: FC<MeetingCreateFormProps> = ({
   data,
   setState = () => {},
   watch,

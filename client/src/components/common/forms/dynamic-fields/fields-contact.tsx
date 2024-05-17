@@ -1,8 +1,15 @@
-import { useState } from "react";
+import { Dispatch, FC, SetStateAction, useState } from "react";
 import { Box, Typography } from "@mui/material";
 import { useSelector } from "react-redux";
 import styled from "@emotion/styled";
-import { useFieldArray } from "react-hook-form";
+import {
+  Control,
+  FieldErrors,
+  UseFormRegister,
+  UseFormSetValue,
+  UseFormWatch,
+  useFieldArray
+} from "react-hook-form";
 // icons
 import ControlPointOutlinedIcon from "@mui/icons-material/ControlPointOutlined";
 import DoNotDisturbOnOutlinedIcon from "@mui/icons-material/DoNotDisturbOnOutlined";
@@ -11,16 +18,28 @@ import AddCircleIcon from "@mui/icons-material/AddCircle";
 import AutocompleteStyled from "@components/common/inputs/autocomplete-styled";
 import RowTitle from "@components/common/titles/row-title";
 import ButtonStyled from "@components/common/buttons/button-styled.button";
-import PageDialogs from "@components/common/dialog/page-dialogs";
 import OpenPageElementIconButton from "@components/common/button-icons/open-page-element.button-icon";
 import DeleteElementIcon from "@components/common/button-icons/delete-element-icon";
 import UserNameWithAvatar from "@components/common/user/user-name-with-avatar";
 // hooks
-import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
+
 import useGetUserAvatar from "@hooks/user/use-get-user-avatar";
 // store
 import { getContactsList } from "@store/contact/contact.store";
 import { getUsersList } from "@store/user/users.store";
+
+import contactsDialogsState from "@dialogs/dialog-handlers/contacts.dialog-handlers";
+import { IDialogPagesState } from "@interfaces/state/dialog-pages-state.interface";
+
+interface FieldsContactProps {
+  data: any;
+  register: UseFormRegister<any>;
+  setValue: UseFormSetValue<any>;
+  watch: UseFormWatch<any>;
+  errors: FieldErrors<any>;
+  setState: Dispatch<SetStateAction<IDialogPagesState>>;
+  control?: Control<any>;
+}
 
 const FieldContainer = styled(Box)`
   width: 100%;
@@ -35,7 +54,7 @@ const ButtonsContainer = styled(Box)`
   gap: 4px;
 `;
 
-const FieldsContact = ({
+const FieldsContact: FC<FieldsContactProps> = ({
   data,
   register,
   setValue,
@@ -43,12 +62,7 @@ const FieldsContact = ({
   errors,
   setState,
   control
-}) => {
-  const [openContact, setOpenContact] = useState({
-    contactPage: false,
-    contact: false
-  });
-
+}): JSX.Element => {
   const {
     fields: fieldContacts,
     append: appenContact,
@@ -75,8 +89,8 @@ const FieldsContact = ({
     userAvatars[user._id] = { getAvatarSrc, isLoading };
   });
 
-  const { handleOpenCreateContactPage } = useDialogHandlers(setState);
-  const { handleOpenContactPage } = useDialogHandlers(setOpenContact);
+  const { handleOpenCreateContactPage, handleOpenContactPage } =
+    contactsDialogsState({ setState });
 
   const handleChangeContact = (contactIndex, currentState) => {
     const updatedContacts = data.contacts.map((contact, index) => {
@@ -192,7 +206,6 @@ const FieldsContact = ({
           onClick={() => handleRemoveContact(lastContactIndex)}
         />
       </ButtonsContainer>
-      <PageDialogs state={openContact} setState={setOpenContact} />
     </>
   );
 };

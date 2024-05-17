@@ -25,17 +25,18 @@ import { getObjectById, updateObject } from "@store/object/objects.store";
 
 interface UpdateObjectProps {
   onClose: () => void;
-  objectId: string | null;
+  state: IDialogPagesState;
 }
 
 const UpdateObject: FC<UpdateObjectProps> = React.memo(
-  ({ onClose, objectId }): JSX.Element => {
+  ({ onClose, state }): JSX.Element => {
     const dispatch = useDispatch();
 
     const [isLoading, setIsLoading] = useState(false);
     const [stateDialogPages, setStateDialogPages] =
       useState<IDialogPagesState>(dialogePagesState);
 
+    const objectId = state.objectId;
     const object = useSelector(getObjectById(objectId));
     const transformedObject = {
       ...object,
@@ -114,6 +115,7 @@ const UpdateObject: FC<UpdateObjectProps> = React.memo(
           subtitle={`${object?.city}, ${object?.address}`}
         />
         <ObjectForm
+          state={state}
           data={data}
           register={register}
           errors={errors}

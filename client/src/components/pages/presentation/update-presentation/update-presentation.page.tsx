@@ -51,7 +51,7 @@ const UpdatePresentation: FC<UpdatePresentationProps> = React.memo(
     } = useForm({
       defaultValues: presentation,
       mode: "onBlur",
-      resolver: yupResolver(presentationSchema)
+      resolver: yupResolver<any>(presentationSchema)
     });
 
     const data = watch();

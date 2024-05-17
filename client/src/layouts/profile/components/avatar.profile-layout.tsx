@@ -2,7 +2,6 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from "@emotion/styled";
 import { Box } from "@mui/material";
 // hooks
-import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
 import useGetUserAvatar from "@hooks/user/use-get-user-avatar";
 // components
 import DialogConfirm from "@components/common/dialog/dialog-confirm";
@@ -14,6 +13,7 @@ import {
   getUserAvatarsLoadingStatus,
   removeAvatar
 } from "@store/avatar/avatar.store";
+import usersDialogsState from "@dialogs/dialog-handlers/users.dialog-handlers.ts";
 
 const AvatarContainer = styled(Box)`
   width: min-content;
@@ -26,7 +26,7 @@ const AvatarProfileLayout = ({ state, setState }) => {
   const dispatch = useDispatch();
   const isUserLoading = useSelector(getUserAvatarsLoadingStatus());
   const currentUserId = useSelector(getCurrentUserId());
-  const { handleOpenUpdateUserAvatarPage } = useDialogHandlers(setState);
+  const { handleOpenUpdateUserAvatarPage } = usersDialogsState({ setState });
   const { avatarSrc } = useGetUserAvatar(currentUserId);
 
   const handleClickOpenConfirmDialog = () => {

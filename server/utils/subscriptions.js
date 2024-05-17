@@ -224,11 +224,7 @@ const subscriptions = async () => {
           return updatedLicense;
         }
 
-        // активная лицензия и баланс меньше списания
-        if (
-          isLicenseActiveType &&
-          newBalanceAtNewDay < costsForAllActivityUsersPerDay
-        ) {
+        if (isLicenseActiveType && currentDate > currentLicenseEndDate) {
           allUserWithCurrentUserArray.forEach(async (userId) => {
             try {
               await User.update(
@@ -275,6 +271,58 @@ const subscriptions = async () => {
 
           return updatedLicense;
         }
+
+        // активная лицензия и баланс меньше списания
+        // if (
+        //   isLicenseActiveType &&
+        //   newBalanceAtNewDay < costsForAllActivityUsersPerDay
+        // ) {
+        //   allUserWithCurrentUserArray.forEach(async (userId) => {
+        //     try {
+        //       await User.update(
+        //         { isActive: false },
+        //         { where: { _id: userId } }
+        //       );
+        //     } catch (error) {
+        //       console.error(
+        //         "Ошибка при обновлении статуса активности пользователя:",
+        //         error
+        //       );
+        //     }
+
+        //     try {
+        //       await UserLicense.update(
+        //         { quantityClicksOnMap: 0, accessDaysQuantity: 0 },
+        //         { where: { userId } }
+        //       );
+        //     } catch (error) {
+        //       console.error(
+        //         "Ошибка при обновлении количества кликов на карте:",
+        //         error
+        //       );
+        //     }
+        //   });
+
+        //   // Обновление информации о лицензии
+        //   await UserLicense.update(
+        //     {
+        //       balance: Sequelize.literal(
+        //         `balance - ${costsForAllActivityUsersPerDay}`
+        //       ),
+        //       accountType: blockedLicenseTypeId,
+        //       activeUsersQuantity: 0,
+        //       dateEnd: currentDate,
+        //       accessDaysQuantity: 0
+        //     },
+        //     { where: { userId: currentUserId } }
+        //   );
+
+        //   const updatedLicense = await UserLicense.findOne({
+        //     where: { userId: currentUserId }
+        //   });
+
+        //   return updatedLicense;
+        // }
       } catch (error) {
         console.error("Ошибка при обработке баланса лицензии:", error);
       }

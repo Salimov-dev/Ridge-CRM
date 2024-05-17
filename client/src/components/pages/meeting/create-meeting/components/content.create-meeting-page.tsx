@@ -32,7 +32,7 @@ const ContentCreateMeetingPage: FC<ContentCreateMeetingPageProps> = ({
 }) => {
   const dispatch: any = useDispatch();
 
-  const objectPageId = state.objectId;
+  const objectId = state.objectId;
   const dateCreate = state.dateCreate;
 
   const {
@@ -74,7 +74,7 @@ const ContentCreateMeetingPage: FC<ContentCreateMeetingPageProps> = ({
   };
 
   useEffect(() => {
-    setValue<any>("objectId", objectPageId);
+    setValue<any>("objectId", objectId);
   }, []);
 
   useEffect(() => {
@@ -107,7 +107,7 @@ const ContentCreateMeetingPage: FC<ContentCreateMeetingPageProps> = ({
         errors={errors}
         register={register}
         setValue={setValue}
-        isObjectPage={!!objectPageId}
+        isObjectPage={!!objectId}
       />
       <SuccessCancelFormButtons
         onSuccess={handleSubmit(onSubmit)}

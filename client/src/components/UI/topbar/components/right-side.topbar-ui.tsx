@@ -5,17 +5,17 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 // components
 import Loader from "@common/loader/loader";
 import ButtonStyled from "@components/common/buttons/button-styled.button";
-import PageDialogs from "@components/common/dialog/page-dialogs";
 import PersonAddAlt1OutlinedIcon from "@mui/icons-material/PersonAddAlt1Outlined";
 import UserMenuTopbar from "./user-menu.topbar-ui";
 // hooks
-import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
 // store
 import {
   getCurrentUserData,
   getIsLoggedIn,
   getUsersLoadingStatus
 } from "@store/user/users.store";
+import authDialogsState from "@dialogs/dialog-handlers/auth.dialog-handlers";
+import DialogPages from "@dialogs/dialog-pages";
 
 const Component = styled(Box)`
   display: flex;
@@ -32,7 +32,7 @@ const TopBarRightSide = () => {
   });
 
   const currentUser = useSelector(getCurrentUserData());
-  const { handleOpenAuthPage } = useDialogHandlers(setState);
+  const { handleOpenAuthPage } = authDialogsState({ setState });
 
   const isLoading = useSelector(getUsersLoadingStatus());
   const isLoggedIn = useSelector(getIsLoggedIn());
@@ -69,7 +69,7 @@ const TopBarRightSide = () => {
       ) : (
         <Loader height="40px" width="60px" padding="0" size={20} />
       )}
-      <PageDialogs state={state} setState={setState} />
+      <DialogPages state={state} setState={setState} />
     </Component>
   );
 };

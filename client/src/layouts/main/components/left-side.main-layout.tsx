@@ -1,11 +1,12 @@
 import { Box, Hidden, Typography } from "@mui/material";
 import styled from "@emotion/styled";
 import ButtonStyled from "@components/common/buttons/button-styled.button";
-import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
 import ThumbUpAltOutlinedIcon from "@mui/icons-material/ThumbUpAltOutlined";
 import ContactsMainLayout from "./contacts.main-layout";
 import LockPersonOutlinedIcon from "@mui/icons-material/LockPersonOutlined";
 import useWindowWidth from "@hooks/window-width/use-window-width";
+import authDialogsState from "@dialogs/dialog-handlers/auth.dialog-handlers";
+import mainLayoutDialogsState from "@dialogs/dialog-handlers/main-layout.dialog-handlers";
 
 const Component = styled(Box)`
   display: flex;
@@ -23,8 +24,9 @@ const Link = styled.a`
 const LeftSideMainLayout = ({ setState }) => {
   const windowWidth = useWindowWidth();
 
-  const { handleOpenAuthPage, handleOpenPersonalPolicyPage } =
-    useDialogHandlers(setState);
+  const { handleOpenAuthPage } = authDialogsState({ setState });
+
+  const { handleOpenPersonalPolicyPage } = mainLayoutDialogsState({ setState });
 
   return (
     <Component

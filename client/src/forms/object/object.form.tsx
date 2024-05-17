@@ -46,6 +46,7 @@ import { getObjectConditionsList } from "@store/object-params/object-conditions.
 import { getTradeAreaList } from "@store/object-params/object-trade-area";
 
 interface ObjectFormProps {
+  state: IDialogPagesState;
   data: IObjectCreateInitState;
   register: UseFormRegister<IObjectCreateInitState>;
   errors: FieldErrors<IObjectCreateInitState>;
@@ -59,6 +60,7 @@ interface ObjectFormProps {
 
 const ObjectForm: FC<ObjectFormProps> = ({
   data,
+  state,
   register,
   errors,
   watch,

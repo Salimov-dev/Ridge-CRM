@@ -4,12 +4,12 @@ import { useForm } from "react-hook-form";
 // initial-states
 import { usersLayoutInitialState } from "@initial-states/layouts/users-layout.initial-state";
 // components
-import PageDialogs from "@components/common/dialog/page-dialogs";
 import HeaderForLayout from "@components/common/headers/header-for-layout";
 import { ContainerStyled } from "@components/common/container/container-styled";
 import ButtonsUsersLayout from "@components/UI/layout-buttons/buttons.users-layout/buttons.users-layout";
 import TeamMateTablesUsersLayout from "./components/temmate-tables.users-layout";
 import InformItemsUsersLayout from "./components/inform-items.users-layout";
+import DialogPages from "@dialogs/dialog-pages";
 
 const UsersLayout = React.memo(() => {
   const [state, setState] = useState({
@@ -50,7 +50,7 @@ const UsersLayout = React.memo(() => {
         setState={setState}
         register={register}
       />
-      <PageDialogs
+      <DialogPages
         state={state}
         setState={setState}
         videoTitle="Как пользоваться страницей с Командой"

@@ -1,7 +1,11 @@
 import HeaderWithCloseButtonForPage from "@components/common/headers/header-with-close-button.page";
 import styled from "@emotion/styled";
 import { Box, Paper, Typography } from "@mui/material";
-import React from "react";
+import React, { FC } from "react";
+
+interface AgreementProps {
+  onClose: () => void;
+}
 
 const AgreementContainer = styled(Paper)`
   padding: 20px;
@@ -23,7 +27,7 @@ const Title = styled(Typography)`
   margin-bottom: -10px;
 `;
 
-const Agreement = React.memo(({ onClose }) => {
+const Agreement: FC<AgreementProps> = React.memo(({ onClose }): JSX.Element => {
   return (
     <>
       <HeaderWithCloseButtonForPage

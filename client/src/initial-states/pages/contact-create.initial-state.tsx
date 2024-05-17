@@ -1,4 +1,6 @@
-export const contactCreateInitialState = {
+import { IContactCreateInitState } from "@interfaces/contact/contact.inteface";
+
+export const contactCreateInitialState: IContactCreateInitState = {
   name: "",
   position: "",
   comment: "",

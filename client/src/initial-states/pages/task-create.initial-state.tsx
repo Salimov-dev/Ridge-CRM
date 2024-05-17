@@ -1,4 +1,6 @@
-export const taskCreateInitialState = {
+import { ITaskCreateInitState } from "@interfaces/task/task.interface";
+
+export const taskCreateInitialState: ITaskCreateInitState = {
   date: null,
   time: null,
   comment: "",

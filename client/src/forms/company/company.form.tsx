@@ -1,4 +1,12 @@
 import { FieldsContainer, Form } from "@styled/styled-form";
+import { Dispatch, FC, SetStateAction } from "react";
+import {
+  Control,
+  FieldErrors,
+  UseFormRegister,
+  UseFormSetValue,
+  UseFormWatch
+} from "react-hook-form";
 // data
 import { companyProfilesArray } from "@data/company/company-profiles";
 // components
@@ -8,8 +16,21 @@ import FieldsObject from "@components/common/forms/dynamic-fields/fields-object"
 import FieldsContact from "@components/common/forms/dynamic-fields/fields-contact";
 // utils
 import { capitalizeFirstLetter } from "@utils/data/capitalize-first-letter";
+// interfaces
+import { ICompanyCreateInitState } from "@interfaces/company/company.inteface";
+import { IDialogPagesState } from "@interfaces/state/dialog-pages-state.interface";
 
-const CompanyForm = ({
+interface CompanyFormProps {
+  data: ICompanyCreateInitState;
+  register: UseFormRegister<ICompanyCreateInitState>;
+  errors: FieldErrors<ICompanyCreateInitState>;
+  watch: UseFormWatch<ICompanyCreateInitState>;
+  setValue: UseFormSetValue<ICompanyCreateInitState>;
+  control: Control<ICompanyCreateInitState>;
+  setState: Dispatch<SetStateAction<IDialogPagesState>>;
+}
+
+const CompanyForm: FC<CompanyFormProps> = ({
   data,
   register,
   errors,
@@ -17,7 +38,7 @@ const CompanyForm = ({
   setState = () => {},
   setValue,
   control
-}) => {
+}): JSX.Element => {
   return (
     <Form noValidate>
       <FieldsContainer sx={{ flexDirection: "column" }}>

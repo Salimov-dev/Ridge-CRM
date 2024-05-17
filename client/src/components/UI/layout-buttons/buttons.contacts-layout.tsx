@@ -8,7 +8,8 @@ import { contactsLayoutInitialState } from "@initial-states/layouts/contacts-lay
 // icons
 import SmartDisplayOutlinedIcon from "@mui/icons-material/SmartDisplayOutlined";
 // hooks
-import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
+import contactsDialogsState from "@dialogs/dialog-handlers/contacts.dialog-handlers";
+import videoTrainingDialogsState from "@dialogs/dialog-handlers/video-training.dialog-handlers";
 
 const Component = styled(Box)`
   display: flex;
@@ -20,8 +21,8 @@ const ButtonsContactsLayout = ({ data, reset, setState }) => {
   const isInputEmpty =
     JSON.stringify(contactsLayoutInitialState) !== JSON.stringify(data);
 
-  const { handleOpenCreateContactPage, handleOpenVideoPlayerPage } =
-    useDialogHandlers(setState);
+  const { handleOpenCreateContactPage } = contactsDialogsState({ setState });
+  const { handleOpenVideoPlayerPage } = videoTrainingDialogsState({ setState });
 
   return (
     <Component>

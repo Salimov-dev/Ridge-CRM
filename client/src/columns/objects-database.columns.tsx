@@ -18,7 +18,10 @@ import ContactTableEntity from "@components/common/table-entities/contact.table-
 import CompanyTableEntity from "@components/common/table-entities/company.table-entity";
 // hooks
 import useGetUserAvatar from "@hooks/user/use-get-user-avatar";
-import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
+// dialogs
+import objectsDialogsState from "@dialogs/dialog-handlers/objects.dialog-handlers";
+import contactsDialogsState from "@dialogs/dialog-handlers/contacts.dialog-handlers";
+import companiesDialogsState from "@dialogs/dialog-handlers/companies.dialog-handlers";
 // store
 import { getLastContactsList } from "@store/last-contact/last-contact.store";
 import { getDistrictName } from "@store/object-params/object-districts.store";
@@ -31,11 +34,9 @@ import {
 export const objectsDatabaseColumns = (setState, isCurrentUserRoleManager) => {
   let columns = [];
 
-  const {
-    handleOpenObjectPage,
-    handleOpenContactPage,
-    handleOpenUpdateCompanyPage
-  } = useDialogHandlers(setState);
+  const { handleOpenObjectPage } = objectsDialogsState({ setState });
+  const { handleOpenContactPage } = contactsDialogsState({ setState });
+  const { handleOpenUpdateCompanyPage } = companiesDialogsState({ setState });
 
   const dateColumn = {
     accessorKey: "created_at",

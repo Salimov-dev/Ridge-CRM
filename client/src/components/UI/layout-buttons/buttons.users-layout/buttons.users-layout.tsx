@@ -10,7 +10,9 @@ import ButtonStyled from "@components/common/buttons/button-styled.button";
 // initial-states
 import { usersLayoutInitialState } from "@initial-states/layouts/users-layout.initial-state";
 // hooks
-import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
+import usersDialogsState from "@dialogs/dialog-handlers/users.dialog-handlers";
+import paymentDialogsState from "@dialogs/dialog-handlers/payments.dialog-handlers";
+import videoTrainingDialogsState from "@dialogs/dialog-handlers/video-training.dialog-handlers";
 
 const Component = styled(Box)`
   display: flex;
@@ -22,11 +24,9 @@ const ButtonsUsersLayout = ({ data, setState, reset }) => {
   const isInputEmpty =
     JSON.stringify(usersLayoutInitialState) !== JSON.stringify(data);
 
-  const {
-    handleOpenCreateUserPage,
-    handleOpenMakePaymentPage,
-    handleOpenVideoPlayerPage
-  } = useDialogHandlers(setState);
+  const { handleOpenCreateUserPage } = usersDialogsState({ setState });
+  const { handleOpenMakePaymentPage } = paymentDialogsState({ setState });
+  const { handleOpenVideoPlayerPage } = videoTrainingDialogsState({ setState });
   return (
     <Component>
       <AddTeammateButton onClick={handleOpenCreateUserPage} />

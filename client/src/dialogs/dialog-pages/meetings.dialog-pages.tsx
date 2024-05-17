@@ -32,11 +32,7 @@ const MeetingsDialogPages: FC<MeetingsDialogPagesProps> = ({
       />
       <DialogStyled
         component={
-          <UpdateMeeting
-            state={state}
-            meetingId={state.meetingId}
-            onClose={handleCloseUpdateMeetingPage}
-          />
+          <UpdateMeeting state={state} onClose={handleCloseUpdateMeetingPage} />
         }
         onClose={handleCloseUpdateMeetingPage}
         maxWidth="md"

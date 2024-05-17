@@ -4,7 +4,6 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 // components
 import HeaderForLayout from "@components/common/headers/header-for-layout";
-import PageDialogs from "@components/common/dialog/page-dialogs";
 import { ContainerStyled } from "@components/common/container/container-styled";
 import BasicTable from "@components/common/table/basic-table";
 import ContactsLayoutFiltersPanel from "@components/UI/filters-panels/contacts-layout.filters-panel";

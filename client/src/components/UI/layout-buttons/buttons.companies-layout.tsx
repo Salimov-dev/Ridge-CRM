@@ -8,7 +8,8 @@ import SmartDisplayOutlinedIcon from "@mui/icons-material/SmartDisplayOutlined";
 // initial-states
 import { companiesLayoutInitialState } from "@initial-states/layouts/companies-layout.initial-state";
 // hooks
-import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
+import companiesDialogsState from "@dialogs/dialog-handlers/companies.dialog-handlers";
+import videoTrainingDialogsState from "@dialogs/dialog-handlers/video-training.dialog-handlers";
 
 const Component = styled(Box)`
   display: flex;
@@ -20,8 +21,8 @@ const ButtonsCompaniesLayout = ({ data, reset, setState }) => {
   const isInputEmpty =
     JSON.stringify(companiesLayoutInitialState) !== JSON.stringify(data);
 
-  const { handleOpenCreateCompanyPage, handleOpenVideoPlayerPage } =
-    useDialogHandlers(setState);
+  const { handleOpenCreateCompanyPage } = companiesDialogsState({ setState });
+  const { handleOpenVideoPlayerPage } = videoTrainingDialogsState({ setState });
 
   return (
     <Component>

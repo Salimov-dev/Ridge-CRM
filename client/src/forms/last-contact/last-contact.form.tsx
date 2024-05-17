@@ -6,8 +6,28 @@ import FieldsContact from "@components/common/forms/dynamic-fields/fields-contac
 import { FieldsContainer, Form } from "@styled/styled-form";
 // utils
 import { capitalizeFirstLetter } from "@utils/data/capitalize-first-letter";
+import { Dispatch, FC, SetStateAction } from "react";
+import {
+  Control,
+  FieldErrors,
+  UseFormRegister,
+  UseFormSetValue,
+  UseFormWatch
+} from "react-hook-form";
+import { IDialogPagesState } from "@interfaces/state/dialog-pages-state.interface";
+import { ITaskCreateInitState } from "@interfaces/task/task.interface";
 
-const LastContactForm = ({
+interface LastContactFormProps {
+  data: ITaskCreateInitState;
+  register: UseFormRegister<ITaskCreateInitState>;
+  errors: FieldErrors<ITaskCreateInitState>;
+  watch: UseFormWatch<ITaskCreateInitState>;
+  setValue: UseFormSetValue<ITaskCreateInitState>;
+  control: Control<ITaskCreateInitState>;
+  setState?: Dispatch<SetStateAction<IDialogPagesState>>;
+}
+
+const LastContactForm: FC<LastContactFormProps> = ({
   data,
   register,
   errors,
@@ -15,7 +35,7 @@ const LastContactForm = ({
   control,
   watch,
   setState = () => {}
-}) => {
+}): JSX.Element => {
   return (
     <Form>
       <FieldsContainer sx={{ flexDirection: "column" }}>
@@ -25,7 +45,7 @@ const LastContactForm = ({
           label="Дата последнего контакта *"
           value={data?.date || null}
           errors={errors?.date}
-          onChange={(value) => setValue("date", value)}
+          onChange={(value: Date | null) => setValue("date", value)}
         />
         <TextFieldStyled
           register={register}

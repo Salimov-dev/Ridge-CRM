@@ -3,6 +3,13 @@ import Loader from "./loader";
 import styled from "@emotion/styled";
 import { useTheme } from "@emotion/react";
 import { tokens } from "@theme/theme";
+import { FC } from "react";
+
+interface LoaderFullWindowProps {
+  color?: string;
+  size?: number;
+  isLoading?: boolean;
+}
 
 const Component = styled(Box)`
   width: 100%;
@@ -15,7 +22,11 @@ const Component = styled(Box)`
   z-ndex: 99999999;
 `;
 
-const LoaderFullWindow = ({ color = "grey", size = 75, isLoading }) => {
+const LoaderFullWindow: FC<LoaderFullWindowProps> = ({
+  color = "grey",
+  size = 75,
+  isLoading
+}) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   return (

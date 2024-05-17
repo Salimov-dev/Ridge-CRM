@@ -3,7 +3,6 @@ import { useSelector } from "react-redux";
 import React, { useEffect, useState } from "react";
 // components
 import HeaderForLayout from "@components/common/headers/header-for-layout";
-import PageDialogs from "@components/common/dialog/page-dialogs";
 import { ContainerStyled } from "@components/common/container/container-styled";
 import CalendarLayoutHeader from "@layouts/calendar/components/header/calendar-layout-header";
 import CalendarLayoutBody from "@layouts/calendar/components/body/calendar-body";
@@ -12,6 +11,7 @@ import getMonth from "@utils/calendar/get-month";
 // store
 import { getMonthIndexState } from "@store/month-index/month-index.store";
 import { getObjectsList } from "@store/object/objects.store";
+import DialogPages from "@dialogs/dialog-pages";
 
 const CalendarLayout = React.memo(() => {
   const [currentMonth, setCurrentMonth] = useState(getMonth());
@@ -46,7 +46,7 @@ const CalendarLayout = React.memo(() => {
       <HeaderForLayout title="Календарь" />
       <CalendarLayoutHeader setState={setState} />
       <CalendarLayoutBody currentMonth={currentMonth} setState={setState} />
-      <PageDialogs
+      <DialogPages
         state={state}
         setState={setState}
         objects={objects}

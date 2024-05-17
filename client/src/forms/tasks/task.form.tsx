@@ -1,3 +1,11 @@
+import { FC } from "react";
+import {
+  FieldErrors,
+  UseFormRegister,
+  UseFormSetValue,
+  UseFormWatch
+} from "react-hook-form";
+import { useSelector } from "react-redux";
 // styled
 import { FieldsContainer, Form } from "@styled/styled-form";
 // components
@@ -8,17 +16,37 @@ import SimpleSwitch from "@components/common/inputs/simple-switch";
 import AutocompleteStyled from "@components/common/inputs/autocomplete-styled";
 // utils
 import { capitalizeFirstLetter } from "@utils/data/capitalize-first-letter";
+// interfaces
+import { ITaskCreateInitState } from "@interfaces/task/task.interface";
+// store
+import { getCurrentUserId } from "@store/user/users.store";
+import { getObjectsList } from "@store/object/objects.store";
 
-const TaskForm = ({
+interface TaskFormProps {
+  data: ITaskCreateInitState;
+  register: UseFormRegister<ITaskCreateInitState>;
+  errors: FieldErrors<ITaskCreateInitState>;
+  watch: UseFormWatch<ITaskCreateInitState>;
+  setValue: UseFormSetValue<ITaskCreateInitState>;
+  isUpdatePage?: boolean;
+  isObjectPage?: boolean;
+}
+
+const TaskForm: FC<TaskFormProps> = ({
   data,
-  objects,
   register,
   setValue,
   watch,
   errors = null,
-  isEditMode = false,
+  isUpdatePage = false,
   isObjectPage = false
 }) => {
+  const currentUserId = useSelector(getCurrentUserId());
+  const objectsList = useSelector(getObjectsList());
+  const currentUserObjects = objectsList?.filter(
+    (obj) => obj?.userId === currentUserId
+  );
+
   const watchObjectId = watch("objectId");
   const watchIsDone = watch("isDone");
   const watchIsCallTask = watch("isCallTask");
@@ -31,7 +59,8 @@ const TaskForm = ({
           value={watchIsCallTask}
           padding="0px"
           onChange={(e) => {
-            setValue("isCallTask", e.target.checked);
+            const target = e.target as HTMLInputElement;
+            setValue("isCallTask", target.checked);
           }}
         />
       </FieldsContainer>
@@ -42,7 +71,7 @@ const TaskForm = ({
           label="Дата *"
           value={data?.date || null}
           errors={errors?.date}
-          onChange={(value) => setValue("date", value)}
+          onChange={(value: string | Date | null) => setValue("date", value)}
         />
         <TimePickerStyled
           register={register}
@@ -58,12 +87,15 @@ const TaskForm = ({
         label="Объект"
         register={register}
         name="objectId"
-        options={objects}
+        options={currentUserObjects}
         value={data.objectId}
         setValue={setValue}
         watchItemId={watchObjectId || ""}
         disabled={isObjectPage}
-        optionLabel={(option) => `${option?.city}, ${option?.address}`}
+        errors={errors?.objectId}
+        optionLabel={(option: { city: any; address: any }) =>
+          `${option?.city}, ${option?.address}`
+        }
       />
       <TextFieldStyled
         register={register}
@@ -76,7 +108,7 @@ const TaskForm = ({
         errors={errors?.comment}
         inputProps={{ maxLength: 200 }}
       />
-      {isEditMode ? (
+      {isUpdatePage ? (
         <TextFieldStyled
           register={register}
           label="Результат"
@@ -88,13 +120,14 @@ const TaskForm = ({
         />
       ) : null}
 
-      {isEditMode ? (
+      {isUpdatePage ? (
         <SimpleSwitch
           title={watchIsCallTask ? "Звонок выполнен" : "Задача выполнена"}
           value={watchIsDone}
           padding="0px"
           onChange={(e) => {
-            setValue("isDone", e.target.checked);
+            const target = e.target as HTMLInputElement;
+            setValue("isDone", target.checked);
           }}
         />
       ) : null}

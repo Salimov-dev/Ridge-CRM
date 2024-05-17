@@ -46,10 +46,7 @@ const ObjectsDialogPages: FC<ObjectsDialogPagesProps> = ({
       />
       <DialogStyled
         component={
-          <UpdateObject
-            onClose={handleCloseUpdateObjectPage}
-            objectId={state.objectId}
-          />
+          <UpdateObject state={state} onClose={handleCloseUpdateObjectPage} />
         }
         onClose={handleCloseUpdateObjectPage}
         open={state.updatePage}

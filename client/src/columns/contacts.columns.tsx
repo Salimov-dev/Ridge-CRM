@@ -10,15 +10,16 @@ import { FormatPhone } from "@utils/table/helpers.table";
 import ButtonStyled from "@components/common/buttons/button-styled.button";
 import CompanyTableEntity from "@components/common/table-entities/company.table-entity";
 import UserNameWithAvatar from "@components/common/user/user-name-with-avatar";
+import ObjectTableEntity from "@components/common/table-entities/object/object.table-entity";
 // hooks
 import useGetUserAvatar from "@hooks/user/use-get-user-avatar";
-import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
+// dialogs
+import contactsDialogsState from "@dialogs/dialog-handlers/contacts.dialog-handlers";
 // store
 import { getPositionNameById } from "@store/contact/contact-positions.store";
 import { Dispatch, SetStateAction } from "react";
 // interfaces
 import { IDialogPagesState } from "@interfaces/state/dialog-pages-state.interface";
-import ObjectTableEntity from "@components/common/table-entities/object/object.table-entity";
 
 interface ContactsColumnsProps {
   isCurrentUserRoleManager: boolean;
@@ -31,7 +32,7 @@ export const contactsColumns = ({
 }: ContactsColumnsProps) => {
   let columns = [];
 
-  const { handleOpenContactPage } = useDialogHandlers(setState);
+  const { handleOpenContactPage } = contactsDialogsState({ setState });
 
   const dateColumn = {
     accessorKey: "created_at",

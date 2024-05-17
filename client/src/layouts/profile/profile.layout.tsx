@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 // components
 import HeaderForLayout from "@components/common/headers/header-for-layout";
-import PageDialogs from "@components/common/dialog/page-dialogs";
 import { ContainerStyled } from "@components/common/container/container-styled";
 import Loader from "@components/common/loader/loader";
 import UserProfileLayoutInfo from "./components/user-profile-info.profile-layout";
@@ -12,6 +11,7 @@ import AvatarProfileLayout from "./components/avatar.profile-layout";
 // store
 import { getCurrentUserData, getUserNameById } from "@store/user/users.store";
 import { getUserAvatarsLoadingStatus } from "@store/avatar/avatar.store";
+import DialogPages from "@dialogs/dialog-pages";
 
 const ProfileLayout = () => {
   const [state, setState] = useState({
@@ -35,7 +35,7 @@ const ProfileLayout = () => {
       <AvatarProfileLayout state={state} setState={setState} />
       <UserProfileLayoutInfo user={user} />
 
-      <PageDialogs state={state} setState={setState} />
+      <DialogPages state={state} setState={setState} />
     </ContainerStyled>
   );
 };

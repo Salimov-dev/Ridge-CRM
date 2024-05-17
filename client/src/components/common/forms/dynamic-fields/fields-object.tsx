@@ -1,7 +1,14 @@
-import { useState } from "react";
+import { Dispatch, FC, SetStateAction, useState } from "react";
 import { Box, Typography } from "@mui/material";
 import { useSelector } from "react-redux";
-import { useFieldArray } from "react-hook-form";
+import {
+  Control,
+  FieldErrors,
+  UseFormRegister,
+  UseFormSetValue,
+  UseFormWatch,
+  useFieldArray
+} from "react-hook-form";
 import ControlPointOutlinedIcon from "@mui/icons-material/ControlPointOutlined";
 import DoNotDisturbOnOutlinedIcon from "@mui/icons-material/DoNotDisturbOnOutlined";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
@@ -11,15 +18,28 @@ import AutocompleteStyled from "@components/common/inputs/autocomplete-styled";
 import RowTitle from "@components/common/titles/row-title";
 import ButtonStyled from "@components/common/buttons/button-styled.button";
 import OpenPageElementIconButton from "@components/common/button-icons/open-page-element.button-icon";
-import PageDialogs from "@components/common/dialog/page-dialogs";
 import DeleteElementIcon from "@components/common/button-icons/delete-element-icon";
 import UserNameWithAvatar from "@components/common/user/user-name-with-avatar";
 // hooks
-import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
 import useGetUserAvatar from "@hooks/user/use-get-user-avatar";
+// interfaces
+import { IContactCreateInitState } from "@interfaces/contact/contact.inteface";
+import { IDialogPagesState } from "@interfaces/state/dialog-pages-state.interface";
 // store
 import { getObjectsList } from "@store/object/objects.store";
 import { getUsersList } from "@store/user/users.store";
+import { ICompanyCreateInitState } from "@interfaces/company/company.inteface";
+import objectsDialogsState from "@dialogs/dialog-handlers/objects.dialog-handlers";
+
+interface FieldsObjectProps {
+  data: IContactCreateInitState | ICompanyCreateInitState;
+  register: UseFormRegister<any>;
+  errors: FieldErrors<any>;
+  watch: UseFormWatch<any>;
+  setValue: UseFormSetValue<any>;
+  control: Control<any>;
+  setState: Dispatch<SetStateAction<IDialogPagesState>>;
+}
 
 const FieldContainer = styled(Box)`
   width: 100%;
@@ -33,7 +53,7 @@ const ButtonsContainer = styled(Box)`
   gap: 4px;
 `;
 
-const FieldsObject = ({
+const FieldsObject: FC<FieldsObjectProps> = ({
   data,
   register,
   setValue,
@@ -41,12 +61,7 @@ const FieldsObject = ({
   errors,
   setState,
   control
-}) => {
-  const [openObject, setOpenObject] = useState({
-    objectPage: false,
-    object: false
-  });
-
+}): JSX.Element => {
   const {
     fields: fieldObjects,
     append: appenObject,
@@ -72,8 +87,8 @@ const FieldsObject = ({
     userAvatars[user._id] = { getAvatarSrc, isLoading };
   });
 
-  const { handleOpenCreateObjectPage } = useDialogHandlers(setState);
-  const { handleOpenObjectPage } = useDialogHandlers(setOpenObject);
+  const { handleOpenCreateObjectPage, handleOpenObjectPage } =
+    objectsDialogsState({ setState });
 
   const handleChangeObject = (objectIndex, currentState) => {
     const updatedObjects = data.objects.map((object, index) => {
@@ -185,7 +200,6 @@ const FieldsObject = ({
           onClick={() => handleRemoveObject(lastObjectIndex)} // передаем функцию removePhone с аргументом
         />
       </ButtonsContainer>
-      <PageDialogs state={openObject} setState={setOpenObject} />
     </>
   );
 };

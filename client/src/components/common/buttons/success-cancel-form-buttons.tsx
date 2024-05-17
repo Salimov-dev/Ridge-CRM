@@ -1,5 +1,16 @@
 import { Box, styled } from "@mui/material";
 import ButtonStyled from "@components/common/buttons/button-styled.button";
+import { FC } from "react";
+
+interface SuccessCancelFormButtonsProps {
+  successTitle?: string;
+  onSuccess: () => void;
+  onCancel: () => void;
+  onRemove?: () => void;
+  disabledSuccess?: boolean;
+  disabledRemoveButton?: boolean;
+  isValidRemoveButton?: boolean;
+}
 
 const ButtonsContainer = styled(Box)`
   width: 100%;
@@ -13,7 +24,7 @@ const Container = styled(Box)`
   gap: 4px;
 `;
 
-const SuccessCancelFormButtons = ({
+const SuccessCancelFormButtons: FC<SuccessCancelFormButtonsProps> = ({
   successTitle = "Сохранить",
   onSuccess,
   onCancel,
@@ -21,7 +32,7 @@ const SuccessCancelFormButtons = ({
   disabledSuccess = false,
   disabledRemoveButton = false,
   isValidRemoveButton = false
-}) => {
+}): JSX.Element => {
   return (
     <ButtonsContainer>
       <ButtonStyled

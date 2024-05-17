@@ -4,14 +4,14 @@ import { Box, Typography } from "@mui/material";
 import DividerStyled from "@components/common/divider/divider-styled";
 import OpenPageElementIconButton from "@components/common/button-icons/open-page-element.button-icon";
 // hooks
-import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
 // store
 import { getObjectAddressById } from "@store/object/objects.store";
+import objectsDialogsState from "@dialogs/dialog-handlers/objects.dialog-handlers";
 
 const TaskObject = ({ task, setState }) => {
   const taskObjectId = task?.objectId;
   const objectAddress = useSelector(getObjectAddressById(taskObjectId));
-  const { handleOpenObjectPage } = useDialogHandlers(setState);
+  const { handleOpenObjectPage } = objectsDialogsState({ setState });
 
   return taskObjectId ? (
     <>

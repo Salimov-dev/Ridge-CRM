@@ -1,5 +1,11 @@
 import styled from "@emotion/styled";
-import { useFieldArray } from "react-hook-form";
+import {
+  Control,
+  FieldErrors,
+  UseFormRegister,
+  UseFormSetValue,
+  useFieldArray
+} from "react-hook-form";
 import { Box, FormHelperText, InputAdornment } from "@mui/material";
 // icons
 import PhoneIphoneOutlinedIcon from "@mui/icons-material/PhoneIphoneOutlined";
@@ -11,6 +17,16 @@ import RowTitle from "@components/common/titles/row-title";
 import ButtonStyled from "@components/common/buttons/button-styled.button";
 import DeleteElementIcon from "@components/common/button-icons/delete-element-icon";
 import SwitchField from "@components/common/inputs/switch-field";
+import { IContactCreateInitState } from "@interfaces/contact/contact.inteface";
+import { FC } from "react";
+
+interface FieldsPhoneProps {
+  data: IContactCreateInitState;
+  register: UseFormRegister<IContactCreateInitState>;
+  setValue: UseFormSetValue<IContactCreateInitState>;
+  errors: FieldErrors<IContactCreateInitState>;
+  control: Control<IContactCreateInitState>;
+}
 
 const FieldContainer = styled(Box)`
   width: 100%;
@@ -25,7 +41,13 @@ const ButtonsContainer = styled(Box)`
   gap: 4px;
 `;
 
-const FieldsPhone = ({ data, register, setValue, errors, control }) => {
+const FieldsPhone: FC<FieldsPhoneProps> = ({
+  data,
+  register,
+  setValue,
+  errors,
+  control
+}): JSX.Element => {
   const {
     fields: fieldPhones,
     append: appendPhone,
@@ -40,9 +62,9 @@ const FieldsPhone = ({ data, register, setValue, errors, control }) => {
   const handleChangePhone = (phoneIndex, currentState) => {
     const updatedPhones = data.phones.map((phone, index) => {
       if (index === phoneIndex) {
-        return { ...phone, isDefault: !currentState }; // Инвертируем состояние текущего объекта
+        return { ...phone, isDefault: !currentState };
       } else if (phone.isDefault) {
-        return { ...phone, isDefault: false }; // Если у другого объекта isDefault был true, устанавливаем его в false
+        return { ...phone, isDefault: false };
       }
       return phone;
     });

@@ -5,7 +5,7 @@ import OpenPageElementIconButton from "../button-icons/open-page-element.button-
 import { AlignCenter } from "../../../styled/styled-columns";
 import { getCompaniesList } from "@store/company/company.store";
 import EmptyTd from "../columns/empty-td";
-import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
+import companiesDialogsState from "@dialogs/dialog-handlers/companies.dialog-handlers";
 
 const Component = styled(Box)`
   display: flex;
@@ -16,7 +16,7 @@ const Component = styled(Box)`
 const CompanyTableEntity = ({ companies, setState }) => {
   const companiesList = useSelector(getCompaniesList());
 
-  const { handleOpenUpdateCompanyPage } = useDialogHandlers(setState);
+  const { handleOpenUpdateCompanyPage } = companiesDialogsState({ setState });
 
   return (
     <AlignCenter sx={{ display: "flex", flexDirection: "column" }}>

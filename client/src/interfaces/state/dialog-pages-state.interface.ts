@@ -7,8 +7,10 @@ export interface IDialogPagesState {
   updatePresentationPage: boolean;
   videoPlayerPage: boolean;
   objectId: string | null;
+  userId: string | null;
+  contactId: string;
   presentationId: string;
-  dateCreate: string;
+  dateCreate: string | Date | null;
   createMyTaskPage: boolean;
   updateMyTaskPage: boolean;
   createManagerTaskPage: boolean;
@@ -23,4 +25,19 @@ export interface IDialogPagesState {
   transferObjectPage: boolean;
   createCompanyPage: boolean;
   updateCompanyPage: boolean;
+  loginPage: boolean;
+  agreementPage: boolean;
+  registerPage: boolean;
+  personalPolicyPage: boolean;
+  createContactPage: boolean;
+  openContactPage: boolean;
+  companyId: string;
+  createUserPage: boolean;
+  updateUserPage: boolean;
+  avatarUpdatePage: boolean;
+  updateProfilePage: boolean;
+  updatePasswordPage: boolean;
+  authPage: boolean;
+  startPage: boolean;
+  makePaymentPage: boolean;
 }

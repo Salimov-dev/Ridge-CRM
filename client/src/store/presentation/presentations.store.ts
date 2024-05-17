@@ -196,9 +196,12 @@ export const removePresentationUpdate =
     }
   };
 
-export const getPresentationById = (id) => (state: IStoreState) => {
+export const getPresentationById = (id: string) => (state: IStoreState) => {
   if (state.presentations.entities) {
-    return state.presentations.entities.find((contact) => contact._id === id);
+    const presentation = state.presentations.entities.find(
+      (contact) => contact._id === id
+    );
+    return presentation !== undefined ? presentation : null;
   }
 };
 

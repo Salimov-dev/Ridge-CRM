@@ -12,7 +12,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 import ButtonStyled from "@components/common/buttons/button-styled.button";
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
 import HeaderWithCloseButtonForPage from "@components/common/headers/header-with-close-button.page";
-import PageDialogs from "@components/common/dialog/page-dialogs";
 import ForgotPasswordUI from "@components/UI/forgot-password/forgot-pasword.ui";
 // initial-states
 import { loginPageInitialState } from "@initial-states/auth/login-page.initial-state";
@@ -22,6 +21,7 @@ import AuthForm from "@forms/auth/auth-form";
 import { loginSchema } from "@schemas/auth/login.schema";
 // store
 import { login } from "@store/user/users.store";
+import DialogPages from "@dialogs/dialog-pages";
 
 interface LoginPageProps {
   onClose: () => void;
@@ -112,7 +112,7 @@ const LoginPage: FC<LoginPageProps> = React.memo(({ onClose }): JSX.Element => {
       </FormContainer>
       <ForgotPasswordUI />
       <LoaderFullWindow isLoading={isLoading} />
-      <PageDialogs state={stateDialogPages} setState={setStateDialogPages} />
+      <DialogPages state={stateDialogPages} setState={setStateDialogPages} />
     </Component>
   );
 });

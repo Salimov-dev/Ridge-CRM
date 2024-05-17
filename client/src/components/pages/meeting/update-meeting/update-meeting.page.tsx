@@ -10,13 +10,12 @@ import ContentUpdateMeetingPage from "./components/content.update-meeting-page";
 import { IDialogPagesState } from "@interfaces/state/dialog-pages-state.interface";
 
 interface UpdateMeetingProps {
-  meetingId: string;
   state: IDialogPagesState;
   onClose: () => void;
 }
 
 const UpdateMeeting: FC<UpdateMeetingProps> = React.memo(
-  ({ state, meetingId, onClose }): JSX.Element => {
+  ({ state, onClose }): JSX.Element => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
 
@@ -32,7 +31,6 @@ const UpdateMeeting: FC<UpdateMeetingProps> = React.memo(
         />
         <ContentUpdateMeetingPage
           state={state}
-          meetingId={meetingId}
           onClose={onClose}
           setIsLoading={setIsLoading}
           isLoading={isLoading}

@@ -4,7 +4,6 @@ import React, { useEffect, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 // components
 import HeaderForLayout from "@components/common/headers/header-for-layout";
-import PageDialogs from "@components/common/dialog/page-dialogs";
 import { ContainerStyled } from "@components/common/container/container-styled";
 import BasicTable from "@components/common/table/basic-table";
 import ButtonsCompaniesLayout from "../../components/UI/layout-buttons/buttons.companies-layout";
@@ -21,17 +20,13 @@ import {
   getCompaniesList,
   getCompaniesLoadingStatus
 } from "@store/company/company.store";
+import DialogPages from "@dialogs/dialog-pages";
+import { dialogePagesState } from "@initial-states/dialog-pages-state/dialog-pages.state";
+import { IDialogPagesState } from "@interfaces/state/dialog-pages-state.interface";
 
 const CompaniesLayout = React.memo(() => {
-  const [stateDialogPages, setStateDialogPages] = useState({
-    contactPage: false,
-    createContactPage: false,
-    openContactPage: false,
-    companyId: null,
-    createCompanyPage: false,
-    updateCompanyPage: false,
-    videoPlayerPage: false
-  });
+  const [stateDialogPages, setStateDialogPages] =
+    useState<IDialogPagesState>(dialogePagesState);
 
   const localStorageState = JSON.parse(
     localStorage.getItem("search-companies-data")
@@ -92,13 +87,13 @@ const CompaniesLayout = React.memo(() => {
       />
       <BasicTable
         items={searchedCompanies}
-        itemsColumns={companiesColumns(
-          setStateDialogPages,
-          isCurrentUserRoleCurator
-        )}
+        itemsColumns={companiesColumns({
+          setState: setStateDialogPages,
+          isCurrentUserRoleCurator: isCurrentUserRoleCurator
+        })}
         isLoading={isLoading}
       />
-      <PageDialogs
+      <DialogPages
         state={stateDialogPages}
         setState={setStateDialogPages}
         videoTitle="Как пользоваться страницей с Компаниями"

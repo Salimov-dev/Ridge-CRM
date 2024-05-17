@@ -13,7 +13,6 @@ import ButtonStyled from "@components/common/buttons/button-styled.button";
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
 import HeaderWithCloseButtonForPage from "@components/common/headers/header-with-close-button.page";
 import AuthForm from "@forms/auth/auth-form";
-import PageDialogs from "@components/common/dialog/page-dialogs";
 import PolisiesLinksRegisterPage from "./policies-links.register-page";
 // initial-states
 import { registerPageInitialState } from "@initial-states/auth/register-page.initial-state";
@@ -21,6 +20,7 @@ import { registerPageInitialState } from "@initial-states/auth/register-page.ini
 import { registerSchema } from "@schemas/auth/register.schema";
 // store
 import { signUp } from "@store/user/users.store";
+import DialogPages from "@dialogs/dialog-pages";
 
 const Component = styled(Box)`
   height: 100%;
@@ -124,7 +124,7 @@ const RegisterPage = React.memo(({ onClose }) => {
       <PolisiesLinksRegisterPage setState={setStateDialogPages} />
 
       <LoaderFullWindow isLoading={isLoading} />
-      <PageDialogs state={stateDialogPages} setState={setStateDialogPages} />
+      <DialogPages state={stateDialogPages} setState={setStateDialogPages} />
     </Component>
   );
 });

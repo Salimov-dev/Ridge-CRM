@@ -1,5 +1,11 @@
 import { Box, InputAdornment } from "@mui/material";
-import { useFieldArray } from "react-hook-form";
+import {
+  Control,
+  FieldErrors,
+  UseFormRegister,
+  UseFormSetValue,
+  useFieldArray
+} from "react-hook-form";
 import styled from "@emotion/styled";
 // icons
 import AlternateEmailOutlinedIcon from "@mui/icons-material/AlternateEmailOutlined";
@@ -11,6 +17,16 @@ import RowTitle from "@components/common/titles/row-title";
 import ButtonStyled from "@components/common/buttons/button-styled.button";
 import DeleteElementIcon from "@components/common/button-icons/delete-element-icon";
 import SwitchField from "@components/common/inputs/switch-field";
+import { FC } from "react";
+import { IContactCreateInitState } from "@interfaces/contact/contact.inteface";
+
+interface FieldsEmailProps {
+  data: IContactCreateInitState;
+  register: UseFormRegister<IContactCreateInitState>;
+  setValue: UseFormSetValue<IContactCreateInitState>;
+  errors: FieldErrors<IContactCreateInitState>;
+  control: Control<IContactCreateInitState>;
+}
 
 const FieldContainer = styled(Box)`
   width: 100%;
@@ -25,7 +41,13 @@ const ButtonsContainer = styled(Box)`
   gap: 4px;
 `;
 
-const FieldsEmail = ({ data, register, setValue, errors, control }) => {
+const FieldsEmail: FC<FieldsEmailProps> = ({
+  data,
+  register,
+  setValue,
+  errors,
+  control
+}): JSX.Element => {
   const {
     fields: fieldEmails,
     append: appendEmail,

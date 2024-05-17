@@ -9,7 +9,7 @@ import ContactTableEntity from "@components/common/table-entities/contact.table-
 // utils
 import { FormatDate } from "@utils/date/format-date";
 // hooks
-import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
+import companiesDialogsState from "@dialogs/dialog-handlers/companies.dialog-handlers";
 // interfaces
 import { IDialogPagesState } from "@interfaces/state/dialog-pages-state.interface";
 
@@ -24,7 +24,7 @@ export const companiesColumns = ({
 }: CompaniesColumnsProps) => {
   let columns = [];
 
-  const { handleOpenUpdateCompanyPage } = useDialogHandlers(setState);
+  const { handleOpenUpdateCompanyPage } = companiesDialogsState({ setState });
 
   const dateColumn = {
     accessorKey: "created_at",

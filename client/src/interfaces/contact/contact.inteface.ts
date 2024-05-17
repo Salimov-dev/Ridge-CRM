@@ -7,9 +7,19 @@ export interface IContact {
   emails: string[];
   companies: string[];
   phones: PhoneNumber[];
-  objects: string[];
+  objectId: string;
   created_at: string;
   updated_at: string;
+}
+
+export interface IContactCreateInitState {
+  name: string;
+  position: string;
+  comment: string;
+  phones: any;
+  emails: any;
+  companies: any;
+  objects: any;
 }
 
 export enum ContactPositions {

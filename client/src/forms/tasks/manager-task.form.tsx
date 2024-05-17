@@ -1,3 +1,10 @@
+import {
+  FieldErrors,
+  UseFormRegister,
+  UseFormSetValue,
+  UseFormWatch
+} from "react-hook-form";
+import { FC } from "react";
 import { useSelector } from "react-redux";
 // components
 import TextFieldStyled from "@components/common/inputs/text-field-styled";
@@ -11,29 +18,57 @@ import { FieldsContainer, Form } from "@styled/styled-form";
 // utils
 import getDateToday from "@utils/date/get-date-today";
 import { capitalizeAllFirstLetters } from "@utils/data/capitalize-all-first-letters";
+// interfaces
+import { IManagerTaskCreateInitState } from "@interfaces/task/task.interface";
 // store
+import { getObjectsList } from "@store/object/objects.store";
 import {
   getIsCurrentUserRoleCurator,
-  getIsCurrentUserRoleManager
+  getIsCurrentUserRoleManager,
+  getUsersList
 } from "@store/user/users.store";
 
-const ManagerTaskForm = ({
+interface ManagerTaskFormProps {
+  data: IManagerTaskCreateInitState;
+  register: UseFormRegister<IManagerTaskCreateInitState>;
+  setValue: UseFormSetValue<IManagerTaskCreateInitState>;
+  watch: UseFormWatch<IManagerTaskCreateInitState>;
+  errors: FieldErrors<IManagerTaskCreateInitState>;
+  isUpdatePage?: boolean;
+  isObjectPage?: boolean;
+}
+
+const ManagerTaskForm: FC<ManagerTaskFormProps> = ({
   data,
-  objects,
-  users,
   register,
   errors,
   watch,
   setValue,
   isObjectPage = false,
-  isEditMode = false
-}) => {
-  const watchObjectId = watch("objectId", "");
-  const watchManagerId = watch("managerId", "");
-  const watchIsDone = watch("isDone", false);
+  isUpdatePage = false
+}): JSX.Element => {
+  const watchManagerId = watch("managerId");
 
+  const watchObjectId = watch("objectId", null);
+  const watchIsDone = watch("isDone", false);
   const isCurrentUserRoleManager = useSelector(getIsCurrentUserRoleManager());
   const isCurrentUserRoleCurator = useSelector(getIsCurrentUserRoleCurator());
+
+  const objectsList = useSelector(getObjectsList());
+  const selectedManagerObjects = objectsList?.filter(
+    (obj) => obj?.userId === watchManagerId
+  );
+
+  const users = useSelector(getUsersList());
+  const actualUsersArray = users?.map((user) => {
+    const lastName = user?.lastName;
+    const firstName = user?.firstName;
+
+    return {
+      _id: user._id,
+      name: `${lastName ? lastName : "Без"} ${firstName ? firstName : "имени"}`
+    };
+  });
 
   return (
     <Form noValidate>
@@ -43,7 +78,7 @@ const ManagerTaskForm = ({
           name="date"
           label="Дата *"
           value={data?.date || null}
-          onChange={(value) => setValue("date", value)}
+          onChange={(value: any) => setValue("date", value)}
           errors={errors?.date}
           minDate={getDateToday()}
           disabled={isCurrentUserRoleManager}
@@ -64,7 +99,7 @@ const ManagerTaskForm = ({
           name="managerId"
           labelId="managerId"
           label="Менеджер"
-          itemsList={users}
+          itemsList={actualUsersArray}
           value={watchManagerId}
           errors={errors?.managerId}
           disabled={isObjectPage}
@@ -79,14 +114,19 @@ const ManagerTaskForm = ({
           }
           register={register}
           name="objectId"
-          options={objects}
+          options={selectedManagerObjects}
           value={watchObjectId}
           setValue={setValue}
           watchItemId={watchObjectId}
+          errors={errors?.objectId}
           disabled={
-            !objects.length || isObjectPage || !isCurrentUserRoleCurator
+            !selectedManagerObjects.length ||
+            isObjectPage ||
+            !isCurrentUserRoleCurator
           }
-          optionLabel={(option) => `${option?.city}, ${option?.address}`}
+          optionLabel={(option: { city: any; address: any }) =>
+            `${option?.city}, ${option?.address}`
+          }
         />
       ) : null}
       <TextFieldStyled
@@ -100,7 +140,7 @@ const ManagerTaskForm = ({
         inputProps={{ maxLength: 150 }}
         disabled={isCurrentUserRoleManager}
       />
-      {isEditMode ? (
+      {isUpdatePage ? (
         <TextFieldStyled
           register={register}
           label="Результат"
@@ -112,12 +152,13 @@ const ManagerTaskForm = ({
           disabled={isCurrentUserRoleCurator}
         />
       ) : null}
-      {isEditMode ? (
+      {isUpdatePage ? (
         <SimpleSwitch
           title="Задача выполнена"
           value={watchIsDone}
           onChange={(e) => {
-            setValue("isDone", e.target.checked);
+            const target = e.target as HTMLInputElement;
+            setValue("isDone", target.checked);
           }}
         />
       ) : null}

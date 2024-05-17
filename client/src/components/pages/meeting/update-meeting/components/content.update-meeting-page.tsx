@@ -25,7 +25,6 @@ import {
 
 interface ContentUpdateMeetingPageProps {
   state: IDialogPagesState;
-  meetingId: string;
   isLoading: boolean;
   onClose: () => void;
   setIsLoading: Dispatch<SetStateAction<boolean>>;
@@ -33,13 +32,13 @@ interface ContentUpdateMeetingPageProps {
 
 const ContentUpdateMeetingPage: FC<ContentUpdateMeetingPageProps> = ({
   state,
-  meetingId,
   onClose,
   isLoading,
   setIsLoading
 }): JSX.Element => {
   const dispatch = useDispatch();
 
+  const meetingId = state.meetingId;
   const meeting = useSelector(getMeetingById(meetingId));
   const address = `${meeting?.city}, ${meeting?.address}`;
   const latitude = meeting?.latitude || null;
@@ -61,7 +60,7 @@ const ContentUpdateMeetingPage: FC<ContentUpdateMeetingPageProps> = ({
   } = useForm({
     defaultValues: formatedMeeting,
     mode: "onChange",
-    resolver: yupResolver(meetingSchema)
+    resolver: yupResolver<any>(meetingSchema)
   });
 
   const data = watch();

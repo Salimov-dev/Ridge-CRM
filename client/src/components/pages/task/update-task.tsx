@@ -1,7 +1,7 @@
 // liraries
 import dayjs from "dayjs";
 import { toast } from "react-toastify";
-import React, { useEffect, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTheme } from "@emotion/react";
 import { tokens } from "@theme/theme";
@@ -15,23 +15,29 @@ import LoaderFullWindow from "@components/common/loader/loader-full-window";
 import DialogConfirm from "@components/common/dialog/dialog-confirm";
 // schema
 import { taskSchema } from "@schemas/task/task.shema";
-//utils
-import { capitalizeFirstLetter } from "@utils/data/capitalize-first-letter";
-import { getObjectsList } from "@store/object/objects.store";
-import { getCurrentUserId } from "@store/user/users.store";
-import { createLastContact } from "@store/last-contact/last-contact.store";
+// interfaces
+import { IDialogPagesState } from "@interfaces/state/dialog-pages-state.interface";
+// hooks
+import useRemoveItem from "@hooks/item/use-remove-item";
 // store
 import { getTaskById, removeTask, updateTask } from "@store/task/tasks.store";
 
-const UpdateTask = React.memo(
-  ({ title, taskId, objectId, onClose, isObjectPage }) => {
+interface UpdateTaskProps {
+  state: IDialogPagesState;
+  onClose: () => void;
+}
+
+const UpdateTask: FC<UpdateTaskProps> = React.memo(
+  ({ state, onClose }): JSX.Element => {
     const dispatch = useDispatch();
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
 
-    const [openConfirm, setOpenConfirm] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
 
+    const title = "Изменить свою задачу";
+    const taskId = state.taskId;
+    const objectId = state.objectId;
     const task = useSelector(getTaskById(taskId));
 
     const formatedTask = {
@@ -53,16 +59,9 @@ const UpdateTask = React.memo(
     });
 
     const data = watch();
-    const isEditMode = taskId ? true : false;
-    const objects = useSelector(getObjectsList());
     const watchIsCallTask = watch("isCallTask");
 
-    const currentUserId = useSelector(getCurrentUserId());
-    const currentUserObjects = objects?.filter(
-      (obj) => obj?.userId === currentUserId
-    );
-
-    const onSubmit = (data) => {
+    const onSubmit = () => {
       setIsLoading(true);
 
       const transformedDate = dayjs(data.date).format(
@@ -77,57 +76,28 @@ const UpdateTask = React.memo(
         time: transformedTime
       };
 
-      const lastContactData = {
-        date: data.date,
-        objectId: data.objectId,
-        result: capitalizeFirstLetter(data.result)
-      };
-
       dispatch<any>(updateTask(newData))
         .then(() => {
           setIsLoading(false);
           onClose();
           toast.success("Задача себе успешно изменена!");
         })
-        .then(() => {
-          const result = data?.result;
-          const isCallTask = data?.isCallTask;
-          if (isCallTask && result) {
-            dispatch<any>(createLastContact(lastContactData))
-              .then(() => {
-                onClose();
-                toast.success("Последний контакт успешно создан!");
-              })
-              .catch((error) => {
-                toast.error(error);
-              });
-          }
-        })
-        .catch((error) => {
+        .catch((error: string) => {
           setIsLoading(false);
           toast.error(error);
         });
     };
 
-    const handleOpenConfirm = () => {
-      setOpenConfirm(true);
-    };
-
-    const handleCloseConfirm = () => {
-      setOpenConfirm(false);
-    };
-
-    const handleRemoveTask = (taskId: number) => {
-      setIsLoading(true);
-      dispatch<any>(removeTask(taskId))
-        .then(onClose(), handleCloseConfirm())
-        .catch((error) => {
-          toast.error(error);
-        })
-        .finally(() => {
-          setIsLoading(false);
-        });
-    };
+    const {
+      openConfirm,
+      handleOpenConfirm,
+      handleCloseConfirm,
+      handleRemoveItem
+    } = useRemoveItem({
+      onRemove: removeTask(taskId),
+      onClose,
+      setIsLoading
+    });
 
     useEffect(() => {
       if (objectId) {
@@ -145,13 +115,12 @@ const UpdateTask = React.memo(
         />
         <TaskForm
           data={data}
-          objects={currentUserObjects}
           register={register}
           setValue={setValue}
           watch={watch}
           errors={errors}
-          isEditMode={isEditMode}
-          isObjectPage={isObjectPage}
+          isUpdatePage={!!taskId}
+          isObjectPage={!!objectId}
         />
         <SuccessCancelFormButtons
           onSuccess={handleSubmit(onSubmit)}
@@ -161,8 +130,8 @@ const UpdateTask = React.memo(
         <DialogConfirm
           question="Вы уверены, что хотите удалить свою задачу?"
           open={openConfirm}
-          onSuccessClick={() => handleRemoveTask(taskId)}
           onClose={handleCloseConfirm}
+          onSuccessClick={() => handleRemoveItem()}
         />
         <LoaderFullWindow isLoading={isLoading} />
       </>

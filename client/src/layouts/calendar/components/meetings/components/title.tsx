@@ -10,7 +10,7 @@ import DoneIconToggler from "../../body/components/day/components/done-icon-togg
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 // store
 import { updateMeeting } from "@store/meeting/meetings.store";
-import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
+import meetingsDialogsState from "@dialogs/dialog-handlers/meetings.dialog-handlers";
 
 const Component = styled(Box)`
   display: flex;
@@ -28,7 +28,7 @@ const Title = ({ meet, currentUserId, setState }) => {
 
   const isAuthor = meet?.userId === currentUserId;
 
-  const { handleOpenUpdateMeetingPage } = useDialogHandlers(setState);
+  const { handleOpenUpdateMeetingPage } = meetingsDialogsState({ setState });
 
   const handleDoneMeeting = (meet) => {
     const newMeeting = { ...meet, isDone: true };

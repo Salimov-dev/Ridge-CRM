@@ -1,13 +1,19 @@
 import { useSelector } from "react-redux";
 import { Box, Typography, styled } from "@mui/material";
+import { Dispatch, FC, SetStateAction } from "react";
 // components
 import BasicTable from "@common/table/basic-table";
 import ButtonStyled from "@components/common/buttons/button-styled.button";
 import RowTitle from "@components/common/titles/row-title";
 // utils
 import sortingByDateAndTime from "@utils/sort/sorting-by-date-and-time";
-// hooks
-import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
+// columns
+import { tasksColumns } from "@columns/tasks.columns";
+// interfaces
+import { IObject } from "@interfaces/object/object.interface";
+import { IDialogPagesState } from "@interfaces/state/dialog-pages-state.interface";
+// dialogs
+import tasksDialogsState from "@dialogs/dialog-handlers/tasks.dialog-handlers";
 import {
   getObjectTasksList,
   getTaskLoadingStatus
@@ -15,9 +21,15 @@ import {
 import {
   getCurrentUserId,
   getIsCurrentUserRoleCurator,
-  getIsUserAuthorThisEntity,
-  getIsUserObserver
+  getIsCurrentUserRoleManager,
+  getIsUserAuthorThisEntity
 } from "@store/user/users.store";
+
+interface ObjectTasksProps {
+  object: IObject | null;
+  state: IDialogPagesState;
+  setState: Dispatch<SetStateAction<IDialogPagesState>>;
+}
 
 const Component = styled(Box)`
   display: flex;
@@ -31,7 +43,11 @@ const Container = styled(Box)`
   justify-content: space-between;
 `;
 
-const ObjectTasks = ({ object, setState, columns }) => {
+const ObjectTasks: FC<ObjectTasksProps> = ({
+  object,
+  setState,
+  state
+}): JSX.Element => {
   const currentUserId = useSelector(getCurrentUserId());
   const objectId = object?._id;
 
@@ -39,15 +55,14 @@ const ObjectTasks = ({ object, setState, columns }) => {
   const sortedTasks = sortingByDateAndTime(tasks);
 
   const isTasksLoading = useSelector(getTaskLoadingStatus());
-  const isObjectAuthorObserver = useSelector(getIsUserObserver(object?.userId));
   const isCurrentUserRoleCurator = useSelector(getIsCurrentUserRoleCurator());
-
+  const isCurrentUserRoleManager = useSelector(getIsCurrentUserRoleManager());
   const isAuthorEntity = useSelector(
     getIsUserAuthorThisEntity(currentUserId, object)
   );
 
   const { handleOpenCreateMyTaskPage, handleOpenCreateManagerTaskPage } =
-    useDialogHandlers(setState);
+    tasksDialogsState({ setState });
 
   return (
     <Component>
@@ -65,24 +80,25 @@ const ObjectTasks = ({ object, setState, columns }) => {
             width="330px"
             onClick={() => handleOpenCreateMyTaskPage(objectId)}
           />
-        ) : (
-          isCurrentUserRoleCurator &&
-          !isObjectAuthorObserver && (
-            <ButtonStyled
-              title="Поставить менеджеру задачу"
-              style="MANAGER_TASK"
-              variant="contained"
-              width="260px"
-              onClick={() => handleOpenCreateManagerTaskPage(objectId)}
-            />
-          )
-        )}
+        ) : isCurrentUserRoleCurator ? (
+          <ButtonStyled
+            title="Поставить менеджеру задачу"
+            style="MANAGER_TASK"
+            variant="contained"
+            width="260px"
+            onClick={() => handleOpenCreateManagerTaskPage(objectId)}
+          />
+        ) : null}
       </Container>
 
       {sortedTasks?.length ? (
         <BasicTable
           items={sortedTasks}
-          itemsColumns={columns}
+          itemsColumns={tasksColumns({
+            state,
+            setState,
+            isCurrentUserRoleManager
+          })}
           isLoading={isTasksLoading}
           isDialogMode={true}
         />

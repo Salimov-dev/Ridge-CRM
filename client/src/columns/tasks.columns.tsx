@@ -1,6 +1,8 @@
 import dayjs from "dayjs";
 import "dayjs/locale/ru";
 import { useSelector } from "react-redux";
+import { Dispatch, SetStateAction } from "react";
+import { Row } from "react-table";
 // mui
 import { Box, Typography } from "@mui/material";
 // styled
@@ -10,7 +12,14 @@ import EmptyTd from "@components/common/columns/empty-td";
 import UserNameWithAvatar from "@components/common/user/user-name-with-avatar";
 import ButtonStyled from "@components/common/buttons/button-styled.button";
 import DoneStatusIcon from "@components/common/columns/done-status-icon";
-import OpenPageElementIconButton from "@components/common/button-icons/open-page-element.button-icon";
+import ObjectTableEntity from "@components/common/table-entities/object/object.table-entity";
+// interfaces
+import { IDialogPagesState } from "@interfaces/state/dialog-pages-state.interface";
+// utils
+import { FormatDate } from "@utils/date/format-date";
+import { FormatTime } from "@utils/date/format-time";
+// hooks
+import useGetUserAvatar from "@hooks/user/use-get-user-avatar";
 // store
 import { getObjectById } from "@store/object/objects.store";
 import { getTaskById } from "@store/task/tasks.store";
@@ -18,25 +27,24 @@ import {
   getCurrentUserId,
   getIsUserAuthorThisEntity
 } from "@store/user/users.store";
-// utils
-import { FormatDate } from "@utils/date/format-date";
-import { FormatTime } from "@utils/date/format-time";
-// hooks
-import useGetUserAvatar from "@hooks/user/use-get-user-avatar";
-import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
+import tasksDialogsState from "@dialogs/dialog-handlers/tasks.dialog-handlers";
 
-export const tasksColumns = (
+interface MeetingsColumnsProps {
+  state: IDialogPagesState;
+  isCurrentUserRoleManager: boolean;
+  setState: Dispatch<SetStateAction<IDialogPagesState>>;
+}
+
+export const tasksColumns = ({
+  state,
   setState,
-  isCurrentUserRoleManager,
-  isDialogPage
-) => {
+  isCurrentUserRoleManager
+}: MeetingsColumnsProps) => {
   let columns = [];
+  const isObjectPage = state?.objectPage;
 
-  const {
-    handleOpenUpdateMyTaskPage,
-    handleOpenUpdateManagerTaskPage,
-    handleOpenObjectPage
-  } = useDialogHandlers(setState);
+  const { handleOpenUpdateMyTaskPage, handleOpenUpdateManagerTaskPage } =
+    tasksDialogsState({ setState });
 
   const dateColumn = {
     header: "Дата и время выполнения задачи",
@@ -45,7 +53,7 @@ export const tasksColumns = (
         accessorKey: "isDone",
         header: "",
         enableSorting: false,
-        cell: (info) => {
+        cell: (info: { getValue: () => any }) => {
           const isDone = info.getValue();
           return <DoneStatusIcon isDone={isDone} />;
         }
@@ -54,7 +62,7 @@ export const tasksColumns = (
         accessorKey: "date",
         header: "Дата",
         enableSorting: false,
-        cell: (info) => {
+        cell: (info: { getValue: () => any }) => {
           const date = info.getValue();
           const formattedDate = FormatDate(date);
           const dayOfWeek = dayjs(date).locale("ru").format("dd");
@@ -70,7 +78,7 @@ export const tasksColumns = (
         accessorKey: "time",
         header: "Время",
         enableSorting: false,
-        cell: (info) => {
+        cell: (info: { getValue: () => any }) => {
           const time = info.getValue();
           return <AlignCenter>{FormatTime(time)}</AlignCenter>;
         }
@@ -85,35 +93,11 @@ export const tasksColumns = (
         accessorKey: "objectId",
         header: "Объект",
         enableSorting: false,
-        cell: (info) => {
+        cell: (info: { getValue: () => any }) => {
           const objectId = info.getValue();
           const object = useSelector(getObjectById(objectId));
-          const fullAddress = `${object?.city}, ${object?.address}`;
 
-          return (
-            <Box
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between"
-              }}
-            >
-              {objectId ? (
-                <>
-                  {fullAddress}d
-                  <OpenPageElementIconButton
-                    title="Открыть объект"
-                    height="20px"
-                    heightButton="20px"
-                    width="20px"
-                    onClick={() => handleOpenObjectPage(objectId)}
-                  />
-                </>
-              ) : (
-                <EmptyTd />
-              )}
-            </Box>
-          );
+          return <ObjectTableEntity object={object} setState={setState} />;
         }
       }
     ]
@@ -126,7 +110,7 @@ export const tasksColumns = (
         accessorKey: "comment",
         header: "Задача",
         enableSorting: false,
-        cell: (info) => {
+        cell: (info: { getValue: () => any }) => {
           const comment = info.getValue();
           return <AlignCenter>{comment}</AlignCenter>;
         }
@@ -135,7 +119,7 @@ export const tasksColumns = (
         accessorKey: "userId",
         header: "Задачу поставил",
         enableSorting: false,
-        cell: (info) => {
+        cell: (info: { getValue: () => any }) => {
           const userId = info.getValue();
           const { getAvatarSrc, isLoading } = useGetUserAvatar(userId);
 
@@ -151,10 +135,10 @@ export const tasksColumns = (
         }
       },
       {
-        accessorFn: (row) => row,
+        accessorFn: (row: Row) => row,
         header: "Ответственный",
         enableSorting: false,
-        cell: (info) => {
+        cell: (info: { getValue: () => any }) => {
           const row = info.getValue();
           const managerId = row.managerId;
           const userId = row.userId;
@@ -164,6 +148,7 @@ export const tasksColumns = (
           } = useGetUserAvatar(managerId);
           const { getAvatarSrc: getUserAvatar, isLoading: isLoadingUser } =
             useGetUserAvatar(userId);
+
           return (
             <AlignCenter>
               {managerId ? (
@@ -187,7 +172,7 @@ export const tasksColumns = (
         accessorKey: "result",
         header: "Результат",
         enableSorting: false,
-        cell: (info) => {
+        cell: (info: { getValue: () => any }) => {
           const comment = info.getValue();
           return comment ? <AlignCenter>{comment}</AlignCenter> : <EmptyTd />;
         }
@@ -196,7 +181,7 @@ export const tasksColumns = (
         accessorKey: "created_at",
         header: "Дата постановки задачи",
         enableSorting: false,
-        cell: (info) => {
+        cell: (info: { getValue: () => any }) => {
           const date = info.getValue();
           return <AlignCenter>{FormatDate(date)}</AlignCenter>;
         }
@@ -208,10 +193,10 @@ export const tasksColumns = (
     header: "Задача",
     columns: [
       {
-        accessorFn: (row) => row,
+        accessorFn: (row: Row) => row,
         header: "Править",
         enableSorting: false,
-        cell: (info) => {
+        cell: (info: { getValue: () => any }) => {
           const row = info.getValue();
           const taskId = row._id;
           const task = useSelector(getTaskById(taskId));
@@ -255,7 +240,7 @@ export const tasksColumns = (
     columns = [dateColumn, otherColumns];
   }
 
-  if (!isDialogPage) {
+  if (!isObjectPage) {
     columns.splice(3, 0, taskObjectColumn);
   }
 

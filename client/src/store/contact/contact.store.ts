@@ -215,11 +215,18 @@ export const removeContactUpdate =
     }
   };
 
-export const getContactById = (contactId: string) => (state: IStoreState) => {
-  if (state.contacts.entities) {
-    return state.contacts.entities.find((cont) => cont._id === contactId);
-  }
-};
+export const getContactById =
+  (contactId: string | null) =>
+  (state: IStoreState): IContact | null => {
+    if (state.contacts.entities) {
+      const contact = state.contacts.entities.find(
+        (cont) => cont._id === contactId
+      );
+      return contact !== undefined ? contact : null;
+    } else {
+      return null;
+    }
+  };
 
 export const getContactsList = () => (state: IStoreState) =>
   state.contacts.entities;

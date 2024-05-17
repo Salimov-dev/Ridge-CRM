@@ -6,9 +6,9 @@ import UpdateElement from "@components/common/button-icons/update-element.button
 // utils
 import { FormatTime } from "@utils/date/format-time";
 // hooks
-import useDialogHandlers from "@hooks/dialog/use-dialog-handlers";
 // store
 import { updateTask } from "@store/task/tasks.store";
+import tasksDialogsState from "@dialogs/dialog-handlers/tasks.dialog-handlers";
 
 const Component = styled(Box)`
   display: flex;
@@ -24,7 +24,7 @@ const Title = ({ task, setState }) => {
   const isTaskDone = task?.isDone;
 
   const { handleOpenUpdateMyTaskPage, handleOpenUpdateManagerTaskPage } =
-    useDialogHandlers(setState);
+    tasksDialogsState({ setState });
 
   const isCuratorTask = Boolean(task?.managerId);
   const dispatch = useDispatch();
