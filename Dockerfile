@@ -8,7 +8,7 @@ RUN npm run build
 FROM node:alpine
 WORKDIR /app
 COPY server/package.json /app
-RUN npm install
+RUN npm install --force
 COPY server /app
 COPY --from=client /app/client/dist /app/client
 
