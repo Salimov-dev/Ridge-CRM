@@ -33,8 +33,6 @@
     "@reduxjs/toolkit": "^1.9.5",
     "@tanstack/react-table": "^8.9.3",
     "axios": "^1.4.0",
-    "canvas": "^2.11.2",
-    "canvas-confetti": "^1.9.0",
     "compress-base64": "^1.0.2",
     "compressorjs": "^1.2.1",
     "cp-table": "^0.1.4",
