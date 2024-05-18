@@ -22,7 +22,7 @@ export const Component = styled(Box)(() => ({
   minHeight: "100vh"
 }));
 
-export const RightSide = styled(Box)(() => ({
+export const RightSide = styled(Box)({
   display: "flex",
   flexDirection: "column",
   justifyContent: "space-between",
@@ -31,7 +31,7 @@ export const RightSide = styled(Box)(() => ({
   backgroundRepeat: "repeat-x",
   backgroundSize: "auto 35px",
   backgroundPosition: "bottom"
-}));
+});
 
 const AppStyled = () => {
   const location = useLocation();

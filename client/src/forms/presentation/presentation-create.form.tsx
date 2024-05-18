@@ -47,7 +47,7 @@ const PresentationCreateForm: FC<PresentationCreateFormProps> = ({
           setValue={setValue}
           watchItemId={watchObjectId}
           errors={errors?.objectId}
-          disabled={isObjectPage}
+          disabled={!!data.objectId}
           maxHeightListBox="8rem"
           optionLabel={(option: IObject) =>
             `${option?.city}, ${option?.address}`

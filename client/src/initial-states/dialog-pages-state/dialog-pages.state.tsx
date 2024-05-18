@@ -39,5 +39,6 @@ export const dialogePagesState = {
   updatePasswordPage: false,
   authPage: false,
   startPage: false,
-  makePaymentPage: false
+  makePaymentPage: false,
+  openDialog: false
 };

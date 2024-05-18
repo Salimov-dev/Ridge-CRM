@@ -89,6 +89,8 @@ const StaticticsLayout = React.memo(() => {
     users,
     data
   );
+  console.log("data", data);
+  console.log("searchedObjects", searchedObjects);
 
   const { chartData, pieData } = useChartsStatisticsData(searchedObjects);
 

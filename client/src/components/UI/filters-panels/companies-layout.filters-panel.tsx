@@ -1,14 +1,23 @@
-import React from "react";
+import React, { FC } from "react";
 import { useSelector } from "react-redux";
+import { UseFormRegister, UseFormSetValue } from "react-hook-form";
 // components
 import SearchField from "@common/inputs/search-field";
 import { FieldsContainer, Form } from "@styled/styled-form";
 import SearchDatePicker from "@components/common/inputs/search-date-picker";
 // store
 import { getCompaniesLoadingStatus } from "@store/company/company.store";
+// interfaces
+import { IDataProps } from "@interfaces/data/data-props.type";
 
-const CompaniesLayoutFiltersPanel = React.memo(
-  ({ data, register, setValue }) => {
+interface CompaniesLayoutFiltersPanelProps {
+  data: IDataProps;
+  register: UseFormRegister<IDataProps>;
+  setValue: UseFormSetValue<IDataProps>;
+}
+
+const CompaniesLayoutFiltersPanel: FC<CompaniesLayoutFiltersPanelProps> =
+  React.memo(({ data, register, setValue }): JSX.Element => {
     const isLoading = useSelector(getCompaniesLoadingStatus());
 
     return (
@@ -35,7 +44,9 @@ const CompaniesLayoutFiltersPanel = React.memo(
             name="startDate"
             label="Добавлены от"
             value={data.startDate}
-            onChange={(value) => setValue("startDate", value)}
+            onChange={(value: string | string[] | null) =>
+              setValue("startDate", value)
+            }
             disabled={isLoading}
           />
           <SearchDatePicker
@@ -43,13 +54,14 @@ const CompaniesLayoutFiltersPanel = React.memo(
             name="endDate"
             label="Добавлены до"
             value={data.endDate}
-            onChange={(value) => setValue("endDate", value)}
+            onChange={(value: string | string[] | null) =>
+              setValue("endDate", value)
+            }
             disabled={isLoading}
           />
         </FieldsContainer>
       </Form>
     );
-  }
-);
+  });
 
 export default CompaniesLayoutFiltersPanel;

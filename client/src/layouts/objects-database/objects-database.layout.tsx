@@ -1,8 +1,9 @@
 // libraries
 import { useForm } from "react-hook-form";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 // components
+import DialogPages from "@dialogs/dialog-pages";
 import HeaderForLayout from "@components/common/headers/header-for-layout";
 import BasicTable from "@components/common/table/basic-table";
 import { ContainerStyled } from "@components/common/container/container-styled";
@@ -12,6 +13,7 @@ import NoCallsControlPanelObjectsDatabase from "./components/no-calls-control-pa
 import NeedToCallsControlPanelObjectsDatabase from "./components/need-to-calls-control-panel.objects-database-layout";
 // initial-states
 import { objectsDatabaseLayoutInitialState } from "@initial-states/layouts/objects-database-layout.initial-state";
+import { dialogePagesState } from "@initial-states/dialog-pages-state/dialog-pages.state";
 // columns
 import { objectsDatabaseColumns } from "@columns/objects-database.columns";
 // hooks
@@ -22,24 +24,24 @@ import {
   getObjectsList,
   getObjectsLoadingStatus
 } from "@store/object/objects.store";
-import DialogPages from "@dialogs/dialog-pages";
+// interfaces
+import { IDialogPagesState } from "@interfaces/state/dialog-pages-state.interface";
+// utils
+import getLocalStorageFiltersState from "@utils/local-storage/get-local-storage-filters-state";
+import setLocalStorageFiltersState from "@utils/local-storage/set-local-storage-filters-state";
 
 const ObjectsDatabaseLayout = React.memo(() => {
   const [period, setPeriod] = useState("fromOneMonthToTwo");
-  const [state, setState] = useState({
-    objectPage: false,
-    createPage: false,
-    updatePage: false,
-    objectId: null
+  const [stateDialogPages, setStateDialogPages] =
+    useState<IDialogPagesState>(dialogePagesState);
+
+  const { localStorageData, formatedState } = getLocalStorageFiltersState({
+    title: "search-objectsdatabase-data"
   });
 
-  const localStorageState = JSON.parse(
-    localStorage.getItem("search-objectsdatabase-data")
-  );
-
   const { watch, reset, setValue } = useForm({
-    defaultValues: Boolean(localStorageState)
-      ? localStorageState
+    defaultValues: localStorageData
+      ? formatedState
       : objectsDatabaseLayoutInitialState,
     mode: "onBlur"
   });
@@ -56,22 +58,10 @@ const ObjectsDatabaseLayout = React.memo(() => {
     period
   );
 
-  useEffect(() => {
-    localStorage.setItem("search-objectsdatabase-data", JSON.stringify(data));
-  }, [data]);
-
-  useEffect(() => {
-    const hasLocalStorageData = localStorage.getItem(
-      "search-objectsdatabase-data"
-    );
-
-    if (hasLocalStorageData?.length) {
-      localStorage.setItem(
-        "search-objectsdatabase-data",
-        JSON.stringify(objectsDatabaseLayoutInitialState)
-      );
-    }
-  }, []);
+  setLocalStorageFiltersState({
+    title: "search-objectsdatabase-data",
+    data: data
+  });
 
   return (
     <ContainerStyled>
@@ -94,12 +84,12 @@ const ObjectsDatabaseLayout = React.memo(() => {
       <BasicTable
         items={filteredObjects}
         itemsColumns={objectsDatabaseColumns(
-          setState,
+          stateDialogPages,
           isCurrentUserRoleManager
         )}
         isLoading={isLoading}
       />
-      <DialogPages state={state} setState={setState} />
+      <DialogPages state={stateDialogPages} setState={setStateDialogPages} />
     </ContainerStyled>
   );
 });

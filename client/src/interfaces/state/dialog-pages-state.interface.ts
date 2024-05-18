@@ -40,4 +40,5 @@ export interface IDialogPagesState {
   authPage: boolean;
   startPage: boolean;
   makePaymentPage: boolean;
+  openDialog: boolean;
 }

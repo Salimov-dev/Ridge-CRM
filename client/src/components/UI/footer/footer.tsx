@@ -34,22 +34,23 @@ const Footer = () => {
       <Menu>
         <ItemFooter title="Главная" path="/" />
         <Divider orientation="vertical" flexItem />
-        <ItemFooter title="Статистика" path="/statictics" />
-        <Divider orientation="vertical" flexItem />
         <ItemFooter title="Объекты" path="/objects" />
-        <Divider orientation="vertical" flexItem />
-        <ItemFooter title="Проработка базы" path="/objectsdatabase" />
         <Divider orientation="vertical" flexItem />
         <ItemFooter title="Сделки" path="/deals" />
         <Divider orientation="vertical" flexItem />
         <ItemFooter title="Встречи" path="/meetings" />
         <Divider orientation="vertical" flexItem />
+        <ItemFooter title="Презентации" path="/presentations" />
+        <Divider orientation="vertical" flexItem />
         <ItemFooter title="Контакты" path="/contacts" />
         <Divider orientation="vertical" flexItem />
-        <ItemFooter title="Календарь" path="/calendar" />
+        <ItemFooter title="Компании" path="/companies" />
         <Divider orientation="vertical" flexItem />
-        <ItemFooter title="Презентации" path="/presentations" />
-
+        <ItemFooter title="Статистика" path="/statictics" />
+        <Divider orientation="vertical" flexItem />
+        <ItemFooter title="Проработка базы" path="/objectsdatabase" />
+        <Divider orientation="vertical" flexItem />
+        <ItemFooter title="Календарь" path="/calendar" />
         {isCurator ? (
           <>
             <Divider orientation="vertical" flexItem />

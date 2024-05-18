@@ -55,7 +55,7 @@ const FooterObjectPage: FC<ObjectPageProps> = ({
   } = useForm({
     defaultValues: object,
     mode: "onChange",
-    resolver: yupResolver(objectPageStatusSchema)
+    resolver: yupResolver<any>(objectPageStatusSchema)
   });
 
   const watchStatus = watch("status");

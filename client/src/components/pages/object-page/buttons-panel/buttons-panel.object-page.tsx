@@ -16,7 +16,7 @@ import {
 } from "@store/user/users.store";
 
 interface ButtonsPanelObjectPageProps {
-  object: IObject;
+  object: IObject | null;
   setState: Dispatch<SetStateAction<IDialogPagesState>>;
   hasCloudButton?: boolean;
   hasAddPresentationButton?: boolean;

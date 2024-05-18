@@ -1,6 +1,5 @@
-import dayjs from "dayjs";
 import { useForm } from "react-hook-form";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 // components
 import HeaderForLayout from "@components/common/headers/header-for-layout";
@@ -10,6 +9,7 @@ import ContactsLayoutFiltersPanel from "@components/UI/filters-panels/contacts-l
 import ButtonsContactsLayout from "@components/UI/layout-buttons/buttons.contacts-layout";
 // initial-states
 import { contactsLayoutInitialState } from "@initial-states/layouts/contacts-layout.initial-state";
+import { dialogePagesState } from "@initial-states/dialog-pages-state/dialog-pages.state";
 // columns
 import { contactsColumns } from "@columns/contacts.columns";
 // hooks
@@ -18,31 +18,24 @@ import useSearchContact from "@hooks/contact/use-search-contact";
 import { getIsCurrentUserRoleManager } from "@store/user/users.store";
 import { getContactsList } from "@store/contact/contact.store";
 import { getLastContactsLoadingStatus } from "@store/last-contact/last-contact.store";
+// dialogs
 import DialogPages from "@dialogs/dialog-pages";
+// interfaces
+import { IDialogPagesState } from "@interfaces/state/dialog-pages-state.interface";
+// utils
+import getLocalStorageFiltersState from "@utils/local-storage/get-local-storage-filters-state";
+import setLocalStorageFiltersState from "@utils/local-storage/set-local-storage-filters-state";
 
 const ContactsLayout = React.memo(() => {
-  const [stateDialogPages, setStateDialogPages] = useState({
-    createContactPage: false,
-    openContactPage: false,
-    contactId: null
+  const [stateDialogPages, setStateDialogPages] =
+    useState<IDialogPagesState>(dialogePagesState);
+
+  const { localStorageData, formatedState } = getLocalStorageFiltersState({
+    title: "search-contacts-data"
   });
 
-  const localStorageState = JSON.parse(
-    localStorage.getItem("search-contacts-data")
-  );
-
-  const formatedState = {
-    ...localStorageState,
-    startDate: localStorageState?.startDate
-      ? dayjs(localStorageState?.startDate)
-      : null,
-    endDate: localStorageState?.endDate
-      ? dayjs(localStorageState?.endDate)
-      : null
-  };
-
   const { register, watch, setValue, reset } = useForm({
-    defaultValues: !!localStorageState
+    defaultValues: localStorageData
       ? formatedState
       : contactsLayoutInitialState,
     mode: "onChange"
@@ -56,20 +49,10 @@ const ContactsLayout = React.memo(() => {
   const contactsList = useSelector(getContactsList());
   const { searchedContacts } = useSearchContact(contactsList, data);
 
-  useEffect(() => {
-    localStorage.setItem("search-contacts-data", JSON.stringify(data));
-  }, [data]);
-
-  useEffect(() => {
-    const hasLocalStorageData = localStorage.getItem("search-contacts-data");
-
-    if (hasLocalStorageData?.length) {
-      localStorage.setItem(
-        "search-contacts-data",
-        JSON.stringify(contactsLayoutInitialState)
-      );
-    }
-  }, []);
+  setLocalStorageFiltersState({
+    title: "search-contacts-data",
+    data: data
+  });
 
   return (
     <ContainerStyled>

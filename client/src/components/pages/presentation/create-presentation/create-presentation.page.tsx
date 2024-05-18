@@ -76,7 +76,7 @@ const CreatePresentation = React.memo(
     };
 
     useEffect(() => {
-      isObjectPage && setValue<any>("objectId", objectId);
+      setValue<any>("objectId", objectId);
     }, [objectId]);
 
     return (

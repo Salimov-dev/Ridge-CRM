@@ -8,7 +8,7 @@ import ClearFilterButton from "@common/buttons/clear-filter.button";
 // data
 import { statisticPositionsArray } from "@data/statistics/statistic-positions";
 // initial-states
-import { statisticsLayoutInitialState } from "../../../initial-states/layouts/statistics-layout.initial-state";
+import { statisticsLayoutInitialState } from "@initial-states/layouts/statistics-layout.initial-state";
 // store
 import { getObjectsLoadingStatus } from "@store/object/objects.store";
 import { getIsCurrentUserRoleCurator } from "@store/user/users.store";
@@ -33,7 +33,7 @@ const StaticticsLayoutFiltersPanel = React.memo(
             onChange={(e) => setValue("selectedUsers", e.target.value)}
             disabled={isObjectsLoading}
           />
-          <MultiSelectField
+          {/* <MultiSelectField
             name="selectedPositions"
             labelId="selectedPositions-label"
             label="Выбор по позиции"
@@ -41,7 +41,7 @@ const StaticticsLayoutFiltersPanel = React.memo(
             selectedItems={data.selectedPositions}
             onChange={(e) => setValue("selectedPositions", e.target.value)}
             disabled={isObjectsLoading}
-          />
+          /> */}
           <SearchSwitch
             title="Без куратора"
             isLoading={isObjectsLoading}
@@ -55,7 +55,7 @@ const StaticticsLayoutFiltersPanel = React.memo(
             }}
           />
           <ClearFilterButton
-            width="400px"
+            width="200px"
             margin="-1px 0 0 0"
             reset={reset}
             initialState={statisticsLayoutInitialState}

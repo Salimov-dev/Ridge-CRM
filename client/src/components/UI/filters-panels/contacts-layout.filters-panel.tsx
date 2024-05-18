@@ -1,5 +1,6 @@
 import { useSelector } from "react-redux";
-import React from "react";
+import { UseFormRegister, UseFormSetValue } from "react-hook-form";
+import React, { FC } from "react";
 // components
 import SearchField from "@common/inputs/search-field";
 import { FieldsContainer, Form } from "@styled/styled-form";
@@ -11,9 +12,17 @@ import { getActualContactPositionList } from "@utils/actual-items/get-actual-con
 import { getLastContactsLoadingStatus } from "@store/last-contact/last-contact.store";
 import { getContactsList } from "@store/contact/contact.store";
 import { getContactPositionsList } from "@store/contact/contact-positions.store";
+// interfaces
+import { IDataProps } from "@interfaces/data/data-props.type";
 
-const ContactsLayoutFiltersPanel = React.memo(
-  ({ data, register, setValue }) => {
+interface ContactsLayoutFiltersPanelProps {
+  data: IDataProps;
+  register: UseFormRegister<IDataProps>;
+  setValue: UseFormSetValue<IDataProps>;
+}
+
+const ContactsLayoutFiltersPanel: FC<ContactsLayoutFiltersPanelProps> =
+  React.memo(({ data, register, setValue }): JSX.Element => {
     const contactsList = useSelector(getContactsList());
     const isLoading = useSelector(getLastContactsLoadingStatus());
 
@@ -73,7 +82,9 @@ const ContactsLayoutFiltersPanel = React.memo(
             name="startDate"
             label="Добавлены от"
             value={data.startDate}
-            onChange={(value) => setValue("startDate", value)}
+            onChange={(value: string | string[] | null) =>
+              setValue("startDate", value)
+            }
             disabled={isLoading}
           />
           <SearchDatePicker
@@ -81,7 +92,9 @@ const ContactsLayoutFiltersPanel = React.memo(
             name="endDate"
             label="Добавлены до"
             value={data.endDate}
-            onChange={(value) => setValue("endDate", value)}
+            onChange={(value: string | string[] | null) =>
+              setValue("endDate", value)
+            }
             disabled={isLoading}
           />
           <MultiSelectField
@@ -96,7 +109,6 @@ const ContactsLayoutFiltersPanel = React.memo(
         </FieldsContainer>
       </Form>
     );
-  }
-);
+  });
 
 export default ContactsLayoutFiltersPanel;

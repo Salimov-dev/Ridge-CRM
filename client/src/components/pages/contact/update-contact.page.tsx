@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { yupResolver } from "@hookform/resolvers/yup";
 // components
+import DialogPages from "@dialogs/dialog-pages";
 import SuccessCancelFormButtons from "@components/common/buttons/success-cancel-form-buttons";
 import LoaderFullWindow from "@components/common/loader/loader-full-window";
 import HeaderWithCloseButtonForPage from "@components/common/headers/header-with-close-button.page";
@@ -29,7 +30,6 @@ import {
   removeContact,
   updateContact
 } from "@store/contact/contact.store";
-import DialogPages from "@dialogs/dialog-pages";
 
 interface UpdateContactProps {
   onClose: () => void;

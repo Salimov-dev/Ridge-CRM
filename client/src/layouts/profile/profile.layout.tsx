@@ -8,18 +8,18 @@ import UserProfileLayoutInfo from "./components/user-profile-info.profile-layout
 import ButtonsProfileLayout from "../../components/UI/layout-buttons/buttons.profile-layout";
 import EmailConfirmInfoProfileLayout from "./components/email-confirm-info.profile-layout";
 import AvatarProfileLayout from "./components/avatar.profile-layout";
+import DialogPages from "@dialogs/dialog-pages";
 // store
 import { getCurrentUserData, getUserNameById } from "@store/user/users.store";
 import { getUserAvatarsLoadingStatus } from "@store/avatar/avatar.store";
-import DialogPages from "@dialogs/dialog-pages";
+// interfaces
+import { IDialogPagesState } from "@interfaces/state/dialog-pages-state.interface";
+// initial-states
+import { dialogePagesState } from "@initial-states/dialog-pages-state/dialog-pages.state";
 
 const ProfileLayout = () => {
-  const [state, setState] = useState({
-    avatarUpdatePage: false,
-    openDialog: false,
-    updateProfilePage: false,
-    updatePasswordPage: false
-  });
+  const [stateDialogPages, setStateDialogPages] =
+    useState<IDialogPagesState>(dialogePagesState);
 
   const user = useSelector(getCurrentUserData());
   const isUserLoading = useSelector(getUserAvatarsLoadingStatus());
@@ -30,12 +30,15 @@ const ProfileLayout = () => {
       <HeaderForLayout
         title={`${!isUserLoading ? userNameSelector : <Loader />}`}
       />
-      <ButtonsProfileLayout setState={setState} />
+      <ButtonsProfileLayout setState={setStateDialogPages} />
       <EmailConfirmInfoProfileLayout user={user} />
-      <AvatarProfileLayout state={state} setState={setState} />
+      <AvatarProfileLayout
+        state={stateDialogPages}
+        setState={setStateDialogPages}
+      />
       <UserProfileLayoutInfo user={user} />
 
-      <DialogPages state={state} setState={setState} />
+      <DialogPages state={stateDialogPages} setState={setStateDialogPages} />
     </ContainerStyled>
   );
 };
