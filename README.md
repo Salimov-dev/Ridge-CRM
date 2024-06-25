@@ -1,5 +1,9 @@
 CRM для отделов развития коммерческой недвижимости
 
+Грядка ЦРМ http://ridge-crm.ru/
+Youtube: https://www.youtube.com/@ridge_crm 
+VK: https://vk.com/ridgecrm
+
 Frontend stack:
 - React, TypeScript, MUI, react-hook-form, yup, react-table, rtk, rr6, Yandex карты, Git
 
