@@ -1,7 +1,6 @@
 CRM для отделов развития коммерческой недвижимости
 
-Грядка ЦРМ http://ridge-crm.ru/
-Youtube: https://www.youtube.com/@ridge_crm 
+Youtube: https://www.youtube.com/@salimov-dev 
 VK: https://vk.com/ridgecrm
 
 Frontend stack:
