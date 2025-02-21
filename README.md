@@ -1,6 +1,6 @@
 CRM для отделов развития коммерческой недвижимости
 
-Youtube: https://www.youtube.com/@salimov-dev 
+Youtube: https://www.youtube.com/@salimov-dev   
 VK: https://vk.com/ridgecrm
 
 Frontend stack:
